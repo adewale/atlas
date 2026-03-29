@@ -71,10 +71,22 @@ Technical constraints:
 - clean component architecture
 - route-level code splitting
 - local generated datasets
-- Cloudflare Workers deployment config
-- accessibility support
+- Cloudflare Workers deployment via @opennextjs/cloudflare adapter
+- wrangler.jsonc (not wrangler.toml) for configuration
+- nodejs_compat_v2 compatibility flag
+- bundle size must stay within Workers limits (10 MB compressed, paid plan)
+- pure static + edge rendering — no KV, D1, R2, or Durable Objects in v1
+- accessibility support (WCAG AA)
 - responsive layout
 - no unnecessary backend/database services in v1
+
+Cloudflare deployment notes:
+- The official @cloudflare/next-on-pages adapter is deprecated and unmaintained.
+  Atlas uses @opennextjs/cloudflare (community OpenNext adapter) instead.
+- If @opennextjs/cloudflare proves unviable with Next.js 15, the fallback is
+  to deploy on Vercel or migrate to a Cloudflare-native framework (Astro, SvelteKit).
+- All pages should be statically exportable where possible to minimize Workers
+  CPU time and stay within free-tier limits.
 
 Build order:
 1. scaffold app

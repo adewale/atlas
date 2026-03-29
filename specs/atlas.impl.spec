@@ -224,9 +224,9 @@ Image support is a v2 feature.
 - Next.js 15 with App Router
 - TypeScript (strict mode)
 - @chenglou/pretext from npm (NOT vendored)
-- Cloudflare Workers via @opennextjs/cloudflare
+- Cloudflare Workers via @opennextjs/cloudflare (see section 16)
 - No additional UI libraries
-- No database or KV
+- No KV, D1, R2, or Durable Objects
 - Route-level code splitting (automatic with App Router)
 - 'use client' only where needed (PeriodicTable search/keyboard state)
 
@@ -268,6 +268,11 @@ package.json scripts:
 - "test:e2e": "playwright test"
 - "typecheck": "tsc --noEmit"
 - "lint": "next lint"
+- "deploy:dry": "wrangler deploy --dry-run"
+- "deploy": "wrangler deploy"
+- "cf:dev": "wrangler dev"
+- "cf:tail": "wrangler tail"
+- "cf:types": "wrangler types"
 
 15. File Structure
 ------------------
@@ -324,8 +329,86 @@ atlas/
 │       └── navigation.spec.ts
 ├── next.config.ts
 ├── open-next.config.ts
-├── wrangler.toml
+├── wrangler.jsonc                      # NOT wrangler.toml — JSON with comments
 ├── tsconfig.json
 ├── package.json
-├── atlas.spec                          # product spec
-└── atlas.impl.spec                     # this file
+├── specs/
+│   ├── atlas.spec                      # product spec
+│   └── atlas.impl.spec                # this file
+└── .agents/skills/                     # Cloudflare skills (committed)
+
+16. Cloudflare Workers Deployment
+---------------------------------
+Adapter: @opennextjs/cloudflare (community OpenNext adapter).
+NOT @cloudflare/next-on-pages (deprecated, unmaintained, incompatible with
+Next.js 15+).
+
+Risk: @opennextjs/cloudflare is community-maintained. If it proves unviable,
+fallback options are:
+  1. Deploy on Vercel (official Next.js host)
+  2. Migrate to Astro or SvelteKit with native Cloudflare adapter
+
+Configuration file: wrangler.jsonc (NOT wrangler.toml — TOML is legacy):
+
+```jsonc
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "atlas",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-03-29",
+  "compatibility_flags": ["nodejs_compat_v2"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}
+```
+
+Key Cloudflare constraints:
+- Bundle size: must stay under 10 MB compressed (paid) / 1 MB (free)
+  - Tree-shake aggressively. Avoid large dependencies.
+  - Check bundle size in build output before deploy.
+- Memory: 128 MB per request (hard limit). Stream large payloads.
+- CPU time: 10ms free / 30s paid per request.
+- nodejs_compat_v2 flag is required for @opennextjs/cloudflare (Node.js
+  built-ins like Buffer, path, stream).
+
+Static asset handling:
+- Static assets (CSS, JS bundles, JSON data) are served free and unmetered
+  on Cloudflare Pages.
+- Use _routes.json to exclude static paths from Workers invocation.
+- Set immutable cache headers on hashed static assets:
+    Cache-Control: public, max-age=31536000, immutable
+
+Deploy commands:
+- Local dev:    wrangler dev
+- Dry run:      wrangler deploy --dry-run
+- Production:   wrangler deploy
+- Live logs:    wrangler tail
+- Type gen:     wrangler types (run after any binding changes)
+
+Workers best practices applied:
+- No global mutable state (no module-level variables that persist across requests)
+- All promises awaited or passed to ctx.waitUntil()
+- Structured JSON console.log() for observability
+- Secrets via `wrangler secret put`, never in config files
+- No ctx.passThroughOnException() — explicit error handling only
+
+17. Web Performance Targets
+---------------------------
+Core Web Vitals targets (all "Good" thresholds):
+- TTFB:  < 800ms
+- FCP:   < 1.8s
+- LCP:   < 2.5s  (largest SVG render)
+- INP:   < 200ms (highlight mode switches, search input)
+- TBT:   < 200ms
+- CLS:   < 0.1   (Pretext pre-measurement prevents layout shift)
+
+Performance strategy:
+- Static generation for all element/atlas/compare pages where possible
+- Pre-computed data (no runtime computation of rankings, groupings, etc.)
+- SVG viewBox sizing prevents CLS (dimensions known at render time)
+- Pretext measures text at build/render time → no reflow-based layout
+- Minimal client JS: only PeriodicTable needs 'use client' for interactivity
+- System fonts (no web font loading delay)
+- No images in v1 (eliminates LCP image concerns)
