@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 28,
+  "symbol": "Ni",
+  "name": "Nickel",
+  "period": 4,
+  "group": 10,
+  "block": "d",
+  "wikidataId": "Q1028",
+  "wikipediaTitle": "Nickel",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Nickel",
+  "category": "transition metal",
+  "mass": 56.28,
+  "electronegativity": 3.3,
+  "ionizationEnergy": 13.33,
+  "radius": 80.4,
+  "rankings": {
+    "atomicNumber": 28
+  },
+  "neighbors": [
+    "Co",
+    "Cu"
+  ]
+}

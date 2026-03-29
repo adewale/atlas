@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 114,
+  "symbol": "Fl",
+  "name": "Flerovium",
+  "period": 7,
+  "group": 14,
+  "block": "p",
+  "wikidataId": "Q1114",
+  "wikipediaTitle": "Flerovium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Flerovium",
+  "category": "post-transition metal",
+  "mass": 229.14,
+  "electronegativity": 2.9,
+  "ionizationEnergy": 15.33,
+  "radius": 109.2,
+  "rankings": {
+    "atomicNumber": 114
+  },
+  "neighbors": [
+    "Nh",
+    "Mc"
+  ]
+}

@@ -1,0 +1,474 @@
+{
+  "H": {
+    "wikipediaTitle": "Hydrogen",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hydrogen"
+  },
+  "He": {
+    "wikipediaTitle": "Helium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Helium"
+  },
+  "Li": {
+    "wikipediaTitle": "Lithium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lithium"
+  },
+  "Be": {
+    "wikipediaTitle": "Beryllium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Beryllium"
+  },
+  "B": {
+    "wikipediaTitle": "Boron",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Boron"
+  },
+  "C": {
+    "wikipediaTitle": "Carbon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Carbon"
+  },
+  "N": {
+    "wikipediaTitle": "Nitrogen",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nitrogen"
+  },
+  "O": {
+    "wikipediaTitle": "Oxygen",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Oxygen"
+  },
+  "F": {
+    "wikipediaTitle": "Fluorine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fluorine"
+  },
+  "Ne": {
+    "wikipediaTitle": "Neon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Neon"
+  },
+  "Na": {
+    "wikipediaTitle": "Sodium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sodium"
+  },
+  "Mg": {
+    "wikipediaTitle": "Magnesium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Magnesium"
+  },
+  "Al": {
+    "wikipediaTitle": "Aluminium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Aluminium"
+  },
+  "Si": {
+    "wikipediaTitle": "Silicon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Silicon"
+  },
+  "P": {
+    "wikipediaTitle": "Phosphorus",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Phosphorus"
+  },
+  "S": {
+    "wikipediaTitle": "Sulfur",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sulfur"
+  },
+  "Cl": {
+    "wikipediaTitle": "Chlorine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chlorine"
+  },
+  "Ar": {
+    "wikipediaTitle": "Argon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Argon"
+  },
+  "K": {
+    "wikipediaTitle": "Potassium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Potassium"
+  },
+  "Ca": {
+    "wikipediaTitle": "Calcium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Calcium"
+  },
+  "Sc": {
+    "wikipediaTitle": "Scandium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Scandium"
+  },
+  "Ti": {
+    "wikipediaTitle": "Titanium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Titanium"
+  },
+  "V": {
+    "wikipediaTitle": "Vanadium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Vanadium"
+  },
+  "Cr": {
+    "wikipediaTitle": "Chromium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chromium"
+  },
+  "Mn": {
+    "wikipediaTitle": "Manganese",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Manganese"
+  },
+  "Fe": {
+    "wikipediaTitle": "Iron",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Iron"
+  },
+  "Co": {
+    "wikipediaTitle": "Cobalt",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cobalt"
+  },
+  "Ni": {
+    "wikipediaTitle": "Nickel",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nickel"
+  },
+  "Cu": {
+    "wikipediaTitle": "Copper",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Copper"
+  },
+  "Zn": {
+    "wikipediaTitle": "Zinc",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zinc"
+  },
+  "Ga": {
+    "wikipediaTitle": "Gallium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gallium"
+  },
+  "Ge": {
+    "wikipediaTitle": "Germanium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Germanium"
+  },
+  "As": {
+    "wikipediaTitle": "Arsenic",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Arsenic"
+  },
+  "Se": {
+    "wikipediaTitle": "Selenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Selenium"
+  },
+  "Br": {
+    "wikipediaTitle": "Bromine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bromine"
+  },
+  "Kr": {
+    "wikipediaTitle": "Krypton",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Krypton"
+  },
+  "Rb": {
+    "wikipediaTitle": "Rubidium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rubidium"
+  },
+  "Sr": {
+    "wikipediaTitle": "Strontium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Strontium"
+  },
+  "Y": {
+    "wikipediaTitle": "Yttrium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Yttrium"
+  },
+  "Zr": {
+    "wikipediaTitle": "Zirconium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zirconium"
+  },
+  "Nb": {
+    "wikipediaTitle": "Niobium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Niobium"
+  },
+  "Mo": {
+    "wikipediaTitle": "Molybdenum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Molybdenum"
+  },
+  "Tc": {
+    "wikipediaTitle": "Technetium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Technetium"
+  },
+  "Ru": {
+    "wikipediaTitle": "Ruthenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ruthenium"
+  },
+  "Rh": {
+    "wikipediaTitle": "Rhodium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhodium"
+  },
+  "Pd": {
+    "wikipediaTitle": "Palladium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Palladium"
+  },
+  "Ag": {
+    "wikipediaTitle": "Silver",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Silver"
+  },
+  "Cd": {
+    "wikipediaTitle": "Cadmium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cadmium"
+  },
+  "In": {
+    "wikipediaTitle": "Indium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Indium"
+  },
+  "Sn": {
+    "wikipediaTitle": "Tin",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tin"
+  },
+  "Sb": {
+    "wikipediaTitle": "Antimony",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Antimony"
+  },
+  "Te": {
+    "wikipediaTitle": "Tellurium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tellurium"
+  },
+  "I": {
+    "wikipediaTitle": "Iodine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Iodine"
+  },
+  "Xe": {
+    "wikipediaTitle": "Xenon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Xenon"
+  },
+  "Cs": {
+    "wikipediaTitle": "Caesium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Caesium"
+  },
+  "Ba": {
+    "wikipediaTitle": "Barium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Barium"
+  },
+  "La": {
+    "wikipediaTitle": "Lanthanum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lanthanum"
+  },
+  "Ce": {
+    "wikipediaTitle": "Cerium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cerium"
+  },
+  "Pr": {
+    "wikipediaTitle": "Praseodymium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Praseodymium"
+  },
+  "Nd": {
+    "wikipediaTitle": "Neodymium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Neodymium"
+  },
+  "Pm": {
+    "wikipediaTitle": "Promethium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Promethium"
+  },
+  "Sm": {
+    "wikipediaTitle": "Samarium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Samarium"
+  },
+  "Eu": {
+    "wikipediaTitle": "Europium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Europium"
+  },
+  "Gd": {
+    "wikipediaTitle": "Gadolinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gadolinium"
+  },
+  "Tb": {
+    "wikipediaTitle": "Terbium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Terbium"
+  },
+  "Dy": {
+    "wikipediaTitle": "Dysprosium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dysprosium"
+  },
+  "Ho": {
+    "wikipediaTitle": "Holmium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Holmium"
+  },
+  "Er": {
+    "wikipediaTitle": "Erbium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Erbium"
+  },
+  "Tm": {
+    "wikipediaTitle": "Thulium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thulium"
+  },
+  "Yb": {
+    "wikipediaTitle": "Ytterbium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ytterbium"
+  },
+  "Lu": {
+    "wikipediaTitle": "Lutetium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lutetium"
+  },
+  "Hf": {
+    "wikipediaTitle": "Hafnium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hafnium"
+  },
+  "Ta": {
+    "wikipediaTitle": "Tantalum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tantalum"
+  },
+  "W": {
+    "wikipediaTitle": "Tungsten",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tungsten"
+  },
+  "Re": {
+    "wikipediaTitle": "Rhenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhenium"
+  },
+  "Os": {
+    "wikipediaTitle": "Osmium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Osmium"
+  },
+  "Ir": {
+    "wikipediaTitle": "Iridium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Iridium"
+  },
+  "Pt": {
+    "wikipediaTitle": "Platinum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Platinum"
+  },
+  "Au": {
+    "wikipediaTitle": "Gold",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gold"
+  },
+  "Hg": {
+    "wikipediaTitle": "Mercury",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mercury"
+  },
+  "Tl": {
+    "wikipediaTitle": "Thallium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thallium"
+  },
+  "Pb": {
+    "wikipediaTitle": "Lead",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lead"
+  },
+  "Bi": {
+    "wikipediaTitle": "Bismuth",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bismuth"
+  },
+  "Po": {
+    "wikipediaTitle": "Polonium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Polonium"
+  },
+  "At": {
+    "wikipediaTitle": "Astatine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Astatine"
+  },
+  "Rn": {
+    "wikipediaTitle": "Radon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Radon"
+  },
+  "Fr": {
+    "wikipediaTitle": "Francium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Francium"
+  },
+  "Ra": {
+    "wikipediaTitle": "Radium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Radium"
+  },
+  "Ac": {
+    "wikipediaTitle": "Actinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Actinium"
+  },
+  "Th": {
+    "wikipediaTitle": "Thorium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thorium"
+  },
+  "Pa": {
+    "wikipediaTitle": "Protactinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Protactinium"
+  },
+  "U": {
+    "wikipediaTitle": "Uranium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Uranium"
+  },
+  "Np": {
+    "wikipediaTitle": "Neptunium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Neptunium"
+  },
+  "Pu": {
+    "wikipediaTitle": "Plutonium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Plutonium"
+  },
+  "Am": {
+    "wikipediaTitle": "Americium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Americium"
+  },
+  "Cm": {
+    "wikipediaTitle": "Curium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Curium"
+  },
+  "Bk": {
+    "wikipediaTitle": "Berkelium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Berkelium"
+  },
+  "Cf": {
+    "wikipediaTitle": "Californium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Californium"
+  },
+  "Es": {
+    "wikipediaTitle": "Einsteinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Einsteinium"
+  },
+  "Fm": {
+    "wikipediaTitle": "Fermium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fermium"
+  },
+  "Md": {
+    "wikipediaTitle": "Mendelevium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mendelevium"
+  },
+  "No": {
+    "wikipediaTitle": "Nobelium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nobelium"
+  },
+  "Lr": {
+    "wikipediaTitle": "Lawrencium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lawrencium"
+  },
+  "Rf": {
+    "wikipediaTitle": "Rutherfordium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rutherfordium"
+  },
+  "Db": {
+    "wikipediaTitle": "Dubnium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dubnium"
+  },
+  "Sg": {
+    "wikipediaTitle": "Seaborgium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Seaborgium"
+  },
+  "Bh": {
+    "wikipediaTitle": "Bohrium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bohrium"
+  },
+  "Hs": {
+    "wikipediaTitle": "Hassium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hassium"
+  },
+  "Mt": {
+    "wikipediaTitle": "Meitnerium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Meitnerium"
+  },
+  "Ds": {
+    "wikipediaTitle": "Darmstadtium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Darmstadtium"
+  },
+  "Rg": {
+    "wikipediaTitle": "Roentgenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Roentgenium"
+  },
+  "Cn": {
+    "wikipediaTitle": "Copernicium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Copernicium"
+  },
+  "Nh": {
+    "wikipediaTitle": "Nihonium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nihonium"
+  },
+  "Fl": {
+    "wikipediaTitle": "Flerovium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flerovium"
+  },
+  "Mc": {
+    "wikipediaTitle": "Moscovium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Moscovium"
+  },
+  "Lv": {
+    "wikipediaTitle": "Livermorium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Livermorium"
+  },
+  "Ts": {
+    "wikipediaTitle": "Tennessine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tennessine"
+  },
+  "Og": {
+    "wikipediaTitle": "Oganesson",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Oganesson"
+  }
+}

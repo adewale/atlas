@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 116,
+  "symbol": "Lv",
+  "name": "Livermorium",
+  "period": 7,
+  "group": 16,
+  "block": "p",
+  "wikidataId": "Q1116",
+  "wikipediaTitle": "Livermorium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Livermorium",
+  "category": "post-transition metal",
+  "mass": 233.16,
+  "electronegativity": 3.1,
+  "ionizationEnergy": 16,
+  "radius": 112.8,
+  "rankings": {
+    "atomicNumber": 116
+  },
+  "neighbors": [
+    "Mc",
+    "Ts"
+  ]
+}

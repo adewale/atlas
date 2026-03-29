@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 103,
+  "symbol": "Lr",
+  "name": "Lawrencium",
+  "period": 7,
+  "group": 17,
+  "block": "d",
+  "wikidataId": "Q1103",
+  "wikipediaTitle": "Lawrencium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Lawrencium",
+  "category": "transition metal",
+  "mass": 207.03,
+  "electronegativity": 1.8,
+  "ionizationEnergy": 11.67,
+  "radius": 89.4,
+  "rankings": {
+    "atomicNumber": 103
+  },
+  "neighbors": [
+    "No",
+    "Rf"
+  ]
+}

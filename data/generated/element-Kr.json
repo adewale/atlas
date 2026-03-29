@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 36,
+  "symbol": "Kr",
+  "name": "Krypton",
+  "period": 4,
+  "group": 18,
+  "block": "p",
+  "wikidataId": "Q1036",
+  "wikipediaTitle": "Krypton",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Krypton",
+  "category": "noble gas",
+  "mass": 72.36,
+  "electronegativity": 1.1,
+  "ionizationEnergy": 16,
+  "radius": 94.8,
+  "rankings": {
+    "atomicNumber": 36
+  },
+  "neighbors": [
+    "Br",
+    "Rb"
+  ]
+}

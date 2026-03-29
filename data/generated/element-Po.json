@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 84,
+  "symbol": "Po",
+  "name": "Polonium",
+  "period": 6,
+  "group": 16,
+  "block": "p",
+  "wikidataId": "Q1084",
+  "wikipediaTitle": "Polonium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Polonium",
+  "category": "metalloid",
+  "mass": 168.84,
+  "electronegativity": 2.9,
+  "ionizationEnergy": 5.33,
+  "radius": 55.2,
+  "rankings": {
+    "atomicNumber": 84
+  },
+  "neighbors": [
+    "Bi",
+    "At"
+  ]
+}

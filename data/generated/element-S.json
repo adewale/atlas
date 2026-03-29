@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 16,
+  "symbol": "S",
+  "name": "Sulfur",
+  "period": 3,
+  "group": 16,
+  "block": "p",
+  "wikidataId": "Q1016",
+  "wikipediaTitle": "Sulfur",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Sulfur",
+  "category": "post-transition metal",
+  "mass": 32.16,
+  "electronegativity": 2.1,
+  "ionizationEnergy": 9.33,
+  "radius": 58.8,
+  "rankings": {
+    "atomicNumber": 16
+  },
+  "neighbors": [
+    "P",
+    "Cl"
+  ]
+}

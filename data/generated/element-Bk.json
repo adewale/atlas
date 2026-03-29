@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 97,
+  "symbol": "Bk",
+  "name": "Berkelium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1097",
+  "wikipediaTitle": "Berkelium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Berkelium",
+  "category": "actinide",
+  "mass": 194.97,
+  "electronegativity": 1.2,
+  "ionizationEnergy": 9.67,
+  "radius": 78.6,
+  "rankings": {
+    "atomicNumber": 97
+  },
+  "neighbors": [
+    "Cm",
+    "Cf"
+  ]
+}

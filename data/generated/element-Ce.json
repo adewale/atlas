@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 58,
+  "symbol": "Ce",
+  "name": "Cerium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1058",
+  "wikipediaTitle": "Cerium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Cerium",
+  "category": "lanthanide",
+  "mass": 116.58,
+  "electronegativity": 3.3,
+  "ionizationEnergy": 10,
+  "radius": 134.4,
+  "rankings": {
+    "atomicNumber": 58
+  },
+  "neighbors": [
+    "La",
+    "Pr"
+  ]
+}

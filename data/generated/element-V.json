@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 23,
+  "symbol": "V",
+  "name": "Vanadium",
+  "period": 4,
+  "group": 5,
+  "block": "d",
+  "wikidataId": "Q1023",
+  "wikipediaTitle": "Vanadium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Vanadium",
+  "category": "transition metal",
+  "mass": 46.23,
+  "electronegativity": 2.8,
+  "ionizationEnergy": 11.67,
+  "radius": 71.4,
+  "rankings": {
+    "atomicNumber": 23
+  },
+  "neighbors": [
+    "Ti",
+    "Cr"
+  ]
+}

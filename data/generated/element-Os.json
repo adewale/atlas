@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 76,
+  "symbol": "Os",
+  "name": "Osmium",
+  "period": 6,
+  "group": 8,
+  "block": "d",
+  "wikidataId": "Q1076",
+  "wikipediaTitle": "Osmium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Osmium",
+  "category": "transition metal",
+  "mass": 152.76,
+  "electronegativity": 2.1,
+  "ionizationEnergy": 16,
+  "radius": 40.8,
+  "rankings": {
+    "atomicNumber": 76
+  },
+  "neighbors": [
+    "Re",
+    "Ir"
+  ]
+}

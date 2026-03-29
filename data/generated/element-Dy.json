@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 66,
+  "symbol": "Dy",
+  "name": "Dysprosium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1066",
+  "wikipediaTitle": "Dysprosium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Dysprosium",
+  "category": "lanthanide",
+  "mass": 132.66,
+  "electronegativity": 1.1,
+  "ionizationEnergy": 12.67,
+  "radius": 148.8,
+  "rankings": {
+    "atomicNumber": 66
+  },
+  "neighbors": [
+    "Tb",
+    "Ho"
+  ]
+}

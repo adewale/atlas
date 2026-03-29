@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 26,
+  "symbol": "Fe",
+  "name": "Iron",
+  "period": 4,
+  "group": 8,
+  "block": "d",
+  "wikidataId": "Q1026",
+  "wikipediaTitle": "Iron",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Iron",
+  "category": "transition metal",
+  "mass": 52.26,
+  "electronegativity": 3.1,
+  "ionizationEnergy": 12.67,
+  "radius": 76.8,
+  "rankings": {
+    "atomicNumber": 26
+  },
+  "neighbors": [
+    "Mn",
+    "Co"
+  ]
+}

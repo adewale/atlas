@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 31,
+  "symbol": "Ga",
+  "name": "Gallium",
+  "period": 4,
+  "group": 13,
+  "block": "p",
+  "wikidataId": "Q1031",
+  "wikipediaTitle": "Gallium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Gallium",
+  "category": "post-transition metal",
+  "mass": 62.31,
+  "electronegativity": 0.6,
+  "ionizationEnergy": 14.33,
+  "radius": 85.8,
+  "rankings": {
+    "atomicNumber": 31
+  },
+  "neighbors": [
+    "Zn",
+    "Ge"
+  ]
+}

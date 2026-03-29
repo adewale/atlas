@@ -1,0 +1,22 @@
+{
+  "atomicNumber": 118,
+  "symbol": "Og",
+  "name": "Oganesson",
+  "period": 7,
+  "group": 18,
+  "block": "p",
+  "wikidataId": "Q1118",
+  "wikipediaTitle": "Oganesson",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Oganesson",
+  "category": "noble gas",
+  "mass": 237.18,
+  "electronegativity": 3.3,
+  "ionizationEnergy": 16.67,
+  "radius": 116.4,
+  "rankings": {
+    "atomicNumber": 118
+  },
+  "neighbors": [
+    "Ts"
+  ]
+}

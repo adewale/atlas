@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 89,
+  "symbol": "Ac",
+  "name": "Actinium",
+  "period": 7,
+  "group": 3,
+  "block": "f",
+  "wikidataId": "Q1089",
+  "wikipediaTitle": "Actinium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Actinium",
+  "category": "actinide",
+  "mass": 178.89,
+  "electronegativity": 3.4,
+  "ionizationEnergy": 7,
+  "radius": 64.2,
+  "rankings": {
+    "atomicNumber": 89
+  },
+  "neighbors": [
+    "Ra",
+    "Th"
+  ]
+}

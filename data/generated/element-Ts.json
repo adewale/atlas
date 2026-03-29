@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 117,
+  "symbol": "Ts",
+  "name": "Tennessine",
+  "period": 7,
+  "group": 17,
+  "block": "p",
+  "wikidataId": "Q1117",
+  "wikipediaTitle": "Tennessine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tennessine",
+  "category": "halogen",
+  "mass": 235.17,
+  "electronegativity": 3.2,
+  "ionizationEnergy": 16.33,
+  "radius": 114.6,
+  "rankings": {
+    "atomicNumber": 117
+  },
+  "neighbors": [
+    "Lv",
+    "Og"
+  ]
+}

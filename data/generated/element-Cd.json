@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 48,
+  "symbol": "Cd",
+  "name": "Cadmium",
+  "period": 5,
+  "group": 12,
+  "block": "d",
+  "wikidataId": "Q1048",
+  "wikipediaTitle": "Cadmium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Cadmium",
+  "category": "transition metal",
+  "mass": 96.48,
+  "electronegativity": 2.3,
+  "ionizationEnergy": 6.67,
+  "radius": 116.4,
+  "rankings": {
+    "atomicNumber": 48
+  },
+  "neighbors": [
+    "Ag",
+    "In"
+  ]
+}

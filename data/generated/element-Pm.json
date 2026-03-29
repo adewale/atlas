@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 61,
+  "symbol": "Pm",
+  "name": "Promethium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1061",
+  "wikipediaTitle": "Promethium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Promethium",
+  "category": "lanthanide",
+  "mass": 122.61,
+  "electronegativity": 0.6,
+  "ionizationEnergy": 11,
+  "radius": 139.8,
+  "rankings": {
+    "atomicNumber": 61
+  },
+  "neighbors": [
+    "Nd",
+    "Sm"
+  ]
+}

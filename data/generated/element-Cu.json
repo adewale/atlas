@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 29,
+  "symbol": "Cu",
+  "name": "Copper",
+  "period": 4,
+  "group": 11,
+  "block": "d",
+  "wikidataId": "Q1029",
+  "wikipediaTitle": "Copper",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Copper",
+  "category": "transition metal",
+  "mass": 58.29,
+  "electronegativity": 3.4,
+  "ionizationEnergy": 13.67,
+  "radius": 82.2,
+  "rankings": {
+    "atomicNumber": 29
+  },
+  "neighbors": [
+    "Ni",
+    "Zn"
+  ]
+}

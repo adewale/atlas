@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 47,
+  "symbol": "Ag",
+  "name": "Silver",
+  "period": 5,
+  "group": 11,
+  "block": "d",
+  "wikidataId": "Q1047",
+  "wikipediaTitle": "Silver",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Silver",
+  "category": "transition metal",
+  "mass": 94.47,
+  "electronegativity": 2.2,
+  "ionizationEnergy": 6.33,
+  "radius": 114.6,
+  "rankings": {
+    "atomicNumber": 47
+  },
+  "neighbors": [
+    "Pd",
+    "Cd"
+  ]
+}

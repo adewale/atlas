@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 102,
+  "symbol": "No",
+  "name": "Nobelium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1102",
+  "wikipediaTitle": "Nobelium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Nobelium",
+  "category": "actinide",
+  "mass": 205.02,
+  "electronegativity": 1.7,
+  "ionizationEnergy": 11.33,
+  "radius": 87.6,
+  "rankings": {
+    "atomicNumber": 102
+  },
+  "neighbors": [
+    "Md",
+    "Lr"
+  ]
+}

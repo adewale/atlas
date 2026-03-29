@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 52,
+  "symbol": "Te",
+  "name": "Tellurium",
+  "period": 5,
+  "group": 16,
+  "block": "p",
+  "wikidataId": "Q1052",
+  "wikipediaTitle": "Tellurium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tellurium",
+  "category": "metalloid",
+  "mass": 104.52,
+  "electronegativity": 2.7,
+  "ionizationEnergy": 8,
+  "radius": 123.6,
+  "rankings": {
+    "atomicNumber": 52
+  },
+  "neighbors": [
+    "Sb",
+    "I"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 11,
+  "symbol": "Na",
+  "name": "Sodium",
+  "period": 3,
+  "group": 1,
+  "block": "s",
+  "wikidataId": "Q1011",
+  "wikipediaTitle": "Sodium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Sodium",
+  "category": "alkali metal",
+  "mass": 22.11,
+  "electronegativity": 1.6,
+  "ionizationEnergy": 7.67,
+  "radius": 49.8,
+  "rankings": {
+    "atomicNumber": 11
+  },
+  "neighbors": [
+    "Ne",
+    "Mg"
+  ]
+}

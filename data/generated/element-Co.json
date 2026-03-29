@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 27,
+  "symbol": "Co",
+  "name": "Cobalt",
+  "period": 4,
+  "group": 9,
+  "block": "d",
+  "wikidataId": "Q1027",
+  "wikipediaTitle": "Cobalt",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Cobalt",
+  "category": "transition metal",
+  "mass": 54.27,
+  "electronegativity": 3.2,
+  "ionizationEnergy": 13,
+  "radius": 78.6,
+  "rankings": {
+    "atomicNumber": 27
+  },
+  "neighbors": [
+    "Fe",
+    "Ni"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 90,
+  "symbol": "Th",
+  "name": "Thorium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1090",
+  "wikipediaTitle": "Thorium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Thorium",
+  "category": "actinide",
+  "mass": 180.9,
+  "electronegativity": 0.5,
+  "ionizationEnergy": 7.33,
+  "radius": 66,
+  "rankings": {
+    "atomicNumber": 90
+  },
+  "neighbors": [
+    "Ac",
+    "Pa"
+  ]
+}

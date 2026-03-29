@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 73,
+  "symbol": "Ta",
+  "name": "Tantalum",
+  "period": 6,
+  "group": 5,
+  "block": "d",
+  "wikidataId": "Q1073",
+  "wikipediaTitle": "Tantalum",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tantalum",
+  "category": "transition metal",
+  "mass": 146.73,
+  "electronegativity": 1.8,
+  "ionizationEnergy": 15,
+  "radius": 35.4,
+  "rankings": {
+    "atomicNumber": 73
+  },
+  "neighbors": [
+    "Hf",
+    "W"
+  ]
+}

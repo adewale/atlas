@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 39,
+  "symbol": "Y",
+  "name": "Yttrium",
+  "period": 5,
+  "group": 3,
+  "block": "d",
+  "wikidataId": "Q1039",
+  "wikipediaTitle": "Yttrium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Yttrium",
+  "category": "transition metal",
+  "mass": 78.39,
+  "electronegativity": 1.4,
+  "ionizationEnergy": 17,
+  "radius": 100.2,
+  "rankings": {
+    "atomicNumber": 39
+  },
+  "neighbors": [
+    "Sr",
+    "Zr"
+  ]
+}

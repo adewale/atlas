@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 25,
+  "symbol": "Mn",
+  "name": "Manganese",
+  "period": 4,
+  "group": 7,
+  "block": "d",
+  "wikidataId": "Q1025",
+  "wikipediaTitle": "Manganese",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Manganese",
+  "category": "transition metal",
+  "mass": 50.25,
+  "electronegativity": 3,
+  "ionizationEnergy": 12.33,
+  "radius": 75,
+  "rankings": {
+    "atomicNumber": 25
+  },
+  "neighbors": [
+    "Cr",
+    "Fe"
+  ]
+}

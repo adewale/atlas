@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 64,
+  "symbol": "Gd",
+  "name": "Gadolinium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1064",
+  "wikipediaTitle": "Gadolinium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Gadolinium",
+  "category": "lanthanide",
+  "mass": 128.64,
+  "electronegativity": 0.9,
+  "ionizationEnergy": 12,
+  "radius": 145.2,
+  "rankings": {
+    "atomicNumber": 64
+  },
+  "neighbors": [
+    "Eu",
+    "Tb"
+  ]
+}

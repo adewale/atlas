@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 78,
+  "symbol": "Pt",
+  "name": "Platinum",
+  "period": 6,
+  "group": 10,
+  "block": "d",
+  "wikidataId": "Q1078",
+  "wikipediaTitle": "Platinum",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Platinum",
+  "category": "transition metal",
+  "mass": 156.78,
+  "electronegativity": 2.3,
+  "ionizationEnergy": 16.67,
+  "radius": 44.4,
+  "rankings": {
+    "atomicNumber": 78
+  },
+  "neighbors": [
+    "Ir",
+    "Au"
+  ]
+}

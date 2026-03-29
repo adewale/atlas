@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 101,
+  "symbol": "Md",
+  "name": "Mendelevium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1101",
+  "wikipediaTitle": "Mendelevium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Mendelevium",
+  "category": "actinide",
+  "mass": 203.01,
+  "electronegativity": 1.6,
+  "ionizationEnergy": 11,
+  "radius": 85.8,
+  "rankings": {
+    "atomicNumber": 101
+  },
+  "neighbors": [
+    "Fm",
+    "No"
+  ]
+}

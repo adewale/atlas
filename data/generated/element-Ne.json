@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 10,
+  "symbol": "Ne",
+  "name": "Neon",
+  "period": 2,
+  "group": 18,
+  "block": "p",
+  "wikidataId": "Q1010",
+  "wikipediaTitle": "Neon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Neon",
+  "category": "noble gas",
+  "mass": 20.1,
+  "electronegativity": 1.5,
+  "ionizationEnergy": 7.33,
+  "radius": 48,
+  "rankings": {
+    "atomicNumber": 10
+  },
+  "neighbors": [
+    "F",
+    "Na"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 37,
+  "symbol": "Rb",
+  "name": "Rubidium",
+  "period": 5,
+  "group": 1,
+  "block": "s",
+  "wikidataId": "Q1037",
+  "wikipediaTitle": "Rubidium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Rubidium",
+  "category": "alkali metal",
+  "mass": 74.37,
+  "electronegativity": 1.2,
+  "ionizationEnergy": 16.33,
+  "radius": 96.6,
+  "rankings": {
+    "atomicNumber": 37
+  },
+  "neighbors": [
+    "Kr",
+    "Sr"
+  ]
+}

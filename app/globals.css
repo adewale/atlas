@@ -1,0 +1,20 @@
+:root {
+  --paper: #f7f2e8;
+  --ink: #0f0f0f;
+  --blue: #133e7c;
+  --red: #9e1c2c;
+  --mustard: #c59b1a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--paper); color: var(--ink); }
+a { color: inherit; }
+main { padding: 2rem clamp(1rem, 4vw, 4rem) 4rem; }
+.thin-rule { border-top: 1px solid var(--ink); opacity: .35; margin: .75rem 0; }
+.pretext-block { font-size: .93rem; }
+.hero-symbol { font-size: clamp(5rem, 16vw, 11rem); line-height: .85; font-weight: 700; }
+.hero-number { font-size: clamp(2rem, 8vw, 6rem); color: var(--blue); font-variant-numeric: tabular-nums; }
+.panel { border: 1px solid var(--ink); padding: 1rem; background: color-mix(in oklab, var(--paper) 90%, white); }
+.grid-table { width: 100%; min-height: 540px; border: 1px solid var(--ink); background: white; }
+.search { width: min(420px, 100%); padding: .6rem .8rem; border: 1px solid var(--ink); background: transparent; }
+.sr-only { position: absolute; left: -9999px; }
+.legend span { display:inline-block; margin-right: .75rem; }

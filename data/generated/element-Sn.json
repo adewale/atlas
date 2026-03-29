@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 50,
+  "symbol": "Sn",
+  "name": "Tin",
+  "period": 5,
+  "group": 14,
+  "block": "p",
+  "wikidataId": "Q1050",
+  "wikipediaTitle": "Tin",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tin",
+  "category": "post-transition metal",
+  "mass": 100.5,
+  "electronegativity": 2.5,
+  "ionizationEnergy": 7.33,
+  "radius": 120,
+  "rankings": {
+    "atomicNumber": 50
+  },
+  "neighbors": [
+    "In",
+    "Sb"
+  ]
+}

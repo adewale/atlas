@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 20,
+  "symbol": "Ca",
+  "name": "Calcium",
+  "period": 4,
+  "group": 2,
+  "block": "s",
+  "wikidataId": "Q1020",
+  "wikipediaTitle": "Calcium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Calcium",
+  "category": "alkaline earth metal",
+  "mass": 40.2,
+  "electronegativity": 2.5,
+  "ionizationEnergy": 10.67,
+  "radius": 66,
+  "rankings": {
+    "atomicNumber": 20
+  },
+  "neighbors": [
+    "K",
+    "Sc"
+  ]
+}

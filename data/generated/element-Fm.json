@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 100,
+  "symbol": "Fm",
+  "name": "Fermium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1100",
+  "wikipediaTitle": "Fermium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Fermium",
+  "category": "actinide",
+  "mass": 201,
+  "electronegativity": 1.5,
+  "ionizationEnergy": 10.67,
+  "radius": 84,
+  "rankings": {
+    "atomicNumber": 100
+  },
+  "neighbors": [
+    "Es",
+    "Md"
+  ]
+}

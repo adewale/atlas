@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 95,
+  "symbol": "Am",
+  "name": "Americium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1095",
+  "wikipediaTitle": "Americium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Americium",
+  "category": "actinide",
+  "mass": 190.95,
+  "electronegativity": 1,
+  "ionizationEnergy": 9,
+  "radius": 75,
+  "rankings": {
+    "atomicNumber": 95
+  },
+  "neighbors": [
+    "Pu",
+    "Cm"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 59,
+  "symbol": "Pr",
+  "name": "Praseodymium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1059",
+  "wikipediaTitle": "Praseodymium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Praseodymium",
+  "category": "lanthanide",
+  "mass": 118.59,
+  "electronegativity": 3.4,
+  "ionizationEnergy": 10.33,
+  "radius": 136.2,
+  "rankings": {
+    "atomicNumber": 59
+  },
+  "neighbors": [
+    "Ce",
+    "Nd"
+  ]
+}

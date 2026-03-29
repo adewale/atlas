@@ -1,0 +1,170 @@
+[
+  {
+    "slug": "actinide",
+    "elements": [
+      "Ac",
+      "Th",
+      "Pa",
+      "U",
+      "Np",
+      "Pu",
+      "Am",
+      "Cm",
+      "Bk",
+      "Cf",
+      "Es",
+      "Fm",
+      "Md",
+      "No"
+    ]
+  },
+  {
+    "slug": "alkali metal",
+    "elements": [
+      "Li",
+      "Na",
+      "K",
+      "Rb",
+      "Cs",
+      "Fr"
+    ]
+  },
+  {
+    "slug": "alkaline earth metal",
+    "elements": [
+      "Be",
+      "Mg",
+      "Ca",
+      "Sr",
+      "Ba",
+      "Ra"
+    ]
+  },
+  {
+    "slug": "halogen",
+    "elements": [
+      "F",
+      "Cl",
+      "Br",
+      "I",
+      "At",
+      "Ts"
+    ]
+  },
+  {
+    "slug": "lanthanide",
+    "elements": [
+      "La",
+      "Ce",
+      "Pr",
+      "Nd",
+      "Pm",
+      "Sm",
+      "Eu",
+      "Gd",
+      "Tb",
+      "Dy",
+      "Ho",
+      "Er",
+      "Tm",
+      "Yb"
+    ]
+  },
+  {
+    "slug": "metalloid",
+    "elements": [
+      "B",
+      "Si",
+      "Ge",
+      "As",
+      "Sb",
+      "Te",
+      "Po"
+    ]
+  },
+  {
+    "slug": "noble gas",
+    "elements": [
+      "He",
+      "Ne",
+      "Ar",
+      "Kr",
+      "Xe",
+      "Rn",
+      "Og"
+    ]
+  },
+  {
+    "slug": "nonmetal",
+    "elements": [
+      "H"
+    ]
+  },
+  {
+    "slug": "post-transition metal",
+    "elements": [
+      "C",
+      "N",
+      "O",
+      "Al",
+      "P",
+      "S",
+      "Ga",
+      "Se",
+      "In",
+      "Sn",
+      "Tl",
+      "Pb",
+      "Bi",
+      "Nh",
+      "Fl",
+      "Mc",
+      "Lv"
+    ]
+  },
+  {
+    "slug": "transition metal",
+    "elements": [
+      "Sc",
+      "Ti",
+      "V",
+      "Cr",
+      "Mn",
+      "Fe",
+      "Co",
+      "Ni",
+      "Cu",
+      "Zn",
+      "Y",
+      "Zr",
+      "Nb",
+      "Mo",
+      "Tc",
+      "Ru",
+      "Rh",
+      "Pd",
+      "Ag",
+      "Cd",
+      "Lu",
+      "Hf",
+      "Ta",
+      "W",
+      "Re",
+      "Os",
+      "Ir",
+      "Pt",
+      "Au",
+      "Hg",
+      "Lr",
+      "Rf",
+      "Db",
+      "Sg",
+      "Bh",
+      "Hs",
+      "Mt",
+      "Ds",
+      "Rg",
+      "Cn"
+    ]
+  }
+]

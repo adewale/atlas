@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 46,
+  "symbol": "Pd",
+  "name": "Palladium",
+  "period": 5,
+  "group": 10,
+  "block": "d",
+  "wikidataId": "Q1046",
+  "wikipediaTitle": "Palladium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Palladium",
+  "category": "transition metal",
+  "mass": 92.46,
+  "electronegativity": 2.1,
+  "ionizationEnergy": 6,
+  "radius": 112.8,
+  "rankings": {
+    "atomicNumber": 46
+  },
+  "neighbors": [
+    "Rh",
+    "Ag"
+  ]
+}

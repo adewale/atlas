@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 17,
+  "symbol": "Cl",
+  "name": "Chlorine",
+  "period": 3,
+  "group": 17,
+  "block": "p",
+  "wikidataId": "Q1017",
+  "wikipediaTitle": "Chlorine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Chlorine",
+  "category": "halogen",
+  "mass": 34.17,
+  "electronegativity": 2.2,
+  "ionizationEnergy": 9.67,
+  "radius": 60.6,
+  "rankings": {
+    "atomicNumber": 17
+  },
+  "neighbors": [
+    "S",
+    "Ar"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 42,
+  "symbol": "Mo",
+  "name": "Molybdenum",
+  "period": 5,
+  "group": 6,
+  "block": "d",
+  "wikidataId": "Q1042",
+  "wikipediaTitle": "Molybdenum",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Molybdenum",
+  "category": "transition metal",
+  "mass": 84.42,
+  "electronegativity": 1.7,
+  "ionizationEnergy": 4.67,
+  "radius": 105.6,
+  "rankings": {
+    "atomicNumber": 42
+  },
+  "neighbors": [
+    "Nb",
+    "Tc"
+  ]
+}

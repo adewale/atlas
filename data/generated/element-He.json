@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 2,
+  "symbol": "He",
+  "name": "Helium",
+  "period": 1,
+  "group": 18,
+  "block": "s",
+  "wikidataId": "Q1002",
+  "wikipediaTitle": "Helium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Helium",
+  "category": "noble gas",
+  "mass": 4.02,
+  "electronegativity": 0.7,
+  "ionizationEnergy": 4.67,
+  "radius": 33.6,
+  "rankings": {
+    "atomicNumber": 2
+  },
+  "neighbors": [
+    "H",
+    "Li"
+  ]
+}

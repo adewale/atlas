@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 53,
+  "symbol": "I",
+  "name": "Iodine",
+  "period": 5,
+  "group": 17,
+  "block": "p",
+  "wikidataId": "Q1053",
+  "wikipediaTitle": "Iodine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Iodine",
+  "category": "halogen",
+  "mass": 106.53,
+  "electronegativity": 2.8,
+  "ionizationEnergy": 8.33,
+  "radius": 125.4,
+  "rankings": {
+    "atomicNumber": 53
+  },
+  "neighbors": [
+    "Te",
+    "Xe"
+  ]
+}

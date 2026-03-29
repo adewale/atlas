@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 99,
+  "symbol": "Es",
+  "name": "Einsteinium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1099",
+  "wikipediaTitle": "Einsteinium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Einsteinium",
+  "category": "actinide",
+  "mass": 198.99,
+  "electronegativity": 1.4,
+  "ionizationEnergy": 10.33,
+  "radius": 82.2,
+  "rankings": {
+    "atomicNumber": 99
+  },
+  "neighbors": [
+    "Cf",
+    "Fm"
+  ]
+}

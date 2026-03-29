@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 15,
+  "symbol": "P",
+  "name": "Phosphorus",
+  "period": 3,
+  "group": 15,
+  "block": "p",
+  "wikidataId": "Q1015",
+  "wikipediaTitle": "Phosphorus",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Phosphorus",
+  "category": "post-transition metal",
+  "mass": 30.15,
+  "electronegativity": 2,
+  "ionizationEnergy": 9,
+  "radius": 57,
+  "rankings": {
+    "atomicNumber": 15
+  },
+  "neighbors": [
+    "Si",
+    "S"
+  ]
+}

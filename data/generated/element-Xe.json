@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 54,
+  "symbol": "Xe",
+  "name": "Xenon",
+  "period": 5,
+  "group": 18,
+  "block": "p",
+  "wikidataId": "Q1054",
+  "wikipediaTitle": "Xenon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Xenon",
+  "category": "noble gas",
+  "mass": 108.54,
+  "electronegativity": 2.9,
+  "ionizationEnergy": 8.67,
+  "radius": 127.2,
+  "rankings": {
+    "atomicNumber": 54
+  },
+  "neighbors": [
+    "I",
+    "Cs"
+  ]
+}

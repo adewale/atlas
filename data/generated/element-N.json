@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 7,
+  "symbol": "N",
+  "name": "Nitrogen",
+  "period": 2,
+  "group": 15,
+  "block": "p",
+  "wikidataId": "Q1007",
+  "wikipediaTitle": "Nitrogen",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Nitrogen",
+  "category": "post-transition metal",
+  "mass": 14.07,
+  "electronegativity": 1.2,
+  "ionizationEnergy": 6.33,
+  "radius": 42.6,
+  "rankings": {
+    "atomicNumber": 7
+  },
+  "neighbors": [
+    "C",
+    "O"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 111,
+  "symbol": "Rg",
+  "name": "Roentgenium",
+  "period": 7,
+  "group": 11,
+  "block": "d",
+  "wikidataId": "Q1111",
+  "wikipediaTitle": "Roentgenium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Roentgenium",
+  "category": "transition metal",
+  "mass": 223.11,
+  "electronegativity": 2.6,
+  "ionizationEnergy": 14.33,
+  "radius": 103.8,
+  "rankings": {
+    "atomicNumber": 111
+  },
+  "neighbors": [
+    "Ds",
+    "Cn"
+  ]
+}

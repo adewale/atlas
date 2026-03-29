@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 56,
+  "symbol": "Ba",
+  "name": "Barium",
+  "period": 6,
+  "group": 2,
+  "block": "s",
+  "wikidataId": "Q1056",
+  "wikipediaTitle": "Barium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Barium",
+  "category": "alkaline earth metal",
+  "mass": 112.56,
+  "electronegativity": 3.1,
+  "ionizationEnergy": 9.33,
+  "radius": 130.8,
+  "rankings": {
+    "atomicNumber": 56
+  },
+  "neighbors": [
+    "Cs",
+    "La"
+  ]
+}

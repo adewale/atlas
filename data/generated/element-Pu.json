@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 94,
+  "symbol": "Pu",
+  "name": "Plutonium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1094",
+  "wikipediaTitle": "Plutonium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Plutonium",
+  "category": "actinide",
+  "mass": 188.94,
+  "electronegativity": 0.9,
+  "ionizationEnergy": 8.67,
+  "radius": 73.2,
+  "rankings": {
+    "atomicNumber": 94
+  },
+  "neighbors": [
+    "Np",
+    "Am"
+  ]
+}

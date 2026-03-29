@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 81,
+  "symbol": "Tl",
+  "name": "Thallium",
+  "period": 6,
+  "group": 13,
+  "block": "p",
+  "wikidataId": "Q1081",
+  "wikipediaTitle": "Thallium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Thallium",
+  "category": "post-transition metal",
+  "mass": 162.81,
+  "electronegativity": 2.6,
+  "ionizationEnergy": 4.33,
+  "radius": 49.8,
+  "rankings": {
+    "atomicNumber": 81
+  },
+  "neighbors": [
+    "Hg",
+    "Pb"
+  ]
+}

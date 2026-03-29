@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 12,
+  "symbol": "Mg",
+  "name": "Magnesium",
+  "period": 3,
+  "group": 2,
+  "block": "s",
+  "wikidataId": "Q1012",
+  "wikipediaTitle": "Magnesium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Magnesium",
+  "category": "alkaline earth metal",
+  "mass": 24.12,
+  "electronegativity": 1.7,
+  "ionizationEnergy": 8,
+  "radius": 51.6,
+  "rankings": {
+    "atomicNumber": 12
+  },
+  "neighbors": [
+    "Na",
+    "Al"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 4,
+  "symbol": "Be",
+  "name": "Beryllium",
+  "period": 2,
+  "group": 2,
+  "block": "s",
+  "wikidataId": "Q1004",
+  "wikipediaTitle": "Beryllium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Beryllium",
+  "category": "alkaline earth metal",
+  "mass": 8.04,
+  "electronegativity": 0.9,
+  "ionizationEnergy": 5.33,
+  "radius": 37.2,
+  "rankings": {
+    "atomicNumber": 4
+  },
+  "neighbors": [
+    "Li",
+    "B"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 75,
+  "symbol": "Re",
+  "name": "Rhenium",
+  "period": 6,
+  "group": 7,
+  "block": "d",
+  "wikidataId": "Q1075",
+  "wikipediaTitle": "Rhenium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhenium",
+  "category": "transition metal",
+  "mass": 150.75,
+  "electronegativity": 2,
+  "ionizationEnergy": 15.67,
+  "radius": 39,
+  "rankings": {
+    "atomicNumber": 75
+  },
+  "neighbors": [
+    "W",
+    "Os"
+  ]
+}

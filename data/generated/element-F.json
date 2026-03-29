@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 9,
+  "symbol": "F",
+  "name": "Fluorine",
+  "period": 2,
+  "group": 17,
+  "block": "p",
+  "wikidataId": "Q1009",
+  "wikipediaTitle": "Fluorine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Fluorine",
+  "category": "halogen",
+  "mass": 18.09,
+  "electronegativity": 1.4,
+  "ionizationEnergy": 7,
+  "radius": 46.2,
+  "rankings": {
+    "atomicNumber": 9
+  },
+  "neighbors": [
+    "O",
+    "Ne"
+  ]
+}

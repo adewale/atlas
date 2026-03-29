@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 91,
+  "symbol": "Pa",
+  "name": "Protactinium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1091",
+  "wikipediaTitle": "Protactinium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Protactinium",
+  "category": "actinide",
+  "mass": 182.91,
+  "electronegativity": 0.6,
+  "ionizationEnergy": 7.67,
+  "radius": 67.8,
+  "rankings": {
+    "atomicNumber": 91
+  },
+  "neighbors": [
+    "Th",
+    "U"
+  ]
+}

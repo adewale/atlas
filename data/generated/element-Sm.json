@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 62,
+  "symbol": "Sm",
+  "name": "Samarium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1062",
+  "wikipediaTitle": "Samarium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Samarium",
+  "category": "lanthanide",
+  "mass": 124.62,
+  "electronegativity": 0.7,
+  "ionizationEnergy": 11.33,
+  "radius": 141.6,
+  "rankings": {
+    "atomicNumber": 62
+  },
+  "neighbors": [
+    "Pm",
+    "Eu"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 85,
+  "symbol": "At",
+  "name": "Astatine",
+  "period": 6,
+  "group": 17,
+  "block": "p",
+  "wikidataId": "Q1085",
+  "wikipediaTitle": "Astatine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Astatine",
+  "category": "halogen",
+  "mass": 170.85,
+  "electronegativity": 3,
+  "ionizationEnergy": 5.67,
+  "radius": 57,
+  "rankings": {
+    "atomicNumber": 85
+  },
+  "neighbors": [
+    "Po",
+    "Rn"
+  ]
+}

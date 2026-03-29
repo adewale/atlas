@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 72,
+  "symbol": "Hf",
+  "name": "Hafnium",
+  "period": 6,
+  "group": 4,
+  "block": "d",
+  "wikidataId": "Q1072",
+  "wikipediaTitle": "Hafnium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Hafnium",
+  "category": "transition metal",
+  "mass": 144.72,
+  "electronegativity": 1.7,
+  "ionizationEnergy": 14.67,
+  "radius": 33.6,
+  "rankings": {
+    "atomicNumber": 72
+  },
+  "neighbors": [
+    "Lu",
+    "Ta"
+  ]
+}

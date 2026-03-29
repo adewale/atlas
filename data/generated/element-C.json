@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 6,
+  "symbol": "C",
+  "name": "Carbon",
+  "period": 2,
+  "group": 14,
+  "block": "p",
+  "wikidataId": "Q1006",
+  "wikipediaTitle": "Carbon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Carbon",
+  "category": "post-transition metal",
+  "mass": 12.06,
+  "electronegativity": 1.1,
+  "ionizationEnergy": 6,
+  "radius": 40.8,
+  "rankings": {
+    "atomicNumber": 6
+  },
+  "neighbors": [
+    "B",
+    "N"
+  ]
+}

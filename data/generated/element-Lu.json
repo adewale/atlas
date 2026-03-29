@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 71,
+  "symbol": "Lu",
+  "name": "Lutetium",
+  "period": 6,
+  "group": 17,
+  "block": "d",
+  "wikidataId": "Q1071",
+  "wikipediaTitle": "Lutetium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Lutetium",
+  "category": "transition metal",
+  "mass": 142.71,
+  "electronegativity": 1.6,
+  "ionizationEnergy": 14.33,
+  "radius": 31.8,
+  "rankings": {
+    "atomicNumber": 71
+  },
+  "neighbors": [
+    "Yb",
+    "Hf"
+  ]
+}

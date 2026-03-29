@@ -1,0 +1,22 @@
+{
+  "atomicNumber": 1,
+  "symbol": "H",
+  "name": "Hydrogen",
+  "period": 1,
+  "group": 1,
+  "block": "s",
+  "wikidataId": "Q1001",
+  "wikipediaTitle": "Hydrogen",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Hydrogen",
+  "category": "nonmetal",
+  "mass": 2.01,
+  "electronegativity": 0.6,
+  "ionizationEnergy": 4.33,
+  "radius": 31.8,
+  "rankings": {
+    "atomicNumber": 1
+  },
+  "neighbors": [
+    "He"
+  ]
+}

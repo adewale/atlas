@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 115,
+  "symbol": "Mc",
+  "name": "Moscovium",
+  "period": 7,
+  "group": 15,
+  "block": "p",
+  "wikidataId": "Q1115",
+  "wikipediaTitle": "Moscovium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Moscovium",
+  "category": "post-transition metal",
+  "mass": 231.15,
+  "electronegativity": 3,
+  "ionizationEnergy": 15.67,
+  "radius": 111,
+  "rankings": {
+    "atomicNumber": 115
+  },
+  "neighbors": [
+    "Fl",
+    "Lv"
+  ]
+}

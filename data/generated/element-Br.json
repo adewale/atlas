@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 35,
+  "symbol": "Br",
+  "name": "Bromine",
+  "period": 4,
+  "group": 17,
+  "block": "p",
+  "wikidataId": "Q1035",
+  "wikipediaTitle": "Bromine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Bromine",
+  "category": "halogen",
+  "mass": 70.35,
+  "electronegativity": 1,
+  "ionizationEnergy": 15.67,
+  "radius": 93,
+  "rankings": {
+    "atomicNumber": 35
+  },
+  "neighbors": [
+    "Se",
+    "Kr"
+  ]
+}

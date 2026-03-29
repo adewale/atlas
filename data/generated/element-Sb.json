@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 51,
+  "symbol": "Sb",
+  "name": "Antimony",
+  "period": 5,
+  "group": 15,
+  "block": "p",
+  "wikidataId": "Q1051",
+  "wikipediaTitle": "Antimony",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Antimony",
+  "category": "metalloid",
+  "mass": 102.51,
+  "electronegativity": 2.6,
+  "ionizationEnergy": 7.67,
+  "radius": 121.8,
+  "rankings": {
+    "atomicNumber": 51
+  },
+  "neighbors": [
+    "Sn",
+    "Te"
+  ]
+}

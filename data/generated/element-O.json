@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 8,
+  "symbol": "O",
+  "name": "Oxygen",
+  "period": 2,
+  "group": 16,
+  "block": "p",
+  "wikidataId": "Q1008",
+  "wikipediaTitle": "Oxygen",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Oxygen",
+  "category": "post-transition metal",
+  "mass": 16.08,
+  "electronegativity": 1.3,
+  "ionizationEnergy": 6.67,
+  "radius": 44.4,
+  "rankings": {
+    "atomicNumber": 8
+  },
+  "neighbors": [
+    "N",
+    "F"
+  ]
+}

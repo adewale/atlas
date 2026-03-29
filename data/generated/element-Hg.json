@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 80,
+  "symbol": "Hg",
+  "name": "Mercury",
+  "period": 6,
+  "group": 12,
+  "block": "d",
+  "wikidataId": "Q1080",
+  "wikipediaTitle": "Mercury",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Mercury",
+  "category": "transition metal",
+  "mass": 160.8,
+  "electronegativity": 2.5,
+  "ionizationEnergy": 4,
+  "radius": 48,
+  "rankings": {
+    "atomicNumber": 80
+  },
+  "neighbors": [
+    "Au",
+    "Tl"
+  ]
+}

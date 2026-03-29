@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 30,
+  "symbol": "Zn",
+  "name": "Zinc",
+  "period": 4,
+  "group": 12,
+  "block": "d",
+  "wikidataId": "Q1030",
+  "wikipediaTitle": "Zinc",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Zinc",
+  "category": "transition metal",
+  "mass": 60.3,
+  "electronegativity": 0.5,
+  "ionizationEnergy": 14,
+  "radius": 84,
+  "rankings": {
+    "atomicNumber": 30
+  },
+  "neighbors": [
+    "Cu",
+    "Ga"
+  ]
+}

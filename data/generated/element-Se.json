@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 34,
+  "symbol": "Se",
+  "name": "Selenium",
+  "period": 4,
+  "group": 16,
+  "block": "p",
+  "wikidataId": "Q1034",
+  "wikipediaTitle": "Selenium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Selenium",
+  "category": "post-transition metal",
+  "mass": 68.34,
+  "electronegativity": 0.9,
+  "ionizationEnergy": 15.33,
+  "radius": 91.2,
+  "rankings": {
+    "atomicNumber": 34
+  },
+  "neighbors": [
+    "As",
+    "Br"
+  ]
+}

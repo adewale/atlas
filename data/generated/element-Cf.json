@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 98,
+  "symbol": "Cf",
+  "name": "Californium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1098",
+  "wikipediaTitle": "Californium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Californium",
+  "category": "actinide",
+  "mass": 196.98,
+  "electronegativity": 1.3,
+  "ionizationEnergy": 10,
+  "radius": 80.4,
+  "rankings": {
+    "atomicNumber": 98
+  },
+  "neighbors": [
+    "Bk",
+    "Es"
+  ]
+}

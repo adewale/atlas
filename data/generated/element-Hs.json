@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 108,
+  "symbol": "Hs",
+  "name": "Hassium",
+  "period": 7,
+  "group": 8,
+  "block": "d",
+  "wikidataId": "Q1108",
+  "wikipediaTitle": "Hassium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Hassium",
+  "category": "transition metal",
+  "mass": 217.08,
+  "electronegativity": 2.3,
+  "ionizationEnergy": 13.33,
+  "radius": 98.4,
+  "rankings": {
+    "atomicNumber": 108
+  },
+  "neighbors": [
+    "Bh",
+    "Mt"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 18,
+  "symbol": "Ar",
+  "name": "Argon",
+  "period": 3,
+  "group": 18,
+  "block": "p",
+  "wikidataId": "Q1018",
+  "wikipediaTitle": "Argon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Argon",
+  "category": "noble gas",
+  "mass": 36.18,
+  "electronegativity": 2.3,
+  "ionizationEnergy": 10,
+  "radius": 62.4,
+  "rankings": {
+    "atomicNumber": 18
+  },
+  "neighbors": [
+    "Cl",
+    "K"
+  ]
+}

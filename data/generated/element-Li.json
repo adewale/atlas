@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 3,
+  "symbol": "Li",
+  "name": "Lithium",
+  "period": 2,
+  "group": 1,
+  "block": "s",
+  "wikidataId": "Q1003",
+  "wikipediaTitle": "Lithium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Lithium",
+  "category": "alkali metal",
+  "mass": 6.03,
+  "electronegativity": 0.8,
+  "ionizationEnergy": 5,
+  "radius": 35.4,
+  "rankings": {
+    "atomicNumber": 3
+  },
+  "neighbors": [
+    "He",
+    "Be"
+  ]
+}

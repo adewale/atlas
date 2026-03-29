@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 40,
+  "symbol": "Zr",
+  "name": "Zirconium",
+  "period": 5,
+  "group": 4,
+  "block": "d",
+  "wikidataId": "Q1040",
+  "wikipediaTitle": "Zirconium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Zirconium",
+  "category": "transition metal",
+  "mass": 80.4,
+  "electronegativity": 1.5,
+  "ionizationEnergy": 4,
+  "radius": 102,
+  "rankings": {
+    "atomicNumber": 40
+  },
+  "neighbors": [
+    "Y",
+    "Nb"
+  ]
+}

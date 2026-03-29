@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 86,
+  "symbol": "Rn",
+  "name": "Radon",
+  "period": 6,
+  "group": 18,
+  "block": "p",
+  "wikidataId": "Q1086",
+  "wikipediaTitle": "Radon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Radon",
+  "category": "noble gas",
+  "mass": 172.86,
+  "electronegativity": 3.1,
+  "ionizationEnergy": 6,
+  "radius": 58.8,
+  "rankings": {
+    "atomicNumber": 86
+  },
+  "neighbors": [
+    "At",
+    "Fr"
+  ]
+}

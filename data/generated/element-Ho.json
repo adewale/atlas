@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 67,
+  "symbol": "Ho",
+  "name": "Holmium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1067",
+  "wikipediaTitle": "Holmium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Holmium",
+  "category": "lanthanide",
+  "mass": 134.67,
+  "electronegativity": 1.2,
+  "ionizationEnergy": 13,
+  "radius": 150.6,
+  "rankings": {
+    "atomicNumber": 67
+  },
+  "neighbors": [
+    "Dy",
+    "Er"
+  ]
+}

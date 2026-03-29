@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 104,
+  "symbol": "Rf",
+  "name": "Rutherfordium",
+  "period": 7,
+  "group": 4,
+  "block": "d",
+  "wikidataId": "Q1104",
+  "wikipediaTitle": "Rutherfordium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Rutherfordium",
+  "category": "transition metal",
+  "mass": 209.04,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 12,
+  "radius": 91.2,
+  "rankings": {
+    "atomicNumber": 104
+  },
+  "neighbors": [
+    "Lr",
+    "Db"
+  ]
+}

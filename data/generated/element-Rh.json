@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 45,
+  "symbol": "Rh",
+  "name": "Rhodium",
+  "period": 5,
+  "group": 9,
+  "block": "d",
+  "wikidataId": "Q1045",
+  "wikipediaTitle": "Rhodium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhodium",
+  "category": "transition metal",
+  "mass": 90.45,
+  "electronegativity": 2,
+  "ionizationEnergy": 5.67,
+  "radius": 111,
+  "rankings": {
+    "atomicNumber": 45
+  },
+  "neighbors": [
+    "Ru",
+    "Pd"
+  ]
+}

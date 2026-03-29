@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 65,
+  "symbol": "Tb",
+  "name": "Terbium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1065",
+  "wikipediaTitle": "Terbium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Terbium",
+  "category": "lanthanide",
+  "mass": 130.65,
+  "electronegativity": 1,
+  "ionizationEnergy": 12.33,
+  "radius": 147,
+  "rankings": {
+    "atomicNumber": 65
+  },
+  "neighbors": [
+    "Gd",
+    "Dy"
+  ]
+}

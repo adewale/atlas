@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 55,
+  "symbol": "Cs",
+  "name": "Caesium",
+  "period": 6,
+  "group": 1,
+  "block": "s",
+  "wikidataId": "Q1055",
+  "wikipediaTitle": "Caesium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Caesium",
+  "category": "alkali metal",
+  "mass": 110.55,
+  "electronegativity": 3,
+  "ionizationEnergy": 9,
+  "radius": 129,
+  "rankings": {
+    "atomicNumber": 55
+  },
+  "neighbors": [
+    "Xe",
+    "Ba"
+  ]
+}

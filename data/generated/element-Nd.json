@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 60,
+  "symbol": "Nd",
+  "name": "Neodymium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1060",
+  "wikipediaTitle": "Neodymium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Neodymium",
+  "category": "lanthanide",
+  "mass": 120.6,
+  "electronegativity": 0.5,
+  "ionizationEnergy": 10.67,
+  "radius": 138,
+  "rankings": {
+    "atomicNumber": 60
+  },
+  "neighbors": [
+    "Pr",
+    "Pm"
+  ]
+}

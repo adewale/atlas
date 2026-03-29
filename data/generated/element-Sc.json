@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 21,
+  "symbol": "Sc",
+  "name": "Scandium",
+  "period": 4,
+  "group": 3,
+  "block": "d",
+  "wikidataId": "Q1021",
+  "wikipediaTitle": "Scandium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Scandium",
+  "category": "transition metal",
+  "mass": 42.21,
+  "electronegativity": 2.6,
+  "ionizationEnergy": 11,
+  "radius": 67.8,
+  "rankings": {
+    "atomicNumber": 21
+  },
+  "neighbors": [
+    "Ca",
+    "Ti"
+  ]
+}

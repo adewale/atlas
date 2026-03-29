@@ -1,0 +1,184 @@
+[
+  {
+    "n": 1,
+    "elements": [
+      "H",
+      "Li",
+      "Na",
+      "K",
+      "Rb",
+      "Cs",
+      "Fr"
+    ]
+  },
+  {
+    "n": 2,
+    "elements": [
+      "Be",
+      "Mg",
+      "Ca",
+      "Sr",
+      "Ba",
+      "Ra"
+    ]
+  },
+  {
+    "n": 3,
+    "elements": [
+      "Sc",
+      "Y",
+      "La",
+      "Ac"
+    ]
+  },
+  {
+    "n": 4,
+    "elements": [
+      "Ti",
+      "Zr",
+      "Hf",
+      "Rf"
+    ]
+  },
+  {
+    "n": 5,
+    "elements": [
+      "V",
+      "Nb",
+      "Ta",
+      "Db"
+    ]
+  },
+  {
+    "n": 6,
+    "elements": [
+      "Cr",
+      "Mo",
+      "W",
+      "Sg"
+    ]
+  },
+  {
+    "n": 7,
+    "elements": [
+      "Mn",
+      "Tc",
+      "Re",
+      "Bh"
+    ]
+  },
+  {
+    "n": 8,
+    "elements": [
+      "Fe",
+      "Ru",
+      "Os",
+      "Hs"
+    ]
+  },
+  {
+    "n": 9,
+    "elements": [
+      "Co",
+      "Rh",
+      "Ir",
+      "Mt"
+    ]
+  },
+  {
+    "n": 10,
+    "elements": [
+      "Ni",
+      "Pd",
+      "Pt",
+      "Ds"
+    ]
+  },
+  {
+    "n": 11,
+    "elements": [
+      "Cu",
+      "Ag",
+      "Au",
+      "Rg"
+    ]
+  },
+  {
+    "n": 12,
+    "elements": [
+      "Zn",
+      "Cd",
+      "Hg",
+      "Cn"
+    ]
+  },
+  {
+    "n": 13,
+    "elements": [
+      "B",
+      "Al",
+      "Ga",
+      "In",
+      "Tl",
+      "Nh"
+    ]
+  },
+  {
+    "n": 14,
+    "elements": [
+      "C",
+      "Si",
+      "Ge",
+      "Sn",
+      "Pb",
+      "Fl"
+    ]
+  },
+  {
+    "n": 15,
+    "elements": [
+      "N",
+      "P",
+      "As",
+      "Sb",
+      "Bi",
+      "Mc"
+    ]
+  },
+  {
+    "n": 16,
+    "elements": [
+      "O",
+      "S",
+      "Se",
+      "Te",
+      "Po",
+      "Lv"
+    ]
+  },
+  {
+    "n": 17,
+    "elements": [
+      "F",
+      "Cl",
+      "Br",
+      "I",
+      "Lu",
+      "At",
+      "Lr",
+      "Ts"
+    ]
+  },
+  {
+    "n": 18,
+    "elements": [
+      "He",
+      "Ne",
+      "Ar",
+      "Kr",
+      "Xe",
+      "Rn",
+      "Og"
+    ]
+  }
+]

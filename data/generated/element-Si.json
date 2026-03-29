@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 14,
+  "symbol": "Si",
+  "name": "Silicon",
+  "period": 3,
+  "group": 14,
+  "block": "p",
+  "wikidataId": "Q1014",
+  "wikipediaTitle": "Silicon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Silicon",
+  "category": "metalloid",
+  "mass": 28.14,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 8.67,
+  "radius": 55.2,
+  "rankings": {
+    "atomicNumber": 14
+  },
+  "neighbors": [
+    "Al",
+    "P"
+  ]
+}

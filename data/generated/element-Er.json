@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 68,
+  "symbol": "Er",
+  "name": "Erbium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1068",
+  "wikipediaTitle": "Erbium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Erbium",
+  "category": "lanthanide",
+  "mass": 136.68,
+  "electronegativity": 1.3,
+  "ionizationEnergy": 13.33,
+  "radius": 152.4,
+  "rankings": {
+    "atomicNumber": 68
+  },
+  "neighbors": [
+    "Ho",
+    "Tm"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 74,
+  "symbol": "W",
+  "name": "Tungsten",
+  "period": 6,
+  "group": 6,
+  "block": "d",
+  "wikidataId": "Q1074",
+  "wikipediaTitle": "Tungsten",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tungsten",
+  "category": "transition metal",
+  "mass": 148.74,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 15.33,
+  "radius": 37.2,
+  "rankings": {
+    "atomicNumber": 74
+  },
+  "neighbors": [
+    "Ta",
+    "Re"
+  ]
+}

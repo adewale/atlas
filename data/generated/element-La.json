@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 57,
+  "symbol": "La",
+  "name": "Lanthanum",
+  "period": 6,
+  "group": 3,
+  "block": "f",
+  "wikidataId": "Q1057",
+  "wikipediaTitle": "Lanthanum",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Lanthanum",
+  "category": "lanthanide",
+  "mass": 114.57,
+  "electronegativity": 3.2,
+  "ionizationEnergy": 9.67,
+  "radius": 132.6,
+  "rankings": {
+    "atomicNumber": 57
+  },
+  "neighbors": [
+    "Ba",
+    "Ce"
+  ]
+}

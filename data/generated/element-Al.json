@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 13,
+  "symbol": "Al",
+  "name": "Aluminium",
+  "period": 3,
+  "group": 13,
+  "block": "p",
+  "wikidataId": "Q1013",
+  "wikipediaTitle": "Aluminium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Aluminium",
+  "category": "post-transition metal",
+  "mass": 26.13,
+  "electronegativity": 1.8,
+  "ionizationEnergy": 8.33,
+  "radius": 53.4,
+  "rankings": {
+    "atomicNumber": 13
+  },
+  "neighbors": [
+    "Mg",
+    "Si"
+  ]
+}

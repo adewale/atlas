@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 106,
+  "symbol": "Sg",
+  "name": "Seaborgium",
+  "period": 7,
+  "group": 6,
+  "block": "d",
+  "wikidataId": "Q1106",
+  "wikipediaTitle": "Seaborgium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Seaborgium",
+  "category": "transition metal",
+  "mass": 213.06,
+  "electronegativity": 2.1,
+  "ionizationEnergy": 12.67,
+  "radius": 94.8,
+  "rankings": {
+    "atomicNumber": 106
+  },
+  "neighbors": [
+    "Db",
+    "Bh"
+  ]
+}

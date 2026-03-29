@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 77,
+  "symbol": "Ir",
+  "name": "Iridium",
+  "period": 6,
+  "group": 9,
+  "block": "d",
+  "wikidataId": "Q1077",
+  "wikipediaTitle": "Iridium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Iridium",
+  "category": "transition metal",
+  "mass": 154.77,
+  "electronegativity": 2.2,
+  "ionizationEnergy": 16.33,
+  "radius": 42.6,
+  "rankings": {
+    "atomicNumber": 77
+  },
+  "neighbors": [
+    "Os",
+    "Pt"
+  ]
+}

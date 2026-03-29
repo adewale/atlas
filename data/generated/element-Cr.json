@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 24,
+  "symbol": "Cr",
+  "name": "Chromium",
+  "period": 4,
+  "group": 6,
+  "block": "d",
+  "wikidataId": "Q1024",
+  "wikipediaTitle": "Chromium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Chromium",
+  "category": "transition metal",
+  "mass": 48.24,
+  "electronegativity": 2.9,
+  "ionizationEnergy": 12,
+  "radius": 73.2,
+  "rankings": {
+    "atomicNumber": 24
+  },
+  "neighbors": [
+    "V",
+    "Mn"
+  ]
+}

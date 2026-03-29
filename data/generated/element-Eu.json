@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 63,
+  "symbol": "Eu",
+  "name": "Europium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1063",
+  "wikipediaTitle": "Europium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Europium",
+  "category": "lanthanide",
+  "mass": 126.63,
+  "electronegativity": 0.8,
+  "ionizationEnergy": 11.67,
+  "radius": 143.4,
+  "rankings": {
+    "atomicNumber": 63
+  },
+  "neighbors": [
+    "Sm",
+    "Gd"
+  ]
+}

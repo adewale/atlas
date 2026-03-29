@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 83,
+  "symbol": "Bi",
+  "name": "Bismuth",
+  "period": 6,
+  "group": 15,
+  "block": "p",
+  "wikidataId": "Q1083",
+  "wikipediaTitle": "Bismuth",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Bismuth",
+  "category": "post-transition metal",
+  "mass": 166.83,
+  "electronegativity": 2.8,
+  "ionizationEnergy": 5,
+  "radius": 53.4,
+  "rankings": {
+    "atomicNumber": 83
+  },
+  "neighbors": [
+    "Pb",
+    "Po"
+  ]
+}

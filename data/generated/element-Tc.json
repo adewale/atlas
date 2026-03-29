@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 43,
+  "symbol": "Tc",
+  "name": "Technetium",
+  "period": 5,
+  "group": 7,
+  "block": "d",
+  "wikidataId": "Q1043",
+  "wikipediaTitle": "Technetium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Technetium",
+  "category": "transition metal",
+  "mass": 86.43,
+  "electronegativity": 1.8,
+  "ionizationEnergy": 5,
+  "radius": 107.4,
+  "rankings": {
+    "atomicNumber": 43
+  },
+  "neighbors": [
+    "Mo",
+    "Ru"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 82,
+  "symbol": "Pb",
+  "name": "Lead",
+  "period": 6,
+  "group": 14,
+  "block": "p",
+  "wikidataId": "Q1082",
+  "wikipediaTitle": "Lead",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Lead",
+  "category": "post-transition metal",
+  "mass": 164.82,
+  "electronegativity": 2.7,
+  "ionizationEnergy": 4.67,
+  "radius": 51.6,
+  "rankings": {
+    "atomicNumber": 82
+  },
+  "neighbors": [
+    "Tl",
+    "Bi"
+  ]
+}

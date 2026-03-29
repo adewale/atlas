@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 92,
+  "symbol": "U",
+  "name": "Uranium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1092",
+  "wikipediaTitle": "Uranium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Uranium",
+  "category": "actinide",
+  "mass": 184.92,
+  "electronegativity": 0.7,
+  "ionizationEnergy": 8,
+  "radius": 69.6,
+  "rankings": {
+    "atomicNumber": 92
+  },
+  "neighbors": [
+    "Pa",
+    "Np"
+  ]
+}

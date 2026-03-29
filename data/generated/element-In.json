@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 49,
+  "symbol": "In",
+  "name": "Indium",
+  "period": 5,
+  "group": 13,
+  "block": "p",
+  "wikidataId": "Q1049",
+  "wikipediaTitle": "Indium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Indium",
+  "category": "post-transition metal",
+  "mass": 98.49,
+  "electronegativity": 2.4,
+  "ionizationEnergy": 7,
+  "radius": 118.2,
+  "rankings": {
+    "atomicNumber": 49
+  },
+  "neighbors": [
+    "Cd",
+    "Sn"
+  ]
+}

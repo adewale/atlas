@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 88,
+  "symbol": "Ra",
+  "name": "Radium",
+  "period": 7,
+  "group": 2,
+  "block": "s",
+  "wikidataId": "Q1088",
+  "wikipediaTitle": "Radium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Radium",
+  "category": "alkaline earth metal",
+  "mass": 176.88,
+  "electronegativity": 3.3,
+  "ionizationEnergy": 6.67,
+  "radius": 62.4,
+  "rankings": {
+    "atomicNumber": 88
+  },
+  "neighbors": [
+    "Fr",
+    "Ac"
+  ]
+}

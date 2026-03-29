@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 22,
+  "symbol": "Ti",
+  "name": "Titanium",
+  "period": 4,
+  "group": 4,
+  "block": "d",
+  "wikidataId": "Q1022",
+  "wikipediaTitle": "Titanium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Titanium",
+  "category": "transition metal",
+  "mass": 44.22,
+  "electronegativity": 2.7,
+  "ionizationEnergy": 11.33,
+  "radius": 69.6,
+  "rankings": {
+    "atomicNumber": 22
+  },
+  "neighbors": [
+    "Sc",
+    "V"
+  ]
+}

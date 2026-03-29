@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 69,
+  "symbol": "Tm",
+  "name": "Thulium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1069",
+  "wikipediaTitle": "Thulium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Thulium",
+  "category": "lanthanide",
+  "mass": 138.69,
+  "electronegativity": 1.4,
+  "ionizationEnergy": 13.67,
+  "radius": 154.2,
+  "rankings": {
+    "atomicNumber": 69
+  },
+  "neighbors": [
+    "Er",
+    "Yb"
+  ]
+}

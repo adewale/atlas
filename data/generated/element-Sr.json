@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 38,
+  "symbol": "Sr",
+  "name": "Strontium",
+  "period": 5,
+  "group": 2,
+  "block": "s",
+  "wikidataId": "Q1038",
+  "wikipediaTitle": "Strontium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Strontium",
+  "category": "alkaline earth metal",
+  "mass": 76.38,
+  "electronegativity": 1.3,
+  "ionizationEnergy": 16.67,
+  "radius": 98.4,
+  "rankings": {
+    "atomicNumber": 38
+  },
+  "neighbors": [
+    "Rb",
+    "Y"
+  ]
+}

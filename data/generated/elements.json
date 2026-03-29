@@ -1,0 +1,2714 @@
+[
+  {
+    "atomicNumber": 1,
+    "symbol": "H",
+    "name": "Hydrogen",
+    "period": 1,
+    "group": 1,
+    "block": "s",
+    "wikidataId": "Q1001",
+    "wikipediaTitle": "Hydrogen",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hydrogen",
+    "category": "nonmetal",
+    "mass": 2.01,
+    "electronegativity": 0.6,
+    "ionizationEnergy": 4.33,
+    "radius": 31.8,
+    "rankings": {
+      "atomicNumber": 1
+    },
+    "neighbors": [
+      "He"
+    ]
+  },
+  {
+    "atomicNumber": 2,
+    "symbol": "He",
+    "name": "Helium",
+    "period": 1,
+    "group": 18,
+    "block": "s",
+    "wikidataId": "Q1002",
+    "wikipediaTitle": "Helium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Helium",
+    "category": "noble gas",
+    "mass": 4.02,
+    "electronegativity": 0.7,
+    "ionizationEnergy": 4.67,
+    "radius": 33.6,
+    "rankings": {
+      "atomicNumber": 2
+    },
+    "neighbors": [
+      "H",
+      "Li"
+    ]
+  },
+  {
+    "atomicNumber": 3,
+    "symbol": "Li",
+    "name": "Lithium",
+    "period": 2,
+    "group": 1,
+    "block": "s",
+    "wikidataId": "Q1003",
+    "wikipediaTitle": "Lithium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lithium",
+    "category": "alkali metal",
+    "mass": 6.03,
+    "electronegativity": 0.8,
+    "ionizationEnergy": 5,
+    "radius": 35.4,
+    "rankings": {
+      "atomicNumber": 3
+    },
+    "neighbors": [
+      "He",
+      "Be"
+    ]
+  },
+  {
+    "atomicNumber": 4,
+    "symbol": "Be",
+    "name": "Beryllium",
+    "period": 2,
+    "group": 2,
+    "block": "s",
+    "wikidataId": "Q1004",
+    "wikipediaTitle": "Beryllium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Beryllium",
+    "category": "alkaline earth metal",
+    "mass": 8.04,
+    "electronegativity": 0.9,
+    "ionizationEnergy": 5.33,
+    "radius": 37.2,
+    "rankings": {
+      "atomicNumber": 4
+    },
+    "neighbors": [
+      "Li",
+      "B"
+    ]
+  },
+  {
+    "atomicNumber": 5,
+    "symbol": "B",
+    "name": "Boron",
+    "period": 2,
+    "group": 13,
+    "block": "p",
+    "wikidataId": "Q1005",
+    "wikipediaTitle": "Boron",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Boron",
+    "category": "metalloid",
+    "mass": 10.05,
+    "electronegativity": 1,
+    "ionizationEnergy": 5.67,
+    "radius": 39,
+    "rankings": {
+      "atomicNumber": 5
+    },
+    "neighbors": [
+      "Be",
+      "C"
+    ]
+  },
+  {
+    "atomicNumber": 6,
+    "symbol": "C",
+    "name": "Carbon",
+    "period": 2,
+    "group": 14,
+    "block": "p",
+    "wikidataId": "Q1006",
+    "wikipediaTitle": "Carbon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Carbon",
+    "category": "post-transition metal",
+    "mass": 12.06,
+    "electronegativity": 1.1,
+    "ionizationEnergy": 6,
+    "radius": 40.8,
+    "rankings": {
+      "atomicNumber": 6
+    },
+    "neighbors": [
+      "B",
+      "N"
+    ]
+  },
+  {
+    "atomicNumber": 7,
+    "symbol": "N",
+    "name": "Nitrogen",
+    "period": 2,
+    "group": 15,
+    "block": "p",
+    "wikidataId": "Q1007",
+    "wikipediaTitle": "Nitrogen",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nitrogen",
+    "category": "post-transition metal",
+    "mass": 14.07,
+    "electronegativity": 1.2,
+    "ionizationEnergy": 6.33,
+    "radius": 42.6,
+    "rankings": {
+      "atomicNumber": 7
+    },
+    "neighbors": [
+      "C",
+      "O"
+    ]
+  },
+  {
+    "atomicNumber": 8,
+    "symbol": "O",
+    "name": "Oxygen",
+    "period": 2,
+    "group": 16,
+    "block": "p",
+    "wikidataId": "Q1008",
+    "wikipediaTitle": "Oxygen",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Oxygen",
+    "category": "post-transition metal",
+    "mass": 16.08,
+    "electronegativity": 1.3,
+    "ionizationEnergy": 6.67,
+    "radius": 44.4,
+    "rankings": {
+      "atomicNumber": 8
+    },
+    "neighbors": [
+      "N",
+      "F"
+    ]
+  },
+  {
+    "atomicNumber": 9,
+    "symbol": "F",
+    "name": "Fluorine",
+    "period": 2,
+    "group": 17,
+    "block": "p",
+    "wikidataId": "Q1009",
+    "wikipediaTitle": "Fluorine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fluorine",
+    "category": "halogen",
+    "mass": 18.09,
+    "electronegativity": 1.4,
+    "ionizationEnergy": 7,
+    "radius": 46.2,
+    "rankings": {
+      "atomicNumber": 9
+    },
+    "neighbors": [
+      "O",
+      "Ne"
+    ]
+  },
+  {
+    "atomicNumber": 10,
+    "symbol": "Ne",
+    "name": "Neon",
+    "period": 2,
+    "group": 18,
+    "block": "p",
+    "wikidataId": "Q1010",
+    "wikipediaTitle": "Neon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Neon",
+    "category": "noble gas",
+    "mass": 20.1,
+    "electronegativity": 1.5,
+    "ionizationEnergy": 7.33,
+    "radius": 48,
+    "rankings": {
+      "atomicNumber": 10
+    },
+    "neighbors": [
+      "F",
+      "Na"
+    ]
+  },
+  {
+    "atomicNumber": 11,
+    "symbol": "Na",
+    "name": "Sodium",
+    "period": 3,
+    "group": 1,
+    "block": "s",
+    "wikidataId": "Q1011",
+    "wikipediaTitle": "Sodium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sodium",
+    "category": "alkali metal",
+    "mass": 22.11,
+    "electronegativity": 1.6,
+    "ionizationEnergy": 7.67,
+    "radius": 49.8,
+    "rankings": {
+      "atomicNumber": 11
+    },
+    "neighbors": [
+      "Ne",
+      "Mg"
+    ]
+  },
+  {
+    "atomicNumber": 12,
+    "symbol": "Mg",
+    "name": "Magnesium",
+    "period": 3,
+    "group": 2,
+    "block": "s",
+    "wikidataId": "Q1012",
+    "wikipediaTitle": "Magnesium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Magnesium",
+    "category": "alkaline earth metal",
+    "mass": 24.12,
+    "electronegativity": 1.7,
+    "ionizationEnergy": 8,
+    "radius": 51.6,
+    "rankings": {
+      "atomicNumber": 12
+    },
+    "neighbors": [
+      "Na",
+      "Al"
+    ]
+  },
+  {
+    "atomicNumber": 13,
+    "symbol": "Al",
+    "name": "Aluminium",
+    "period": 3,
+    "group": 13,
+    "block": "p",
+    "wikidataId": "Q1013",
+    "wikipediaTitle": "Aluminium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Aluminium",
+    "category": "post-transition metal",
+    "mass": 26.13,
+    "electronegativity": 1.8,
+    "ionizationEnergy": 8.33,
+    "radius": 53.4,
+    "rankings": {
+      "atomicNumber": 13
+    },
+    "neighbors": [
+      "Mg",
+      "Si"
+    ]
+  },
+  {
+    "atomicNumber": 14,
+    "symbol": "Si",
+    "name": "Silicon",
+    "period": 3,
+    "group": 14,
+    "block": "p",
+    "wikidataId": "Q1014",
+    "wikipediaTitle": "Silicon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Silicon",
+    "category": "metalloid",
+    "mass": 28.14,
+    "electronegativity": 1.9,
+    "ionizationEnergy": 8.67,
+    "radius": 55.2,
+    "rankings": {
+      "atomicNumber": 14
+    },
+    "neighbors": [
+      "Al",
+      "P"
+    ]
+  },
+  {
+    "atomicNumber": 15,
+    "symbol": "P",
+    "name": "Phosphorus",
+    "period": 3,
+    "group": 15,
+    "block": "p",
+    "wikidataId": "Q1015",
+    "wikipediaTitle": "Phosphorus",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Phosphorus",
+    "category": "post-transition metal",
+    "mass": 30.15,
+    "electronegativity": 2,
+    "ionizationEnergy": 9,
+    "radius": 57,
+    "rankings": {
+      "atomicNumber": 15
+    },
+    "neighbors": [
+      "Si",
+      "S"
+    ]
+  },
+  {
+    "atomicNumber": 16,
+    "symbol": "S",
+    "name": "Sulfur",
+    "period": 3,
+    "group": 16,
+    "block": "p",
+    "wikidataId": "Q1016",
+    "wikipediaTitle": "Sulfur",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Sulfur",
+    "category": "post-transition metal",
+    "mass": 32.16,
+    "electronegativity": 2.1,
+    "ionizationEnergy": 9.33,
+    "radius": 58.8,
+    "rankings": {
+      "atomicNumber": 16
+    },
+    "neighbors": [
+      "P",
+      "Cl"
+    ]
+  },
+  {
+    "atomicNumber": 17,
+    "symbol": "Cl",
+    "name": "Chlorine",
+    "period": 3,
+    "group": 17,
+    "block": "p",
+    "wikidataId": "Q1017",
+    "wikipediaTitle": "Chlorine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chlorine",
+    "category": "halogen",
+    "mass": 34.17,
+    "electronegativity": 2.2,
+    "ionizationEnergy": 9.67,
+    "radius": 60.6,
+    "rankings": {
+      "atomicNumber": 17
+    },
+    "neighbors": [
+      "S",
+      "Ar"
+    ]
+  },
+  {
+    "atomicNumber": 18,
+    "symbol": "Ar",
+    "name": "Argon",
+    "period": 3,
+    "group": 18,
+    "block": "p",
+    "wikidataId": "Q1018",
+    "wikipediaTitle": "Argon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Argon",
+    "category": "noble gas",
+    "mass": 36.18,
+    "electronegativity": 2.3,
+    "ionizationEnergy": 10,
+    "radius": 62.4,
+    "rankings": {
+      "atomicNumber": 18
+    },
+    "neighbors": [
+      "Cl",
+      "K"
+    ]
+  },
+  {
+    "atomicNumber": 19,
+    "symbol": "K",
+    "name": "Potassium",
+    "period": 4,
+    "group": 1,
+    "block": "s",
+    "wikidataId": "Q1019",
+    "wikipediaTitle": "Potassium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Potassium",
+    "category": "alkali metal",
+    "mass": 38.19,
+    "electronegativity": 2.4,
+    "ionizationEnergy": 10.33,
+    "radius": 64.2,
+    "rankings": {
+      "atomicNumber": 19
+    },
+    "neighbors": [
+      "Ar",
+      "Ca"
+    ]
+  },
+  {
+    "atomicNumber": 20,
+    "symbol": "Ca",
+    "name": "Calcium",
+    "period": 4,
+    "group": 2,
+    "block": "s",
+    "wikidataId": "Q1020",
+    "wikipediaTitle": "Calcium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Calcium",
+    "category": "alkaline earth metal",
+    "mass": 40.2,
+    "electronegativity": 2.5,
+    "ionizationEnergy": 10.67,
+    "radius": 66,
+    "rankings": {
+      "atomicNumber": 20
+    },
+    "neighbors": [
+      "K",
+      "Sc"
+    ]
+  },
+  {
+    "atomicNumber": 21,
+    "symbol": "Sc",
+    "name": "Scandium",
+    "period": 4,
+    "group": 3,
+    "block": "d",
+    "wikidataId": "Q1021",
+    "wikipediaTitle": "Scandium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Scandium",
+    "category": "transition metal",
+    "mass": 42.21,
+    "electronegativity": 2.6,
+    "ionizationEnergy": 11,
+    "radius": 67.8,
+    "rankings": {
+      "atomicNumber": 21
+    },
+    "neighbors": [
+      "Ca",
+      "Ti"
+    ]
+  },
+  {
+    "atomicNumber": 22,
+    "symbol": "Ti",
+    "name": "Titanium",
+    "period": 4,
+    "group": 4,
+    "block": "d",
+    "wikidataId": "Q1022",
+    "wikipediaTitle": "Titanium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Titanium",
+    "category": "transition metal",
+    "mass": 44.22,
+    "electronegativity": 2.7,
+    "ionizationEnergy": 11.33,
+    "radius": 69.6,
+    "rankings": {
+      "atomicNumber": 22
+    },
+    "neighbors": [
+      "Sc",
+      "V"
+    ]
+  },
+  {
+    "atomicNumber": 23,
+    "symbol": "V",
+    "name": "Vanadium",
+    "period": 4,
+    "group": 5,
+    "block": "d",
+    "wikidataId": "Q1023",
+    "wikipediaTitle": "Vanadium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Vanadium",
+    "category": "transition metal",
+    "mass": 46.23,
+    "electronegativity": 2.8,
+    "ionizationEnergy": 11.67,
+    "radius": 71.4,
+    "rankings": {
+      "atomicNumber": 23
+    },
+    "neighbors": [
+      "Ti",
+      "Cr"
+    ]
+  },
+  {
+    "atomicNumber": 24,
+    "symbol": "Cr",
+    "name": "Chromium",
+    "period": 4,
+    "group": 6,
+    "block": "d",
+    "wikidataId": "Q1024",
+    "wikipediaTitle": "Chromium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Chromium",
+    "category": "transition metal",
+    "mass": 48.24,
+    "electronegativity": 2.9,
+    "ionizationEnergy": 12,
+    "radius": 73.2,
+    "rankings": {
+      "atomicNumber": 24
+    },
+    "neighbors": [
+      "V",
+      "Mn"
+    ]
+  },
+  {
+    "atomicNumber": 25,
+    "symbol": "Mn",
+    "name": "Manganese",
+    "period": 4,
+    "group": 7,
+    "block": "d",
+    "wikidataId": "Q1025",
+    "wikipediaTitle": "Manganese",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Manganese",
+    "category": "transition metal",
+    "mass": 50.25,
+    "electronegativity": 3,
+    "ionizationEnergy": 12.33,
+    "radius": 75,
+    "rankings": {
+      "atomicNumber": 25
+    },
+    "neighbors": [
+      "Cr",
+      "Fe"
+    ]
+  },
+  {
+    "atomicNumber": 26,
+    "symbol": "Fe",
+    "name": "Iron",
+    "period": 4,
+    "group": 8,
+    "block": "d",
+    "wikidataId": "Q1026",
+    "wikipediaTitle": "Iron",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Iron",
+    "category": "transition metal",
+    "mass": 52.26,
+    "electronegativity": 3.1,
+    "ionizationEnergy": 12.67,
+    "radius": 76.8,
+    "rankings": {
+      "atomicNumber": 26
+    },
+    "neighbors": [
+      "Mn",
+      "Co"
+    ]
+  },
+  {
+    "atomicNumber": 27,
+    "symbol": "Co",
+    "name": "Cobalt",
+    "period": 4,
+    "group": 9,
+    "block": "d",
+    "wikidataId": "Q1027",
+    "wikipediaTitle": "Cobalt",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cobalt",
+    "category": "transition metal",
+    "mass": 54.27,
+    "electronegativity": 3.2,
+    "ionizationEnergy": 13,
+    "radius": 78.6,
+    "rankings": {
+      "atomicNumber": 27
+    },
+    "neighbors": [
+      "Fe",
+      "Ni"
+    ]
+  },
+  {
+    "atomicNumber": 28,
+    "symbol": "Ni",
+    "name": "Nickel",
+    "period": 4,
+    "group": 10,
+    "block": "d",
+    "wikidataId": "Q1028",
+    "wikipediaTitle": "Nickel",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nickel",
+    "category": "transition metal",
+    "mass": 56.28,
+    "electronegativity": 3.3,
+    "ionizationEnergy": 13.33,
+    "radius": 80.4,
+    "rankings": {
+      "atomicNumber": 28
+    },
+    "neighbors": [
+      "Co",
+      "Cu"
+    ]
+  },
+  {
+    "atomicNumber": 29,
+    "symbol": "Cu",
+    "name": "Copper",
+    "period": 4,
+    "group": 11,
+    "block": "d",
+    "wikidataId": "Q1029",
+    "wikipediaTitle": "Copper",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Copper",
+    "category": "transition metal",
+    "mass": 58.29,
+    "electronegativity": 3.4,
+    "ionizationEnergy": 13.67,
+    "radius": 82.2,
+    "rankings": {
+      "atomicNumber": 29
+    },
+    "neighbors": [
+      "Ni",
+      "Zn"
+    ]
+  },
+  {
+    "atomicNumber": 30,
+    "symbol": "Zn",
+    "name": "Zinc",
+    "period": 4,
+    "group": 12,
+    "block": "d",
+    "wikidataId": "Q1030",
+    "wikipediaTitle": "Zinc",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zinc",
+    "category": "transition metal",
+    "mass": 60.3,
+    "electronegativity": 0.5,
+    "ionizationEnergy": 14,
+    "radius": 84,
+    "rankings": {
+      "atomicNumber": 30
+    },
+    "neighbors": [
+      "Cu",
+      "Ga"
+    ]
+  },
+  {
+    "atomicNumber": 31,
+    "symbol": "Ga",
+    "name": "Gallium",
+    "period": 4,
+    "group": 13,
+    "block": "p",
+    "wikidataId": "Q1031",
+    "wikipediaTitle": "Gallium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gallium",
+    "category": "post-transition metal",
+    "mass": 62.31,
+    "electronegativity": 0.6,
+    "ionizationEnergy": 14.33,
+    "radius": 85.8,
+    "rankings": {
+      "atomicNumber": 31
+    },
+    "neighbors": [
+      "Zn",
+      "Ge"
+    ]
+  },
+  {
+    "atomicNumber": 32,
+    "symbol": "Ge",
+    "name": "Germanium",
+    "period": 4,
+    "group": 14,
+    "block": "p",
+    "wikidataId": "Q1032",
+    "wikipediaTitle": "Germanium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Germanium",
+    "category": "metalloid",
+    "mass": 64.32,
+    "electronegativity": 0.7,
+    "ionizationEnergy": 14.67,
+    "radius": 87.6,
+    "rankings": {
+      "atomicNumber": 32
+    },
+    "neighbors": [
+      "Ga",
+      "As"
+    ]
+  },
+  {
+    "atomicNumber": 33,
+    "symbol": "As",
+    "name": "Arsenic",
+    "period": 4,
+    "group": 15,
+    "block": "p",
+    "wikidataId": "Q1033",
+    "wikipediaTitle": "Arsenic",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Arsenic",
+    "category": "metalloid",
+    "mass": 66.33,
+    "electronegativity": 0.8,
+    "ionizationEnergy": 15,
+    "radius": 89.4,
+    "rankings": {
+      "atomicNumber": 33
+    },
+    "neighbors": [
+      "Ge",
+      "Se"
+    ]
+  },
+  {
+    "atomicNumber": 34,
+    "symbol": "Se",
+    "name": "Selenium",
+    "period": 4,
+    "group": 16,
+    "block": "p",
+    "wikidataId": "Q1034",
+    "wikipediaTitle": "Selenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Selenium",
+    "category": "post-transition metal",
+    "mass": 68.34,
+    "electronegativity": 0.9,
+    "ionizationEnergy": 15.33,
+    "radius": 91.2,
+    "rankings": {
+      "atomicNumber": 34
+    },
+    "neighbors": [
+      "As",
+      "Br"
+    ]
+  },
+  {
+    "atomicNumber": 35,
+    "symbol": "Br",
+    "name": "Bromine",
+    "period": 4,
+    "group": 17,
+    "block": "p",
+    "wikidataId": "Q1035",
+    "wikipediaTitle": "Bromine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bromine",
+    "category": "halogen",
+    "mass": 70.35,
+    "electronegativity": 1,
+    "ionizationEnergy": 15.67,
+    "radius": 93,
+    "rankings": {
+      "atomicNumber": 35
+    },
+    "neighbors": [
+      "Se",
+      "Kr"
+    ]
+  },
+  {
+    "atomicNumber": 36,
+    "symbol": "Kr",
+    "name": "Krypton",
+    "period": 4,
+    "group": 18,
+    "block": "p",
+    "wikidataId": "Q1036",
+    "wikipediaTitle": "Krypton",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Krypton",
+    "category": "noble gas",
+    "mass": 72.36,
+    "electronegativity": 1.1,
+    "ionizationEnergy": 16,
+    "radius": 94.8,
+    "rankings": {
+      "atomicNumber": 36
+    },
+    "neighbors": [
+      "Br",
+      "Rb"
+    ]
+  },
+  {
+    "atomicNumber": 37,
+    "symbol": "Rb",
+    "name": "Rubidium",
+    "period": 5,
+    "group": 1,
+    "block": "s",
+    "wikidataId": "Q1037",
+    "wikipediaTitle": "Rubidium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rubidium",
+    "category": "alkali metal",
+    "mass": 74.37,
+    "electronegativity": 1.2,
+    "ionizationEnergy": 16.33,
+    "radius": 96.6,
+    "rankings": {
+      "atomicNumber": 37
+    },
+    "neighbors": [
+      "Kr",
+      "Sr"
+    ]
+  },
+  {
+    "atomicNumber": 38,
+    "symbol": "Sr",
+    "name": "Strontium",
+    "period": 5,
+    "group": 2,
+    "block": "s",
+    "wikidataId": "Q1038",
+    "wikipediaTitle": "Strontium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Strontium",
+    "category": "alkaline earth metal",
+    "mass": 76.38,
+    "electronegativity": 1.3,
+    "ionizationEnergy": 16.67,
+    "radius": 98.4,
+    "rankings": {
+      "atomicNumber": 38
+    },
+    "neighbors": [
+      "Rb",
+      "Y"
+    ]
+  },
+  {
+    "atomicNumber": 39,
+    "symbol": "Y",
+    "name": "Yttrium",
+    "period": 5,
+    "group": 3,
+    "block": "d",
+    "wikidataId": "Q1039",
+    "wikipediaTitle": "Yttrium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Yttrium",
+    "category": "transition metal",
+    "mass": 78.39,
+    "electronegativity": 1.4,
+    "ionizationEnergy": 17,
+    "radius": 100.2,
+    "rankings": {
+      "atomicNumber": 39
+    },
+    "neighbors": [
+      "Sr",
+      "Zr"
+    ]
+  },
+  {
+    "atomicNumber": 40,
+    "symbol": "Zr",
+    "name": "Zirconium",
+    "period": 5,
+    "group": 4,
+    "block": "d",
+    "wikidataId": "Q1040",
+    "wikipediaTitle": "Zirconium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Zirconium",
+    "category": "transition metal",
+    "mass": 80.4,
+    "electronegativity": 1.5,
+    "ionizationEnergy": 4,
+    "radius": 102,
+    "rankings": {
+      "atomicNumber": 40
+    },
+    "neighbors": [
+      "Y",
+      "Nb"
+    ]
+  },
+  {
+    "atomicNumber": 41,
+    "symbol": "Nb",
+    "name": "Niobium",
+    "period": 5,
+    "group": 5,
+    "block": "d",
+    "wikidataId": "Q1041",
+    "wikipediaTitle": "Niobium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Niobium",
+    "category": "transition metal",
+    "mass": 82.41,
+    "electronegativity": 1.6,
+    "ionizationEnergy": 4.33,
+    "radius": 103.8,
+    "rankings": {
+      "atomicNumber": 41
+    },
+    "neighbors": [
+      "Zr",
+      "Mo"
+    ]
+  },
+  {
+    "atomicNumber": 42,
+    "symbol": "Mo",
+    "name": "Molybdenum",
+    "period": 5,
+    "group": 6,
+    "block": "d",
+    "wikidataId": "Q1042",
+    "wikipediaTitle": "Molybdenum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Molybdenum",
+    "category": "transition metal",
+    "mass": 84.42,
+    "electronegativity": 1.7,
+    "ionizationEnergy": 4.67,
+    "radius": 105.6,
+    "rankings": {
+      "atomicNumber": 42
+    },
+    "neighbors": [
+      "Nb",
+      "Tc"
+    ]
+  },
+  {
+    "atomicNumber": 43,
+    "symbol": "Tc",
+    "name": "Technetium",
+    "period": 5,
+    "group": 7,
+    "block": "d",
+    "wikidataId": "Q1043",
+    "wikipediaTitle": "Technetium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Technetium",
+    "category": "transition metal",
+    "mass": 86.43,
+    "electronegativity": 1.8,
+    "ionizationEnergy": 5,
+    "radius": 107.4,
+    "rankings": {
+      "atomicNumber": 43
+    },
+    "neighbors": [
+      "Mo",
+      "Ru"
+    ]
+  },
+  {
+    "atomicNumber": 44,
+    "symbol": "Ru",
+    "name": "Ruthenium",
+    "period": 5,
+    "group": 8,
+    "block": "d",
+    "wikidataId": "Q1044",
+    "wikipediaTitle": "Ruthenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ruthenium",
+    "category": "transition metal",
+    "mass": 88.44,
+    "electronegativity": 1.9,
+    "ionizationEnergy": 5.33,
+    "radius": 109.2,
+    "rankings": {
+      "atomicNumber": 44
+    },
+    "neighbors": [
+      "Tc",
+      "Rh"
+    ]
+  },
+  {
+    "atomicNumber": 45,
+    "symbol": "Rh",
+    "name": "Rhodium",
+    "period": 5,
+    "group": 9,
+    "block": "d",
+    "wikidataId": "Q1045",
+    "wikipediaTitle": "Rhodium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhodium",
+    "category": "transition metal",
+    "mass": 90.45,
+    "electronegativity": 2,
+    "ionizationEnergy": 5.67,
+    "radius": 111,
+    "rankings": {
+      "atomicNumber": 45
+    },
+    "neighbors": [
+      "Ru",
+      "Pd"
+    ]
+  },
+  {
+    "atomicNumber": 46,
+    "symbol": "Pd",
+    "name": "Palladium",
+    "period": 5,
+    "group": 10,
+    "block": "d",
+    "wikidataId": "Q1046",
+    "wikipediaTitle": "Palladium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Palladium",
+    "category": "transition metal",
+    "mass": 92.46,
+    "electronegativity": 2.1,
+    "ionizationEnergy": 6,
+    "radius": 112.8,
+    "rankings": {
+      "atomicNumber": 46
+    },
+    "neighbors": [
+      "Rh",
+      "Ag"
+    ]
+  },
+  {
+    "atomicNumber": 47,
+    "symbol": "Ag",
+    "name": "Silver",
+    "period": 5,
+    "group": 11,
+    "block": "d",
+    "wikidataId": "Q1047",
+    "wikipediaTitle": "Silver",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Silver",
+    "category": "transition metal",
+    "mass": 94.47,
+    "electronegativity": 2.2,
+    "ionizationEnergy": 6.33,
+    "radius": 114.6,
+    "rankings": {
+      "atomicNumber": 47
+    },
+    "neighbors": [
+      "Pd",
+      "Cd"
+    ]
+  },
+  {
+    "atomicNumber": 48,
+    "symbol": "Cd",
+    "name": "Cadmium",
+    "period": 5,
+    "group": 12,
+    "block": "d",
+    "wikidataId": "Q1048",
+    "wikipediaTitle": "Cadmium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cadmium",
+    "category": "transition metal",
+    "mass": 96.48,
+    "electronegativity": 2.3,
+    "ionizationEnergy": 6.67,
+    "radius": 116.4,
+    "rankings": {
+      "atomicNumber": 48
+    },
+    "neighbors": [
+      "Ag",
+      "In"
+    ]
+  },
+  {
+    "atomicNumber": 49,
+    "symbol": "In",
+    "name": "Indium",
+    "period": 5,
+    "group": 13,
+    "block": "p",
+    "wikidataId": "Q1049",
+    "wikipediaTitle": "Indium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Indium",
+    "category": "post-transition metal",
+    "mass": 98.49,
+    "electronegativity": 2.4,
+    "ionizationEnergy": 7,
+    "radius": 118.2,
+    "rankings": {
+      "atomicNumber": 49
+    },
+    "neighbors": [
+      "Cd",
+      "Sn"
+    ]
+  },
+  {
+    "atomicNumber": 50,
+    "symbol": "Sn",
+    "name": "Tin",
+    "period": 5,
+    "group": 14,
+    "block": "p",
+    "wikidataId": "Q1050",
+    "wikipediaTitle": "Tin",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tin",
+    "category": "post-transition metal",
+    "mass": 100.5,
+    "electronegativity": 2.5,
+    "ionizationEnergy": 7.33,
+    "radius": 120,
+    "rankings": {
+      "atomicNumber": 50
+    },
+    "neighbors": [
+      "In",
+      "Sb"
+    ]
+  },
+  {
+    "atomicNumber": 51,
+    "symbol": "Sb",
+    "name": "Antimony",
+    "period": 5,
+    "group": 15,
+    "block": "p",
+    "wikidataId": "Q1051",
+    "wikipediaTitle": "Antimony",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Antimony",
+    "category": "metalloid",
+    "mass": 102.51,
+    "electronegativity": 2.6,
+    "ionizationEnergy": 7.67,
+    "radius": 121.8,
+    "rankings": {
+      "atomicNumber": 51
+    },
+    "neighbors": [
+      "Sn",
+      "Te"
+    ]
+  },
+  {
+    "atomicNumber": 52,
+    "symbol": "Te",
+    "name": "Tellurium",
+    "period": 5,
+    "group": 16,
+    "block": "p",
+    "wikidataId": "Q1052",
+    "wikipediaTitle": "Tellurium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tellurium",
+    "category": "metalloid",
+    "mass": 104.52,
+    "electronegativity": 2.7,
+    "ionizationEnergy": 8,
+    "radius": 123.6,
+    "rankings": {
+      "atomicNumber": 52
+    },
+    "neighbors": [
+      "Sb",
+      "I"
+    ]
+  },
+  {
+    "atomicNumber": 53,
+    "symbol": "I",
+    "name": "Iodine",
+    "period": 5,
+    "group": 17,
+    "block": "p",
+    "wikidataId": "Q1053",
+    "wikipediaTitle": "Iodine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Iodine",
+    "category": "halogen",
+    "mass": 106.53,
+    "electronegativity": 2.8,
+    "ionizationEnergy": 8.33,
+    "radius": 125.4,
+    "rankings": {
+      "atomicNumber": 53
+    },
+    "neighbors": [
+      "Te",
+      "Xe"
+    ]
+  },
+  {
+    "atomicNumber": 54,
+    "symbol": "Xe",
+    "name": "Xenon",
+    "period": 5,
+    "group": 18,
+    "block": "p",
+    "wikidataId": "Q1054",
+    "wikipediaTitle": "Xenon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Xenon",
+    "category": "noble gas",
+    "mass": 108.54,
+    "electronegativity": 2.9,
+    "ionizationEnergy": 8.67,
+    "radius": 127.2,
+    "rankings": {
+      "atomicNumber": 54
+    },
+    "neighbors": [
+      "I",
+      "Cs"
+    ]
+  },
+  {
+    "atomicNumber": 55,
+    "symbol": "Cs",
+    "name": "Caesium",
+    "period": 6,
+    "group": 1,
+    "block": "s",
+    "wikidataId": "Q1055",
+    "wikipediaTitle": "Caesium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Caesium",
+    "category": "alkali metal",
+    "mass": 110.55,
+    "electronegativity": 3,
+    "ionizationEnergy": 9,
+    "radius": 129,
+    "rankings": {
+      "atomicNumber": 55
+    },
+    "neighbors": [
+      "Xe",
+      "Ba"
+    ]
+  },
+  {
+    "atomicNumber": 56,
+    "symbol": "Ba",
+    "name": "Barium",
+    "period": 6,
+    "group": 2,
+    "block": "s",
+    "wikidataId": "Q1056",
+    "wikipediaTitle": "Barium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Barium",
+    "category": "alkaline earth metal",
+    "mass": 112.56,
+    "electronegativity": 3.1,
+    "ionizationEnergy": 9.33,
+    "radius": 130.8,
+    "rankings": {
+      "atomicNumber": 56
+    },
+    "neighbors": [
+      "Cs",
+      "La"
+    ]
+  },
+  {
+    "atomicNumber": 57,
+    "symbol": "La",
+    "name": "Lanthanum",
+    "period": 6,
+    "group": 3,
+    "block": "f",
+    "wikidataId": "Q1057",
+    "wikipediaTitle": "Lanthanum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lanthanum",
+    "category": "lanthanide",
+    "mass": 114.57,
+    "electronegativity": 3.2,
+    "ionizationEnergy": 9.67,
+    "radius": 132.6,
+    "rankings": {
+      "atomicNumber": 57
+    },
+    "neighbors": [
+      "Ba",
+      "Ce"
+    ]
+  },
+  {
+    "atomicNumber": 58,
+    "symbol": "Ce",
+    "name": "Cerium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1058",
+    "wikipediaTitle": "Cerium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cerium",
+    "category": "lanthanide",
+    "mass": 116.58,
+    "electronegativity": 3.3,
+    "ionizationEnergy": 10,
+    "radius": 134.4,
+    "rankings": {
+      "atomicNumber": 58
+    },
+    "neighbors": [
+      "La",
+      "Pr"
+    ]
+  },
+  {
+    "atomicNumber": 59,
+    "symbol": "Pr",
+    "name": "Praseodymium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1059",
+    "wikipediaTitle": "Praseodymium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Praseodymium",
+    "category": "lanthanide",
+    "mass": 118.59,
+    "electronegativity": 3.4,
+    "ionizationEnergy": 10.33,
+    "radius": 136.2,
+    "rankings": {
+      "atomicNumber": 59
+    },
+    "neighbors": [
+      "Ce",
+      "Nd"
+    ]
+  },
+  {
+    "atomicNumber": 60,
+    "symbol": "Nd",
+    "name": "Neodymium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1060",
+    "wikipediaTitle": "Neodymium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Neodymium",
+    "category": "lanthanide",
+    "mass": 120.6,
+    "electronegativity": 0.5,
+    "ionizationEnergy": 10.67,
+    "radius": 138,
+    "rankings": {
+      "atomicNumber": 60
+    },
+    "neighbors": [
+      "Pr",
+      "Pm"
+    ]
+  },
+  {
+    "atomicNumber": 61,
+    "symbol": "Pm",
+    "name": "Promethium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1061",
+    "wikipediaTitle": "Promethium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Promethium",
+    "category": "lanthanide",
+    "mass": 122.61,
+    "electronegativity": 0.6,
+    "ionizationEnergy": 11,
+    "radius": 139.8,
+    "rankings": {
+      "atomicNumber": 61
+    },
+    "neighbors": [
+      "Nd",
+      "Sm"
+    ]
+  },
+  {
+    "atomicNumber": 62,
+    "symbol": "Sm",
+    "name": "Samarium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1062",
+    "wikipediaTitle": "Samarium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Samarium",
+    "category": "lanthanide",
+    "mass": 124.62,
+    "electronegativity": 0.7,
+    "ionizationEnergy": 11.33,
+    "radius": 141.6,
+    "rankings": {
+      "atomicNumber": 62
+    },
+    "neighbors": [
+      "Pm",
+      "Eu"
+    ]
+  },
+  {
+    "atomicNumber": 63,
+    "symbol": "Eu",
+    "name": "Europium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1063",
+    "wikipediaTitle": "Europium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Europium",
+    "category": "lanthanide",
+    "mass": 126.63,
+    "electronegativity": 0.8,
+    "ionizationEnergy": 11.67,
+    "radius": 143.4,
+    "rankings": {
+      "atomicNumber": 63
+    },
+    "neighbors": [
+      "Sm",
+      "Gd"
+    ]
+  },
+  {
+    "atomicNumber": 64,
+    "symbol": "Gd",
+    "name": "Gadolinium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1064",
+    "wikipediaTitle": "Gadolinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gadolinium",
+    "category": "lanthanide",
+    "mass": 128.64,
+    "electronegativity": 0.9,
+    "ionizationEnergy": 12,
+    "radius": 145.2,
+    "rankings": {
+      "atomicNumber": 64
+    },
+    "neighbors": [
+      "Eu",
+      "Tb"
+    ]
+  },
+  {
+    "atomicNumber": 65,
+    "symbol": "Tb",
+    "name": "Terbium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1065",
+    "wikipediaTitle": "Terbium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Terbium",
+    "category": "lanthanide",
+    "mass": 130.65,
+    "electronegativity": 1,
+    "ionizationEnergy": 12.33,
+    "radius": 147,
+    "rankings": {
+      "atomicNumber": 65
+    },
+    "neighbors": [
+      "Gd",
+      "Dy"
+    ]
+  },
+  {
+    "atomicNumber": 66,
+    "symbol": "Dy",
+    "name": "Dysprosium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1066",
+    "wikipediaTitle": "Dysprosium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dysprosium",
+    "category": "lanthanide",
+    "mass": 132.66,
+    "electronegativity": 1.1,
+    "ionizationEnergy": 12.67,
+    "radius": 148.8,
+    "rankings": {
+      "atomicNumber": 66
+    },
+    "neighbors": [
+      "Tb",
+      "Ho"
+    ]
+  },
+  {
+    "atomicNumber": 67,
+    "symbol": "Ho",
+    "name": "Holmium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1067",
+    "wikipediaTitle": "Holmium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Holmium",
+    "category": "lanthanide",
+    "mass": 134.67,
+    "electronegativity": 1.2,
+    "ionizationEnergy": 13,
+    "radius": 150.6,
+    "rankings": {
+      "atomicNumber": 67
+    },
+    "neighbors": [
+      "Dy",
+      "Er"
+    ]
+  },
+  {
+    "atomicNumber": 68,
+    "symbol": "Er",
+    "name": "Erbium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1068",
+    "wikipediaTitle": "Erbium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Erbium",
+    "category": "lanthanide",
+    "mass": 136.68,
+    "electronegativity": 1.3,
+    "ionizationEnergy": 13.33,
+    "radius": 152.4,
+    "rankings": {
+      "atomicNumber": 68
+    },
+    "neighbors": [
+      "Ho",
+      "Tm"
+    ]
+  },
+  {
+    "atomicNumber": 69,
+    "symbol": "Tm",
+    "name": "Thulium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1069",
+    "wikipediaTitle": "Thulium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thulium",
+    "category": "lanthanide",
+    "mass": 138.69,
+    "electronegativity": 1.4,
+    "ionizationEnergy": 13.67,
+    "radius": 154.2,
+    "rankings": {
+      "atomicNumber": 69
+    },
+    "neighbors": [
+      "Er",
+      "Yb"
+    ]
+  },
+  {
+    "atomicNumber": 70,
+    "symbol": "Yb",
+    "name": "Ytterbium",
+    "period": 6,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1070",
+    "wikipediaTitle": "Ytterbium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Ytterbium",
+    "category": "lanthanide",
+    "mass": 140.7,
+    "electronegativity": 1.5,
+    "ionizationEnergy": 14,
+    "radius": 30,
+    "rankings": {
+      "atomicNumber": 70
+    },
+    "neighbors": [
+      "Tm",
+      "Lu"
+    ]
+  },
+  {
+    "atomicNumber": 71,
+    "symbol": "Lu",
+    "name": "Lutetium",
+    "period": 6,
+    "group": 17,
+    "block": "d",
+    "wikidataId": "Q1071",
+    "wikipediaTitle": "Lutetium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lutetium",
+    "category": "transition metal",
+    "mass": 142.71,
+    "electronegativity": 1.6,
+    "ionizationEnergy": 14.33,
+    "radius": 31.8,
+    "rankings": {
+      "atomicNumber": 71
+    },
+    "neighbors": [
+      "Yb",
+      "Hf"
+    ]
+  },
+  {
+    "atomicNumber": 72,
+    "symbol": "Hf",
+    "name": "Hafnium",
+    "period": 6,
+    "group": 4,
+    "block": "d",
+    "wikidataId": "Q1072",
+    "wikipediaTitle": "Hafnium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hafnium",
+    "category": "transition metal",
+    "mass": 144.72,
+    "electronegativity": 1.7,
+    "ionizationEnergy": 14.67,
+    "radius": 33.6,
+    "rankings": {
+      "atomicNumber": 72
+    },
+    "neighbors": [
+      "Lu",
+      "Ta"
+    ]
+  },
+  {
+    "atomicNumber": 73,
+    "symbol": "Ta",
+    "name": "Tantalum",
+    "period": 6,
+    "group": 5,
+    "block": "d",
+    "wikidataId": "Q1073",
+    "wikipediaTitle": "Tantalum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tantalum",
+    "category": "transition metal",
+    "mass": 146.73,
+    "electronegativity": 1.8,
+    "ionizationEnergy": 15,
+    "radius": 35.4,
+    "rankings": {
+      "atomicNumber": 73
+    },
+    "neighbors": [
+      "Hf",
+      "W"
+    ]
+  },
+  {
+    "atomicNumber": 74,
+    "symbol": "W",
+    "name": "Tungsten",
+    "period": 6,
+    "group": 6,
+    "block": "d",
+    "wikidataId": "Q1074",
+    "wikipediaTitle": "Tungsten",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tungsten",
+    "category": "transition metal",
+    "mass": 148.74,
+    "electronegativity": 1.9,
+    "ionizationEnergy": 15.33,
+    "radius": 37.2,
+    "rankings": {
+      "atomicNumber": 74
+    },
+    "neighbors": [
+      "Ta",
+      "Re"
+    ]
+  },
+  {
+    "atomicNumber": 75,
+    "symbol": "Re",
+    "name": "Rhenium",
+    "period": 6,
+    "group": 7,
+    "block": "d",
+    "wikidataId": "Q1075",
+    "wikipediaTitle": "Rhenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhenium",
+    "category": "transition metal",
+    "mass": 150.75,
+    "electronegativity": 2,
+    "ionizationEnergy": 15.67,
+    "radius": 39,
+    "rankings": {
+      "atomicNumber": 75
+    },
+    "neighbors": [
+      "W",
+      "Os"
+    ]
+  },
+  {
+    "atomicNumber": 76,
+    "symbol": "Os",
+    "name": "Osmium",
+    "period": 6,
+    "group": 8,
+    "block": "d",
+    "wikidataId": "Q1076",
+    "wikipediaTitle": "Osmium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Osmium",
+    "category": "transition metal",
+    "mass": 152.76,
+    "electronegativity": 2.1,
+    "ionizationEnergy": 16,
+    "radius": 40.8,
+    "rankings": {
+      "atomicNumber": 76
+    },
+    "neighbors": [
+      "Re",
+      "Ir"
+    ]
+  },
+  {
+    "atomicNumber": 77,
+    "symbol": "Ir",
+    "name": "Iridium",
+    "period": 6,
+    "group": 9,
+    "block": "d",
+    "wikidataId": "Q1077",
+    "wikipediaTitle": "Iridium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Iridium",
+    "category": "transition metal",
+    "mass": 154.77,
+    "electronegativity": 2.2,
+    "ionizationEnergy": 16.33,
+    "radius": 42.6,
+    "rankings": {
+      "atomicNumber": 77
+    },
+    "neighbors": [
+      "Os",
+      "Pt"
+    ]
+  },
+  {
+    "atomicNumber": 78,
+    "symbol": "Pt",
+    "name": "Platinum",
+    "period": 6,
+    "group": 10,
+    "block": "d",
+    "wikidataId": "Q1078",
+    "wikipediaTitle": "Platinum",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Platinum",
+    "category": "transition metal",
+    "mass": 156.78,
+    "electronegativity": 2.3,
+    "ionizationEnergy": 16.67,
+    "radius": 44.4,
+    "rankings": {
+      "atomicNumber": 78
+    },
+    "neighbors": [
+      "Ir",
+      "Au"
+    ]
+  },
+  {
+    "atomicNumber": 79,
+    "symbol": "Au",
+    "name": "Gold",
+    "period": 6,
+    "group": 11,
+    "block": "d",
+    "wikidataId": "Q1079",
+    "wikipediaTitle": "Gold",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gold",
+    "category": "transition metal",
+    "mass": 158.79,
+    "electronegativity": 2.4,
+    "ionizationEnergy": 17,
+    "radius": 46.2,
+    "rankings": {
+      "atomicNumber": 79
+    },
+    "neighbors": [
+      "Pt",
+      "Hg"
+    ]
+  },
+  {
+    "atomicNumber": 80,
+    "symbol": "Hg",
+    "name": "Mercury",
+    "period": 6,
+    "group": 12,
+    "block": "d",
+    "wikidataId": "Q1080",
+    "wikipediaTitle": "Mercury",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mercury",
+    "category": "transition metal",
+    "mass": 160.8,
+    "electronegativity": 2.5,
+    "ionizationEnergy": 4,
+    "radius": 48,
+    "rankings": {
+      "atomicNumber": 80
+    },
+    "neighbors": [
+      "Au",
+      "Tl"
+    ]
+  },
+  {
+    "atomicNumber": 81,
+    "symbol": "Tl",
+    "name": "Thallium",
+    "period": 6,
+    "group": 13,
+    "block": "p",
+    "wikidataId": "Q1081",
+    "wikipediaTitle": "Thallium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thallium",
+    "category": "post-transition metal",
+    "mass": 162.81,
+    "electronegativity": 2.6,
+    "ionizationEnergy": 4.33,
+    "radius": 49.8,
+    "rankings": {
+      "atomicNumber": 81
+    },
+    "neighbors": [
+      "Hg",
+      "Pb"
+    ]
+  },
+  {
+    "atomicNumber": 82,
+    "symbol": "Pb",
+    "name": "Lead",
+    "period": 6,
+    "group": 14,
+    "block": "p",
+    "wikidataId": "Q1082",
+    "wikipediaTitle": "Lead",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lead",
+    "category": "post-transition metal",
+    "mass": 164.82,
+    "electronegativity": 2.7,
+    "ionizationEnergy": 4.67,
+    "radius": 51.6,
+    "rankings": {
+      "atomicNumber": 82
+    },
+    "neighbors": [
+      "Tl",
+      "Bi"
+    ]
+  },
+  {
+    "atomicNumber": 83,
+    "symbol": "Bi",
+    "name": "Bismuth",
+    "period": 6,
+    "group": 15,
+    "block": "p",
+    "wikidataId": "Q1083",
+    "wikipediaTitle": "Bismuth",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bismuth",
+    "category": "post-transition metal",
+    "mass": 166.83,
+    "electronegativity": 2.8,
+    "ionizationEnergy": 5,
+    "radius": 53.4,
+    "rankings": {
+      "atomicNumber": 83
+    },
+    "neighbors": [
+      "Pb",
+      "Po"
+    ]
+  },
+  {
+    "atomicNumber": 84,
+    "symbol": "Po",
+    "name": "Polonium",
+    "period": 6,
+    "group": 16,
+    "block": "p",
+    "wikidataId": "Q1084",
+    "wikipediaTitle": "Polonium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Polonium",
+    "category": "metalloid",
+    "mass": 168.84,
+    "electronegativity": 2.9,
+    "ionizationEnergy": 5.33,
+    "radius": 55.2,
+    "rankings": {
+      "atomicNumber": 84
+    },
+    "neighbors": [
+      "Bi",
+      "At"
+    ]
+  },
+  {
+    "atomicNumber": 85,
+    "symbol": "At",
+    "name": "Astatine",
+    "period": 6,
+    "group": 17,
+    "block": "p",
+    "wikidataId": "Q1085",
+    "wikipediaTitle": "Astatine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Astatine",
+    "category": "halogen",
+    "mass": 170.85,
+    "electronegativity": 3,
+    "ionizationEnergy": 5.67,
+    "radius": 57,
+    "rankings": {
+      "atomicNumber": 85
+    },
+    "neighbors": [
+      "Po",
+      "Rn"
+    ]
+  },
+  {
+    "atomicNumber": 86,
+    "symbol": "Rn",
+    "name": "Radon",
+    "period": 6,
+    "group": 18,
+    "block": "p",
+    "wikidataId": "Q1086",
+    "wikipediaTitle": "Radon",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Radon",
+    "category": "noble gas",
+    "mass": 172.86,
+    "electronegativity": 3.1,
+    "ionizationEnergy": 6,
+    "radius": 58.8,
+    "rankings": {
+      "atomicNumber": 86
+    },
+    "neighbors": [
+      "At",
+      "Fr"
+    ]
+  },
+  {
+    "atomicNumber": 87,
+    "symbol": "Fr",
+    "name": "Francium",
+    "period": 7,
+    "group": 1,
+    "block": "s",
+    "wikidataId": "Q1087",
+    "wikipediaTitle": "Francium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Francium",
+    "category": "alkali metal",
+    "mass": 174.87,
+    "electronegativity": 3.2,
+    "ionizationEnergy": 6.33,
+    "radius": 60.6,
+    "rankings": {
+      "atomicNumber": 87
+    },
+    "neighbors": [
+      "Rn",
+      "Ra"
+    ]
+  },
+  {
+    "atomicNumber": 88,
+    "symbol": "Ra",
+    "name": "Radium",
+    "period": 7,
+    "group": 2,
+    "block": "s",
+    "wikidataId": "Q1088",
+    "wikipediaTitle": "Radium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Radium",
+    "category": "alkaline earth metal",
+    "mass": 176.88,
+    "electronegativity": 3.3,
+    "ionizationEnergy": 6.67,
+    "radius": 62.4,
+    "rankings": {
+      "atomicNumber": 88
+    },
+    "neighbors": [
+      "Fr",
+      "Ac"
+    ]
+  },
+  {
+    "atomicNumber": 89,
+    "symbol": "Ac",
+    "name": "Actinium",
+    "period": 7,
+    "group": 3,
+    "block": "f",
+    "wikidataId": "Q1089",
+    "wikipediaTitle": "Actinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Actinium",
+    "category": "actinide",
+    "mass": 178.89,
+    "electronegativity": 3.4,
+    "ionizationEnergy": 7,
+    "radius": 64.2,
+    "rankings": {
+      "atomicNumber": 89
+    },
+    "neighbors": [
+      "Ra",
+      "Th"
+    ]
+  },
+  {
+    "atomicNumber": 90,
+    "symbol": "Th",
+    "name": "Thorium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1090",
+    "wikipediaTitle": "Thorium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Thorium",
+    "category": "actinide",
+    "mass": 180.9,
+    "electronegativity": 0.5,
+    "ionizationEnergy": 7.33,
+    "radius": 66,
+    "rankings": {
+      "atomicNumber": 90
+    },
+    "neighbors": [
+      "Ac",
+      "Pa"
+    ]
+  },
+  {
+    "atomicNumber": 91,
+    "symbol": "Pa",
+    "name": "Protactinium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1091",
+    "wikipediaTitle": "Protactinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Protactinium",
+    "category": "actinide",
+    "mass": 182.91,
+    "electronegativity": 0.6,
+    "ionizationEnergy": 7.67,
+    "radius": 67.8,
+    "rankings": {
+      "atomicNumber": 91
+    },
+    "neighbors": [
+      "Th",
+      "U"
+    ]
+  },
+  {
+    "atomicNumber": 92,
+    "symbol": "U",
+    "name": "Uranium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1092",
+    "wikipediaTitle": "Uranium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Uranium",
+    "category": "actinide",
+    "mass": 184.92,
+    "electronegativity": 0.7,
+    "ionizationEnergy": 8,
+    "radius": 69.6,
+    "rankings": {
+      "atomicNumber": 92
+    },
+    "neighbors": [
+      "Pa",
+      "Np"
+    ]
+  },
+  {
+    "atomicNumber": 93,
+    "symbol": "Np",
+    "name": "Neptunium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1093",
+    "wikipediaTitle": "Neptunium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Neptunium",
+    "category": "actinide",
+    "mass": 186.93,
+    "electronegativity": 0.8,
+    "ionizationEnergy": 8.33,
+    "radius": 71.4,
+    "rankings": {
+      "atomicNumber": 93
+    },
+    "neighbors": [
+      "U",
+      "Pu"
+    ]
+  },
+  {
+    "atomicNumber": 94,
+    "symbol": "Pu",
+    "name": "Plutonium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1094",
+    "wikipediaTitle": "Plutonium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Plutonium",
+    "category": "actinide",
+    "mass": 188.94,
+    "electronegativity": 0.9,
+    "ionizationEnergy": 8.67,
+    "radius": 73.2,
+    "rankings": {
+      "atomicNumber": 94
+    },
+    "neighbors": [
+      "Np",
+      "Am"
+    ]
+  },
+  {
+    "atomicNumber": 95,
+    "symbol": "Am",
+    "name": "Americium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1095",
+    "wikipediaTitle": "Americium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Americium",
+    "category": "actinide",
+    "mass": 190.95,
+    "electronegativity": 1,
+    "ionizationEnergy": 9,
+    "radius": 75,
+    "rankings": {
+      "atomicNumber": 95
+    },
+    "neighbors": [
+      "Pu",
+      "Cm"
+    ]
+  },
+  {
+    "atomicNumber": 96,
+    "symbol": "Cm",
+    "name": "Curium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1096",
+    "wikipediaTitle": "Curium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Curium",
+    "category": "actinide",
+    "mass": 192.96,
+    "electronegativity": 1.1,
+    "ionizationEnergy": 9.33,
+    "radius": 76.8,
+    "rankings": {
+      "atomicNumber": 96
+    },
+    "neighbors": [
+      "Am",
+      "Bk"
+    ]
+  },
+  {
+    "atomicNumber": 97,
+    "symbol": "Bk",
+    "name": "Berkelium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1097",
+    "wikipediaTitle": "Berkelium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Berkelium",
+    "category": "actinide",
+    "mass": 194.97,
+    "electronegativity": 1.2,
+    "ionizationEnergy": 9.67,
+    "radius": 78.6,
+    "rankings": {
+      "atomicNumber": 97
+    },
+    "neighbors": [
+      "Cm",
+      "Cf"
+    ]
+  },
+  {
+    "atomicNumber": 98,
+    "symbol": "Cf",
+    "name": "Californium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1098",
+    "wikipediaTitle": "Californium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Californium",
+    "category": "actinide",
+    "mass": 196.98,
+    "electronegativity": 1.3,
+    "ionizationEnergy": 10,
+    "radius": 80.4,
+    "rankings": {
+      "atomicNumber": 98
+    },
+    "neighbors": [
+      "Bk",
+      "Es"
+    ]
+  },
+  {
+    "atomicNumber": 99,
+    "symbol": "Es",
+    "name": "Einsteinium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1099",
+    "wikipediaTitle": "Einsteinium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Einsteinium",
+    "category": "actinide",
+    "mass": 198.99,
+    "electronegativity": 1.4,
+    "ionizationEnergy": 10.33,
+    "radius": 82.2,
+    "rankings": {
+      "atomicNumber": 99
+    },
+    "neighbors": [
+      "Cf",
+      "Fm"
+    ]
+  },
+  {
+    "atomicNumber": 100,
+    "symbol": "Fm",
+    "name": "Fermium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1100",
+    "wikipediaTitle": "Fermium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Fermium",
+    "category": "actinide",
+    "mass": 201,
+    "electronegativity": 1.5,
+    "ionizationEnergy": 10.67,
+    "radius": 84,
+    "rankings": {
+      "atomicNumber": 100
+    },
+    "neighbors": [
+      "Es",
+      "Md"
+    ]
+  },
+  {
+    "atomicNumber": 101,
+    "symbol": "Md",
+    "name": "Mendelevium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1101",
+    "wikipediaTitle": "Mendelevium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Mendelevium",
+    "category": "actinide",
+    "mass": 203.01,
+    "electronegativity": 1.6,
+    "ionizationEnergy": 11,
+    "radius": 85.8,
+    "rankings": {
+      "atomicNumber": 101
+    },
+    "neighbors": [
+      "Fm",
+      "No"
+    ]
+  },
+  {
+    "atomicNumber": 102,
+    "symbol": "No",
+    "name": "Nobelium",
+    "period": 7,
+    "group": null,
+    "block": "f",
+    "wikidataId": "Q1102",
+    "wikipediaTitle": "Nobelium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nobelium",
+    "category": "actinide",
+    "mass": 205.02,
+    "electronegativity": 1.7,
+    "ionizationEnergy": 11.33,
+    "radius": 87.6,
+    "rankings": {
+      "atomicNumber": 102
+    },
+    "neighbors": [
+      "Md",
+      "Lr"
+    ]
+  },
+  {
+    "atomicNumber": 103,
+    "symbol": "Lr",
+    "name": "Lawrencium",
+    "period": 7,
+    "group": 17,
+    "block": "d",
+    "wikidataId": "Q1103",
+    "wikipediaTitle": "Lawrencium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Lawrencium",
+    "category": "transition metal",
+    "mass": 207.03,
+    "electronegativity": 1.8,
+    "ionizationEnergy": 11.67,
+    "radius": 89.4,
+    "rankings": {
+      "atomicNumber": 103
+    },
+    "neighbors": [
+      "No",
+      "Rf"
+    ]
+  },
+  {
+    "atomicNumber": 104,
+    "symbol": "Rf",
+    "name": "Rutherfordium",
+    "period": 7,
+    "group": 4,
+    "block": "d",
+    "wikidataId": "Q1104",
+    "wikipediaTitle": "Rutherfordium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rutherfordium",
+    "category": "transition metal",
+    "mass": 209.04,
+    "electronegativity": 1.9,
+    "ionizationEnergy": 12,
+    "radius": 91.2,
+    "rankings": {
+      "atomicNumber": 104
+    },
+    "neighbors": [
+      "Lr",
+      "Db"
+    ]
+  },
+  {
+    "atomicNumber": 105,
+    "symbol": "Db",
+    "name": "Dubnium",
+    "period": 7,
+    "group": 5,
+    "block": "d",
+    "wikidataId": "Q1105",
+    "wikipediaTitle": "Dubnium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Dubnium",
+    "category": "transition metal",
+    "mass": 211.05,
+    "electronegativity": 2,
+    "ionizationEnergy": 12.33,
+    "radius": 93,
+    "rankings": {
+      "atomicNumber": 105
+    },
+    "neighbors": [
+      "Rf",
+      "Sg"
+    ]
+  },
+  {
+    "atomicNumber": 106,
+    "symbol": "Sg",
+    "name": "Seaborgium",
+    "period": 7,
+    "group": 6,
+    "block": "d",
+    "wikidataId": "Q1106",
+    "wikipediaTitle": "Seaborgium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Seaborgium",
+    "category": "transition metal",
+    "mass": 213.06,
+    "electronegativity": 2.1,
+    "ionizationEnergy": 12.67,
+    "radius": 94.8,
+    "rankings": {
+      "atomicNumber": 106
+    },
+    "neighbors": [
+      "Db",
+      "Bh"
+    ]
+  },
+  {
+    "atomicNumber": 107,
+    "symbol": "Bh",
+    "name": "Bohrium",
+    "period": 7,
+    "group": 7,
+    "block": "d",
+    "wikidataId": "Q1107",
+    "wikipediaTitle": "Bohrium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bohrium",
+    "category": "transition metal",
+    "mass": 215.07,
+    "electronegativity": 2.2,
+    "ionizationEnergy": 13,
+    "radius": 96.6,
+    "rankings": {
+      "atomicNumber": 107
+    },
+    "neighbors": [
+      "Sg",
+      "Hs"
+    ]
+  },
+  {
+    "atomicNumber": 108,
+    "symbol": "Hs",
+    "name": "Hassium",
+    "period": 7,
+    "group": 8,
+    "block": "d",
+    "wikidataId": "Q1108",
+    "wikipediaTitle": "Hassium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Hassium",
+    "category": "transition metal",
+    "mass": 217.08,
+    "electronegativity": 2.3,
+    "ionizationEnergy": 13.33,
+    "radius": 98.4,
+    "rankings": {
+      "atomicNumber": 108
+    },
+    "neighbors": [
+      "Bh",
+      "Mt"
+    ]
+  },
+  {
+    "atomicNumber": 109,
+    "symbol": "Mt",
+    "name": "Meitnerium",
+    "period": 7,
+    "group": 9,
+    "block": "d",
+    "wikidataId": "Q1109",
+    "wikipediaTitle": "Meitnerium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Meitnerium",
+    "category": "transition metal",
+    "mass": 219.09,
+    "electronegativity": 2.4,
+    "ionizationEnergy": 13.67,
+    "radius": 100.2,
+    "rankings": {
+      "atomicNumber": 109
+    },
+    "neighbors": [
+      "Hs",
+      "Ds"
+    ]
+  },
+  {
+    "atomicNumber": 110,
+    "symbol": "Ds",
+    "name": "Darmstadtium",
+    "period": 7,
+    "group": 10,
+    "block": "d",
+    "wikidataId": "Q1110",
+    "wikipediaTitle": "Darmstadtium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Darmstadtium",
+    "category": "transition metal",
+    "mass": 221.1,
+    "electronegativity": 2.5,
+    "ionizationEnergy": 14,
+    "radius": 102,
+    "rankings": {
+      "atomicNumber": 110
+    },
+    "neighbors": [
+      "Mt",
+      "Rg"
+    ]
+  },
+  {
+    "atomicNumber": 111,
+    "symbol": "Rg",
+    "name": "Roentgenium",
+    "period": 7,
+    "group": 11,
+    "block": "d",
+    "wikidataId": "Q1111",
+    "wikipediaTitle": "Roentgenium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Roentgenium",
+    "category": "transition metal",
+    "mass": 223.11,
+    "electronegativity": 2.6,
+    "ionizationEnergy": 14.33,
+    "radius": 103.8,
+    "rankings": {
+      "atomicNumber": 111
+    },
+    "neighbors": [
+      "Ds",
+      "Cn"
+    ]
+  },
+  {
+    "atomicNumber": 112,
+    "symbol": "Cn",
+    "name": "Copernicium",
+    "period": 7,
+    "group": 12,
+    "block": "d",
+    "wikidataId": "Q1112",
+    "wikipediaTitle": "Copernicium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Copernicium",
+    "category": "transition metal",
+    "mass": 225.12,
+    "electronegativity": 2.7,
+    "ionizationEnergy": 14.67,
+    "radius": 105.6,
+    "rankings": {
+      "atomicNumber": 112
+    },
+    "neighbors": [
+      "Rg",
+      "Nh"
+    ]
+  },
+  {
+    "atomicNumber": 113,
+    "symbol": "Nh",
+    "name": "Nihonium",
+    "period": 7,
+    "group": 13,
+    "block": "p",
+    "wikidataId": "Q1113",
+    "wikipediaTitle": "Nihonium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Nihonium",
+    "category": "post-transition metal",
+    "mass": 227.13,
+    "electronegativity": 2.8,
+    "ionizationEnergy": 15,
+    "radius": 107.4,
+    "rankings": {
+      "atomicNumber": 113
+    },
+    "neighbors": [
+      "Cn",
+      "Fl"
+    ]
+  },
+  {
+    "atomicNumber": 114,
+    "symbol": "Fl",
+    "name": "Flerovium",
+    "period": 7,
+    "group": 14,
+    "block": "p",
+    "wikidataId": "Q1114",
+    "wikipediaTitle": "Flerovium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Flerovium",
+    "category": "post-transition metal",
+    "mass": 229.14,
+    "electronegativity": 2.9,
+    "ionizationEnergy": 15.33,
+    "radius": 109.2,
+    "rankings": {
+      "atomicNumber": 114
+    },
+    "neighbors": [
+      "Nh",
+      "Mc"
+    ]
+  },
+  {
+    "atomicNumber": 115,
+    "symbol": "Mc",
+    "name": "Moscovium",
+    "period": 7,
+    "group": 15,
+    "block": "p",
+    "wikidataId": "Q1115",
+    "wikipediaTitle": "Moscovium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Moscovium",
+    "category": "post-transition metal",
+    "mass": 231.15,
+    "electronegativity": 3,
+    "ionizationEnergy": 15.67,
+    "radius": 111,
+    "rankings": {
+      "atomicNumber": 115
+    },
+    "neighbors": [
+      "Fl",
+      "Lv"
+    ]
+  },
+  {
+    "atomicNumber": 116,
+    "symbol": "Lv",
+    "name": "Livermorium",
+    "period": 7,
+    "group": 16,
+    "block": "p",
+    "wikidataId": "Q1116",
+    "wikipediaTitle": "Livermorium",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Livermorium",
+    "category": "post-transition metal",
+    "mass": 233.16,
+    "electronegativity": 3.1,
+    "ionizationEnergy": 16,
+    "radius": 112.8,
+    "rankings": {
+      "atomicNumber": 116
+    },
+    "neighbors": [
+      "Mc",
+      "Ts"
+    ]
+  },
+  {
+    "atomicNumber": 117,
+    "symbol": "Ts",
+    "name": "Tennessine",
+    "period": 7,
+    "group": 17,
+    "block": "p",
+    "wikidataId": "Q1117",
+    "wikipediaTitle": "Tennessine",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Tennessine",
+    "category": "halogen",
+    "mass": 235.17,
+    "electronegativity": 3.2,
+    "ionizationEnergy": 16.33,
+    "radius": 114.6,
+    "rankings": {
+      "atomicNumber": 117
+    },
+    "neighbors": [
+      "Lv",
+      "Og"
+    ]
+  },
+  {
+    "atomicNumber": 118,
+    "symbol": "Og",
+    "name": "Oganesson",
+    "period": 7,
+    "group": 18,
+    "block": "p",
+    "wikidataId": "Q1118",
+    "wikipediaTitle": "Oganesson",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Oganesson",
+    "category": "noble gas",
+    "mass": 237.18,
+    "electronegativity": 3.3,
+    "ionizationEnergy": 16.67,
+    "radius": 116.4,
+    "rankings": {
+      "atomicNumber": 118
+    },
+    "neighbors": [
+      "Ts"
+    ]
+  }
+]

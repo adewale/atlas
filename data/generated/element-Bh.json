@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 107,
+  "symbol": "Bh",
+  "name": "Bohrium",
+  "period": 7,
+  "group": 7,
+  "block": "d",
+  "wikidataId": "Q1107",
+  "wikipediaTitle": "Bohrium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Bohrium",
+  "category": "transition metal",
+  "mass": 215.07,
+  "electronegativity": 2.2,
+  "ionizationEnergy": 13,
+  "radius": 96.6,
+  "rankings": {
+    "atomicNumber": 107
+  },
+  "neighbors": [
+    "Sg",
+    "Hs"
+  ]
+}

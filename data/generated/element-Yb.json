@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 70,
+  "symbol": "Yb",
+  "name": "Ytterbium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1070",
+  "wikipediaTitle": "Ytterbium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Ytterbium",
+  "category": "lanthanide",
+  "mass": 140.7,
+  "electronegativity": 1.5,
+  "ionizationEnergy": 14,
+  "radius": 30,
+  "rankings": {
+    "atomicNumber": 70
+  },
+  "neighbors": [
+    "Tm",
+    "Lu"
+  ]
+}

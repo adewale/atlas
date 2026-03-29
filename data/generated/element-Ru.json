@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 44,
+  "symbol": "Ru",
+  "name": "Ruthenium",
+  "period": 5,
+  "group": 8,
+  "block": "d",
+  "wikidataId": "Q1044",
+  "wikipediaTitle": "Ruthenium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Ruthenium",
+  "category": "transition metal",
+  "mass": 88.44,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 5.33,
+  "radius": 109.2,
+  "rankings": {
+    "atomicNumber": 44
+  },
+  "neighbors": [
+    "Tc",
+    "Rh"
+  ]
+}

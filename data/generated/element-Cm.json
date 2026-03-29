@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 96,
+  "symbol": "Cm",
+  "name": "Curium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1096",
+  "wikipediaTitle": "Curium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Curium",
+  "category": "actinide",
+  "mass": 192.96,
+  "electronegativity": 1.1,
+  "ionizationEnergy": 9.33,
+  "radius": 76.8,
+  "rankings": {
+    "atomicNumber": 96
+  },
+  "neighbors": [
+    "Am",
+    "Bk"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 109,
+  "symbol": "Mt",
+  "name": "Meitnerium",
+  "period": 7,
+  "group": 9,
+  "block": "d",
+  "wikidataId": "Q1109",
+  "wikipediaTitle": "Meitnerium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Meitnerium",
+  "category": "transition metal",
+  "mass": 219.09,
+  "electronegativity": 2.4,
+  "ionizationEnergy": 13.67,
+  "radius": 100.2,
+  "rankings": {
+    "atomicNumber": 109
+  },
+  "neighbors": [
+    "Hs",
+    "Ds"
+  ]
+}

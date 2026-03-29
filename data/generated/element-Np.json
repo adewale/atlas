@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 93,
+  "symbol": "Np",
+  "name": "Neptunium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "wikidataId": "Q1093",
+  "wikipediaTitle": "Neptunium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Neptunium",
+  "category": "actinide",
+  "mass": 186.93,
+  "electronegativity": 0.8,
+  "ionizationEnergy": 8.33,
+  "radius": 71.4,
+  "rankings": {
+    "atomicNumber": 93
+  },
+  "neighbors": [
+    "U",
+    "Pu"
+  ]
+}

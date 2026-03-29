@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 33,
+  "symbol": "As",
+  "name": "Arsenic",
+  "period": 4,
+  "group": 15,
+  "block": "p",
+  "wikidataId": "Q1033",
+  "wikipediaTitle": "Arsenic",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Arsenic",
+  "category": "metalloid",
+  "mass": 66.33,
+  "electronegativity": 0.8,
+  "ionizationEnergy": 15,
+  "radius": 89.4,
+  "rankings": {
+    "atomicNumber": 33
+  },
+  "neighbors": [
+    "Ge",
+    "Se"
+  ]
+}

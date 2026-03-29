@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 79,
+  "symbol": "Au",
+  "name": "Gold",
+  "period": 6,
+  "group": 11,
+  "block": "d",
+  "wikidataId": "Q1079",
+  "wikipediaTitle": "Gold",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Gold",
+  "category": "transition metal",
+  "mass": 158.79,
+  "electronegativity": 2.4,
+  "ionizationEnergy": 17,
+  "radius": 46.2,
+  "rankings": {
+    "atomicNumber": 79
+  },
+  "neighbors": [
+    "Pt",
+    "Hg"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 32,
+  "symbol": "Ge",
+  "name": "Germanium",
+  "period": 4,
+  "group": 14,
+  "block": "p",
+  "wikidataId": "Q1032",
+  "wikipediaTitle": "Germanium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Germanium",
+  "category": "metalloid",
+  "mass": 64.32,
+  "electronegativity": 0.7,
+  "ionizationEnergy": 14.67,
+  "radius": 87.6,
+  "rankings": {
+    "atomicNumber": 32
+  },
+  "neighbors": [
+    "Ga",
+    "As"
+  ]
+}

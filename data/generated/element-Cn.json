@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 112,
+  "symbol": "Cn",
+  "name": "Copernicium",
+  "period": 7,
+  "group": 12,
+  "block": "d",
+  "wikidataId": "Q1112",
+  "wikipediaTitle": "Copernicium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Copernicium",
+  "category": "transition metal",
+  "mass": 225.12,
+  "electronegativity": 2.7,
+  "ionizationEnergy": 14.67,
+  "radius": 105.6,
+  "rankings": {
+    "atomicNumber": 112
+  },
+  "neighbors": [
+    "Rg",
+    "Nh"
+  ]
+}

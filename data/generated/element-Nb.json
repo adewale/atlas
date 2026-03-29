@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 41,
+  "symbol": "Nb",
+  "name": "Niobium",
+  "period": 5,
+  "group": 5,
+  "block": "d",
+  "wikidataId": "Q1041",
+  "wikipediaTitle": "Niobium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Niobium",
+  "category": "transition metal",
+  "mass": 82.41,
+  "electronegativity": 1.6,
+  "ionizationEnergy": 4.33,
+  "radius": 103.8,
+  "rankings": {
+    "atomicNumber": 41
+  },
+  "neighbors": [
+    "Zr",
+    "Mo"
+  ]
+}

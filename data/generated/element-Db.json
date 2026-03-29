@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 105,
+  "symbol": "Db",
+  "name": "Dubnium",
+  "period": 7,
+  "group": 5,
+  "block": "d",
+  "wikidataId": "Q1105",
+  "wikipediaTitle": "Dubnium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Dubnium",
+  "category": "transition metal",
+  "mass": 211.05,
+  "electronegativity": 2,
+  "ionizationEnergy": 12.33,
+  "radius": 93,
+  "rankings": {
+    "atomicNumber": 105
+  },
+  "neighbors": [
+    "Rf",
+    "Sg"
+  ]
+}

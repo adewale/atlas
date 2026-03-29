@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 110,
+  "symbol": "Ds",
+  "name": "Darmstadtium",
+  "period": 7,
+  "group": 10,
+  "block": "d",
+  "wikidataId": "Q1110",
+  "wikipediaTitle": "Darmstadtium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Darmstadtium",
+  "category": "transition metal",
+  "mass": 221.1,
+  "electronegativity": 2.5,
+  "ionizationEnergy": 14,
+  "radius": 102,
+  "rankings": {
+    "atomicNumber": 110
+  },
+  "neighbors": [
+    "Mt",
+    "Rg"
+  ]
+}

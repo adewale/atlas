@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 113,
+  "symbol": "Nh",
+  "name": "Nihonium",
+  "period": 7,
+  "group": 13,
+  "block": "p",
+  "wikidataId": "Q1113",
+  "wikipediaTitle": "Nihonium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Nihonium",
+  "category": "post-transition metal",
+  "mass": 227.13,
+  "electronegativity": 2.8,
+  "ionizationEnergy": 15,
+  "radius": 107.4,
+  "rankings": {
+    "atomicNumber": 113
+  },
+  "neighbors": [
+    "Cn",
+    "Fl"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "atomicNumber": 87,
+  "symbol": "Fr",
+  "name": "Francium",
+  "period": 7,
+  "group": 1,
+  "block": "s",
+  "wikidataId": "Q1087",
+  "wikipediaTitle": "Francium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Francium",
+  "category": "alkali metal",
+  "mass": 174.87,
+  "electronegativity": 3.2,
+  "ionizationEnergy": 6.33,
+  "radius": 60.6,
+  "rankings": {
+    "atomicNumber": 87
+  },
+  "neighbors": [
+    "Rn",
+    "Ra"
+  ]
+}
