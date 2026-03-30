@@ -201,7 +201,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const properties = [
     { label: 'Atomic Mass', key: 'mass', searchTerm: 'mass', unit: 'Da' },
     { label: 'Electronegativity', key: 'electronegativity', searchTerm: 'electronegativity', unit: '' },
-    { label: 'Ionization Energy', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
+    { label: 'Ionisation Energy', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
     { label: 'Atomic Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
   ] as const;
 
@@ -416,7 +416,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   label={prop.label}
                   rank={rank}
                   color={color}
-                  width={FULL_WIDTH - 60}
+                  width={svgWidth - 60}
                   animate={animate}
                   delay={animate ? 200 + i * 50 : 0}
                   value={val}
@@ -626,7 +626,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         {/* Neighbors */}
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase' }}>
-            Neighbors
+            Neighbours
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
             {element.neighbors.map((sym) => (

@@ -600,7 +600,7 @@ test.describe('Page transitions: content readable after navigation', () => {
       { path: '/phase-landscape', heading: 'Phase Landscape at STP' },
       { path: '/property-scatter', heading: 'Property Scatter' },
       { path: '/anomaly-explorer', heading: 'Anomaly Explorer' },
-      { path: '/neighborhood-graph', heading: 'Neighborhood Graph' },
+      { path: '/neighborhood-graph', heading: 'Neighbourhood Graph' },
       { path: '/discovery-timeline', heading: 'Discovery Timeline' },
       { path: '/etymology-map', heading: 'Etymology Map' },
       { path: '/discoverer-network', heading: 'Discoverer Network' },

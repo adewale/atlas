@@ -25,7 +25,7 @@ export default function Home() {
           { to: '/phase-landscape', label: 'Phase Landscape', color: '#9e1c2c' },
           { to: '/property-scatter', label: 'Property Scatter', color: '#133e7c' },
           { to: '/anomaly-explorer', label: 'Anomaly Explorer', color: '#c59b1a' },
-          { to: '/neighborhood-graph', label: 'Neighborhood Graph', color: '#0f0f0f' },
+          { to: '/neighborhood-graph', label: 'Neighbourhood Graph', color: '#0f0f0f' },
           { to: '/discovery-timeline', label: 'Discovery Timeline', color: '#9e1c2c' },
           { to: '/etymology-map', label: 'Etymology Map', color: '#133e7c' },
           { to: '/discoverer-network', label: 'Discoverer Network', color: '#c59b1a' },

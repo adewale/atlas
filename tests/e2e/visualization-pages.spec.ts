@@ -160,7 +160,7 @@ test.describe('Neighborhood Graph', () => {
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/neighborhood-graph.png', fullPage: true });
 
-    await expect(page.locator('h1')).toHaveText('Neighborhood Graph');
+    await expect(page.locator('h1')).toHaveText('Neighbourhood Graph');
 
     // Should have node circles (118 elements)
     const circles = page.locator('svg circle');
@@ -501,6 +501,50 @@ test.describe('Timeline Era', () => {
       await page.waitForTimeout(1500);
       // Should be on a discoverer detail page
       await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
+    }
+  });
+});
+
+test.describe('Entity Map', () => {
+  test('renders graph, catalogue, and relationships', async ({ page }) => {
+    await page.goto('/entity-map');
+    await page.waitForTimeout(2000);
+    await page.screenshot({ path: 'tests/e2e/screenshots/entity-map.png', fullPage: true });
+
+    await expect(page.locator('h1')).toHaveText('Entity Map');
+
+    // Entity graph SVG should have 12 nodes
+    const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
+    await expect(graphSvg).toBeVisible();
+    const circles = graphSvg.locator('circle');
+    expect(await circles.count()).toBe(12);
+
+    // Node labels should be readable (font-size >= 10)
+    const nodeLabels = graphSvg.locator('text[font-weight="bold"]');
+    const labelCount = await nodeLabels.count();
+    expect(labelCount).toBeGreaterThanOrEqual(12);
+
+    // Entity catalogue section
+    await expect(page.locator('h2:has-text("Entity Catalogue")')).toBeVisible();
+
+    // Relationship section
+    await expect(page.locator('h2:has-text("Relationships")')).toBeVisible();
+  });
+
+  test('graph labels are readable — bounding boxes have positive size', async ({ page }) => {
+    await page.goto('/entity-map');
+    await page.waitForTimeout(2000);
+
+    const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
+    const nodeLabels = graphSvg.locator('text[font-weight="bold"]');
+    const count = await nodeLabels.count();
+
+    for (let i = 0; i < count; i++) {
+      const box = await nodeLabels.nth(i).boundingBox();
+      if (box) {
+        expect(box.width, `Label ${i} should have positive width`).toBeGreaterThan(5);
+        expect(box.height, `Label ${i} should have positive height`).toBeGreaterThan(5);
+      }
     }
   });
 });

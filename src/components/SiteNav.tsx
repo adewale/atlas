@@ -26,6 +26,7 @@ export default function SiteNav() {
         <Link to="/about" style={{ color: '#999', textDecoration: 'none' }}>About</Link>
         <Link to="/credits" style={{ color: '#999', textDecoration: 'none' }}>Credits</Link>
         <Link to="/design" style={{ color: '#999', textDecoration: 'none' }}>Design</Link>
+        <Link to="/entity-map" style={{ color: '#999', textDecoration: 'none' }}>Entity Map</Link>
       </div>
     </nav>
   );

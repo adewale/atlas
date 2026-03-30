@@ -23,6 +23,7 @@ const EtymologyMap = lazy(() => import('./pages/EtymologyMap'));
 const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
 const DiscovererDetail = lazy(() => import('./pages/DiscovererDetail'));
 const TimelineEra = lazy(() => import('./pages/TimelineEra'));
+const EntityMap = lazy(() => import('./pages/EntityMap'));
 
 export const router = createBrowserRouter([
   { path: '/', Component: Home },
@@ -110,6 +111,7 @@ export const router = createBrowserRouter([
     },
   },
   { path: '/design', Component: Design },
+  { path: '/entity-map', Component: EntityMap },
   {
     path: '/discovery-timeline',
     Component: DiscoveryTimeline,

@@ -34,7 +34,7 @@ npm run dev          # http://localhost:5173
 | `/phase-landscape` | Elements arranged by melting and boiling points |
 | `/property-scatter` | Scatter plot of any two numeric properties |
 | `/anomaly-explorer` | Interactive exploration of periodic table rule-breakers |
-| `/neighborhood-graph` | Force-directed graph of element relationships |
+| `/neighborhood-graph` | Force-directed graph of element neighbourhood relationships |
 | `/discovery-timeline` | When every element was discovered, from antiquity to 2010s |
 | `/etymology-map` | Elements grouped by the origin of their names |
 | `/discoverer-network` | Who discovered what, with lateral navigation between co-discoveries |
@@ -47,10 +47,11 @@ npm run dev          # http://localhost:5173
 | `/discoverer/:name` | Individual discoverer page with their elements, prev/next navigation, and related discoverers |
 | `/timeline/:era` | Timeline era page (decade or "antiquity") with elements, discoverers, and nearby era links |
 | `/design` | Design language reference (palette, typography, spacing, animation) |
+| `/entity-map` | Entity relationship graph, catalogue, and navigable links |
 
 ## Graph Navigation
 
-Every element folio connects to its neighbors in the directed graph:
+Every element folio connects to its neighbours in the directed graph:
 
 - **Positional** — prev/next by atomic number
 - **Categorical** — group, period, block, category index pages

@@ -34,7 +34,7 @@ function originColor(origin: string): string {
 // Constants
 // ---------------------------------------------------------------------------
 const INTRO_TEXT =
-  'Element names tell the story of science. Some honor places, some honor people, some invoke mythology. The etymology reveals centuries of discovery and human ambition.';
+  'Element names tell the story of science. Some honour places, some honour people, some invoke mythology. The etymology reveals centuries of discovery and human ambition.';
 
 const CARD_W = 80;
 const CARD_H = 48;

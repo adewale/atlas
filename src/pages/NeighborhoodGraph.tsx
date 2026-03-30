@@ -18,7 +18,7 @@ import SiteNav from '../components/SiteNav';
 // Constants
 // ---------------------------------------------------------------------------
 const INTRO_TEXT =
-  'Every element has neighbors \u2014 elements adjacent in the periodic table. This graph maps those relationships. Hover to see an element\u2019s neighborhood.';
+  'Every element has neighbours \u2014 elements adjacent in the periodic table. This graph maps those relationships. Hover to see an element\u2019s neighbourhood.';
 
 const SVG_WIDTH = VIEWBOX_W;
 const INTRO_HEIGHT = 80;
@@ -94,13 +94,13 @@ export default function NeighborhoodGraph() {
       <Link to="/" style={{ fontSize: '14px' }}>
         &larr; Periodic Table
       </Link>
-      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighborhood Graph</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighbourhood Graph</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${totalHeight}`}
           role="img"
-          aria-label="Force-directed-style network graph of element neighborhoods in the periodic table"
+          aria-label="Force-directed-style network graph of element neighbourhoods in the periodic table"
           style={{
             width: '100%',
             minWidth: SVG_WIDTH,
@@ -191,7 +191,7 @@ export default function NeighborhoodGraph() {
                   onMouseLeave={() => setHoveredSymbol(null)}
                   onClick={() => navigate(`/element/${el.symbol}`)}
                   role="button"
-                  aria-label={`${el.name} (${el.symbol}), ${el.neighbors.length} neighbors`}
+                  aria-label={`${el.name} (${el.symbol}), ${el.neighbors.length} neighbours`}
                 >
                   <circle
                     cx={cx}
