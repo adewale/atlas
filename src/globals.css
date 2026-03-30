@@ -208,6 +208,13 @@ svg [role="button"] {
   from { opacity: 0; }
 }
 
+/* VizNav bar morph: persists across visualisation page transitions */
+::view-transition-old(viz-nav),
+::view-transition-new(viz-nav) {
+  animation-duration: 150ms;
+  animation-timing-function: var(--ease-snap);
+}
+
 /* Element symbol morph: seamless transition between grid cell and folio hero */
 ::view-transition-old(element-symbol),
 ::view-transition-new(element-symbol) {

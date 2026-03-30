@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
+import VizNav from '../components/VizNav';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
@@ -186,9 +187,7 @@ export default function EtymologyMap() {
 
   return (
     <main style={styles.page}>
-      <Link to="/" style={styles.backLink}>
-        ← Periodic Table
-      </Link>
+      <VizNav />
 
       <h1 style={styles.title}>Etymology Map</h1>
 

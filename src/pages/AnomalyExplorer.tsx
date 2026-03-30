@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useLoaderData, Link, useNavigate } from 'react-router';
+import VizNav from '../components/VizNav';
 import { allElements } from '../lib/data';
 import {
   getCellPosition,
@@ -106,17 +107,7 @@ export default function AnomalyExplorer() {
 
   return (
     <main style={{ padding: '24px 16px', maxWidth: 1100, margin: '0 auto' }}>
-      <Link
-        to="/"
-        style={{
-          fontSize: 14,
-          color: BLACK,
-          textDecoration: 'none',
-          borderBottom: `1px solid ${BLACK}`,
-        }}
-      >
-        &larr; Periodic Table
-      </Link>
+      <VizNav />
 
       <h1
         style={{
@@ -124,7 +115,7 @@ export default function AnomalyExplorer() {
           fontSize: 13,
           fontWeight: 700,
           color: MUSTARD,
-          margin: '20px 0 16px',
+          margin: '0 0 16px',
           textTransform: 'uppercase',
           letterSpacing: '0.2em',
         }}

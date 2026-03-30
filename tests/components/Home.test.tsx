@@ -30,10 +30,9 @@ describe('Home', () => {
     expect(cells.length).toBe(118);
   });
 
-  it('shows the status bar', () => {
+  it('shows keyboard shortcut hint', () => {
     renderHome();
-    expect(screen.getByText(/118 elements/)).toBeInTheDocument();
-    expect(screen.getByText(/Arrow keys to navigate/)).toBeInTheDocument();
+    expect(screen.getByText(/keyboard shortcuts/)).toBeInTheDocument();
   });
 
   it('has navigation links to About, Credits, and Design', () => {

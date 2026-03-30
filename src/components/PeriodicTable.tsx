@@ -11,7 +11,6 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { useGridNavigation } from '../hooks/useGridNavigation';
-import KeyboardHelp from './KeyboardHelp';
 import InfoTip from './InfoTip';
 
 // ---------------------------------------------------------------------------
@@ -109,7 +108,6 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   const [highlightMode, setHighlightMode] = useState<HighlightMode>('none');
   const [property, setProperty] = useState<NumericProperty>('mass');
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -136,19 +134,15 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Global keyboard shortcuts: ? for help, / to focus search, Escape to clear/close
+  // Local keyboard shortcuts: / to focus search, Escape to clear
   useEffect(() => {
     function handleGlobalKey(e: KeyboardEvent) {
       const tag = (e.target as HTMLElement).tagName;
       const isInput = tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA';
 
-      if (e.key === 'Escape') {
-        if (showHelp) { setShowHelp(false); return; }
-        if (query) { setQuery(''); return; }
-      }
-      if (e.key === '?' && !isInput) {
-        e.preventDefault();
-        setShowHelp((v) => !v);
+      if (e.key === 'Escape' && query) {
+        setQuery('');
+        return;
       }
       if (e.key === '/' && !isInput) {
         e.preventDefault();
@@ -157,7 +151,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
     }
     window.addEventListener('keydown', handleGlobalKey);
     return () => window.removeEventListener('keydown', handleGlobalKey);
-  }, [showHelp, query]);
+  }, [query]);
 
   const handleCellClick = useCallback(
     (symbol: string) => {
@@ -262,32 +256,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             </InfoTip>
           </div>
         )}
-        <button
-          onClick={() => setShowHelp((v) => !v)}
-          aria-label="Keyboard shortcuts"
-          aria-expanded={showHelp}
-          style={{
-            width: '36px',
-            height: '36px',
-            minHeight: '44px',
-            minWidth: '44px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid #0f0f0f',
-            background: showHelp ? BLACK : PAPER,
-            color: showHelp ? PAPER : BLACK,
-            fontFamily: "'SF Mono', monospace",
-            fontSize: '16px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap)',
-          }}
-        >
-          ?
-        </button>
       </div>
-      {showHelp && <KeyboardHelp onClose={() => setShowHelp(false)} />}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg
         ref={svgRef}

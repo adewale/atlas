@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router';
+import VizNav from '../components/VizNav';
 import { allElements, getElement } from '../lib/data';
 import {
   getCellPosition,
@@ -91,10 +92,8 @@ export default function NeighborhoodGraph() {
 
   return (
     <main>
-      <Link to="/" style={{ fontSize: '14px' }}>
-        &larr; Periodic Table
-      </Link>
-      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighbourhood Graph</h1>
+      <VizNav />
+      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighbourhood Graph</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg

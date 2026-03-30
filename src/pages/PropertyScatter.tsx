@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router';
+import VizNav from '../components/VizNav';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER } from '../lib/theme';
@@ -91,10 +92,8 @@ export default function PropertyScatter() {
 
   return (
     <main style={{ padding: '24px 0', maxWidth: '760px' }}>
-      <Link to="/" style={{ fontSize: '14px' }}>
-        ← Periodic Table
-      </Link>
-      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#133e7c' }}>Property Scatter</h1>
+      <VizNav />
+      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#133e7c' }}>Property Scatter</h1>
 
       {/* Pretext intro */}
       <svg

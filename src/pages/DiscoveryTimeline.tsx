@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router';
+import VizNav from '../components/VizNav';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED } from '../lib/theme';
@@ -175,10 +176,8 @@ export default function DiscoveryTimeline() {
 
   return (
     <main>
-      <Link to="/" style={{ fontSize: '14px' }}>
-        ← Periodic Table
-      </Link>
-      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Discovery Timeline</h1>
+      <VizNav />
+      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Discovery Timeline</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg

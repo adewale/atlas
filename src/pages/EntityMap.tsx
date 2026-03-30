@@ -69,10 +69,10 @@ const ENTITIES: Entity[] = [
     { name: '1890s', href: '/timeline/1890' },
     { name: '1940s', href: '/timeline/1940' },
   ]},
-  { id: 'etymology', label: 'Etymology Origin', route: '/etymology-map', count: '7', colour: WARM_RED, description: 'Why elements are named: place, person, mythology, property, mineral, astronomical, unknown.', examples: [
-    { name: 'Place names', href: '/etymology-map' },
-    { name: 'Mythology', href: '/etymology-map' },
-    { name: 'Properties', href: '/etymology-map' },
+  { id: 'etymology', label: 'Etymology Origin', route: '/etymology-map#:origin', count: '7', colour: WARM_RED, description: 'Why elements are named: place, person, mythology, property, mineral, astronomical, unknown.', examples: [
+    { name: 'Place names', href: '/etymology-map#place' },
+    { name: 'Mythology', href: '/etymology-map#mythology' },
+    { name: 'Properties', href: '/etymology-map#property' },
   ]},
   { id: 'comparison', label: 'Comparison', route: '/compare/:a/:b', count: '6903', colour: BLACK, description: 'Side-by-side element pair. Any two of 118 elements can be compared.', examples: [
     { name: 'Fe vs Cu', href: '/compare/Fe/Cu' },
@@ -391,6 +391,44 @@ export default function EntityMapPage() {
             />
           ))}
         </div>
+      </section>
+
+      {/* URL Patterns */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>URL Patterns</h2>
+        <p style={{ fontSize: '13px', color: '#666', marginBottom: '12px', lineHeight: 1.6 }}>
+          Every entity has a unique, linkable URL. Share any page and the recipient sees exactly what you see.
+        </p>
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
+          <thead>
+            <tr style={{ borderBottom: '2px solid #0f0f0f', textAlign: 'left' }}>
+              <th style={{ padding: '6px 8px' }}>Entity</th>
+              <th style={{ padding: '6px 8px', fontFamily: "'SF Mono', monospace" }}>URL Pattern</th>
+              <th style={{ padding: '6px 8px' }}>Example</th>
+              <th style={{ padding: '6px 8px' }}>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ENTITIES.filter((e) => e.route !== '—').map((entity) => (
+              <tr key={entity.id} style={{ borderBottom: '1px solid #ece7db' }}>
+                <td style={{ padding: '6px 8px' }}>
+                  <span style={{ color: entity.colour, fontWeight: 'bold' }}>{entity.label}</span>
+                </td>
+                <td style={{ padding: '6px 8px', fontFamily: "'SF Mono', monospace", fontSize: '11px', color: '#666' }}>
+                  {entity.route}
+                </td>
+                <td style={{ padding: '6px 8px' }}>
+                  {entity.examples[0] && (
+                    <Link to={entity.examples[0].href} style={{ fontSize: '11px', color: entity.colour, textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
+                      {entity.examples[0].name}
+                    </Link>
+                  )}
+                </td>
+                <td style={{ padding: '6px 8px', fontFamily: "'SF Mono', monospace" }}>{entity.count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       {/* Relationships Table */}
