@@ -74,7 +74,7 @@ export default function About() {
         </svg>
       </section>
 
-      <section>
+      <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Technology</h2>
         <svg
           width={SVG_MAX_WIDTH}
@@ -85,6 +85,14 @@ export default function About() {
         >
           <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
         </svg>
+      </section>
+
+      <section>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Language</h2>
+        <p style={{ lineHeight: 1.7 }}>
+          Atlas follows a strict visual system: hard color fields, sharp corners, giant numerals, and high data-ink ratio.
+          See the full <Link to="/design">Design Language</Link> reference for palette, spacing, typography, and animation details.
+        </p>
       </section>
     </article>
   );

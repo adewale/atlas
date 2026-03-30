@@ -171,6 +171,12 @@ svg [role="button"] {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Help panel enter: drop + fade */
+@keyframes help-panel-enter {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* Rule line draw from left */
 @keyframes rule-draw {
   from { clip-path: inset(0 100% 0 0); }

@@ -23,7 +23,10 @@ describe('Home', () => {
 
   it('renders the periodic table with 118 elements', () => {
     renderHome();
-    const cells = screen.getAllByRole('button');
+    // Element cells have role="button" with aria-label containing "atomic number"
+    const cells = screen.getAllByRole('button').filter(
+      (el) => el.getAttribute('aria-label')?.includes('atomic number'),
+    );
     expect(cells.length).toBe(118);
   });
 

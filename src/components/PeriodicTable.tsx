@@ -11,6 +11,7 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { useGridNavigation } from '../hooks/useGridNavigation';
+import KeyboardHelp from './KeyboardHelp';
 
 // ---------------------------------------------------------------------------
 // Highlight modes
@@ -99,14 +100,18 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   const [highlightMode, setHighlightMode] = useState<HighlightMode>('none');
   const [property, setProperty] = useState<NumericProperty>('mass');
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   const { activeSymbol, setActiveSymbol, onKeyDown } = useGridNavigation({
     onActivate: onSelectElement,
   });
 
-  const filteredSymbols = new Set(searchElements(query).map((e) => e.symbol));
+  const searchResults = searchElements(query);
+  const filteredSymbols = new Set(searchResults.map((e) => e.symbol));
   const isFiltering = query.trim().length > 0;
+  const matchCount = isFiltering ? filteredSymbols.size : null;
 
   // Find focused element for ripple distance calculation
   const focusedElement = allElements.find((e) => e.symbol === activeSymbol);
@@ -116,6 +121,29 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
     const id = requestAnimationFrame(() => setHasLoaded(true));
     return () => cancelAnimationFrame(id);
   }, []);
+
+  // Global keyboard shortcuts: ? for help, / to focus search, Escape to clear/close
+  useEffect(() => {
+    function handleGlobalKey(e: KeyboardEvent) {
+      const tag = (e.target as HTMLElement).tagName;
+      const isInput = tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA';
+
+      if (e.key === 'Escape') {
+        if (showHelp) { setShowHelp(false); return; }
+        if (query) { setQuery(''); return; }
+      }
+      if (e.key === '?' && !isInput) {
+        e.preventDefault();
+        setShowHelp((v) => !v);
+      }
+      if (e.key === '/' && !isInput) {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    }
+    window.addEventListener('keydown', handleGlobalKey);
+    return () => window.removeEventListener('keydown', handleGlobalKey);
+  }, [showHelp, query]);
 
   const handleCellClick = useCallback(
     (symbol: string) => {
@@ -128,17 +156,26 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   return (
     <div>
       <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <div>
+        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
           <label htmlFor="pt-search" className="sr-only">Search elements</label>
           <input
+            ref={searchRef}
             id="pt-search"
             type="search"
             placeholder="Search name or symbol"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape' && query) {
+                e.stopPropagation();
+                setQuery('');
+              }
+            }}
             aria-describedby="pt-search-desc"
+            aria-label={matchCount != null ? `Search elements — ${matchCount} of 118 match` : 'Search elements'}
             style={{
               padding: '8px 12px',
+              paddingRight: matchCount != null ? '56px' : '12px',
               border: '1px solid #0f0f0f',
               background: PAPER,
               fontFamily: 'inherit',
@@ -146,8 +183,23 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               minHeight: '44px',
             }}
           />
+          {matchCount != null && (
+            <span
+              aria-live="polite"
+              style={{
+                position: 'absolute',
+                right: '8px',
+                fontSize: '11px',
+                fontFamily: "'SF Mono', monospace",
+                color: matchCount === 0 ? WARM_RED : '#666',
+                pointerEvents: 'none',
+              }}
+            >
+              {matchCount}/{118}
+            </span>
+          )}
           <span id="pt-search-desc" className="sr-only">
-            Filter elements by name or symbol
+            Filter elements by name or symbol. Press / to focus, Escape to clear.
           </span>
         </div>
         <div>
@@ -190,7 +242,32 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             </select>
           </div>
         )}
+        <button
+          onClick={() => setShowHelp((v) => !v)}
+          aria-label="Keyboard shortcuts"
+          aria-expanded={showHelp}
+          style={{
+            width: '36px',
+            height: '36px',
+            minHeight: '44px',
+            minWidth: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid #0f0f0f',
+            background: showHelp ? BLACK : PAPER,
+            color: showHelp ? PAPER : BLACK,
+            fontFamily: "'SF Mono', monospace",
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap)',
+          }}
+        >
+          ?
+        </button>
       </div>
+      {showHelp && <KeyboardHelp onClose={() => setShowHelp(false)} />}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg
         ref={svgRef}

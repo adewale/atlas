@@ -18,8 +18,10 @@ function renderTable(onSelect = vi.fn()) {
 describe('PeriodicTable', () => {
   it('renders 118 element cells', () => {
     renderTable();
-    // Each element has a button role with an aria-label
-    const cells = screen.getAllByRole('button');
+    // Element cells have role="button" with aria-label containing "atomic number"
+    const cells = screen.getAllByRole('button').filter(
+      (el) => el.getAttribute('aria-label')?.includes('atomic number'),
+    );
     expect(cells.length).toBe(118);
   });
 
