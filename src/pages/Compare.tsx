@@ -28,30 +28,7 @@ export default function Compare() {
         <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />
       </div>
 
-      <style>{`
-        @keyframes compare-expand {
-          from { clip-path: inset(0 50% 0 50%); }
-          to { clip-path: inset(0 0 0 0); }
-        }
-        @keyframes compare-scale {
-          from { transform: scale(0.95); }
-          to { transform: scale(1); }
-        }
-        @keyframes bar-grow {
-          from { clip-path: inset(0 100% 0 0); }
-          to { clip-path: inset(0 0 0 0); }
-        }
-        @keyframes folio-line-reveal {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          @keyframes compare-expand { from { clip-path: inset(0); } to { clip-path: inset(0); } }
-          @keyframes compare-scale { from { transform: scale(1); } to { transform: scale(1); } }
-          @keyframes bar-grow { from { clip-path: inset(0); } to { clip-path: inset(0); } }
-          @keyframes folio-line-reveal { from { opacity: 0; } to { opacity: 1; } }
-        }
-      `}</style>
+      {/* Keyframes now in globals.css */}
     </main>
   );
 }

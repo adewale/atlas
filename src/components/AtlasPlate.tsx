@@ -133,7 +133,15 @@ export default function AtlasPlate({
           const label = truncateToFit(el.category, NAME_FONT, NAME_MAX_W);
 
           return (
-            <g key={el.symbol} role="link" aria-label={`${el.name}, ${el.symbol}`}>
+            <g
+              key={el.symbol}
+              role="link"
+              aria-label={`${el.name}, ${el.symbol}`}
+              style={{
+                opacity: 0,
+                animation: `card-enter 250ms var(--ease-out) ${i * 15}ms forwards`,
+              }}
+            >
               <Link to={`/element/${el.symbol}`}>
                 <rect x={x} y={y} width={CARD_W} height={CARD_H} fill={fill} />
                 <text

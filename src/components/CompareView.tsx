@@ -3,9 +3,7 @@ import { generateComparisonNotes } from '../lib/compare';
 import { useWedgeText } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
 
-const DEEP_BLUE = '#133e7c';
-const WARM_RED = '#9e1c2c';
-const PAPER = '#f7f2e8';
+import { DEEP_BLUE, WARM_RED, PAPER } from '../lib/theme';
 const DEFAULT_WIDTH = 800;
 const SPLIT_H = 280;
 

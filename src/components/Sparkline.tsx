@@ -1,3 +1,5 @@
+import { useRef, useEffect, useState } from 'react';
+
 type GroupTrendProps = {
   values: (number | null)[];
   highlightIndex: number;
@@ -8,6 +10,7 @@ type GroupTrendProps = {
 
 /**
  * Group trend sparkline: polyline of property values across the group.
+ * Animates with stroke-dashoffset draw effect on mount.
  */
 export function GroupTrendSparkline({
   values,
@@ -38,15 +41,44 @@ export function GroupTrendSparkline({
     }
   });
 
+  const polyRef = useRef<SVGPolylineElement>(null);
+  const [pathLength, setPathLength] = useState(0);
+
+  useEffect(() => {
+    if (polyRef.current) {
+      const len = polyRef.current.getTotalLength();
+      setPathLength(len);
+    }
+  }, [values, width, height]);
+
   return (
     <svg width={width} height={height} role="img" aria-label={`Group trend: ${values.map((v) => v !== null ? v.toFixed(1) : '—').join(', ')}`}>
       <polyline
+        ref={polyRef}
         points={points.join(' ')}
         fill="none"
         stroke={color}
         strokeWidth={1.5}
+        style={
+          pathLength > 0
+            ? {
+                strokeDasharray: pathLength,
+                strokeDashoffset: pathLength,
+                animation: `sparkline-draw 600ms var(--ease-out) 200ms forwards`,
+              } as React.CSSProperties
+            : undefined
+        }
       />
-      <circle cx={highlightX} cy={highlightY} r={3} fill={color} />
+      <circle
+        cx={highlightX}
+        cy={highlightY}
+        r={3}
+        fill={color}
+        style={{
+          opacity: 0,
+          animation: 'folio-line-reveal 200ms var(--ease-out) 700ms forwards',
+        }}
+      />
     </svg>
   );
 }
@@ -61,6 +93,7 @@ type RankDotProps = {
 
 /**
  * Rank dot sparkline: single dot positioned on a 1-N scale.
+ * Dot scales in on mount.
  */
 export function RankDotSparkline({
   rank,
@@ -76,7 +109,16 @@ export function RankDotSparkline({
   return (
     <svg width={width} height={height} role="img" aria-label={`Rank ${rank} of ${total}`}>
       <line x1={0} y1={height / 2} x2={width} y2={height / 2} stroke="#ccc" strokeWidth={0.5} />
-      <circle cx={x} cy={height / 2} r={3} fill={color} />
+      <circle
+        cx={x}
+        cy={height / 2}
+        r={3}
+        fill={color}
+        style={{
+          opacity: 0,
+          animation: 'folio-line-reveal 200ms var(--ease-out) 300ms forwards',
+        }}
+      />
     </svg>
   );
 }

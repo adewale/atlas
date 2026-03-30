@@ -131,6 +131,52 @@ svg [role="button"] {
   touch-action: pinch-zoom;
 }
 
+/* ----------------------------------------
+   Shared keyframes (single source of truth)
+   ---------------------------------------- */
+
+/* Text line stagger: opacity + translateY */
+@keyframes folio-line-reveal {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Data plate horizontal wipe */
+@keyframes plate-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Property bar grow from left */
+@keyframes bar-grow {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Compare panel expand from center */
+@keyframes compare-expand {
+  from { clip-path: inset(0 50% 0 50%); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Compare symbol scale */
+@keyframes compare-scale {
+  from { transform: scale(0.95); }
+  to   { transform: scale(1); }
+}
+
+/* AtlasPlate card stagger: opacity + translateY */
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Sparkline draw via stroke-dashoffset */
+@keyframes sparkline-draw {
+  from { stroke-dashoffset: var(--dash-length); }
+  to   { stroke-dashoffset: 0; }
+}
+
 /* Reduced motion: keep opacity/color changes, remove movement */
 @media (prefers-reduced-motion: reduce) {
   *,

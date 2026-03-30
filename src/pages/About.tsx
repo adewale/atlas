@@ -44,7 +44,7 @@ export default function About() {
           role="img"
           style={{ maxWidth: '100%' }}
         >
-          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules />
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
 
@@ -70,7 +70,7 @@ export default function About() {
           role="img"
           style={{ maxWidth: '100%' }}
         >
-          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules />
+          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
 
@@ -83,7 +83,7 @@ export default function About() {
           role="img"
           style={{ maxWidth: '100%' }}
         >
-          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules />
+          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
     </article>

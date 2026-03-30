@@ -44,7 +44,7 @@ export default function Credits() {
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Structured Data</h2>
         <svg width={TEXT_WIDTH} height={structuredLines.length * structuredLH + structuredLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={structuredLines} lineHeight={structuredLH} />
+          <PretextSvg lines={structuredLines} lineHeight={structuredLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
 
@@ -52,7 +52,7 @@ export default function Credits() {
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Identifiers</h2>
         <svg width={TEXT_WIDTH} height={identifiersLines.length * identifiersLH + identifiersLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} />
+          <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
 
@@ -60,7 +60,7 @@ export default function Credits() {
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Text Summaries</h2>
         <svg width={TEXT_WIDTH} height={summariesNoteLines.length * summariesNoteLH + summariesNoteLH} style={{ maxWidth: '100%', marginBottom: '12px' }}>
-          <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} />
+          <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
         <table
           style={{
@@ -113,7 +113,7 @@ export default function Credits() {
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Media</h2>
         <svg width={TEXT_WIDTH} height={mediaLines.length * mediaLH + mediaLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={mediaLines} lineHeight={mediaLH} />
+          <PretextSvg lines={mediaLines} lineHeight={mediaLH} maxWidth={TEXT_WIDTH} animationStagger={25} />
         </svg>
       </section>
 
@@ -136,7 +136,7 @@ export default function Credits() {
       <section>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>About Atlas</h2>
         <svg width={TEXT_WIDTH} height={aboutLines.length * aboutLH + aboutLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={aboutLines} lineHeight={aboutLH} />
+          <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
     </article>

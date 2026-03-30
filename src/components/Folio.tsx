@@ -12,9 +12,7 @@ import { GroupTrendSparkline, RankDotSparkline } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
-const DEEP_BLUE = '#133e7c';
-const WARM_RED = '#9e1c2c';
-const PAPER = '#f7f2e8';
+import { DEEP_BLUE, WARM_RED, PAPER, toSlug } from '../lib/theme';
 
 const PLATE_WIDTH = 160;
 const PLATE_HEIGHT = 180;
@@ -347,7 +345,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase' }}>
             Category
           </div>
-          <Link to={`/atlas/category/${element.category.toLowerCase().replace(/\s+/g, '-')}`} aria-label={element.category} style={{ textDecoration: 'none' }}>
+          <Link to={`/atlas/category/${toSlug(element.category)}`} aria-label={element.category} style={{ textDecoration: 'none' }}>
             <svg
               width={MARGINALIA_WIDTH}
               height={catLines.length * catLH + catLH}

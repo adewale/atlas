@@ -1,5 +1,6 @@
 import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
+import { DEEP_BLUE } from '../lib/theme';
 import AtlasPlate from '../components/AtlasPlate';
 import type { RankingsData } from '../lib/types';
 
@@ -26,7 +27,7 @@ export default function AtlasRank() {
         <AtlasPlate
           elements={elements}
           caption={`All 118 elements by ${label}`}
-          captionColor="#133e7c"
+          captionColor={DEEP_BLUE}
           propertyKey={property}
         />
       )}

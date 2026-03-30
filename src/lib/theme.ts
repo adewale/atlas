@@ -1,0 +1,29 @@
+/**
+ * Shared color constants and category utilities.
+ * Single source of truth — never hardcode hex values elsewhere.
+ */
+
+export const DEEP_BLUE = '#133e7c';
+export const WARM_RED = '#9e1c2c';
+export const MUSTARD = '#c59b1a';
+export const PAPER = '#f7f2e8';
+export const BLACK = '#0f0f0f';
+export const DIM = '#ece7db';
+
+/** Map a category string to its display color. */
+export function categoryColor(category: string): string {
+  const cat = category.toLowerCase();
+  if (cat.includes('metalloid')) return MUSTARD;
+  if (cat.includes('nonmetal') || cat.includes('noble')) return WARM_RED;
+  return DEEP_BLUE;
+}
+
+/** Convert category name to URL slug. */
+export function toSlug(name: string): string {
+  return name.toLowerCase().replace(/\s+/g, '-');
+}
+
+/** Convert URL slug back to category label. */
+export function fromSlug(slug: string): string {
+  return slug.replace(/-/g, ' ');
+}

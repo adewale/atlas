@@ -34,12 +34,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-const DEEP_BLUE = '#133e7c';
-const WARM_RED = '#9e1c2c';
-const MUSTARD = '#c59b1a';
-const PAPER = '#f7f2e8';
-const BLACK = '#0f0f0f';
-const DIM = '#ece7db';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, categoryColor } from '../lib/theme';
 
 function getCellFill(el: ElementRecord, mode: HighlightMode, property: NumericProperty): string {
   switch (mode) {
@@ -51,12 +46,8 @@ function getCellFill(el: ElementRecord, mode: HighlightMode, property: NumericPr
       return el.period % 2 === 0 ? DEEP_BLUE : WARM_RED;
     case 'block':
       return blockColor(el.block);
-    case 'category': {
-      const cat = el.category.toLowerCase();
-      if (cat.includes('metalloid')) return MUSTARD;
-      if (cat.includes('nonmetal') || cat.includes('noble gas')) return WARM_RED;
-      return DEEP_BLUE; // metal-containing
-    }
+    case 'category':
+      return categoryColor(el.category);
     case 'property': {
       const val = el[property];
       if (val == null) return PAPER;

@@ -36,49 +36,7 @@ export default function Element() {
         <Folio element={element} sources={sources} groups={groups} animate={true} />
       </article>
 
-      {/* Folio entry animations CSS */}
-      <style>{`
-        @keyframes folio-line-reveal {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes plate-wipe {
-          from {
-            clip-path: inset(0 100% 0 0);
-          }
-          to {
-            clip-path: inset(0 0 0 0);
-          }
-        }
-        @keyframes bar-grow {
-          from {
-            clip-path: inset(0 100% 0 0);
-          }
-          to {
-            clip-path: inset(0 0 0 0);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          @keyframes folio-line-reveal {
-            from { opacity: 0; }
-            to { opacity: 1; }
-          }
-          @keyframes plate-wipe {
-            from { clip-path: inset(0); }
-            to { clip-path: inset(0); }
-          }
-          @keyframes bar-grow {
-            from { clip-path: inset(0); }
-            to { clip-path: inset(0); }
-          }
-        }
-      `}</style>
+      {/* Keyframes now in globals.css */}
     </main>
   );
 }

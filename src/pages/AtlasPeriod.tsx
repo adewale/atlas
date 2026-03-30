@@ -1,5 +1,6 @@
 import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
+import { WARM_RED, DEEP_BLUE } from '../lib/theme';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PeriodData } from '../lib/types';
 
@@ -10,8 +11,7 @@ export default function AtlasPeriod() {
   const period = periods.find((p) => p.n === Number(n));
   const elements = period ? period.elements.map((s) => getElement(s)!).filter(Boolean) : [];
 
-  const colors = ['#9e1c2c', '#133e7c'];
-  const color = colors[(Number(n) - 1) % 2];
+  const color = (Number(n) - 1) % 2 === 0 ? WARM_RED : DEEP_BLUE;
 
   return (
     <main>
