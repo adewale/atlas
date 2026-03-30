@@ -81,6 +81,7 @@ export default function DiscovererNetwork() {
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${totalHeight}`}
+          overflow="visible"
           role="img"
           aria-label="Chart showing which scientists discovered which elements"
           style={{

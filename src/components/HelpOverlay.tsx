@@ -113,7 +113,7 @@ function HelpPanel({ onClose }: { onClose: () => void }) {
         </button>
       </div>
 
-      <svg width={PANEL_WIDTH - 32} height={svgH} style={{ maxWidth: '100%', display: 'block' }}>
+      <svg width={PANEL_WIDTH - 32} height={svgH} overflow="visible" style={{ maxWidth: '100%', display: 'block' }}>
         <PretextSvg
           lines={introLines}
           lineHeight={introLH}

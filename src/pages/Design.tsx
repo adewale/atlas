@@ -45,33 +45,6 @@ export default function Design() {
         40% Tufte data density.
       </p>
 
-      {/* Entity Map link */}
-      <section style={{ marginBottom: '40px' }}>
-        <Link
-          to="/entity-map"
-          style={{
-            fontSize: '13px',
-            fontWeight: 'bold',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            padding: '10px 16px',
-            border: `1.5px solid ${WARM_RED}`,
-            color: WARM_RED,
-            textDecoration: 'none',
-            minHeight: 'unset',
-            minWidth: 'unset',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <span style={{ width: '8px', height: '8px', background: WARM_RED, display: 'inline-block' }} />
-          Entity Map — 12 types, 13 relationships →
-        </Link>
-      </section>
-
-      <div style={{ borderTop: `2px solid ${BLACK}`, margin: '40px 0' }} />
-
       {/* Palette */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Palette</h2>

@@ -187,7 +187,7 @@ export default function EtymologyMap() {
     return ORDER.map((key) => sectionMap.get(key)).filter(Boolean) as EtymologyEntry[];
   }, [etymology]);
 
-  const introSvgHeight = lines.length * lineHeight + 8;
+  const introSvgHeight = lines.length * lineHeight + 16;
 
   return (
     <PageShell vizNav>
@@ -197,6 +197,7 @@ export default function EtymologyMap() {
 
       <svg
         viewBox={`0 0 ${MAX_WIDTH} ${introSvgHeight}`}
+        overflow="visible"
         style={styles.introSvg}
         role="img"
         aria-label="Introduction to etymology map"

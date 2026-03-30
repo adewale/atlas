@@ -2,9 +2,15 @@ import type { ReactNode } from 'react';
 import { useIsMobile } from '../hooks/useIsMobile';
 import VizNav from './VizNav';
 import SiteNav from './SiteNav';
-import { BLACK } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, MUSTARD } from '../lib/theme';
 
-const ATLAS_LETTERS = ['A', 'T', 'L', 'A', 'S'] as const;
+const ATLAS_LETTERS = [
+  { letter: 'A', size: 28, color: WARM_RED },
+  { letter: 'T', size: 22, color: BLACK },
+  { letter: 'L', size: 28, color: DEEP_BLUE },
+  { letter: 'A', size: 28, color: WARM_RED },
+  { letter: 'S', size: 22, color: MUSTARD },
+] as const;
 
 type PageShellProps = {
   children: ReactNode;
@@ -53,19 +59,21 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
             userSelect: 'none',
           }}
         >
-          {ATLAS_LETTERS.map((letter, i) => (
+          {ATLAS_LETTERS.map((item, i) => (
             <span
               key={i}
               style={{
-                fontSize: '56px',
+                fontSize: `${item.size}px`,
                 fontWeight: 900,
                 fontFamily: 'system-ui, sans-serif',
                 lineHeight: 1,
-                color: BLACK,
-                letterSpacing: '-0.02em',
+                color: item.color,
+                letterSpacing: '0.15em',
+                textAlign: 'center',
+                display: 'block',
               }}
             >
-              {letter}
+              {item.letter}
             </span>
           ))}
         </h1>

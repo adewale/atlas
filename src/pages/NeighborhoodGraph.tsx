@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate } from 'react-router';
 import { allElements, getElement } from '../lib/data';
 import {
   getCellPosition,
@@ -9,9 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { PAPER, BLACK, DIM, GREY_RULE } from '../lib/theme';
-import { usePretextLines } from '../hooks/usePretextLines';
-import PretextSvg from '../components/PretextSvg';
+import { BLACK, GREY_RULE } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -19,11 +17,9 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 // Constants
 // ---------------------------------------------------------------------------
 const INTRO_TEXT =
-  'Every element has neighbours \u2014 elements adjacent in the periodic table. This graph maps those relationships. Hover to see an element\u2019s neighbourhood.';
+  'Every element has neighbours — elements adjacent in the periodic table. This graph maps those relationships. Hover to see an element\u2019s neighbourhood.';
 
 const SVG_WIDTH = VIEWBOX_W;
-const INTRO_HEIGHT = 80;
-const TABLE_OFFSET_Y = INTRO_HEIGHT + 16;
 const NODE_RADIUS = 10;
 
 // ---------------------------------------------------------------------------
@@ -64,11 +60,6 @@ export default function NeighborhoodGraph() {
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  const { lines, lineHeight } = usePretextLines({
-    text: INTRO_TEXT,
-    maxWidth: SVG_WIDTH,
-  });
-
   useEffect(() => {
     const id = requestAnimationFrame(() => setHasLoaded(true));
     return () => cancelAnimationFrame(id);
@@ -89,15 +80,18 @@ export default function NeighborhoodGraph() {
     return set;
   }, [hoveredSymbol]);
 
-  const totalHeight = TABLE_OFFSET_Y + VIEWBOX_H + 24;
-
   return (
     <PageShell vizNav>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighbourhood Graph</h1>
 
+      <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
+        {INTRO_TEXT}
+      </p>
+
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg
-          viewBox={`0 0 ${SVG_WIDTH} ${totalHeight}`}
+          viewBox={`0 0 ${SVG_WIDTH} ${VIEWBOX_H + 24}`}
+          overflow="visible"
           role="img"
           aria-label="Force-directed-style network graph of element neighbourhoods in the periodic table"
           style={{
@@ -107,128 +101,113 @@ export default function NeighborhoodGraph() {
             touchAction: 'pinch-zoom',
           }}
         >
-          {/* Intro text */}
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fontSize={16}
-            fill={BLACK}
-            maxWidth={SVG_WIDTH}
-            animationStagger={40}
-          />
+          {/* Edges (lines between neighbors) */}
+          {edges.map((edge) => {
+            const sourceEl = getElement(edge.sourceSymbol);
+            const targetEl = getElement(edge.targetSymbol);
+            if (!sourceEl || !targetEl) return null;
 
-          {/* Graph */}
-          <g transform={`translate(0, ${TABLE_OFFSET_Y})`}>
-            {/* Edges (lines between neighbors) */}
-            {edges.map((edge) => {
-              const sourceEl = getElement(edge.sourceSymbol);
-              const targetEl = getElement(edge.targetSymbol);
-              if (!sourceEl || !targetEl) return null;
+            const sp = getCellPosition(sourceEl);
+            const tp = getCellPosition(targetEl);
 
-              const sp = getCellPosition(sourceEl);
-              const tp = getCellPosition(targetEl);
+            const sx = sp.x + CELL_WIDTH / 2;
+            const sy = sp.y + CELL_HEIGHT / 2;
+            const tx = tp.x + CELL_WIDTH / 2;
+            const ty = tp.y + CELL_HEIGHT / 2;
 
-              const sx = sp.x + CELL_WIDTH / 2;
-              const sy = sp.y + CELL_HEIGHT / 2;
-              const tx = tp.x + CELL_WIDTH / 2;
-              const ty = tp.y + CELL_HEIGHT / 2;
+            const isHighlighted =
+              hoveredSymbol != null &&
+              highlightSet.has(edge.sourceSymbol) &&
+              highlightSet.has(edge.targetSymbol);
 
-              const isHighlighted =
-                hoveredSymbol != null &&
-                highlightSet.has(edge.sourceSymbol) &&
-                highlightSet.has(edge.targetSymbol);
+            const isDimmed = hoveredSymbol != null && !isHighlighted;
+            const hoveredEl = hoveredSymbol ? getElement(hoveredSymbol) : null;
 
-              const isDimmed = hoveredSymbol != null && !isHighlighted;
-              const hoveredEl = hoveredSymbol ? getElement(hoveredSymbol) : null;
+            return (
+              <line
+                key={`${edge.sourceSymbol}-${edge.targetSymbol}`}
+                x1={sx}
+                y1={sy}
+                x2={tx}
+                y2={ty}
+                stroke={
+                  isHighlighted && hoveredEl
+                    ? blockColor(hoveredEl.block)
+                    : GREY_RULE
+                }
+                strokeWidth={isHighlighted ? 1.5 : 0.5}
+                opacity={isDimmed ? 0.15 : 1}
+                style={{
+                  transition: 'opacity 200ms var(--ease-out), stroke-width 200ms var(--ease-out), stroke 200ms var(--ease-out)',
+                  clipPath: hasLoaded ? 'none' : 'inset(0 100% 0 0)',
+                  animation: hasLoaded
+                    ? undefined
+                    : `rule-draw 400ms var(--ease-out) ${edge.sourceAtomicNumber * 6}ms forwards`,
+                }}
+              />
+            );
+          })}
 
-              return (
-                <line
-                  key={`${edge.sourceSymbol}-${edge.targetSymbol}`}
-                  x1={sx}
-                  y1={sy}
-                  x2={tx}
-                  y2={ty}
-                  stroke={
-                    isHighlighted && hoveredEl
-                      ? blockColor(hoveredEl.block)
-                      : GREY_RULE
-                  }
-                  strokeWidth={isHighlighted ? 1.5 : 0.5}
-                  opacity={isDimmed ? 0.15 : 1}
+          {/* Nodes (circles + labels) */}
+          {allElements.map((el) => {
+            const pos = getCellPosition(el);
+            const cx = pos.x + CELL_WIDTH / 2;
+            const cy = pos.y + CELL_HEIGHT / 2;
+            const fill = blockColor(el.block);
+
+            const isHighlighted = highlightSet.has(el.symbol);
+            const isDimmed = hoveredSymbol != null && !isHighlighted;
+
+            return (
+              <g
+                key={el.symbol}
+                style={{
+                  cursor: 'pointer',
+                  opacity: isDimmed ? 0.15 : 1,
+                  transition: 'opacity 200ms var(--ease-out)',
+                }}
+                onMouseEnter={() => setHoveredSymbol(el.symbol)}
+                onMouseLeave={() => setHoveredSymbol(null)}
+                onClick={() => navigate(`/element/${el.symbol}`)}
+                role="button"
+                aria-label={`${el.symbol} — ${el.name}, ${el.neighbors.length} neighbours`}
+              >
+                <title>{el.name}</title>
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={NODE_RADIUS}
+                  fill={fill}
                   style={{
-                    transition: 'opacity 200ms var(--ease-out), stroke-width 200ms var(--ease-out), stroke 200ms var(--ease-out)',
-                    clipPath: hasLoaded ? 'none' : 'inset(0 100% 0 0)',
+                    opacity: hasLoaded ? 1 : 0,
+                    transition: hasLoaded
+                      ? 'opacity 200ms var(--ease-out)'
+                      : 'none',
                     animation: hasLoaded
                       ? undefined
-                      : `rule-draw 400ms var(--ease-out) ${edge.sourceAtomicNumber * 6}ms forwards`,
+                      : `folio-line-reveal 300ms var(--ease-out) ${el.atomicNumber * 6}ms forwards`,
                   }}
                 />
-              );
-            })}
-
-            {/* Nodes (circles + labels) */}
-            {allElements.map((el) => {
-              const pos = getCellPosition(el);
-              const cx = pos.x + CELL_WIDTH / 2;
-              const cy = pos.y + CELL_HEIGHT / 2;
-              const fill = blockColor(el.block);
-
-              const isHighlighted = highlightSet.has(el.symbol);
-              const isDimmed = hoveredSymbol != null && !isHighlighted;
-
-              return (
-                <g
-                  key={el.symbol}
+                <text
+                  x={cx}
+                  y={cy - NODE_RADIUS - 3}
+                  textAnchor="middle"
+                  fontSize={8}
+                  fill={BLACK}
+                  fontFamily="system-ui, sans-serif"
                   style={{
-                    cursor: 'pointer',
-                    opacity: isDimmed ? 0.15 : 1,
-                    transition: 'opacity 200ms var(--ease-out)',
+                    pointerEvents: 'none',
+                    opacity: hasLoaded ? 1 : 0,
+                    animation: hasLoaded
+                      ? undefined
+                      : `folio-line-reveal 300ms var(--ease-out) ${el.atomicNumber * 6}ms forwards`,
                   }}
-                  onMouseEnter={() => setHoveredSymbol(el.symbol)}
-                  onMouseLeave={() => setHoveredSymbol(null)}
-                  onClick={() => navigate(`/element/${el.symbol}`)}
-                  role="button"
-                  aria-label={`${el.symbol} — ${el.name}, ${el.neighbors.length} neighbours`}
                 >
-                  <title>{el.name}</title>
-                  <circle
-                    cx={cx}
-                    cy={cy}
-                    r={NODE_RADIUS}
-                    fill={fill}
-                    style={{
-                      opacity: hasLoaded ? 1 : 0,
-                      transition: hasLoaded
-                        ? 'opacity 200ms var(--ease-out)'
-                        : 'none',
-                      animation: hasLoaded
-                        ? undefined
-                        : `folio-line-reveal 300ms var(--ease-out) ${el.atomicNumber * 6}ms forwards`,
-                    }}
-                  />
-                  <text
-                    x={cx}
-                    y={cy - NODE_RADIUS - 3}
-                    textAnchor="middle"
-                    fontSize={8}
-                    fill={BLACK}
-                    fontFamily="system-ui, sans-serif"
-                    style={{
-                      pointerEvents: 'none',
-                      opacity: hasLoaded ? 1 : 0,
-                      animation: hasLoaded
-                        ? undefined
-                        : `folio-line-reveal 300ms var(--ease-out) ${el.atomicNumber * 6}ms forwards`,
-                    }}
-                  >
-                    {el.symbol}
-                  </text>
-                </g>
-              );
-            })}
-          </g>
+                  {el.symbol}
+                </text>
+              </g>
+            );
+          })}
         </svg>
       </div>
     </PageShell>

@@ -179,9 +179,46 @@ export default function DiscoveryTimeline() {
     <PageShell vizNav>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Discovery Timeline</h1>
 
+      {/* Era browse links */}
+      <section style={{ marginBottom: '16px' }}>
+        <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px' }}>
+          Browse by Era
+        </h2>
+        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+          <Link
+            to="/timeline/antiquity"
+            title="View the Antiquity discovery era"
+            style={{
+              fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
+              textTransform: 'uppercase', padding: '4px 10px',
+              border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
+              textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
+            }}
+          >
+            Antiquity
+          </Link>
+          {allDecades.map((d) => (
+            <Link
+              key={d}
+              to={`/timeline/${d}`}
+              title={`View the ${d}s discovery era`}
+              style={{
+                fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
+                padding: '4px 10px',
+                border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
+                textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
+              }}
+            >
+              {d}s
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${totalHeight}`}
+          overflow="visible"
           role="img"
           aria-label="Timeline of element discoveries from antiquity to the present"
           style={{
@@ -378,42 +415,6 @@ export default function DiscoveryTimeline() {
           ))}
         </svg>
       </div>
-
-      {/* Era browse links */}
-      <section style={{ marginTop: '24px' }}>
-        <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px' }}>
-          Browse by Era
-        </h2>
-        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-          <Link
-            to="/timeline/antiquity"
-            title="View the Antiquity discovery era"
-            style={{
-              fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-              textTransform: 'uppercase', padding: '4px 10px',
-              border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
-              textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
-            }}
-          >
-            Antiquity
-          </Link>
-          {allDecades.map((d) => (
-            <Link
-              key={d}
-              to={`/timeline/${d}`}
-              title={`View the ${d}s discovery era`}
-              style={{
-                fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-                padding: '4px 10px',
-                border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
-                textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
-              }}
-            >
-              {d}s
-            </Link>
-          ))}
-        </div>
-      </section>
     </PageShell>
   );
 }

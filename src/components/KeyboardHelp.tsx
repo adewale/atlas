@@ -71,7 +71,7 @@ export default function KeyboardHelp({ onClose }: KeyboardHelpProps) {
         </button>
       </div>
 
-      <svg width={PANEL_WIDTH - 32} height={svgH} style={{ maxWidth: '100%', display: 'block' }}>
+      <svg width={PANEL_WIDTH - 32} height={svgH} overflow="visible" style={{ maxWidth: '100%', display: 'block' }}>
         {/* Intro text — Pretext measured */}
         <PretextSvg
           lines={introLines}

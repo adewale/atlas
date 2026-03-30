@@ -4,9 +4,9 @@ import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 const VIZ_PAGES = [
   { to: '/', label: 'Table', colour: BLACK },
   { to: '/phase-landscape', label: 'Phase', colour: WARM_RED },
-  { to: '/property-scatter', label: 'Scatter', colour: DEEP_BLUE },
-  { to: '/anomaly-explorer', label: 'Anomalies', colour: MUSTARD },
   { to: '/neighborhood-graph', label: 'Neighbours', colour: BLACK },
+  { to: '/anomaly-explorer', label: 'Anomalies', colour: MUSTARD },
+  { to: '/property-scatter', label: 'Scatter', colour: DEEP_BLUE },
   { to: '/discovery-timeline', label: 'Timeline', colour: WARM_RED },
   { to: '/etymology-map', label: 'Etymology', colour: DEEP_BLUE },
   { to: '/discoverer-network', label: 'Discoverers', colour: MUSTARD },

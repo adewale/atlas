@@ -306,11 +306,22 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
               onClick={() => setHovered(hovered === node.id ? null : node.id)}
               opacity={dimmed ? 0.2 : 1}
             >
+              {/* Roundel: filled circle with white text */}
               <circle
                 r={r}
-                fill={isHovered ? entity.colour : PAPER}
+                fill={entity.colour}
                 stroke={entity.colour}
-                strokeWidth={isHovered ? 3 : 2}
+                strokeWidth={isHovered ? 4 : 2}
+                style={{ transition: 'stroke-width 150ms ease-out, r 150ms ease-out' }}
+              />
+              {/* Outer ring for roundel effect */}
+              <circle
+                r={r + 5}
+                fill="none"
+                stroke={entity.colour}
+                strokeWidth={1}
+                opacity={isHovered ? 0.6 : 0.2}
+                style={{ transition: 'opacity 150ms ease-out' }}
               />
               <text
                 y={1}
@@ -318,7 +329,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
                 dominantBaseline="middle"
                 fontSize={node.id === 'element' ? 12 : 10}
                 fontWeight="bold"
-                fill={isHovered ? PAPER : entity.colour}
+                fill={PAPER}
                 fontFamily="system-ui, sans-serif"
                 style={{ textTransform: 'uppercase', letterSpacing: '0.05em' }}
               >
@@ -556,9 +567,6 @@ export default function EntityMapPage() {
         </div>
       </section>
 
-      <div style={{ fontSize: '13px' }}>
-        <Link to="/design" style={{ color: WARM_RED }}>Design Language →</Link>
-      </div>
       </div>
 
     </PageShell>
