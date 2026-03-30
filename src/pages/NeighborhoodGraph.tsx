@@ -190,7 +190,7 @@ export default function NeighborhoodGraph() {
                   onMouseLeave={() => setHoveredSymbol(null)}
                   onClick={() => navigate(`/element/${el.symbol}`)}
                   role="button"
-                  aria-label={`${el.name} (${el.symbol}), ${el.neighbors.length} neighbours`}
+                  aria-label={`${el.symbol} — ${el.name}, ${el.neighbors.length} neighbours`}
                 >
                   <title>{el.name}</title>
                   <circle

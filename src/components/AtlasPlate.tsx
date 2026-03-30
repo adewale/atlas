@@ -143,7 +143,7 @@ export default function AtlasPlate({
             <g
               key={el.symbol}
               role="link"
-              aria-label={`${el.name}, ${el.symbol}`}
+              aria-label={`${el.symbol} — ${el.name}`}
               style={{
                 opacity: 0,
                 animation: `card-enter 250ms var(--ease-out) ${i * 15}ms forwards`,

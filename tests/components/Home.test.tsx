@@ -23,9 +23,9 @@ describe('Home', () => {
 
   it('renders the periodic table with 118 elements', () => {
     renderHome();
-    // Element cells have role="button" with aria-label containing "atomic number"
+    // Element cells have role="button" with aria-label matching "Symbol Number Name Category"
     const cells = screen.getAllByRole('button').filter(
-      (el) => el.getAttribute('aria-label')?.includes('atomic number'),
+      (el) => /^[A-Z][a-z]?\s\d+\s/.test(el.getAttribute('aria-label') ?? ''),
     );
     expect(cells.length).toBe(118);
   });

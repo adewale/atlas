@@ -6,7 +6,7 @@ import type React from 'react';
 
 export const DEEP_BLUE = '#133e7c';
 export const WARM_RED = '#9e1c2c';
-export const MUSTARD = '#c59b1a';
+export const MUSTARD = '#856912'; /* WCAG AA 4.7:1 on PAPER — was #c59b1a */
 export const PAPER = '#f7f2e8';
 export const BLACK = '#0f0f0f';
 export const DIM = '#ece7db';
@@ -14,7 +14,7 @@ export const DIM = '#ece7db';
 /* Grey scale — use instead of hardcoded hex */
 export const GREY_DARK = '#333';
 export const GREY_MID = '#666';
-export const GREY_LIGHT = '#999';
+export const GREY_LIGHT = '#696969'; /* WCAG AA 4.9:1 on PAPER — was #999 */
 export const GREY_RULE = '#ccc';
 
 /* Etymology-specific palette (not in the core 4-colour system) */

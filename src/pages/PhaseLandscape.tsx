@@ -134,7 +134,7 @@ export default function PhaseLandscape() {
                   <g
                     transform={`translate(${pos.x}, ${pos.y})`}
                     role="button"
-                    aria-label={`${el.name}, ${el.phase} at STP`}
+                    aria-label={`${el.symbol} — ${el.name}, ${el.phase} at STP`}
                     style={{ cursor: 'pointer' }}
                   >
                     <title>{el.name}</title>

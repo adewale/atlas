@@ -343,13 +343,13 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               onClick={() => handleCellClick(el.symbol)}
               onMouseEnter={() => setActiveSymbol(el.symbol)}
               role="button"
-              aria-label={`${el.name}, atomic number ${el.atomicNumber}, ${el.category}`}
+              aria-label={`${el.symbol} ${el.atomicNumber} ${el.name} ${el.category}`}
               tabIndex={-1}
               style={{
                 cursor: 'pointer',
               }}
             >
-            <title>{`${el.name} (${el.symbol}) — ${el.category}`}</title>
+            <title>{`${el.symbol} ${el.atomicNumber} ${el.name} ${el.category}`}</title>
             <g
               style={{
                 opacity: hasLoaded ? 1 : 0,

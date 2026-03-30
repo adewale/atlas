@@ -18,9 +18,13 @@ function renderTable(onSelect = vi.fn()) {
 describe('PeriodicTable', () => {
   it('renders 118 element cells', () => {
     renderTable();
-    // Element cells have role="button" with aria-label containing "atomic number"
+    // Element cells have role="button" with aria-label containing element name
     const cells = screen.getAllByRole('button').filter(
-      (el) => el.getAttribute('aria-label')?.includes('atomic number'),
+      (el) => {
+        const label = el.getAttribute('aria-label') ?? '';
+        // Element labels follow pattern: "Symbol Number Name Category"
+        return /^[A-Z][a-z]?\s\d+\s/.test(label);
+      },
     );
     expect(cells.length).toBe(118);
   });
@@ -29,7 +33,7 @@ describe('PeriodicTable', () => {
     renderTable();
     const input = screen.getByLabelText(/Filter elements/);
     fireEvent.change(input, { target: { value: 'iron' } });
-    const feCell = screen.getByLabelText(/^Iron,/);
+    const feCell = screen.getByLabelText(/Iron/);
     expect(feCell).toBeInTheDocument();
   });
 
@@ -37,7 +41,7 @@ describe('PeriodicTable', () => {
     renderTable();
     const input = screen.getByLabelText(/Filter elements/);
     fireEvent.change(input, { target: { value: 'Fe' } });
-    const feCell = screen.getByLabelText(/^Iron,/);
+    const feCell = screen.getByLabelText(/Iron/);
     expect(feCell).toBeInTheDocument();
   });
 
@@ -46,7 +50,7 @@ describe('PeriodicTable', () => {
     const blockBtn = screen.getByRole('button', { name: /block/i });
     fireEvent.click(blockBtn);
     // d-block element (Iron) should get warm red fill
-    const feCell = screen.getByLabelText(/^Iron,/);
+    const feCell = screen.getByLabelText(/Iron/);
     const rect = feCell.querySelector('rect');
     expect(rect).toHaveAttribute('fill', '#9e1c2c');
   });
@@ -54,7 +58,7 @@ describe('PeriodicTable', () => {
   it('clicking an element calls onSelectElement', () => {
     const onSelect = vi.fn();
     renderTable(onSelect);
-    const feCell = screen.getByLabelText(/^Iron,/);
+    const feCell = screen.getByLabelText(/Iron/);
     fireEvent.click(feCell);
     expect(onSelect).toHaveBeenCalledWith('Fe');
   });
@@ -64,7 +68,7 @@ describe('PeriodicTable', () => {
     const input = screen.getByLabelText(/Filter elements/);
     fireEvent.change(input, { target: { value: 'iron' } });
     // He should be dimmed — fill changes to DIM color (#ece7db)
-    const heCell = screen.getByLabelText(/^Helium,/);
+    const heCell = screen.getByLabelText(/Helium/);
     const rect = heCell.querySelector('rect');
     expect(rect).toHaveAttribute('fill', '#ece7db');
   });
@@ -74,7 +78,7 @@ describe('PeriodicTable', () => {
     const blockBtn = screen.getByRole('button', { name: /block/i });
     fireEvent.click(blockBtn);
     // H is s-block, should have deep blue fill (#133e7c)
-    const hCell = screen.getByLabelText(/^Hydrogen,/);
+    const hCell = screen.getByLabelText(/Hydrogen/);
     const rect = hCell.querySelector('rect');
     expect(rect).toHaveAttribute('fill', '#133e7c');
   });
