@@ -6,7 +6,7 @@ import type { ElementRecord } from './types';
 // ---------------------------------------------------------------------------
 const BLOCK_COLORS: Record<string, string> = {
   s: '#133e7c',
-  p: '#c59b1a',
+  p: '#856912',
   d: '#9e1c2c',
   f: '#0f0f0f',
 };

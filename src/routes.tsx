@@ -2,6 +2,11 @@ import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
 
+let groupsCache: unknown = null;
+let anomaliesCache: unknown = null;
+let discoverersCache: unknown = null;
+let timelineCache: unknown = null;
+
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
 const AtlasGroup = lazy(() => import('./pages/AtlasGroup'));
@@ -31,20 +36,20 @@ export const router = createBrowserRouter([
     path: '/element/:symbol',
     Component: Element,
     loader: async ({ params }: LoaderFunctionArgs) => {
-      const [elementMod, groupsMod, anomaliesMod] = await Promise.all([
+      const [elementMod, groups, anomalies] = await Promise.all([
         import(`../data/generated/element-${params.symbol}.json`),
-        import('../data/generated/groups.json'),
-        import('../data/generated/anomalies.json'),
+        groupsCache ?? import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
+        anomaliesCache ?? import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
       ]);
-      return { element: elementMod.default, groups: groupsMod.default, anomalies: anomaliesMod.default };
+      return { element: elementMod.default, groups, anomalies };
     },
   },
   {
     path: '/atlas/group/:n',
     Component: AtlasGroup,
     loader: async () => {
-      const mod = await import('../data/generated/groups.json');
-      return { groups: mod.default };
+      groupsCache ??= await import('../data/generated/groups.json').then(m => m.default);
+      return { groups: groupsCache };
     },
   },
   {
@@ -86,8 +91,8 @@ export const router = createBrowserRouter([
     path: '/atlas/anomaly/:slug',
     Component: AtlasAnomaly,
     loader: async () => {
-      const mod = await import('../data/generated/anomalies.json');
-      return { anomalies: mod.default };
+      anomaliesCache ??= await import('../data/generated/anomalies.json').then(m => m.default);
+      return { anomalies: anomaliesCache };
     },
   },
   {
@@ -116,8 +121,8 @@ export const router = createBrowserRouter([
     path: '/discovery-timeline',
     Component: DiscoveryTimeline,
     loader: async () => {
-      const mod = await import('../data/generated/timeline.json');
-      return mod.default;
+      timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
+      return timelineCache;
     },
   },
   { path: '/phase-landscape', Component: PhaseLandscape },
@@ -126,8 +131,8 @@ export const router = createBrowserRouter([
     path: '/anomaly-explorer',
     Component: AnomalyExplorer,
     loader: async () => {
-      const mod = await import('../data/generated/anomalies.json');
-      return { anomalies: mod.default };
+      anomaliesCache ??= await import('../data/generated/anomalies.json').then(m => m.default);
+      return { anomalies: anomaliesCache };
     },
   },
   { path: '/neighborhood-graph', Component: NeighborhoodGraph },
@@ -143,24 +148,24 @@ export const router = createBrowserRouter([
     path: '/discoverer-network',
     Component: DiscovererNetwork,
     loader: async () => {
-      const mod = await import('../data/generated/discoverers.json');
-      return { discoverers: mod.default };
+      discoverersCache ??= await import('../data/generated/discoverers.json').then(m => m.default);
+      return { discoverers: discoverersCache };
     },
   },
   {
     path: '/discoverer/:name',
     Component: DiscovererDetail,
     loader: async () => {
-      const mod = await import('../data/generated/discoverers.json');
-      return { discoverers: mod.default };
+      discoverersCache ??= await import('../data/generated/discoverers.json').then(m => m.default);
+      return { discoverers: discoverersCache };
     },
   },
   {
     path: '/timeline/:era',
     Component: TimelineEra,
     loader: async () => {
-      const mod = await import('../data/generated/timeline.json');
-      return mod.default;
+      timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
+      return timelineCache;
     },
   },
 ]);

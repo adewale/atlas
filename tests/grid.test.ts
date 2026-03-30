@@ -23,14 +23,14 @@ describe('contrastTextColor', () => {
     expect(contrastTextColor('#f7f2e8')).toBe('#0f0f0f'); // paper
     expect(contrastTextColor('#ffffff')).toBe('#0f0f0f');
     expect(contrastTextColor('#ece7db')).toBe('#0f0f0f'); // dim
-    expect(contrastTextColor('#c59b1a')).toBe('#0f0f0f'); // mustard
+    expect(contrastTextColor('#856912')).toBe('#f7f2e8'); // mustard (WCAG AA)
   });
 });
 
 describe('blockColor', () => {
   it('returns correct color for each block', () => {
     expect(blockColor('s')).toBe('#133e7c');
-    expect(blockColor('p')).toBe('#c59b1a');
+    expect(blockColor('p')).toBe('#856912');
     expect(blockColor('d')).toBe('#9e1c2c');
     expect(blockColor('f')).toBe('#0f0f0f');
   });

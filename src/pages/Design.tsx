@@ -10,7 +10,7 @@ const PALETTE = [
   { name: 'Black', hex: '#0f0f0f' },
   { name: 'Deep Blue', hex: '#133e7c' },
   { name: 'Warm Red', hex: '#9e1c2c' },
-  { name: 'Mustard', hex: '#c59b1a' },
+  { name: 'Mustard', hex: '#856912' },
 ];
 
 const BLOCKS = ['s', 'p', 'd', 'f'] as const;

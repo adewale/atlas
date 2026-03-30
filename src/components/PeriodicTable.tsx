@@ -96,6 +96,129 @@ function gridDistance(a: ElementRecord, b: ElementRecord): number {
 }
 
 // ---------------------------------------------------------------------------
+// Memoized cell component — only re-renders when its own props change
+// ---------------------------------------------------------------------------
+type ElementCellProps = {
+  symbol: string;
+  atomicNumber: number;
+  name: string;
+  category: string;
+  x: number;
+  y: number;
+  fill: string;
+  textColor: string;
+  isActive: boolean;
+  isDimmed: boolean;
+  hasLoaded: boolean;
+  dist: number;
+  onClick: (symbol: string) => void;
+  onHover: (symbol: string) => void;
+};
+
+const ElementCell = memo(
+  function ElementCell({
+    symbol,
+    atomicNumber,
+    name,
+    category,
+    x,
+    y,
+    fill,
+    textColor,
+    isActive,
+    isDimmed,
+    hasLoaded,
+    dist,
+    onClick,
+    onHover,
+  }: ElementCellProps) {
+    const displayName = name.length > 9 ? name.slice(0, 8) + '\u2026' : name;
+    return (
+      <g
+        transform={`translate(${x}, ${y})`}
+        onClick={() => onClick(symbol)}
+        onMouseEnter={() => onHover(symbol)}
+        role="button"
+        aria-label={`${symbol} ${atomicNumber} ${name} ${category}`}
+        tabIndex={-1}
+        style={{ cursor: 'pointer' }}
+      >
+        <title>{`${symbol} ${atomicNumber} ${name} ${category}`}</title>
+        <g
+          style={{
+            opacity: hasLoaded ? 1 : 0,
+            transform: hasLoaded ? 'none' : 'translateY(4px)',
+            transition: hasLoaded
+              ? `opacity 200ms var(--ease-spring) ${atomicNumber * 4}ms, transform 200ms var(--ease-spring) ${atomicNumber * 4}ms`
+              : 'none',
+          }}
+        >
+          <rect
+            x={1}
+            y={1}
+            width={CELL_WIDTH - 2}
+            height={CELL_HEIGHT - 2}
+            fill={fill}
+            stroke={isActive ? WARM_RED : BLACK}
+            strokeWidth={isActive ? 2 : 0.5}
+            style={{
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
+            }}
+          />
+          <text
+            x={4}
+            y={13}
+            fontSize={9}
+            fill={textColor}
+            fontFamily="system-ui, sans-serif"
+            style={{
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
+              viewTransitionName: isActive ? 'element-number' : undefined,
+            } as React.CSSProperties}
+          >
+            {atomicNumber}
+          </text>
+          <text
+            x={CELL_WIDTH / 2}
+            y={36}
+            textAnchor="middle"
+            fontSize={16}
+            fontWeight="bold"
+            fill={textColor}
+            fontFamily="system-ui, sans-serif"
+            style={{
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
+              viewTransitionName: isActive ? 'element-symbol' : undefined,
+            } as React.CSSProperties}
+          >
+            {symbol}
+          </text>
+          <text
+            x={CELL_WIDTH / 2}
+            y={52}
+            textAnchor="middle"
+            fontSize={7}
+            fill={textColor}
+            fontFamily="system-ui, sans-serif"
+            style={{ transition: `fill 250ms var(--ease-out) ${dist * 8}ms` }}
+          >
+            {displayName}
+          </text>
+        </g>
+      </g>
+    );
+  },
+  (prev, next) =>
+    prev.symbol === next.symbol &&
+    prev.fill === next.fill &&
+    prev.textColor === next.textColor &&
+    prev.isActive === next.isActive &&
+    prev.isDimmed === next.isDimmed &&
+    prev.hasLoaded === next.hasLoaded &&
+    prev.dist === next.dist,
+);
+
+// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 type PeriodicTableProps = {
@@ -120,6 +243,19 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
     const filtering = query.trim().length > 0;
     return { filteredSymbols: symbols, isFiltering: filtering, matchCount: filtering ? symbols.size : null };
   }, [query]);
+
+  // Pre-compute all 118 fills and text colors so cells don't recompute on hover
+  const { fillMap, textColorMap, dimmedTextColor } = useMemo(() => {
+    const fills = new Map<string, string>();
+    const textColors = new Map<string, string>();
+    const dimText = contrastTextColor(DIM);
+    for (const el of allElements) {
+      const f = getCellFill(el, highlightMode, property);
+      fills.set(el.symbol, f);
+      textColors.set(el.symbol, contrastTextColor(f));
+    }
+    return { fillMap: fills, textColorMap: textColors, dimmedTextColor: dimText };
+  }, [highlightMode, property]);
 
   // Find focused element position for ripple distance calculation
   const focusedPos = useMemo(() => {
@@ -293,8 +429,8 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 background: isActive ? DEEP_BLUE : 'transparent',
                 color: isActive ? PAPER : GREY_MID,
                 cursor: 'pointer',
-                minHeight: '36px',
-                minWidth: '36px',
+                minHeight: '44px',
+                minWidth: '44px',
                 fontFamily: 'inherit',
                 transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
               }}
@@ -347,88 +483,30 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           const pos = CELL_POSITIONS.get(el.symbol)!;
           const isActive = el.symbol === activeSymbol;
           const isDimmed = isFiltering && !filteredSymbols.has(el.symbol);
-          const fill = isDimmed ? DIM : getCellFill(el, highlightMode, property);
-          const textColor = isDimmed ? GREY_LIGHT : contrastTextColor(fill);
+          const fill = isDimmed ? DIM : fillMap.get(el.symbol)!;
+          const textColor = isDimmed ? dimmedTextColor : textColorMap.get(el.symbol)!;
           const dist = focusedPos
             ? Math.abs(pos.col - focusedPos.col) + Math.abs(pos.row - focusedPos.row)
             : 0;
 
           return (
-            <g
+            <ElementCell
               key={el.symbol}
-              transform={`translate(${pos.x}, ${pos.y})`}
-              onClick={() => handleCellClick(el.symbol)}
-              onMouseEnter={() => setActiveSymbol(el.symbol)}
-              role="button"
-              aria-label={`${el.symbol} ${el.atomicNumber} ${el.name} ${el.category}`}
-              tabIndex={-1}
-              style={{
-                cursor: 'pointer',
-              }}
-            >
-            <title>{`${el.symbol} ${el.atomicNumber} ${el.name} ${el.category}`}</title>
-            <g
-              style={{
-                opacity: hasLoaded ? 1 : 0,
-                transform: hasLoaded ? 'none' : 'translateY(4px)',
-                transition: hasLoaded
-                  ? `opacity 200ms var(--ease-spring) ${el.atomicNumber * 4}ms, transform 200ms var(--ease-spring) ${el.atomicNumber * 4}ms`
-                  : 'none',
-              }}
-            >
-              <rect
-                x={1}
-                y={1}
-                width={CELL_WIDTH - 2}
-                height={CELL_HEIGHT - 2}
-                fill={fill}
-                stroke={isActive ? WARM_RED : BLACK}
-                strokeWidth={isActive ? 2 : 0.5}
-                style={{
-                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-                }}
-              />
-              <text
-                x={4}
-                y={13}
-                fontSize={9}
-                fill={textColor}
-                fontFamily="system-ui, sans-serif"
-                style={{
-                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-                  viewTransitionName: isActive ? 'element-number' : undefined,
-                } as React.CSSProperties}
-              >
-                {el.atomicNumber}
-              </text>
-              <text
-                x={CELL_WIDTH / 2}
-                y={36}
-                textAnchor="middle"
-                fontSize={16}
-                fontWeight="bold"
-                fill={textColor}
-                fontFamily="system-ui, sans-serif"
-                style={{
-                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-                  viewTransitionName: isActive ? 'element-symbol' : undefined,
-                } as React.CSSProperties}
-              >
-                {el.symbol}
-              </text>
-              <text
-                x={CELL_WIDTH / 2}
-                y={52}
-                textAnchor="middle"
-                fontSize={7}
-                fill={textColor}
-                fontFamily="system-ui, sans-serif"
-                style={{ transition: `fill 250ms var(--ease-out) ${dist * 8}ms` }}
-              >
-                {el.name.length > 9 ? el.name.slice(0, 8) + '…' : el.name}
-              </text>
-            </g>
-            </g>
+              symbol={el.symbol}
+              atomicNumber={el.atomicNumber}
+              name={el.name}
+              category={el.category}
+              x={pos.x}
+              y={pos.y}
+              fill={fill}
+              textColor={textColor}
+              isActive={isActive}
+              isDimmed={isDimmed}
+              hasLoaded={hasLoaded}
+              dist={dist}
+              onClick={handleCellClick}
+              onHover={setActiveSymbol}
+            />
           );
         })}
       </svg>
