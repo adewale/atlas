@@ -1,5 +1,5 @@
-import { useEffect, useState, useMemo } from 'react';
-import { Link, useLoaderData } from 'react-router';
+import { useEffect, useState, useMemo, useRef } from 'react';
+import { Link, useLoaderData, useLocation } from 'react-router';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
@@ -151,6 +151,8 @@ const styles = {
 export default function EtymologyMap() {
   const { etymology } = useLoaderData() as { etymology: EtymologyEntry[] };
   const [hasLoaded, setHasLoaded] = useState(false);
+  const location = useLocation();
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const { lines, lineHeight } = usePretextLines({
     text: INTRO_TEXT,
@@ -161,6 +163,14 @@ export default function EtymologyMap() {
     const id = requestAnimationFrame(() => setHasLoaded(true));
     return () => cancelAnimationFrame(id);
   }, []);
+
+  // Scroll to hash-targeted section on load
+  useEffect(() => {
+    const hash = location.hash.replace('#', '').toLowerCase();
+    if (hash && sectionRefs.current[hash]) {
+      sectionRefs.current[hash]!.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location.hash]);
 
   // Order sections by the canonical list
   const orderedSections = useMemo(() => {
@@ -203,6 +213,8 @@ export default function EtymologyMap() {
         return (
           <section
             key={section.origin}
+            id={section.origin.toLowerCase()}
+            ref={(el) => { sectionRefs.current[section.origin.toLowerCase()] = el; }}
             style={{ marginBottom: SECTION_GAP }}
           >
             <div style={styles.sectionHeader(color)}>

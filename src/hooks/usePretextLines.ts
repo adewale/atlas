@@ -37,6 +37,7 @@ type UseShapedTextOptions = {
   narrowWidth: number;
   font?: string;
   mobile?: boolean;
+  leftIndent?: { width: number; height: number };
 };
 
 type UseWedgeTextOptions = {
@@ -89,30 +90,53 @@ export function useShapedText({
   narrowWidth,
   font = BODY_FONT,
   mobile = false,
+  leftIndent,
 }: UseShapedTextOptions): {
   lines: PositionedLine[];
   lineHeight: number;
   plateHeightInLines: number;
+  identityHeightInLines: number;
 } {
   return useMemo(() => {
     const lineHeight = computeLineHeight(font);
     const plateHeightInLines = Math.ceil(PLATE_HEIGHT / lineHeight);
+    const identityHeightInLines = leftIndent
+      ? Math.ceil(leftIndent.height / lineHeight)
+      : 0;
 
     if (mobile) {
       const lines = measureLines(text, font, fullWidth, lineHeight);
-      return { lines, lineHeight, plateHeightInLines };
+      return { lines, lineHeight, plateHeightInLines, identityHeightInLines };
     }
 
-    // Build width array: narrow for lines beside plate, full for lines below
+    const leftW = leftIndent ? leftIndent.width : 0;
+    const GAP = leftIndent ? 16 : 0;
+
+    // Build width array accounting for both left identity block and right plate
     const widthPerLine: number[] = [];
-    // Generous max lines estimate
     for (let i = 0; i < 200; i++) {
-      widthPerLine.push(i < plateHeightInLines ? narrowWidth : fullWidth);
+      const besidePlate = i < plateHeightInLines;
+      const besideIdentity = i < identityHeightInLines;
+      if (besideIdentity && besidePlate) {
+        widthPerLine.push(narrowWidth - leftW - GAP);
+      } else if (besidePlate) {
+        widthPerLine.push(narrowWidth);
+      } else if (besideIdentity) {
+        widthPerLine.push(fullWidth - leftW - GAP);
+      } else {
+        widthPerLine.push(fullWidth);
+      }
     }
 
     const lines = shapeText(text, font, widthPerLine, lineHeight);
-    return { lines, lineHeight, plateHeightInLines };
-  }, [text, fullWidth, narrowWidth, font, mobile]);
+
+    // Offset x for lines beside the identity block
+    for (let i = 0; i < Math.min(identityHeightInLines, lines.length); i++) {
+      lines[i].x = leftW + GAP;
+    }
+
+    return { lines, lineHeight, plateHeightInLines, identityHeightInLines };
+  }, [text, fullWidth, narrowWidth, font, mobile, leftIndent?.width, leftIndent?.height]);
 }
 
 type UseDropCapOptions = {

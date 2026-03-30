@@ -23,6 +23,7 @@ vi.mock('../../src/hooks/usePretextLines', () => ({
     ],
     lineHeight: 20,
     plateHeightInLines: 9,
+    identityHeightInLines: 7,
   }),
 }));
 
@@ -185,6 +186,12 @@ describe('Folio', () => {
     renderFolio();
     const catLink = screen.getByRole('link', { name: /transition metal/i });
     expect(catLink).toHaveAttribute('href', '/atlas/category/transition-metal');
+  });
+
+  it('etymology link points to specific origin hash', () => {
+    renderFolio();
+    const etymLink = screen.getByText('(property →)');
+    expect(etymLink).toHaveAttribute('href', '/etymology-map#property');
   });
 
   it('discoverer link points to encoded discoverer URL', () => {

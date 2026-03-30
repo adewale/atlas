@@ -255,10 +255,15 @@ svg [role="button"] {
     padding-left: 16px !important;
   }
 
-  /* Data plate: above summary on mobile */
+  /* Identity block and data plate: stacked on mobile */
   .folio-summary-area {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+  }
+  .folio-identity {
+    position: static !important;
+    width: 100% !important;
+    margin-bottom: 12px;
   }
   .folio-data-plate {
     position: static !important;

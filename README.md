@@ -8,11 +8,11 @@ Atlas treats the periodic table as a directed graph of 118 elements connected by
 
 60% [Oliver Byrne](https://www.c82.net/euclid/) visual drama, 40% [Edward Tufte](https://www.edwardtufte.com/) data density:
 
-- **Hard color fields** — solid rects, no gradients, no border-radius
-- **Four colors** — paper `#f7f2e8`, deep blue `#133e7c`, warm red `#9e1c2c`, mustard `#c59b1a`
+- **Hard colour fields** — solid rects, no gradients, no border-radius
+- **Four colours** — paper `#f7f2e8`, deep blue `#133e7c`, warm red `#9e1c2c`, mustard `#c59b1a`
 - **Block identity** — s/p/d/f blocks map to blue/mustard/red/black so you recognise the block before reading a word
 - **Giant numerals** — atomic number and symbol are hero elements, not labels
-- **High data-ink ratio** — property bars where length IS the value, inline sparklines, no chartjunk
+- **High data-ink ratio** — property bars where length IS the value, no chartjunk
 - **Pretext typography** — all body text measured and positioned with `@chenglou/pretext`, rendered as SVG `<text>` elements with thin rules between lines
 - **90% still, 10% explosive** — text staggers in line-by-line, data plates wipe, bars grow, symbols morph via the View Transitions API
 
@@ -119,6 +119,10 @@ The e2e suite includes:
 npm run deploy   # builds and deploys to Cloudflare Pages
 ```
 
-## License
+## Standing on Shoulders
+
+Atlas would not exist without [PubChem](https://pubchem.ncbi.nlm.nih.gov/), [Wikidata](https://www.wikidata.org/), and [Wikipedia](https://en.wikipedia.org/). These open data projects represent decades of painstaking work by scientists, editors, and volunteers worldwide. What Atlas adds is a layer of cross-linked navigation, visual encoding, and computed relationships that make the periodic table explorable as a connected graph rather than a flat table. Every element connects to its group, period, block, category, discoverer, era, etymology, neighbours, anomalies, and rankings — thirteen relationship types, all surfaced as navigable links. But the data beneath it all comes from the community. We are grateful.
+
+## Licence
 
 Data: PubChem (public domain), Wikidata (CC0 1.0), Wikipedia excerpts (CC BY-SA 4.0).

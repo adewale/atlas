@@ -21,6 +21,10 @@ const PLATE_HEIGHT = 180;
 const FULL_WIDTH = 560;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - 24;
 
+// Identity block: number + symbol + name, acts as a large "drop cap"
+const IDENTITY_WIDTH = 130;
+const IDENTITY_HEIGHT = 150;
+
 const MIN_ANNOTATION_GAP = 20;
 
 /** Find the y-position of the first text line containing `keyword`. */
@@ -104,11 +108,12 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
   const svgWidth = mobile ? 320 : FULL_WIDTH;
 
-  const { lines, lineHeight, plateHeightInLines } = useShapedText({
+  const { lines, lineHeight, plateHeightInLines, identityHeightInLines } = useShapedText({
     text: element.summary,
     fullWidth: FULL_WIDTH,
     narrowWidth: NARROW_WIDTH,
     mobile,
+    leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },
   });
 
   // Group trend data for electronegativity sparkline
@@ -261,54 +266,63 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           ) : <span />}
         </nav>
 
-        {/* Giant atomic number in block color — Byrne scale: enormous next to tiny */}
-        <div
-          className="folio-number"
-          aria-hidden="true"
-          style={{
-            fontSize: '96px',
-            fontWeight: 'bold',
-            color,
-            fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
-            lineHeight: 1,
-            marginLeft: '-2px',
-            viewTransitionName: 'element-number',
-          } as React.CSSProperties}
-        >
-          {paddedNumber}
-        </div>
-
-        {/* Giant symbol in block color — the symbol declares its block identity */}
-        <div
-          className="folio-symbol"
-          style={{
-            fontSize: '56px',
-            fontWeight: 'bold',
-            color,
-            lineHeight: 1.1,
-            viewTransitionName: 'element-symbol',
-          } as React.CSSProperties}
-        >
-          {element.symbol}
-        </div>
-
-        {/* Element name — quiet caption, Byrne-style: small, wide-tracked, uppercase */}
-        <h2 style={{
-          fontSize: '14px',
-          fontWeight: 'normal',
-          margin: '6px 0 12px',
-          textTransform: 'uppercase',
-          letterSpacing: '0.3em',
-          color: '#666',
-        }}>
-          {element.name}
-        </h2>
-
-        {/* Thick rule in block color — Byrne: structural bar, not decorative line */}
-        <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
-
-        {/* Summary text shaped around data plate */}
+        {/* Summary area: identity block (left), text (centre), data plate (right) */}
         <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
+          {/* Identity block — number + symbol + name, acts as dramatic drop cap */}
+          <div
+            className="folio-identity"
+            style={{
+              position: mobile ? 'static' : 'absolute',
+              top: 0,
+              left: 0,
+              width: mobile ? '100%' : IDENTITY_WIDTH,
+              marginBottom: mobile ? '12px' : 0,
+              ...(animate
+                ? {
+                    opacity: 0,
+                    animation: 'folio-line-reveal 400ms var(--ease-out) forwards',
+                  }
+                : {}),
+            }}
+          >
+            <div
+              className="folio-number"
+              aria-hidden="true"
+              style={{
+                fontSize: mobile ? '64px' : '56px',
+                fontWeight: 'bold',
+                color,
+                fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
+                lineHeight: 1,
+                viewTransitionName: 'element-number',
+              } as React.CSSProperties}
+            >
+              {paddedNumber}
+            </div>
+            <div
+              className="folio-symbol"
+              style={{
+                fontSize: mobile ? '40px' : '44px',
+                fontWeight: 'bold',
+                color,
+                lineHeight: 1.1,
+                viewTransitionName: 'element-symbol',
+              } as React.CSSProperties}
+            >
+              {element.symbol}
+            </div>
+            <h2 style={{
+              fontSize: '11px',
+              fontWeight: 'normal',
+              margin: '4px 0 0',
+              textTransform: 'uppercase',
+              letterSpacing: '0.2em',
+              color: '#666',
+            }}>
+              {element.name}
+            </h2>
+          </div>
+
           {/* Data plate positioned at top-right */}
           <div
             data-testid="data-plate"
@@ -343,7 +357,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">{element.period}</text>
                 </svg>
               </Link>
-              {/* Block row — block color */}
+              {/* Block row — block colour */}
               <Link to={`/atlas/block/${element.block}`} aria-label={`Block ${element.block}`} style={{ display: 'block', textDecoration: 'none' }}>
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={color} />
@@ -354,7 +368,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             </div>
           </div>
 
-          {/* Shaped summary text */}
+          {/* Shaped summary text — flows around identity block (left) and data plate (right) */}
           <svg
             width={svgWidth}
             height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
@@ -367,20 +381,12 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               y={0}
               maxWidth={svgWidth}
               animationStagger={animate ? 30 : undefined}
-              dropCap={{ fontSize: 48, fill: color }}
-              inlineSparkline={
-                groupTrendData
-                  ? {
-                      lineIndex: -1,
-                      values: groupTrendData.values,
-                      highlightIndex: groupTrendData.highlightIndex,
-                      color: color,
-                    }
-                  : undefined
-              }
             />
           </svg>
         </div>
+
+        {/* Thick rule in block colour */}
+        <div style={{ borderTop: `4px solid ${color}`, margin: '16px 0' }} />
 
         {/* Group phase strip — shows phase at STP for each group member */}
         {groupPhaseData && (
@@ -394,7 +400,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               phases={groupPhaseData.phases}
               symbols={groupPhaseData.symbols}
               highlightIndex={groupPhaseData.highlightIndex}
-              width={FULL_WIDTH}
+              width={svgWidth}
               height={24}
             />
             <div style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '9px', color: '#666' }}>
@@ -448,7 +454,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   fontWeight: 'bold',
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
-                  padding: '3px 8px',
+                  padding: '6px 10px',
                   border: `1px solid ${color}`,
                   color,
                   textDecoration: 'none',
@@ -482,7 +488,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 {element.etymologyDescription}
                 {element.etymologyOrigin && element.etymologyOrigin !== 'unknown' && (
                   <Link
-                    to="/etymology-map"
+                    to={`/etymology-map#${element.etymologyOrigin?.toLowerCase()}`}
                     style={{ marginLeft: '6px', fontSize: '11px', color }}
                   >
                     ({element.etymologyOrigin} →)
