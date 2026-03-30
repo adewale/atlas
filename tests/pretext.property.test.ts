@@ -200,17 +200,24 @@ describe('Pretext wrapper integration', () => {
   });
 
   describe('computeLineHeight', () => {
-    it('calls prepareWithSegments with reference text "Xg"', () => {
-      mockLayout.mockReturnValueOnce({ lineCount: 1, height: 22 });
+    it('parses font size and returns 1.2× multiplier', () => {
       const h = computeLineHeight('18px serif');
-      expect(mockPrepareWithSegments).toHaveBeenCalledWith('Xg', '18px serif');
-      expect(h).toBe(22);
+      expect(h).toBe(Math.ceil(18 * 1.2)); // 22
     });
 
-    it('uses default font when none provided', () => {
-      mockLayout.mockReturnValueOnce({ lineCount: 1, height: 20 });
-      computeLineHeight();
-      expect(mockPrepareWithSegments).toHaveBeenCalledWith('Xg', '16px system-ui');
+    it('uses default 16px when no font provided', () => {
+      const h = computeLineHeight();
+      expect(h).toBe(Math.ceil(16 * 1.2)); // 20
+    });
+
+    it('handles fractional font sizes', () => {
+      const h = computeLineHeight('14.5px system-ui');
+      expect(h).toBe(Math.ceil(14.5 * 1.2)); // 18
+    });
+
+    it('falls back to 16px when font string has no px size', () => {
+      const h = computeLineHeight('medium sans-serif');
+      expect(h).toBe(Math.ceil(16 * 1.2)); // 20
     });
   });
 });

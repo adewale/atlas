@@ -81,13 +81,15 @@ export function fitLabel(
 }
 
 /**
- * Compute the line height from a reference measurement.
- * Used for plate-height coordination in Tier 2.
+ * Compute the line height from the font size.
+ * Uses a 1.2× multiplier (standard browser default line-height).
+ * The previous approach — layout(ref, 9999, 0) — always returned 0
+ * because pretext's layout returns lineCount × lineHeight.
  */
 export function computeLineHeight(font: string = DEFAULT_FONT): number {
-  const ref = prepareWithSegments('Xg', font);
-  const { height } = layout(ref, 9999, 0);
-  return height;
+  const match = font.match(/(\d+(?:\.\d+)?)px/);
+  const fontSize = match ? parseFloat(match[1]) : 16;
+  return Math.ceil(fontSize * 1.2);
 }
 
 export { prepareWithSegments, layout, layoutWithLines, layoutNextLine };

@@ -7,9 +7,9 @@ export default function AtlasCategory() {
   const { slug } = useParams();
   const { categories } = useLoaderData() as { categories: CategoryData[] };
 
-  const cat = categories.find((c) => c.slug === slug);
-  const elements = cat ? cat.elements.map((s) => getElement(s)!).filter(Boolean) : [];
   const label = slug?.replace(/-/g, ' ') ?? '';
+  const cat = categories.find((c) => c.slug === label);
+  const elements = cat ? cat.elements.map((s) => getElement(s)!).filter(Boolean) : [];
 
   // Category coloring: metal=blue, nonmetal/noble=red, metalloid=mustard
   let color = '#133e7c';
