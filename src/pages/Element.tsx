@@ -5,6 +5,7 @@ import Folio from '../components/Folio';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { BACK_LINK_STYLE } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Element() {
   const { symbol } = useParams();

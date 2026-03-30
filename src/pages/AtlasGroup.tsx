@@ -5,6 +5,7 @@ import { BLACK, BACK_LINK_STYLE } from '../lib/theme';
 import AtlasPlate from '../components/AtlasPlate';
 import type { GroupData } from '../lib/types';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function AtlasGroup() {
   const { n } = useParams();

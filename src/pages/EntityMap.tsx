@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 /* ------------------------------------------------------------------ */
 /* Entity catalogue                                                    */

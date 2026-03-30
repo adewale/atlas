@@ -4,6 +4,7 @@ import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
 import { BLACK, DIM, BACK_LINK_STYLE } from '../lib/theme';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const TEXT_WIDTH = 720;
 

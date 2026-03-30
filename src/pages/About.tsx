@@ -3,6 +3,7 @@ import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
 import { BLACK, DEEP_BLUE, BACK_LINK_STYLE } from '../lib/theme';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const SVG_MAX_WIDTH = 640;
 
@@ -19,6 +20,7 @@ const TECHNOLOGY_TEXT =
   'Built with React, Vite, and @chenglou/pretext for text measurement. Deployed on Cloudflare Pages. System fonts throughout. No images in v1.';
 
 export default function About() {
+  useDocumentTitle('About');
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_MAX_WIDTH,
@@ -41,7 +43,7 @@ export default function About() {
   });
 
   return (
-    <main>
+    <main id="main-content">
       <div style={{ maxWidth: '640px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>About Atlas</h1>

@@ -4,9 +4,11 @@ import { WARM_RED, DEEP_BLUE, BACK_LINK_STYLE } from '../lib/theme';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PeriodData } from '../lib/types';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function AtlasPeriod() {
   const { n } = useParams();
+  useDocumentTitle(`Period ${n}`);
   const { periods } = useLoaderData() as { periods: PeriodData[] };
 
   const period = periods.find((p) => p.n === Number(n));
@@ -15,7 +17,7 @@ export default function AtlasPeriod() {
   const color = (Number(n) - 1) % 2 === 0 ? WARM_RED : DEEP_BLUE;
 
   return (
-    <main>
+    <main id="main-content">
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color }}>Period {n}</h1>
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />

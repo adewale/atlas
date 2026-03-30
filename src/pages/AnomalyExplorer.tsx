@@ -15,6 +15,7 @@ import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 /* ------------------------------------------------------------------ */
 /* Colour key for anomaly buttons (cycle through Byrne palette)       */
@@ -82,6 +83,7 @@ const DESC_Y_OFFSET = 24;
 /* Component                                                          */
 /* ------------------------------------------------------------------ */
 export default function AnomalyExplorer() {
+  useDocumentTitle('Anomaly Explorer');
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -106,7 +108,7 @@ export default function AnomalyExplorer() {
   const totalHeight = VIEWBOX_H + DESC_Y_OFFSET + (selected ? descSvgHeight : 0);
 
   return (
-    <main>
+    <main id="main-content">
       <VizNav />
 
       <h1

@@ -6,6 +6,7 @@ import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -152,6 +153,7 @@ const styles = {
 // Component
 // ---------------------------------------------------------------------------
 export default function EtymologyMap() {
+  useDocumentTitle('Etymology Map');
   const { etymology } = useLoaderData() as { etymology: EtymologyEntry[] };
   const [hasLoaded, setHasLoaded] = useState(false);
   const location = useLocation();
@@ -188,7 +190,7 @@ export default function EtymologyMap() {
   const introSvgHeight = lines.length * lineHeight + 8;
 
   return (
-    <main style={styles.page}>
+    <main id="main-content" style={styles.page}>
       <VizNav />
       <div style={styles.content}>
 

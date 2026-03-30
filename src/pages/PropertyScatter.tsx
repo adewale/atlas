@@ -9,6 +9,7 @@ import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
 import type { ElementRecord } from '../lib/types';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
 // Property config

@@ -4,16 +4,18 @@ import { useIsMobile } from '../hooks/useIsMobile';
 import { BACK_LINK_STYLE } from '../lib/theme';
 import CompareView from '../components/CompareView';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Compare() {
   const { symbolA, symbolB } = useParams();
   const elementA = symbolA ? getElement(symbolA) : undefined;
   const elementB = symbolB ? getElement(symbolB) : undefined;
   const vertical = useIsMobile(600);
+  useDocumentTitle(elementA && elementB ? `${elementA.name} vs ${elementB.name}` : 'Compare Not Found');
 
   if (!elementA || !elementB) {
     return (
-      <main>
+      <main id="main-content">
         <h1>Compare — Element not found</h1>
         <p>
           Could not find one or both elements.{' '}
@@ -25,7 +27,7 @@ export default function Compare() {
   }
 
   return (
-    <main>
+    <main id="main-content">
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <div style={{ marginTop: '16px' }}>
         <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />

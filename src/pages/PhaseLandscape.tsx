@@ -14,6 +14,7 @@ import { BLACK, DEEP_BLUE, WARM_RED, PAPER } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
 // Phase → colour mapping (Byrne: hard colour fields, no gradients)
@@ -49,6 +50,7 @@ const TABLE_OFFSET_Y = LEGEND_HEIGHT + INTRO_HEIGHT + 16;
 // Component
 // ---------------------------------------------------------------------------
 export default function PhaseLandscape() {
+  useDocumentTitle('Phase Landscape');
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const { lines, lineHeight } = usePretextLines({
@@ -64,7 +66,7 @@ export default function PhaseLandscape() {
   const totalHeight = TABLE_OFFSET_Y + VIEWBOX_H + 60;
 
   return (
-    <main>
+    <main id="main-content">
       <VizNav />
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Phase Landscape at STP</h1>
 

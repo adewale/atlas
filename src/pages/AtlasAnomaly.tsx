@@ -6,6 +6,7 @@ import PretextSvg from '../components/PretextSvg';
 import AtlasPlate from '../components/AtlasPlate';
 import type { AnomalyData } from '../lib/types';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const DESC_MAX_W = 600;
 
@@ -14,6 +15,7 @@ export default function AtlasAnomaly() {
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
 
   const anomaly = anomalies.find((a) => a.slug === slug);
+  useDocumentTitle(anomaly ? anomaly.label : 'Anomaly Not Found');
   const elements = anomaly ? anomaly.elements.map((s) => getElement(s)!).filter(Boolean) : [];
 
   const { lines, lineHeight } = usePretextLines({
@@ -22,7 +24,7 @@ export default function AtlasAnomaly() {
   });
 
   return (
-    <main>
+    <main id="main-content">
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       {anomaly ? (
         <>

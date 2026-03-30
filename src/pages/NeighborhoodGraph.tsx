@@ -14,6 +14,7 @@ import { PAPER, BLACK, DIM, GREY_RULE } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -59,6 +60,7 @@ for (const el of allElements) {
 // Component
 // ---------------------------------------------------------------------------
 export default function NeighborhoodGraph() {
+  useDocumentTitle('Neighbourhood Graph');
   const navigate = useNavigate();
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -91,7 +93,7 @@ export default function NeighborhoodGraph() {
   const totalHeight = TABLE_OFFSET_Y + VIEWBOX_H + 24;
 
   return (
-    <main>
+    <main id="main-content">
       <VizNav />
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighbourhood Graph</h1>
 

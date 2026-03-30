@@ -7,6 +7,7 @@ import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID } from '../lib/the
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -62,6 +63,7 @@ type Tooltip = { x: number; y: number; name: string; year: string; discoverer: s
 // Component
 // ---------------------------------------------------------------------------
 export default function DiscoveryTimeline() {
+  useDocumentTitle('Discovery Timeline');
   const { antiquity, timeline } = useLoaderData() as TimelineData;
   const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -175,7 +177,7 @@ export default function DiscoveryTimeline() {
   const totalHeight = eraLabelY + 30;
 
   return (
-    <main>
+    <main id="main-content">
       <VizNav />
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Discovery Timeline</h1>
 

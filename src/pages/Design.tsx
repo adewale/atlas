@@ -3,6 +3,7 @@ import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const PALETTE = [
   { name: 'Paper', hex: '#f7f2e8' },

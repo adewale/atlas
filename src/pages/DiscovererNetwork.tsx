@@ -7,6 +7,7 @@ import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 /* ------------------------------------------------------------------ */
 /* Constants                                                           */
@@ -26,6 +27,7 @@ const INTRO_MAX_W = SVG_WIDTH;
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 export default function DiscovererNetwork() {
+  useDocumentTitle('Discoverer Network');
   const { discoverers } = useLoaderData() as { discoverers: { name: string; elements: string[] }[] };
   const navigate = useNavigate();
 
@@ -70,7 +72,7 @@ export default function DiscovererNetwork() {
   const totalHeight = barsStartY + totalRows * ROW_HEIGHT + 40;
 
   return (
-    <main>
+    <main id="main-content">
       <VizNav />
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: MUSTARD }}>Discoverer Network</h1>
 

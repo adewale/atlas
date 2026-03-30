@@ -4,6 +4,7 @@ import { DEEP_BLUE, BACK_LINK_STYLE } from '../lib/theme';
 import AtlasPlate from '../components/AtlasPlate';
 import type { RankingsData } from '../lib/types';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const LABELS: Record<string, string> = {
   mass: 'Atomic Mass',

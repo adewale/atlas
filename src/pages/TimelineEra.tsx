@@ -5,6 +5,7 @@ import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, DEEP_BLUE, BLACK, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 type TimelineEntry = { symbol: string; year: number | null; discoverer: string };
 type TimelineData = { antiquity: TimelineEntry[]; timeline: TimelineEntry[] };
@@ -41,6 +42,7 @@ export default function TimelineEra() {
 
   // Prev/next era
   const eraLabel = isAntiquity ? 'Antiquity' : `${decade}s`;
+  useDocumentTitle(eraLabel);
   let prevEra: string | null = null;
   let nextEra: string | null = null;
 
@@ -80,7 +82,7 @@ export default function TimelineEra() {
 
   if (entries.length === 0) {
     return (
-      <main>
+      <main id="main-content">
         <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
         <h1 style={{ margin: '12px 0 16px' }}>No elements found for this era</h1>
         <SiteNav />
@@ -89,7 +91,7 @@ export default function TimelineEra() {
   }
 
   return (
-    <main>
+    <main id="main-content">
       <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
 
       {/* Prev / Next navigation */}
