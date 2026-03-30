@@ -4,7 +4,7 @@ import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
-import { computeLineHeight } from '../lib/pretext';
+import { computeLineHeight, PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
@@ -194,7 +194,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
   // Pretext-measured marginalia text
   const MARGINALIA_WIDTH = 180;
-  const MARGINALIA_FONT = '14px system-ui';
+  const MARGINALIA_FONT = `14px ${PRETEXT_SANS}`;
 
   const { lines: catLines, lineHeight: catLH } = usePretextLines({
     text: element.category,

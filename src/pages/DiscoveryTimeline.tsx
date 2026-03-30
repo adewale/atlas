@@ -4,6 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID, INSCRIPTION_STYLE } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -71,7 +72,7 @@ export default function DiscoveryTimeline() {
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_WIDTH,
-    dropCapFont: '80px system-ui',
+    dropCapFont: `80px ${PRETEXT_SANS}`,
   });
 
   useEffect(() => {

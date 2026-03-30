@@ -3,6 +3,7 @@ import { generateComparisonNotes } from '../lib/compare';
 import { useWedgeText } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
 
+import { PRETEXT_SANS } from '../lib/pretext';
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT } from '../lib/theme';
 const DEFAULT_WIDTH = 800;
 const SPLIT_H = 280;
@@ -41,7 +42,7 @@ export default function CompareView({
     text: notesText,
     minWidth: WIDTH * 0.35,
     maxWidth: WIDTH - 8,
-    font: '14px system-ui',
+    font: `14px ${PRETEXT_SANS}`,
   });
 
   // Compute max values for bars

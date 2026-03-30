@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { usePretextLines } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
 import { BLACK, PAPER, GREY_MID, MONO_FONT } from '../lib/theme';
 
 const PANEL_WIDTH = 480;
-const INTRO_FONT = '14px system-ui';
+const INTRO_FONT = `14px ${PRETEXT_SANS}`;
 
 const SHORTCUTS: { keys: string; action: string }[] = [
   { keys: '← → ↑ ↓', action: 'Navigate grid' },

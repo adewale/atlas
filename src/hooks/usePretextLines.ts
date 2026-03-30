@@ -4,10 +4,11 @@ import {
   shapeText,
   dropCapLayout,
   computeLineHeight,
+  PRETEXT_SANS,
   type PositionedLine,
 } from '../lib/pretext';
 
-const BODY_FONT = '16px system-ui';
+const BODY_FONT = `16px ${PRETEXT_SANS}`;
 const PLATE_HEIGHT = 180;
 
 type UsePretextLinesOptions = {
@@ -154,7 +155,7 @@ export function useDropCapText({
   text,
   maxWidth,
   font = BODY_FONT,
-  dropCapFont = '48px system-ui',
+  dropCapFont = `48px ${PRETEXT_SANS}`,
 }: UseDropCapOptions): {
   dropCap: { char: string; width: number; height: number; fontSize: number };
   lines: PositionedLine[];

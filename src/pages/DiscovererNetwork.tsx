@@ -4,6 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -48,7 +49,7 @@ export default function DiscovererNetwork() {
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: INTRO_MAX_W,
-    dropCapFont: '72px system-ui',
+    dropCapFont: `72px ${PRETEXT_SANS}`,
   });
 
   // Separate antiquity group and prolific discoverers (2+ elements)

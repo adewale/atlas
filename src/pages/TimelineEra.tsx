@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useCallback, useRef } from 'react';
 import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
-import { WARM_RED, DEEP_BLUE, BLACK, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
+import type { PlateHoverInfo } from '../components/AtlasPlate';
+import { WARM_RED, DEEP_BLUE, BLACK, PAPER, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -30,6 +31,38 @@ export default function TimelineEra() {
 
   const elements = entries.map((e) => getElement(e.symbol)!).filter(Boolean);
   const color = elements.length > 0 ? blockColor(elements[0].block) : DEEP_BLUE;
+
+  // Tooltip state
+  type TooltipData = { name: string; year: string; discoverer: string; category: string; top: number; left: number } | null;
+  const [tooltip, setTooltip] = useState<TooltipData>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Build a lookup from symbol to timeline entry for discoverer/year info
+  const entryBySymbol = useMemo(() => {
+    const map = new Map<string, TimelineEntry>();
+    for (const e of entries) map.set(e.symbol, e);
+    return map;
+  }, [entries]);
+
+  const handleHover = useCallback(
+    (info: PlateHoverInfo) => {
+      if (!info || !containerRef.current) {
+        setTooltip(null);
+        return;
+      }
+      const entry = entryBySymbol.get(info.symbol);
+      const containerRect = containerRef.current.getBoundingClientRect();
+      setTooltip({
+        name: info.name,
+        year: entry?.year != null ? String(entry.year) : 'Antiquity',
+        discoverer: entry?.discoverer ?? 'Unknown',
+        category: info.category,
+        top: info.rect.top - containerRect.top,
+        left: info.rect.left - containerRect.left + info.rect.width / 2,
+      });
+    },
+    [entryBySymbol],
+  );
 
   // All decades that have elements
   const allDecades = useMemo(() => {
@@ -144,7 +177,37 @@ export default function TimelineEra() {
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
 
       {elements.length > 0 && (
-        <AtlasPlate elements={elements} caption={eraLabel} captionColor={color} />
+        <div ref={containerRef} style={{ position: 'relative' }}>
+          <AtlasPlate elements={elements} caption={eraLabel} captionColor={color} onHover={handleHover} />
+          {tooltip && (
+            <div
+              style={{
+                position: 'absolute',
+                top: tooltip.top - 8,
+                left: tooltip.left,
+                transform: 'translate(-50%, -100%)',
+                background: BLACK,
+                color: PAPER,
+                padding: '8px 14px',
+                borderRadius: '2px',
+                pointerEvents: 'none',
+                whiteSpace: 'nowrap',
+                zIndex: 10,
+                fontFamily: 'system-ui, sans-serif',
+              }}
+            >
+              <div style={{ fontSize: '12px', fontWeight: 'bold' }}>
+                {tooltip.name} ({tooltip.year})
+              </div>
+              <div style={{ fontSize: '10px', opacity: 0.85, marginTop: '2px' }}>
+                {tooltip.discoverer}
+              </div>
+              <div style={{ fontSize: '10px', opacity: 0.7, marginTop: '2px' }}>
+                {tooltip.category}
+              </div>
+            </div>
+          )}
+        </div>
       )}
 
       {/* Discoverers in this era */}

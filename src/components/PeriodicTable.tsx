@@ -399,46 +399,56 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
       {/* Property sub-selector — always rendered for animation, visible when Property mode is active */}
       <div
         style={{
-          display: 'flex',
-          gap: '6px',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          marginTop: '8px',
-          paddingLeft: '16px',
           overflow: 'hidden',
           maxHeight: highlightMode === 'property' ? '60px' : '0px',
           opacity: highlightMode === 'property' ? 1 : 0,
           transition: 'max-height 250ms ease-in-out, opacity 200ms ease-in-out',
+          marginTop: highlightMode === 'property' ? '8px' : '0px',
         }}
       >
-        {PROPERTY_OPTIONS.map((o) => {
-          const isActive = property === o.value;
-          return (
-            <button
-              key={o.value}
-              onClick={() => setProperty(o.value)}
-              aria-pressed={isActive}
-              tabIndex={highlightMode === 'property' ? 0 : -1}
-              style={{
-                fontSize: '9px',
-                fontWeight: 'bold',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                padding: '4px 8px',
-                border: `1.5px solid ${isActive ? DEEP_BLUE : GREY_RULE}`,
-                background: isActive ? DEEP_BLUE : 'transparent',
-                color: isActive ? PAPER : GREY_MID,
-                cursor: 'pointer',
-                minHeight: '44px',
-                minWidth: '44px',
-                fontFamily: 'inherit',
-                transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
-              }}
-            >
-              {o.label}
-            </button>
-          );
-        })}
+        <div
+          style={{
+            display: 'flex',
+            gap: '6px',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            paddingLeft: '24px',
+            paddingTop: '6px',
+            paddingBottom: '6px',
+            borderLeft: `3px solid ${DEEP_BLUE}`,
+            background: DIM,
+            borderRadius: '0 4px 4px 0',
+          }}
+        >
+          {PROPERTY_OPTIONS.map((o) => {
+            const isActive = property === o.value;
+            return (
+              <button
+                key={o.value}
+                onClick={() => setProperty(o.value)}
+                aria-pressed={isActive}
+                tabIndex={highlightMode === 'property' ? 0 : -1}
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  padding: '3px 7px',
+                  border: `1.5px solid ${isActive ? DEEP_BLUE : GREY_RULE}`,
+                  background: isActive ? DEEP_BLUE : 'transparent',
+                  color: isActive ? PAPER : GREY_MID,
+                  cursor: 'pointer',
+                  minHeight: '44px',
+                  minWidth: '44px',
+                  fontFamily: 'inherit',
+                  transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
+                }}
+              >
+                {o.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg

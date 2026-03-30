@@ -5,6 +5,7 @@ import PageShell from '../components/PageShell';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { usePretextLines } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 
 /* ------------------------------------------------------------------ */
@@ -63,7 +64,7 @@ const ENTITIES: Entity[] = [
   ]},
   { id: 'discoverer', label: 'Discoverer', route: '/discoverer/:name', count: '50+', colour: MUSTARD, description: 'Person or group who discovered elements. Graph-navigable with related discoverers by era or block.', examples: [
     { name: 'Humphry Davy', href: '/discoverer/Humphry%20Davy' },
-    { name: 'Marie Curie', href: '/discoverer/Marie%20Curie' },
+    { name: 'Marie Curie & Pierre Curie', href: '/discoverer/Marie%20Curie%20%26%20Pierre%20Curie' },
     { name: 'Carl Wilhelm Scheele', href: '/discoverer/Carl%20Wilhelm%20Scheele' },
   ]},
   { id: 'era', label: 'Timeline Era', route: '/timeline/:era', count: '30+', colour: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.', examples: [
@@ -189,7 +190,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
   const { lines: descLines, lineHeight: descLH } = usePretextLines({
     text: hoveredEntity?.description ?? '',
     maxWidth: 200,
-    font: '12px system-ui',
+    font: `12px ${PRETEXT_SANS}`,
   });
 
   const activeEdges = hovered

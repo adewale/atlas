@@ -15,7 +15,9 @@ export type PositionedLine = {
   y: number;
 };
 
-const DEFAULT_FONT = '16px system-ui';
+export const PRETEXT_SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+
+const DEFAULT_FONT = `16px ${PRETEXT_SANS}`;
 
 /**
  * Tier 1: Measure text into positioned lines for SVG rendering.

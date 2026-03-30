@@ -1,4 +1,5 @@
 import type { PositionedLine } from '../lib/pretext';
+import { PRETEXT_SANS } from '../lib/pretext';
 import { BLACK } from '../lib/theme';
 
 export type InlineSparklineConfig = {
@@ -115,7 +116,7 @@ export default function PretextSvg({
           fontSize={dropCap.fontSize}
           fontWeight="bold"
           fill={dropCap.fill}
-          fontFamily="system-ui, sans-serif"
+          fontFamily={PRETEXT_SANS}
           style={
             animationStagger != null
               ? {
@@ -190,7 +191,7 @@ export default function PretextSvg({
               y={lineY}
               fontSize={fontSize}
               fill={fill}
-              fontFamily="system-ui, sans-serif"
+              fontFamily={PRETEXT_SANS}
               style={
                 staggerDelay != null
                   ? {

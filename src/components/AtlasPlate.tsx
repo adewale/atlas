@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
-import { fitLabel, measureLines } from '../lib/pretext';
+import { fitLabel, measureLines, PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import PretextSvg from './PretextSvg';
@@ -10,9 +10,9 @@ import PretextSvg from './PretextSvg';
 const CARD_W = 100;
 const CARD_H = 80;
 const GAP = 4;
-const NAME_FONT = '8px system-ui';
+const NAME_FONT = `8px ${PRETEXT_SANS}`;
 const NAME_MAX_W = CARD_W - 12; // 6px padding each side
-const CAPTION_FONT = 'bold 16px system-ui, sans-serif';
+const CAPTION_FONT = `bold 16px ${PRETEXT_SANS}`;
 const CAPTION_PADDING = 12;
 
 const UNITS: Record<string, string> = {
@@ -54,6 +54,11 @@ function truncateToFit(name: string, font: string, maxWidth: number): string {
 }
 
 
+export type PlateHoverInfo = {
+  element: ElementRecord;
+  rect: { top: number; left: number; width: number; height: number };
+} | null;
+
 type AtlasPlateProps = {
   elements: ElementRecord[];
   caption: string;
@@ -62,6 +67,7 @@ type AtlasPlateProps = {
   columns?: number;
   sparklineValues?: (number | null)[];
   sparklineHighlight?: number;
+  onHover?: (info: PlateHoverInfo) => void;
 };
 
 /**
@@ -78,10 +84,12 @@ export default function AtlasPlate({
   columns = 4,
   sparklineValues,
   sparklineHighlight,
+  onHover,
 }: AtlasPlateProps) {
   const isMobile = useIsMobile();
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const cols = isMobile ? 2 : columns;
   const rows = Math.ceil(elements.length / cols);
   const gridW = cols * (CARD_W + GAP) - GAP;
@@ -94,9 +102,35 @@ export default function AtlasPlate({
   const gridH = rows * (CARD_H + GAP) - GAP;
   const totalH = captionH + 8 + gridH;
 
+  // Convert SVG-local card coordinates to page-relative rect for tooltip positioning
+  const handleCardEnter = useCallback(
+    (el: ElementRecord, svgX: number, svgY: number) => {
+      if (!onHover || !svgRef.current) return;
+      const svg = svgRef.current;
+      const svgRect = svg.getBoundingClientRect();
+      const scaleX = svgRect.width / gridW;
+      const scaleY = svgRect.height / totalH;
+      onHover({
+        element: el,
+        rect: {
+          left: svgRect.left + svgX * scaleX,
+          top: svgRect.top + svgY * scaleY,
+          width: CARD_W * scaleX,
+          height: CARD_H * scaleY,
+        },
+      });
+    },
+    [onHover, gridW, totalH],
+  );
+
+  const handleCardLeave = useCallback(() => {
+    if (onHover) onHover(null);
+  }, [onHover]);
+
   return (
     <div style={{ overflowX: 'auto' }}>
       <svg
+        ref={svgRef}
         width={gridW}
         height={totalH}
         viewBox={`0 0 ${gridW} ${totalH}`}
@@ -155,6 +189,8 @@ export default function AtlasPlate({
                 style={{ cursor: 'pointer' }}
                 role="link"
                 onClick={(e) => { e.preventDefault(); setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+                onMouseEnter={() => handleCardEnter(el, x, y)}
+                onMouseLeave={handleCardLeave}
               >
                 <title>{el.name}</title>
                 <rect x={x} y={y} width={CARD_W} height={CARD_H} fill={fill} />
