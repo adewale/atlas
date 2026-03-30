@@ -128,7 +128,7 @@ describe('generateComparisonNotes', () => {
       'Both s-block elements.',
       'Share period 1.',
       'Both classified as nonmetal.',
-      'Groups 1 and 1.',
+      'Share group 1.',
       'Similar mass ranking (50 vs 50 of 118).',
     ]);
   });
@@ -140,11 +140,11 @@ describe('generateComparisonNotes', () => {
     expect(notes.join(' ')).not.toContain('at STP');
   });
 
-  it('same-group elements produce "Groups X and X" note', () => {
+  it('same-group elements produce "Share group" note', () => {
     const a = makeElement({ group: 8 });
     const b = makeElement({ group: 8 });
     const notes = generateComparisonNotes(a, b);
-    expect(notes).toContain('Groups 8 and 8.');
+    expect(notes).toContain('Share group 8.');
   });
 
   it('mass ranking boundary: diff of 5 is similar', () => {

@@ -56,6 +56,26 @@ describe('searchElements', () => {
     const results = searchElements('Hyd');
     expect(results[0].symbol).toBe('H');
   });
+
+  it('exact symbol match is prioritized over partial name match', () => {
+    // "hydrogen" contains "n", but Nitrogen (N) should come first for query "N"
+    const nResults = searchElements('N');
+    expect(nResults[0].symbol).toBe('N');
+
+    // "hydrogen" contains "o", but Oxygen (O) should come first for query "O"
+    const oResults = searchElements('O');
+    expect(oResults[0].symbol).toBe('O');
+
+    // "magnesium" contains "s", but Sulfur (S) should come first for query "S"
+    const sResults = searchElements('S');
+    expect(sResults[0].symbol).toBe('S');
+  });
+
+  it('exact name match is prioritized over partial name match', () => {
+    // "Neon" contains "ne" but searching "Neon" should return Neon first
+    const results = searchElements('Neon');
+    expect(results[0].symbol).toBe('Ne');
+  });
 });
 
 describe('allElements', () => {

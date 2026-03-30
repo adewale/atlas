@@ -24,7 +24,11 @@ export function generateComparisonNotes(a: ElementRecord, b: ElementRecord): str
   }
 
   if (a.group !== null && b.group !== null) {
-    notes.push(`Groups ${a.group} and ${b.group}.`);
+    if (a.group === b.group) {
+      notes.push(`Share group ${a.group}.`);
+    } else {
+      notes.push(`Groups ${a.group} and ${b.group}.`);
+    }
   }
 
   const massRankA = a.rankings.mass ?? 0;

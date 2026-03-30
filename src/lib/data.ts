@@ -14,9 +14,21 @@ export function getElement(symbol: string): ElementRecord | undefined {
 export function searchElements(query: string): ElementRecord[] {
   if (!query.trim()) return allElements;
   const q = query.toLowerCase().trim();
-  return allElements.filter(
+  const matches = allElements.filter(
     (el) =>
       el.name.toLowerCase().includes(q) ||
       el.symbol.toLowerCase().includes(q),
   );
+  // Sort by relevance: exact symbol > exact name > symbol starts-with > name starts-with > rest
+  return matches.sort((a, b) => {
+    const aSymL = a.symbol.toLowerCase();
+    const bSymL = b.symbol.toLowerCase();
+    const aNameL = a.name.toLowerCase();
+    const bNameL = b.name.toLowerCase();
+    const aScore =
+      aSymL === q ? 0 : aNameL === q ? 1 : aSymL.startsWith(q) ? 2 : aNameL.startsWith(q) ? 3 : 4;
+    const bScore =
+      bSymL === q ? 0 : bNameL === q ? 1 : bSymL.startsWith(q) ? 2 : bNameL.startsWith(q) ? 3 : 4;
+    return aScore - bScore || a.atomicNumber - b.atomicNumber;
+  });
 }
