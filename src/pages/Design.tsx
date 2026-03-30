@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
@@ -414,5 +414,168 @@ export default function Design() {
       <TooltipPatterns />
       </div>
     </PageShell>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Tooltip & Hover Patterns                                          */
+/* ------------------------------------------------------------------ */
+
+function TooltipPatterns() {
+  const [svgTooltip, setSvgTooltip] = useState<{ x: number; y: number; label: string } | null>(null);
+
+  return (
+    <section style={{ marginBottom: '40px' }}>
+      <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>
+        Tooltip &amp; Hover Patterns
+      </h2>
+      <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
+        Four tooltip strategies, chosen by context: InfoTip for educational asides,
+        SVG native title for basic identification, custom SVG card for rich data,
+        and CSS hover states for affordance cues.
+      </p>
+
+      {/* 1. InfoTip component */}
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
+          InfoTip — (?) circle that reveals a black tooltip on hover/focus/click
+        </div>
+        <div style={{ fontSize: '14px', lineHeight: 1.8 }}>
+          <span>Electronegativity</span>
+          <InfoTip label="A measure of how strongly an atom attracts shared electrons in a bond. Pauling scale, 0.7–4.0.">
+            {''}
+          </InfoTip>
+          <span style={{ marginLeft: '16px' }}>Ionisation Energy</span>
+          <InfoTip label="Energy required to remove the outermost electron from a gaseous atom. Measured in kJ/mol.">
+            {''}
+          </InfoTip>
+        </div>
+      </div>
+
+      {/* 2. SVG native tooltip (<title>) */}
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
+          SVG native tooltip — {'<title>'} element, browser-rendered on hover (try hovering)
+        </div>
+        <svg width={260} height={50}>
+          {[
+            { cx: 30, sym: 'Na', block: 's' as const, name: 'Sodium (Na) — Alkali metal, period 3' },
+            { cx: 80, sym: 'Fe', block: 'd' as const, name: 'Iron (Fe) — Transition metal, period 4' },
+            { cx: 130, sym: 'Br', block: 'p' as const, name: 'Bromine (Br) — Halogen, period 4' },
+            { cx: 180, sym: 'U', block: 'f' as const, name: 'Uranium (U) — Actinide, period 7' },
+          ].map((el) => (
+            <g key={el.sym}>
+              <title>{el.name}</title>
+              <rect
+                x={el.cx - 7}
+                y={18}
+                width={14}
+                height={14}
+                fill={blockColor(el.block)}
+                stroke={BLACK}
+                strokeWidth={0.25}
+                style={{ cursor: 'default' }}
+              />
+              <text x={el.cx} y={14} textAnchor="middle" fontSize={9} fill={BLACK} fontFamily="system-ui">
+                {el.sym}
+              </text>
+            </g>
+          ))}
+          <text x={220} y={28} fontSize={10} fill={GREY_MID} fontFamily="system-ui">← hover</text>
+        </svg>
+      </div>
+
+      {/* 3. Custom SVG tooltip (black box, white text) */}
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
+          Custom SVG tooltip — black rect with white text, follows hovered element (DiscoveryTimeline / PropertyScatter style)
+        </div>
+        <svg width={340} height={100}>
+          {/* Fake axis */}
+          <line x1={20} y1={80} x2={320} y2={80} stroke={BLACK} strokeWidth={0.75} />
+          {[
+            { x: 60, y: 60, sym: 'H', year: '1766', discoverer: 'Cavendish', block: 's' as const },
+            { x: 140, y: 45, sym: 'O', year: '1774', discoverer: 'Priestley', block: 'p' as const },
+            { x: 220, y: 55, sym: 'Fe', year: 'Ancient', discoverer: 'Unknown', block: 'd' as const },
+            { x: 290, y: 40, sym: 'Pu', year: '1940', discoverer: 'Seaborg', block: 'f' as const },
+          ].map((pt) => (
+            <g key={pt.sym}>
+              <rect
+                x={pt.x - 5}
+                y={pt.y}
+                width={10}
+                height={10}
+                fill={blockColor(pt.block)}
+                stroke={BLACK}
+                strokeWidth={0.25}
+                style={{ cursor: 'pointer' }}
+                onMouseEnter={() => setSvgTooltip({ x: pt.x, y: pt.y, label: `${pt.sym} (${pt.year}) — ${pt.discoverer}` })}
+                onMouseLeave={() => setSvgTooltip(null)}
+              />
+            </g>
+          ))}
+          {svgTooltip && (
+            <g transform={`translate(${svgTooltip.x}, ${svgTooltip.y})`} style={{ pointerEvents: 'none' }}>
+              <rect x={-80} y={-30} width={160} height={24} fill={BLACK} rx={2} />
+              <text
+                x={0}
+                y={-14}
+                textAnchor="middle"
+                fontSize={11}
+                fontWeight="bold"
+                fill={PAPER}
+                fontFamily="system-ui, sans-serif"
+              >
+                {svgTooltip.label}
+              </text>
+            </g>
+          )}
+        </svg>
+      </div>
+
+      {/* 4. CSS hover state (border thickening) */}
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
+          CSS hover state — border thickens on hover (etymology card pattern)
+        </div>
+        <style>{`
+          .design-hover-card {
+            border: 2px solid ${DEEP_BLUE};
+            transition: border-width 120ms var(--ease-snap), box-shadow 120ms var(--ease-snap);
+          }
+          .design-hover-card:hover {
+            border-width: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+          }
+        `}</style>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {[
+            { sym: 'Li', label: 'Greek: lithos', color: DEEP_BLUE },
+            { sym: 'Au', label: 'Latin: aurum', color: MUSTARD },
+            { sym: 'Hg', label: 'Greek: hydrargyros', color: WARM_RED },
+          ].map((card) => (
+            <div
+              key={card.sym}
+              className="design-hover-card"
+              style={{
+                borderColor: card.color,
+                borderRadius: 2,
+                width: 80,
+                height: 48,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: PAPER,
+                cursor: 'pointer',
+              }}
+            >
+              <span style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.1 }}>{card.sym}</span>
+              <span style={{ fontSize: 9, color: GREY_MID }}>{card.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

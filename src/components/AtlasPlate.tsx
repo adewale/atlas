@@ -219,7 +219,7 @@ export default function AtlasPlate({
                   y={y + 54}
                   fontSize={8}
                   fill={textFill}
-                  fontFamily="system-ui"
+                  fontFamily={PRETEXT_SANS}
                 >
                   {label !== el.category && <title>{el.category}</title>}
                   {label}
