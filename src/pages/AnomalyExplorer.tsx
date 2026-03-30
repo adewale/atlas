@@ -106,7 +106,7 @@ export default function AnomalyExplorer() {
   const totalHeight = VIEWBOX_H + DESC_Y_OFFSET + (selected ? descSvgHeight : 0);
 
   return (
-    <main style={{ padding: '24px 16px', maxWidth: 1100, margin: '0 auto' }}>
+    <main>
       <VizNav />
 
       <h1

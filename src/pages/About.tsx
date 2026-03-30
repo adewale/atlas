@@ -41,9 +41,10 @@ export default function About() {
   });
 
   return (
-    <article style={{ maxWidth: '640px' }}>
-      <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>About Atlas</h1>
+    <main>
+      <div style={{ maxWidth: '640px' }}>
+      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>About Atlas</h1>
 
       <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '16px' }} />
 
@@ -118,7 +119,8 @@ export default function About() {
           See the full <Link to="/design">Design Language</Link> reference for palette, spacing, typography, and animation details.
         </p>
       </section>
+      </div>
       <SiteNav />
-    </article>
+    </main>
   );
 }

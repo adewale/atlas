@@ -33,9 +33,10 @@ const EASINGS = [
 
 export default function Design() {
   return (
-    <main style={{ maxWidth: '800px' }}>
-      <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
+    <main>
+      <div style={{ maxWidth: '800px' }}>
+      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>
         Living reference for the Atlas visual system. 60% Kronecker-Wallis/Byrne visual drama,
         40% Tufte data density.
@@ -256,6 +257,7 @@ export default function Design() {
           </ol>
         </div>
       </section>
+      </div>
       <SiteNav />
     </main>
   );

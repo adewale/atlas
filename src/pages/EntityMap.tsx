@@ -355,8 +355,9 @@ export default function EntityMapPage() {
   );
 
   return (
-    <main style={{ maxWidth: '900px' }}>
-      <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
+    <main>
+      <div style={{ maxWidth: '900px' }}>
+      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
       <h1 style={{
         margin: '16px 0 8px',
         letterSpacing: '0.2em',
@@ -513,6 +514,7 @@ export default function EntityMapPage() {
 
       <div style={{ fontSize: '13px' }}>
         <Link to="/design" style={{ color: WARM_RED }}>Design Language →</Link>
+      </div>
       </div>
 
       <SiteNav />

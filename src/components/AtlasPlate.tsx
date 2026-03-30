@@ -20,6 +20,12 @@ const UNITS: Record<string, string> = {
   radius: 'pm',
 };
 
+const UNIT_TOOLTIPS: Record<string, string> = {
+  Da: 'Daltons — atomic mass unit',
+  eV: 'Electron volts — ionisation energy',
+  pm: 'Picometres — atomic radius',
+};
+
 const ABBREV: Record<string, string> = {
   'transition metal': 'trans. metal',
   'alkali metal': 'alkali',
@@ -170,6 +176,7 @@ export default function AtlasPlate({
                   fill={textFill}
                   fontFamily="system-ui"
                 >
+                  {label !== el.category && <title>{el.category}</title>}
                   {label}
                 </text>
                 <text
@@ -179,6 +186,7 @@ export default function AtlasPlate({
                   fill={textFill}
                   fontFamily="'SF Mono', monospace"
                 >
+                  {unit && UNIT_TOOLTIPS[unit] && <title>{UNIT_TOOLTIPS[unit]}</title>}
                   {displayVal}
                 </text>
               </Link>

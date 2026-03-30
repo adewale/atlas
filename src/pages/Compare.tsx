@@ -24,8 +24,8 @@ export default function Compare() {
   }
 
   return (
-    <main style={{ padding: '24px 0' }}>
-      <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
+    <main>
+      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
       <div style={{ marginTop: '16px' }}>
         <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />
       </div>

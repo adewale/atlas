@@ -81,8 +81,8 @@ export default function TimelineEra() {
   if (entries.length === 0) {
     return (
       <main>
-        <Link to="/discovery-timeline" style={{ fontSize: '14px' }}>← Discovery Timeline</Link>
-        <h1 style={{ margin: '16px 0' }}>No elements found for this era</h1>
+        <Link to="/discovery-timeline" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Timeline</Link>
+        <h1 style={{ margin: '12px 0 16px' }}>No elements found for this era</h1>
         <SiteNav />
     </main>
     );
@@ -90,7 +90,7 @@ export default function TimelineEra() {
 
   return (
     <main>
-      <Link to="/discovery-timeline" style={{ fontSize: '14px' }}>← Discovery Timeline</Link>
+      <Link to="/discovery-timeline" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Timeline</Link>
 
       {/* Prev / Next navigation */}
       <nav style={{

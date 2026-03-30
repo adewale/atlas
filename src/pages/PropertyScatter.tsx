@@ -91,8 +91,9 @@ export default function PropertyScatter() {
   const introHeight = lines.length * lineHeight + 16;
 
   return (
-    <main style={{ padding: '24px 0', maxWidth: '760px' }}>
+    <main>
       <VizNav />
+      <div style={{ maxWidth: '760px' }}>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#133e7c' }}>Property Scatter</h1>
 
       {/* Pretext intro */}
@@ -267,6 +268,7 @@ export default function PropertyScatter() {
           );
         })}
       </svg>
+      </div>
       <SiteNav />
     </main>
   );

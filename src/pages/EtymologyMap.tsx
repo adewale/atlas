@@ -49,12 +49,13 @@ const MAX_WIDTH = 960;
 // ---------------------------------------------------------------------------
 const styles = {
   page: {
-    maxWidth: MAX_WIDTH,
-    margin: '0 auto',
-    padding: '24px 16px 64px',
     fontFamily: 'system-ui, sans-serif',
     background: PAPER,
     minHeight: '100vh',
+  } as React.CSSProperties,
+
+  content: {
+    maxWidth: MAX_WIDTH,
   } as React.CSSProperties,
 
   backLink: {
@@ -188,6 +189,7 @@ export default function EtymologyMap() {
   return (
     <main style={styles.page}>
       <VizNav />
+      <div style={styles.content}>
 
       <h1 style={styles.title}>Etymology Map</h1>
 
@@ -244,6 +246,7 @@ export default function EtymologyMap() {
           </section>
         );
       })}
+      </div>
       <SiteNav />
     </main>
   );

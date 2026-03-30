@@ -30,16 +30,14 @@ export default function Element() {
   }
 
   return (
-    <main style={{ padding: '24px 0' }}>
-      <div style={{ marginBottom: '16px' }}>
-        <a
-          href="/"
-          onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}
-          style={{ fontSize: '14px' }}
-        >
-          ← Periodic Table
-        </a>
-      </div>
+    <main>
+      <a
+        href="/"
+        onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}
+        style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}
+      >
+        ← Table
+      </a>
       <article>
         <Folio element={element} sources={sources} groups={groups} anomalies={anomalies} animate={true} />
       </article>

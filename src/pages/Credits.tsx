@@ -10,7 +10,7 @@ export default function Credits() {
   const { credits } = useLoaderData() as { credits: CreditsData };
 
   const structuredText = `${credits.structured.provider} — ${credits.structured.license}. Atomic mass, electronegativity, ionisation energy, radius, and phase data.`;
-  const identifiersText = `${credits.identifiers.provider} — ${credits.identifiers.license}. QIDs, Wikipedia sitelinks, category classification, group/period/block.`;
+  const identifiersText = `${credits.identifiers.provider} — ${credits.identifiers.license}. QIDs (Wikidata identifiers), Wikipedia sitelinks, category classification, group/period/block.`;
   const summariesNoteText = 'Excerpts may differ from current Wikipedia content. All used under CC BY-SA 4.0.';
   const aboutText = 'Atlas is an original editorial and design work. The derived data (rankings, groupings, anomaly descriptions) and comparison templates are original content.';
   const mediaText = 'No media in v1.';
@@ -37,9 +37,10 @@ export default function Credits() {
   });
 
   return (
-    <article style={{ maxWidth: '800px' }}>
-      <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Credits</h1>
+    <main>
+      <div style={{ maxWidth: '800px' }}>
+      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Credits</h1>
 
       <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '24px' }} />
 
@@ -142,7 +143,8 @@ export default function Credits() {
           <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
+      </div>
       <SiteNav />
-    </article>
+    </main>
   );
 }

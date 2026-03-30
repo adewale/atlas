@@ -19,7 +19,7 @@ export default function DiscovererDetail() {
   if (!discoverer) {
     return (
       <main>
-        <Link to="/discoverer-network" style={{ fontSize: '14px' }}>← Discoverer Network</Link>
+        <Link to="/discoverer-network" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Discoverers</Link>
         <h1 style={{ margin: '16px 0' }}>Discoverer not found</h1>
         <SiteNav />
     </main>
@@ -71,7 +71,7 @@ export default function DiscovererDetail() {
 
   return (
     <main>
-      <Link to="/discoverer-network" style={{ fontSize: '14px' }}>← Discoverer Network</Link>
+      <Link to="/discoverer-network" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Discoverers</Link>
 
       {/* Prev / Next navigation */}
       <nav style={{
