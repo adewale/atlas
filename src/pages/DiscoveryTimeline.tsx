@@ -7,6 +7,7 @@ import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
+import ElementSquare from '../components/ElementSquare';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -302,32 +303,30 @@ export default function DiscoveryTimeline() {
             {antiquitySquares.map((sq) => {
               const el = getElement(sq.entry.symbol);
               return (
-                <g key={`antiq-${sq.entry.symbol}`}>
-                  <title>{el?.name ?? sq.entry.symbol}</title>
-                  <rect
-                    x={sq.x}
-                    y={sq.y}
-                    width={SQ}
-                    height={SQ}
-                    fill={sq.color}
-                    stroke={BLACK}
-                    strokeWidth={0.25}
-                    style={{
-                      cursor: 'pointer',
-                      opacity: hasLoaded ? 1 : 0,
-                      transition: hasLoaded
-                        ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
-                        : 'none',
-                    }}
-                    onMouseEnter={() =>
-                      handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
-                    }
-                    onMouseLeave={handleSquareLeave}
-                    onClick={() => handleSquareClick(sq.entry.symbol)}
-                    role="button"
-                    aria-label={`${el?.name ?? sq.entry.symbol}, known since antiquity`}
-                  />
-                </g>
+                <ElementSquare
+                  key={`antiq-${sq.entry.symbol}`}
+                  symbol={sq.entry.symbol}
+                  color={sq.color}
+                  size={SQ}
+                  x={sq.x}
+                  y={sq.y}
+                  title={el?.name ?? sq.entry.symbol}
+                  style={{
+                    opacity: hasLoaded ? 1 : 0,
+                    transition: hasLoaded
+                      ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
+                      : 'none',
+                  }}
+                  onMouseEnter={() =>
+                    handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
+                  }
+                  onMouseLeave={handleSquareLeave}
+                  onClick={() => handleSquareClick(sq.entry.symbol)}
+                  rectProps={{
+                    role: 'button',
+                    'aria-label': `${el?.name ?? sq.entry.symbol}, known since antiquity`,
+                  }}
+                />
               );
             })}
 
@@ -335,32 +334,30 @@ export default function DiscoveryTimeline() {
             {squares.map((sq) => {
               const el = getElement(sq.entry.symbol);
               return (
-                <g key={`tl-${sq.entry.symbol}`}>
-                  <title>{el?.name ?? sq.entry.symbol}</title>
-                  <rect
-                    x={sq.x}
-                    y={sq.y}
-                    width={SQ}
-                    height={SQ}
-                    fill={sq.color}
-                    stroke={BLACK}
-                    strokeWidth={0.25}
-                    style={{
-                      cursor: 'pointer',
-                      opacity: hasLoaded ? 1 : 0,
-                      transition: hasLoaded
-                        ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
-                        : 'none',
-                    }}
-                    onMouseEnter={() =>
-                      handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
-                    }
-                    onMouseLeave={handleSquareLeave}
-                    onClick={() => handleSquareClick(sq.entry.symbol)}
-                    role="button"
-                    aria-label={`${el?.name ?? sq.entry.symbol}, discovered ${sq.entry.year} by ${sq.entry.discoverer}`}
-                  />
-                </g>
+                <ElementSquare
+                  key={`tl-${sq.entry.symbol}`}
+                  symbol={sq.entry.symbol}
+                  color={sq.color}
+                  size={SQ}
+                  x={sq.x}
+                  y={sq.y}
+                  title={el?.name ?? sq.entry.symbol}
+                  style={{
+                    opacity: hasLoaded ? 1 : 0,
+                    transition: hasLoaded
+                      ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
+                      : 'none',
+                  }}
+                  onMouseEnter={() =>
+                    handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
+                  }
+                  onMouseLeave={handleSquareLeave}
+                  onClick={() => handleSquareClick(sq.entry.symbol)}
+                  rectProps={{
+                    role: 'button',
+                    'aria-label': `${el?.name ?? sq.entry.symbol}, discovered ${sq.entry.year} by ${sq.entry.discoverer}`,
+                  }}
+                />
               );
             })}
 

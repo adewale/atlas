@@ -8,6 +8,7 @@ import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
 import type { ElementRecord } from '../lib/types';
 import PageShell from '../components/PageShell';
+import ElementSquare from '../components/ElementSquare';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -378,19 +379,20 @@ export default function PropertyScatter() {
 
           return (
             <g key={d.el.symbol}>
-              <title>{d.el.name}</title>
-              {/* Visible square */}
-              <rect
+              {/* Visible square via ElementSquare */}
+              <ElementSquare
+                symbol={d.el.symbol}
+                color={fill}
+                size={SQUARE_SIZE}
                 x={cx - SQUARE_SIZE / 2}
                 y={cy - SQUARE_SIZE / 2}
-                width={SQUARE_SIZE}
-                height={SQUARE_SIZE}
-                fill={fill}
+                title={d.el.name}
+                highlighted={isHovered}
                 style={{
                   opacity: 0,
                   animation: `card-enter 300ms var(--ease-out) ${i * 15}ms forwards`,
+                  pointerEvents: 'none',
                 }}
-                pointerEvents="none"
               />
               {/* Invisible larger hit target */}
               <rect
