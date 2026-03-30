@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';

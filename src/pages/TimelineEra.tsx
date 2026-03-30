@@ -50,13 +50,14 @@ export default function TimelineEra() {
         setTooltip(null);
         return;
       }
-      const entry = entryBySymbol.get(info.symbol);
+      const el = info.element;
+      const entry = entryBySymbol.get(el.symbol);
       const containerRect = containerRef.current.getBoundingClientRect();
       setTooltip({
-        name: info.name,
-        year: entry?.year != null ? String(entry.year) : 'Antiquity',
-        discoverer: entry?.discoverer ?? 'Unknown',
-        category: info.category,
+        name: el.name,
+        year: entry?.year != null ? String(entry.year) : (el.discoveryYear != null ? String(el.discoveryYear) : 'Antiquity'),
+        discoverer: entry?.discoverer ?? el.discoverer ?? 'Unknown',
+        category: el.category,
         top: info.rect.top - containerRect.top,
         left: info.rect.left - containerRect.left + info.rect.width / 2,
       });
