@@ -43,6 +43,7 @@ function buildSparklinePoints(
 export type DropCapConfig = {
   fontSize: number;    // e.g. 48
   fill: string;        // block colour
+  char?: string;       // explicit drop cap character (from useDropCapText)
   lineSpan?: number;   // how many body lines it spans (default: computed from fontSize / lineHeight)
 };
 
@@ -92,8 +93,12 @@ export default function PretextSvg({
         : inlineSparkline.lineIndex
       : -1;
 
-  // Drop cap: extract first character from first line, render it large
-  const dropCapChar = dropCap && lines.length > 0 ? lines[0].text[0] : null;
+  // Drop cap: use explicit char if provided (from useDropCapText, which already
+  // pre-sliced lines), otherwise extract first char from first line (legacy path).
+  const hasExplicitDropCap = dropCap?.char != null;
+  const dropCapChar = dropCap && lines.length > 0
+    ? (dropCap.char ?? lines[0].text[0])
+    : null;
   const dropCapLineSpan = dropCap
     ? dropCap.lineSpan ?? Math.ceil(dropCap.fontSize / lineHeight)
     : 0;
@@ -127,8 +132,9 @@ export default function PretextSvg({
       {lines.map((line, i) => {
         const lineY = line.y + lineHeight;
         const staggerDelay = animationStagger != null ? i * animationStagger : undefined;
-        // Offset lines beside the drop cap so text flows around it
-        const dropCapOffset = dropCapChar && i < dropCapLineSpan ? dropCapIndent : 0;
+        // Offset lines beside the drop cap so text flows around it.
+        // When using useDropCapText (hasExplicitDropCap), lines already have correct x offsets.
+        const dropCapOffset = dropCapChar && !hasExplicitDropCap && i < dropCapLineSpan ? dropCapIndent : 0;
         const baseX = line.x + dropCapOffset;
         const lineX =
           textAlign === 'center' && maxWidth
@@ -195,7 +201,7 @@ export default function PretextSvg({
                   : undefined
               }
             >
-              {dropCapChar && i === 0 ? line.text.slice(1) : line.text}
+              {dropCapChar && i === 0 && !hasExplicitDropCap ? line.text.slice(1) : line.text}
             </text>
             {sparklineData && (
               <g

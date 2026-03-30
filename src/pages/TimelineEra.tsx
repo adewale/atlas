@@ -4,7 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, DEEP_BLUE, BLACK, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 type TimelineEntry = { symbol: string; year: number | null; discoverer: string };
@@ -82,16 +82,15 @@ export default function TimelineEra() {
 
   if (entries.length === 0) {
     return (
-      <main id="main-content">
+      <PageShell>
         <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
         <h1 style={{ margin: '12px 0 16px' }}>No elements found for this era</h1>
-        <SiteNav />
-    </main>
+      </PageShell>
     );
   }
 
   return (
-    <main id="main-content">
+    <PageShell>
       <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
 
       {/* Prev / Next navigation */}
@@ -235,7 +234,6 @@ export default function TimelineEra() {
           </div>
         </section>
       )}
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

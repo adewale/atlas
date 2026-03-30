@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -358,7 +358,7 @@ export default function EntityMapPage() {
   useDocumentTitle('Entity Map');
 
   return (
-    <main id="main-content">
+    <PageShell>
       <div style={{ maxWidth: '900px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{
@@ -561,7 +561,6 @@ export default function EntityMapPage() {
       </div>
       </div>
 
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

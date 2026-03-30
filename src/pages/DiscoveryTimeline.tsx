@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router';
-import VizNav from '../components/VizNav';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -69,7 +68,7 @@ export default function DiscoveryTimeline() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [tooltip, setTooltip] = useState<Tooltip>(null);
 
-  const { lines, lineHeight } = useDropCapText({
+  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_WIDTH,
     dropCapFont: '80px system-ui',
@@ -177,8 +176,7 @@ export default function DiscoveryTimeline() {
   const totalHeight = eraLabelY + 30;
 
   return (
-    <main id="main-content">
-      <VizNav />
+    <PageShell vizNav>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Discovery Timeline</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
@@ -203,7 +201,7 @@ export default function DiscoveryTimeline() {
             fill={BLACK}
             maxWidth={SVG_WIDTH}
             animationStagger={40}
-            dropCap={{ fontSize: 80, fill: WARM_RED }}
+            dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
           />
 
           {/* Timeline chart offset below intro */}
@@ -416,7 +414,6 @@ export default function DiscoveryTimeline() {
           ))}
         </div>
       </section>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

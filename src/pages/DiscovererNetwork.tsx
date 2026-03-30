@@ -1,12 +1,11 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, Link, useNavigate } from 'react-router';
-import VizNav from '../components/VizNav';
 import { getElement } from '../lib/data';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 /* ------------------------------------------------------------------ */
@@ -46,7 +45,7 @@ export default function DiscovererNetwork() {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  const { lines, lineHeight } = useDropCapText({
+  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: INTRO_MAX_W,
     dropCapFont: '72px system-ui',
@@ -64,7 +63,10 @@ export default function DiscovererNetwork() {
   }, [discoverers]);
 
   // Layout measurements
-  const introHeight = lines.length * lineHeight + 24;
+  const introTextHeight = lines.length * lineHeight + 16;
+  const legendY = introTextHeight + 16;          // clear gap below intro text
+  const legendHeight = SQ + 12;                   // legend row height
+  const introHeight = legendY + legendHeight + 12; // total intro section
   const antiquityStartY = introHeight + 8;
   const antiquityHeight = antiquity ? ROW_HEIGHT + 16 : 0;
   const barsStartY = antiquityStartY + antiquityHeight + 8;
@@ -72,8 +74,7 @@ export default function DiscovererNetwork() {
   const totalHeight = barsStartY + totalRows * ROW_HEIGHT + 40;
 
   return (
-    <main id="main-content">
-      <VizNav />
+    <PageShell vizNav>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: MUSTARD }}>Discoverer Network</h1>
 
       {/* bar-grow keyframe in globals.css */}
@@ -99,11 +100,11 @@ export default function DiscovererNetwork() {
             fill={BLACK}
             maxWidth={INTRO_MAX_W}
             animationStagger={40}
-            dropCap={{ fontSize: 72, fill: MUSTARD }}
+            dropCap={{ fontSize: 72, fill: MUSTARD, char: introDC.char }}
           />
 
           {/* Block colour legend */}
-          <g transform={`translate(0, ${introHeight - 8})`}>
+          <g transform={`translate(0, ${legendY})`}>
             {[
               { label: 's-block', block: 's' },
               { label: 'p-block', block: 'p' },
@@ -318,7 +319,6 @@ export default function DiscovererNetwork() {
           )}
         </svg>
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

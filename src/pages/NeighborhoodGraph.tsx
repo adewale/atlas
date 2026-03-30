@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router';
-import VizNav from '../components/VizNav';
 import { allElements, getElement } from '../lib/data';
 import {
   getCellPosition,
@@ -13,7 +12,7 @@ import {
 import { PAPER, BLACK, DIM, GREY_RULE } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -93,8 +92,7 @@ export default function NeighborhoodGraph() {
   const totalHeight = TABLE_OFFSET_Y + VIEWBOX_H + 24;
 
   return (
-    <main id="main-content">
-      <VizNav />
+    <PageShell vizNav>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighbourhood Graph</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
@@ -233,7 +231,6 @@ export default function NeighborhoodGraph() {
           </g>
         </svg>
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

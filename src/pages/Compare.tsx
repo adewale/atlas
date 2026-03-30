@@ -3,7 +3,7 @@ import { getElement } from '../lib/data';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { BACK_LINK_STYLE } from '../lib/theme';
 import CompareView from '../components/CompareView';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Compare() {
@@ -15,26 +15,24 @@ export default function Compare() {
 
   if (!elementA || !elementB) {
     return (
-      <main id="main-content">
+      <PageShell>
         <h1>Compare — Element not found</h1>
         <p>
           Could not find one or both elements.{' '}
           <Link to="/">Back to periodic table</Link>
         </p>
-        <SiteNav />
-    </main>
+    </PageShell>
     );
   }
 
   return (
-    <main id="main-content">
+    <PageShell>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <div style={{ marginTop: '16px' }}>
         <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />
       </div>
 
       {/* Keyframes now in globals.css */}
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

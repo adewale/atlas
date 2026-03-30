@@ -258,26 +258,43 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           );
         })}
 
-        {/* Property sub-selector — appears when Property mode is active */}
-        {highlightMode === 'property' && PROPERTY_OPTIONS.map((o) => {
+      </div>
+
+      {/* Property sub-selector — always rendered for animation, visible when Property mode is active */}
+      <div
+        style={{
+          display: 'flex',
+          gap: '6px',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          marginTop: '8px',
+          paddingLeft: '16px',
+          overflow: 'hidden',
+          maxHeight: highlightMode === 'property' ? '60px' : '0px',
+          opacity: highlightMode === 'property' ? 1 : 0,
+          transition: 'max-height 250ms ease-in-out, opacity 200ms ease-in-out',
+        }}
+      >
+        {PROPERTY_OPTIONS.map((o) => {
           const isActive = property === o.value;
           return (
             <button
               key={o.value}
               onClick={() => setProperty(o.value)}
               aria-pressed={isActive}
+              tabIndex={highlightMode === 'property' ? 0 : -1}
               style={{
-                fontSize: '10px',
+                fontSize: '9px',
                 fontWeight: 'bold',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                padding: '6px 10px',
+                padding: '4px 8px',
                 border: `1.5px solid ${isActive ? DEEP_BLUE : GREY_RULE}`,
                 background: isActive ? DEEP_BLUE : 'transparent',
                 color: isActive ? PAPER : GREY_MID,
                 cursor: 'pointer',
-                minHeight: '44px',
-                minWidth: '44px',
+                minHeight: '36px',
+                minWidth: '36px',
                 fontFamily: 'inherit',
                 transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
               }}

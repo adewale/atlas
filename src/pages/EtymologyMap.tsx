@@ -1,11 +1,10 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
-import VizNav from '../components/VizNav';
 import { getElement } from '../lib/data';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -159,7 +158,7 @@ export default function EtymologyMap() {
   const location = useLocation();
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
-  const { lines, lineHeight } = useDropCapText({
+  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: MAX_WIDTH,
     dropCapFont: '72px system-ui',
@@ -190,8 +189,7 @@ export default function EtymologyMap() {
   const introSvgHeight = lines.length * lineHeight + 8;
 
   return (
-    <main id="main-content" style={styles.page}>
-      <VizNav />
+    <PageShell vizNav>
       <div style={styles.content}>
 
       <h1 style={styles.title}>Etymology Map</h1>
@@ -210,7 +208,7 @@ export default function EtymologyMap() {
           fill={BLACK}
           maxWidth={MAX_WIDTH}
           animationStagger={40}
-          dropCap={{ fontSize: 72, fill: DEEP_BLUE }}
+          dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }}
         />
       </svg>
 
@@ -251,7 +249,6 @@ export default function EtymologyMap() {
         );
       })}
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

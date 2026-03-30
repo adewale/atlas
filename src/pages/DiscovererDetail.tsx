@@ -4,7 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 type DiscovererEntry = { name: string; elements: string[] };
@@ -20,11 +20,10 @@ export default function DiscovererDetail() {
   useDocumentTitle(discoverer ? discoverer.name : 'Discoverer Not Found');
   if (!discoverer) {
     return (
-      <main id="main-content">
+      <PageShell>
         <Link to="/discoverer-network" style={BACK_LINK_STYLE}>← Discoverers</Link>
         <h1 style={{ margin: '16px 0' }}>Discoverer not found</h1>
-        <SiteNav />
-    </main>
+      </PageShell>
     );
   }
 
@@ -72,7 +71,7 @@ export default function DiscovererDetail() {
   }, [discoverers, decodedName, elements, years]);
 
   return (
-    <main id="main-content">
+    <PageShell>
       <Link to="/discoverer-network" style={BACK_LINK_STYLE}>← Discoverers</Link>
 
       {/* Prev / Next navigation */}
@@ -184,7 +183,6 @@ export default function DiscovererDetail() {
           </Link>
         )}
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

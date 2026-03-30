@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { BLACK, DEEP_BLUE, BACK_LINK_STYLE } from '../lib/theme';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -43,7 +43,7 @@ export default function About() {
   });
 
   return (
-    <main id="main-content">
+    <PageShell>
       <div style={{ maxWidth: '640px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>About Atlas</h1>
@@ -58,7 +58,7 @@ export default function About() {
           role="img"
           style={{ maxWidth: '100%' }}
         >
-          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE }} />
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
         </svg>
       </section>
 
@@ -122,7 +122,6 @@ export default function About() {
         </p>
       </section>
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

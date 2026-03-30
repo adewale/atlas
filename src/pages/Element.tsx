@@ -4,7 +4,7 @@ import type { ElementRecord, ElementSources, GroupData, AnomalyData } from '../l
 import Folio from '../components/Folio';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { BACK_LINK_STYLE } from '../lib/theme';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Element() {
@@ -22,18 +22,18 @@ export default function Element() {
 
   if (!element) {
     return (
-      <main id="main-content">
+      <PageShell>
         <h1>Element not found</h1>
         <p>
           No element with symbol &ldquo;{symbol}&rdquo;.{' '}
           <Link to="/">Back to periodic table</Link>
         </p>
-      </main>
+      </PageShell>
     );
   }
 
   return (
-    <main id="main-content">
+    <PageShell>
       <a
         href="/"
         onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}
@@ -46,7 +46,6 @@ export default function Element() {
       </article>
 
       {/* Keyframes now in globals.css */}
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

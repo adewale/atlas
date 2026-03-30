@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router';
-import VizNav from '../components/VizNav';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE } from '../lib/theme';
@@ -8,7 +7,7 @@ import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
 import type { ElementRecord } from '../lib/types';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -94,8 +93,7 @@ export default function PropertyScatter() {
   useDocumentTitle('Property Scatter');
 
   return (
-    <main id="main-content">
-      <VizNav />
+    <PageShell vizNav>
       <div style={{ maxWidth: '760px' }}>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE }}>Property Scatter</h1>
 
@@ -273,7 +271,6 @@ export default function PropertyScatter() {
         })}
       </svg>
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

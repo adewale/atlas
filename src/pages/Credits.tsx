@@ -2,7 +2,7 @@ import { useLoaderData, Link } from 'react-router';
 import type { CreditsData } from '../lib/types';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { BLACK, DIM, BACK_LINK_STYLE } from '../lib/theme';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -41,7 +41,7 @@ export default function Credits() {
   useDocumentTitle('Credits');
 
   return (
-    <main id="main-content">
+    <PageShell>
       <div style={{ maxWidth: '800px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Credits</h1>
@@ -148,7 +148,6 @@ export default function Credits() {
         </svg>
       </section>
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import VizNav from '../components/VizNav';
 import { allElements } from '../lib/data';
 import {
   getCellPosition,
@@ -13,7 +12,7 @@ import {
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -66,8 +65,7 @@ export default function PhaseLandscape() {
   const totalHeight = TABLE_OFFSET_Y + VIEWBOX_H + 60;
 
   return (
-    <main id="main-content">
-      <VizNav />
+    <PageShell vizNav>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Phase Landscape at STP</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
@@ -190,7 +188,6 @@ export default function PhaseLandscape() {
           </text>
         </svg>
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

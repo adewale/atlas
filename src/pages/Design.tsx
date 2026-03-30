@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE } from '../lib/theme';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const PALETTE = [
@@ -36,7 +36,7 @@ export default function Design() {
   useDocumentTitle('Design Language');
 
   return (
-    <main id="main-content">
+    <PageShell>
       <div style={{ maxWidth: '800px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
@@ -261,7 +261,6 @@ export default function Design() {
         </div>
       </section>
       </div>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

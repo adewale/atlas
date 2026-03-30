@@ -5,7 +5,7 @@ import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import AtlasPlate from '../components/AtlasPlate';
 import type { AnomalyData } from '../lib/types';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const DESC_MAX_W = 600;
@@ -24,7 +24,7 @@ export default function AtlasAnomaly() {
   });
 
   return (
-    <main id="main-content">
+    <PageShell>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       {anomaly ? (
         <>
@@ -48,7 +48,6 @@ export default function AtlasAnomaly() {
       ) : (
         <p>Anomaly not found.</p>
       )}
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }

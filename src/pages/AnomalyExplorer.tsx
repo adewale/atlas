@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { useLoaderData, Link, useNavigate } from 'react-router';
-import VizNav from '../components/VizNav';
 import { allElements } from '../lib/data';
 import {
   getCellPosition,
@@ -14,7 +13,7 @@ import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
-import SiteNav from '../components/SiteNav';
+import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 /* ------------------------------------------------------------------ */
@@ -108,9 +107,7 @@ export default function AnomalyExplorer() {
   const totalHeight = VIEWBOX_H + DESC_Y_OFFSET + (selected ? descSvgHeight : 0);
 
   return (
-    <main id="main-content">
-      <VizNav />
-
+    <PageShell vizNav>
       <h1
         style={{
           fontFamily: 'system-ui, sans-serif',
@@ -261,7 +258,6 @@ export default function AnomalyExplorer() {
           />
         )}
       </svg>
-      <SiteNav />
-    </main>
+    </PageShell>
   );
 }
