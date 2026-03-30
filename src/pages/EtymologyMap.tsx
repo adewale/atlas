@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
@@ -162,13 +162,13 @@ export default function EtymologyMap() {
   }, []);
 
   // Order sections by the canonical list
-  const ORDER = ['place', 'person', 'mythology', 'property', 'mineral', 'astronomical', 'unknown'];
-  const sectionMap = new Map(
-    etymology.map((entry) => [entry.origin.toLowerCase(), entry]),
-  );
-  const orderedSections = ORDER.map((key) => sectionMap.get(key)).filter(
-    Boolean,
-  ) as EtymologyEntry[];
+  const orderedSections = useMemo(() => {
+    const ORDER = ['place', 'person', 'mythology', 'property', 'mineral', 'astronomical', 'unknown'];
+    const sectionMap = new Map(
+      etymology.map((entry: EtymologyEntry) => [entry.origin.toLowerCase(), entry]),
+    );
+    return ORDER.map((key) => sectionMap.get(key)).filter(Boolean) as EtymologyEntry[];
+  }, [etymology]);
 
   const introSvgHeight = lines.length * lineHeight + 8;
 

@@ -317,6 +317,194 @@ test.describe('Etymology Map', () => {
   });
 });
 
+test.describe('Drop cap text flow', () => {
+  test('drop cap initial does not overlap body text', async ({ page }) => {
+    await page.goto('/element/Fe');
+    await page.waitForTimeout(2000);
+    await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-fe.png', fullPage: true });
+
+    // The summary SVG contains the drop cap and body text
+    const summarySvg = page.locator('svg[aria-label="Element summary"]');
+    await expect(summarySvg).toBeVisible();
+
+    // The drop cap is a large <text> element (font-size ~48px)
+    const dropCap = summarySvg.locator('text[font-size="48"]');
+    const dropCapCount = await dropCap.count();
+    expect(dropCapCount).toBe(1);
+
+    // Body text lines exist after the drop cap
+    const bodyLines = summarySvg.locator('text:not([font-size="48"])');
+    const bodyCount = await bodyLines.count();
+    expect(bodyCount).toBeGreaterThan(2);
+
+    // Drop cap should be positioned at the top-left of the SVG
+    const svgBox = await summarySvg.boundingBox();
+    const dropCapBox = await dropCap.boundingBox();
+    expect(svgBox).not.toBeNull();
+    expect(dropCapBox).not.toBeNull();
+
+    // Drop cap should be within the SVG bounds and have visible dimensions
+    expect(dropCapBox!.width).toBeGreaterThan(5);
+    expect(dropCapBox!.height).toBeGreaterThan(20);
+
+    // The first few body lines should have different x from later lines,
+    // showing text flows around the drop cap (narrower width near cap)
+    // Collect all body line x positions relative to SVG
+    const xPositions: number[] = [];
+    for (let i = 0; i < bodyCount; i++) {
+      const box = await bodyLines.nth(i).boundingBox();
+      if (box) xPositions.push(Math.round(box.x - svgBox!.x));
+    }
+    // At least the first line should be indented (x > 0) from the drop cap
+    // while later lines return to x ≈ 0
+    const hasIndentedLine = xPositions.some((x) => x > 10);
+    const hasFullWidthLine = xPositions.some((x) => x < 5);
+    expect(hasIndentedLine).toBe(true);
+    expect(hasFullWidthLine).toBe(true);
+  });
+
+  test('drop cap flows text on Hydrogen (short summary)', async ({ page }) => {
+    await page.goto('/element/H');
+    await page.waitForTimeout(2000);
+    await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-h.png', fullPage: true });
+
+    const summarySvg = page.locator('svg[aria-label="Element summary"]');
+    await expect(summarySvg).toBeVisible();
+
+    // Drop cap should still exist
+    const dropCap = summarySvg.locator('text[font-size="48"]');
+    await expect(dropCap).toBeVisible();
+  });
+
+  test('drop cap flows text on Oganesson (long summary)', async ({ page }) => {
+    await page.goto('/element/Og');
+    await page.waitForTimeout(2000);
+
+    const summarySvg = page.locator('svg[aria-label="Element summary"]');
+    await expect(summarySvg).toBeVisible();
+
+    const dropCap = summarySvg.locator('text[font-size="48"]');
+    await expect(dropCap).toBeVisible();
+
+    // Lines after the drop cap height should use full width (x ≈ 0 relative to SVG)
+    const svgBox = await summarySvg.boundingBox();
+    expect(svgBox).not.toBeNull();
+    const bodyLines = summarySvg.locator('text:not([font-size="48"])');
+    const count = await bodyLines.count();
+    if (count > 4) {
+      // A later line should have x close to 0 (full width, not indented)
+      const laterBox = await bodyLines.nth(count - 1).boundingBox();
+      expect(laterBox).not.toBeNull();
+      const relX = laterBox!.x - svgBox!.x;
+      expect(relX).toBeLessThan(20);
+    }
+  });
+});
+
+test.describe('Discoverer Detail', () => {
+  test('renders discoverer page with elements', async ({ page }) => {
+    await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
+    await page.waitForTimeout(2000);
+    await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-davy.png', fullPage: true });
+
+    await expect(page.locator('h1')).toHaveText('Humphry Davy');
+
+    // Should show element count
+    await expect(page.locator('text=element')).toBeVisible();
+
+    // Back link to network
+    await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
+
+    // Related discoverers section
+    await expect(page.locator('h2:has-text("Related Discoverers")')).toBeVisible();
+  });
+
+  test('prev/next navigation works', async ({ page }) => {
+    await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
+    await page.waitForTimeout(1500);
+
+    // Should have prev or next links
+    const navLinks = page.locator('nav a');
+    const count = await navLinks.count();
+    expect(count).toBeGreaterThan(0);
+
+    // Click a nav link
+    await navLinks.first().click();
+    await page.waitForTimeout(1500);
+
+    // Should be on a different discoverer page
+    await expect(page.locator('h1')).toBeVisible();
+  });
+
+  test('related discoverer links navigate correctly', async ({ page }) => {
+    await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
+    await page.waitForTimeout(1500);
+
+    const relatedLinks = page.locator('section:has(h2:has-text("Related")) a');
+    const count = await relatedLinks.count();
+    if (count > 0) {
+      await relatedLinks.first().click();
+      await page.waitForTimeout(1500);
+      // Should be on another discoverer detail page
+      await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
+    }
+  });
+});
+
+test.describe('Timeline Era', () => {
+  test('renders era page with elements', async ({ page }) => {
+    await page.goto('/timeline/1770');
+    await page.waitForTimeout(2000);
+    await page.screenshot({ path: 'tests/e2e/screenshots/timeline-1770s.png', fullPage: true });
+
+    await expect(page.locator('h1')).toHaveText('1770s');
+
+    // Should show element count
+    await expect(page.locator('text=element')).toBeVisible();
+
+    // Back link to timeline
+    await expect(page.locator('a[href="/discovery-timeline"]')).toBeVisible();
+
+    // Nearby eras section
+    await expect(page.locator('h2:has-text("Nearby Eras")')).toBeVisible();
+  });
+
+  test('antiquity era page works', async ({ page }) => {
+    await page.goto('/timeline/antiquity');
+    await page.waitForTimeout(2000);
+
+    await expect(page.locator('h1')).toHaveText('Antiquity');
+    await expect(page.locator('text=element')).toBeVisible();
+  });
+
+  test('prev/next era navigation works', async ({ page }) => {
+    await page.goto('/timeline/1770');
+    await page.waitForTimeout(1500);
+
+    const navLinks = page.locator('nav a');
+    const count = await navLinks.count();
+    expect(count).toBeGreaterThan(0);
+
+    await navLinks.first().click();
+    await page.waitForTimeout(1500);
+    await expect(page.locator('h1')).toBeVisible();
+  });
+
+  test('discoverer links from era page work', async ({ page }) => {
+    await page.goto('/timeline/1770');
+    await page.waitForTimeout(1500);
+
+    const discovererLinks = page.locator('section:has(h2:has-text("Discoverers")) a');
+    const count = await discovererLinks.count();
+    if (count > 0) {
+      await discovererLinks.first().click();
+      await page.waitForTimeout(1500);
+      // Should be on a discoverer detail page
+      await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
+    }
+  });
+});
+
 test.describe('Discoverer Network', () => {
   test('renders discoverer rows with element squares', async ({ page }) => {
     await page.goto('/discoverer-network');

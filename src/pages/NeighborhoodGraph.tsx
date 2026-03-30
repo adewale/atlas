@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { allElements, getElement } from '../lib/data';
 import {
@@ -72,16 +72,19 @@ export default function NeighborhoodGraph() {
   }, []);
 
   // Build the set of highlighted symbols (hovered element + its neighbors)
-  const highlightSet = new Set<string>();
-  if (hoveredSymbol) {
-    highlightSet.add(hoveredSymbol);
-    const hoveredEl = getElement(hoveredSymbol);
-    if (hoveredEl) {
-      for (const n of hoveredEl.neighbors) {
-        highlightSet.add(n);
+  const highlightSet = useMemo(() => {
+    const set = new Set<string>();
+    if (hoveredSymbol) {
+      set.add(hoveredSymbol);
+      const hoveredEl = getElement(hoveredSymbol);
+      if (hoveredEl) {
+        for (const n of hoveredEl.neighbors) {
+          set.add(n);
+        }
       }
     }
-  }
+    return set;
+  }, [hoveredSymbol]);
 
   const totalHeight = TABLE_OFFSET_Y + VIEWBOX_H + 24;
 

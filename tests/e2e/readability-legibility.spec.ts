@@ -178,12 +178,12 @@ test.describe('Readability: Element Folio', () => {
     const discoveryLabel = page.locator('text=Discovery').first();
     await expect(discoveryLabel).toBeVisible();
 
-    // Discoverer link should point to discoverer network
-    const discovererLink = page.locator('a[href="/discoverer-network"]');
+    // Discoverer link should point to discoverer detail page
+    const discovererLink = page.locator('a[href*="/discoverer/"]');
     await expect(discovererLink).toBeVisible();
 
-    // Timeline link should be present
-    const timelineLink = page.locator('a[href="/discovery-timeline"]');
+    // Timeline link should be present (links to era or full timeline)
+    const timelineLink = page.locator('a:has-text("timeline")');
     await expect(timelineLink).toBeVisible();
   });
 
@@ -537,21 +537,23 @@ test.describe('Page transitions: content readable after navigation', () => {
     await expect(page.locator('h2')).toHaveText('Iron');
   });
 
-  test('folio → discoverer network → folio: readable at each step', async ({ page }) => {
+  test('folio → discoverer detail → network: readable at each step', async ({ page }) => {
     await page.goto('/element/Fe');
     await waitForAnimations(page);
 
-    // Click discoverer link
-    const discLink = page.locator('a[href="/discoverer-network"]');
+    // Click discoverer link (now points to /discoverer/:name)
+    const discLink = page.locator('a[href*="/discoverer/"]').first();
     await expect(discLink).toBeVisible();
     await discLink.click();
     await waitForAnimations(page);
-    await expect(page.locator('h1')).toHaveText('Discoverer Network');
+    // Should be on a discoverer detail page with back link to network
+    await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-discoverer.png', fullPage: true });
 
-    // Navigate back
-    await page.locator('a[href="/"]').click();
+    // Navigate to network
+    await page.locator('a[href="/discoverer-network"]').click();
     await waitForAnimations(page);
+    await expect(page.locator('h1')).toHaveText('Discoverer Network');
   });
 
   test('folio → etymology map: readable after transition', async ({ page }) => {
@@ -567,16 +569,19 @@ test.describe('Page transitions: content readable after navigation', () => {
     }
   });
 
-  test('folio → timeline: readable after transition', async ({ page }) => {
-    await page.goto('/element/Fe');
+  test('folio → timeline era: readable after transition', async ({ page }) => {
+    // Use Oxygen (discoveryYear = 1774) to test era links, since Fe is antiquity (no year)
+    await page.goto('/element/O');
     await waitForAnimations(page);
 
-    const timeLink = page.locator('a[href="/discovery-timeline"]');
+    // O discovery link goes to /timeline/1770
+    const timeLink = page.locator('a[href*="/timeline/"]').first();
     await expect(timeLink).toBeVisible();
     await timeLink.click();
     await waitForAnimations(page);
-    await expect(page.locator('h1')).toHaveText('Discovery Timeline');
-    await page.screenshot({ path: 'tests/e2e/screenshots/transition-timeline.png', fullPage: true });
+    // Should be on a timeline era page with back link
+    await expect(page.locator('a[href="/discovery-timeline"]')).toBeVisible();
+    await page.screenshot({ path: 'tests/e2e/screenshots/transition-timeline-era.png', fullPage: true });
   });
 
   test('folio → compare → back: no broken state', async ({ page }) => {

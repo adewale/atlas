@@ -38,6 +38,9 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
 
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, categoryColor } from '../lib/theme';
 
+// Pre-compute cell positions once at module level (they never change)
+const CELL_POSITIONS = new Map(allElements.map(el => [el.symbol, getCellPosition(el)]));
+
 // Pre-compute property ranges once at module level (data never changes)
 const PROPERTY_RANGES: Record<NumericProperty, { min: number; max: number }> = (() => {
   const keys: NumericProperty[] = ['mass', 'electronegativity', 'ionizationEnergy', 'radius'];
@@ -114,13 +117,18 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
     onActivate: onSelectElement,
   });
 
-  const searchResults = searchElements(query);
-  const filteredSymbols = new Set(searchResults.map((e) => e.symbol));
-  const isFiltering = query.trim().length > 0;
-  const matchCount = isFiltering ? filteredSymbols.size : null;
+  const { filteredSymbols, isFiltering, matchCount } = useMemo(() => {
+    const results = searchElements(query);
+    const symbols = new Set(results.map((e) => e.symbol));
+    const filtering = query.trim().length > 0;
+    return { filteredSymbols: symbols, isFiltering: filtering, matchCount: filtering ? symbols.size : null };
+  }, [query]);
 
-  // Find focused element for ripple distance calculation
-  const focusedElement = allElements.find((e) => e.symbol === activeSymbol);
+  // Find focused element position for ripple distance calculation
+  const focusedPos = useMemo(() => {
+    if (!activeSymbol) return null;
+    return CELL_POSITIONS.get(activeSymbol) ?? null;
+  }, [activeSymbol]);
 
   useEffect(() => {
     // Trigger load animation
@@ -320,12 +328,14 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           strokeDasharray="4 4"
         />
         {allElements.map((el) => {
-          const pos = getCellPosition(el);
+          const pos = CELL_POSITIONS.get(el.symbol)!;
           const isActive = el.symbol === activeSymbol;
           const isDimmed = isFiltering && !filteredSymbols.has(el.symbol);
           const fill = isDimmed ? DIM : getCellFill(el, highlightMode, property);
           const textColor = isDimmed ? '#999' : contrastTextColor(fill);
-          const dist = focusedElement ? gridDistance(el, focusedElement) : 0;
+          const dist = focusedPos
+            ? Math.abs(pos.col - focusedPos.col) + Math.abs(pos.row - focusedPos.row)
+            : 0;
 
           return (
             <g

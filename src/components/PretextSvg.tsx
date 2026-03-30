@@ -96,6 +96,8 @@ export default function PretextSvg({
   const dropCapLineSpan = dropCap
     ? dropCap.lineSpan ?? Math.ceil(dropCap.fontSize / lineHeight)
     : 0;
+  // Estimate drop cap glyph width (~0.65× fontSize for most fonts) + 8px gap
+  const dropCapIndent = dropCap ? Math.ceil(dropCap.fontSize * 0.65) + 8 : 0;
 
   return (
     <g className={className} transform={`translate(${x}, ${y})`}>
@@ -124,10 +126,13 @@ export default function PretextSvg({
       {lines.map((line, i) => {
         const lineY = line.y + lineHeight;
         const staggerDelay = animationStagger != null ? i * animationStagger : undefined;
+        // Offset lines beside the drop cap so text flows around it
+        const dropCapOffset = dropCapChar && i < dropCapLineSpan ? dropCapIndent : 0;
+        const baseX = line.x + dropCapOffset;
         const lineX =
           textAlign === 'center' && maxWidth
-            ? line.x + (maxWidth - line.width) / 2
-            : line.x;
+            ? baseX + (maxWidth - line.width) / 2
+            : baseX;
 
         // Inline sparkline rendering for this line
         const MIN_SPARKLINE_WIDTH = 40;

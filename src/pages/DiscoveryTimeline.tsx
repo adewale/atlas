@@ -85,6 +85,15 @@ export default function DiscoveryTimeline() {
     delay: number;
   };
 
+  // All decades with elements (for era browse links)
+  const allDecades = useMemo(() => {
+    const decades = new Set<number>();
+    for (const e of timeline) {
+      if (e.year != null) decades.add(decadeOf(e.year));
+    }
+    return [...decades].sort((a, b) => a - b);
+  }, [timeline]);
+
   // Memoize all layout computations — they depend only on loader data
   const { squares, antiquitySquares, minYear } = useMemo(() => {
     // Bin timeline entries by decade
@@ -363,6 +372,40 @@ export default function DiscoveryTimeline() {
           ))}
         </svg>
       </div>
+
+      {/* Era browse links */}
+      <section style={{ marginTop: '24px' }}>
+        <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#666', marginBottom: '8px' }}>
+          Browse by Era
+        </h2>
+        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+          <Link
+            to="/timeline/antiquity"
+            style={{
+              fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
+              textTransform: 'uppercase', padding: '4px 10px',
+              border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
+              textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
+            }}
+          >
+            Antiquity
+          </Link>
+          {allDecades.map((d) => (
+            <Link
+              key={d}
+              to={`/timeline/${d}`}
+              style={{
+                fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
+                padding: '4px 10px',
+                border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
+                textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
+              }}
+            >
+              {d}s
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

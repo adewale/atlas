@@ -21,6 +21,8 @@ const AnomalyExplorer = lazy(() => import('./pages/AnomalyExplorer'));
 const NeighborhoodGraph = lazy(() => import('./pages/NeighborhoodGraph'));
 const EtymologyMap = lazy(() => import('./pages/EtymologyMap'));
 const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
+const DiscovererDetail = lazy(() => import('./pages/DiscovererDetail'));
+const TimelineEra = lazy(() => import('./pages/TimelineEra'));
 
 export const router = createBrowserRouter([
   { path: '/', Component: Home },
@@ -140,6 +142,22 @@ export const router = createBrowserRouter([
     loader: async () => {
       const mod = await import('../data/generated/discoverers.json');
       return { discoverers: mod.default };
+    },
+  },
+  {
+    path: '/discoverer/:name',
+    Component: DiscovererDetail,
+    loader: async () => {
+      const mod = await import('../data/generated/discoverers.json');
+      return { discoverers: mod.default };
+    },
+  },
+  {
+    path: '/timeline/:era',
+    Component: TimelineEra,
+    loader: async () => {
+      const mod = await import('../data/generated/timeline.json');
+      return mod.default;
     },
   },
 ]);

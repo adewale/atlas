@@ -128,16 +128,19 @@ export default function DiscovererNetwork() {
           {/* Antiquity group */}
           {antiquity && (
             <g transform={`translate(0, ${antiquityStartY})`}>
-              <text
-                x={0}
-                y={SQ - 2}
-                fontSize={14}
-                fontWeight="bold"
-                fill={WARM_RED}
-                fontFamily="system-ui, sans-serif"
-              >
-                {antiquity.name}
-              </text>
+              <a href={`/discoverer/${encodeURIComponent(antiquity.name)}`}>
+                <text
+                  x={0}
+                  y={SQ - 2}
+                  fontSize={14}
+                  fontWeight="bold"
+                  fill={WARM_RED}
+                  fontFamily="system-ui, sans-serif"
+                  style={{ cursor: 'pointer' }}
+                >
+                  {antiquity.name}
+                </text>
+              </a>
               <g
                 transform={`translate(${LEFT_COL}, 0)`}
                 style={{
@@ -193,22 +196,25 @@ export default function DiscovererNetwork() {
             const delay = rowIdx * 40;
             return (
               <g key={disc.name} transform={`translate(0, ${rowY})`}>
-                {/* Discoverer name */}
-                <text
-                  x={0}
-                  y={SQ - 2}
-                  fontSize={13}
-                  fill={BLACK}
-                  fontFamily="system-ui, sans-serif"
-                  style={{
-                    opacity: hasLoaded ? 1 : 0,
-                    transition: `opacity 300ms var(--ease-out) ${delay}ms`,
-                  }}
-                >
-                  {disc.name.length > 24
-                    ? disc.name.slice(0, 22) + '…'
-                    : disc.name}
-                </text>
+                {/* Discoverer name — links to detail page */}
+                <a href={`/discoverer/${encodeURIComponent(disc.name)}`}>
+                  <text
+                    x={0}
+                    y={SQ - 2}
+                    fontSize={13}
+                    fill={BLACK}
+                    fontFamily="system-ui, sans-serif"
+                    style={{
+                      cursor: 'pointer',
+                      opacity: hasLoaded ? 1 : 0,
+                      transition: `opacity 300ms var(--ease-out) ${delay}ms`,
+                    }}
+                  >
+                    {disc.name.length > 24
+                      ? disc.name.slice(0, 22) + '…'
+                      : disc.name}
+                  </text>
+                </a>
 
                 {/* Element squares with bar-grow animation */}
                 <g

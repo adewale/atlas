@@ -460,12 +460,12 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
             <div>
               <span style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
               <div>
-                <Link to="/discoverer-network" style={{ color, textDecoration: 'none' }}>
+                <Link to={`/discoverer/${encodeURIComponent(element.discoverer)}`} style={{ color, textDecoration: 'none' }}>
                   {element.discoverer}
                 </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
                 <Link
-                  to="/discovery-timeline"
+                  to={element.discoveryYear ? `/timeline/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
                   timeline →
