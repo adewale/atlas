@@ -3,3 +3,5 @@ dist/
 *.tsbuildinfo
 .claude/
 .pi/
+test-results/
+tests/e2e/screenshots/
