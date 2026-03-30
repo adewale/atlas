@@ -32,7 +32,7 @@ export default function About() {
   return (
     <article style={{ maxWidth: '640px' }}>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.15em' }}>About Atlas</h1>
+      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>About Atlas</h1>
 
       <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '16px' }} />
 

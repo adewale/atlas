@@ -90,7 +90,7 @@ export default function NeighborhoodGraph() {
       <Link to="/" style={{ fontSize: '14px' }}>
         &larr; Periodic Table
       </Link>
-      <h1 style={{ margin: '16px 0' }}>Neighborhood Graph</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighborhood Graph</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg

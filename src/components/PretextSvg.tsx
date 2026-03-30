@@ -39,6 +39,12 @@ function buildSparklinePoints(
   return { points: pts.join(' '), dotX, dotY };
 }
 
+export type DropCapConfig = {
+  fontSize: number;    // e.g. 48
+  fill: string;        // block color
+  lineSpan?: number;   // how many body lines it spans (default: computed from fontSize / lineHeight)
+};
+
 type PretextSvgProps = {
   lines: PositionedLine[];
   lineHeight: number;
@@ -54,6 +60,7 @@ type PretextSvgProps = {
   animationStagger?: number;
   className?: string;
   inlineSparkline?: InlineSparklineConfig;
+  dropCap?: DropCapConfig;
 };
 
 /**
@@ -74,6 +81,7 @@ export default function PretextSvg({
   animationStagger,
   className,
   inlineSparkline,
+  dropCap,
 }: PretextSvgProps) {
   // Resolve target line index for inline sparkline (-1 = last line)
   const sparklineTargetLine =
@@ -83,8 +91,36 @@ export default function PretextSvg({
         : inlineSparkline.lineIndex
       : -1;
 
+  // Drop cap: extract first character from first line, render it large
+  const dropCapChar = dropCap && lines.length > 0 ? lines[0].text[0] : null;
+  const dropCapLineSpan = dropCap
+    ? dropCap.lineSpan ?? Math.ceil(dropCap.fontSize / lineHeight)
+    : 0;
+
   return (
     <g className={className} transform={`translate(${x}, ${y})`}>
+      {/* Drop cap initial — large colored first character */}
+      {dropCapChar && dropCap && (
+        <text
+          x={0}
+          y={lines[0].y + dropCap.fontSize * 0.82}
+          fontSize={dropCap.fontSize}
+          fontWeight="bold"
+          fill={dropCap.fill}
+          fontFamily="system-ui, sans-serif"
+          style={
+            animationStagger != null
+              ? {
+                  opacity: 0,
+                  transform: 'translateY(6px)',
+                  animation: `folio-line-reveal 400ms var(--ease-out) 0ms forwards`,
+                }
+              : undefined
+          }
+        >
+          {dropCapChar}
+        </text>
+      )}
       {lines.map((line, i) => {
         const lineY = line.y + lineHeight;
         const staggerDelay = animationStagger != null ? i * animationStagger : undefined;
@@ -153,7 +189,7 @@ export default function PretextSvg({
                   : undefined
               }
             >
-              {line.text}
+              {dropCapChar && i === 0 ? line.text.slice(1) : line.text}
             </text>
             {sparklineData && (
               <g

@@ -4,6 +4,7 @@ import type { ElementRecord, ElementSources } from '../lib/types';
 import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
+import { computeLineHeight } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
@@ -253,29 +254,30 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           ) : <span />}
         </nav>
 
-        {/* Giant atomic number in block color — morphs from grid cell */}
+        {/* Giant atomic number in block color — Byrne scale: enormous next to tiny */}
         <div
           className="folio-number"
           aria-hidden="true"
           style={{
-            fontSize: '72px',
+            fontSize: '96px',
             fontWeight: 'bold',
             color,
             fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
             lineHeight: 1,
+            marginLeft: '-2px',
             viewTransitionName: 'element-number',
           } as React.CSSProperties}
         >
           {paddedNumber}
         </div>
 
-        {/* Giant symbol — view-transition-name matches grid cell for morphing */}
+        {/* Giant symbol in block color — the symbol declares its block identity */}
         <div
           className="folio-symbol"
           style={{
             fontSize: '56px',
             fontWeight: 'bold',
-            color: '#0f0f0f',
+            color,
             lineHeight: 1.1,
             viewTransitionName: 'element-symbol',
           } as React.CSSProperties}
@@ -283,13 +285,20 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           {element.symbol}
         </div>
 
-        {/* Element name */}
-        <h2 style={{ fontSize: '24px', fontWeight: 'normal', margin: '4px 0 12px' }}>
+        {/* Element name — quiet caption, Byrne-style: small, wide-tracked, uppercase */}
+        <h2 style={{
+          fontSize: '14px',
+          fontWeight: 'normal',
+          margin: '6px 0 12px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.3em',
+          color: '#666',
+        }}>
           {element.name}
         </h2>
 
-        {/* Thin rule in block color */}
-        <div style={{ borderTop: `1px solid ${color}`, marginBottom: '16px' }} />
+        {/* Thick rule in block color — Byrne: structural bar, not decorative line */}
+        <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
 
         {/* Summary text shaped around data plate */}
         <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
@@ -351,6 +360,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
               y={0}
               maxWidth={svgWidth}
               animationStagger={animate ? 30 : undefined}
+              dropCap={{ fontSize: 48, fill: color }}
               inlineSparkline={
                 groupTrendData
                   ? {
@@ -411,7 +421,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           style={{
             marginTop: '24px',
             padding: '12px 0',
-            borderTop: `1px solid ${color}`,
+            borderTop: `3px solid ${color}`,
             fontSize: '13px',
             lineHeight: 1.7,
             color: '#333',

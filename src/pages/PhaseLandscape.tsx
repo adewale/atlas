@@ -66,7 +66,7 @@ export default function PhaseLandscape() {
       <Link to="/" style={{ fontSize: '14px' }}>
         ← Periodic Table
       </Link>
-      <h1 style={{ margin: '16px 0' }}>Phase Landscape at STP</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Phase Landscape at STP</h1>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg

@@ -38,7 +38,7 @@ export default function Credits() {
   return (
     <article style={{ maxWidth: '800px' }}>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.15em' }}>Credits</h1>
+      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Credits</h1>
 
       <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '24px' }} />
 

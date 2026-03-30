@@ -33,7 +33,7 @@ export default function Design() {
   return (
     <main style={{ maxWidth: '800px' }}>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.15em' }}>Design Language</h1>
+      <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>
         Living reference for the Atlas visual system. 60% Kronecker-Wallis/Byrne visual drama,
         40% Tufte data density.
@@ -106,11 +106,11 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: '#666' }}>Monospace — SF Mono / Cascadia Code</div>
           <p className="mono">118 elements · 7 periods · 18 groups</p>
         </div>
-        <div>
-          <div style={{ fontSize: '12px', color: '#666' }}>Giant numerals</div>
+        <div style={{ marginBottom: '16px' }}>
+          <div style={{ fontSize: '12px', color: '#666' }}>Giant numerals — 96px, monospace, block-colored</div>
           <span
             style={{
-              fontSize: '72px',
+              fontSize: '96px',
               fontWeight: 'bold',
               fontFamily: "'SF Mono', monospace",
               color: '#9e1c2c',
@@ -119,6 +119,26 @@ export default function Design() {
           >
             026
           </span>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ fontSize: '12px', color: '#666' }}>Inscription titles — 13px, uppercase, 0.2em tracking, block-colored</div>
+          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#9e1c2c', margin: '4px 0' }}>Discovery Timeline</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#133e7c', margin: '4px 0' }}>Etymology Map</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#c59b1a', margin: '4px 0' }}>Anomaly Explorer</h3>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ fontSize: '12px', color: '#666' }}>Element name caption — 14px, uppercase, 0.3em tracking</div>
+          <span style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.3em', color: '#666' }}>Hydrogen</span>
+        </div>
+        <div>
+          <div style={{ fontSize: '12px', color: '#666' }}>Drop cap — 48px initial in block color, Pretext-measured flow</div>
+          <svg width={400} height={80}>
+            <text x={0} y={42} fontSize={48} fontWeight="bold" fill="#133e7c" fontFamily="system-ui, sans-serif">H</text>
+            <text x={34} y={20} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">ydrogen is the lightest element,</text>
+            <text x={34} y={39} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">with an atomic mass of 1.008.</text>
+            <text x={0} y={58} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">It is the most abundant element in</text>
+            <text x={0} y={77} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">the universe.</text>
+          </svg>
         </div>
       </section>
 

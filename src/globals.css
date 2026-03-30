@@ -277,9 +277,9 @@ svg [role="button"] {
     max-width: 100%;
   }
 
-  /* Giant numbers smaller on mobile */
+  /* Giant numbers smaller on mobile — still dramatic */
   .folio-number {
-    font-size: 48px !important;
+    font-size: 64px !important;
   }
   .folio-symbol {
     font-size: 40px !important;

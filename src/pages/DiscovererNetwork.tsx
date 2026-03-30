@@ -71,7 +71,7 @@ export default function DiscovererNetwork() {
       <Link to="/" style={{ fontSize: '14px' }}>
         ← Periodic Table
       </Link>
-      <h1 style={{ margin: '16px 0' }}>Discoverer Network</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: MUSTARD }}>Discoverer Network</h1>
 
       {/* bar-grow keyframe in globals.css */}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>

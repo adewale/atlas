@@ -27,8 +27,10 @@ export default function PropertyBar({
   const fraction = rank > 0 ? (total - rank + 1) / total : 0;
   const barWidth = fraction * width;
 
+  const percentile = rank > 0 ? Math.round(((total - rank + 1) / total) * 100) : 0;
+
   return (
-    <svg width={width + 60} height={height + 14} role="img" aria-label={`${label}: ranked ${rank} of ${total}`}>
+    <svg width={width + 60} height={height + 14} role="img" aria-label={`${label}: ranked ${rank} of ${total}, ${percentile}th percentile`}>
       <text
         x={0}
         y={10}
@@ -62,6 +64,18 @@ export default function PropertyBar({
             : undefined
         }
       />
+      {/* Byrne dual-coding: percentile number at bar end */}
+      {rank > 0 && (
+        <text
+          x={barWidth + 4}
+          y={14 + height - 3}
+          fontSize={9}
+          fill="#666"
+          fontFamily="'SF Mono', 'Cascadia Code', 'Fira Code', monospace"
+        >
+          {percentile}
+        </text>
+      )}
     </svg>
   );
 }

@@ -15,8 +15,8 @@ export default function Home() {
 
   return (
     <main id="main-content">
-      <h1 style={{ letterSpacing: '0.15em', marginBottom: '24px', fontSize: '24px' }}>
-        A T L A S
+      <h1 style={{ letterSpacing: '0.3em', marginBottom: '24px', fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+        Atlas
       </h1>
       <PeriodicTable onSelectElement={handleSelect} />
       {/* Explore section — Byrne-style navigation to visualizations */}
@@ -34,17 +34,22 @@ export default function Home() {
             key={to}
             to={to}
             style={{
-              fontSize: '12px',
+              fontSize: '11px',
               fontWeight: 'bold',
-              letterSpacing: '0.02em',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
               padding: '6px 12px',
               border: `1.5px solid ${color}`,
               color,
               textDecoration: 'none',
               minHeight: 'unset',
               minWidth: 'unset',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
+            <span style={{ width: '8px', height: '8px', background: color, display: 'inline-block', flexShrink: 0 }} />
             {label}
           </Link>
         ))}

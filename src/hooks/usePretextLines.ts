@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import {
   measureLines,
   shapeText,
+  dropCapLayout,
   computeLineHeight,
   type PositionedLine,
 } from '../lib/pretext';
@@ -112,4 +113,35 @@ export function useShapedText({
     const lines = shapeText(text, font, widthPerLine, lineHeight);
     return { lines, lineHeight, plateHeightInLines };
   }, [text, fullWidth, narrowWidth, font, mobile]);
+}
+
+type UseDropCapOptions = {
+  text: string;
+  maxWidth: number;
+  font?: string;
+  dropCapFont?: string;
+};
+
+/**
+ * Hook for Tier 2b: drop-cap text layout.
+ * A large initial character with body text flowing around it.
+ */
+export function useDropCapText({
+  text,
+  maxWidth,
+  font = BODY_FONT,
+  dropCapFont = '48px system-ui',
+}: UseDropCapOptions): {
+  dropCap: { char: string; width: number; height: number; fontSize: number };
+  lines: PositionedLine[];
+  lineHeight: number;
+} {
+  return useMemo(() => {
+    const lineHeight = computeLineHeight(font);
+    if (!text) {
+      return { dropCap: { char: '', width: 0, height: 0, fontSize: 0 }, lines: [], lineHeight };
+    }
+    const result = dropCapLayout(text, font, dropCapFont, maxWidth, lineHeight);
+    return { ...result, lineHeight };
+  }, [text, maxWidth, font, dropCapFont]);
 }

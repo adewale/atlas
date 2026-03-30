@@ -295,6 +295,30 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           touchAction: 'pinch-zoom',
         }}
       >
+        {/* Byrne: thin rules between periods — structure through negative space */}
+        {[1, 2, 3, 4, 5, 6].map((period) => (
+          <line
+            key={`rule-${period}`}
+            x1={0}
+            y1={period * CELL_HEIGHT}
+            x2={18 * CELL_WIDTH}
+            y2={period * CELL_HEIGHT}
+            stroke="#0f0f0f"
+            strokeWidth={0.3}
+            opacity={0.15}
+          />
+        ))}
+        {/* Heavier rule before f-block gap — the void speaks */}
+        <line
+          x1={3 * CELL_WIDTH}
+          y1={7 * CELL_HEIGHT + CELL_HEIGHT * 0.5}
+          x2={17 * CELL_WIDTH}
+          y2={7 * CELL_HEIGHT + CELL_HEIGHT * 0.5}
+          stroke="#0f0f0f"
+          strokeWidth={0.5}
+          opacity={0.2}
+          strokeDasharray="4 4"
+        />
         {allElements.map((el) => {
           const pos = getCellPosition(el);
           const isActive = el.symbol === activeSymbol;

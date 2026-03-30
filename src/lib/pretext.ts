@@ -92,5 +92,63 @@ export function computeLineHeight(font: string = DEFAULT_FONT): number {
   return Math.ceil(fontSize * 1.2);
 }
 
+/**
+ * Tier 2b: Drop-cap text layout.
+ * Measures a large initial character separately, then flows the remaining text
+ * around it using variable-width lines (narrower beside the drop cap, full after).
+ */
+export function dropCapLayout(
+  text: string,
+  font: string,
+  dropCapFont: string,
+  maxWidth: number,
+  lineHeight: number,
+): {
+  dropCap: { char: string; width: number; height: number; fontSize: number };
+  lines: PositionedLine[];
+} {
+  if (!text || text.length === 0) {
+    return { dropCap: { char: '', width: 0, height: 0, fontSize: 0 }, lines: [] };
+  }
+
+  // Extract the first character and the rest
+  const dropChar = text[0];
+  const restText = text.slice(1);
+
+  // Measure the drop cap character at its large font size
+  const dropPrepared = prepareWithSegments(dropChar, dropCapFont);
+  const dropResult = layoutWithLines(dropPrepared, 9999, 0);
+  const dropWidth = dropResult.lines[0]?.width ?? 40;
+
+  // Parse drop cap font size
+  const match = dropCapFont.match(/(\d+(?:\.\d+)?)px/);
+  const dropFontSize = match ? parseFloat(match[1]) : 48;
+  const dropHeight = dropFontSize; // height of the drop cap glyph
+
+  // How many body lines the drop cap spans
+  const dropCapLines = Math.ceil(dropHeight / lineHeight);
+  const gap = 8; // space between drop cap and body text
+
+  // Build variable-width array: narrow beside drop cap, full after
+  const narrowWidth = maxWidth - dropWidth - gap;
+  const widths: number[] = [];
+  for (let i = 0; i < 200; i++) {
+    widths.push(i < dropCapLines ? narrowWidth : maxWidth);
+  }
+
+  // Layout the rest of the text with variable widths
+  const lines = shapeText(restText, font, widths, lineHeight);
+
+  // Offset x for lines beside the drop cap
+  for (let i = 0; i < Math.min(dropCapLines, lines.length); i++) {
+    lines[i].x = dropWidth + gap;
+  }
+
+  return {
+    dropCap: { char: dropChar, width: dropWidth, height: dropHeight, fontSize: dropFontSize },
+    lines,
+  };
+}
+
 export { prepareWithSegments, layout, layoutWithLines, layoutNextLine };
 export type { LayoutLine, PreparedTextWithSegments, LayoutCursor };

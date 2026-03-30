@@ -120,10 +120,12 @@ export default function AnomalyExplorer() {
       <h1
         style={{
           fontFamily: 'system-ui, sans-serif',
-          fontSize: 28,
+          fontSize: 13,
           fontWeight: 700,
-          color: BLACK,
+          color: MUSTARD,
           margin: '20px 0 16px',
+          textTransform: 'uppercase',
+          letterSpacing: '0.2em',
         }}
       >
         Anomaly Explorer

@@ -93,7 +93,7 @@ export default function PropertyScatter() {
       <Link to="/" style={{ fontSize: '14px' }}>
         ← Periodic Table
       </Link>
-      <h1 style={{ margin: '16px 0' }}>Property Scatter</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#133e7c' }}>Property Scatter</h1>
 
       {/* Pretext intro */}
       <svg

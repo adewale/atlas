@@ -62,9 +62,11 @@ const styles = {
 
   title: {
     margin: '16px 0 8px',
-    fontSize: '28px',
+    fontSize: '13px',
     fontWeight: 700,
-    color: BLACK,
+    color: DEEP_BLUE,
+    textTransform: 'uppercase',
+    letterSpacing: '0.2em',
   } as React.CSSProperties,
 
   introSvg: {
