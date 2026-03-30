@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 43,
+  "symbol": "Tc",
+  "name": "Technetium",
+  "wikidataId": "Q1054",
+  "wikipediaTitle": "Technetium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Technetium",
+  "period": 5,
+  "group": 7,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 96.90636,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 7.28,
+  "radius": 209,
+  "summary": "Technetium is a chemical element; it has symbol Tc and atomic number 43. It is the lightest element whose isotopes are all radioactive. Technetium and promethium are the only radioactive elements whose neighbours in the sense of atomic number are both stable. All available technetium is produced as a synthetic element. Naturally occurring technetium is a spontaneous fission product in uranium ore and thorium ore, or the product of neutron capture in molybdenum ores. This silvery gray, crystalline transition metal lies between manganese and rhenium in group 7 of the periodic table, and its chemical properties are intermediate between those of both adjacent elements. The most common naturally occurring isotope is 99Tc, in traces only.",
+  "neighbors": [
+    "Mo",
+    "Ru"
+  ],
+  "rankings": {
+    "mass": 76,
+    "electronegativity": 38,
+    "ionizationEnergy": 50,
+    "radius": 49
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/43"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1054"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Technetium",
+      "url": "https://en.wikipedia.org/wiki/Technetium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

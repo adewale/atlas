@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 55,
+  "symbol": "Cs",
+  "name": "Caesium",
+  "wikidataId": "Q1108",
+  "wikipediaTitle": "Caesium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Caesium",
+  "period": 6,
+  "group": 1,
+  "block": "s",
+  "category": "alkali metal",
+  "phase": "solid",
+  "mass": 132.905452,
+  "electronegativity": 0.79,
+  "ionizationEnergy": 3.894,
+  "radius": 343,
+  "summary": "Caesium is a chemical element; it has symbol Cs and atomic number 55. It is a soft, silvery-golden alkali metal with a melting point of 28.5 °C, which makes it one of only five elemental metals that are liquid at or near room temperature. Caesium has physical and chemical properties similar to those of rubidium and potassium. It is pyrophoric and reacts with water even at −116 °C (−177 °F). It is the least electronegative stable element, with a value of 0.79 on the Pauling scale. It has only one stable isotope, caesium-133. Caesium is mined mostly from pollucite. Caesium-137, a fission product, is extracted from waste produced by nuclear reactors. It has the largest atomic radius of all elements whose radii have been measured or calculated, at about 260 picometres.",
+  "neighbors": [
+    "Xe",
+    "Ba"
+  ],
+  "rankings": {
+    "mass": 64,
+    "electronegativity": 94,
+    "ionizationEnergy": 102,
+    "radius": 2
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/55"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1108"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Caesium",
+      "url": "https://en.wikipedia.org/wiki/Caesium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 86,
+  "symbol": "Rn",
+  "name": "Radon",
+  "wikidataId": "Q1133",
+  "wikipediaTitle": "Radon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Radon",
+  "period": 6,
+  "group": 18,
+  "block": "p",
+  "category": "noble gas",
+  "phase": "gas",
+  "mass": 222.01758,
+  "electronegativity": null,
+  "ionizationEnergy": 10.745,
+  "radius": 220,
+  "summary": "Radon is a chemical element; it has symbol Rn and atomic number 86. It is a radioactive noble gas and is colorless and odorless. Of the three naturally occurring radon isotopes, only 222Rn has a sufficiently long half-life for it to be released from the soil and rock where it is generated. Radon isotopes are the immediate decay products of radium isotopes.",
+  "neighbors": [
+    "At",
+    "Fr"
+  ],
+  "rankings": {
+    "mass": 33,
+    "electronegativity": 0,
+    "ionizationEnergy": 13,
+    "radius": 35
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/86"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1133"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Radon",
+      "url": "https://en.wikipedia.org/wiki/Radon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

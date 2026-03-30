@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 40,
+  "symbol": "Zr",
+  "name": "Zirconium",
+  "wikidataId": "Q1038",
+  "wikipediaTitle": "Zirconium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Zirconium",
+  "period": 5,
+  "group": 4,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 91.22,
+  "electronegativity": 1.33,
+  "ionizationEnergy": 6.634,
+  "radius": 186,
+  "summary": "Zirconium is a chemical element; it has symbol Zr and atomic number 40. First identified in 1789, isolated in impure form in 1824, and manufactured at scale by 1925, pure zirconium is a lustrous transition metal with a greyish-white color that closely resembles hafnium and, to a lesser extent, titanium. It is solid at room temperature, ductile, malleable and corrosion-resistant. The name zirconium is derived from the name of the mineral zircon, the most important source of zirconium. The word is related to Persian zargun. Besides zircon, zirconium occurs in over 140 other minerals, including baddeleyite and eudialyte; most zirconium is produced as a byproduct of minerals mined for titanium and tin.",
+  "neighbors": [
+    "Y",
+    "Nb"
+  ],
+  "rankings": {
+    "mass": 79,
+    "electronegativity": 59,
+    "ionizationEnergy": 58,
+    "radius": 76
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/40"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1038"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Zirconium",
+      "url": "https://en.wikipedia.org/wiki/Zirconium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

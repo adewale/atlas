@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 75,
+  "symbol": "Re",
+  "name": "Rhenium",
+  "wikidataId": "Q737",
+  "wikipediaTitle": "Rhenium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhenium",
+  "period": 6,
+  "group": 7,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 186.207,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 7.88,
+  "radius": 217,
+  "summary": "Rhenium is a chemical element; it has symbol Re and atomic number 75. It is a silvery-gray, heavy, third-row transition metal in group 7 of the periodic table. With an estimated average concentration of 1 part per billion (ppb), rhenium is one of the rarest elements in the Earth's crust. It has one of the highest melting and boiling points of any element. It resembles manganese and technetium chemically and is mainly obtained as a by-product of the extraction and refinement of molybdenum and copper ores. It shows in its compounds a wide variety of oxidation states ranging from −3 to +7.",
+  "neighbors": [
+    "W",
+    "Os"
+  ],
+  "rankings": {
+    "mass": 44,
+    "electronegativity": 39,
+    "ionizationEnergy": 39,
+    "radius": 39
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/75"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q737"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Rhenium",
+      "url": "https://en.wikipedia.org/wiki/Rhenium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

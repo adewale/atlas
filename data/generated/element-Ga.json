@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 31,
+  "symbol": "Ga",
+  "name": "Gallium",
+  "wikidataId": "Q861",
+  "wikipediaTitle": "Gallium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Gallium",
+  "period": 4,
+  "group": 13,
+  "block": "p",
+  "category": "post-transition metal",
+  "phase": "solid",
+  "mass": 69.723,
+  "electronegativity": 1.81,
+  "ionizationEnergy": 5.999,
+  "radius": 187,
+  "summary": "\nGallium is a chemical element; it has symbol Ga and atomic number 31. Discovered by the French chemist Paul-Émile Lecoq de Boisbaudran in Paris, France, 1875, \nelemental gallium is a soft, silvery metal at standard temperature and pressure. In its liquid state, it becomes silvery white. If enough force is applied, solid gallium may fracture conchoidally. Since its discovery in 1875, gallium has widely been used to make alloys with low melting points. It is also used in semiconductors, as a dopant in semiconductor substrates.",
+  "neighbors": [
+    "Zn",
+    "Ge"
+  ],
+  "rankings": {
+    "mass": 88,
+    "electronegativity": 42,
+    "ionizationEnergy": 78,
+    "radius": 75
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/31"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q861"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Gallium",
+      "url": "https://en.wikipedia.org/wiki/Gallium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 29,
+  "symbol": "Cu",
+  "name": "Copper",
+  "wikidataId": "Q753",
+  "wikipediaTitle": "Copper",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Copper",
+  "period": 4,
+  "group": 11,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 63.55,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 7.726,
+  "radius": 140,
+  "summary": "Copper is a chemical element; it has symbol Cu and atomic number 29. It is a soft, malleable, and ductile metal with very high thermal and electrical conductivity. A freshly exposed surface of pure copper has a pinkish-orange color. Copper is used as a conductor of heat and electricity, as a building material, and as a constituent of various metal alloys, such as sterling silver used in jewelry, cupronickel used to make marine hardware and coins, and constantan used in strain gauges and thermocouples for temperature measurement.",
+  "neighbors": [
+    "Ni",
+    "Zn"
+  ],
+  "rankings": {
+    "mass": 90,
+    "electronegativity": 37,
+    "ionizationEnergy": 40,
+    "radius": 96
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/29"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q753"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Copper",
+      "url": "https://en.wikipedia.org/wiki/Copper",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 117,
+  "symbol": "Ts",
+  "name": "Tennessine",
+  "wikidataId": "Q1306",
+  "wikipediaTitle": "Tennessine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tennessine",
+  "period": 7,
+  "group": 17,
+  "block": "p",
+  "category": "halogen",
+  "phase": "expected to be a solid",
+  "mass": 294.211,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "Tennessine is a synthetic element; it has symbol Ts and atomic number 117. It has the second-highest atomic number, the joint-highest atomic mass of all known elements, and is the penultimate element of the 7th period of the periodic table. It is named after the U.S. state of Tennessee, where key research institutions involved in its discovery are located.",
+  "neighbors": [
+    "Lv",
+    "Og"
+  ],
+  "rankings": {
+    "mass": 2,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/117"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1306"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Tennessine",
+      "url": "https://en.wikipedia.org/wiki/Tennessine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 92,
+  "symbol": "U",
+  "name": "Uranium",
+  "wikidataId": "Q1098",
+  "wikipediaTitle": "Uranium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Uranium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "category": "actinide",
+  "phase": "solid",
+  "mass": 238.0289,
+  "electronegativity": 1.38,
+  "ionizationEnergy": 6.194,
+  "radius": 240,
+  "summary": "Uranium is a chemical element; it has symbol U and atomic number 92. It is a silvery-grey metal in the actinide series of the periodic table. A uranium atom has 92 protons and 92 electrons, of which 6 are valence electrons. Uranium radioactively decays, usually by emitting an alpha particle. The half-life of this decay varies between 159,200 and 4.5 billion years for different isotopes, making them useful for dating the age of the Earth. The most common isotopes in natural uranium are uranium-238 and uranium-235. Uranium has the highest atomic weight of the primordially occurring elements. Its density is about 70% higher than that of lead and slightly lower than that of gold or tungsten. It occurs naturally in low concentrations of a few parts per million in soil, rock and water, and is commercially extracted from uranium-bearing minerals such as uraninite.",
+  "neighbors": [
+    "Pa",
+    "Np"
+  ],
+  "rankings": {
+    "mass": 26,
+    "electronegativity": 56,
+    "ionizationEnergy": 68,
+    "radius": 18
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/92"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1098"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Uranium",
+      "url": "https://en.wikipedia.org/wiki/Uranium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

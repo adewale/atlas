@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 19,
+  "symbol": "K",
+  "name": "Potassium",
+  "wikidataId": "Q703",
+  "wikipediaTitle": "Potassium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Potassium",
+  "period": 4,
+  "group": 1,
+  "block": "s",
+  "category": "alkali metal",
+  "phase": "solid",
+  "mass": 39.0983,
+  "electronegativity": 0.82,
+  "ionizationEnergy": 4.341,
+  "radius": 275,
+  "summary": "Potassium is a chemical element; it has symbol K and atomic number 19. It is a silvery white metal that is soft enough to easily cut with a knife. Potassium metal reacts rapidly with atmospheric oxygen to form flaky white potassium peroxide in only seconds of exposure. It was first isolated from potash, the ashes of plants, from which its name derives. In the periodic table, potassium is one of the alkali metals, all of which have a single valence electron in the outer electron shell, which is easily removed to create an ion with a positive charge. In nature, potassium occurs only in ionic salts. Elemental potassium reacts vigorously with water, generating sufficient heat to ignite hydrogen emitted in the reaction, and burning with a lilac-colored flame. It is found dissolved in seawater, and occurs in many minerals such as orthoclase, a common constituent of granites and other igneous rocks.",
+  "neighbors": [
+    "Ar",
+    "Ca"
+  ],
+  "rankings": {
+    "mass": 101,
+    "electronegativity": 92,
+    "ionizationEnergy": 99,
+    "radius": 5
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/19"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q703"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Potassium",
+      "url": "https://en.wikipedia.org/wiki/Potassium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

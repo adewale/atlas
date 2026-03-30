@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 73,
+  "symbol": "Ta",
+  "name": "Tantalum",
+  "wikidataId": "Q1123",
+  "wikipediaTitle": "Tantalum",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tantalum",
+  "period": 6,
+  "group": 5,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 180.9479,
+  "electronegativity": 1.5,
+  "ionizationEnergy": 7.89,
+  "radius": 217,
+  "summary": "Tantalum is a chemical element; it has symbol Ta and atomic number 73. It is named after Tantalus, a figure in Greek mythology. Tantalum is a very hard, ductile, lustrous, blue-gray transition metal that is highly corrosion-resistant. It is part of the refractory metals group, which are widely used as components of strong high-melting-point alloys. It is a group 5 element, along with vanadium and niobium, and it always occurs in geologic sources together with the chemically similar niobium, mainly in the mineral groups tantalite, columbite, and coltan.",
+  "neighbors": [
+    "Hf",
+    "W"
+  ],
+  "rankings": {
+    "mass": 46,
+    "electronegativity": 54,
+    "ionizationEnergy": 37,
+    "radius": 38
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/73"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1123"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Tantalum",
+      "url": "https://en.wikipedia.org/wiki/Tantalum",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

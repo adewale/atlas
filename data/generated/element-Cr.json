@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 24,
+  "symbol": "Cr",
+  "name": "Chromium",
+  "wikidataId": "Q725",
+  "wikipediaTitle": "Chromium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Chromium",
+  "period": 4,
+  "group": 6,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 51.996,
+  "electronegativity": 1.66,
+  "ionizationEnergy": 6.767,
+  "radius": 189,
+  "summary": "Chromium is a chemical element; it has symbol Cr and atomic number 24. It is the first element in group 6. It is a steely-grey, lustrous, hard, and brittle transition metal.",
+  "neighbors": [
+    "V",
+    "Mn"
+  ],
+  "rankings": {
+    "mass": 95,
+    "electronegativity": 45,
+    "ionizationEnergy": 54,
+    "radius": 72
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/24"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q725"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Chromium",
+      "url": "https://en.wikipedia.org/wiki/Chromium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

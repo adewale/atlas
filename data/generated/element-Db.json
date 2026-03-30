@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 105,
+  "symbol": "Db",
+  "name": "Dubnium",
+  "wikidataId": "Q1232",
+  "wikipediaTitle": "Dubnium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Dubnium",
+  "period": 7,
+  "group": 5,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 268.126,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "Dubnium is a synthetic chemical element; it has symbol Db and atomic number 105. It is highly radioactive: the most stable known isotope, dubnium-268, has a half-life of about 16 hours. This greatly limits extended research on the element.",
+  "neighbors": [
+    "Rf",
+    "Sg"
+  ],
+  "rankings": {
+    "mass": 14,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/105"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1232"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Dubnium",
+      "url": "https://en.wikipedia.org/wiki/Dubnium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

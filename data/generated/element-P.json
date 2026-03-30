@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 15,
+  "symbol": "P",
+  "name": "Phosphorus",
+  "wikidataId": "Q674",
+  "wikipediaTitle": "Phosphorus",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Phosphorus",
+  "period": 3,
+  "group": 15,
+  "block": "p",
+  "category": "nonmetal",
+  "phase": "solid",
+  "mass": 30.973762,
+  "electronegativity": 2.19,
+  "ionizationEnergy": 10.487,
+  "radius": 180,
+  "summary": "Phosphorus is a chemical element; it has symbol P and atomic number 15. All elemental forms of phosphorus are highly reactive and are therefore never found in nature. Elemental phosphorus can be prepared artificially, the two most common allotropes being white phosphorus and red phosphorus. With 31P as its only stable isotope, phosphorus has an occurrence in Earth's crust of about 0.1%, generally as phosphate rock. A member of the pnictogen family, phosphorus readily forms a wide variety of organic and inorganic compounds, with as its main oxidation states +5, +3 and −3.",
+  "neighbors": [
+    "Si",
+    "S"
+  ],
+  "rankings": {
+    "mass": 104,
+    "electronegativity": 23,
+    "ionizationEnergy": 14,
+    "radius": 81
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/15"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q674"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Phosphorus",
+      "url": "https://en.wikipedia.org/wiki/Phosphorus",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

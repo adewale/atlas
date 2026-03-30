@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 10,
+  "symbol": "Ne",
+  "name": "Neon",
+  "wikidataId": "Q654",
+  "wikipediaTitle": "Neon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Neon",
+  "period": 2,
+  "group": 18,
+  "block": "p",
+  "category": "noble gas",
+  "phase": "gas",
+  "mass": 20.18,
+  "electronegativity": null,
+  "ionizationEnergy": 21.565,
+  "radius": 154,
+  "summary": "Neon is a chemical element; it has the symbol Ne and the atomic number 10. It is the second noble gas in the periodic table. Neon is a colorless, odorless, inert monatomic gas under standard conditions, with approximately two-thirds the density of air.",
+  "neighbors": [
+    "F",
+    "Na"
+  ],
+  "rankings": {
+    "mass": 109,
+    "electronegativity": 0,
+    "ionizationEnergy": 2,
+    "radius": 92
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/10"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q654"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Neon",
+      "url": "https://en.wikipedia.org/wiki/Neon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

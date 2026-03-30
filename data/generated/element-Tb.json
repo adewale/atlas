@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 65,
+  "symbol": "Tb",
+  "name": "Terbium",
+  "wikidataId": "Q1838",
+  "wikipediaTitle": "Terbium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Terbium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "category": "lanthanide",
+  "phase": "solid",
+  "mass": 158.92535,
+  "electronegativity": null,
+  "ionizationEnergy": 5.864,
+  "radius": 221,
+  "summary": "Terbium is a chemical element; it has symbol Tb and atomic number 65. It is a silvery-white, rare earth metal that is malleable and ductile. The ninth member of the lanthanide series, terbium is a fairly electropositive metal that reacts with water, evolving hydrogen gas. Terbium is never found in nature as a free element, but it is contained in many minerals, including cerite, gadolinite, monazite, xenotime and euxenite.",
+  "neighbors": [
+    "Gd",
+    "Dy"
+  ],
+  "rankings": {
+    "mass": 54,
+    "electronegativity": 0,
+    "ionizationEnergy": 83,
+    "radius": 32
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/65"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1838"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Terbium",
+      "url": "https://en.wikipedia.org/wiki/Terbium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 100,
+  "symbol": "Fm",
+  "name": "Fermium",
+  "wikidataId": "Q1896",
+  "wikipediaTitle": "Fermium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Fermium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "category": "actinide",
+  "phase": "solid",
+  "mass": 257.09511,
+  "electronegativity": 1.3,
+  "ionizationEnergy": 6.5,
+  "radius": null,
+  "summary": "Fermium is a synthetic chemical element; it has symbol Fm and atomic number 100. It is an actinide and the heaviest element that can be formed by neutron bombardment of lighter elements, and hence the last element that can be prepared in macroscopic quantities, although pure fermium metal has not been prepared yet. A total of 20 isotopes are known, with 257Fm being the longest-lived with a half-life of 100.5 days.",
+  "neighbors": [
+    "Es",
+    "Md"
+  ],
+  "rankings": {
+    "mass": 19,
+    "electronegativity": 68,
+    "ionizationEnergy": 61,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/100"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1896"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Fermium",
+      "url": "https://en.wikipedia.org/wiki/Fermium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

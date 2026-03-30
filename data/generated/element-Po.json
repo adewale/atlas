@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 84,
+  "symbol": "Po",
+  "name": "Polonium",
+  "wikidataId": "Q979",
+  "wikipediaTitle": "Polonium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Polonium",
+  "period": 6,
+  "group": 16,
+  "block": "p",
+  "category": "metalloid",
+  "phase": "solid",
+  "mass": 208.98243,
+  "electronegativity": 2,
+  "ionizationEnergy": 8.417,
+  "radius": 197,
+  "summary": "Polonium is a chemical element; it has symbol Po and atomic number 84. A rare and highly radioactive metal with no stable isotopes, polonium is a chalcogen and chemically similar to selenium and tellurium, though its metallic character resembles that of its horizontal neighbours in the periodic table: thallium, lead, and bismuth. Due to the short half-life of all its isotopes, its natural occurrence is limited to tiny traces of the fleeting polonium-210 in uranium ores, as it is the penultimate daughter of natural uranium-238. Though two longer-lived isotopes exist, they are much more difficult to produce. Today, polonium is usually produced in milligram quantities by the neutron irradiation of bismuth. Due to its intense radioactivity, which results in the radiolysis of chemical bonds and radioactive self-heating, its chemistry has mostly been investigated on the trace scale only.",
+  "neighbors": [
+    "Bi",
+    "At"
+  ],
+  "rankings": {
+    "mass": 35,
+    "electronegativity": 32,
+    "ionizationEnergy": 30,
+    "radius": 64
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/84"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q979"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Polonium",
+      "url": "https://en.wikipedia.org/wiki/Polonium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

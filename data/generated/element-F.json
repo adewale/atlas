@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 9,
+  "symbol": "F",
+  "name": "Fluorine",
+  "wikidataId": "Q650",
+  "wikipediaTitle": "Fluorine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Fluorine",
+  "period": 2,
+  "group": 17,
+  "block": "p",
+  "category": "halogen",
+  "phase": "gas",
+  "mass": 18.99840316,
+  "electronegativity": 3.98,
+  "ionizationEnergy": 17.423,
+  "radius": 135,
+  "summary": "Fluorine is a chemical element; it has symbol F and atomic number 9. It is the lightest halogen and exists at standard conditions as pale yellow diatomic gas. Fluorine is extremely reactive as it reacts with all other elements except for the light noble gases. In its elemental form it is highly toxic.",
+  "neighbors": [
+    "O",
+    "Ne"
+  ],
+  "rankings": {
+    "mass": 110,
+    "electronegativity": 1,
+    "ionizationEnergy": 3,
+    "radius": 98
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/9"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q650"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Fluorine",
+      "url": "https://en.wikipedia.org/wiki/Fluorine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

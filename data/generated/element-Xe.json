@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 54,
+  "symbol": "Xe",
+  "name": "Xenon",
+  "wikidataId": "Q1106",
+  "wikipediaTitle": "Xenon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Xenon",
+  "period": 5,
+  "group": 18,
+  "block": "p",
+  "category": "noble gas",
+  "phase": "gas",
+  "mass": 131.29,
+  "electronegativity": 2.6,
+  "ionizationEnergy": 12.13,
+  "radius": 216,
+  "summary": "Xenon is a chemical element; it has symbol Xe and atomic number 54. It is a dense, colorless, odorless noble gas found in Earth's atmosphere in trace amounts. Although generally unreactive, it can undergo a few chemical reactions such as the formation of xenon hexafluoroplatinate, the first noble gas compound to be synthesized.",
+  "neighbors": [
+    "I",
+    "Cs"
+  ],
+  "rankings": {
+    "mass": 65,
+    "electronegativity": 8,
+    "ionizationEnergy": 10,
+    "radius": 40
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/54"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1106"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Xenon",
+      "url": "https://en.wikipedia.org/wiki/Xenon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

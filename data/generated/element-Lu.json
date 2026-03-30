@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 71,
+  "symbol": "Lu",
+  "name": "Lutetium",
+  "wikidataId": "Q1857",
+  "wikipediaTitle": "Lutetium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Lutetium",
+  "period": 6,
+  "group": 3,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 174.9667,
+  "electronegativity": 1.27,
+  "ionizationEnergy": 5.426,
+  "radius": 221,
+  "summary": "Lutetium is a chemical element; it has symbol Lu and atomic number 71. It is a silvery white metal, which resists corrosion in dry air, but not in moist air. Lutetium is the last element in the lanthanide series, and it is traditionally counted among the rare earth elements; it can also be classified as the first element of the sixth-period transition metals.",
+  "neighbors": [
+    "Yb",
+    "Hf"
+  ],
+  "rankings": {
+    "mass": 48,
+    "electronegativity": 73,
+    "ionizationEnergy": 93,
+    "radius": 33
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/71"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1857"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Lutetium",
+      "url": "https://en.wikipedia.org/wiki/Lutetium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

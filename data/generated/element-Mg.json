@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 12,
+  "symbol": "Mg",
+  "name": "Magnesium",
+  "wikidataId": "Q660",
+  "wikipediaTitle": "Magnesium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Magnesium",
+  "period": 3,
+  "group": 2,
+  "block": "s",
+  "category": "alkaline earth metal",
+  "phase": "solid",
+  "mass": 24.305,
+  "electronegativity": 1.31,
+  "ionizationEnergy": 7.646,
+  "radius": 173,
+  "summary": "Magnesium is a chemical element; it has symbol Mg and atomic number 12. It is a shiny gray metal having a low density, low melting point, and high chemical reactivity. Like the other alkaline earth metals, it occurs naturally only in combination with other elements and almost always has an oxidation state of +2. It reacts readily with air to form a thin passivation coating of magnesium oxide that inhibits further corrosion of the metal. The free metal burns with a brilliant-white light. The metal is obtained mainly by electrolysis of magnesium salts obtained from brine. It is less dense than aluminium and is used primarily as a component in strong and lightweight alloys that contain aluminium.",
+  "neighbors": [
+    "Na",
+    "Al"
+  ],
+  "rankings": {
+    "mass": 107,
+    "electronegativity": 60,
+    "ionizationEnergy": 41,
+    "radius": 85
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/12"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q660"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Magnesium",
+      "url": "https://en.wikipedia.org/wiki/Magnesium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

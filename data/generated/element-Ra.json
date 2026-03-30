@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 88,
+  "symbol": "Ra",
+  "name": "Radium",
+  "wikidataId": "Q1128",
+  "wikipediaTitle": "Radium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Radium",
+  "period": 7,
+  "group": 2,
+  "block": "s",
+  "category": "alkaline earth metal",
+  "phase": "solid",
+  "mass": 226.02541,
+  "electronegativity": 0.9,
+  "ionizationEnergy": 5.279,
+  "radius": 283,
+  "summary": "Radium is a chemical element; it has symbol Ra and atomic number 88. It is the sixth element in group 2 of the periodic table, also known as the alkaline earth metals. Pure radium is silvery-white, but it readily reacts with nitrogen (rather than oxygen) upon exposure to air, forming a black surface layer of radium nitride (Ra3N2). All isotopes of radium are radioactive, the most stable isotope being radium-226 with a half-life of 1,600 years. When radium decays, it emits ionizing radiation as a by-product, which can excite fluorescent chemicals and cause radioluminescence. For this property, it was widely used in self-luminous paints following its discovery. Of the radioactive elements that occur in quantity, radium is considered particularly toxic, and it is carcinogenic due to the radioactivity of both it and its immediate decay product radon as well as its tendency to accumulate in the bones.",
+  "neighbors": [
+    "Fr",
+    "Ac"
+  ],
+  "rankings": {
+    "mass": 31,
+    "electronegativity": 90,
+    "ionizationEnergy": 95,
+    "radius": 4
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/88"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1128"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Radium",
+      "url": "https://en.wikipedia.org/wiki/Radium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

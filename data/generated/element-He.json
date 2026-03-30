@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 2,
+  "symbol": "He",
+  "name": "Helium",
+  "wikidataId": "Q560",
+  "wikipediaTitle": "Helium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Helium",
+  "period": 1,
+  "group": 18,
+  "block": "s",
+  "category": "noble gas",
+  "phase": "gas",
+  "mass": 4.0026,
+  "electronegativity": null,
+  "ionizationEnergy": 24.587,
+  "radius": 140,
+  "summary": "Helium is a chemical element; it has symbol He and atomic number 2. It is a colorless, odorless, non-toxic, inert, monatomic gas and the first in the noble gas group in the periodic table. Its boiling point is the lowest among all the elements, and it does not have a melting point at standard pressures. It is the second-lightest and second-most abundant element in the observable universe, after hydrogen. It is present at about 24% of the total elemental mass, which is more than 12 times the mass of all the heavier elements combined. Its abundance is similar to this in both the Sun and Jupiter, because of the very high nuclear binding energy of helium-4 with respect to the next three elements after helium. This helium-4 binding energy also accounts for why it is a product of both nuclear fusion and radioactive decay. The most common isotope of helium in the universe is helium-4, the vast majority of which was formed during the Big Bang. Large amounts of new helium are created by nuclear fusion of hydrogen in stars.",
+  "neighbors": [
+    "H",
+    "Li"
+  ],
+  "rankings": {
+    "mass": 117,
+    "electronegativity": 0,
+    "ionizationEnergy": 1,
+    "radius": 95
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/2"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q560"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Helium",
+      "url": "https://en.wikipedia.org/wiki/Helium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

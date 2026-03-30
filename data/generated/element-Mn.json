@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 25,
+  "symbol": "Mn",
+  "name": "Manganese",
+  "wikidataId": "Q731",
+  "wikipediaTitle": "Manganese",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Manganese",
+  "period": 4,
+  "group": 7,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 54.93804,
+  "electronegativity": 1.55,
+  "ionizationEnergy": 7.434,
+  "radius": 197,
+  "summary": "Manganese is a chemical element; it has the symbol Mn and atomic number 25. It is a hard, brittle, silvery metal, often found in minerals in combination with iron. First isolated in the 1770s, manganese is a transition metal with many industrial alloy uses, particularly in stainless steels in which it improves strength, workability, and resistance to wear. Manganese oxide is used as an oxidising agent, as a rubber additive, and in glass making, fertilizers, and ceramics. Manganese sulfate can be used as a fungicide.",
+  "neighbors": [
+    "Cr",
+    "Fe"
+  ],
+  "rankings": {
+    "mass": 94,
+    "electronegativity": 52,
+    "ionizationEnergy": 45,
+    "radius": 63
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/25"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q731"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Manganese",
+      "url": "https://en.wikipedia.org/wiki/Manganese",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 17,
+  "symbol": "Cl",
+  "name": "Chlorine",
+  "wikidataId": "Q688",
+  "wikipediaTitle": "Chlorine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Chlorine",
+  "period": 3,
+  "group": 17,
+  "block": "p",
+  "category": "halogen",
+  "phase": "gas",
+  "mass": 35.45,
+  "electronegativity": 3.16,
+  "ionizationEnergy": 12.968,
+  "radius": 175,
+  "summary": "Chlorine is a chemical element; it has symbol Cl and atomic number 17. The second-lightest of the halogens, it appears between fluorine and bromine in the periodic table and its properties are mostly intermediate between them. Chlorine is a yellow-green gas at room temperature. It is an extremely reactive element and a strong oxidising agent: among the elements, it has the highest electron affinity and the third-highest electronegativity on the revised Pauling scale, behind only oxygen and fluorine.",
+  "neighbors": [
+    "S",
+    "Ar"
+  ],
+  "rankings": {
+    "mass": 102,
+    "electronegativity": 3,
+    "ionizationEnergy": 9,
+    "radius": 84
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/17"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q688"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Chlorine",
+      "url": "https://en.wikipedia.org/wiki/Chlorine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

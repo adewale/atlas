@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 36,
+  "symbol": "Kr",
+  "name": "Krypton",
+  "wikidataId": "Q888",
+  "wikipediaTitle": "Krypton",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Krypton",
+  "period": 4,
+  "group": 18,
+  "block": "p",
+  "category": "noble gas",
+  "phase": "gas",
+  "mass": 83.8,
+  "electronegativity": 3,
+  "ionizationEnergy": 14,
+  "radius": 202,
+  "summary": "Krypton is a chemical element; it has symbol Kr and atomic number 36. It is a colorless, odorless noble gas that occurs in trace amounts in the atmosphere and is often used with other rare gases in fluorescent lamps. Krypton is chemically inert.",
+  "neighbors": [
+    "Br",
+    "Rb"
+  ],
+  "rankings": {
+    "mass": 83,
+    "electronegativity": 5,
+    "ionizationEnergy": 6,
+    "radius": 57
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/36"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q888"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Krypton",
+      "url": "https://en.wikipedia.org/wiki/Krypton",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

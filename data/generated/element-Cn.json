@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 112,
+  "symbol": "Cn",
+  "name": "Copernicium",
+  "wikidataId": "Q1278",
+  "wikipediaTitle": "Copernicium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Copernicium",
+  "period": 7,
+  "group": 12,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "expected to be a solid",
+  "mass": 286.179,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "\nCopernicium is a synthetic chemical element; it has symbol Cn and atomic number 112. Its known isotopes are extremely radioactive, and have only been created in a laboratory. The most stable known isotope, copernicium-285, has a half-life of approximately 30 seconds. Copernicium was first created in February 1996 by the GSI Helmholtz Centre for Heavy Ion Research near Darmstadt, Germany. It was named after the astronomer Nicolaus Copernicus on his 537th anniversary.",
+  "neighbors": [
+    "Rg",
+    "Nh"
+  ],
+  "rankings": {
+    "mass": 7,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/112"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1278"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Copernicium",
+      "url": "https://en.wikipedia.org/wiki/Copernicium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

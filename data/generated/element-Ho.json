@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 67,
+  "symbol": "Ho",
+  "name": "Holmium",
+  "wikidataId": "Q1846",
+  "wikipediaTitle": "Holmium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Holmium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "category": "lanthanide",
+  "phase": "solid",
+  "mass": 164.93033,
+  "electronegativity": 1.23,
+  "ionizationEnergy": 6.022,
+  "radius": 216,
+  "summary": "Holmium is a chemical element; it has symbol Ho and atomic number 67. It is a rare-earth element and the eleventh member of the lanthanide series of elements. It is a relatively soft, silvery, fairly corrosion-resistant and malleable metal. Like many other lanthanides, holmium is too reactive to be found in native form, as pure holmium slowly forms a yellowish oxide coating when exposed to air. When isolated, holmium is relatively stable in dry air at room temperature. However, it reacts with water and corrodes readily, and also burns in air when heated.",
+  "neighbors": [
+    "Dy",
+    "Er"
+  ],
+  "rankings": {
+    "mass": 52,
+    "electronegativity": 76,
+    "ionizationEnergy": 76,
+    "radius": 41
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/67"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1846"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Holmium",
+      "url": "https://en.wikipedia.org/wiki/Holmium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

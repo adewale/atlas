@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 33,
+  "symbol": "As",
+  "name": "Arsenic",
+  "wikidataId": "Q871",
+  "wikipediaTitle": "Arsenic",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Arsenic",
+  "period": 4,
+  "group": 15,
+  "block": "p",
+  "category": "metalloid",
+  "phase": "solid",
+  "mass": 74.92159,
+  "electronegativity": 2.18,
+  "ionizationEnergy": 9.815,
+  "radius": 185,
+  "summary": "Arsenic is a chemical element; it has the symbol As and atomic number 33. It is a metalloid and one of the pnictogens, and therefore shares many properties with its group 15 neighbors phosphorus and antimony. Arsenic is notoriously toxic. It occurs naturally in many minerals, usually in combination with sulfur and metals, but also as a pure elemental crystal. It has various allotropes, but only the grey form, which has a metallic appearance, is important to industry.",
+  "neighbors": [
+    "Ge",
+    "Se"
+  ],
+  "rankings": {
+    "mass": 86,
+    "electronegativity": 24,
+    "ionizationEnergy": 18,
+    "radius": 77
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/33"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q871"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Arsenic",
+      "url": "https://en.wikipedia.org/wiki/Arsenic",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

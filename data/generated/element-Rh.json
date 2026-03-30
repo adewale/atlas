@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 45,
+  "symbol": "Rh",
+  "name": "Rhodium",
+  "wikidataId": "Q1087",
+  "wikipediaTitle": "Rhodium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Rhodium",
+  "period": 5,
+  "group": 9,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 102.9055,
+  "electronegativity": 2.28,
+  "ionizationEnergy": 7.459,
+  "radius": 195,
+  "summary": "Rhodium is a chemical element; it has symbol Rh and atomic number 45. It is a very rare, dark silvery-white, hard, corrosion-resistant transition metal. It is a noble metal and a member of the platinum group. It has only one naturally occurring isotope, which is 103Rh. Naturally occurring rhodium is usually found as a free metal or as an alloy with similar metals and rarely as a chemical compound in minerals such as bowieite and rhodplumsite. It is one of the rarest and most valuable precious metals. Rhodium is a group 9 element. It is used for the enhancement of jewelry.",
+  "neighbors": [
+    "Ru",
+    "Pd"
+  ],
+  "rankings": {
+    "mass": 74,
+    "electronegativity": 15,
+    "ionizationEnergy": 44,
+    "radius": 66
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/45"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1087"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Rhodium",
+      "url": "https://en.wikipedia.org/wiki/Rhodium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "atomicNumber": 118,
+  "symbol": "Og",
+  "name": "Oganesson",
+  "wikidataId": "Q1307",
+  "wikipediaTitle": "Oganesson",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Oganesson",
+  "period": 7,
+  "group": 18,
+  "block": "p",
+  "category": "noble gas",
+  "phase": "expected to be a gas",
+  "mass": 295.216,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "Oganesson is a synthetic chemical element; it has symbol Og and atomic number 118. It was first synthesized in 2002 at the Joint Institute for Nuclear Research (JINR) in Dubna, near Moscow, Russia, by a joint team of Russian and American scientists. In December 2015, it was recognized as one of four new elements by the Joint Working Party of the international scientific bodies IUPAC and IUPAP. It was formally named on 28 November 2016. The name honors the nuclear physicist Yuri Oganessian, who played a leading role in the discovery of the heaviest elements in the periodic table.",
+  "neighbors": [
+    "Ts"
+  ],
+  "rankings": {
+    "mass": 1,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/118"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1307"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Oganesson",
+      "url": "https://en.wikipedia.org/wiki/Oganesson",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

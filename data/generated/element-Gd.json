@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 64,
+  "symbol": "Gd",
+  "name": "Gadolinium",
+  "wikidataId": "Q1832",
+  "wikipediaTitle": "Gadolinium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Gadolinium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "category": "lanthanide",
+  "phase": "solid",
+  "mass": 157.25,
+  "electronegativity": 1.2,
+  "ionizationEnergy": 6.15,
+  "radius": 237,
+  "summary": "Gadolinium is a chemical element; it has symbol Gd and atomic number 64. It is a silvery-white metal when oxidation is removed. Gadolinium is a malleable and ductile rare-earth element. It reacts with atmospheric oxygen or moisture slowly to form a black oxide coating. Gadolinium below its Curie point of 20 °C (68 °F) is ferromagnetic, with an attraction to a magnetic field higher than that of nickel. Above this temperature it is the most paramagnetic element. It is found in nature only in an oxidized form. When separated, it usually has impurities of the other rare earths because of their similar chemical properties.",
+  "neighbors": [
+    "Eu",
+    "Tb"
+  ],
+  "rankings": {
+    "mass": 55,
+    "electronegativity": 79,
+    "ionizationEnergy": 70,
+    "radius": 20
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/64"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1832"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Gadolinium",
+      "url": "https://en.wikipedia.org/wiki/Gadolinium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

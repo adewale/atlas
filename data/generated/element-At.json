@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 85,
+  "symbol": "At",
+  "name": "Astatine",
+  "wikidataId": "Q999",
+  "wikipediaTitle": "Astatine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Astatine",
+  "period": 6,
+  "group": 17,
+  "block": "p",
+  "category": "halogen",
+  "phase": "solid",
+  "mass": 209.98715,
+  "electronegativity": 2.2,
+  "ionizationEnergy": 9.5,
+  "radius": 202,
+  "summary": "Astatine is a chemical element; it has symbol At and atomic number 85. It is the rarest naturally occurring element in the Earth's crust, occurring only as the decay product of various heavier elements. All of astatine's isotopes are short-lived; the most stable is astatine-210, with a half-life of 8.1 hours. Consequently, a solid sample of the element has never been seen, because any macroscopic specimen would be immediately vaporized by the heat of its radioactivity.",
+  "neighbors": [
+    "Po",
+    "Rn"
+  ],
+  "rankings": {
+    "mass": 34,
+    "electronegativity": 22,
+    "ionizationEnergy": 20,
+    "radius": 61
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/85"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q999"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Astatine",
+      "url": "https://en.wikipedia.org/wiki/Astatine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

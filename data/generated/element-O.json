@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 8,
+  "symbol": "O",
+  "name": "Oxygen",
+  "wikidataId": "Q629",
+  "wikipediaTitle": "Oxygen",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Oxygen",
+  "period": 2,
+  "group": 16,
+  "block": "p",
+  "category": "nonmetal",
+  "phase": "gas",
+  "mass": 15.999,
+  "electronegativity": 3.44,
+  "ionizationEnergy": 13.618,
+  "radius": 152,
+  "summary": "Oxygen is a chemical element; it has the symbol O and its atomic number is 8. It is a member of the chalcogen group in the periodic table. It is highly reactive, a nonmetal, and a potent oxidizing agent that readily forms oxides with most elements as well as with other compounds. Oxygen is the most abundant element in Earth's crust, making up almost half of the Earth's crust in the form of various oxides such as water, carbon dioxide, iron oxides, and silicates. It is also the third-most abundant element in the universe after hydrogen and helium.",
+  "neighbors": [
+    "N",
+    "F"
+  ],
+  "rankings": {
+    "mass": 111,
+    "electronegativity": 2,
+    "ionizationEnergy": 7,
+    "radius": 94
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/8"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q629"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Oxygen",
+      "url": "https://en.wikipedia.org/wiki/Oxygen",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

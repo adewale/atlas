@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 14,
+  "symbol": "Si",
+  "name": "Silicon",
+  "wikidataId": "Q670",
+  "wikipediaTitle": "Silicon",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Silicon",
+  "period": 3,
+  "group": 14,
+  "block": "p",
+  "category": "metalloid",
+  "phase": "solid",
+  "mass": 28.085,
+  "electronegativity": 1.9,
+  "ionizationEnergy": 8.152,
+  "radius": 210,
+  "summary": "Silicon is a chemical element; it has symbol Si and atomic number 14. It is a hard, brittle crystalline solid with a blue-grey metallic lustre, and is a tetravalent non-metal and semiconductor. It is a member of group 14 in the periodic table: carbon is above it; and germanium, tin, lead, and flerovium are below it. It is relatively unreactive. Silicon is a significant element that is essential for several physiological and metabolic processes in plants. Silicon is widely used as a semiconductor material in various electrical devices such as transistors, solar cells, and integrated circuits. It dominates semiconductor applications due to its low cost, excellent electronic properties, and adaptable physical characteristics.",
+  "neighbors": [
+    "Al",
+    "P"
+  ],
+  "rankings": {
+    "mass": 105,
+    "electronegativity": 36,
+    "ionizationEnergy": 33,
+    "radius": 46
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/14"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q670"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Silicon",
+      "url": "https://en.wikipedia.org/wiki/Silicon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

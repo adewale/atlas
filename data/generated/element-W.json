@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 74,
+  "symbol": "W",
+  "name": "Tungsten",
+  "wikidataId": "Q743",
+  "wikipediaTitle": "Tungsten",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tungsten",
+  "period": 6,
+  "group": 6,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 183.84,
+  "electronegativity": 2.36,
+  "ionizationEnergy": 7.98,
+  "radius": 210,
+  "summary": "Tungsten is a chemical element which has the symbol W and atomic number 74. It is a metal found naturally on Earth almost exclusively in compounds with other elements. It was identified as a distinct element in 1781 and first isolated as a metal in 1783. Its important ores include scheelite and wolframite, the latter lending the element its alternative name.",
+  "neighbors": [
+    "Ta",
+    "Re"
+  ],
+  "rankings": {
+    "mass": 45,
+    "electronegativity": 13,
+    "ionizationEnergy": 34,
+    "radius": 47
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/74"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q743"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Tungsten",
+      "url": "https://en.wikipedia.org/wiki/Tungsten",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

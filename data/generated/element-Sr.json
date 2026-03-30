@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 38,
+  "symbol": "Sr",
+  "name": "Strontium",
+  "wikidataId": "Q938",
+  "wikipediaTitle": "Strontium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Strontium",
+  "period": 5,
+  "group": 2,
+  "block": "s",
+  "category": "alkaline earth metal",
+  "phase": "solid",
+  "mass": 87.62,
+  "electronegativity": 0.95,
+  "ionizationEnergy": 5.695,
+  "radius": 249,
+  "summary": "Strontium is a chemical element; it has symbol Sr and atomic number 38. An alkaline earth metal, it is a soft silver-white yellowish metallic element that is highly chemically reactive. The metal forms a dark oxide layer when it is exposed to air. Strontium has physical and chemical properties similar to those of its two vertical neighbors in the periodic table, calcium and barium. It occurs naturally mainly in the minerals celestine and strontianite, and is mostly mined from these.",
+  "neighbors": [
+    "Rb",
+    "Y"
+  ],
+  "rankings": {
+    "mass": 81,
+    "electronegativity": 88,
+    "ionizationEnergy": 85,
+    "radius": 8
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/38"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q938"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Strontium",
+      "url": "https://en.wikipedia.org/wiki/Strontium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

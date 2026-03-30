@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 48,
+  "symbol": "Cd",
+  "name": "Cadmium",
+  "wikidataId": "Q1091",
+  "wikipediaTitle": "Cadmium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Cadmium",
+  "period": 5,
+  "group": 12,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 112.41,
+  "electronegativity": 1.69,
+  "ionizationEnergy": 8.994,
+  "radius": 158,
+  "summary": "Cadmium is a chemical element; it has symbol Cd and atomic number 48. This soft, silvery-white metal is chemically similar to the two other stable metals in group 12, zinc and mercury. Like zinc, it demonstrates oxidation state +2 in most of its compounds, and like mercury, it has a lower melting point than the transition metals in groups 3 through 11. Cadmium and its congeners in group 12 are often not considered transition metals, in that they do not have partly filled d or f electron shells in the elemental or common oxidation states. The average concentration of cadmium in Earth's crust is between 0.1 and 0.5 parts per million (ppm). It was discovered in 1817 simultaneously by Stromeyer and Hermann, both in Germany, as an impurity in zinc carbonate.",
+  "neighbors": [
+    "Ag",
+    "In"
+  ],
+  "rankings": {
+    "mass": 71,
+    "electronegativity": 44,
+    "ionizationEnergy": 27,
+    "radius": 90
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/48"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1091"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Cadmium",
+      "url": "https://en.wikipedia.org/wiki/Cadmium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 53,
+  "symbol": "I",
+  "name": "Iodine",
+  "wikidataId": "Q1103",
+  "wikipediaTitle": "Iodine",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Iodine",
+  "period": 5,
+  "group": 17,
+  "block": "p",
+  "category": "halogen",
+  "phase": "solid",
+  "mass": 126.9045,
+  "electronegativity": 2.66,
+  "ionizationEnergy": 10.451,
+  "radius": 198,
+  "summary": "Iodine is a chemical element; it has symbol I and atomic number 53. The heaviest of the stable halogens, it exists at standard conditions as a semi-lustrous, non-metallic solid that melts to form a deep violet liquid at 114 °C (237 °F), and boils to a violet gas at 184 °C (363 °F). The element was discovered by the French chemist Bernard Courtois in 1811 and was named two years later by Joseph Louis Gay-Lussac, after the Ancient Greek Ιώδης, meaning 'violet'.",
+  "neighbors": [
+    "Te",
+    "Xe"
+  ],
+  "rankings": {
+    "mass": 67,
+    "electronegativity": 7,
+    "ionizationEnergy": 15,
+    "radius": 62
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/53"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1103"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Iodine",
+      "url": "https://en.wikipedia.org/wiki/Iodine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

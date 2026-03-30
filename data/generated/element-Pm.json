@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 61,
+  "symbol": "Pm",
+  "name": "Promethium",
+  "wikidataId": "Q1809",
+  "wikipediaTitle": "Promethium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Promethium",
+  "period": 6,
+  "group": null,
+  "block": "f",
+  "category": "lanthanide",
+  "phase": "solid",
+  "mass": 144.91276,
+  "electronegativity": null,
+  "ionizationEnergy": 5.55,
+  "radius": 236,
+  "summary": "Promethium is a chemical element; it has symbol Pm and atomic number 61. All of its isotopes are radioactive; it is extremely rare, with only about 500–600 grams naturally occurring in the Earth's crust at any given time. Promethium is one of the only two radioactive elements that are both preceded and succeeded in the periodic table by elements with stable forms, the other being technetium. Chemically, promethium is a lanthanide. Promethium shows only one stable oxidation state of +3.",
+  "neighbors": [
+    "Nd",
+    "Sm"
+  ],
+  "rankings": {
+    "mass": 58,
+    "electronegativity": 0,
+    "ionizationEnergy": 89,
+    "radius": 22
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/61"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1809"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Promethium",
+      "url": "https://en.wikipedia.org/wiki/Promethium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

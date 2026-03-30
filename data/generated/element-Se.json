@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 34,
+  "symbol": "Se",
+  "name": "Selenium",
+  "wikidataId": "Q876",
+  "wikipediaTitle": "Selenium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Selenium",
+  "period": 4,
+  "group": 16,
+  "block": "p",
+  "category": "nonmetal",
+  "phase": "solid",
+  "mass": 78.97,
+  "electronegativity": 2.55,
+  "ionizationEnergy": 9.752,
+  "radius": 190,
+  "summary": "Selenium is a chemical element; it has symbol Se and atomic number 34. It has various physical appearances, including a brick-red powder, a vitreous black solid, and a grey metallic-looking form. It seldom occurs in this elemental state or as pure ore compounds in Earth's crust. Selenium was discovered in 1817 by Jöns Jacob Berzelius, who noted the similarity of the new element to the previously discovered tellurium.",
+  "neighbors": [
+    "As",
+    "Br"
+  ],
+  "rankings": {
+    "mass": 85,
+    "electronegativity": 11,
+    "ionizationEnergy": 19,
+    "radius": 71
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/34"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q876"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Selenium",
+      "url": "https://en.wikipedia.org/wiki/Selenium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

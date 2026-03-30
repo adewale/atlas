@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 32,
+  "symbol": "Ge",
+  "name": "Germanium",
+  "wikidataId": "Q867",
+  "wikipediaTitle": "Germanium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Germanium",
+  "period": 4,
+  "group": 14,
+  "block": "p",
+  "category": "metalloid",
+  "phase": "solid",
+  "mass": 72.63,
+  "electronegativity": 2.01,
+  "ionizationEnergy": 7.9,
+  "radius": 211,
+  "summary": "Germanium is a chemical element; it has symbol Ge and atomic number 32. It is lustrous, hard-brittle, grayish-white and similar in appearance to silicon. It is a metalloid in the carbon group that is chemically similar to silicon. Like silicon, germanium naturally reacts and forms complexes with oxygen in nature.",
+  "neighbors": [
+    "Ga",
+    "As"
+  ],
+  "rankings": {
+    "mass": 87,
+    "electronegativity": 30,
+    "ionizationEnergy": 36,
+    "radius": 45
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/32"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q867"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Germanium",
+      "url": "https://en.wikipedia.org/wiki/Germanium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

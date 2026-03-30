@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 44,
+  "symbol": "Ru",
+  "name": "Ruthenium",
+  "wikidataId": "Q1086",
+  "wikipediaTitle": "Ruthenium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Ruthenium",
+  "period": 5,
+  "group": 8,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 101.1,
+  "electronegativity": 2.2,
+  "ionizationEnergy": 7.361,
+  "radius": 207,
+  "summary": "Ruthenium is a chemical element; it has symbol Ru and atomic number 44. It is a rare transition metal belonging to the platinum group of the periodic table. Like the other metals of the platinum group, ruthenium is unreactive to most chemicals. Karl Ernst Claus, a Russian scientist of Baltic-German ancestry, discovered the element in 1844 at Kazan State University and named it in honor of Russia, using the Latin name Ruthenia. Ruthenium is usually found as a minor component of platinum ores; the annual production has risen from about 19 tonnes in 2009 to 35.5 tonnes in 2017. Most ruthenium produced is used in wear-resistant electrical contacts and thick-film resistors. A minor application for ruthenium is in platinum alloys and as a chemical catalyst. A new application of ruthenium is as the capping layer for extreme ultraviolet photomasks in semiconductor lithography. Ruthenium is generally found in ores with the other platinum group metals in the Ural Mountains and in North and South America. Small but commercially important quantities are also found in pentlandite extracted from Sudbury, Ontario, and in pyroxenite deposits in South Africa.",
+  "neighbors": [
+    "Tc",
+    "Rh"
+  ],
+  "rankings": {
+    "mass": 75,
+    "electronegativity": 18,
+    "ionizationEnergy": 47,
+    "radius": 53
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/44"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1086"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Ruthenium",
+      "url": "https://en.wikipedia.org/wiki/Ruthenium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

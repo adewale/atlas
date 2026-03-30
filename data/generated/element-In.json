@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 49,
+  "symbol": "In",
+  "name": "Indium",
+  "wikidataId": "Q1094",
+  "wikipediaTitle": "Indium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Indium",
+  "period": 5,
+  "group": 13,
+  "block": "p",
+  "category": "post-transition metal",
+  "phase": "solid",
+  "mass": 114.818,
+  "electronegativity": 1.78,
+  "ionizationEnergy": 5.786,
+  "radius": 193,
+  "summary": "Indium is a chemical element; it has symbol In and atomic number 49. It is a silvery-white post-transition metal and one of the softest elements. Chemically, indium is similar to gallium and thallium, and its properties are largely intermediate between the two. It was discovered in 1863 by Ferdinand Reich and Hieronymous Theodor Richter by spectroscopic methods and named for the indigo blue line in its spectrum.",
+  "neighbors": [
+    "Cd",
+    "Sn"
+  ],
+  "rankings": {
+    "mass": 70,
+    "electronegativity": 43,
+    "ionizationEnergy": 84,
+    "radius": 68
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/49"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1094"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Indium",
+      "url": "https://en.wikipedia.org/wiki/Indium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

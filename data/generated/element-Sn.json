@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 50,
+  "symbol": "Sn",
+  "name": "Tin",
+  "wikidataId": "Q1096",
+  "wikipediaTitle": "Tin",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tin",
+  "period": 5,
+  "group": 14,
+  "block": "p",
+  "category": "post-transition metal",
+  "phase": "solid",
+  "mass": 118.71,
+  "electronegativity": 1.96,
+  "ionizationEnergy": 7.344,
+  "radius": 217,
+  "summary": "Tin is a chemical element; it has the symbol Sn and atomic number 50. A metallic-gray metal, tin is soft enough to be cut with little force, and a bar of tin can be bent by hand with little effort. When bent, a bar of tin makes a sound, the so-called \"tin cry\", as a result of twinning in tin crystals.",
+  "neighbors": [
+    "In",
+    "Sb"
+  ],
+  "rankings": {
+    "mass": 69,
+    "electronegativity": 33,
+    "ionizationEnergy": 48,
+    "radius": 37
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/50"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1096"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Tin",
+      "url": "https://en.wikipedia.org/wiki/Tin",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

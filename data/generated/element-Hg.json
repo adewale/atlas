@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 80,
+  "symbol": "Hg",
+  "name": "Mercury",
+  "wikidataId": "Q925",
+  "wikipediaTitle": "Mercury (element)",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Mercury_(element)",
+  "period": 6,
+  "group": 12,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "liquid",
+  "mass": 200.59,
+  "electronegativity": 2,
+  "ionizationEnergy": 10.438,
+  "radius": 209,
+  "summary": "Mercury is a chemical element; it has symbol Hg and atomic number 80. It is commonly known as quicksilver. A heavy, silvery d-block element, mercury is the only metallic element that is known to be liquid at standard temperature and pressure; the only other element that is liquid under these conditions is bromine, one of the halogens, though metals such as caesium, gallium, and rubidium melt just above room temperature.",
+  "neighbors": [
+    "Au",
+    "Tl"
+  ],
+  "rankings": {
+    "mass": 39,
+    "electronegativity": 31,
+    "ionizationEnergy": 16,
+    "radius": 51
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/80"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q925"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Mercury (element)",
+      "url": "https://en.wikipedia.org/wiki/Mercury_(element)",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

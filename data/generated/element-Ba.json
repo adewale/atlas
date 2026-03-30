@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 56,
+  "symbol": "Ba",
+  "name": "Barium",
+  "wikidataId": "Q1112",
+  "wikipediaTitle": "Barium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Barium",
+  "period": 6,
+  "group": 2,
+  "block": "s",
+  "category": "alkaline earth metal",
+  "phase": "solid",
+  "mass": 137.33,
+  "electronegativity": 0.89,
+  "ionizationEnergy": 5.212,
+  "radius": 268,
+  "summary": "Barium is a chemical element; it has symbol Ba and atomic number 56. It is the fifth element in group 2 and is a soft, silvery alkaline earth metal. Because of its high chemical reactivity, barium is never found in nature as a free element.",
+  "neighbors": [
+    "Cs",
+    "La"
+  ],
+  "rankings": {
+    "mass": 63,
+    "electronegativity": 91,
+    "ionizationEnergy": 96,
+    "radius": 6
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/56"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1112"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Barium",
+      "url": "https://en.wikipedia.org/wiki/Barium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

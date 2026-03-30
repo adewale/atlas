@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 116,
+  "symbol": "Lv",
+  "name": "Livermorium",
+  "wikidataId": "Q1304",
+  "wikipediaTitle": "Livermorium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Livermorium",
+  "period": 7,
+  "group": 16,
+  "block": "p",
+  "category": "post-transition metal",
+  "phase": "expected to be a solid",
+  "mass": 293.205,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "Livermorium is a synthetic chemical element; it has symbol Lv and atomic number 116. It is an extremely radioactive element that has only been created in a laboratory setting and has not been observed in nature. The element is named after the Lawrence Livermore National Laboratory in the United States, which collaborated with the Joint Institute for Nuclear Research (JINR) in Dubna, Russia, to discover livermorium during experiments conducted between 2000 and 2006. The name of the laboratory refers to the city of Livermore, California, where it is located, which in turn was named after the rancher and landowner Robert Livermore. The name was adopted by IUPAC on May 30, 2012. Six isotopes of livermorium are known, with mass numbers of 288–293 inclusive; the longest-lived among them is livermorium-293 with a half-life of about 80 milliseconds. A seventh possible isotope with mass number 294 has been reported but not yet confirmed.",
+  "neighbors": [
+    "Mc",
+    "Ts"
+  ],
+  "rankings": {
+    "mass": 3,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/116"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1304"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Livermorium",
+      "url": "https://en.wikipedia.org/wiki/Livermorium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

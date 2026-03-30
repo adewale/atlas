@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 52,
+  "symbol": "Te",
+  "name": "Tellurium",
+  "wikidataId": "Q1100",
+  "wikipediaTitle": "Tellurium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Tellurium",
+  "period": 5,
+  "group": 16,
+  "block": "p",
+  "category": "metalloid",
+  "phase": "solid",
+  "mass": 127.6,
+  "electronegativity": 2.1,
+  "ionizationEnergy": 9.01,
+  "radius": 206,
+  "summary": "Tellurium is a chemical element; it has the symbol Te and atomic number 52. It is a brittle, mildly toxic, rare, silver-white metalloid. Tellurium is chemically related to selenium and sulfur, all three of which are chalcogens. It is occasionally found in its native form as elemental crystals. Tellurium is far more common in the universe as a whole than on Earth. Its extreme rarity in the Earth's crust, comparable to that of platinum, is due partly to its formation of a volatile hydride that caused tellurium to be lost to space as a gas during the hot nebular formation of Earth.",
+  "neighbors": [
+    "Sb",
+    "I"
+  ],
+  "rankings": {
+    "mass": 66,
+    "electronegativity": 26,
+    "ionizationEnergy": 25,
+    "radius": 56
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/52"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1100"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Tellurium",
+      "url": "https://en.wikipedia.org/wiki/Tellurium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

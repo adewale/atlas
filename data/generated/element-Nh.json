@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 113,
+  "symbol": "Nh",
+  "name": "Nihonium",
+  "wikidataId": "Q1301",
+  "wikipediaTitle": "Nihonium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Nihonium",
+  "period": 7,
+  "group": 13,
+  "block": "p",
+  "category": "post-transition metal",
+  "phase": "expected to be a solid",
+  "mass": 286.182,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "Nihonium is a synthetic chemical element; it has symbol Nh and atomic number 113. It is extremely radioactive: its most stable known isotope, nihonium-286, has a half-life of about 10 seconds. In the periodic table, nihonium is a transactinide element in the p-block. It is a member of period 7 and group 13.",
+  "neighbors": [
+    "Cn",
+    "Fl"
+  ],
+  "rankings": {
+    "mass": 6,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/113"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1301"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Nihonium",
+      "url": "https://en.wikipedia.org/wiki/Nihonium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

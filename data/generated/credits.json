@@ -1,0 +1,980 @@
+{
+  "structured": {
+    "provider": "PubChem",
+    "license": "public domain",
+    "url": "https://pubchem.ncbi.nlm.nih.gov/periodic-table/"
+  },
+  "identifiers": {
+    "provider": "Wikidata",
+    "license": "CC0 1.0",
+    "url": "https://www.wikidata.org/"
+  },
+  "summaries": [
+    {
+      "symbol": "H",
+      "name": "Hydrogen",
+      "title": "Hydrogen",
+      "url": "https://en.wikipedia.org/wiki/Hydrogen",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "He",
+      "name": "Helium",
+      "title": "Helium",
+      "url": "https://en.wikipedia.org/wiki/Helium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Li",
+      "name": "Lithium",
+      "title": "Lithium",
+      "url": "https://en.wikipedia.org/wiki/Lithium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Be",
+      "name": "Beryllium",
+      "title": "Beryllium",
+      "url": "https://en.wikipedia.org/wiki/Beryllium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "B",
+      "name": "Boron",
+      "title": "Boron",
+      "url": "https://en.wikipedia.org/wiki/Boron",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "C",
+      "name": "Carbon",
+      "title": "Carbon",
+      "url": "https://en.wikipedia.org/wiki/Carbon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "N",
+      "name": "Nitrogen",
+      "title": "Nitrogen",
+      "url": "https://en.wikipedia.org/wiki/Nitrogen",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "O",
+      "name": "Oxygen",
+      "title": "Oxygen",
+      "url": "https://en.wikipedia.org/wiki/Oxygen",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "F",
+      "name": "Fluorine",
+      "title": "Fluorine",
+      "url": "https://en.wikipedia.org/wiki/Fluorine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ne",
+      "name": "Neon",
+      "title": "Neon",
+      "url": "https://en.wikipedia.org/wiki/Neon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Na",
+      "name": "Sodium",
+      "title": "Sodium",
+      "url": "https://en.wikipedia.org/wiki/Sodium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Mg",
+      "name": "Magnesium",
+      "title": "Magnesium",
+      "url": "https://en.wikipedia.org/wiki/Magnesium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Al",
+      "name": "Aluminium",
+      "title": "Aluminium",
+      "url": "https://en.wikipedia.org/wiki/Aluminium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Si",
+      "name": "Silicon",
+      "title": "Silicon",
+      "url": "https://en.wikipedia.org/wiki/Silicon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "P",
+      "name": "Phosphorus",
+      "title": "Phosphorus",
+      "url": "https://en.wikipedia.org/wiki/Phosphorus",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "S",
+      "name": "Sulfur",
+      "title": "Sulfur",
+      "url": "https://en.wikipedia.org/wiki/Sulfur",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cl",
+      "name": "Chlorine",
+      "title": "Chlorine",
+      "url": "https://en.wikipedia.org/wiki/Chlorine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ar",
+      "name": "Argon",
+      "title": "Argon",
+      "url": "https://en.wikipedia.org/wiki/Argon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "K",
+      "name": "Potassium",
+      "title": "Potassium",
+      "url": "https://en.wikipedia.org/wiki/Potassium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ca",
+      "name": "Calcium",
+      "title": "Calcium",
+      "url": "https://en.wikipedia.org/wiki/Calcium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Sc",
+      "name": "Scandium",
+      "title": "Scandium",
+      "url": "https://en.wikipedia.org/wiki/Scandium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ti",
+      "name": "Titanium",
+      "title": "Titanium",
+      "url": "https://en.wikipedia.org/wiki/Titanium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "V",
+      "name": "Vanadium",
+      "title": "Vanadium",
+      "url": "https://en.wikipedia.org/wiki/Vanadium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cr",
+      "name": "Chromium",
+      "title": "Chromium",
+      "url": "https://en.wikipedia.org/wiki/Chromium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Mn",
+      "name": "Manganese",
+      "title": "Manganese",
+      "url": "https://en.wikipedia.org/wiki/Manganese",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Fe",
+      "name": "Iron",
+      "title": "Iron",
+      "url": "https://en.wikipedia.org/wiki/Iron",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Co",
+      "name": "Cobalt",
+      "title": "Cobalt",
+      "url": "https://en.wikipedia.org/wiki/Cobalt",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ni",
+      "name": "Nickel",
+      "title": "Nickel",
+      "url": "https://en.wikipedia.org/wiki/Nickel",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cu",
+      "name": "Copper",
+      "title": "Copper",
+      "url": "https://en.wikipedia.org/wiki/Copper",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Zn",
+      "name": "Zinc",
+      "title": "Zinc",
+      "url": "https://en.wikipedia.org/wiki/Zinc",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ga",
+      "name": "Gallium",
+      "title": "Gallium",
+      "url": "https://en.wikipedia.org/wiki/Gallium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ge",
+      "name": "Germanium",
+      "title": "Germanium",
+      "url": "https://en.wikipedia.org/wiki/Germanium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "As",
+      "name": "Arsenic",
+      "title": "Arsenic",
+      "url": "https://en.wikipedia.org/wiki/Arsenic",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Se",
+      "name": "Selenium",
+      "title": "Selenium",
+      "url": "https://en.wikipedia.org/wiki/Selenium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Br",
+      "name": "Bromine",
+      "title": "Bromine",
+      "url": "https://en.wikipedia.org/wiki/Bromine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Kr",
+      "name": "Krypton",
+      "title": "Krypton",
+      "url": "https://en.wikipedia.org/wiki/Krypton",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Rb",
+      "name": "Rubidium",
+      "title": "Rubidium",
+      "url": "https://en.wikipedia.org/wiki/Rubidium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Sr",
+      "name": "Strontium",
+      "title": "Strontium",
+      "url": "https://en.wikipedia.org/wiki/Strontium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Y",
+      "name": "Yttrium",
+      "title": "Yttrium",
+      "url": "https://en.wikipedia.org/wiki/Yttrium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Zr",
+      "name": "Zirconium",
+      "title": "Zirconium",
+      "url": "https://en.wikipedia.org/wiki/Zirconium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Nb",
+      "name": "Niobium",
+      "title": "Niobium",
+      "url": "https://en.wikipedia.org/wiki/Niobium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Mo",
+      "name": "Molybdenum",
+      "title": "Molybdenum",
+      "url": "https://en.wikipedia.org/wiki/Molybdenum",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Tc",
+      "name": "Technetium",
+      "title": "Technetium",
+      "url": "https://en.wikipedia.org/wiki/Technetium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ru",
+      "name": "Ruthenium",
+      "title": "Ruthenium",
+      "url": "https://en.wikipedia.org/wiki/Ruthenium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Rh",
+      "name": "Rhodium",
+      "title": "Rhodium",
+      "url": "https://en.wikipedia.org/wiki/Rhodium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Pd",
+      "name": "Palladium",
+      "title": "Palladium",
+      "url": "https://en.wikipedia.org/wiki/Palladium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ag",
+      "name": "Silver",
+      "title": "Silver",
+      "url": "https://en.wikipedia.org/wiki/Silver",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cd",
+      "name": "Cadmium",
+      "title": "Cadmium",
+      "url": "https://en.wikipedia.org/wiki/Cadmium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "In",
+      "name": "Indium",
+      "title": "Indium",
+      "url": "https://en.wikipedia.org/wiki/Indium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Sn",
+      "name": "Tin",
+      "title": "Tin",
+      "url": "https://en.wikipedia.org/wiki/Tin",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Sb",
+      "name": "Antimony",
+      "title": "Antimony",
+      "url": "https://en.wikipedia.org/wiki/Antimony",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Te",
+      "name": "Tellurium",
+      "title": "Tellurium",
+      "url": "https://en.wikipedia.org/wiki/Tellurium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "I",
+      "name": "Iodine",
+      "title": "Iodine",
+      "url": "https://en.wikipedia.org/wiki/Iodine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Xe",
+      "name": "Xenon",
+      "title": "Xenon",
+      "url": "https://en.wikipedia.org/wiki/Xenon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cs",
+      "name": "Caesium",
+      "title": "Caesium",
+      "url": "https://en.wikipedia.org/wiki/Caesium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ba",
+      "name": "Barium",
+      "title": "Barium",
+      "url": "https://en.wikipedia.org/wiki/Barium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "La",
+      "name": "Lanthanum",
+      "title": "Lanthanum",
+      "url": "https://en.wikipedia.org/wiki/Lanthanum",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ce",
+      "name": "Cerium",
+      "title": "Cerium",
+      "url": "https://en.wikipedia.org/wiki/Cerium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Pr",
+      "name": "Praseodymium",
+      "title": "Praseodymium",
+      "url": "https://en.wikipedia.org/wiki/Praseodymium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Nd",
+      "name": "Neodymium",
+      "title": "Neodymium",
+      "url": "https://en.wikipedia.org/wiki/Neodymium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Pm",
+      "name": "Promethium",
+      "title": "Promethium",
+      "url": "https://en.wikipedia.org/wiki/Promethium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Sm",
+      "name": "Samarium",
+      "title": "Samarium",
+      "url": "https://en.wikipedia.org/wiki/Samarium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Eu",
+      "name": "Europium",
+      "title": "Europium",
+      "url": "https://en.wikipedia.org/wiki/Europium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Gd",
+      "name": "Gadolinium",
+      "title": "Gadolinium",
+      "url": "https://en.wikipedia.org/wiki/Gadolinium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Tb",
+      "name": "Terbium",
+      "title": "Terbium",
+      "url": "https://en.wikipedia.org/wiki/Terbium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Dy",
+      "name": "Dysprosium",
+      "title": "Dysprosium",
+      "url": "https://en.wikipedia.org/wiki/Dysprosium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ho",
+      "name": "Holmium",
+      "title": "Holmium",
+      "url": "https://en.wikipedia.org/wiki/Holmium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Er",
+      "name": "Erbium",
+      "title": "Erbium",
+      "url": "https://en.wikipedia.org/wiki/Erbium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Tm",
+      "name": "Thulium",
+      "title": "Thulium",
+      "url": "https://en.wikipedia.org/wiki/Thulium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Yb",
+      "name": "Ytterbium",
+      "title": "Ytterbium",
+      "url": "https://en.wikipedia.org/wiki/Ytterbium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Lu",
+      "name": "Lutetium",
+      "title": "Lutetium",
+      "url": "https://en.wikipedia.org/wiki/Lutetium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Hf",
+      "name": "Hafnium",
+      "title": "Hafnium",
+      "url": "https://en.wikipedia.org/wiki/Hafnium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ta",
+      "name": "Tantalum",
+      "title": "Tantalum",
+      "url": "https://en.wikipedia.org/wiki/Tantalum",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "W",
+      "name": "Tungsten",
+      "title": "Tungsten",
+      "url": "https://en.wikipedia.org/wiki/Tungsten",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Re",
+      "name": "Rhenium",
+      "title": "Rhenium",
+      "url": "https://en.wikipedia.org/wiki/Rhenium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Os",
+      "name": "Osmium",
+      "title": "Osmium",
+      "url": "https://en.wikipedia.org/wiki/Osmium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ir",
+      "name": "Iridium",
+      "title": "Iridium",
+      "url": "https://en.wikipedia.org/wiki/Iridium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Pt",
+      "name": "Platinum",
+      "title": "Platinum",
+      "url": "https://en.wikipedia.org/wiki/Platinum",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Au",
+      "name": "Gold",
+      "title": "Gold",
+      "url": "https://en.wikipedia.org/wiki/Gold",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Hg",
+      "name": "Mercury",
+      "title": "Mercury (element)",
+      "url": "https://en.wikipedia.org/wiki/Mercury_(element)",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Tl",
+      "name": "Thallium",
+      "title": "Thallium",
+      "url": "https://en.wikipedia.org/wiki/Thallium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Pb",
+      "name": "Lead",
+      "title": "Lead",
+      "url": "https://en.wikipedia.org/wiki/Lead",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Bi",
+      "name": "Bismuth",
+      "title": "Bismuth",
+      "url": "https://en.wikipedia.org/wiki/Bismuth",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Po",
+      "name": "Polonium",
+      "title": "Polonium",
+      "url": "https://en.wikipedia.org/wiki/Polonium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "At",
+      "name": "Astatine",
+      "title": "Astatine",
+      "url": "https://en.wikipedia.org/wiki/Astatine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Rn",
+      "name": "Radon",
+      "title": "Radon",
+      "url": "https://en.wikipedia.org/wiki/Radon",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Fr",
+      "name": "Francium",
+      "title": "Francium",
+      "url": "https://en.wikipedia.org/wiki/Francium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ra",
+      "name": "Radium",
+      "title": "Radium",
+      "url": "https://en.wikipedia.org/wiki/Radium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ac",
+      "name": "Actinium",
+      "title": "Actinium",
+      "url": "https://en.wikipedia.org/wiki/Actinium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Th",
+      "name": "Thorium",
+      "title": "Thorium",
+      "url": "https://en.wikipedia.org/wiki/Thorium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Pa",
+      "name": "Protactinium",
+      "title": "Protactinium",
+      "url": "https://en.wikipedia.org/wiki/Protactinium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "U",
+      "name": "Uranium",
+      "title": "Uranium",
+      "url": "https://en.wikipedia.org/wiki/Uranium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Np",
+      "name": "Neptunium",
+      "title": "Neptunium",
+      "url": "https://en.wikipedia.org/wiki/Neptunium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Pu",
+      "name": "Plutonium",
+      "title": "Plutonium",
+      "url": "https://en.wikipedia.org/wiki/Plutonium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Am",
+      "name": "Americium",
+      "title": "Americium",
+      "url": "https://en.wikipedia.org/wiki/Americium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cm",
+      "name": "Curium",
+      "title": "Curium",
+      "url": "https://en.wikipedia.org/wiki/Curium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Bk",
+      "name": "Berkelium",
+      "title": "Berkelium",
+      "url": "https://en.wikipedia.org/wiki/Berkelium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cf",
+      "name": "Californium",
+      "title": "Californium",
+      "url": "https://en.wikipedia.org/wiki/Californium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Es",
+      "name": "Einsteinium",
+      "title": "Einsteinium",
+      "url": "https://en.wikipedia.org/wiki/Einsteinium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Fm",
+      "name": "Fermium",
+      "title": "Fermium",
+      "url": "https://en.wikipedia.org/wiki/Fermium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Md",
+      "name": "Mendelevium",
+      "title": "Mendelevium",
+      "url": "https://en.wikipedia.org/wiki/Mendelevium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "No",
+      "name": "Nobelium",
+      "title": "Nobelium",
+      "url": "https://en.wikipedia.org/wiki/Nobelium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Lr",
+      "name": "Lawrencium",
+      "title": "Lawrencium",
+      "url": "https://en.wikipedia.org/wiki/Lawrencium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Rf",
+      "name": "Rutherfordium",
+      "title": "Rutherfordium",
+      "url": "https://en.wikipedia.org/wiki/Rutherfordium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Db",
+      "name": "Dubnium",
+      "title": "Dubnium",
+      "url": "https://en.wikipedia.org/wiki/Dubnium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Sg",
+      "name": "Seaborgium",
+      "title": "Seaborgium",
+      "url": "https://en.wikipedia.org/wiki/Seaborgium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Bh",
+      "name": "Bohrium",
+      "title": "Bohrium",
+      "url": "https://en.wikipedia.org/wiki/Bohrium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Hs",
+      "name": "Hassium",
+      "title": "Hassium",
+      "url": "https://en.wikipedia.org/wiki/Hassium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Mt",
+      "name": "Meitnerium",
+      "title": "Meitnerium",
+      "url": "https://en.wikipedia.org/wiki/Meitnerium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ds",
+      "name": "Darmstadtium",
+      "title": "Darmstadtium",
+      "url": "https://en.wikipedia.org/wiki/Darmstadtium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Rg",
+      "name": "Roentgenium",
+      "title": "Roentgenium",
+      "url": "https://en.wikipedia.org/wiki/Roentgenium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Cn",
+      "name": "Copernicium",
+      "title": "Copernicium",
+      "url": "https://en.wikipedia.org/wiki/Copernicium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Nh",
+      "name": "Nihonium",
+      "title": "Nihonium",
+      "url": "https://en.wikipedia.org/wiki/Nihonium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Fl",
+      "name": "Flerovium",
+      "title": "Flerovium",
+      "url": "https://en.wikipedia.org/wiki/Flerovium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Mc",
+      "name": "Moscovium",
+      "title": "Moscovium",
+      "url": "https://en.wikipedia.org/wiki/Moscovium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Lv",
+      "name": "Livermorium",
+      "title": "Livermorium",
+      "url": "https://en.wikipedia.org/wiki/Livermorium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Ts",
+      "name": "Tennessine",
+      "title": "Tennessine",
+      "url": "https://en.wikipedia.org/wiki/Tennessine",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    },
+    {
+      "symbol": "Og",
+      "name": "Oganesson",
+      "title": "Oganesson",
+      "url": "https://en.wikipedia.org/wiki/Oganesson",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  ],
+  "software": [
+    {
+      "name": "Vite",
+      "url": "https://vite.dev/",
+      "license": "MIT"
+    },
+    {
+      "name": "React",
+      "url": "https://react.dev/",
+      "license": "MIT"
+    },
+    {
+      "name": "React Router",
+      "url": "https://reactrouter.com/",
+      "license": "MIT"
+    },
+    {
+      "name": "@chenglou/pretext",
+      "url": "https://github.com/chenglou/pretext",
+      "license": "MIT"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 102,
+  "symbol": "No",
+  "name": "Nobelium",
+  "wikidataId": "Q1901",
+  "wikipediaTitle": "Nobelium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Nobelium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "category": "actinide",
+  "phase": "solid",
+  "mass": 259.101,
+  "electronegativity": 1.3,
+  "ionizationEnergy": 6.65,
+  "radius": null,
+  "summary": "Nobelium is a synthetic chemical element; it has symbol No and atomic number 102. It is named after Alfred Nobel, the inventor of dynamite and benefactor of science. A radioactive metal, it is the tenth transuranium element, the second transfermium, and is the fourteenth member of the actinide series. Like all elements with atomic number over 100, nobelium can only be produced in particle accelerators by bombarding lighter elements with charged particles. A total of twelve nobelium isotopes are known to exist; the most stable is 259No with a half-life of 58 minutes, but the shorter-lived 255No is most commonly used in chemistry because it can be produced on a larger scale.",
+  "neighbors": [
+    "Md",
+    "Lr"
+  ],
+  "rankings": {
+    "mass": 17,
+    "electronegativity": 70,
+    "ionizationEnergy": 57,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/102"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1901"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Nobelium",
+      "url": "https://en.wikipedia.org/wiki/Nobelium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 114,
+  "symbol": "Fl",
+  "name": "Flerovium",
+  "wikidataId": "Q1302",
+  "wikipediaTitle": "Flerovium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Flerovium",
+  "period": 7,
+  "group": 14,
+  "block": "p",
+  "category": "post-transition metal",
+  "phase": "expected to be a solid",
+  "mass": 290.192,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "Flerovium is a synthetic chemical element; it has symbol Fl and atomic number 114. It is an extremely radioactive, superheavy element, named after the Flerov Laboratory of Nuclear Reactions of the Joint Institute for Nuclear Research in Dubna, Russia, where the element was discovered in 1999. The lab's name, in turn, honours Russian physicist Georgy Flyorov. IUPAC adopted the name on 30 May 2012. The name and symbol had previously been proposed for element 102 (nobelium) but were not accepted by IUPAC at that time.",
+  "neighbors": [
+    "Nh",
+    "Mc"
+  ],
+  "rankings": {
+    "mass": 5,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/114"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1302"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Flerovium",
+      "url": "https://en.wikipedia.org/wiki/Flerovium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

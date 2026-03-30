@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 28,
+  "symbol": "Ni",
+  "name": "Nickel",
+  "wikidataId": "Q744",
+  "wikipediaTitle": "Nickel",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Nickel",
+  "period": 4,
+  "group": 10,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 58.693,
+  "electronegativity": 1.91,
+  "ionizationEnergy": 7.64,
+  "radius": 163,
+  "summary": "Nickel is a chemical element; it has symbol Ni and atomic number 28. It is a silvery-white lustrous metal with a slight golden tinge. Nickel is a hard and ductile transition metal. Pure nickel is chemically reactive, but large pieces are slow to react with air under standard conditions because a passivation layer of nickel oxide that prevents further corrosion forms on the surface. Even so, pure native nickel is found in Earth's crust only in tiny amounts, usually in ultramafic rocks, and in the interiors of larger nickel–iron meteorites that were not exposed to oxygen when outside Earth's atmosphere.",
+  "neighbors": [
+    "Co",
+    "Cu"
+  ],
+  "rankings": {
+    "mass": 92,
+    "electronegativity": 35,
+    "ionizationEnergy": 42,
+    "radius": 89
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/28"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q744"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Nickel",
+      "url": "https://en.wikipedia.org/wiki/Nickel",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

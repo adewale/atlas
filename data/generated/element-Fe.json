@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 26,
+  "symbol": "Fe",
+  "name": "Iron",
+  "wikidataId": "Q677",
+  "wikipediaTitle": "Iron",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Iron",
+  "period": 4,
+  "group": 8,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 55.84,
+  "electronegativity": 1.83,
+  "ionizationEnergy": 7.902,
+  "radius": 194,
+  "summary": "Iron is a chemical element; it has symbol Fe and atomic number 26. It is a metal that belongs to the first transition series and group 8 of the periodic table. It is, by mass, the most common element on Earth, forming much of Earth's outer and inner core. It is the fourth most abundant element in the Earth's crust. In its metallic state it was mainly deposited by meteorites.",
+  "neighbors": [
+    "Mn",
+    "Co"
+  ],
+  "rankings": {
+    "mass": 93,
+    "electronegativity": 41,
+    "ionizationEnergy": 35,
+    "radius": 67
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/26"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q677"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Iron",
+      "url": "https://en.wikipedia.org/wiki/Iron",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

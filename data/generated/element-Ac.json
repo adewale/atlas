@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 89,
+  "symbol": "Ac",
+  "name": "Actinium",
+  "wikidataId": "Q1121",
+  "wikipediaTitle": "Actinium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Actinium",
+  "period": 7,
+  "group": 3,
+  "block": "f",
+  "category": "actinide",
+  "phase": "solid",
+  "mass": 227.02775,
+  "electronegativity": 1.1,
+  "ionizationEnergy": 5.17,
+  "radius": 260,
+  "summary": "Actinium is a chemical element; it has symbol Ac and atomic number 89. It was discovered by Friedrich Oskar Giesel in 1902, who gave it the name emanium; the element got its name by being wrongly identified with a substance André-Louis Debierne found in 1899 and called actinium. The actinide series, a set of 15 elements between actinium and lawrencium in the periodic table, is named after actinium. Together with polonium, radium, and radon, actinium was one of the first non-primordial radioactive elements to be discovered.",
+  "neighbors": [
+    "Ra",
+    "Th"
+  ],
+  "rankings": {
+    "mass": 30,
+    "electronegativity": 85,
+    "ionizationEnergy": 97,
+    "radius": 7
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/89"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1121"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Actinium",
+      "url": "https://en.wikipedia.org/wiki/Actinium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

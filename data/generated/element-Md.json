@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 101,
+  "symbol": "Md",
+  "name": "Mendelevium",
+  "wikidataId": "Q1898",
+  "wikipediaTitle": "Mendelevium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Mendelevium",
+  "period": 7,
+  "group": null,
+  "block": "f",
+  "category": "actinide",
+  "phase": "solid",
+  "mass": 258.09843,
+  "electronegativity": 1.3,
+  "ionizationEnergy": 6.58,
+  "radius": null,
+  "summary": "Mendelevium is a synthetic chemical element; it has symbol Md and atomic number 101. A metallic radioactive transuranium element in the actinide series, it is the first element by atomic number that currently cannot be produced in macroscopic quantities by neutron bombardment of lighter elements. It is the thirteenth actinide, the ninth transuranic element, and the first transfermium; it is named after Dmitri Mendeleev, the father of the periodic table.",
+  "neighbors": [
+    "Fm",
+    "No"
+  ],
+  "rankings": {
+    "mass": 18,
+    "electronegativity": 69,
+    "ionizationEnergy": 59,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/101"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1898"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Mendelevium",
+      "url": "https://en.wikipedia.org/wiki/Mendelevium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

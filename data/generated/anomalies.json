@@ -1,0 +1,102 @@
+[
+  {
+    "slug": "synthetic-heavy",
+    "label": "Synthetic superheavy elements",
+    "description": "Elements beyond lawrencium (Z > 103) exist only as synthetic isotopes with half-lives measured in milliseconds to seconds. Their chemical properties are predicted by extrapolation from lighter homologues but remain largely unverified experimentally.",
+    "elements": [
+      "Rf",
+      "Db",
+      "Sg",
+      "Bh",
+      "Hs",
+      "Mt",
+      "Ds",
+      "Rg",
+      "Cn",
+      "Nh",
+      "Fl",
+      "Mc",
+      "Lv",
+      "Ts",
+      "Og"
+    ]
+  },
+  {
+    "slug": "f-block-gap",
+    "label": "f-block discontinuity",
+    "description": "The lanthanides (Z 57–71) and actinides (Z 89–103) are separated from the main periodic table grid because they fill f-orbitals. This creates a visual gap that obscures their relationship to the d-block elements they sit between.",
+    "elements": [
+      "La",
+      "Ce",
+      "Pr",
+      "Nd",
+      "Pm",
+      "Sm",
+      "Eu",
+      "Gd",
+      "Tb",
+      "Dy",
+      "Ho",
+      "Er",
+      "Tm",
+      "Yb",
+      "Ac",
+      "Th",
+      "Pa",
+      "U",
+      "Np",
+      "Pu",
+      "Am",
+      "Cm",
+      "Bk",
+      "Cf",
+      "Es",
+      "Fm",
+      "Md",
+      "No"
+    ]
+  },
+  {
+    "slug": "diagonal-relationships",
+    "label": "Diagonal relationships",
+    "description": "Certain pairs of elements positioned diagonally on the periodic table share unexpected chemical similarities: lithium/magnesium, beryllium/aluminium, boron/silicon. These diagonal relationships arise from opposing trends in size and charge.",
+    "elements": [
+      "Li",
+      "Be",
+      "B",
+      "Mg",
+      "Al",
+      "Si"
+    ]
+  },
+  {
+    "slug": "electron-config-anomalies",
+    "label": "Electron configuration anomalies",
+    "description": "These elements have ground-state electron configurations that deviate from the aufbau prediction. Chromium and copper prefer half-filled or fully-filled d-subshells; similar anomalies appear in heavier transition metals and are driven by exchange energy stabilisation.",
+    "elements": [
+      "Cr",
+      "Cu",
+      "Nb",
+      "Mo",
+      "Ru",
+      "Rh",
+      "Pd",
+      "Ag",
+      "Pt",
+      "Au"
+    ]
+  },
+  {
+    "slug": "metalloid-boundary",
+    "label": "Metalloid boundary",
+    "description": "The metalloids sit on the staircase boundary between metals and nonmetals. They exhibit intermediate properties — semiconductivity, amphoteric oxides — that make them essential in electronics and materials science.",
+    "elements": [
+      "B",
+      "Si",
+      "Ge",
+      "As",
+      "Sb",
+      "Te"
+    ]
+  }
+]

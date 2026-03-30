@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 47,
+  "symbol": "Ag",
+  "name": "Silver",
+  "wikidataId": "Q1090",
+  "wikipediaTitle": "Silver",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Silver",
+  "period": 5,
+  "group": 11,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 107.868,
+  "electronegativity": 1.93,
+  "ionizationEnergy": 7.576,
+  "radius": 172,
+  "summary": "Silver is a chemical element; it has symbol Ag and atomic number 47. A soft, whitish-gray, lustrous transition metal, it exhibits the highest electrical conductivity, thermal conductivity, and reflectivity of any metal. Silver is found in the Earth's crust in the pure, free elemental form, as an alloy with gold and other metals, and in minerals such as argentite and chlorargyrite. Most silver is produced as a byproduct of copper, gold, lead, and zinc refining.",
+  "neighbors": [
+    "Pd",
+    "Cd"
+  ],
+  "rankings": {
+    "mass": 72,
+    "electronegativity": 34,
+    "ionizationEnergy": 43,
+    "radius": 86
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/47"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1090"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Silver",
+      "url": "https://en.wikipedia.org/wiki/Silver",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

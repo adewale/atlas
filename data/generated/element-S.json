@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 16,
+  "symbol": "S",
+  "name": "Sulfur",
+  "wikidataId": "Q682",
+  "wikipediaTitle": "Sulfur",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Sulfur",
+  "period": 3,
+  "group": 16,
+  "block": "p",
+  "category": "nonmetal",
+  "phase": "solid",
+  "mass": 32.07,
+  "electronegativity": 2.58,
+  "ionizationEnergy": 10.36,
+  "radius": 180,
+  "summary": "Sulfur (American spelling and the preferred IUPAC name) or sulphur (Commonwealth spelling) is a chemical element; it has symbol S and atomic number 16. It is abundant, multivalent and nonmetallic. Under normal conditions, sulfur atoms form cyclic octatomic molecules with the chemical formula S8. Elemental sulfur is a bright yellow, crystalline solid at room temperature.",
+  "neighbors": [
+    "P",
+    "Cl"
+  ],
+  "rankings": {
+    "mass": 103,
+    "electronegativity": 9,
+    "ionizationEnergy": 17,
+    "radius": 82
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/16"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q682"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Sulfur",
+      "url": "https://en.wikipedia.org/wiki/Sulfur",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

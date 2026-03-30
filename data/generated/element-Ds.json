@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 110,
+  "symbol": "Ds",
+  "name": "Darmstadtium",
+  "wikidataId": "Q1266",
+  "wikipediaTitle": "Darmstadtium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Darmstadtium",
+  "period": 7,
+  "group": 10,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "expected to be a solid",
+  "mass": 282.166,
+  "electronegativity": null,
+  "ionizationEnergy": null,
+  "radius": null,
+  "summary": "Darmstadtium is a synthetic chemical element; it has symbol Ds and atomic number 110. It is extremely radioactive: the most stable known isotope, darmstadtium-281, has a half-life of approximately 14 seconds. Darmstadtium was first created in November 1994 by the GSI Helmholtz Centre for Heavy Ion Research in Darmstadt, Germany, after which it was named.",
+  "neighbors": [
+    "Mt",
+    "Rg"
+  ],
+  "rankings": {
+    "mass": 9,
+    "electronegativity": 0,
+    "ionizationEnergy": 0,
+    "radius": 0
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/110"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1266"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Darmstadtium",
+      "url": "https://en.wikipedia.org/wiki/Darmstadtium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

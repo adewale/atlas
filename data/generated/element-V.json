@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 23,
+  "symbol": "V",
+  "name": "Vanadium",
+  "wikidataId": "Q722",
+  "wikipediaTitle": "Vanadium",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Vanadium",
+  "period": 4,
+  "group": 5,
+  "block": "d",
+  "category": "transition metal",
+  "phase": "solid",
+  "mass": 50.9415,
+  "electronegativity": 1.63,
+  "ionizationEnergy": 6.746,
+  "radius": 179,
+  "summary": "Vanadium is a chemical element; it has symbol V and atomic number 23. It is a hard, silvery-grey, malleable transition metal. The elemental metal is rarely found in nature, but once isolated artificially, the formation of an oxide layer (passivation) somewhat stabilizes the free metal against further oxidation.",
+  "neighbors": [
+    "Ti",
+    "Cr"
+  ],
+  "rankings": {
+    "mass": 96,
+    "electronegativity": 47,
+    "ionizationEnergy": 56,
+    "radius": 83
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/23"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q722"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Vanadium",
+      "url": "https://en.wikipedia.org/wiki/Vanadium",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 51,
+  "symbol": "Sb",
+  "name": "Antimony",
+  "wikidataId": "Q1099",
+  "wikipediaTitle": "Antimony",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Antimony",
+  "period": 5,
+  "group": 15,
+  "block": "p",
+  "category": "metalloid",
+  "phase": "solid",
+  "mass": 121.76,
+  "electronegativity": 2.05,
+  "ionizationEnergy": 8.64,
+  "radius": 206,
+  "summary": "Antimony is a chemical element with the symbol Sb and atomic number 51. A lustrous grey metal or metalloid, it occurs in nature mainly in the form of the sulfide mineral stibnite. Antimony compounds have been known since ancient times and were powdered for use as medicine and cosmetics, often known by the Arabic name kohl.",
+  "neighbors": [
+    "Sn",
+    "Te"
+  ],
+  "rankings": {
+    "mass": 68,
+    "electronegativity": 27,
+    "ionizationEnergy": 29,
+    "radius": 55
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/51"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q1099"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Antimony",
+      "url": "https://en.wikipedia.org/wiki/Antimony",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}

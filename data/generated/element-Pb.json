@@ -1,0 +1,47 @@
+{
+  "atomicNumber": 82,
+  "symbol": "Pb",
+  "name": "Lead",
+  "wikidataId": "Q708",
+  "wikipediaTitle": "Lead",
+  "wikipediaUrl": "https://en.wikipedia.org/wiki/Lead",
+  "period": 6,
+  "group": 14,
+  "block": "p",
+  "category": "post-transition metal",
+  "phase": "solid",
+  "mass": 207,
+  "electronegativity": 2.33,
+  "ionizationEnergy": 7.417,
+  "radius": 202,
+  "summary": "Lead is a chemical element with the symbol Pb and atomic number 82. It is a heavy metal, denser than most common materials. Lead is soft, malleable, and has a relatively low melting point. When freshly cut or melted, it appears shiny silvery with a bluish tint, but tarnishes to dull gray on exposure to air. Lead has the highest atomic number of any stable element, and three of its isotopes are endpoints of major nuclear decay chains of heavier elements.",
+  "neighbors": [
+    "Tl",
+    "Bi"
+  ],
+  "rankings": {
+    "mass": 37,
+    "electronegativity": 14,
+    "ionizationEnergy": 46,
+    "radius": 60
+  },
+  "sources": {
+    "structured": {
+      "provider": "PubChem",
+      "license": "public domain",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/element/82"
+    },
+    "identifiers": {
+      "provider": "Wikidata",
+      "license": "CC0 1.0",
+      "url": "https://www.wikidata.org/wiki/Q708"
+    },
+    "summary": {
+      "provider": "Wikipedia",
+      "title": "Lead",
+      "url": "https://en.wikipedia.org/wiki/Lead",
+      "license": "CC BY-SA 4.0",
+      "accessDate": "2026-03-30"
+    }
+  }
+}
