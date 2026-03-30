@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -54,7 +54,7 @@ export default function PhaseLandscape() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Phase Landscape at STP</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Phase Landscape at STP</h1>
 
       <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
         {LEGEND_ITEMS.map((item) => (

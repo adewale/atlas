@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, Link, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor, contrastTextColor } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
@@ -75,7 +75,7 @@ export default function DiscovererNetwork() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: MUSTARD }}>Discoverer Network</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
 
       {/* bar-grow keyframe in globals.css */}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>

@@ -33,6 +33,23 @@ export const BACK_LINK_STYLE: React.CSSProperties = {
   color: GREY_MID,
 };
 
+/** Inscription title: 13px bold uppercase with wide tracking */
+export const INSCRIPTION_STYLE = {
+  fontSize: '13px',
+  fontWeight: 'bold',
+  textTransform: 'uppercase',
+  letterSpacing: '0.2em',
+  margin: '0 0 16px',
+} as const;
+
+/** Section heading: 20px bold with subtle tracking */
+export const SECTION_HEADING_STYLE = {
+  fontSize: '20px',
+  fontWeight: 'bold',
+  letterSpacing: '0.05em',
+  marginBottom: '16px',
+} as const;
+
 /** Map a category string to its display color. */
 export function categoryColor(category: string): string {
   const cat = category.toLowerCase();

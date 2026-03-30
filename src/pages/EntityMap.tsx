@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -372,14 +372,7 @@ export default function EntityMapPage() {
     <PageShell>
       <div style={{ maxWidth: '900px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
-      <h1 style={{
-        margin: '16px 0 8px',
-        letterSpacing: '0.2em',
-        fontSize: '13px',
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        color: WARM_RED,
-      }}>
+      <h1 style={{ ...INSCRIPTION_STYLE, margin: '16px 0 8px', color: WARM_RED }}>
         Entity Map
       </h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px', fontSize: '14px', color: GREY_DARK }}>
@@ -389,13 +382,13 @@ export default function EntityMapPage() {
 
       {/* Relationship Graph */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Entity Graph</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Entity Graph</h2>
         <EntityGraph hovered={hovered} setHovered={setHovered} />
       </section>
 
       {/* Entity Catalogue */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Entity Catalogue</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Entity Catalogue</h2>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           {ENTITIES.map((entity) => (
             <EntityCard
@@ -410,7 +403,7 @@ export default function EntityMapPage() {
 
       {/* URL Patterns */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>URL Patterns</h2>
+        <h2 style={SECTION_HEADING_STYLE}>URL Patterns</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '12px', lineHeight: 1.6 }}>
           Every entity has a unique, linkable URL. Share any page and the recipient sees exactly what you see.
         </p>
@@ -448,7 +441,7 @@ export default function EntityMapPage() {
 
       {/* Relationships Table */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Relationships</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Relationships</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '12px', lineHeight: 1.6 }}>
           All 13 edges are surfaced as navigable links in both directions. The "Via" column shows where each link lives in the UI.
         </p>

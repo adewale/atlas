@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, INSCRIPTION_STYLE } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
@@ -95,7 +95,7 @@ export default function PropertyScatter() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: '760px' }}>
-      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE }}>Property Scatter</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE }}>Property Scatter</h1>
 
       {/* Pretext intro */}
       <svg

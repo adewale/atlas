@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID } from '../lib/theme';
+import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID, INSCRIPTION_STYLE } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
@@ -177,7 +177,7 @@ export default function DiscoveryTimeline() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED }}>Discovery Timeline</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Discovery Timeline</h1>
 
       {/* Era browse links */}
       <section style={{ marginBottom: '16px' }}>

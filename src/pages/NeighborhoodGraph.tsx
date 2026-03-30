@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, GREY_RULE } from '../lib/theme';
+import { BLACK, GREY_RULE, INSCRIPTION_STYLE } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -82,7 +82,7 @@ export default function NeighborhoodGraph() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: BLACK }}>Neighbourhood Graph</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK }}>Neighbourhood Graph</h1>
 
       <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
         {INTRO_TEXT}
