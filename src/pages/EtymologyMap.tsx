@@ -113,7 +113,7 @@ const styles = {
       overflow: 'hidden',
       opacity: visible ? 1 : 0,
       transform: visible ? 'translateY(0)' : 'translateY(10px)',
-      transition: `opacity 300ms ease ${delay}ms, transform 300ms ease ${delay}ms`,
+      transition: `opacity 300ms var(--ease-out) ${delay}ms, transform 300ms var(--ease-out) ${delay}ms`,
     }) as React.CSSProperties,
 
   symbol: {
@@ -143,25 +143,6 @@ const styles = {
 } as const;
 
 // ---------------------------------------------------------------------------
-// CSS keyframes injected once
-// ---------------------------------------------------------------------------
-const KEYFRAME_ID = 'etymology-card-enter';
-
-function ensureKeyframes() {
-  if (typeof document === 'undefined') return;
-  if (document.getElementById(KEYFRAME_ID)) return;
-  const style = document.createElement('style');
-  style.id = KEYFRAME_ID;
-  style.textContent = `
-    @keyframes card-enter {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-  `;
-  document.head.appendChild(style);
-}
-
-// ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
 export default function EtymologyMap() {
@@ -174,7 +155,6 @@ export default function EtymologyMap() {
   });
 
   useEffect(() => {
-    ensureKeyframes();
     const id = requestAnimationFrame(() => setHasLoaded(true));
     return () => cancelAnimationFrame(id);
   }, []);

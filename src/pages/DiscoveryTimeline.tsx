@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
@@ -75,22 +75,8 @@ export default function DiscoveryTimeline() {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // --- Bin timeline entries by decade ---
-  const decadeBins = new Map<number, TimelineEntry[]>();
-  for (const entry of timeline) {
-    if (entry.year == null) continue;
-    const d = decadeOf(entry.year);
-    if (!decadeBins.has(d)) decadeBins.set(d, []);
-    decadeBins.get(d)!.push(entry);
-  }
-
-  // Find earliest year for animation offset
-  const years = timeline.filter((e) => e.year != null).map((e) => e.year!);
-  const minYear = Math.min(...years);
-
   const axisY = SVG_HEIGHT - MARGIN_BOTTOM;
 
-  // Build positioned squares for timeline entries
   type PlacedSquare = {
     entry: TimelineEntry;
     x: number;
@@ -99,36 +85,53 @@ export default function DiscoveryTimeline() {
     delay: number;
   };
 
-  const squares: PlacedSquare[] = [];
-  for (const [decade, entries] of decadeBins) {
-    const cx = yearToX(decade + 5); // center of decade
-    entries.forEach((entry, stackIdx) => {
+  // Memoize all layout computations — they depend only on loader data
+  const { squares, antiquitySquares, minYear } = useMemo(() => {
+    // Bin timeline entries by decade
+    const decadeBins = new Map<number, TimelineEntry[]>();
+    for (const entry of timeline) {
+      if (entry.year == null) continue;
+      const d = decadeOf(entry.year);
+      if (!decadeBins.has(d)) decadeBins.set(d, []);
+      decadeBins.get(d)!.push(entry);
+    }
+
+    const years = timeline.filter((e) => e.year != null).map((e) => e.year!);
+    const mYear = Math.min(...years);
+
+    const sqs: PlacedSquare[] = [];
+    for (const [decade, entries] of decadeBins) {
+      const cx = yearToX(decade + 5);
+      entries.forEach((entry, stackIdx) => {
+        const el = getElement(entry.symbol);
+        const color = el ? blockColor(el.block) : BLACK;
+        const x = cx - SQ / 2;
+        const y = axisY - SQ - stackIdx * (SQ + SQ_GAP);
+        const delay = (entry.year! - mYear) * 2;
+        sqs.push({ entry, x, y, color, delay });
+      });
+    }
+
+    // Antiquity cluster: 2 rows x 5 columns at left
+    const ANTIQ_X = 10;
+    const ANTIQ_Y = axisY - SQ;
+    const ANTIQ_COLS = 5;
+    const antSqs: PlacedSquare[] = antiquity.map((entry, i) => {
+      const col = i % ANTIQ_COLS;
+      const row = Math.floor(i / ANTIQ_COLS);
       const el = getElement(entry.symbol);
       const color = el ? blockColor(el.block) : BLACK;
-      const x = cx - SQ / 2;
-      const y = axisY - SQ - stackIdx * (SQ + SQ_GAP);
-      const delay = (entry.year! - minYear) * 2;
-      squares.push({ entry, x, y, color, delay });
+      return {
+        entry,
+        x: ANTIQ_X + col * (SQ + SQ_GAP),
+        y: ANTIQ_Y - row * (SQ + SQ_GAP),
+        color,
+        delay: i * 40,
+      };
     });
-  }
 
-  // Antiquity cluster: 2 rows x 5 columns at left
-  const ANTIQ_X = 10;
-  const ANTIQ_Y = axisY - SQ;
-  const ANTIQ_COLS = 5;
-  const antiquitySquares: PlacedSquare[] = antiquity.map((entry, i) => {
-    const col = i % ANTIQ_COLS;
-    const row = Math.floor(i / ANTIQ_COLS);
-    const el = getElement(entry.symbol);
-    const color = el ? blockColor(el.block) : BLACK;
-    return {
-      entry,
-      x: ANTIQ_X + col * (SQ + SQ_GAP),
-      y: ANTIQ_Y - row * (SQ + SQ_GAP),
-      color,
-      delay: i * 40,
-    };
-  });
+    return { squares: sqs, antiquitySquares: antSqs, minYear: mYear };
+  }, [antiquity, timeline, axisY]);
 
   const handleSquareEnter = useCallback(
     (sq: PlacedSquare, svgX: number, svgY: number) => {
@@ -231,8 +234,8 @@ export default function DiscoveryTimeline() {
 
             {/* "Known since antiquity" label */}
             <text
-              x={ANTIQ_X}
-              y={ANTIQ_Y - Math.ceil(antiquity.length / ANTIQ_COLS) * (SQ + SQ_GAP) - 4}
+              x={10}
+              y={axisY - SQ - Math.ceil(antiquity.length / 5) * (SQ + SQ_GAP) - 4}
               fontSize={11}
               fill={BLACK}
               fontFamily="system-ui, sans-serif"
@@ -258,7 +261,7 @@ export default function DiscoveryTimeline() {
                     cursor: 'pointer',
                     opacity: hasLoaded ? 1 : 0,
                     transition: hasLoaded
-                      ? `opacity 300ms ease ${sq.delay}ms`
+                      ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
                       : 'none',
                   }}
                   onMouseEnter={() =>
@@ -289,7 +292,7 @@ export default function DiscoveryTimeline() {
                     cursor: 'pointer',
                     opacity: hasLoaded ? 1 : 0,
                     transition: hasLoaded
-                      ? `opacity 300ms ease ${sq.delay}ms`
+                      ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
                       : 'none',
                   }}
                   onMouseEnter={() =>

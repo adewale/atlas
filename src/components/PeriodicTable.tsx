@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
 import type { ElementRecord } from '../lib/types';
 import { allElements, searchElements } from '../lib/data';
 import {
@@ -38,6 +38,17 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
 
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, categoryColor } from '../lib/theme';
 
+// Pre-compute property ranges once at module level (data never changes)
+const PROPERTY_RANGES: Record<NumericProperty, { min: number; max: number }> = (() => {
+  const keys: NumericProperty[] = ['mass', 'electronegativity', 'ionizationEnergy', 'radius'];
+  const ranges = {} as Record<NumericProperty, { min: number; max: number }>;
+  for (const key of keys) {
+    const values = allElements.map((e) => e[key]).filter((v): v is number => v != null);
+    ranges[key] = { min: Math.min(...values), max: Math.max(...values) };
+  }
+  return ranges;
+})();
+
 function getCellFill(el: ElementRecord, mode: HighlightMode, property: NumericProperty): string {
   switch (mode) {
     case 'none':
@@ -53,15 +64,9 @@ function getCellFill(el: ElementRecord, mode: HighlightMode, property: NumericPr
     case 'property': {
       const val = el[property];
       if (val == null) return PAPER;
-      // Find min/max across all elements for this property
-      const values = allElements
-        .map((e) => e[property])
-        .filter((v): v is number => v != null);
-      const min = Math.min(...values);
-      const max = Math.max(...values);
+      const { min, max } = PROPERTY_RANGES[property];
       if (max === min) return PAPER;
       const t = (val - min) / (max - min);
-      // Interpolate from paper to deep blue
       return interpolateColor(PAPER, DEEP_BLUE, t);
     }
   }
@@ -329,7 +334,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 stroke={isActive ? '#9e1c2c' : '#0f0f0f'}
                 strokeWidth={isActive ? 2 : 0.5}
                 style={{
-                  transition: `fill 250ms ease ${dist * 8}ms`,
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
                 }}
               />
               <text
@@ -339,7 +344,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 fill={textColor}
                 fontFamily="system-ui, sans-serif"
                 style={{
-                  transition: `fill 250ms ease ${dist * 8}ms`,
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
                   viewTransitionName: isActive ? 'element-number' : undefined,
                 } as React.CSSProperties}
               >
@@ -354,7 +359,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 fill={textColor}
                 fontFamily="system-ui, sans-serif"
                 style={{
-                  transition: `fill 250ms ease ${dist * 8}ms`,
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
                   viewTransitionName: isActive ? 'element-symbol' : undefined,
                 } as React.CSSProperties}
               >
@@ -367,7 +372,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 fontSize={7}
                 fill={textColor}
                 fontFamily="system-ui, sans-serif"
-                style={{ transition: `fill 250ms ease ${dist * 8}ms` }}
+                style={{ transition: `fill 250ms var(--ease-out) ${dist * 8}ms` }}
               >
                 {el.name.length > 9 ? el.name.slice(0, 8) + '…' : el.name}
               </text>

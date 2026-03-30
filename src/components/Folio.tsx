@@ -5,7 +5,7 @@ import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { getElement } from '../lib/data';
+import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
 import PropertyBar from './PropertyBar';
 import { GroupTrendSparkline, RankDotSparkline, GroupPhaseStrip } from './Sparkline';
@@ -135,6 +135,32 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
     return { phases, symbols: group.elements, highlightIndex };
   }, [groups, element]);
 
+  // Prev/next by atomic number for sequential navigation
+  const prevElement = useMemo(
+    () => (element.atomicNumber > 1 ? allElements.find((e) => e.atomicNumber === element.atomicNumber - 1) : null),
+    [element.atomicNumber],
+  );
+  const nextElement = useMemo(
+    () => (element.atomicNumber < 118 ? allElements.find((e) => e.atomicNumber === element.atomicNumber + 1) : null),
+    [element.atomicNumber],
+  );
+
+  // Find elements sharing the same discoverer (lateral link)
+  const sameDiscoverer = useMemo(() => {
+    if (!element.discoverer || element.discoverer.toLowerCase().includes('antiquity')) return [];
+    return allElements
+      .filter((e) => e.discoverer === element.discoverer && e.symbol !== element.symbol)
+      .slice(0, 6);
+  }, [element]);
+
+  // Find elements sharing the same etymology origin (lateral link)
+  const sameEtymology = useMemo(() => {
+    if (!element.etymologyOrigin || element.etymologyOrigin === 'unknown') return [];
+    return allElements
+      .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol)
+      .slice(0, 6);
+  }, [element]);
+
   const paddedNumber = String(element.atomicNumber).padStart(3, '0');
 
   // Refs for measuring vertical offset between summary area and marginalia
@@ -197,6 +223,36 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
       {/* Main content */}
       <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
+        {/* Prev / Next navigation */}
+        <nav
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontSize: '12px',
+            marginBottom: '8px',
+            opacity: 0,
+            animation: animate ? 'folio-line-reveal 200ms var(--ease-out) forwards' : undefined,
+          }}
+        >
+          {prevElement ? (
+            <Link
+              to={`/element/${prevElement.symbol}`}
+              style={{ color: '#666', textDecoration: 'none' }}
+            >
+              ← {prevElement.symbol} <span style={{ color: '#999' }}>{prevElement.name}</span>
+            </Link>
+          ) : <span />}
+          {nextElement ? (
+            <Link
+              to={`/element/${nextElement.symbol}`}
+              style={{ color: '#666', textDecoration: 'none' }}
+            >
+              <span style={{ color: '#999' }}>{nextElement.name}</span> {nextElement.symbol} →
+            </Link>
+          ) : <span />}
+        </nav>
+
         {/* Giant atomic number in block color — morphs from grid cell */}
         <div
           className="folio-number"
@@ -350,7 +406,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           })}
         </div>
 
-        {/* Etymology and discovery — educational context */}
+        {/* Etymology and discovery — educational context with lateral links */}
         <div
           style={{
             marginTop: '24px',
@@ -366,16 +422,56 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           {element.etymologyDescription && (
             <div style={{ marginBottom: '6px' }}>
               <span style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Etymology</span>
-              <div>{element.etymologyDescription}</div>
+              <div>
+                {element.etymologyDescription}
+                {element.etymologyOrigin && element.etymologyOrigin !== 'unknown' && (
+                  <Link
+                    to="/etymology-map"
+                    style={{ marginLeft: '6px', fontSize: '11px', color }}
+                  >
+                    ({element.etymologyOrigin} →)
+                  </Link>
+                )}
+              </div>
+              {sameEtymology.length > 0 && (
+                <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>
+                  Also named for {element.etymologyOrigin}:{' '}
+                  {sameEtymology.map((e, i) => (
+                    <span key={e.symbol}>
+                      {i > 0 && ', '}
+                      <Link to={`/element/${e.symbol}`} style={{ color }}>{e.symbol}</Link>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           )}
           {element.discoverer && (
             <div>
               <span style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
               <div>
-                {element.discoverer}
+                <Link to="/discoverer-network" style={{ color, textDecoration: 'none' }}>
+                  {element.discoverer}
+                </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
+                <Link
+                  to="/discovery-timeline"
+                  style={{ marginLeft: '6px', fontSize: '11px', color }}
+                >
+                  timeline →
+                </Link>
               </div>
+              {sameDiscoverer.length > 0 && (
+                <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>
+                  Also by {element.discoverer.split(',')[0].split(' and ')[0]}:{' '}
+                  {sameDiscoverer.map((e, i) => (
+                    <span key={e.symbol}>
+                      {i > 0 && ', '}
+                      <Link to={`/element/${e.symbol}`} style={{ color }}>{e.symbol}</Link>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -142,7 +142,7 @@ export default function DiscovererNetwork() {
                 transform={`translate(${LEFT_COL}, 0)`}
                 style={{
                   clipPath: hasLoaded ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)',
-                  transition: 'clip-path 600ms ease-out',
+                  transition: 'clip-path 600ms var(--ease-out)',
                 }}
               >
                 {antiquity.elements.map((sym, j) => {
@@ -202,7 +202,7 @@ export default function DiscovererNetwork() {
                   fontFamily="system-ui, sans-serif"
                   style={{
                     opacity: hasLoaded ? 1 : 0,
-                    transition: `opacity 300ms ease-out ${delay}ms`,
+                    transition: `opacity 300ms var(--ease-out) ${delay}ms`,
                   }}
                 >
                   {disc.name.length > 24
@@ -215,7 +215,7 @@ export default function DiscovererNetwork() {
                   transform={`translate(${LEFT_COL}, 0)`}
                   style={{
                     animation: hasLoaded
-                      ? `bar-grow 500ms ease-out ${delay}ms both`
+                      ? `bar-grow 500ms var(--ease-out) ${delay}ms both`
                       : 'none',
                     clipPath: hasLoaded ? undefined : 'inset(0 100% 0 0)',
                   }}

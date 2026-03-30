@@ -155,7 +155,7 @@ export default function NeighborhoodGraph() {
                   strokeWidth={isHighlighted ? 1.5 : 0.5}
                   opacity={isDimmed ? 0.15 : 1}
                   style={{
-                    transition: 'opacity 200ms ease, stroke-width 200ms ease, stroke 200ms ease',
+                    transition: 'opacity 200ms var(--ease-out), stroke-width 200ms var(--ease-out), stroke 200ms var(--ease-out)',
                     clipPath: hasLoaded ? 'none' : 'inset(0 100% 0 0)',
                     animation: hasLoaded
                       ? undefined
@@ -181,7 +181,7 @@ export default function NeighborhoodGraph() {
                   style={{
                     cursor: 'pointer',
                     opacity: isDimmed ? 0.15 : 1,
-                    transition: 'opacity 200ms ease',
+                    transition: 'opacity 200ms var(--ease-out)',
                   }}
                   onMouseEnter={() => setHoveredSymbol(el.symbol)}
                   onMouseLeave={() => setHoveredSymbol(null)}
@@ -197,7 +197,7 @@ export default function NeighborhoodGraph() {
                     style={{
                       opacity: hasLoaded ? 1 : 0,
                       transition: hasLoaded
-                        ? 'opacity 200ms ease'
+                        ? 'opacity 200ms var(--ease-out)'
                         : 'none',
                       animation: hasLoaded
                         ? undefined

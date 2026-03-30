@@ -156,7 +156,7 @@ export default function AnomalyExplorer() {
                 borderRadius: 0,
                 padding: '6px 14px',
                 cursor: 'pointer',
-                transition: 'background 200ms, color 200ms',
+                transition: 'background 200ms var(--ease-out), color 200ms var(--ease-out)',
               }}
             >
               {a.label}
@@ -218,7 +218,7 @@ export default function AnomalyExplorer() {
                 stroke={hasSelection && !isHighlighted ? DIM : BLACK}
                 strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
                 rx={0}
-                style={{ transition: 'fill 250ms, stroke 250ms' }}
+                style={{ transition: 'fill 250ms var(--ease-out), stroke 250ms var(--ease-out)' }}
               />
               <text
                 x={CELL_WIDTH / 2}
@@ -228,7 +228,7 @@ export default function AnomalyExplorer() {
                 fontWeight={700}
                 fontFamily="system-ui, sans-serif"
                 fill={textColor}
-                style={{ transition: 'fill 250ms' }}
+                style={{ transition: 'fill 250ms var(--ease-out)' }}
               >
                 {el.symbol}
               </text>
@@ -240,7 +240,7 @@ export default function AnomalyExplorer() {
                 fontFamily="system-ui, sans-serif"
                 fill={textColor}
                 opacity={0.7}
-                style={{ transition: 'fill 250ms' }}
+                style={{ transition: 'fill 250ms var(--ease-out)' }}
               >
                 {el.atomicNumber}
               </text>
