@@ -44,6 +44,13 @@ Block-based color coding maps s/p/d/f blocks to `DEEP_BLUE`/`MUSTARD`/`WARM_RED`
 
 **Typography**: System font stack (`system-ui, sans-serif`) for body; monospace stack (`SF Mono`, `Cascadia Code`, `Fira Code`) for data labels via `MONO_FONT`.
 
+**Shared style constants** (`theme.ts`):
+- `INSCRIPTION_STYLE` — 13px bold uppercase, 0.2em tracking (page h1 headings)
+- `SECTION_HEADING_STYLE` — 20px bold, 0.05em tracking (section h2 headings)
+- `BACK_LINK_STYLE` — 14px with left arrow affordance
+
+**Wordmark**: The ATLAS wordmark in the left gutter uses alternating letter sizes (A/L/A at 28px, T/S at 22px) with Byrne palette colors for visual rhythm.
+
 ## Layout Architecture
 
 `PageShell` (`src/components/PageShell.tsx`) provides the top-level CSS Grid:
@@ -56,6 +63,12 @@ Mobile:  [1fr full-width]
 Grid rows: `auto` (header/VizNav) | `1fr` (main content) | `auto` (SiteNav footer). The left gutter renders a vertical "ATLAS" wordmark on desktop and collapses on mobile (breakpoint via `useIsMobile` hook at 768px).
 
 Visualization pages pass `vizNav` to PageShell, which renders the `VizNav` navigation bar in the header slot.
+
+**VizNav tab order**: Table-showing pages come first (Table, Phase, Neighbours, Anomalies) for smooth cross-tab transitions, followed by non-table visualizations (Scatter, Timeline, Etymology, Discoverers).
+
+**Table alignment principle**: Pages that show a periodic table (Home, Phase, Neighbours, Anomalies) keep controls/filters/legend as HTML above the SVG, with the SVG containing only the grid at y=0. This ensures the table appears at the same screen position across tabs.
+
+**Information hierarchy principle**: Controls belong above the content they control (e.g., Timeline's era browse links above the chart).
 
 ## Data Layer
 
@@ -143,8 +156,10 @@ Property-based testing (PBT) philosophy: tests assert universal properties acros
 - `compare.test.ts`, `data.test.ts`, `grid.test.ts` — specific behavior tests
 
 **E2E tests** (`tests/e2e/`):
-- 5 Playwright viewport projects (desktop, mobile, iPhone variants)
-- `layout-consistency.spec.ts` — PageShell grid structure across all pages
+- 5 Playwright viewport projects (desktop, mobile, iPhone 15/16/17 variants)
+- `layout-consistency.spec.ts` — PageShell grid structure, wordmark, anomaly filters, drop cap readability
+- `etymology-map.spec.ts` — semantic headings, theme colors, card positions, focus styles, link patterns
+- `structural-audit.spec.ts` — VizNav tab order, h1 visibility, console errors, keyboard overlay, roundel design, timeline hierarchy
 - `readability-legibility.spec.ts` — WCAG contrast verification
 - `navigation.spec.ts` — route transitions and keyboard navigation
 - `visualization-pages.spec.ts` — visualization page rendering
@@ -158,3 +173,14 @@ Property-based testing (PBT) philosophy: tests assert universal properties acros
 - Every page wraps content in `PageShell`, maintaining consistent grid structure
 - WCAG AA contrast ratios (4.5:1) on all text — enforced by `contrastTextColor()` and verified in e2e tests
 - Color palette hex values are never hardcoded outside `theme.ts`
+- Entity Graph uses roundel design (always-filled nodes with PAPER text) for guaranteed readability
+- SVG elements with drop caps or text near edges use `overflow="visible"` to prevent clipping
+- VizNav tab order places table-showing pages first for transition coherence
+
+## Alignment Grid
+
+**Base unit**: 4px — all spacing values are multiples of 4px (CSS variables `--sp-1` through `--sp-12`).
+
+**Cell grid**: 56px wide × 64px tall, 18 columns × 10 rows (with f-block gap). ViewBox: 1008×704px.
+
+**PageShell gutter**: 64px (exactly one cell width + 8px padding). Body padding: 24px top/bottom, 16px left/right (mobile: 16/12).
