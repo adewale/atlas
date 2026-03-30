@@ -10,6 +10,12 @@ afterEach(() => {
 
 // Mock pretext since jsdom has no canvas for font measurement
 vi.mock('../../src/hooks/usePretextLines', () => ({
+  usePretextLines: ({ text }: { text: string }) => ({
+    lines: [
+      { text: text.slice(0, 40), width: 160, x: 0, y: 0 },
+    ],
+    lineHeight: 18,
+  }),
   useShapedText: ({ text }: { text: string }) => ({
     lines: [
       { text: text.slice(0, 60), width: 300, x: 0, y: 0 },

@@ -1,8 +1,39 @@
 import { useLoaderData, Link } from 'react-router';
 import type { CreditsData } from '../lib/types';
+import { usePretextLines } from '../hooks/usePretextLines';
+import PretextSvg from '../components/PretextSvg';
+
+const TEXT_WIDTH = 720;
 
 export default function Credits() {
   const { credits } = useLoaderData() as { credits: CreditsData };
+
+  const structuredText = `${credits.structured.provider} — ${credits.structured.license}. Atomic mass, electronegativity, ionization energy, radius, and phase data.`;
+  const identifiersText = `${credits.identifiers.provider} — ${credits.identifiers.license}. QIDs, Wikipedia sitelinks, category classification, group/period/block.`;
+  const summariesNoteText = 'Excerpts may differ from current Wikipedia content. All used under CC BY-SA 4.0.';
+  const aboutText = 'Atlas is an original editorial and design work. The derived data (rankings, groupings, anomaly descriptions) and comparison templates are original content.';
+  const mediaText = 'No media in v1.';
+
+  const { lines: structuredLines, lineHeight: structuredLH } = usePretextLines({
+    text: structuredText,
+    maxWidth: TEXT_WIDTH,
+  });
+  const { lines: identifiersLines, lineHeight: identifiersLH } = usePretextLines({
+    text: identifiersText,
+    maxWidth: TEXT_WIDTH,
+  });
+  const { lines: summariesNoteLines, lineHeight: summariesNoteLH } = usePretextLines({
+    text: summariesNoteText,
+    maxWidth: TEXT_WIDTH,
+  });
+  const { lines: aboutLines, lineHeight: aboutLH } = usePretextLines({
+    text: aboutText,
+    maxWidth: TEXT_WIDTH,
+  });
+  const { lines: mediaLines, lineHeight: mediaLH } = usePretextLines({
+    text: mediaText,
+    maxWidth: TEXT_WIDTH,
+  });
 
   return (
     <article style={{ maxWidth: '800px' }}>
@@ -12,41 +43,25 @@ export default function Credits() {
       {/* Structured Data */}
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Structured Data</h2>
-        <p style={{ lineHeight: 1.6 }}>
-          <a href={credits.structured.url} target="_blank" rel="noopener noreferrer">
-            {credits.structured.provider}
-          </a>{' '}
-          — {credits.structured.license}. Atomic mass, electronegativity, ionization energy,
-          radius, and phase data.
-        </p>
+        <svg width={TEXT_WIDTH} height={structuredLines.length * structuredLH + structuredLH} style={{ maxWidth: '100%' }}>
+          <PretextSvg lines={structuredLines} lineHeight={structuredLH} />
+        </svg>
       </section>
 
       {/* Identifiers */}
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Identifiers</h2>
-        <p style={{ lineHeight: 1.6 }}>
-          <a href={credits.identifiers.url} target="_blank" rel="noopener noreferrer">
-            {credits.identifiers.provider}
-          </a>{' '}
-          — {credits.identifiers.license}. QIDs, Wikipedia sitelinks, category classification,
-          group/period/block.
-        </p>
+        <svg width={TEXT_WIDTH} height={identifiersLines.length * identifiersLH + identifiersLH} style={{ maxWidth: '100%' }}>
+          <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} />
+        </svg>
       </section>
 
       {/* Text Summaries */}
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Text Summaries</h2>
-        <p style={{ lineHeight: 1.6, marginBottom: '12px' }}>
-          Excerpts may differ from current Wikipedia content. All used under{' '}
-          <a
-            href="https://creativecommons.org/licenses/by-sa/4.0/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            CC BY-SA 4.0
-          </a>
-          .
-        </p>
+        <svg width={TEXT_WIDTH} height={summariesNoteLines.length * summariesNoteLH + summariesNoteLH} style={{ maxWidth: '100%', marginBottom: '12px' }}>
+          <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} />
+        </svg>
         <table
           style={{
             width: '100%',
@@ -97,7 +112,9 @@ export default function Credits() {
       {/* Media */}
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Media</h2>
-        <p style={{ lineHeight: 1.6 }}>No media in v1.</p>
+        <svg width={TEXT_WIDTH} height={mediaLines.length * mediaLH + mediaLH} style={{ maxWidth: '100%' }}>
+          <PretextSvg lines={mediaLines} lineHeight={mediaLH} />
+        </svg>
       </section>
 
       {/* Software */}
@@ -118,10 +135,9 @@ export default function Credits() {
       {/* About Atlas */}
       <section>
         <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>About Atlas</h2>
-        <p style={{ lineHeight: 1.6 }}>
-          Atlas is an original editorial and design work. The derived data (rankings,
-          groupings, anomaly descriptions) and comparison templates are original content.
-        </p>
+        <svg width={TEXT_WIDTH} height={aboutLines.length * aboutLH + aboutLH} style={{ maxWidth: '100%' }}>
+          <PretextSvg lines={aboutLines} lineHeight={aboutLH} />
+        </svg>
       </section>
     </article>
   );

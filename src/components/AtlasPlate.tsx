@@ -64,10 +64,10 @@ export default function AtlasPlate({
         style={{ maxWidth: '100%' }}
       >
         {/* Caption strip — solid color band with Pretext-measured text */}
-        <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} rx={2} />
+        <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} />
         {captionLines.map((line, i) => (
           <text
-            key={i}
+            key={`cap-${line.y}`}
             x={CAPTION_PADDING}
             y={CAPTION_PADDING + line.y + 16}
             fontSize={16}

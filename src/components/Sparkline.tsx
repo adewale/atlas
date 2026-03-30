@@ -39,7 +39,7 @@ export function GroupTrendSparkline({
   });
 
   return (
-    <svg width={width} height={height} role="img" aria-label="Group trend sparkline">
+    <svg width={width} height={height} role="img" aria-label={`Group trend: ${values.map((v) => v !== null ? v.toFixed(1) : '—').join(', ')}`}>
       <polyline
         points={points.join(' ')}
         fill="none"

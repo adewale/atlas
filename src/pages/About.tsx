@@ -1,6 +1,34 @@
 import { Link } from 'react-router';
+import { usePretextLines } from '../hooks/usePretextLines';
+import PretextSvg from '../components/PretextSvg';
+
+const SVG_MAX_WIDTH = 640;
+
+const INTRO_TEXT =
+  'Atlas is a structural exploration of the periodic table, drawing on the visual traditions of Oliver Byrne and the data-density principles of Edward Tufte. Every element is presented as a folio — a single, information-rich page where color is structural identity and the shape of the data is the data itself.';
+
+const DATA_SOURCES_TEXT =
+  'Numeric properties (mass, electronegativity, ionization energy, radius) come from PubChem (public domain). Identifiers and classification from Wikidata (CC0 1.0). Text summaries excerpted from Wikipedia under CC BY-SA 4.0. Full attribution on the credits page.';
+
+const TECHNOLOGY_TEXT =
+  'Built with React, Vite, and @chenglou/pretext for text measurement. Deployed on Cloudflare Pages. System fonts throughout. No images in v1.';
 
 export default function About() {
+  const { lines: introLines, lineHeight: introLH } = usePretextLines({
+    text: INTRO_TEXT,
+    maxWidth: SVG_MAX_WIDTH,
+  });
+
+  const { lines: dataLines, lineHeight: dataLH } = usePretextLines({
+    text: DATA_SOURCES_TEXT,
+    maxWidth: SVG_MAX_WIDTH,
+  });
+
+  const { lines: techLines, lineHeight: techLH } = usePretextLines({
+    text: TECHNOLOGY_TEXT,
+    maxWidth: SVG_MAX_WIDTH,
+  });
+
   return (
     <article style={{ maxWidth: '640px' }}>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
@@ -8,13 +36,16 @@ export default function About() {
 
       <div style={{ borderTop: '1px solid #0f0f0f', marginBottom: '24px' }} />
 
-      <section style={{ marginBottom: '32px', lineHeight: 1.7 }}>
-        <p>
-          Atlas is a structural exploration of the periodic table, drawing on the visual
-          traditions of Oliver Byrne and the data-density principles of Edward Tufte.
-          Every element is presented as a folio — a single, information-rich page where
-          color is structural identity and the shape of the data is the data itself.
-        </p>
+      <section style={{ marginBottom: '32px' }}>
+        <svg
+          width={SVG_MAX_WIDTH}
+          height={introLines.length * introLH + introLH}
+          aria-label="Introduction"
+          role="img"
+          style={{ maxWidth: '100%' }}
+        >
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules />
+        </svg>
       </section>
 
       <section style={{ marginBottom: '32px' }}>
@@ -32,42 +63,28 @@ export default function About() {
 
       <section style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '18px', marginBottom: '12px' }}>Data Sources</h2>
-        <p style={{ lineHeight: 1.7 }}>
-          Numeric properties (mass, electronegativity, ionization energy, radius) come from{' '}
-          <a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">
-            PubChem
-          </a>{' '}
-          (public domain). Identifiers and classification from{' '}
-          <a href="https://www.wikidata.org/" target="_blank" rel="noopener noreferrer">
-            Wikidata
-          </a>{' '}
-          (CC0 1.0). Text summaries excerpted from{' '}
-          <a href="https://www.wikipedia.org/" target="_blank" rel="noopener noreferrer">
-            Wikipedia
-          </a>{' '}
-          under{' '}
-          <a
-            href="https://creativecommons.org/licenses/by-sa/4.0/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            CC BY-SA 4.0
-          </a>
-          . Full attribution on the{' '}
-          <Link to="/credits">credits page</Link>.
-        </p>
+        <svg
+          width={SVG_MAX_WIDTH}
+          height={dataLines.length * dataLH + dataLH}
+          aria-label="Data sources description"
+          role="img"
+          style={{ maxWidth: '100%' }}
+        >
+          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules />
+        </svg>
       </section>
 
       <section>
         <h2 style={{ fontSize: '18px', marginBottom: '12px' }}>Technology</h2>
-        <p style={{ lineHeight: 1.7 }}>
-          Built with React, Vite, and{' '}
-          <a href="https://github.com/chenglou/pretext" target="_blank" rel="noopener noreferrer">
-            @chenglou/pretext
-          </a>{' '}
-          for text measurement. Deployed on Cloudflare Pages. System fonts throughout.
-          No images in v1.
-        </p>
+        <svg
+          width={SVG_MAX_WIDTH}
+          height={techLines.length * techLH + techLH}
+          aria-label="Technology description"
+          role="img"
+          style={{ maxWidth: '100%' }}
+        >
+          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules />
+        </svg>
       </section>
     </article>
   );

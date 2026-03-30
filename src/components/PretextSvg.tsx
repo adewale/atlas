@@ -41,7 +41,7 @@ export default function PretextSvg({
         const isShort = maxWidth && line.width < maxWidth * 0.7;
         const lineX = isTerminal && isShort ? line.x + (maxWidth - line.width) / 2 : line.x;
         return (
-          <g key={i}>
+          <g key={`line-${line.y}`}>
             {showRules && i > 0 && maxWidth && (
               <line
                 x1={0}

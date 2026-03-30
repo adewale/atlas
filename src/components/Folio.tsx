@@ -1,7 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import type { ElementRecord, ElementSources } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
-import { useShapedText } from '../hooks/usePretextLines';
+import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
 import { getElement } from '../lib/data';
 import PretextSvg from './PretextSvg';
 import PropertyBar from './PropertyBar';
@@ -30,6 +30,37 @@ const PLATE_HEIGHT = 180;
 const FULL_WIDTH = 560;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - 24;
 
+type MarginaliaPropertyProps = {
+  text: string;
+  rank: number;
+  color: string;
+  maxWidth: number;
+  font: string;
+};
+
+function MarginaliaProperty({ text, rank, color, maxWidth, font }: MarginaliaPropertyProps) {
+  const { lines: propLines, lineHeight: propLH } = usePretextLines({
+    text,
+    maxWidth,
+    font,
+  });
+
+  return (
+    <div style={{ marginBottom: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <svg
+          width={maxWidth}
+          height={propLines.length * propLH + propLH}
+          style={{ maxWidth: '100%', display: 'block', flexShrink: 1 }}
+        >
+          <PretextSvg lines={propLines} lineHeight={propLH} fontSize={14} />
+        </svg>
+        <RankDotSparkline rank={rank} color={color} />
+      </div>
+    </div>
+  );
+}
+
 type FolioProps = {
   element: ElementRecord;
   sources?: ElementSources;
@@ -40,6 +71,8 @@ type FolioProps = {
 export default function Folio({ element, sources, groups, animate = true }: FolioProps) {
   const color = blockColor(element.block);
   const mobile = useIsMobile();
+
+  const svgWidth = mobile ? 320 : FULL_WIDTH;
 
   const { lines, lineHeight, plateHeightInLines } = useShapedText({
     text: element.summary,
@@ -62,6 +95,16 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
   }, [groups, element]);
 
   const paddedNumber = String(element.atomicNumber).padStart(3, '0');
+
+  // Pretext-measured marginalia text
+  const MARGINALIA_WIDTH = 180;
+  const MARGINALIA_FONT = '14px system-ui';
+
+  const { lines: catLines, lineHeight: catLH } = usePretextLines({
+    text: element.category,
+    maxWidth: MARGINALIA_WIDTH,
+    font: MARGINALIA_FONT,
+  });
 
   // Property bars data
   const properties = [
@@ -202,9 +245,10 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
           {/* Shaped summary text */}
           <svg
-            width={FULL_WIDTH}
+            width={svgWidth}
             height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
             aria-label="Element summary"
+            style={{ maxWidth: '100%' }}
           >
             <PretextSvg
               lines={lines}
@@ -260,26 +304,34 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           lineHeight: 1.6,
         }}
       >
-        {/* Category */}
+        {/* Category — Pretext Tier 1 measured text */}
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase' }}>
             Category
           </div>
-          <div>{element.category}</div>
+          <svg
+            width={MARGINALIA_WIDTH}
+            height={catLines.length * catLH + catLH}
+            style={{ maxWidth: '100%', display: 'block' }}
+          >
+            <PretextSvg lines={catLines} lineHeight={catLH} fontSize={14} />
+          </svg>
         </div>
 
-        {/* Key properties with rank dots */}
+        {/* Key properties with rank dots — Pretext Tier 1 measured labels */}
         {properties.map((prop) => {
           const val = element[prop.key as keyof ElementRecord];
           const rank = element.rankings[prop.key] ?? 0;
+          const displayText = `${prop.label}: ${val != null ? String(val) : '—'}`;
           return (
-            <div key={prop.key} style={{ marginBottom: '8px' }}>
-              <div style={{ fontSize: '10px', color: '#666' }}>{prop.label}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="mono">{val != null ? String(val) : '—'}</span>
-                <RankDotSparkline rank={rank} color={color} />
-              </div>
-            </div>
+            <MarginaliaProperty
+              key={prop.key}
+              text={displayText}
+              rank={rank}
+              color={color}
+              maxWidth={MARGINALIA_WIDTH}
+              font={MARGINALIA_FONT}
+            />
           );
         })}
 
