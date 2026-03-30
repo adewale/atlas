@@ -342,7 +342,28 @@ test.describe('Information pages', () => {
 
     await expect(page.locator('h1')).toHaveText('Design Language');
 
-    // Section headings
+    // Entity sections
+    await expect(page.locator('h2:has-text("Entity Graph")')).toBeVisible();
+    await expect(page.locator('h2:has-text("Entity Catalog")')).toBeVisible();
+    await expect(page.locator('h2:has-text("Relationships")')).toBeVisible();
+
+    // Entity graph SVG should have nodes
+    const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
+    await expect(graphSvg).toBeVisible();
+    const circles = graphSvg.locator('circle');
+    const circleCount = await circles.count();
+    expect(circleCount).toBe(12); // 12 entity types
+
+    // Entity cards should be present (12 entities)
+    const cards = page.locator('div:has(> div:has-text("Element")) >> nth=0');
+    await expect(cards).toBeVisible();
+
+    // Relationship table should have rows
+    const tableRows = page.locator('tbody tr');
+    const rowCount = await tableRows.count();
+    expect(rowCount).toBe(13); // 13 relationship types
+
+    // Design system sections
     await expect(page.locator('h2:has-text("Palette")')).toBeVisible();
     await expect(page.locator('h2:has-text("Block Colors")')).toBeVisible();
     await expect(page.locator('h2:has-text("Typography")')).toBeVisible();
