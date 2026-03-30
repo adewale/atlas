@@ -35,11 +35,14 @@ const SQ_GAP = 2;
 const INTRO_TEXT =
   'The periodic table was built over centuries. Ancient peoples knew gold, iron, and copper. The 18th century brought the gas rush. The 20th century saw the synthetic era.';
 
+// Antiquity cluster center: starts at x=10, 5 columns of (SQ + SQ_GAP)
+const ANTIQ_CENTER_X = 10 + (5 * (SQ + SQ_GAP)) / 2;
+
 const ERA_LABELS: { x: number; label: string }[] = [
-  { x: 30, label: 'Ancient' },
-  { x: 260, label: '1700s: Gases & Alkalis' },
-  { x: 480, label: '1800s: Spectroscopy era' },
-  { x: 720, label: '1900s+: Nuclear synthesis' },
+  { x: ANTIQ_CENTER_X, label: 'Ancient' },
+  { x: yearToX(1750), label: '1700s: Gases & Alkalis' },
+  { x: yearToX(1850), label: '1800s: Spectroscopy era' },
+  { x: yearToX(1950), label: '1900s+: Nuclear synthesis' },
 ];
 
 // ---------------------------------------------------------------------------

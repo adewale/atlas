@@ -342,47 +342,55 @@ export default function PropertyScatter() {
           );
         })}
 
-        {/* Min/max value labels at axis endpoints */}
-        <text
-          x={MARGIN.left}
-          y={MARGIN.top + PLOT_H + 16}
-          textAnchor="middle"
-          fontSize={9}
-          fill={GREY_LIGHT}
-          fontFamily="system-ui, sans-serif"
-        >
-          {formatTick(xMin)}
-        </text>
-        <text
-          x={MARGIN.left + PLOT_W}
-          y={MARGIN.top + PLOT_H + 16}
-          textAnchor="middle"
-          fontSize={9}
-          fill={GREY_LIGHT}
-          fontFamily="system-ui, sans-serif"
-        >
-          {formatTick(xMax)}
-        </text>
-        <text
-          x={MARGIN.left - 8}
-          y={MARGIN.top + PLOT_H + 3}
-          textAnchor="end"
-          fontSize={9}
-          fill={GREY_LIGHT}
-          fontFamily="system-ui, sans-serif"
-        >
-          {formatTick(yMin)}
-        </text>
-        <text
-          x={MARGIN.left - 8}
-          y={MARGIN.top + 3}
-          textAnchor="end"
-          fontSize={9}
-          fill={GREY_LIGHT}
-          fontFamily="system-ui, sans-serif"
-        >
-          {formatTick(yMax)}
-        </text>
+        {/* Min/max value labels at axis endpoints — suppress when a tick is nearby */}
+        {!xTicks.some((t) => Math.abs(t - xMin) / (xMax - xMin || 1) < 0.05) && (
+          <text
+            x={MARGIN.left}
+            y={MARGIN.top + PLOT_H + 16}
+            textAnchor="middle"
+            fontSize={9}
+            fill={GREY_LIGHT}
+            fontFamily="system-ui, sans-serif"
+          >
+            {formatTick(xMin)}
+          </text>
+        )}
+        {!xTicks.some((t) => Math.abs(t - xMax) / (xMax - xMin || 1) < 0.05) && (
+          <text
+            x={MARGIN.left + PLOT_W}
+            y={MARGIN.top + PLOT_H + 16}
+            textAnchor="middle"
+            fontSize={9}
+            fill={GREY_LIGHT}
+            fontFamily="system-ui, sans-serif"
+          >
+            {formatTick(xMax)}
+          </text>
+        )}
+        {!yTicks.some((t) => Math.abs(t - yMin) / (yMax - yMin || 1) < 0.05) && (
+          <text
+            x={MARGIN.left - 8}
+            y={MARGIN.top + PLOT_H + 3}
+            textAnchor="end"
+            fontSize={9}
+            fill={GREY_LIGHT}
+            fontFamily="system-ui, sans-serif"
+          >
+            {formatTick(yMin)}
+          </text>
+        )}
+        {!yTicks.some((t) => Math.abs(t - yMax) / (yMax - yMin || 1) < 0.05) && (
+          <text
+            x={MARGIN.left - 8}
+            y={MARGIN.top + 3}
+            textAnchor="end"
+            fontSize={9}
+            fill={GREY_LIGHT}
+            fontFamily="system-ui, sans-serif"
+          >
+            {formatTick(yMax)}
+          </text>
+        )}
 
         {/* X axis label — inscription style */}
         <text
