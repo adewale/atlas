@@ -234,6 +234,10 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               tabIndex={-1}
               style={{
                 cursor: 'pointer',
+              }}
+            >
+            <g
+              style={{
                 opacity: hasLoaded ? 1 : 0,
                 transform: hasLoaded ? 'none' : 'translateY(4px)',
                 transition: hasLoaded
@@ -286,6 +290,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               >
                 {el.name.length > 9 ? el.name.slice(0, 8) + '…' : el.name}
               </text>
+            </g>
             </g>
           );
         })}
