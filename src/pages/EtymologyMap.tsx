@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
 import { getElement } from '../lib/data';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
@@ -87,12 +87,13 @@ const styles = {
       alignItems: 'center',
       padding: '0 12px',
       background: color,
-      color: '#fff',
+      color: PAPER,
       fontWeight: 700,
       fontSize: '15px',
       letterSpacing: '0.03em',
       textTransform: 'capitalize',
       boxSizing: 'border-box',
+      margin: 0,
     }) as React.CSSProperties,
 
   cardGrid: {
@@ -131,7 +132,7 @@ const styles = {
   desc: {
     fontSize: 9,
     lineHeight: 1.2,
-    color: '#555',
+    color: GREY_MID,
     textAlign: 'center',
     padding: '0 4px',
     overflow: 'hidden',
@@ -221,10 +222,10 @@ export default function EtymologyMap() {
             ref={(el) => { sectionRefs.current[section.origin.toLowerCase()] = el; }}
             style={{ marginBottom: SECTION_GAP }}
           >
-            <div style={styles.sectionHeader(color)}>
+            <h2 style={styles.sectionHeader(color)}>
               <span>{section.origin}</span>
               <span style={styles.count}>{section.elements.length}</span>
-            </div>
+            </h2>
 
             <div style={styles.cardGrid}>
               {section.elements.map((el, cardIdx) => {
@@ -233,7 +234,8 @@ export default function EtymologyMap() {
                   <Link
                     key={el.symbol}
                     to={`/element/${el.symbol}`}
-                    title={getElement(el.symbol)?.name ?? el.symbol}
+                    title={`${getElement(el.symbol)?.name}: ${el.description}`}
+                    className="etymology-card"
                     style={styles.card(color, stagger, hasLoaded)}
                     aria-label={`${el.symbol} — ${el.description}`}
                   >

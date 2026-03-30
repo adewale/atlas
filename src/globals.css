@@ -6,6 +6,8 @@
   --warm-red: #9e1c2c;
   --mustard: #856912;
 
+  --dim: #ece7db;
+
   /* Block colours */
   --block-s: var(--deep-blue);
   --block-p: var(--mustard);
@@ -117,6 +119,16 @@ button, a, select, input, [role="button"] {
 svg [role="button"] {
   min-height: unset;
   min-width: unset;
+}
+
+/* Etymology card hover/focus styling */
+.etymology-card:hover {
+  border-width: 3px !important;
+  background: var(--dim) !important;
+}
+.etymology-card:focus-visible {
+  outline: 2px solid var(--warm-red);
+  outline-offset: 2px;
 }
 
 /* Containment for animated elements */
