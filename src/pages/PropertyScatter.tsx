@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 import VizNav from '../components/VizNav';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
@@ -37,7 +37,7 @@ const PLOT_H = SVG_H - MARGIN.top - MARGIN.bottom;
 const SQUARE_SIZE = 10;
 
 const INTRO_TEXT =
-  'Each square is one element. Color encodes the electron block. Position encodes two numeric properties \u2014 change the axes to discover patterns.';
+  'Each square is one element. Colour encodes the electron block. Position encodes two numeric properties \u2014 change the axes to discover patterns.';
 
 // ---------------------------------------------------------------------------
 // Component
@@ -94,7 +94,7 @@ export default function PropertyScatter() {
     <main>
       <VizNav />
       <div style={{ maxWidth: '760px' }}>
-      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#133e7c' }}>Property Scatter</h1>
+      <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE }}>Property Scatter</h1>
 
       {/* Pretext intro */}
       <svg

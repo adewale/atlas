@@ -3,6 +3,7 @@ import type { CreditsData } from '../lib/types';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
+import { BLACK, DIM, BACK_LINK_STYLE } from '../lib/theme';
 
 const TEXT_WIDTH = 720;
 
@@ -39,10 +40,10 @@ export default function Credits() {
   return (
     <main>
       <div style={{ maxWidth: '800px' }}>
-      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Credits</h1>
 
-      <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '24px' }} />
+      <div style={{ borderTop: `2px solid ${BLACK}`, marginBottom: '24px' }} />
 
       {/* Structured Data */}
       <section style={{ marginBottom: '32px' }}>
@@ -75,7 +76,7 @@ export default function Credits() {
           }}
         >
           <thead>
-            <tr style={{ borderBottom: '2px solid #0f0f0f', textAlign: 'left' }}>
+            <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
               <th style={{ padding: '4px 8px' }}>Element</th>
               <th style={{ padding: '4px 8px' }}>Wikipedia Article</th>
               <th style={{ padding: '4px 8px' }}>Access Date</th>
@@ -84,7 +85,7 @@ export default function Credits() {
           </thead>
           <tbody>
             {credits.summaries.map((s) => (
-              <tr key={s.symbol} style={{ borderBottom: '1px solid #ece7db' }}>
+              <tr key={s.symbol} style={{ borderBottom: `1px solid ${DIM}` }}>
                 <td style={{ padding: '4px 8px' }}>
                   <Link to={`/element/${s.symbol}`}>
                     {s.symbol} — {s.name}

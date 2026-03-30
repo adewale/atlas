@@ -1,4 +1,5 @@
 import type { ElementSources } from '../lib/types';
+import { BLACK } from '../lib/theme';
 
 type SourceStripProps = {
   sources: ElementSources;
@@ -9,9 +10,9 @@ type SourceStripProps = {
  * MANDATORY on every folio — CC BY-SA 4.0 attribution requirement.
  * Shows per-element data provenance with licensing.
  */
-export default function SourceStrip({ sources, ruleColor = '#0f0f0f' }: SourceStripProps) {
+export default function SourceStrip({ sources, ruleColor = BLACK }: SourceStripProps) {
   return (
-    <div style={{ fontSize: '11px', lineHeight: 1.6, color: '#0f0f0f' }}>
+    <div style={{ fontSize: '11px', lineHeight: 1.6, color: BLACK }}>
       <div
         style={{
           borderTop: `1px solid ${ruleColor}`,

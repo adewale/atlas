@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
+import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { fitLabel, measureLines } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import PretextSvg from './PretextSvg';
@@ -71,7 +72,7 @@ type AtlasPlateProps = {
 export default function AtlasPlate({
   elements,
   caption,
-  captionColor = '#0f0f0f',
+  captionColor = BLACK,
   propertyKey = 'mass',
   columns = 4,
   sparklineValues,
@@ -184,7 +185,7 @@ export default function AtlasPlate({
                   y={y + 70}
                   fontSize={10}
                   fill={textFill}
-                  fontFamily="'SF Mono', monospace"
+                  fontFamily={MONO_FONT}
                 >
                   {unit && UNIT_TOOLTIPS[unit] && <title>{UNIT_TOOLTIPS[unit]}</title>}
                   {displayVal}
@@ -194,7 +195,7 @@ export default function AtlasPlate({
           );
         })}
       </svg>
-      <div style={{ marginTop: '6px', fontSize: '11px', color: '#666', letterSpacing: '0.02em' }}>
+      <div style={{ marginTop: '6px', fontSize: '11px', color: GREY_MID, letterSpacing: '0.02em' }}>
         {elements.map(el => el.symbol).join(' · ')}
       </div>
     </div>

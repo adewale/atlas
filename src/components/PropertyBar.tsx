@@ -1,3 +1,5 @@
+import { BLACK, PAPER, GREY_LIGHT, MONO_FONT } from '../lib/theme';
+
 type PropertyBarProps = {
   label: string;
   rank: number;
@@ -41,8 +43,8 @@ export default function PropertyBar({
         x={0}
         y={10}
         fontSize={10}
-        fill="#0f0f0f"
-        fontFamily="'SF Mono', 'Cascadia Code', 'Fira Code', monospace"
+        fill={BLACK}
+        fontFamily={MONO_FONT}
       >
         {label}
       </text>
@@ -51,8 +53,8 @@ export default function PropertyBar({
         y={14}
         width={width}
         height={height}
-        fill="#f7f2e8"
-        stroke="#0f0f0f"
+        fill={PAPER}
+        stroke={BLACK}
         strokeWidth={0.5}
       />
       <rect
@@ -77,8 +79,8 @@ export default function PropertyBar({
             x={barWidth + 4}
             y={14 + height - 4}
             fontSize={9}
-            fill="#0f0f0f"
-            fontFamily="'SF Mono', 'Cascadia Code', 'Fira Code', monospace"
+            fill={BLACK}
+            fontFamily={MONO_FONT}
           >
             {valueLabel}
           </text>
@@ -86,8 +88,8 @@ export default function PropertyBar({
             x={width + 4}
             y={10}
             fontSize={8}
-            fill="#999"
-            fontFamily="'SF Mono', 'Cascadia Code', 'Fira Code', monospace"
+            fill={GREY_LIGHT}
+            fontFamily={MONO_FONT}
           >
             {rankLabel}
           </text>

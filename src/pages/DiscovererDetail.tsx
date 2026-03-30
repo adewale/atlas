@@ -3,7 +3,7 @@ import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
-import { WARM_RED } from '../lib/theme';
+import { WARM_RED, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
 
 type DiscovererEntry = { name: string; elements: string[] };
@@ -19,7 +19,7 @@ export default function DiscovererDetail() {
   if (!discoverer) {
     return (
       <main>
-        <Link to="/discoverer-network" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Discoverers</Link>
+        <Link to="/discoverer-network" style={BACK_LINK_STYLE}>← Discoverers</Link>
         <h1 style={{ margin: '16px 0' }}>Discoverer not found</h1>
         <SiteNav />
     </main>
@@ -71,7 +71,7 @@ export default function DiscovererDetail() {
 
   return (
     <main>
-      <Link to="/discoverer-network" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Discoverers</Link>
+      <Link to="/discoverer-network" style={BACK_LINK_STYLE}>← Discoverers</Link>
 
       {/* Prev / Next navigation */}
       <nav style={{
@@ -82,12 +82,12 @@ export default function DiscovererDetail() {
         marginTop: '8px',
       }}>
         {prevDisc ? (
-          <Link to={`/discoverer/${encodeURIComponent(prevDisc.name)}`} style={{ color: '#666', textDecoration: 'none' }}>
+          <Link to={`/discoverer/${encodeURIComponent(prevDisc.name)}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             ← {prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name}
           </Link>
         ) : <span />}
         {nextDisc ? (
-          <Link to={`/discoverer/${encodeURIComponent(nextDisc.name)}`} style={{ color: '#666', textDecoration: 'none' }}>
+          <Link to={`/discoverer/${encodeURIComponent(nextDisc.name)}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             {nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name} →
           </Link>
         ) : <span />}
@@ -98,7 +98,7 @@ export default function DiscovererDetail() {
         <span style={{
           fontSize: '96px',
           fontWeight: 'bold',
-          fontFamily: "'SF Mono', 'Cascadia Code', monospace",
+          fontFamily: MONO_FONT,
           lineHeight: 1,
           color,
           letterSpacing: '-0.02em',
@@ -115,7 +115,7 @@ export default function DiscovererDetail() {
           }}>
             {discoverer.name}
           </h1>
-          <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
+          <div style={{ fontSize: '13px', color: GREY_MID, marginTop: '4px' }}>
             {elements.length} element{elements.length !== 1 ? 's' : ''} · {yearRange}
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function DiscovererDetail() {
             fontWeight: 'bold',
             textTransform: 'uppercase',
             letterSpacing: '0.15em',
-            color: '#666',
+            color: GREY_MID,
             marginBottom: '8px',
           }}>
             Related Discoverers

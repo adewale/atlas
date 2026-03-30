@@ -10,7 +10,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { PAPER, BLACK, DIM } from '../lib/theme';
+import { PAPER, BLACK, DIM, GREY_RULE } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
@@ -153,7 +153,7 @@ export default function NeighborhoodGraph() {
                   stroke={
                     isHighlighted && hoveredEl
                       ? blockColor(hoveredEl.block)
-                      : '#ccc'
+                      : GREY_RULE
                   }
                   strokeWidth={isHighlighted ? 1.5 : 0.5}
                   opacity={isDimmed ? 0.15 : 1}

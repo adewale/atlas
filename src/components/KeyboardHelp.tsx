@@ -1,5 +1,6 @@
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
+import { BLACK, PAPER, GREY_MID, MONO_FONT } from '../lib/theme';
 
 const PANEL_WIDTH = 480;
 const INTRO_FONT = '14px system-ui';
@@ -37,8 +38,8 @@ export default function KeyboardHelp({ onClose }: KeyboardHelpProps) {
       aria-label="Keyboard shortcuts"
       style={{
         marginBottom: '16px',
-        border: '2px solid #0f0f0f',
-        background: '#f7f2e8',
+        border: `2px solid ${BLACK}`,
+        background: PAPER,
         padding: '16px',
         maxWidth: PANEL_WIDTH,
         opacity: 0,
@@ -46,7 +47,7 @@ export default function KeyboardHelp({ onClose }: KeyboardHelpProps) {
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '12px' }}>
-        <div style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#0f0f0f' }}>
+        <div style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em', color: BLACK }}>
           Keyboard Controls
         </div>
         <button
@@ -57,7 +58,7 @@ export default function KeyboardHelp({ onClose }: KeyboardHelpProps) {
             border: 'none',
             fontSize: '14px',
             cursor: 'pointer',
-            color: '#666',
+            color: GREY_MID,
             fontFamily: 'system-ui',
             minHeight: '44px',
             minWidth: '44px',
@@ -99,7 +100,7 @@ export default function KeyboardHelp({ onClose }: KeyboardHelpProps) {
                 y1={y}
                 x2={PANEL_WIDTH - 32}
                 y2={y}
-                stroke="#0f0f0f"
+                stroke={BLACK}
                 strokeWidth={0.5}
                 opacity={0.15}
                 style={{
@@ -112,9 +113,9 @@ export default function KeyboardHelp({ onClose }: KeyboardHelpProps) {
                 x={0}
                 y={y + 20}
                 fontSize={13}
-                fontFamily="'SF Mono', 'Cascadia Code', monospace"
+                fontFamily={MONO_FONT}
                 fontWeight="bold"
-                fill="#0f0f0f"
+                fill={BLACK}
               >
                 {s.keys}
               </text>
@@ -124,7 +125,7 @@ export default function KeyboardHelp({ onClose }: KeyboardHelpProps) {
                 y={y + 20}
                 textAnchor="end"
                 fontSize={13}
-                fill="#666"
+                fill={GREY_MID}
                 fontFamily="system-ui"
               >
                 {s.action}

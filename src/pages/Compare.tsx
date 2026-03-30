@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { BACK_LINK_STYLE } from '../lib/theme';
 import CompareView from '../components/CompareView';
 import SiteNav from '../components/SiteNav';
 
@@ -25,7 +26,7 @@ export default function Compare() {
 
   return (
     <main>
-      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <div style={{ marginTop: '16px' }}>
         <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />
       </div>

@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_LIGHT, GREY_RULE } from '../lib/theme';
 
 type GroupTrendProps = {
   values: (number | null)[];
@@ -17,7 +18,7 @@ export function GroupTrendSparkline({
   highlightIndex,
   width = 300,
   height = 40,
-  color = '#0f0f0f',
+  color = BLACK,
 }: GroupTrendProps) {
   const validValues = values.filter((v): v is number => v != null);
   if (validValues.length < 2) return null;
@@ -87,9 +88,9 @@ export function GroupTrendSparkline({
 // Group phase strip: phase-of-matter at STP for each element in the group
 // ---------------------------------------------------------------------------
 const PHASE_COLORS: Record<string, string> = {
-  solid: '#0f0f0f',
-  liquid: '#133e7c',
-  gas: '#9e1c2c',
+  solid: BLACK,
+  liquid: DEEP_BLUE,
+  gas: WARM_RED,
 };
 
 type GroupPhaseStripProps = {
@@ -126,7 +127,7 @@ export function GroupPhaseStrip({
       {phases.map((phase, i) => {
         const x = i * cellW;
         const isHighlight = i === highlightIndex;
-        const color = phase ? PHASE_COLORS[phase] ?? '#999' : '#999';
+        const color = phase ? PHASE_COLORS[phase] ?? GREY_LIGHT : GREY_LIGHT;
         return (
           <g key={i}>
             <rect
@@ -135,7 +136,7 @@ export function GroupPhaseStrip({
               width={cellW - 2}
               height={cellH}
               fill={phase ? color : 'none'}
-              stroke={isHighlight ? '#0f0f0f' : color}
+              stroke={isHighlight ? BLACK : color}
               strokeWidth={isHighlight ? 1.5 : 0.5}
               opacity={phase ? (isHighlight ? 1 : 0.6) : 0.3}
               style={{
@@ -149,7 +150,7 @@ export function GroupPhaseStrip({
               textAnchor="middle"
               fontSize={8}
               fontFamily="system-ui"
-              fill={phase ? (phase === 'solid' ? '#f7f2e8' : '#f7f2e8') : '#999'}
+              fill={phase ? PAPER : GREY_LIGHT}
               style={{
                 opacity: 0,
                 animation: `folio-line-reveal 200ms var(--ease-out) ${200 + i * 30}ms forwards`,
@@ -181,7 +182,7 @@ export function RankDotSparkline({
   total = 118,
   width = 40,
   height = 12,
-  color = '#0f0f0f',
+  color = BLACK,
 }: RankDotProps) {
   if (rank <= 0) return null;
   // rank 1 = rightmost (highest), rank N = leftmost
@@ -189,7 +190,7 @@ export function RankDotSparkline({
 
   return (
     <svg width={width} height={height} role="img" aria-label={`Rank ${rank} of ${total}`}>
-      <line x1={0} y1={height / 2} x2={width} y2={height / 2} stroke="#ccc" strokeWidth={0.5} />
+      <line x1={0} y1={height / 2} x2={width} y2={height / 2} stroke={GREY_RULE} strokeWidth={0.5} />
       <circle
         cx={x}
         cy={height / 2}

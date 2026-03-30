@@ -13,7 +13,7 @@ import { GroupTrendSparkline, RankDotSparkline, GroupPhaseStrip } from './Sparkl
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
-import { DEEP_BLUE, WARM_RED, PAPER, toSlug } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug } from '../lib/theme';
 import InfoTip from './InfoTip';
 
 const PLATE_WIDTH = 160;
@@ -251,17 +251,17 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           {prevElement ? (
             <Link
               to={`/element/${prevElement.symbol}`}
-              style={{ color: '#666', textDecoration: 'none' }}
+              style={{ color: GREY_MID, textDecoration: 'none' }}
             >
-              ← {prevElement.symbol} <span style={{ color: '#999' }}>{prevElement.name}</span>
+              ← {prevElement.symbol} <span style={{ color: GREY_LIGHT }}>{prevElement.name}</span>
             </Link>
           ) : <span />}
           {nextElement ? (
             <Link
               to={`/element/${nextElement.symbol}`}
-              style={{ color: '#666', textDecoration: 'none' }}
+              style={{ color: GREY_MID, textDecoration: 'none' }}
             >
-              <span style={{ color: '#999' }}>{nextElement.name}</span> {nextElement.symbol} →
+              <span style={{ color: GREY_LIGHT }}>{nextElement.name}</span> {nextElement.symbol} →
             </Link>
           ) : <span />}
         </nav>
@@ -292,7 +292,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 fontSize: mobile ? '64px' : '56px',
                 fontWeight: 'bold',
                 color,
-                fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
+                fontFamily: MONO_FONT,
                 lineHeight: 1,
                 viewTransitionName: 'element-number',
               } as React.CSSProperties}
@@ -317,7 +317,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               margin: '4px 0 0',
               textTransform: 'uppercase',
               letterSpacing: '0.2em',
-              color: '#666',
+              color: GREY_MID,
             }}>
               {element.name}
             </h2>
@@ -346,7 +346,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={DEEP_BLUE} />
                   <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
-                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">{element.group ?? '—'}</text>
+                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>{element.group ?? '—'}</text>
                 </svg>
               </Link>
               {/* Period row — warm red */}
@@ -354,7 +354,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={WARM_RED} />
                   <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
-                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">{element.period}</text>
+                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>{element.period}</text>
                 </svg>
               </Link>
               {/* Block row — block colour */}
@@ -362,7 +362,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={color} />
                   <text x={12} y={20} fontSize={10} fill={contrastTextColor(color)} fontFamily="system-ui">BLOCK</text>
-                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={contrastTextColor(color)} fontFamily="'SF Mono', monospace">{element.block}</text>
+                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={contrastTextColor(color)} fontFamily={MONO_FONT}>{element.block}</text>
                 </svg>
               </Link>
             </div>
@@ -391,7 +391,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         {/* Group phase strip — shows phase at STP for each group member */}
         {groupPhaseData && (
           <div style={{ marginTop: '16px' }}>
-            <div style={{ fontSize: '10px', color: '#666', marginBottom: '4px' }}>
+            <div style={{ fontSize: '10px', color: GREY_MID, marginBottom: '4px' }}>
               <InfoTip label="STP = Standard Temperature and Pressure (0°C, 1 atm). This strip shows the physical state of each element in the same group at these conditions.">
                 <span>Phase at STP — Group {element.group}</span>
               </InfoTip>
@@ -403,10 +403,10 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               width={svgWidth}
               height={24}
             />
-            <div style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '9px', color: '#666' }}>
-              <span><span style={{ color: '#0f0f0f' }}>■</span> Solid</span>
-              <span><span style={{ color: '#133e7c' }}>■</span> Liquid</span>
-              <span><span style={{ color: '#9e1c2c' }}>■</span> Gas</span>
+            <div style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '9px', color: GREY_MID }}>
+              <span><span style={{ color: BLACK }}>■</span> Solid</span>
+              <span><span style={{ color: DEEP_BLUE }}>■</span> Liquid</span>
+              <span><span style={{ color: WARM_RED }}>■</span> Gas</span>
             </div>
           </div>
         )}
@@ -476,14 +476,14 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             borderTop: `3px solid ${color}`,
             fontSize: '13px',
             lineHeight: 1.7,
-            color: '#333',
+            color: GREY_DARK,
             opacity: 0,
             animation: animate ? 'folio-line-reveal 300ms var(--ease-out) 400ms forwards' : undefined,
           }}
         >
           {element.etymologyDescription && (
             <div style={{ marginBottom: '6px' }}>
-              <span style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Etymology</span>
+              <span style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Etymology</span>
               <div>
                 {element.etymologyDescription}
                 {element.etymologyOrigin && element.etymologyOrigin !== 'unknown' && (
@@ -496,7 +496,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 )}
               </div>
               {sameEtymology.length > 0 && (
-                <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>
+                <div style={{ fontSize: '11px', color: GREY_MID, marginTop: '2px' }}>
                   Also named for {element.etymologyOrigin}:{' '}
                   {sameEtymology.map((e, i) => (
                     <span key={e.symbol}>
@@ -510,7 +510,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           )}
           {element.discoverer && (
             <div>
-              <span style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
+              <span style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
               <div>
                 <Link to={`/discoverer/${encodeURIComponent(element.discoverer)}`} style={{ color, textDecoration: 'none' }}>
                   {element.discoverer}
@@ -524,7 +524,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 </Link>
               </div>
               {sameDiscoverer.length > 0 && (
-                <div style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>
+                <div style={{ fontSize: '11px', color: GREY_MID, marginTop: '2px' }}>
                   Also by {element.discoverer.split(',')[0].split(' and ')[0]}:{' '}
                   {sameDiscoverer.map((e, i) => (
                     <span key={e.symbol}>
@@ -553,7 +553,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
       >
         {/* Category — Pretext Tier 1 measured text */}
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
             Category
           </div>
           <Link to={`/atlas/category/${toSlug(element.category)}`} aria-label={element.category} style={{ textDecoration: 'none' }}>
@@ -631,7 +631,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
         {/* Neighbors */}
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
             Neighbours
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>

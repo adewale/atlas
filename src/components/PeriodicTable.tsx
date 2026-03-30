@@ -34,7 +34,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, categoryColor } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_LIGHT, GREY_RULE, MONO_FONT, categoryColor } from '../lib/theme';
 
 // Pre-compute cell positions once at module level (they never change)
 const CELL_POSITIONS = new Map(allElements.map(el => [el.symbol, getCellPosition(el)]));
@@ -177,7 +177,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             fontWeight: 'bold',
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            color: '#666',
+            color: GREY_MID,
             position: 'absolute',
             left: '10px',
             pointerEvents: 'none',
@@ -201,7 +201,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             style={{
               width: query ? '180px' : '90px',
               padding: query ? '6px 48px 6px 10px' : '6px 10px',
-              border: `1.5px solid ${isFiltering ? BLACK : '#ccc'}`,
+              border: `1.5px solid ${isFiltering ? BLACK : GREY_RULE}`,
               background: PAPER,
               fontFamily: 'inherit',
               fontSize: '13px',
@@ -216,8 +216,8 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 position: 'absolute',
                 right: '8px',
                 fontSize: '10px',
-                fontFamily: "'SF Mono', 'Cascadia Code', monospace",
-                color: matchCount === 0 ? WARM_RED : '#666',
+                fontFamily: MONO_FONT,
+                color: matchCount === 0 ? WARM_RED : GREY_MID,
                 pointerEvents: 'none',
               }}
             >
@@ -243,9 +243,9 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
                 padding: '6px 10px',
-                border: `1.5px solid ${isActive ? BLACK : '#ccc'}`,
+                border: `1.5px solid ${isActive ? BLACK : GREY_RULE}`,
                 background: isActive ? BLACK : 'transparent',
-                color: isActive ? PAPER : '#666',
+                color: isActive ? PAPER : GREY_MID,
                 cursor: 'pointer',
                 minHeight: '44px',
                 minWidth: '44px',
@@ -272,9 +272,9 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
                 padding: '6px 10px',
-                border: `1.5px solid ${isActive ? DEEP_BLUE : '#ccc'}`,
+                border: `1.5px solid ${isActive ? DEEP_BLUE : GREY_RULE}`,
                 background: isActive ? DEEP_BLUE : 'transparent',
-                color: isActive ? PAPER : '#666',
+                color: isActive ? PAPER : GREY_MID,
                 cursor: 'pointer',
                 minHeight: '44px',
                 minWidth: '44px',
@@ -310,7 +310,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             y1={period * CELL_HEIGHT}
             x2={18 * CELL_WIDTH}
             y2={period * CELL_HEIGHT}
-            stroke="#0f0f0f"
+            stroke={BLACK}
             strokeWidth={0.3}
             opacity={0.15}
           />
@@ -321,7 +321,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           y1={7 * CELL_HEIGHT + CELL_HEIGHT * 0.5}
           x2={17 * CELL_WIDTH}
           y2={7 * CELL_HEIGHT + CELL_HEIGHT * 0.5}
-          stroke="#0f0f0f"
+          stroke={BLACK}
           strokeWidth={0.5}
           opacity={0.2}
           strokeDasharray="4 4"
@@ -331,7 +331,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           const isActive = el.symbol === activeSymbol;
           const isDimmed = isFiltering && !filteredSymbols.has(el.symbol);
           const fill = isDimmed ? DIM : getCellFill(el, highlightMode, property);
-          const textColor = isDimmed ? '#999' : contrastTextColor(fill);
+          const textColor = isDimmed ? GREY_LIGHT : contrastTextColor(fill);
           const dist = focusedPos
             ? Math.abs(pos.col - focusedPos.col) + Math.abs(pos.row - focusedPos.row)
             : 0;
@@ -364,7 +364,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 width={CELL_WIDTH - 2}
                 height={CELL_HEIGHT - 2}
                 fill={fill}
-                stroke={isActive ? '#9e1c2c' : '#0f0f0f'}
+                stroke={isActive ? WARM_RED : BLACK}
                 strokeWidth={isActive ? 2 : 0.5}
                 style={{
                   transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,

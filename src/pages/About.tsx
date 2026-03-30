@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
-import { DEEP_BLUE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, BACK_LINK_STYLE } from '../lib/theme';
 
 const SVG_MAX_WIDTH = 640;
 
@@ -43,10 +43,10 @@ export default function About() {
   return (
     <main>
       <div style={{ maxWidth: '640px' }}>
-      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>About Atlas</h1>
 
-      <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '16px' }} />
+      <div style={{ borderTop: `2px solid ${BLACK}`, marginBottom: '16px' }} />
 
       <section style={{ marginBottom: '40px' }}>
         <svg

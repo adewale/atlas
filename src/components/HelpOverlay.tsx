@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
-import { BLACK, PAPER } from '../lib/theme';
+import { BLACK, PAPER, GREY_MID, MONO_FONT } from '../lib/theme';
 
 const PANEL_WIDTH = 480;
 const INTRO_FONT = '14px system-ui';
@@ -100,7 +100,7 @@ function HelpPanel({ onClose }: { onClose: () => void }) {
             border: 'none',
             fontSize: '14px',
             cursor: 'pointer',
-            color: '#666',
+            color: GREY_MID,
             fontFamily: 'system-ui',
             minHeight: '44px',
             minWidth: '44px',
@@ -150,7 +150,7 @@ function HelpPanel({ onClose }: { onClose: () => void }) {
                 x={0}
                 y={y + 20}
                 fontSize={13}
-                fontFamily="'SF Mono', 'Cascadia Code', monospace"
+                fontFamily={MONO_FONT}
                 fontWeight="bold"
                 fill={BLACK}
               >
@@ -161,7 +161,7 @@ function HelpPanel({ onClose }: { onClose: () => void }) {
                 y={y + 20}
                 textAnchor="end"
                 fontSize={13}
-                fill="#666"
+                fill={GREY_MID}
                 fontFamily="system-ui"
               >
                 {s.action}

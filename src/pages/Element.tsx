@@ -3,6 +3,7 @@ import { getElement } from '../lib/data';
 import type { ElementRecord, ElementSources, GroupData, AnomalyData } from '../lib/types';
 import Folio from '../components/Folio';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
+import { BACK_LINK_STYLE } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
 
 export default function Element() {
@@ -34,7 +35,7 @@ export default function Element() {
       <a
         href="/"
         onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}
-        style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}
+        style={BACK_LINK_STYLE}
       >
         ← Table
       </a>

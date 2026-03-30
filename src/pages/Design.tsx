@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
 
 const PALETTE = [
@@ -35,7 +35,7 @@ export default function Design() {
   return (
     <main>
       <div style={{ maxWidth: '800px' }}>
-      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: GREY_MID }}>← Table</Link>
+      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>
         Living reference for the Atlas visual system. 60% Kronecker-Wallis/Byrne visual drama,
@@ -86,7 +86,7 @@ export default function Design() {
                   justifyContent: 'center',
                   color: contrastTextColor(c.hex),
                   fontSize: '11px',
-                  fontFamily: "'SF Mono', monospace",
+                  fontFamily: MONO_FONT,
                 }}
               >
                 {c.hex}
@@ -142,7 +142,7 @@ export default function Design() {
             style={{
               fontSize: '96px',
               fontWeight: 'bold',
-              fontFamily: "'SF Mono', monospace",
+              fontFamily: MONO_FONT,
               color: WARM_RED,
               lineHeight: 1,
             }}
@@ -189,13 +189,13 @@ export default function Design() {
         <svg width={160} height={180}>
           <rect x={0} y={0} width={160} height={56} fill={DEEP_BLUE} />
           <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
-          <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">8</text>
+          <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>8</text>
           <rect x={0} y={60} width={160} height={56} fill={WARM_RED} />
           <text x={12} y={80} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
-          <text x={12} y={106} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">4</text>
+          <text x={12} y={106} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>4</text>
           <rect x={0} y={120} width={160} height={56} fill={WARM_RED} />
           <text x={12} y={140} fontSize={10} fill={PAPER} fontFamily="system-ui">BLOCK</text>
-          <text x={12} y={166} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">d</text>
+          <text x={12} y={166} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>d</text>
         </svg>
       </section>
 

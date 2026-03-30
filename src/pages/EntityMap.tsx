@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
 import { useIsMobile } from '../hooks/useIsMobile';
 
@@ -141,7 +141,7 @@ function EntityCard({ entity, highlight, onHover }: { entity: Entity; highlight:
   return (
     <div
       style={{
-        border: `2px solid ${highlight ? entity.colour : '#ece7db'}`,
+        border: `2px solid ${highlight ? entity.colour : DIM}`,
         padding: '12px 16px',
         width: '220px',
         maxWidth: '100%',
@@ -156,14 +156,14 @@ function EntityCard({ entity, highlight, onHover }: { entity: Entity; highlight:
         <span style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
           {entity.label}
         </span>
-        <span style={{ fontSize: '10px', color: '#666', marginLeft: 'auto', fontFamily: "'SF Mono', monospace" }}>
+        <span style={{ fontSize: '10px', color: GREY_MID, marginLeft: 'auto', fontFamily: MONO_FONT }}>
           {entity.count}
         </span>
       </div>
-      <div style={{ fontSize: '11px', color: '#666', lineHeight: 1.5, marginBottom: '6px' }}>
+      <div style={{ fontSize: '11px', color: GREY_MID, lineHeight: 1.5, marginBottom: '6px' }}>
         {entity.description}
       </div>
-      <div style={{ fontSize: '10px', fontFamily: "'SF Mono', monospace", color: '#999', marginBottom: '4px' }}>
+      <div style={{ fontSize: '10px', fontFamily: MONO_FONT, color: GREY_LIGHT, marginBottom: '4px' }}>
         {entity.route}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
@@ -328,8 +328,8 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
                 y={r + 14}
                 textAnchor="middle"
                 fontSize={10}
-                fill="#666"
-                fontFamily="'SF Mono', monospace"
+                fill={GREY_MID}
+                fontFamily={MONO_FONT}
               >
                 {entity.count}
               </text>
@@ -357,7 +357,7 @@ export default function EntityMapPage() {
   return (
     <main>
       <div style={{ maxWidth: '900px' }}>
-      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{
         margin: '16px 0 8px',
         letterSpacing: '0.2em',
@@ -368,7 +368,7 @@ export default function EntityMapPage() {
       }}>
         Entity Map
       </h1>
-      <p style={{ lineHeight: 1.7, marginBottom: '32px', fontSize: '14px', color: '#333' }}>
+      <p style={{ lineHeight: 1.7, marginBottom: '32px', fontSize: '14px', color: GREY_DARK }}>
         Atlas models 12 entity types connected by 13 relationship types. Element is the central
         hub — every other entity connects through it. {mobile ? 'Tap' : 'Hover over'} a node to highlight its edges.
       </p>
@@ -397,25 +397,25 @@ export default function EntityMapPage() {
       {/* URL Patterns */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>URL Patterns</h2>
-        <p style={{ fontSize: '13px', color: '#666', marginBottom: '12px', lineHeight: 1.6 }}>
+        <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '12px', lineHeight: 1.6 }}>
           Every entity has a unique, linkable URL. Share any page and the recipient sees exactly what you see.
         </p>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
           <thead>
-            <tr style={{ borderBottom: '2px solid #0f0f0f', textAlign: 'left' }}>
+            <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
               <th style={{ padding: '6px 8px' }}>Entity</th>
-              <th style={{ padding: '6px 8px', fontFamily: "'SF Mono', monospace" }}>URL Pattern</th>
+              <th style={{ padding: '6px 8px', fontFamily: MONO_FONT }}>URL Pattern</th>
               <th style={{ padding: '6px 8px' }}>Example</th>
               <th style={{ padding: '6px 8px' }}>Count</th>
             </tr>
           </thead>
           <tbody>
             {ENTITIES.filter((e) => e.route !== '—').map((entity) => (
-              <tr key={entity.id} style={{ borderBottom: '1px solid #ece7db' }}>
+              <tr key={entity.id} style={{ borderBottom: `1px solid ${DIM}` }}>
                 <td style={{ padding: '6px 8px' }}>
                   <span style={{ color: entity.colour, fontWeight: 'bold' }}>{entity.label}</span>
                 </td>
-                <td style={{ padding: '6px 8px', fontFamily: "'SF Mono', monospace", fontSize: '11px', color: '#666' }}>
+                <td style={{ padding: '6px 8px', fontFamily: MONO_FONT, fontSize: '11px', color: GREY_MID }}>
                   {entity.route}
                 </td>
                 <td style={{ padding: '6px 8px' }}>
@@ -425,7 +425,7 @@ export default function EntityMapPage() {
                     </Link>
                   )}
                 </td>
-                <td style={{ padding: '6px 8px', fontFamily: "'SF Mono', monospace" }}>{entity.count}</td>
+                <td style={{ padding: '6px 8px', fontFamily: MONO_FONT }}>{entity.count}</td>
               </tr>
             ))}
           </tbody>
@@ -435,7 +435,7 @@ export default function EntityMapPage() {
       {/* Relationships Table */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Relationships</h2>
-        <p style={{ fontSize: '13px', color: '#666', marginBottom: '12px', lineHeight: 1.6 }}>
+        <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '12px', lineHeight: 1.6 }}>
           All 13 edges are surfaced as navigable links in both directions. The "Via" column shows where each link lives in the UI.
         </p>
         {mobile ? (
@@ -448,7 +448,7 @@ export default function EntityMapPage() {
                 <div
                   key={i}
                   style={{
-                    borderLeft: `3px solid ${fromEntity?.colour ?? '#ccc'}`,
+                    borderLeft: `3px solid ${fromEntity?.colour ?? GREY_RULE}`,
                     padding: '8px 12px',
                     fontSize: '13px',
                     lineHeight: 1.6,
@@ -456,11 +456,11 @@ export default function EntityMapPage() {
                 >
                   <div>
                     <span style={{ color: fromEntity?.colour, fontWeight: 'bold' }}>{fromEntity?.label}</span>
-                    {' '}<span style={{ color: '#666' }}>{edge.label}</span>{' '}
+                    {' '}<span style={{ color: GREY_MID }}>{edge.label}</span>{' '}
                     <span style={{ color: toEntity?.colour, fontWeight: 'bold' }}>{toEntity?.label}</span>
-                    {' '}<span style={{ fontSize: '11px', color: '#999', fontFamily: "'SF Mono', monospace" }}>({edge.cardinality})</span>
+                    {' '}<span style={{ fontSize: '11px', color: GREY_LIGHT, fontFamily: MONO_FONT }}>({edge.cardinality})</span>
                   </div>
-                  <div style={{ fontSize: '11px', color: '#999', marginTop: '2px' }}>
+                  <div style={{ fontSize: '11px', color: GREY_LIGHT, marginTop: '2px' }}>
                     Forward: {edge.forwardVia ?? '—'} · Reverse: {edge.reverseVia ?? '—'}
                   </div>
                 </div>
@@ -471,7 +471,7 @@ export default function EntityMapPage() {
           /* Desktop: table layout */
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
             <thead>
-              <tr style={{ borderBottom: '2px solid #0f0f0f', textAlign: 'left' }}>
+              <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
                 <th style={{ padding: '6px 8px' }}>From</th>
                 <th style={{ padding: '6px 8px' }}>Relationship</th>
                 <th style={{ padding: '6px 8px' }}>To</th>
@@ -488,8 +488,8 @@ export default function EntityMapPage() {
                   <tr
                     key={i}
                     style={{
-                      borderBottom: '1px solid #ece7db',
-                      background: hovered && (edge.from === hovered || edge.to === hovered) ? '#f7f2e8' : undefined,
+                      borderBottom: `1px solid ${DIM}`,
+                      background: hovered && (edge.from === hovered || edge.to === hovered) ? PAPER : undefined,
                     }}
                     onMouseEnter={() => setHovered(edge.from)}
                     onMouseLeave={() => setHovered(null)}
@@ -497,13 +497,13 @@ export default function EntityMapPage() {
                     <td style={{ padding: '6px 8px' }}>
                       <span style={{ color: fromEntity?.colour }}>{fromEntity?.label ?? edge.from}</span>
                     </td>
-                    <td style={{ padding: '6px 8px', color: '#666' }}>{edge.label}</td>
+                    <td style={{ padding: '6px 8px', color: GREY_MID }}>{edge.label}</td>
                     <td style={{ padding: '6px 8px' }}>
                       <span style={{ color: toEntity?.colour }}>{toEntity?.label ?? edge.to}</span>
                     </td>
-                    <td style={{ padding: '6px 8px', fontFamily: "'SF Mono', monospace" }}>{edge.cardinality}</td>
-                    <td style={{ padding: '6px 8px', fontSize: '11px', color: '#666' }}>{edge.forwardVia ?? '—'}</td>
-                    <td style={{ padding: '6px 8px', fontSize: '11px', color: '#666' }}>{edge.reverseVia ?? '—'}</td>
+                    <td style={{ padding: '6px 8px', fontFamily: MONO_FONT }}>{edge.cardinality}</td>
+                    <td style={{ padding: '6px 8px', fontSize: '11px', color: GREY_MID }}>{edge.forwardVia ?? '—'}</td>
+                    <td style={{ padding: '6px 8px', fontSize: '11px', color: GREY_MID }}>{edge.reverseVia ?? '—'}</td>
                   </tr>
                 );
               })}

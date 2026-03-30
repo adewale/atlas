@@ -3,7 +3,7 @@ import { generateComparisonNotes } from '../lib/compare';
 import { useWedgeText } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
 
-import { DEEP_BLUE, WARM_RED, PAPER } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT } from '../lib/theme';
 const DEFAULT_WIDTH = 800;
 const SPLIT_H = 280;
 
@@ -230,7 +230,7 @@ export default function CompareView({
                 x={4}
                 y={y + 14}
                 fontSize={10}
-                fill="#0f0f0f"
+                fill={BLACK}
                 fontFamily="system-ui"
               >
                 {prop.label}
@@ -255,8 +255,8 @@ export default function CompareView({
                 x={Math.max(barA + 8, 60)}
                 y={y + 27}
                 fontSize={9}
-                fill="#0f0f0f"
-                fontFamily="'SF Mono', monospace"
+                fill={BLACK}
+                fontFamily={MONO_FONT}
               >
                 {valA != null ? valA : '—'}
               </text>
@@ -280,8 +280,8 @@ export default function CompareView({
                 x={Math.max(barB + 8, 60)}
                 y={y + 41}
                 fontSize={9}
-                fill="#0f0f0f"
-                fontFamily="'SF Mono', monospace"
+                fill={BLACK}
+                fontFamily={MONO_FONT}
               >
                 {valB != null ? valB : '—'}
               </text>
@@ -296,7 +296,7 @@ export default function CompareView({
           x={4}
           y={notesY}
           fontSize={14}
-          fill="#0f0f0f"
+          fill={BLACK}
           maxWidth={WIDTH - 8}
           textAlign="center"
           animationStagger={animate ? 30 : undefined}

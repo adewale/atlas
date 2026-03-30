@@ -3,12 +3,14 @@ import PeriodicTable from '../components/PeriodicTable';
 import VizNav from '../components/VizNav';
 import SiteNav from '../components/SiteNav';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { BLACK, PAPER } from '../lib/theme';
 
 const ATLAS_LETTERS = ['A', 'T', 'L', 'A', 'S'] as const;
 
 export default function Home() {
   const transitionNavigate = useViewTransitionNavigate();
+  const isMobile = useIsMobile();
 
   const handleSelect = useCallback(
     (symbol: string) => {
@@ -20,8 +22,8 @@ export default function Home() {
   return (
     <main id="main-content">
       <div style={{ display: 'flex', gap: '0' }}>
-        {/* Vertical ATLAS wordmark in left gutter */}
-        <h1
+        {/* Vertical ATLAS wordmark in left gutter — desktop only */}
+        {!isMobile && <h1
           aria-label="Atlas"
           style={{
             display: 'flex',
@@ -50,7 +52,7 @@ export default function Home() {
               {letter}
             </span>
           ))}
-        </h1>
+        </h1>}
 
         {/* Main content area */}
         <div style={{ flex: 1, minWidth: 0 }}>

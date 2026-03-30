@@ -3,7 +3,7 @@ import { Link, useLoaderData, useNavigate } from 'react-router';
 import VizNav from '../components/VizNav';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED } from '../lib/theme';
+import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
@@ -377,7 +377,7 @@ export default function DiscoveryTimeline() {
 
       {/* Era browse links */}
       <section style={{ marginTop: '24px' }}>
-        <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#666', marginBottom: '8px' }}>
+        <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px' }}>
           Browse by Era
         </h2>
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>

@@ -3,7 +3,7 @@ import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
-import { WARM_RED, DEEP_BLUE, BLACK } from '../lib/theme';
+import { WARM_RED, DEEP_BLUE, BLACK, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
 
 type TimelineEntry = { symbol: string; year: number | null; discoverer: string };
@@ -81,7 +81,7 @@ export default function TimelineEra() {
   if (entries.length === 0) {
     return (
       <main>
-        <Link to="/discovery-timeline" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Timeline</Link>
+        <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
         <h1 style={{ margin: '12px 0 16px' }}>No elements found for this era</h1>
         <SiteNav />
     </main>
@@ -90,7 +90,7 @@ export default function TimelineEra() {
 
   return (
     <main>
-      <Link to="/discovery-timeline" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Timeline</Link>
+      <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
 
       {/* Prev / Next navigation */}
       <nav style={{
@@ -101,12 +101,12 @@ export default function TimelineEra() {
         marginTop: '8px',
       }}>
         {prevEra ? (
-          <Link to={`/timeline/${prevEra}`} style={{ color: '#666', textDecoration: 'none' }}>
+          <Link to={`/timeline/${prevEra}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             ← {prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`}
           </Link>
         ) : <span />}
         {nextEra ? (
-          <Link to={`/timeline/${nextEra}`} style={{ color: '#666', textDecoration: 'none' }}>
+          <Link to={`/timeline/${nextEra}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             {`${nextEra}s`} →
           </Link>
         ) : <span />}
@@ -117,7 +117,7 @@ export default function TimelineEra() {
         <span style={{
           fontSize: '96px',
           fontWeight: 'bold',
-          fontFamily: "'SF Mono', 'Cascadia Code', monospace",
+          fontFamily: MONO_FONT,
           lineHeight: 1,
           color,
           letterSpacing: '-0.02em',
@@ -134,7 +134,7 @@ export default function TimelineEra() {
           }}>
             {eraLabel}
           </h1>
-          <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
+          <div style={{ fontSize: '13px', color: GREY_MID, marginTop: '4px' }}>
             {elements.length} element{elements.length !== 1 ? 's' : ''} discovered
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function TimelineEra() {
             fontWeight: 'bold',
             textTransform: 'uppercase',
             letterSpacing: '0.15em',
-            color: '#666',
+            color: GREY_MID,
             marginBottom: '8px',
           }}>
             Discoverers
@@ -196,7 +196,7 @@ export default function TimelineEra() {
             fontWeight: 'bold',
             textTransform: 'uppercase',
             letterSpacing: '0.15em',
-            color: '#666',
+            color: GREY_MID,
             marginBottom: '8px',
           }}>
             Nearby Eras

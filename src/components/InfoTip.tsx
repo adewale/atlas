@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, type ReactNode } from 'react';
+import { BLACK, PAPER, GREY_MID, GREY_LIGHT } from '../lib/theme';
 
 type InfoTipProps = {
   label: string;
@@ -43,9 +44,9 @@ export default function InfoTip({ label, children }: InfoTipProps) {
           minHeight: 'unset',
           marginLeft: '3px',
           borderRadius: '50%',
-          border: '1px solid #999',
+          border: `1px solid ${GREY_LIGHT}`,
           background: 'none',
-          color: '#666',
+          color: GREY_MID,
           fontSize: '9px',
           fontWeight: 'bold',
           fontFamily: 'system-ui',
@@ -69,8 +70,8 @@ export default function InfoTip({ label, children }: InfoTipProps) {
             transform: 'translateX(-50%)',
             width: '240px',
             padding: '8px 10px',
-            background: '#0f0f0f',
-            color: '#f7f2e8',
+            background: BLACK,
+            color: PAPER,
             fontSize: '12px',
             lineHeight: 1.5,
             fontFamily: 'system-ui',
