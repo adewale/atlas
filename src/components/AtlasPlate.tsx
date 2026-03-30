@@ -186,8 +186,8 @@ export default function AtlasPlate({
           );
         })}
       </svg>
-      <div style={{ marginTop: '8px', fontSize: '14px', color: '#0f0f0f' }}>
-        {elements.map(el => el.symbol).join(' \u00b7 ')}
+      <div style={{ marginTop: '6px', fontSize: '11px', color: '#666', letterSpacing: '0.02em' }}>
+        {elements.map(el => el.symbol).join(' · ')}
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ export default function Design() {
 
       {/* Palette */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Palette</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Palette</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {PALETTE.map((c) => (
             <div key={c.hex} style={{ textAlign: 'center' }}>
@@ -69,7 +69,7 @@ export default function Design() {
 
       {/* Block Colors */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Block Colors</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Block Colors</h2>
         <div style={{ display: 'flex', gap: '8px' }}>
           {BLOCKS.map((b) => {
             const color = blockColor(b);
@@ -97,7 +97,7 @@ export default function Design() {
 
       {/* Typography */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Typography</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Typography</h2>
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '12px', color: '#666' }}>Body — system-ui, 16px</div>
           <p>The quick brown fox jumps over the lazy dog.</p>
@@ -124,7 +124,7 @@ export default function Design() {
 
       {/* Element Cell */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Element Cell</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Element Cell</h2>
         <svg width={56} height={64}>
           <rect x={1} y={1} width={54} height={62} fill="#f7f2e8" stroke="#0f0f0f" strokeWidth={0.5} />
           <text x={4} y={13} fontSize={9} fill="#0f0f0f" fontFamily="system-ui">26</text>
@@ -135,7 +135,7 @@ export default function Design() {
 
       {/* Data Plate */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Data Plate</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Data Plate</h2>
         <svg width={160} height={180}>
           <rect x={0} y={0} width={160} height={56} fill="#133e7c" />
           <text x={12} y={20} fontSize={10} fill="#f7f2e8" fontFamily="system-ui">GROUP</text>
@@ -151,7 +151,7 @@ export default function Design() {
 
       {/* Property Bars */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Property Bars</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Property Bars</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <PropertyBar label="Mass" rank={93} color="#9e1c2c" />
           <PropertyBar label="EN" rank={41} color="#133e7c" />
@@ -162,7 +162,7 @@ export default function Design() {
 
       {/* Spacing */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Spacing Scale</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Spacing Scale</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {SPACING.map((s) => (
             <div key={s.name} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -182,7 +182,7 @@ export default function Design() {
 
       {/* Animation Moments */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '16px' }}>Animation Moments</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Animation Moments</h2>
         <div style={{ fontSize: '13px', lineHeight: 1.7 }}>
           {EASINGS.map((e) => (
             <div key={e.name} style={{ marginBottom: '8px' }}>

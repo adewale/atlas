@@ -34,9 +34,9 @@ export default function About() {
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
       <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.15em' }}>About Atlas</h1>
 
-      <div style={{ borderTop: '1px solid #0f0f0f', marginBottom: '24px' }} />
+      <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '16px' }} />
 
-      <section style={{ marginBottom: '32px' }}>
+      <section style={{ marginBottom: '40px' }}>
         <svg
           width={SVG_MAX_WIDTH}
           height={introLines.length * introLH + introLH}
@@ -48,9 +48,9 @@ export default function About() {
         </svg>
       </section>
 
-      <section style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '12px' }}>Design Principles</h2>
-        <ul style={{ paddingLeft: '20px', lineHeight: 1.7 }}>
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Principles</h2>
+        <ul style={{ paddingLeft: '1.2em', lineHeight: 1.7 }}>
           <li>60% Byrne visual drama, 40% Tufte data density</li>
           <li>Hard color fields — solid rects, no gradients</li>
           <li>Giant numerals and symbols as hero elements</li>
@@ -61,8 +61,8 @@ export default function About() {
         </ul>
       </section>
 
-      <section style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '12px' }}>Data Sources</h2>
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Data Sources</h2>
         <svg
           width={SVG_MAX_WIDTH}
           height={dataLines.length * dataLH + dataLH}
@@ -75,7 +75,7 @@ export default function About() {
       </section>
 
       <section>
-        <h2 style={{ fontSize: '18px', marginBottom: '12px' }}>Technology</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Technology</h2>
         <svg
           width={SVG_MAX_WIDTH}
           height={techLines.length * techLH + techLH}

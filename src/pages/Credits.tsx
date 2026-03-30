@@ -40,9 +40,11 @@ export default function Credits() {
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
       <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.15em' }}>Credits</h1>
 
+      <div style={{ borderTop: '2px solid #0f0f0f', marginBottom: '24px' }} />
+
       {/* Structured Data */}
       <section style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Structured Data</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Structured Data</h2>
         <svg width={TEXT_WIDTH} height={structuredLines.length * structuredLH + structuredLH} style={{ maxWidth: '100%' }}>
           <PretextSvg lines={structuredLines} lineHeight={structuredLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
@@ -50,7 +52,7 @@ export default function Credits() {
 
       {/* Identifiers */}
       <section style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Identifiers</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Identifiers</h2>
         <svg width={TEXT_WIDTH} height={identifiersLines.length * identifiersLH + identifiersLH} style={{ maxWidth: '100%' }}>
           <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
@@ -58,7 +60,7 @@ export default function Credits() {
 
       {/* Text Summaries */}
       <section style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Text Summaries</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Text Summaries</h2>
         <svg width={TEXT_WIDTH} height={summariesNoteLines.length * summariesNoteLH + summariesNoteLH} style={{ maxWidth: '100%', marginBottom: '12px' }}>
           <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
@@ -111,7 +113,7 @@ export default function Credits() {
 
       {/* Media */}
       <section style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Media</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Media</h2>
         <svg width={TEXT_WIDTH} height={mediaLines.length * mediaLH + mediaLH} style={{ maxWidth: '100%' }}>
           <PretextSvg lines={mediaLines} lineHeight={mediaLH} maxWidth={TEXT_WIDTH} animationStagger={25} />
         </svg>
@@ -119,7 +121,7 @@ export default function Credits() {
 
       {/* Software */}
       <section style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>Software</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Software</h2>
         <ul style={{ paddingLeft: '20px', lineHeight: 1.7 }}>
           {credits.software.map((s) => (
             <li key={s.name}>
@@ -134,7 +136,7 @@ export default function Credits() {
 
       {/* About Atlas */}
       <section>
-        <h2 style={{ fontSize: '18px', marginBottom: '8px' }}>About Atlas</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>About Atlas</h2>
         <svg width={TEXT_WIDTH} height={aboutLines.length * aboutLH + aboutLH} style={{ maxWidth: '100%' }}>
           <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>

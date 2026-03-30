@@ -93,9 +93,7 @@ export default function PretextSvg({
         const lineX =
           textAlign === 'center' && maxWidth
             ? line.x + (maxWidth - line.width) / 2
-            : isTerminal && isShort && maxWidth
-              ? line.x + (maxWidth - line.width) / 2
-              : line.x;
+            : line.x;
 
         // Inline sparkline rendering for this line
         const MIN_SPARKLINE_WIDTH = 40;
