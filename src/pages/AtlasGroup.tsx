@@ -20,7 +20,7 @@ export default function AtlasGroup() {
   return (
     <PageShell>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
-      <h1 style={{ margin: '12px 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color }}>Group {n}</h1>
+      <h1 style={{ margin: '12px 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color, viewTransitionName: 'data-plate-group' } as React.CSSProperties}>Group {n}</h1>
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={`Group ${n}`} captionColor={color} />

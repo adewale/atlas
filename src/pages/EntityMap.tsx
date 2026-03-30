@@ -304,6 +304,9 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
           const isActive = activeNodeIds.has(node.id);
           const dimmed = hovered != null && !isActive;
           const r = node.id === 'element' ? 32 : 22;
+          const barH = Math.round(r * 0.8);  // bar height
+          const barW = r * 2 + 12;           // bar extends 6px past ring on each side
+          const ringStroke = isHovered ? 5 : 3;
 
           return (
             <g
@@ -315,23 +318,23 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
               onClick={() => setHovered(hovered === node.id ? null : node.id)}
               opacity={dimmed ? 0.2 : 1}
             >
-              {/* Roundel: filled circle with white text */}
+              {/* Ring */}
               <circle
                 r={r}
-                fill={entity.colour}
-                stroke={entity.colour}
-                strokeWidth={isHovered ? 4 : 2}
-                style={{ transition: 'stroke-width 150ms ease-out, r 150ms ease-out' }}
-              />
-              {/* Outer ring for roundel effect */}
-              <circle
-                r={r + 5}
                 fill="none"
                 stroke={entity.colour}
-                strokeWidth={1}
-                opacity={isHovered ? 0.6 : 0.2}
-                style={{ transition: 'opacity 150ms ease-out' }}
+                strokeWidth={ringStroke}
+                style={{ transition: 'stroke-width 150ms ease-out' }}
               />
+              {/* Bar — extends past ring edges */}
+              <rect
+                x={-barW / 2}
+                y={-barH / 2}
+                width={barW}
+                height={barH}
+                fill={entity.colour}
+              />
+              {/* Label text — white on colored bar */}
               <text
                 y={1}
                 textAnchor="middle"
@@ -344,7 +347,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
               >
                 {entity.label.length > 10 ? entity.label.slice(0, 9) + '…' : entity.label}
               </text>
-              {/* Count badge */}
+              {/* Count badge below */}
               <text
                 y={r + 14}
                 textAnchor="middle"

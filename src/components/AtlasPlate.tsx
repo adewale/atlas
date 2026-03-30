@@ -1,9 +1,10 @@
-import { Link } from 'react-router';
+import { useState } from 'react';
 import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { fitLabel, measureLines } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import PretextSvg from './PretextSvg';
 
 const CARD_W = 100;
@@ -79,6 +80,8 @@ export default function AtlasPlate({
   sparklineHighlight,
 }: AtlasPlateProps) {
   const isMobile = useIsMobile();
+  const transitionNavigate = useViewTransitionNavigate();
+  const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const cols = isMobile ? 2 : columns;
   const rows = Math.ceil(elements.length / cols);
   const gridW = cols * (CARD_W + GAP) - GAP;
@@ -142,14 +145,18 @@ export default function AtlasPlate({
           return (
             <g
               key={el.symbol}
-              role="link"
               aria-label={`${el.symbol} — ${el.name}`}
               style={{
                 opacity: 0,
                 animation: `card-enter 250ms var(--ease-out) ${i * 15}ms forwards`,
               }}
             >
-              <Link to={`/element/${el.symbol}`} title={el.name}>
+              <g
+                style={{ cursor: 'pointer' }}
+                role="link"
+                onClick={(e) => { e.preventDefault(); setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+              >
+                <title>{el.name}</title>
                 <rect x={x} y={y} width={CARD_W} height={CARD_H} fill={fill} />
                 <text
                   x={x + 6}
@@ -167,6 +174,7 @@ export default function AtlasPlate({
                   fontWeight="bold"
                   fill={textFill}
                   fontFamily="system-ui"
+                  style={{ viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
                 >
                   {el.symbol}
                 </text>
@@ -190,7 +198,7 @@ export default function AtlasPlate({
                   {unit && UNIT_TOOLTIPS[unit] && <title>{UNIT_TOOLTIPS[unit]}</title>}
                   {displayVal}
                 </text>
-              </Link>
+              </g>
             </g>
           );
         })}

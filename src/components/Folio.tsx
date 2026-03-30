@@ -342,7 +342,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
               {/* Group row — deep blue */}
-              <Link to={element.group != null ? `/atlas/group/${element.group}` : '#'} aria-label={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} style={{ display: 'block', textDecoration: 'none' }}>
+              <Link to={element.group != null ? `/atlas/group/${element.group}` : '#'} aria-label={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} style={{ display: 'block', textDecoration: 'none', viewTransitionName: 'data-plate-group' } as React.CSSProperties}>
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={DEEP_BLUE} />
                   <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
@@ -350,7 +350,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 </svg>
               </Link>
               {/* Period row — warm red */}
-              <Link to={`/atlas/period/${element.period}`} aria-label={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} style={{ display: 'block', textDecoration: 'none' }}>
+              <Link to={`/atlas/period/${element.period}`} aria-label={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} style={{ display: 'block', textDecoration: 'none', viewTransitionName: 'data-plate-period' } as React.CSSProperties}>
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={WARM_RED} />
                   <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
@@ -358,7 +358,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 </svg>
               </Link>
               {/* Block row — block colour */}
-              <Link to={`/atlas/block/${element.block}`} aria-label={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} style={{ display: 'block', textDecoration: 'none' }}>
+              <Link to={`/atlas/block/${element.block}`} aria-label={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} style={{ display: 'block', textDecoration: 'none', viewTransitionName: 'data-plate-block' } as React.CSSProperties}>
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={color} />
                   <text x={12} y={20} fontSize={10} fill={contrastTextColor(color)} fontFamily="system-ui">BLOCK</text>

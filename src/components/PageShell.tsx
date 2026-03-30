@@ -2,15 +2,19 @@ import type { ReactNode } from 'react';
 import { useIsMobile } from '../hooks/useIsMobile';
 import VizNav from './VizNav';
 import SiteNav from './SiteNav';
-import { BLACK, DEEP_BLUE, WARM_RED, MUSTARD } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, MUSTARD, PAPER } from '../lib/theme';
 
 const ATLAS_LETTERS = [
-  { letter: 'A', size: 28, color: WARM_RED },
-  { letter: 'T', size: 22, color: BLACK },
-  { letter: 'L', size: 28, color: DEEP_BLUE },
-  { letter: 'A', size: 28, color: WARM_RED },
-  { letter: 'S', size: 22, color: MUSTARD },
-] as const;
+  { letter: 'A', color: WARM_RED, shape: 'rect' as const },
+  { letter: 'T', color: BLACK, shape: 'circle' as const },
+  { letter: 'L', color: DEEP_BLUE, shape: 'rect' as const },
+  { letter: 'A', color: WARM_RED, shape: 'rect' as const },
+  { letter: 'S', color: MUSTARD, shape: 'circle' as const },
+];
+
+const WORDMARK_SIZE = 24;
+const CELL = 40;
+const BAR_W = 48;
 
 type PageShellProps = {
   children: ReactNode;
@@ -59,23 +63,34 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
             userSelect: 'none',
           }}
         >
-          {ATLAS_LETTERS.map((item, i) => (
-            <span
-              key={i}
-              style={{
-                fontSize: `${item.size}px`,
-                fontWeight: 900,
-                fontFamily: 'system-ui, sans-serif',
-                lineHeight: 1,
-                color: item.color,
-                letterSpacing: '0.15em',
-                textAlign: 'center',
-                display: 'block',
-              }}
-            >
-              {item.letter}
-            </span>
-          ))}
+          <svg
+            width={BAR_W}
+            height={ATLAS_LETTERS.length * CELL}
+            viewBox={`0 0 ${BAR_W} ${ATLAS_LETTERS.length * CELL}`}
+            aria-hidden="true"
+          >
+            {ATLAS_LETTERS.map((item, i) => (
+              <g key={i}>
+                {item.shape === 'rect' ? (
+                  <rect x={4} y={i * CELL + 2} width={40} height={36} fill={item.color} />
+                ) : (
+                  <circle cx={24} cy={i * CELL + 20} r={18} fill={item.color} />
+                )}
+                <text
+                  x={24}
+                  y={i * CELL + 26}
+                  textAnchor="middle"
+                  fontSize={WORDMARK_SIZE}
+                  fontFamily="Georgia, 'Times New Roman', serif"
+                  fontWeight="bold"
+                  fill={PAPER}
+                  letterSpacing="0.1em"
+                >
+                  {item.letter}
+                </text>
+              </g>
+            ))}
+          </svg>
         </h1>
       )}
 
