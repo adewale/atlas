@@ -10,6 +10,16 @@ export const PAPER = '#f7f2e8';
 export const BLACK = '#0f0f0f';
 export const DIM = '#ece7db';
 
+/* Grey scale — use instead of hardcoded hex */
+export const GREY_DARK = '#333';
+export const GREY_MID = '#666';
+export const GREY_LIGHT = '#999';
+export const GREY_RULE = '#ccc';
+
+/* Etymology-specific palette (not in the core 4-colour system) */
+export const MINERAL_BROWN = '#5a3e1b';
+export const ASTRO_PURPLE = '#4a0e6b';
+
 /** Map a category string to its display color. */
 export function categoryColor(category: string): string {
   const cat = category.toLowerCase();

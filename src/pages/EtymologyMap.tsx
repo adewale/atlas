@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
 import VizNav from '../components/VizNav';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
@@ -22,9 +22,9 @@ const ORIGIN_COLORS: Record<string, string> = {
   person: WARM_RED,
   mythology: MUSTARD,
   property: BLACK,
-  mineral: '#5a3e1b',
-  astronomical: '#4a0e6b',
-  unknown: '#999',
+  mineral: MINERAL_BROWN,
+  astronomical: ASTRO_PURPLE,
+  unknown: GREY_LIGHT,
 };
 
 function originColor(origin: string): string {

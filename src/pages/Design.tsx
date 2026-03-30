@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
-import { WARM_RED } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID } from '../lib/theme';
 import SiteNav from '../components/SiteNav';
 
 const PALETTE = [
@@ -35,7 +35,7 @@ export default function Design() {
   return (
     <main>
       <div style={{ maxWidth: '800px' }}>
-      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: '#666' }}>← Table</Link>
+      <Link to="/" style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', color: GREY_MID }}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>
         Living reference for the Atlas visual system. 60% Kronecker-Wallis/Byrne visual drama,
@@ -67,7 +67,7 @@ export default function Design() {
         </Link>
       </section>
 
-      <div style={{ borderTop: '2px solid #0f0f0f', margin: '40px 0' }} />
+      <div style={{ borderTop: `2px solid ${BLACK}`, margin: '40px 0' }} />
 
       {/* Palette */}
       <section style={{ marginBottom: '40px' }}>
@@ -80,7 +80,7 @@ export default function Design() {
                   width: '80px',
                   height: '80px',
                   background: c.hex,
-                  border: '1px solid #0f0f0f',
+                  border: `1px solid ${BLACK}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -129,21 +129,21 @@ export default function Design() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Typography</h2>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: '#666' }}>Body — system-ui, 16px</div>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Body — system-ui, 16px</div>
           <p>The quick brown fox jumps over the lazy dog.</p>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: '#666' }}>Monospace — SF Mono / Cascadia Code</div>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Monospace — SF Mono / Cascadia Code</div>
           <p className="mono">118 elements · 7 periods · 18 groups</p>
         </div>
         <div style={{ marginBottom: '16px' }}>
-          <div style={{ fontSize: '12px', color: '#666' }}>Giant numerals — 96px, monospace, block-coloured</div>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Giant numerals — 96px, monospace, block-coloured</div>
           <span
             style={{
               fontSize: '96px',
               fontWeight: 'bold',
               fontFamily: "'SF Mono', monospace",
-              color: '#9e1c2c',
+              color: WARM_RED,
               lineHeight: 1,
             }}
           >
@@ -151,23 +151,23 @@ export default function Design() {
           </span>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: '#666' }}>Inscription titles — 13px, uppercase, 0.2em tracking, block-coloured</div>
-          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#9e1c2c', margin: '4px 0' }}>Discovery Timeline</h3>
-          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#133e7c', margin: '4px 0' }}>Etymology Map</h3>
-          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#c59b1a', margin: '4px 0' }}>Anomaly Explorer</h3>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Inscription titles — 13px, uppercase, 0.2em tracking, block-coloured</div>
+          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED, margin: '4px 0' }}>Discovery Timeline</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE, margin: '4px 0' }}>Etymology Map</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: MUSTARD, margin: '4px 0' }}>Anomaly Explorer</h3>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: '#666' }}>Element name caption — 14px, uppercase, 0.3em tracking</div>
-          <span style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.3em', color: '#666' }}>Hydrogen</span>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Element name caption — 14px, uppercase, 0.3em tracking</div>
+          <span style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.3em', color: GREY_MID }}>Hydrogen</span>
         </div>
         <div>
-          <div style={{ fontSize: '12px', color: '#666' }}>Drop cap — 48px initial in block colour, Pretext-measured flow</div>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Drop cap — 48px initial in block colour, Pretext-measured flow</div>
           <svg width={400} height={80} style={{ maxWidth: '100%' }}>
-            <text x={0} y={42} fontSize={48} fontWeight="bold" fill="#133e7c" fontFamily="system-ui, sans-serif">H</text>
-            <text x={34} y={20} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">ydrogen is the lightest element,</text>
-            <text x={34} y={39} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">with an atomic mass of 1.008.</text>
-            <text x={0} y={58} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">It is the most abundant element in</text>
-            <text x={0} y={77} fontSize={16} fill="#0f0f0f" fontFamily="system-ui, sans-serif">the universe.</text>
+            <text x={0} y={42} fontSize={48} fontWeight="bold" fill={DEEP_BLUE} fontFamily="system-ui, sans-serif">H</text>
+            <text x={34} y={20} fontSize={16} fill={BLACK} fontFamily="system-ui, sans-serif">ydrogen is the lightest element,</text>
+            <text x={34} y={39} fontSize={16} fill={BLACK} fontFamily="system-ui, sans-serif">with an atomic mass of 1.008.</text>
+            <text x={0} y={58} fontSize={16} fill={BLACK} fontFamily="system-ui, sans-serif">It is the most abundant element in</text>
+            <text x={0} y={77} fontSize={16} fill={BLACK} fontFamily="system-ui, sans-serif">the universe.</text>
           </svg>
         </div>
       </section>
@@ -176,10 +176,10 @@ export default function Design() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Element Cell</h2>
         <svg width={56} height={64}>
-          <rect x={1} y={1} width={54} height={62} fill="#f7f2e8" stroke="#0f0f0f" strokeWidth={0.5} />
-          <text x={4} y={13} fontSize={9} fill="#0f0f0f" fontFamily="system-ui">26</text>
-          <text x={28} y={36} textAnchor="middle" fontSize={16} fontWeight="bold" fill="#0f0f0f" fontFamily="system-ui">Fe</text>
-          <text x={28} y={52} textAnchor="middle" fontSize={7} fill="#0f0f0f" fontFamily="system-ui">Iron</text>
+          <rect x={1} y={1} width={54} height={62} fill={PAPER} stroke={BLACK} strokeWidth={0.5} />
+          <text x={4} y={13} fontSize={9} fill={BLACK} fontFamily="system-ui">26</text>
+          <text x={28} y={36} textAnchor="middle" fontSize={16} fontWeight="bold" fill={BLACK} fontFamily="system-ui">Fe</text>
+          <text x={28} y={52} textAnchor="middle" fontSize={7} fill={BLACK} fontFamily="system-ui">Iron</text>
         </svg>
       </section>
 
@@ -187,30 +187,30 @@ export default function Design() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Data Plate</h2>
         <svg width={160} height={180}>
-          <rect x={0} y={0} width={160} height={56} fill="#133e7c" />
-          <text x={12} y={20} fontSize={10} fill="#f7f2e8" fontFamily="system-ui">GROUP</text>
-          <text x={12} y={46} fontSize={24} fontWeight="bold" fill="#f7f2e8" fontFamily="'SF Mono', monospace">8</text>
-          <rect x={0} y={60} width={160} height={56} fill="#9e1c2c" />
-          <text x={12} y={80} fontSize={10} fill="#f7f2e8" fontFamily="system-ui">PERIOD</text>
-          <text x={12} y={106} fontSize={24} fontWeight="bold" fill="#f7f2e8" fontFamily="'SF Mono', monospace">4</text>
-          <rect x={0} y={120} width={160} height={56} fill="#9e1c2c" />
-          <text x={12} y={140} fontSize={10} fill="#f7f2e8" fontFamily="system-ui">BLOCK</text>
-          <text x={12} y={166} fontSize={24} fontWeight="bold" fill="#f7f2e8" fontFamily="'SF Mono', monospace">d</text>
+          <rect x={0} y={0} width={160} height={56} fill={DEEP_BLUE} />
+          <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
+          <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">8</text>
+          <rect x={0} y={60} width={160} height={56} fill={WARM_RED} />
+          <text x={12} y={80} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
+          <text x={12} y={106} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">4</text>
+          <rect x={0} y={120} width={160} height={56} fill={WARM_RED} />
+          <text x={12} y={140} fontSize={10} fill={PAPER} fontFamily="system-ui">BLOCK</text>
+          <text x={12} y={166} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">d</text>
         </svg>
       </section>
 
       {/* Property Bars */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Property Bars</h2>
-        <p style={{ fontSize: '13px', color: '#666', marginBottom: '12px', lineHeight: 1.6 }}>
+        <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '12px', lineHeight: 1.6 }}>
           Tufte principle: the bar is the data, and the label shows the actual value with units.
           No legend required — rank context (#N of 118) sits at top-right.
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <PropertyBar label="Atomic Mass" rank={93} color="#9e1c2c" value={55.845} unit="Da" />
-          <PropertyBar label="Electronegativity" rank={41} color="#133e7c" value={1.83} />
-          <PropertyBar label="Ionisation Energy" rank={35} color="#c59b1a" value={762.5} unit="kJ/mol" />
-          <PropertyBar label="Atomic Radius" rank={67} color="#0f0f0f" value={126} unit="pm" />
+          <PropertyBar label="Atomic Mass" rank={93} color={WARM_RED} value={55.845} unit="Da" />
+          <PropertyBar label="Electronegativity" rank={41} color={DEEP_BLUE} value={1.83} />
+          <PropertyBar label="Ionisation Energy" rank={35} color={MUSTARD} value={762.5} unit="kJ/mol" />
+          <PropertyBar label="Atomic Radius" rank={67} color={BLACK} value={126} unit="pm" />
         </div>
       </section>
 
@@ -225,10 +225,10 @@ export default function Design() {
                 style={{
                   width: s.value,
                   height: '12px',
-                  background: '#133e7c',
+                  background: DEEP_BLUE,
                 }}
               />
-              <span style={{ fontSize: '11px', color: '#666' }}>{s.value}</span>
+              <span style={{ fontSize: '11px', color: GREY_MID }}>{s.value}</span>
             </div>
           ))}
         </div>
@@ -241,7 +241,7 @@ export default function Design() {
           {EASINGS.map((e) => (
             <div key={e.name} style={{ marginBottom: '8px' }}>
               <code>{e.name}</code>
-              <span style={{ color: '#666' }}> — {e.use}</span>
+              <span style={{ color: GREY_MID }}> — {e.use}</span>
               <br />
               <span className="mono" style={{ fontSize: '11px' }}>{e.value}</span>
             </div>
