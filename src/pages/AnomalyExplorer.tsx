@@ -10,7 +10,7 @@ import {
   CELL_HEIGHT,
   contrastTextColor,
 } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
@@ -113,13 +113,8 @@ export default function AnomalyExplorer() {
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         <h1
           style={{
-            fontFamily: 'system-ui, sans-serif',
-            fontSize: 13,
-            fontWeight: 700,
+            ...INSCRIPTION_STYLE,
             color: MUSTARD,
-            margin: '0 0 16px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.2em',
           }}
         >
           Anomaly Explorer

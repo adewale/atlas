@@ -420,7 +420,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             paddingBottom: '6px',
             borderLeft: `3px solid ${BLACK}`,
             background: 'transparent',
-            borderRadius: '0 4px 4px 0',
+            borderRadius: 0,
           }}
         >
           {PROPERTY_OPTIONS.map((o) => {

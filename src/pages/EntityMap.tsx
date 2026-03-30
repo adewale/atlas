@@ -149,6 +149,7 @@ function EntityCard({ entity, highlight, onHover }: { entity: Entity; highlight:
         padding: '12px 16px',
         width: '220px',
         maxWidth: '100%',
+        minHeight: '150px',
         transition: 'border-color 150ms ease-out',
         background: highlight ? `${entity.colour}08` : 'transparent',
       }}
@@ -567,7 +568,7 @@ export default function EntityMapPage() {
 
       {/* Visualisation pages — where each entity type is surfaced */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', margin: '32px 0 12px' }}>
+        <h2 style={{ ...SECTION_HEADING_STYLE, margin: '32px 0 12px' }}>
           Visualisation Pages
         </h2>
         <p style={{ fontSize: '13px', color: GREY_MID, lineHeight: 1.7, marginBottom: '16px' }}>

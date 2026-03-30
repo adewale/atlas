@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { getElement } from '../lib/data';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -67,12 +67,9 @@ const styles = {
   } as React.CSSProperties,
 
   title: {
-    margin: '16px 0 8px',
-    fontSize: '13px',
-    fontWeight: 700,
+    ...INSCRIPTION_STYLE,
     color: DEEP_BLUE,
-    textTransform: 'uppercase',
-    letterSpacing: '0.2em',
+    margin: '0 0 16px',
   } as React.CSSProperties,
 
   introSvg: {

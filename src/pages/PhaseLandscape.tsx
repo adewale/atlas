@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -138,7 +138,7 @@ export default function PhaseLandscape() {
         </svg>
       </div>
 
-      <p style={{ fontSize: '13px', color: BLACK, opacity: 0.7, marginTop: '12px' }}>
+      <p style={{ fontSize: '13px', color: GREY_MID, marginTop: '12px' }}>
         STP = Standard Temperature and Pressure (0°C, 1 atm). Most elements are solid metals at room temperature.
       </p>
     </PageShell>
