@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Link, useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID, INSCRIPTION_STYLE } from '../lib/theme';
+import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -178,43 +178,45 @@ export default function DiscoveryTimeline() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Discovery Timeline</h1>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Discovery Timeline</h1>
 
-      {/* Era browse links */}
-      <section style={{ marginBottom: '16px' }}>
-        <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px' }}>
-          Browse by Era
-        </h2>
-        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-          <Link
-            to="/timeline/antiquity"
-            title="View the Antiquity discovery era"
-            style={{
-              fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-              textTransform: 'uppercase', padding: '4px 10px',
-              border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
-              textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
-            }}
-          >
-            Antiquity
-          </Link>
-          {allDecades.map((d) => (
+        {/* Era browse links */}
+        <section style={{ marginBottom: '16px' }}>
+          <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px' }}>
+            Browse by Era
+          </h2>
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
             <Link
-              key={d}
-              to={`/timeline/${d}`}
-              title={`View the ${d}s discovery era`}
+              to="/timeline/antiquity"
+              title="View the Antiquity discovery era"
               style={{
                 fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-                padding: '4px 10px',
+                textTransform: 'uppercase', padding: '4px 10px',
                 border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
                 textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
               }}
             >
-              {d}s
+              Antiquity
             </Link>
-          ))}
-        </div>
-      </section>
+            {allDecades.map((d) => (
+              <Link
+                key={d}
+                to={`/timeline/${d}`}
+                title={`View the ${d}s discovery era`}
+                style={{
+                  fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
+                  padding: '4px 10px',
+                  border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
+                  textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
+                }}
+              >
+                {d}s
+              </Link>
+            ))}
+          </div>
+        </section>
+      </div>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg

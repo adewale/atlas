@@ -10,7 +10,7 @@ import {
   CELL_HEIGHT,
   contrastTextColor,
 } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
@@ -110,54 +110,56 @@ export default function AnomalyExplorer() {
 
   return (
     <PageShell vizNav>
-      <h1
-        style={{
-          fontFamily: 'system-ui, sans-serif',
-          fontSize: 13,
-          fontWeight: 700,
-          color: MUSTARD,
-          margin: '0 0 16px',
-          textTransform: 'uppercase',
-          letterSpacing: '0.2em',
-        }}
-      >
-        Anomaly Explorer
-      </h1>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+        <h1
+          style={{
+            fontFamily: 'system-ui, sans-serif',
+            fontSize: 13,
+            fontWeight: 700,
+            color: MUSTARD,
+            margin: '0 0 16px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+          }}
+        >
+          Anomaly Explorer
+        </h1>
 
-      {/* ---- Byrne colour key: one bold button per anomaly ---- */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 8,
-          marginBottom: 24,
-        }}
-      >
-        {anomalies.map((a, i) => {
-          const isActive = selectedSlug === a.slug;
-          const bg = buttonColorFor(i);
-          return (
-            <button
-              key={a.slug}
-              onClick={() => setSelectedSlug(isActive ? null : a.slug)}
-              style={{
-                fontFamily: 'system-ui, sans-serif',
-                fontSize: 13,
-                fontWeight: 700,
-                letterSpacing: '0.02em',
-                color: isActive ? contrastTextColor(bg) : BLACK,
-                background: isActive ? bg : 'transparent',
-                border: `2px solid ${bg}`,
-                borderRadius: 0,
-                padding: '6px 14px',
-                cursor: 'pointer',
-                transition: 'background 200ms var(--ease-out), color 200ms var(--ease-out)',
-              }}
-            >
-              {a.label}
-            </button>
-          );
-        })}
+        {/* ---- Byrne colour key: one bold button per anomaly ---- */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 8,
+            marginBottom: 24,
+          }}
+        >
+          {anomalies.map((a, i) => {
+            const isActive = selectedSlug === a.slug;
+            const bg = buttonColorFor(i);
+            return (
+              <button
+                key={a.slug}
+                onClick={() => setSelectedSlug(isActive ? null : a.slug)}
+                style={{
+                  fontFamily: 'system-ui, sans-serif',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: '0.02em',
+                  color: isActive ? contrastTextColor(bg) : BLACK,
+                  background: isActive ? bg : 'transparent',
+                  border: `2px solid ${bg}`,
+                  borderRadius: 0,
+                  padding: '6px 14px',
+                  cursor: 'pointer',
+                  transition: 'background 200ms var(--ease-out), color 200ms var(--ease-out)',
+                }}
+              >
+                {a.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* ---- Periodic table grid ---- */}

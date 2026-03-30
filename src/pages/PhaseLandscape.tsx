@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -56,20 +56,22 @@ export default function PhaseLandscape() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Phase Landscape at STP</h1>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Phase Landscape at STP</h1>
 
-      <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
-        {LEGEND_ITEMS.map((item) => (
-          <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ width: '24px', height: '16px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}` }} />
-            <span style={{ fontSize: '13px', fontWeight: 'bold' }}>{item.phase}</span>
-          </div>
-        ))}
+        <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
+          {LEGEND_ITEMS.map((item) => (
+            <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ width: '24px', height: '16px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}` }} />
+              <span style={{ fontSize: '13px', fontWeight: 'bold' }}>{item.phase}</span>
+            </div>
+          ))}
+        </div>
+
+        <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
+          {INTRO_TEXT}
+        </p>
       </div>
-
-      <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
-        {INTRO_TEXT}
-      </p>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg

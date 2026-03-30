@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, GREY_RULE, INSCRIPTION_STYLE } from '../lib/theme';
+import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -82,11 +82,13 @@ export default function NeighborhoodGraph() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK }}>Neighbourhood Graph</h1>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK }}>Neighbourhood Graph</h1>
 
-      <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
-        {INTRO_TEXT}
-      </p>
+        <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
+          {INTRO_TEXT}
+        </p>
+      </div>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
         <svg

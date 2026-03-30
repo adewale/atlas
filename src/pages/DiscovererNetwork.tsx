@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, Link, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor, contrastTextColor } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';

@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
@@ -166,67 +166,69 @@ export default function PropertyScatter() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: '760px' }}>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE }}>Property Scatter</h1>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE }}>Property Scatter</h1>
 
-      {/* Pretext intro */}
-      <svg
-        width="100%"
-        viewBox={`0 0 660 ${introHeight}`}
-        style={{ display: 'block', marginTop: '16px' }}
-      >
-        <PretextSvg lines={lines} lineHeight={lineHeight} x={10} y={0} />
-      </svg>
+        {/* Pretext intro */}
+        <svg
+          width="100%"
+          viewBox={`0 0 660 ${introHeight}`}
+          style={{ display: 'block', marginTop: '16px' }}
+        >
+          <PretextSvg lines={lines} lineHeight={lineHeight} x={10} y={0} />
+        </svg>
 
-      {/* Educational note */}
-      <p style={{ fontSize: '14px', lineHeight: 1.6, marginTop: '8px', color: BLACK }}>
-        <InfoTip label="Electronegativity measures how strongly an atom attracts electrons in a chemical bond (Pauling scale). Ionisation energy is the energy needed to remove an electron from a neutral atom. Noble gases cluster at high ionisation energy because their filled shells resist electron removal.">
-          What do these properties mean?
-        </InfoTip>
-      </p>
+        {/* Educational note */}
+        <p style={{ fontSize: '14px', lineHeight: 1.6, marginTop: '8px', color: BLACK }}>
+          <InfoTip label="Electronegativity measures how strongly an atom attracts electrons in a chemical bond (Pauling scale). Ionisation energy is the energy needed to remove an electron from a neutral atom. Noble gases cluster at high ionisation energy because their filled shells resist electron removal.">
+            What do these properties mean?
+          </InfoTip>
+        </p>
 
-      {/* Axis selectors — coupled so you can't pick the same property for both */}
-      <div style={{ display: 'flex', gap: '24px', marginTop: '16px', flexWrap: 'wrap' }}>
-        <label style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          X axis:
-          <select
-            value={xKey}
-            onChange={(e) => handleXChange(e.target.value as PropertyKey)}
-            style={{
-              fontSize: '14px',
-              padding: '4px 8px',
-              background: PAPER,
-              border: `1px solid ${BLACK}`,
-              fontFamily: 'system-ui',
-            }}
-          >
-            {PROPERTY_KEYS.map((k) => (
-              <option key={k} value={k} disabled={k === yKey}>
-                {PROPERTY_LABELS[k]}
-              </option>
-            ))}
-          </select>
-        </label>
+        {/* Axis selectors — coupled so you can't pick the same property for both */}
+        <div style={{ display: 'flex', gap: '24px', marginTop: '16px', flexWrap: 'wrap' }}>
+          <label style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            X axis:
+            <select
+              value={xKey}
+              onChange={(e) => handleXChange(e.target.value as PropertyKey)}
+              style={{
+                fontSize: '14px',
+                padding: '4px 8px',
+                background: PAPER,
+                border: `1px solid ${BLACK}`,
+                fontFamily: 'system-ui',
+              }}
+            >
+              {PROPERTY_KEYS.map((k) => (
+                <option key={k} value={k} disabled={k === yKey}>
+                  {PROPERTY_LABELS[k]}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        <label style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-          Y axis:
-          <select
-            value={yKey}
-            onChange={(e) => handleYChange(e.target.value as PropertyKey)}
-            style={{
-              fontSize: '14px',
-              padding: '4px 8px',
-              background: PAPER,
-              border: `1px solid ${BLACK}`,
-              fontFamily: 'system-ui',
-            }}
-          >
-            {PROPERTY_KEYS.map((k) => (
-              <option key={k} value={k} disabled={k === xKey}>
-                {PROPERTY_LABELS[k]}
-              </option>
-            ))}
-          </select>
-        </label>
+          <label style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            Y axis:
+            <select
+              value={yKey}
+              onChange={(e) => handleYChange(e.target.value as PropertyKey)}
+              style={{
+                fontSize: '14px',
+                padding: '4px 8px',
+                background: PAPER,
+                border: `1px solid ${BLACK}`,
+                fontFamily: 'system-ui',
+              }}
+            >
+              {PROPERTY_KEYS.map((k) => (
+                <option key={k} value={k} disabled={k === xKey}>
+                  {PROPERTY_LABELS[k]}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
       </div>
 
       {/* Scatter plot */}

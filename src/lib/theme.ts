@@ -24,6 +24,14 @@ export const ASTRO_PURPLE = '#4a0e6b';
 /* Typography — canonical monospace stack */
 export const MONO_FONT = "'SF Mono', 'Cascadia Code', 'Fira Code', monospace";
 
+/**
+ * Minimum height for the control/intro section between the tab nav and
+ * the main visualization.  Every viz page wraps its heading + legend +
+ * filters in a container with this minHeight so the SVG starts at the
+ * same vertical position regardless of which tab is active.
+ */
+export const CONTROL_SECTION_MIN_HEIGHT = 200;
+
 /* Shared style objects */
 export const BACK_LINK_STYLE: React.CSSProperties = {
   fontSize: '12px',

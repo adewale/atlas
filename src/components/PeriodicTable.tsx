@@ -34,7 +34,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_LIGHT, GREY_RULE, MONO_FONT, categoryColor } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_LIGHT, GREY_RULE, MONO_FONT, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 
 // Pre-compute cell positions once at module level (they never change)
 const CELL_POSITIONS = new Map(allElements.map(el => [el.symbol, getCellPosition(el)]));
@@ -298,6 +298,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
 
   return (
     <div>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
       {/* Unified filter bar: text filter + colour chips */}
       <div style={{
         display: 'flex',
@@ -396,14 +397,16 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
 
       </div>
 
-      {/* Property sub-selector — always rendered for animation, visible when Property mode is active */}
+      {/* Property sub-selector — drops down from the Property button */}
       <div
         style={{
           overflow: 'hidden',
           maxHeight: highlightMode === 'property' ? '60px' : '0px',
           opacity: highlightMode === 'property' ? 1 : 0,
-          transition: 'max-height 250ms ease-in-out, opacity 200ms ease-in-out',
+          transform: highlightMode === 'property' ? 'translateY(0)' : 'translateY(-8px)',
+          transition: 'max-height 250ms ease-in-out, opacity 200ms ease-in-out, transform 250ms ease-in-out, margin-top 250ms ease-in-out',
           marginTop: highlightMode === 'property' ? '8px' : '0px',
+          transformOrigin: 'top right',
         }}
       >
         <div
@@ -415,8 +418,8 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             paddingLeft: '24px',
             paddingTop: '6px',
             paddingBottom: '6px',
-            borderLeft: `3px solid ${DEEP_BLUE}`,
-            background: DIM,
+            borderLeft: `3px solid ${BLACK}`,
+            background: 'transparent',
             borderRadius: '0 4px 4px 0',
           }}
         >
@@ -434,14 +437,14 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   padding: '3px 7px',
-                  border: `1.5px solid ${isActive ? DEEP_BLUE : GREY_RULE}`,
-                  background: isActive ? DEEP_BLUE : 'transparent',
-                  color: isActive ? PAPER : GREY_MID,
+                  border: `1.5px solid ${isActive ? DEEP_BLUE : BLACK}`,
+                  background: isActive ? DEEP_BLUE : BLACK,
+                  color: PAPER,
                   cursor: 'pointer',
                   minHeight: '44px',
                   minWidth: '44px',
                   fontFamily: 'inherit',
-                  transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
+                  transition: 'background 150ms ease-in-out, color 150ms ease-in-out, border-color 150ms ease-in-out',
                 }}
               >
                 {o.label}

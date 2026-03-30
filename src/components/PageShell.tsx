@@ -2,19 +2,20 @@ import type { ReactNode } from 'react';
 import { useIsMobile } from '../hooks/useIsMobile';
 import VizNav from './VizNav';
 import SiteNav from './SiteNav';
-import { BLACK, DEEP_BLUE, WARM_RED, MUSTARD, PAPER } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, MUSTARD, GREY_RULE } from '../lib/theme';
 
 const ATLAS_LETTERS = [
-  { letter: 'A', color: WARM_RED, shape: 'rect' as const },
-  { letter: 'T', color: BLACK, shape: 'circle' as const },
-  { letter: 'L', color: DEEP_BLUE, shape: 'rect' as const },
-  { letter: 'A', color: WARM_RED, shape: 'rect' as const },
-  { letter: 'S', color: MUSTARD, shape: 'circle' as const },
+  { letter: 'A', color: WARM_RED },
+  { letter: 'T', color: BLACK },
+  { letter: 'L', color: DEEP_BLUE },
+  { letter: 'A', color: WARM_RED },
+  { letter: 'S', color: MUSTARD },
 ];
 
-const WORDMARK_SIZE = 24;
-const CELL = 40;
+const FONT_SIZE = 22;
+const CELL = 32;
 const BAR_W = 48;
+const RULE_COLOR = GREY_RULE;
 
 type PageShellProps = {
   children: ReactNode;
@@ -56,8 +57,8 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'flex-start',
-            paddingTop: '8px',
-            gap: '4px',
+            paddingTop: 0,
+            gap: 0,
             width: '64px',
             margin: 0,
             userSelect: 'none',
@@ -65,31 +66,43 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
         >
           <svg
             width={BAR_W}
-            height={ATLAS_LETTERS.length * CELL}
-            viewBox={`0 0 ${BAR_W} ${ATLAS_LETTERS.length * CELL}`}
+            height={ATLAS_LETTERS.length * CELL + 12}
+            viewBox={`0 0 ${BAR_W} ${ATLAS_LETTERS.length * CELL + 12}`}
             aria-hidden="true"
           >
+            {/* Top rule — thin hairline */}
+            <line x1={10} y1={2} x2={BAR_W - 10} y2={2} stroke={RULE_COLOR} strokeWidth={0.75} />
+            {/* Small diamond accent below top rule */}
+            <polygon
+              points={`${BAR_W / 2},5 ${BAR_W / 2 + 2.5},8 ${BAR_W / 2},11 ${BAR_W / 2 - 2.5},8`}
+              fill={RULE_COLOR}
+            />
+
             {ATLAS_LETTERS.map((item, i) => (
-              <g key={i}>
-                {item.shape === 'rect' ? (
-                  <rect x={4} y={i * CELL + 2} width={40} height={36} fill={item.color} />
-                ) : (
-                  <circle cx={24} cy={i * CELL + 20} r={18} fill={item.color} />
-                )}
-                <text
-                  x={24}
-                  y={i * CELL + 26}
-                  textAnchor="middle"
-                  fontSize={WORDMARK_SIZE}
-                  fontFamily="Cinzel, Georgia, serif"
-                  fontWeight="bold"
-                  fill={PAPER}
-                  letterSpacing="0.1em"
-                >
-                  {item.letter}
-                </text>
-              </g>
+              <text
+                key={i}
+                x={BAR_W / 2}
+                y={14 + i * CELL + FONT_SIZE}
+                textAnchor="middle"
+                fontSize={FONT_SIZE}
+                fontFamily="Cinzel, Georgia, serif"
+                fontWeight="700"
+                fill={item.color}
+                letterSpacing="0.15em"
+              >
+                {item.letter}
+              </text>
             ))}
+
+            {/* Bottom rule — matching hairline */}
+            <line
+              x1={10}
+              y1={ATLAS_LETTERS.length * CELL + 10}
+              x2={BAR_W - 10}
+              y2={ATLAS_LETTERS.length * CELL + 10}
+              stroke={RULE_COLOR}
+              strokeWidth={0.75}
+            />
           </svg>
         </h1>
       )}
