@@ -1,4 +1,4 @@
-Build a Next.js App Router web app called “Atlas” and target deployment to Cloudflare Workers using the OpenNext Cloudflare adapter.
+Build a Vite + React + React Router web app called "Atlas" and deploy as a static site on Cloudflare Pages.
 
 Product:
 Atlas is a machine-edited atlas of the periodic table built from Wikidata, Wikipedia, and Wikimedia Commons. It is not a conventional encyclopedia. It should teach relationships between elements through composition, comparison, ranking, and editorial layout.
@@ -14,16 +14,17 @@ Core rules:
 
 Required routes:
 - /
-- /element/[symbol]
-- /atlas/group/[n]
-- /atlas/period/[n]
-- /atlas/block/[block]
-- /atlas/category/[slug]
-- /atlas/rank/[property]
-- /atlas/anomaly/[slug]
-- /compare/[symbolA]/[symbolB]
+- /element/:symbol
+- /atlas/group/:n
+- /atlas/period/:n
+- /atlas/block/:block
+- /atlas/category/:slug
+- /atlas/rank/:property
+- /atlas/anomaly/:slug
+- /compare/:symbolA/:symbolB
 - /about
 - /credits
+- /design
 
 Required features:
 - full periodic table with 118 elements
@@ -36,7 +37,7 @@ Required features:
 - source strip on each folio distinguishing data, text, and media sources
 
 Design language:
-- Tufte-like density plus Byrne/Kronecker-Wallis color drama
+- 60% Kronecker-Wallis/Byrne color drama, 40% Tufte data density
 - palette: paper, black, deep blue, warm red, mustard yellow
 - 90% quiet, 10% explosive
 - giant numerals and symbols
@@ -44,10 +45,10 @@ Design language:
 - hard color fields
 - narrow marginalia
 - generous outer whitespace
-- minimal animation
+- targeted dramatic animation at key moments, not everywhere
 
 Pretext requirements:
-Use Pretext on constrained summary blocks, marginal notes, relationship callouts, ranking captions, compare-band text, atlas plate captions, and print-like folio layout. The visual result should clearly show that text has been composed into space.
+Use Pretext on constrained summary blocks, marginal notes, relationship callouts, ranking captions, compare-band text, atlas plate captions, and print-like folio layout. Use shaped text (variable-width line breaking) to flow text around data plates. Use per-line geometry for inline sparklines, marginal annotations, and animated text reveals. The visual result should clearly show that text has been composed into space.
 
 Data generation:
 Create a deterministic build-time script that fetches and normalizes data into generated JSON files:
@@ -67,33 +68,23 @@ Every folio must show:
 - Media: Wikimedia Commons file-specific credit/license
 
 Technical constraints:
-- TypeScript
+- Vite + React 19 + React Router 7
+- TypeScript (strict mode)
+- Static site build (no SSR, no server functions)
+- Cloudflare Pages deployment (static assets, no Workers runtime needed)
+- Route-level code splitting via React Router lazy()
 - clean component architecture
-- route-level code splitting
 - local generated datasets
-- Cloudflare Workers deployment via @opennextjs/cloudflare adapter
-- wrangler.jsonc (not wrangler.toml) for configuration
-- nodejs_compat_v2 compatibility flag
-- bundle size must stay within Workers limits (10 MB compressed, paid plan)
-- pure static + edge rendering — no KV, D1, R2, or Durable Objects in v1
 - accessibility support (WCAG AA)
 - responsive layout
 - no unnecessary backend/database services in v1
 
-Cloudflare deployment notes:
-- The official @cloudflare/next-on-pages adapter is deprecated and unmaintained.
-  Atlas uses @opennextjs/cloudflare (community OpenNext adapter) instead.
-- If @opennextjs/cloudflare proves unviable with Next.js 15, the fallback is
-  to deploy on Vercel or migrate to a Cloudflare-native framework (Astro, SvelteKit).
-- All pages should be statically exportable where possible to minimize Workers
-  CPU time and stay within free-tier limits.
-
 Build order:
-1. scaffold app
-2. build generator
-3. render table
-4. build one excellent folio template
-5. integrate Pretext
-6. add atlas and compare
+1. scaffold Vite + React + React Router app
+2. build data generator
+3. render periodic table
+4. build one excellent folio template with shaped Pretext text
+5. integrate Pretext across all views (sparklines, annotations, animation)
+6. add atlas and compare views
 7. add credits/about
-8. polish
+8. polish animations and Byrne/Tufte integration
