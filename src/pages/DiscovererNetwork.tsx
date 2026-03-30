@@ -76,7 +76,9 @@ export default function DiscovererNetwork() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
+      </div>
 
       {/* bar-grow keyframe in globals.css */}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>

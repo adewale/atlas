@@ -453,6 +453,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           })}
         </div>
       </div>
+      </div>
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg
         ref={svgRef}
