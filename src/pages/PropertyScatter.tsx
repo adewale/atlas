@@ -91,8 +91,10 @@ export default function PropertyScatter() {
 
   const introHeight = lines.length * lineHeight + 16;
 
+  useDocumentTitle('Property Scatter');
+
   return (
-    <main>
+    <main id="main-content">
       <VizNav />
       <div style={{ maxWidth: '760px' }}>
       <h1 style={{ margin: '0 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE }}>Property Scatter</h1>

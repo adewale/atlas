@@ -18,10 +18,11 @@ export default function Element() {
   const groups: GroupData[] | undefined = loaderData?.groups;
   const anomalies: AnomalyData[] | undefined = loaderData?.anomalies;
   const transitionNavigate = useViewTransitionNavigate();
+  useDocumentTitle(element ? element.name : 'Element Not Found');
 
   if (!element) {
     return (
-      <main>
+      <main id="main-content">
         <h1>Element not found</h1>
         <p>
           No element with symbol &ldquo;{symbol}&rdquo;.{' '}
@@ -32,7 +33,7 @@ export default function Element() {
   }
 
   return (
-    <main>
+    <main id="main-content">
       <a
         href="/"
         onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}

@@ -15,8 +15,10 @@ export default function AtlasBlock() {
   const elements = found ? found.elements.map((s) => getElement(s)!).filter(Boolean) : [];
   const color = block ? blockColor(block) : BLACK;
 
+  useDocumentTitle(`${block}-block`);
+
   return (
-    <main>
+    <main id="main-content">
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color }}>{block}-block</h1>
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />

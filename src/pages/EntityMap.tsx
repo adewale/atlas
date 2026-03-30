@@ -355,8 +355,10 @@ export default function EntityMapPage() {
       : [],
   );
 
+  useDocumentTitle('Entity Map');
+
   return (
-    <main>
+    <main id="main-content">
       <div style={{ maxWidth: '900px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{

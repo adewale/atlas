@@ -33,8 +33,10 @@ const EASINGS = [
 ];
 
 export default function Design() {
+  useDocumentTitle('Design Language');
+
   return (
-    <main>
+    <main id="main-content">
       <div style={{ maxWidth: '800px' }}>
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>

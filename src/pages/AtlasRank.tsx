@@ -21,8 +21,10 @@ export default function AtlasRank() {
   const elements = symbols.map((s) => getElement(s)!).filter(Boolean);
   const label = property ? LABELS[property] ?? property : '';
 
+  useDocumentTitle(`Ranked by ${label}`);
+
   return (
-    <main>
+    <main id="main-content">
       <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE }}>Ranked by {label}</h1>
       <div style={{ borderTop: `4px solid ${DEEP_BLUE}`, marginBottom: '16px' }} />
