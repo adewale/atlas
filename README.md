@@ -44,6 +44,9 @@ npm run dev          # http://localhost:5173
 | `/atlas/category/:slug` | Elements by category (alkali metal, halogen, etc.) |
 | `/atlas/rank/:property` | Elements ranked by a numeric property |
 | `/atlas/anomaly/:slug` | Elements involved in a specific anomaly |
+| `/discoverer/:name` | Individual discoverer page with their elements, prev/next navigation, and related discoverers |
+| `/timeline/:era` | Timeline era page (decade or "antiquity") with elements, discoverers, and nearby era links |
+| `/design` | Design language reference (palette, typography, spacing, animation) |
 
 ## Graph Navigation
 
@@ -54,6 +57,9 @@ Every element folio connects to its neighbors in the directed graph:
 - **Historical** — other elements by the same discoverer, link to discovery timeline
 - **Etymological** — other elements sharing a name origin, link to etymology map
 - **Property-based** — rankings, anomalies, scatter plots
+- **Discoverer graph** — folio → discoverer detail → related discoverers (shared elements, overlapping eras) → back to folio
+- **Timeline era browsing** — folio → era page (decade or "antiquity") → nearby eras → discoverers active in that era
+- **Cross-links** — discoverer pages link to their active timeline era; era pages link to discoverers within them
 
 ## Architecture
 

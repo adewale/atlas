@@ -5,6 +5,7 @@ import * as fc from 'fast-check';
 const mockPrepareWithSegments = vi.fn((_text: string, _font: string) => ({
   __brand: 'prepared',
   _text,
+  widths: Array.from({ length: _text.length }, () => 8),
 }));
 
 const mockLayout = vi.fn((_prepared: unknown, _maxWidth: number, _lineSpacing: number) => ({
@@ -52,7 +53,7 @@ vi.mock('@chenglou/pretext', () => ({
   layoutNextLine: (...args: unknown[]) => mockLayoutNextLine(...(args as [unknown, { segmentIndex: number; graphemeIndex: number }, number])),
 }));
 
-import { measureLines, shapeText, fitLabel, computeLineHeight } from '../src/lib/pretext';
+import { measureLines, shapeText, fitLabel, computeLineHeight, dropCapLayout } from '../src/lib/pretext';
 
 const textArb = fc.string({ minLength: 1, maxLength: 200 }).filter((s) => s.trim().length > 0);
 const widthArb = fc.integer({ min: 40, max: 2000 });
@@ -196,6 +197,57 @@ describe('Pretext wrapper integration', () => {
     it('returns false when layout.lineCount > 1', () => {
       mockLayout.mockReturnValueOnce({ lineCount: 2, height: 40 });
       expect(fitLabel('very long text', '16px system-ui', 10)).toBe(false);
+    });
+  });
+
+  describe('dropCapLayout', () => {
+    it('extracts first char and calls shapeText for the rest', () => {
+      const result = dropCapLayout('Hello world', '16px system-ui', '48px system-ui', 400, 20);
+      expect(result.dropCap.char).toBe('H');
+      // prepareWithSegments should be called twice: once for the drop cap char, once for the rest
+      expect(mockPrepareWithSegments).toHaveBeenCalledWith('H', '48px system-ui');
+      expect(mockPrepareWithSegments).toHaveBeenCalledWith('ello world', '16px system-ui');
+    });
+
+    it('drop cap height matches font size', () => {
+      const result = dropCapLayout('Abc', '16px system-ui', '48px system-ui', 400, 20);
+      expect(result.dropCap.fontSize).toBe(48);
+      expect(result.dropCap.height).toBe(48);
+    });
+
+    it('lines beside drop cap have x offset', () => {
+      // With 48px drop cap font, dropHeight=48, lineHeight=20 => dropCapLines = ceil(48/20) = 3
+      // dropWidth = 8 (from mock widths[0]), gap = 8 => x offset = 16
+      const result = dropCapLayout('A' + 'b'.repeat(150), '16px system-ui', '48px system-ui', 400, 20);
+      const dropCapLines = Math.ceil(48 / 20); // 3
+      for (let i = 0; i < Math.min(dropCapLines, result.lines.length); i++) {
+        expect(result.lines[i].x).toBeGreaterThan(0);
+      }
+    });
+
+    it('later lines return to x=0', () => {
+      const result = dropCapLayout('A' + 'b'.repeat(150), '16px system-ui', '48px system-ui', 400, 20);
+      const dropCapLines = Math.ceil(48 / 20); // 3
+      for (let i = dropCapLines; i < result.lines.length; i++) {
+        expect(result.lines[i].x).toBe(0);
+      }
+    });
+
+    it('forAll(text): drop cap char equals text[0]', () => {
+      fc.assert(
+        fc.property(textArb, (text) => {
+          const result = dropCapLayout(text, '16px system-ui', '48px system-ui', 400, 20);
+          expect(result.dropCap.char).toBe(text[0]);
+        }),
+        { numRuns: 50 },
+      );
+    });
+
+    it('returns empty result for empty text', () => {
+      const result = dropCapLayout('', '16px system-ui', '48px system-ui', 400, 20);
+      expect(result.dropCap.char).toBe('');
+      expect(result.dropCap.width).toBe(0);
+      expect(result.lines).toEqual([]);
     });
   });
 

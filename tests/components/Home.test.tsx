@@ -36,11 +36,13 @@ describe('Home', () => {
     expect(screen.getByText(/Arrow keys to navigate/)).toBeInTheDocument();
   });
 
-  it('has navigation links to About and Credits', () => {
+  it('has navigation links to About, Credits, and Design', () => {
     renderHome();
     const aboutLink = screen.getByRole('link', { name: /about/i });
     expect(aboutLink).toHaveAttribute('href', '/about');
     const creditsLink = screen.getByRole('link', { name: /credits/i });
     expect(creditsLink).toHaveAttribute('href', '/credits');
+    const designLink = screen.getByRole('link', { name: /design/i });
+    expect(designLink).toHaveAttribute('href', '/design');
   });
 });

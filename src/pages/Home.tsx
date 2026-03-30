@@ -59,6 +59,7 @@ export default function Home() {
         <nav style={{ fontSize: '13px', display: 'flex', gap: '16px' }}>
           <Link to="/about">About</Link>
           <Link to="/credits">Credits</Link>
+          <Link to="/design">Design</Link>
         </nav>
       </footer>
     </main>

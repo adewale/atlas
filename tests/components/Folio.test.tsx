@@ -186,4 +186,38 @@ describe('Folio', () => {
     const catLink = screen.getByRole('link', { name: /transition metal/i });
     expect(catLink).toHaveAttribute('href', '/atlas/category/transition-metal');
   });
+
+  it('discoverer link points to encoded discoverer URL', () => {
+    renderFolio();
+    const discovererLink = screen.getByText('Known since antiquity');
+    expect(discovererLink).toHaveAttribute(
+      'href',
+      '/discoverer/Known%20since%20antiquity',
+    );
+  });
+
+  it('timeline link falls back to /discovery-timeline when discoveryYear is null', () => {
+    renderFolio();
+    const timelineLink = screen.getByText('timeline →');
+    expect(timelineLink).toHaveAttribute('href', '/discovery-timeline');
+  });
+
+  it('timeline link points to decade URL when discoveryYear is present', () => {
+    const oxygen: ElementRecord = {
+      ...FE,
+      atomicNumber: 8,
+      symbol: 'O',
+      name: 'Oxygen',
+      discoveryYear: 1774,
+      discoverer: 'Joseph Priestley',
+      neighbors: ['N', 'F'],
+    };
+    render(
+      <MemoryRouter>
+        <Folio element={oxygen} animate={false} />
+      </MemoryRouter>,
+    );
+    const timelineLink = screen.getByText('timeline →');
+    expect(timelineLink).toHaveAttribute('href', '/timeline/1770');
+  });
 });
