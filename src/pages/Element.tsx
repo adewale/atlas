@@ -50,7 +50,7 @@ export default function Element() {
         }
         @keyframes plate-wipe {
           from {
-            clip-path: inset(0 0 0 100%);
+            clip-path: inset(0 100% 0 0);
           }
           to {
             clip-path: inset(0 0 0 0);

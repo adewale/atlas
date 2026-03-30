@@ -25,7 +25,7 @@ describe('PeriodicTable', () => {
 
   it('search filters correctly — searching "iron" shows Fe', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search elements…');
+    const input = screen.getByPlaceholderText('Search name or symbol');
     fireEvent.change(input, { target: { value: 'iron' } });
     // Fe cell should still be visible (not dimmed)
     const feCell = screen.getByLabelText(/^Iron,/);
@@ -34,7 +34,7 @@ describe('PeriodicTable', () => {
 
   it('search for "Fe" by symbol works', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search elements…');
+    const input = screen.getByPlaceholderText('Search name or symbol');
     fireEvent.change(input, { target: { value: 'Fe' } });
     const feCell = screen.getByLabelText(/^Iron,/);
     expect(feCell).toBeInTheDocument();

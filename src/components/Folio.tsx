@@ -1,25 +1,15 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useRef, useLayoutEffect } from 'react';
 import type { ElementRecord, ElementSources } from '../lib/types';
+import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement } from '../lib/data';
 import PretextSvg from './PretextSvg';
 import PropertyBar from './PropertyBar';
 import { GroupTrendSparkline, RankDotSparkline } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
-
-function useIsMobile(breakpoint = 768) {
-  const [mobile, setMobile] = useState(
-    typeof window !== 'undefined' ? window.innerWidth < breakpoint : false
-  );
-  useEffect(() => {
-    const handler = () => setMobile(window.innerWidth < breakpoint);
-    window.addEventListener('resize', handler);
-    return () => window.removeEventListener('resize', handler);
-  }, [breakpoint]);
-  return mobile;
-}
 
 const DEEP_BLUE = '#133e7c';
 const WARM_RED = '#9e1c2c';
@@ -29,6 +19,44 @@ const PLATE_WIDTH = 160;
 const PLATE_HEIGHT = 180;
 const FULL_WIDTH = 560;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - 24;
+
+const MIN_ANNOTATION_GAP = 20;
+
+/** Find the y-position of the first text line containing `keyword`. */
+function findLineYForKeyword(
+  lines: PositionedLine[],
+  keyword: string,
+  lineHeight: number,
+): number | null {
+  const kw = keyword.toLowerCase();
+  for (const line of lines) {
+    if (line.text.toLowerCase().includes(kw)) {
+      return line.y + lineHeight;
+    }
+  }
+  return null;
+}
+
+/** Resolve overlap: if two annotations are within MIN_ANNOTATION_GAP, push later ones down. */
+function resolveOverlaps(positions: (number | null)[]): (number | null)[] {
+  const result = [...positions];
+  // Sort indices by their non-null y values, preserving order for nulls
+  const nonNullIndices = result
+    .map((y, i) => ({ y, i }))
+    .filter((e): e is { y: number; i: number } => e.y != null)
+    .sort((a, b) => a.y - b.y);
+
+  for (let j = 1; j < nonNullIndices.length; j++) {
+    const prev = nonNullIndices[j - 1];
+    const curr = nonNullIndices[j];
+    const prevY = result[prev.i]!;
+    const currY = result[curr.i]!;
+    if (currY - prevY < MIN_ANNOTATION_GAP) {
+      result[curr.i] = prevY + MIN_ANNOTATION_GAP;
+    }
+  }
+  return result;
+}
 
 type MarginaliaPropertyProps = {
   text: string;
@@ -96,6 +124,22 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
   const paddedNumber = String(element.atomicNumber).padStart(3, '0');
 
+  // Refs for measuring vertical offset between summary area and marginalia
+  const summaryRef = useRef<HTMLDivElement>(null);
+  const marginaliaRef = useRef<HTMLElement>(null);
+  const [summaryOffsetInMarginalia, setSummaryOffsetInMarginalia] = useState(0);
+
+  useLayoutEffect(() => {
+    if (mobile) return;
+    const summaryEl = summaryRef.current;
+    const marginaliaEl = marginaliaRef.current;
+    if (summaryEl && marginaliaEl) {
+      const summaryTop = summaryEl.getBoundingClientRect().top;
+      const marginaliaTop = marginaliaEl.getBoundingClientRect().top;
+      setSummaryOffsetInMarginalia(summaryTop - marginaliaTop);
+    }
+  }, [mobile, lines, lineHeight]);
+
   // Pretext-measured marginalia text
   const MARGINALIA_WIDTH = 180;
   const MARGINALIA_FONT = '14px system-ui';
@@ -106,13 +150,22 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
     font: MARGINALIA_FONT,
   });
 
-  // Property bars data
+  // Property bars data with search terms for marginalia alignment
   const properties = [
-    { label: 'Mass', key: 'mass' },
-    { label: 'EN', key: 'electronegativity' },
-    { label: 'IE', key: 'ionizationEnergy' },
-    { label: 'Radius', key: 'radius' },
+    { label: 'Mass', key: 'mass', searchTerm: 'mass', unit: 'Da' },
+    { label: 'EN', key: 'electronegativity', searchTerm: 'electronegativity', unit: '' },
+    { label: 'IE', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
+    { label: 'Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
   ] as const;
+
+  // Compute y-positions for marginalia annotations aligned to summary text lines
+  const annotationPositions = useMemo(() => {
+    if (mobile) return null; // On mobile, use stacked layout
+    const rawPositions = properties.map((prop) =>
+      findLineYForKeyword(lines, prop.searchTerm, lineHeight),
+    );
+    return resolveOverlaps(rawPositions);
+  }, [lines, lineHeight, mobile]);
 
   return (
     <div className="folio-layout" style={{ display: 'flex', gap: '48px', position: 'relative' }}>
@@ -168,7 +221,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
         <div style={{ borderTop: `1px solid ${color}`, marginBottom: '16px' }} />
 
         {/* Summary text shaped around data plate */}
-        <div className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
+        <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
           {/* Data plate positioned at top-right */}
           <div
             data-testid="data-plate"
@@ -180,7 +233,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
               width: PLATE_WIDTH,
               ...(animate
                 ? {
-                    clipPath: 'inset(0 0 0 100%)',
+                    clipPath: 'inset(0 100% 0 0)',
                     animation: 'plate-wipe 350ms var(--ease-out) 150ms forwards',
                   }
                 : {}),
@@ -254,7 +307,18 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
               lines={lines}
               lineHeight={lineHeight}
               y={0}
+              maxWidth={svgWidth}
               animationStagger={animate ? 30 : undefined}
+              inlineSparkline={
+                groupTrendData
+                  ? {
+                      lineIndex: -1,
+                      values: groupTrendData.values,
+                      highlightIndex: groupTrendData.highlightIndex,
+                      color: color,
+                    }
+                  : undefined
+              }
             />
           </svg>
         </div>
@@ -296,12 +360,14 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
       {/* Marginalia panel */}
       <aside
+        ref={marginaliaRef}
         className="folio-marginalia"
         style={{
           width: '200px',
           flexShrink: 0,
           fontSize: '13px',
           lineHeight: 1.6,
+          position: 'relative',
         }}
       >
         {/* Category — Pretext Tier 1 measured text */}
@@ -318,22 +384,67 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           </svg>
         </div>
 
-        {/* Key properties with rank dots — Pretext Tier 1 measured labels */}
-        {properties.map((prop) => {
-          const val = element[prop.key as keyof ElementRecord];
-          const rank = element.rankings[prop.key] ?? 0;
-          const displayText = `${prop.label}: ${val != null ? String(val) : '—'}`;
-          return (
-            <MarginaliaProperty
-              key={prop.key}
-              text={displayText}
-              rank={rank}
-              color={color}
-              maxWidth={MARGINALIA_WIDTH}
-              font={MARGINALIA_FONT}
-            />
-          );
-        })}
+        {/* Key properties with rank dots — aligned to text lines on desktop, stacked on mobile */}
+        {!mobile && annotationPositions ? (
+          /* Desktop: absolutely positioned annotations aligned to summary text lines */
+          properties.map((prop, i) => {
+            const val = element[prop.key as keyof ElementRecord];
+            const rank = element.rankings[prop.key] ?? 0;
+            const displayText = `${prop.label}: ${val != null ? String(val) : '—'}`;
+            const targetY = annotationPositions[i];
+
+            if (targetY != null) {
+              return (
+                <div
+                  key={prop.key}
+                  style={{
+                    position: 'absolute',
+                    top: summaryOffsetInMarginalia + targetY,
+                    left: 0,
+                    right: 0,
+                  }}
+                >
+                  <MarginaliaProperty
+                    text={`◄ ${displayText}`}
+                    rank={rank}
+                    color={color}
+                    maxWidth={MARGINALIA_WIDTH}
+                    font={MARGINALIA_FONT}
+                  />
+                </div>
+              );
+            }
+
+            /* Fallback: no keyword match, render in flow */
+            return (
+              <MarginaliaProperty
+                key={prop.key}
+                text={displayText}
+                rank={rank}
+                color={color}
+                maxWidth={MARGINALIA_WIDTH}
+                font={MARGINALIA_FONT}
+              />
+            );
+          })
+        ) : (
+          /* Mobile / no positions: sequential stacked layout */
+          properties.map((prop) => {
+            const val = element[prop.key as keyof ElementRecord];
+            const rank = element.rankings[prop.key] ?? 0;
+            const displayText = `${prop.label}: ${val != null ? String(val) : '—'}`;
+            return (
+              <MarginaliaProperty
+                key={prop.key}
+                text={displayText}
+                rank={rank}
+                color={color}
+                maxWidth={MARGINALIA_WIDTH}
+                font={MARGINALIA_FONT}
+              />
+            );
+          })
+        )}
 
         {/* Neighbors */}
         <div style={{ marginBottom: '12px' }}>

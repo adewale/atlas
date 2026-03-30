@@ -1,6 +1,6 @@
 import type { ElementRecord } from '../lib/types';
 import { generateComparisonNotes } from '../lib/compare';
-import { usePretextLines } from '../hooks/usePretextLines';
+import { useWedgeText } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
 
 const DEEP_BLUE = '#133e7c';
@@ -39,8 +39,9 @@ export default function CompareView({
   const notes = generateComparisonNotes(elementA, elementB);
   const notesText = notes.join(' ');
 
-  const { lines: notesLines, lineHeight: notesLineHeight } = usePretextLines({
+  const { lines: notesLines, lineHeight: notesLineHeight } = useWedgeText({
     text: notesText,
+    minWidth: WIDTH * 0.35,
     maxWidth: WIDTH - 8,
     font: '14px system-ui',
   });
@@ -299,6 +300,7 @@ export default function CompareView({
           fontSize={14}
           fill="#0f0f0f"
           maxWidth={WIDTH - 8}
+          textAlign="center"
           animationStagger={animate ? 30 : undefined}
         />
       </svg>

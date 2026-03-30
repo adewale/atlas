@@ -2,6 +2,8 @@ import { Link } from 'react-router';
 import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { fitLabel, measureLines } from '../lib/pretext';
+import { useIsMobile } from '../hooks/useIsMobile';
+import PretextSvg from './PretextSvg';
 
 const CARD_W = 100;
 const CARD_H = 80;
@@ -11,14 +13,38 @@ const NAME_MAX_W = CARD_W - 12; // 6px padding each side
 const CAPTION_FONT = 'bold 16px system-ui, sans-serif';
 const CAPTION_PADDING = 12;
 
+const UNITS: Record<string, string> = {
+  mass: 'Da',
+  electronegativity: '',
+  ionizationEnergy: 'eV',
+  radius: 'pm',
+};
+
+const ABBREV: Record<string, string> = {
+  'transition metal': 'trans. metal',
+  'alkali metal': 'alkali',
+  'alkaline earth metal': 'alk. earth',
+  'noble gas': 'noble gas',
+  'post-transition metal': 'post-trans.',
+  'reactive nonmetal': 'nonmetal',
+};
+
 function truncateToFit(name: string, font: string, maxWidth: number): string {
   if (fitLabel(name, font, maxWidth)) return name;
-  for (let i = name.length - 1; i > 0; i--) {
-    const truncated = name.slice(0, i) + '\u2026';
+
+  // Try abbreviation first
+  const abbrev = ABBREV[name];
+  if (abbrev && fitLabel(abbrev, font, maxWidth)) return abbrev;
+
+  // Last resort: truncate with ellipsis (using abbreviation if available, else original)
+  const base = abbrev ?? name;
+  for (let i = base.length - 1; i > 0; i--) {
+    const truncated = base.slice(0, i) + '\u2026';
     if (fitLabel(truncated, font, maxWidth)) return truncated;
   }
-  return name[0] + '\u2026';
+  return base[0] + '\u2026';
 }
+
 
 type AtlasPlateProps = {
   elements: ElementRecord[];
@@ -26,6 +52,8 @@ type AtlasPlateProps = {
   captionColor?: string;
   propertyKey?: string;
   columns?: number;
+  sparklineValues?: (number | null)[];
+  sparklineHighlight?: number;
 };
 
 /**
@@ -40,8 +68,11 @@ export default function AtlasPlate({
   captionColor = '#0f0f0f',
   propertyKey = 'mass',
   columns = 4,
+  sparklineValues,
+  sparklineHighlight,
 }: AtlasPlateProps) {
-  const cols = columns;
+  const isMobile = useIsMobile();
+  const cols = isMobile ? 2 : columns;
   const rows = Math.ceil(elements.length / cols);
   const gridW = cols * (CARD_W + GAP) - GAP;
 
@@ -65,19 +96,25 @@ export default function AtlasPlate({
       >
         {/* Caption strip — solid color band with Pretext-measured text */}
         <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} />
-        {captionLines.map((line, i) => (
-          <text
-            key={`cap-${line.y}`}
-            x={CAPTION_PADDING}
-            y={CAPTION_PADDING + line.y + 16}
-            fontSize={16}
-            fontWeight="bold"
-            fill={contrastTextColor(captionColor)}
-            fontFamily="system-ui, sans-serif"
-          >
-            {line.text}
-          </text>
-        ))}
+        <PretextSvg
+          lines={captionLines}
+          lineHeight={20}
+          x={CAPTION_PADDING}
+          y={CAPTION_PADDING}
+          fontSize={16}
+          fill={contrastTextColor(captionColor)}
+          maxWidth={gridW - CAPTION_PADDING * 2}
+          inlineSparkline={
+            sparklineValues
+              ? {
+                  lineIndex: -1,
+                  values: sparklineValues,
+                  highlightIndex: sparklineHighlight,
+                  color: contrastTextColor(captionColor),
+                }
+              : undefined
+          }
+        />
 
         {/* Cards */}
         {elements.map((el, i) => {
@@ -88,10 +125,12 @@ export default function AtlasPlate({
           const fill = blockColor(el.block);
           const textFill = contrastTextColor(fill);
           const propVal = el[propertyKey as keyof ElementRecord];
-          const displayVal =
+          const rawVal =
             propVal != null && typeof propVal !== 'object' ? String(propVal) : '—';
+          const unit = UNITS[propertyKey] ?? '';
+          const displayVal = rawVal !== '—' && unit ? `${rawVal} ${unit}` : rawVal;
 
-          const label = truncateToFit(el.name, NAME_FONT, NAME_MAX_W);
+          const label = truncateToFit(el.category, NAME_FONT, NAME_MAX_W);
 
           return (
             <g key={el.symbol} role="link" aria-label={`${el.name}, ${el.symbol}`}>
@@ -104,7 +143,7 @@ export default function AtlasPlate({
                   fill={textFill}
                   fontFamily="system-ui"
                 >
-                  {el.atomicNumber}
+                  {String(el.atomicNumber).padStart(3, '0')}
                 </text>
                 <text
                   x={x + 6}
@@ -139,6 +178,9 @@ export default function AtlasPlate({
           );
         })}
       </svg>
+      <div style={{ marginTop: '8px', fontSize: '14px', color: '#0f0f0f' }}>
+        {elements.map(el => el.symbol).join(' \u00b7 ')}
+      </div>
     </div>
   );
 }

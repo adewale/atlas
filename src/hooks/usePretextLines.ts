@@ -38,6 +38,46 @@ type UseShapedTextOptions = {
   mobile?: boolean;
 };
 
+type UseWedgeTextOptions = {
+  text: string;
+  minWidth: number;  // width of narrowest line (top)
+  maxWidth: number;  // width of widest line (bottom)
+  font?: string;
+};
+
+/**
+ * Hook for V-shaped (wedge) text: lines get progressively wider
+ * from minWidth at top to maxWidth at bottom.
+ */
+export function useWedgeText({
+  text,
+  minWidth,
+  maxWidth,
+  font = BODY_FONT,
+}: UseWedgeTextOptions): { lines: PositionedLine[]; lineHeight: number } {
+  const lh = useMemo(() => computeLineHeight(font), [font]);
+
+  const lines = useMemo(() => {
+    if (!text) return [];
+
+    // Estimate line count using average width
+    const avgWidth = (minWidth + maxWidth) / 2;
+    const estimate = measureLines(text, font, avgWidth, lh);
+    const numLines = Math.max(estimate.length, 2);
+
+    // Create V-shaped width array: linearly interpolate from minWidth to maxWidth
+    // Add extra entries so shapeText won't run out
+    const widths = Array.from({ length: numLines + 5 }, (_, i) => {
+      const t = numLines <= 1 ? 1 : i / (numLines - 1);
+      return minWidth + Math.min(t, 1) * (maxWidth - minWidth);
+    });
+
+    return shapeText(text, font, widths, lh);
+  }, [text, font, minWidth, maxWidth, lh]);
+
+  return { lines, lineHeight: lh };
+}
+
 /**
  * Hook for Tier 2: shaped text that flows around the data plate.
  * Computes plateHeightInLines from Pretext font measurement at render time.

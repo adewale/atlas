@@ -18,6 +18,9 @@ export default function Home() {
         A T L A S
       </h1>
       <PeriodicTable onSelectElement={handleSelect} />
+      <div style={{ fontSize: '12px', color: '#666', textAlign: 'center', marginTop: '8px' }}>
+        118 elements · Arrow keys to navigate · Enter to open folio
+      </div>
     </main>
   );
 }

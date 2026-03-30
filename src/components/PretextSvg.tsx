@@ -1,5 +1,44 @@
 import type { PositionedLine } from '../lib/pretext';
 
+export type InlineSparklineConfig = {
+  lineIndex: number; // which line to attach to (-1 = last line)
+  values: (number | null)[];
+  highlightIndex?: number;
+  color?: string;
+};
+
+/** Build an SVG polyline points string and highlight coords from sparkline data. */
+function buildSparklinePoints(
+  values: (number | null)[],
+  width: number,
+  height: number,
+  highlightIndex?: number
+): { points: string; dotX: number; dotY: number } | null {
+  const validValues = values.filter((v): v is number => v != null);
+  if (validValues.length < 2) return null;
+
+  const min = Math.min(...validValues);
+  const max = Math.max(...validValues);
+  const range = max - min || 1;
+
+  const pts: string[] = [];
+  let dotX = 0;
+  let dotY = 0;
+
+  values.forEach((v, i) => {
+    if (v == null) return;
+    const x = (i / (values.length - 1)) * width;
+    const y = height - ((v - min) / range) * (height - 4) - 2;
+    pts.push(`${x},${y}`);
+    if (i === highlightIndex) {
+      dotX = x;
+      dotY = y;
+    }
+  });
+
+  return { points: pts.join(' '), dotX, dotY };
+}
+
 type PretextSvgProps = {
   lines: PositionedLine[];
   lineHeight: number;
@@ -11,8 +50,10 @@ type PretextSvgProps = {
   showRules?: boolean;
   ruleColor?: string;
   maxWidth?: number;
+  textAlign?: 'left' | 'center';
   animationStagger?: number;
   className?: string;
+  inlineSparkline?: InlineSparklineConfig;
 };
 
 /**
@@ -29,9 +70,19 @@ export default function PretextSvg({
   showRules = false,
   ruleColor = '#0f0f0f',
   maxWidth,
+  textAlign = 'left',
   animationStagger,
   className,
+  inlineSparkline,
 }: PretextSvgProps) {
+  // Resolve target line index for inline sparkline (-1 = last line)
+  const sparklineTargetLine =
+    inlineSparkline != null
+      ? inlineSparkline.lineIndex === -1
+        ? lines.length - 1
+        : inlineSparkline.lineIndex
+      : -1;
+
   return (
     <g className={className} transform={`translate(${x}, ${y})`}>
       {lines.map((line, i) => {
@@ -39,7 +90,36 @@ export default function PretextSvg({
         const staggerDelay = animationStagger != null ? i * animationStagger : undefined;
         const isTerminal = i === lines.length - 1;
         const isShort = maxWidth && line.width < maxWidth * 0.7;
-        const lineX = isTerminal && isShort ? line.x + (maxWidth - line.width) / 2 : line.x;
+        const lineX =
+          textAlign === 'center' && maxWidth
+            ? line.x + (maxWidth - line.width) / 2
+            : isTerminal && isShort && maxWidth
+              ? line.x + (maxWidth - line.width) / 2
+              : line.x;
+
+        // Inline sparkline rendering for this line
+        const MIN_SPARKLINE_WIDTH = 40;
+        const SPARKLINE_GAP = 8;
+        const SPARKLINE_HEIGHT = 12;
+        const showSparkline =
+          inlineSparkline != null &&
+          maxWidth != null &&
+          i === sparklineTargetLine &&
+          maxWidth - (lineX + line.width + SPARKLINE_GAP) > MIN_SPARKLINE_WIDTH;
+
+        const sparklineWidth = showSparkline
+          ? maxWidth! - (lineX + line.width + SPARKLINE_GAP)
+          : 0;
+
+        const sparklineData = showSparkline
+          ? buildSparklinePoints(
+              inlineSparkline!.values,
+              sparklineWidth,
+              SPARKLINE_HEIGHT,
+              inlineSparkline!.highlightIndex
+            )
+          : null;
+
         return (
           <g key={`line-${line.y}`}>
             {showRules && i > 0 && maxWidth && (
@@ -71,6 +151,25 @@ export default function PretextSvg({
             >
               {line.text}
             </text>
+            {sparklineData && (
+              <g transform={`translate(${lineX + line.width + SPARKLINE_GAP}, ${lineY - SPARKLINE_HEIGHT + 2})`}>
+                <polyline
+                  points={sparklineData.points}
+                  fill="none"
+                  stroke={inlineSparkline!.color || '#0f0f0f'}
+                  strokeWidth={1}
+                  opacity={0.6}
+                />
+                {inlineSparkline!.highlightIndex != null && (
+                  <circle
+                    cx={sparklineData.dotX}
+                    cy={sparklineData.dotY}
+                    r={2}
+                    fill={inlineSparkline!.color || '#0f0f0f'}
+                  />
+                )}
+              </g>
+            )}
           </g>
         );
       })}

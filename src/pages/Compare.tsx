@@ -1,31 +1,13 @@
-import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
 import { getElement } from '../lib/data';
+import { useIsMobile } from '../hooks/useIsMobile';
 import CompareView from '../components/CompareView';
-
-const MOBILE_BREAKPOINT = 600;
-
-function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {
-  const [isMobile, setIsMobile] = useState(
-    () => typeof window !== 'undefined' && window.innerWidth < breakpoint,
-  );
-
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < breakpoint);
-    }
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [breakpoint]);
-
-  return isMobile;
-}
 
 export default function Compare() {
   const { symbolA, symbolB } = useParams();
   const elementA = symbolA ? getElement(symbolA) : undefined;
   const elementB = symbolB ? getElement(symbolB) : undefined;
-  const vertical = useIsMobile();
+  const vertical = useIsMobile(600);
 
   if (!elementA || !elementB) {
     return (

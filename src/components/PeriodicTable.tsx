@@ -141,7 +141,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           <input
             id="pt-search"
             type="search"
-            placeholder="Search elements…"
+            placeholder="Search name or symbol"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             aria-describedby="pt-search-desc"
