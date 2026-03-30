@@ -17,7 +17,7 @@ export default function SourceStrip({ sources, ruleColor = BLACK }: SourceStripP
         style={{
           borderTop: `1px solid ${ruleColor}`,
           paddingTop: '8px',
-          marginTop: '8px',
+          marginTop: '32px',
         }}
       />
       <div>

@@ -42,8 +42,10 @@ function findLineYForKeyword(
   return null;
 }
 
-/** Resolve overlap: if two annotations are within MIN_ANNOTATION_GAP, push later ones down. */
-function resolveOverlaps(positions: (number | null)[]): (number | null)[] {
+/** Resolve overlap: if two annotations are within MIN_ANNOTATION_GAP, push later ones down.
+ *  If maxY is provided, clamp annotations so they don't exceed that boundary;
+ *  overflow items are stacked upward from maxY with MIN_ANNOTATION_GAP spacing. */
+function resolveOverlaps(positions: (number | null)[], maxY?: number): (number | null)[] {
   const result = [...positions];
   // Sort indices by their non-null y values, preserving order for nulls
   const nonNullIndices = result
@@ -60,6 +62,31 @@ function resolveOverlaps(positions: (number | null)[]): (number | null)[] {
       result[curr.i] = prevY + MIN_ANNOTATION_GAP;
     }
   }
+
+  // Clamp to maxY: if any annotation exceeds the available height,
+  // stack them upward from maxY with MIN_ANNOTATION_GAP spacing.
+  if (maxY != null && nonNullIndices.length > 0) {
+    // Walk backwards through sorted annotations and pull any that exceed maxY
+    for (let j = nonNullIndices.length - 1; j >= 0; j--) {
+      const idx = nonNullIndices[j].i;
+      const y = result[idx]!;
+      const limit = maxY - (nonNullIndices.length - 1 - j) * MIN_ANNOTATION_GAP;
+      if (y > limit) {
+        result[idx] = limit;
+      }
+    }
+    // Re-enforce minimum gap from top to bottom after clamping
+    for (let j = 1; j < nonNullIndices.length; j++) {
+      const prev = nonNullIndices[j - 1];
+      const curr = nonNullIndices[j];
+      const prevY = result[prev.i]!;
+      const currY = result[curr.i]!;
+      if (currY - prevY < MIN_ANNOTATION_GAP) {
+        result[curr.i] = prevY + MIN_ANNOTATION_GAP;
+      }
+    }
+  }
+
   return result;
 }
 
@@ -210,14 +237,17 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     { label: 'Atomic Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
   ] as const;
 
+  // Available height for marginalia annotations: summary text height acts as boundary
+  const summaryTextHeight = lines.length * lineHeight;
+
   // Compute y-positions for marginalia annotations aligned to summary text lines
   const annotationPositions = useMemo(() => {
     if (mobile) return null; // On mobile, use stacked layout
     const rawPositions = properties.map((prop) =>
       findLineYForKeyword(lines, prop.searchTerm, lineHeight),
     );
-    return resolveOverlaps(rawPositions);
-  }, [lines, lineHeight, mobile]);
+    return resolveOverlaps(rawPositions, summaryTextHeight);
+  }, [lines, lineHeight, mobile, summaryTextHeight]);
 
   return (
     <div className="folio-layout" style={{ display: 'flex', gap: '48px', position: 'relative' }}>
