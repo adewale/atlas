@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, Link, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
-import { blockColor, contrastTextColor } from '../lib/grid';
+import { blockColor } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
@@ -163,13 +163,16 @@ export default function DiscovererNetwork() {
                   const el = getElement(sym);
                   if (!el) return null;
                   const fill = blockColor(el.block);
-                  const textFill = contrastTextColor(fill);
                   const ex = j * (SQ + SQ_GAP);
                   return (
-                    <g
+                    <ElementSquare
                       key={sym}
-                      transform={`translate(${ex}, 0)`}
-                      style={{ cursor: 'pointer' }}
+                      symbol={sym}
+                      color={fill}
+                      size={SQ}
+                      x={ex}
+                      y={0}
+                      title={el.name}
                       onClick={() => navigate(`/element/${sym}`)}
                       onMouseEnter={() =>
                         setHovered({
@@ -181,21 +184,7 @@ export default function DiscovererNetwork() {
                         })
                       }
                       onMouseLeave={() => setHovered(null)}
-                    >
-                      <title>{el.name}</title>
-                      <rect width={SQ} height={SQ} fill={fill} rx={2} />
-                      <text
-                        x={SQ / 2}
-                        y={SQ / 2 + 3}
-                        textAnchor="middle"
-                        fontSize={8}
-                        fontWeight="bold"
-                        fill={textFill}
-                        fontFamily="system-ui, sans-serif"
-                      >
-                        {sym}
-                      </text>
-                    </g>
+                    />
                   );
                 })}
               </g>
