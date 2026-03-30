@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import PeriodicTable from '../components/PeriodicTable';
 
 export default function Home() {
@@ -21,6 +21,10 @@ export default function Home() {
       <div style={{ fontSize: '12px', color: '#666', textAlign: 'center', marginTop: '8px' }}>
         118 elements · Arrow keys to navigate · Enter to open folio
       </div>
+      <nav style={{ marginTop: '32px', fontSize: '13px', display: 'flex', gap: '24px', justifyContent: 'center' }}>
+        <Link to="/about">About</Link>
+        <Link to="/credits">Credits</Link>
+      </nav>
     </main>
   );
 }

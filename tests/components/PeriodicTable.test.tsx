@@ -87,4 +87,16 @@ describe('PeriodicTable', () => {
     const propSelect = screen.getByLabelText('Property');
     expect(propSelect).toBeInTheDocument();
   });
+
+  it('property selector includes all four numeric properties', () => {
+    renderTable();
+    const select = screen.getByLabelText('Highlight mode');
+    fireEvent.change(select, { target: { value: 'property' } });
+    const propSelect = screen.getByLabelText('Property') as HTMLSelectElement;
+    const options = Array.from(propSelect.options).map((o) => o.value);
+    expect(options).toContain('mass');
+    expect(options).toContain('electronegativity');
+    expect(options).toContain('ionizationEnergy');
+    expect(options).toContain('radius');
+  });
 });

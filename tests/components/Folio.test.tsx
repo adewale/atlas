@@ -138,15 +138,48 @@ describe('Folio', () => {
     expect(screen.getByLabelText(/Data plate: Group —/)).toBeInTheDocument();
   });
 
-  it('compare link points to correct URL', () => {
+  it('compare link points to correct URL and uses client-side routing', () => {
     renderFolio();
     const link = screen.getByText('Compare →');
     expect(link).toHaveAttribute('href', '/compare/Fe/Mn');
+    // Should be rendered by React Router's Link, not a plain <a> tag.
+    // MemoryRouter wraps Link output with onClick handlers; plain <a> won't
+    // have the data-discover-* attributes or the internal click handling.
+    // We check that it's inside a react-router link by verifying the
+    // closest <a> has an onclick handler (react-router adds one).
+    expect(link.onclick).not.toBeNull();
+  });
+
+  it('neighbor links use client-side routing', () => {
+    renderFolio();
+    const mnLink = screen.getByText('Mn');
+    expect(mnLink).toHaveAttribute('href', '/element/Mn');
+    // React Router Link adds an onClick handler; plain <a> tags don't
+    expect(mnLink.onclick).not.toBeNull();
   });
 
   it('shaped text lines are rendered in SVG', () => {
     renderFolio();
     const svgText = screen.getByLabelText('Element summary');
     expect(svgText).toBeInTheDocument();
+  });
+
+  it('data plate links group, period, and block to atlas pages', () => {
+    renderFolio();
+    // Group label should link to /atlas/group/8
+    const groupLink = screen.getByRole('link', { name: /group 8/i });
+    expect(groupLink).toHaveAttribute('href', '/atlas/group/8');
+    // Period label should link to /atlas/period/4
+    const periodLink = screen.getByRole('link', { name: /period 4/i });
+    expect(periodLink).toHaveAttribute('href', '/atlas/period/4');
+    // Block label should link to /atlas/block/d
+    const blockLink = screen.getByRole('link', { name: /block d/i });
+    expect(blockLink).toHaveAttribute('href', '/atlas/block/d');
+  });
+
+  it('category label links to atlas category page', () => {
+    renderFolio();
+    const catLink = screen.getByRole('link', { name: /transition metal/i });
+    expect(catLink).toHaveAttribute('href', '/atlas/category/transition-metal');
   });
 });

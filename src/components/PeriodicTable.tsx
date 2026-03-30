@@ -16,7 +16,7 @@ import { useGridNavigation } from '../hooks/useGridNavigation';
 // Highlight modes
 // ---------------------------------------------------------------------------
 type HighlightMode = 'none' | 'group' | 'period' | 'block' | 'category' | 'property';
-type NumericProperty = 'mass' | 'electronegativity' | 'ionizationEnergy';
+type NumericProperty = 'mass' | 'electronegativity' | 'ionizationEnergy' | 'radius';
 
 const HIGHLIGHT_OPTIONS: { value: HighlightMode; label: string }[] = [
   { value: 'none', label: 'None' },
@@ -31,6 +31,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'mass', label: 'Mass' },
   { value: 'electronegativity', label: 'Electronegativity' },
   { value: 'ionizationEnergy', label: 'Ionization Energy' },
+  { value: 'radius', label: 'Radius' },
 ];
 
 const DEEP_BLUE = '#133e7c';

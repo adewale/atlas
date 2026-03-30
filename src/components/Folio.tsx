@@ -1,4 +1,5 @@
 import { useMemo, useState, useRef, useLayoutEffect } from 'react';
+import { Link } from 'react-router';
 import type { ElementRecord, ElementSources } from '../lib/types';
 import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor } from '../lib/grid';
@@ -239,61 +240,32 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
                 : {}),
             }}
           >
-            <svg width={PLATE_WIDTH} height={PLATE_HEIGHT} role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
+            <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
               {/* Group row — deep blue */}
-              <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={DEEP_BLUE} />
-              <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">
-                GROUP
-              </text>
-              <text
-                x={12}
-                y={46}
-                fontSize={24}
-                fontWeight="bold"
-                fill={PAPER}
-                fontFamily="'SF Mono', monospace"
-              >
-                {element.group ?? '—'}
-              </text>
-
+              <Link to={element.group != null ? `/atlas/group/${element.group}` : '#'} aria-label={`Group ${element.group ?? '—'}`} style={{ display: 'block', textDecoration: 'none' }}>
+                <svg width={PLATE_WIDTH} height={56}>
+                  <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={DEEP_BLUE} />
+                  <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
+                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">{element.group ?? '—'}</text>
+                </svg>
+              </Link>
               {/* Period row — warm red */}
-              <rect x={0} y={60} width={PLATE_WIDTH} height={56} fill={WARM_RED} />
-              <text x={12} y={80} fontSize={10} fill={PAPER} fontFamily="system-ui">
-                PERIOD
-              </text>
-              <text
-                x={12}
-                y={106}
-                fontSize={24}
-                fontWeight="bold"
-                fill={PAPER}
-                fontFamily="'SF Mono', monospace"
-              >
-                {element.period}
-              </text>
-
+              <Link to={`/atlas/period/${element.period}`} aria-label={`Period ${element.period}`} style={{ display: 'block', textDecoration: 'none' }}>
+                <svg width={PLATE_WIDTH} height={56}>
+                  <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={WARM_RED} />
+                  <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
+                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily="'SF Mono', monospace">{element.period}</text>
+                </svg>
+              </Link>
               {/* Block row — block color */}
-              <rect x={0} y={120} width={PLATE_WIDTH} height={56} fill={color} />
-              <text
-                x={12}
-                y={140}
-                fontSize={10}
-                fill={contrastTextColor(color)}
-                fontFamily="system-ui"
-              >
-                BLOCK
-              </text>
-              <text
-                x={12}
-                y={166}
-                fontSize={24}
-                fontWeight="bold"
-                fill={contrastTextColor(color)}
-                fontFamily="'SF Mono', monospace"
-              >
-                {element.block}
-              </text>
-            </svg>
+              <Link to={`/atlas/block/${element.block}`} aria-label={`Block ${element.block}`} style={{ display: 'block', textDecoration: 'none' }}>
+                <svg width={PLATE_WIDTH} height={56}>
+                  <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={color} />
+                  <text x={12} y={20} fontSize={10} fill={contrastTextColor(color)} fontFamily="system-ui">BLOCK</text>
+                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={contrastTextColor(color)} fontFamily="'SF Mono', monospace">{element.block}</text>
+                </svg>
+              </Link>
+            </div>
           </div>
 
           {/* Shaped summary text */}
@@ -375,13 +347,15 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           <div style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase' }}>
             Category
           </div>
-          <svg
-            width={MARGINALIA_WIDTH}
-            height={catLines.length * catLH + catLH}
-            style={{ maxWidth: '100%', display: 'block' }}
-          >
-            <PretextSvg lines={catLines} lineHeight={catLH} fontSize={14} />
-          </svg>
+          <Link to={`/atlas/category/${element.category.toLowerCase().replace(/\s+/g, '-')}`} aria-label={element.category} style={{ textDecoration: 'none' }}>
+            <svg
+              width={MARGINALIA_WIDTH}
+              height={catLines.length * catLH + catLH}
+              style={{ maxWidth: '100%', display: 'block' }}
+            >
+              <PretextSvg lines={catLines} lineHeight={catLH} fontSize={14} />
+            </svg>
+          </Link>
         </div>
 
         {/* Key properties with rank dots — aligned to text lines on desktop, stacked on mobile */}
@@ -453,9 +427,9 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
             {element.neighbors.map((sym) => (
-              <a key={sym} href={`/element/${sym}`}>
+              <Link key={sym} to={`/element/${sym}`}>
                 {sym}
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -465,9 +439,9 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
         {/* Compare link */}
         <div style={{ marginTop: '12px' }}>
-          <a href={`/compare/${element.symbol}/${element.neighbors[0] ?? 'O'}`}>
+          <Link to={`/compare/${element.symbol}/${element.neighbors[0] ?? 'O'}`}>
             Compare →
-          </a>
+          </Link>
         </div>
       </aside>
     </div>
