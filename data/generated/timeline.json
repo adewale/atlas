@@ -1,0 +1,596 @@
+{
+  "antiquity": [
+    {
+      "symbol": "C",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "S",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Fe",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Cu",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Ag",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Sn",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Sb",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Au",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Hg",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    },
+    {
+      "symbol": "Pb",
+      "year": null,
+      "discoverer": "Known since antiquity"
+    }
+  ],
+  "timeline": [
+    {
+      "symbol": "As",
+      "year": 1250,
+      "discoverer": "Albertus Magnus"
+    },
+    {
+      "symbol": "P",
+      "year": 1669,
+      "discoverer": "Hennig Brand"
+    },
+    {
+      "symbol": "Co",
+      "year": 1735,
+      "discoverer": "Georg Brandt"
+    },
+    {
+      "symbol": "Pt",
+      "year": 1735,
+      "discoverer": "Antonio de Ulloa"
+    },
+    {
+      "symbol": "Zn",
+      "year": 1746,
+      "discoverer": "Andreas Sigismund Marggraf"
+    },
+    {
+      "symbol": "Ni",
+      "year": 1751,
+      "discoverer": "Axel Fredrik Cronstedt"
+    },
+    {
+      "symbol": "Bi",
+      "year": 1753,
+      "discoverer": "Claude François Geoffroy"
+    },
+    {
+      "symbol": "Mg",
+      "year": 1755,
+      "discoverer": "Joseph Black"
+    },
+    {
+      "symbol": "H",
+      "year": 1766,
+      "discoverer": "Henry Cavendish"
+    },
+    {
+      "symbol": "N",
+      "year": 1772,
+      "discoverer": "Daniel Rutherford"
+    },
+    {
+      "symbol": "O",
+      "year": 1774,
+      "discoverer": "Joseph Priestley & Carl Wilhelm Scheele"
+    },
+    {
+      "symbol": "Cl",
+      "year": 1774,
+      "discoverer": "Carl Wilhelm Scheele"
+    },
+    {
+      "symbol": "Mn",
+      "year": 1774,
+      "discoverer": "Johan Gottlieb Gahn"
+    },
+    {
+      "symbol": "Mo",
+      "year": 1781,
+      "discoverer": "Carl Wilhelm Scheele"
+    },
+    {
+      "symbol": "Te",
+      "year": 1783,
+      "discoverer": "Franz-Joseph Müller von Reichenstein"
+    },
+    {
+      "symbol": "W",
+      "year": 1783,
+      "discoverer": "Juan José Elhuyar & Fausto Elhuyar"
+    },
+    {
+      "symbol": "Zr",
+      "year": 1789,
+      "discoverer": "Martin Heinrich Klaproth"
+    },
+    {
+      "symbol": "U",
+      "year": 1789,
+      "discoverer": "Martin Heinrich Klaproth"
+    },
+    {
+      "symbol": "Sr",
+      "year": 1790,
+      "discoverer": "Adair Crawford"
+    },
+    {
+      "symbol": "Ti",
+      "year": 1791,
+      "discoverer": "William Gregor"
+    },
+    {
+      "symbol": "Y",
+      "year": 1794,
+      "discoverer": "Johan Gadolin"
+    },
+    {
+      "symbol": "Cr",
+      "year": 1797,
+      "discoverer": "Louis Nicolas Vauquelin"
+    },
+    {
+      "symbol": "Be",
+      "year": 1798,
+      "discoverer": "Louis Nicolas Vauquelin"
+    },
+    {
+      "symbol": "V",
+      "year": 1801,
+      "discoverer": "Andrés Manuel del Río"
+    },
+    {
+      "symbol": "Nb",
+      "year": 1801,
+      "discoverer": "Charles Hatchett"
+    },
+    {
+      "symbol": "Ta",
+      "year": 1802,
+      "discoverer": "Anders Gustaf Ekeberg"
+    },
+    {
+      "symbol": "Rh",
+      "year": 1803,
+      "discoverer": "William Hyde Wollaston"
+    },
+    {
+      "symbol": "Pd",
+      "year": 1803,
+      "discoverer": "William Hyde Wollaston"
+    },
+    {
+      "symbol": "Ce",
+      "year": 1803,
+      "discoverer": "Jöns Jacob Berzelius & Wilhelm Hisinger"
+    },
+    {
+      "symbol": "Os",
+      "year": 1803,
+      "discoverer": "Smithson Tennant"
+    },
+    {
+      "symbol": "Ir",
+      "year": 1803,
+      "discoverer": "Smithson Tennant"
+    },
+    {
+      "symbol": "Na",
+      "year": 1807,
+      "discoverer": "Humphry Davy"
+    },
+    {
+      "symbol": "K",
+      "year": 1807,
+      "discoverer": "Humphry Davy"
+    },
+    {
+      "symbol": "B",
+      "year": 1808,
+      "discoverer": "Humphry Davy"
+    },
+    {
+      "symbol": "Ca",
+      "year": 1808,
+      "discoverer": "Humphry Davy"
+    },
+    {
+      "symbol": "Ba",
+      "year": 1808,
+      "discoverer": "Humphry Davy"
+    },
+    {
+      "symbol": "I",
+      "year": 1811,
+      "discoverer": "Bernard Courtois"
+    },
+    {
+      "symbol": "Li",
+      "year": 1817,
+      "discoverer": "Johan August Arfwedson"
+    },
+    {
+      "symbol": "Se",
+      "year": 1817,
+      "discoverer": "Jöns Jacob Berzelius"
+    },
+    {
+      "symbol": "Cd",
+      "year": 1817,
+      "discoverer": "Friedrich Stromeyer"
+    },
+    {
+      "symbol": "Si",
+      "year": 1824,
+      "discoverer": "Jöns Jacob Berzelius"
+    },
+    {
+      "symbol": "Al",
+      "year": 1825,
+      "discoverer": "Hans Christian Ørsted"
+    },
+    {
+      "symbol": "Br",
+      "year": 1826,
+      "discoverer": "Antoine Jérôme Balard"
+    },
+    {
+      "symbol": "Th",
+      "year": 1829,
+      "discoverer": "Jöns Jacob Berzelius"
+    },
+    {
+      "symbol": "La",
+      "year": 1839,
+      "discoverer": "Carl Gustaf Mosander"
+    },
+    {
+      "symbol": "Tb",
+      "year": 1843,
+      "discoverer": "Carl Gustaf Mosander"
+    },
+    {
+      "symbol": "Er",
+      "year": 1843,
+      "discoverer": "Carl Gustaf Mosander"
+    },
+    {
+      "symbol": "Ru",
+      "year": 1844,
+      "discoverer": "Karl Ernst Claus"
+    },
+    {
+      "symbol": "Cs",
+      "year": 1860,
+      "discoverer": "Robert Bunsen & Gustav Kirchhoff"
+    },
+    {
+      "symbol": "Rb",
+      "year": 1861,
+      "discoverer": "Robert Bunsen & Gustav Kirchhoff"
+    },
+    {
+      "symbol": "Tl",
+      "year": 1861,
+      "discoverer": "William Crookes"
+    },
+    {
+      "symbol": "In",
+      "year": 1863,
+      "discoverer": "Ferdinand Reich & Hieronymus Richter"
+    },
+    {
+      "symbol": "He",
+      "year": 1868,
+      "discoverer": "Pierre Janssen & Joseph Lockyer"
+    },
+    {
+      "symbol": "Ga",
+      "year": 1875,
+      "discoverer": "Paul Emile Lecoq de Boisbaudran"
+    },
+    {
+      "symbol": "Ho",
+      "year": 1878,
+      "discoverer": "Marc Delafontaine & Jacques-Louis Soret"
+    },
+    {
+      "symbol": "Yb",
+      "year": 1878,
+      "discoverer": "Jean Charles Galissard de Marignac"
+    },
+    {
+      "symbol": "Sc",
+      "year": 1879,
+      "discoverer": "Lars Fredrik Nilson"
+    },
+    {
+      "symbol": "Sm",
+      "year": 1879,
+      "discoverer": "Paul Emile Lecoq de Boisbaudran"
+    },
+    {
+      "symbol": "Tm",
+      "year": 1879,
+      "discoverer": "Per Teodor Cleve"
+    },
+    {
+      "symbol": "Gd",
+      "year": 1880,
+      "discoverer": "Jean Charles Galissard de Marignac"
+    },
+    {
+      "symbol": "Pr",
+      "year": 1885,
+      "discoverer": "Carl Auer von Welsbach"
+    },
+    {
+      "symbol": "Nd",
+      "year": 1885,
+      "discoverer": "Carl Auer von Welsbach"
+    },
+    {
+      "symbol": "F",
+      "year": 1886,
+      "discoverer": "Henri Moissan"
+    },
+    {
+      "symbol": "Ge",
+      "year": 1886,
+      "discoverer": "Clemens Winkler"
+    },
+    {
+      "symbol": "Dy",
+      "year": 1886,
+      "discoverer": "Paul Emile Lecoq de Boisbaudran"
+    },
+    {
+      "symbol": "Ar",
+      "year": 1894,
+      "discoverer": "Lord Rayleigh & William Ramsay"
+    },
+    {
+      "symbol": "Ne",
+      "year": 1898,
+      "discoverer": "William Ramsay & Morris Travers"
+    },
+    {
+      "symbol": "Kr",
+      "year": 1898,
+      "discoverer": "William Ramsay & Morris Travers"
+    },
+    {
+      "symbol": "Xe",
+      "year": 1898,
+      "discoverer": "William Ramsay & Morris Travers"
+    },
+    {
+      "symbol": "Po",
+      "year": 1898,
+      "discoverer": "Marie Curie & Pierre Curie"
+    },
+    {
+      "symbol": "Ra",
+      "year": 1898,
+      "discoverer": "Marie Curie & Pierre Curie"
+    },
+    {
+      "symbol": "Ac",
+      "year": 1899,
+      "discoverer": "André-Louis Debierne"
+    },
+    {
+      "symbol": "Rn",
+      "year": 1900,
+      "discoverer": "Friedrich Ernst Dorn"
+    },
+    {
+      "symbol": "Eu",
+      "year": 1901,
+      "discoverer": "Eugène-Anatole Demarçay"
+    },
+    {
+      "symbol": "Lu",
+      "year": 1907,
+      "discoverer": "Georges Urbain"
+    },
+    {
+      "symbol": "Pa",
+      "year": 1913,
+      "discoverer": "Kasimir Fajans & Oswald Helmuth Göhring"
+    },
+    {
+      "symbol": "Hf",
+      "year": 1923,
+      "discoverer": "Dirk Coster & George de Hevesy"
+    },
+    {
+      "symbol": "Re",
+      "year": 1925,
+      "discoverer": "Walter Noddack, Ida Tacke & Otto Berg"
+    },
+    {
+      "symbol": "Tc",
+      "year": 1937,
+      "discoverer": "Carlo Perrier & Emilio Segrè"
+    },
+    {
+      "symbol": "Fr",
+      "year": 1939,
+      "discoverer": "Marguerite Perey"
+    },
+    {
+      "symbol": "At",
+      "year": 1940,
+      "discoverer": "Dale Corson, Kenneth MacKenzie & Emilio Segrè"
+    },
+    {
+      "symbol": "Np",
+      "year": 1940,
+      "discoverer": "Edwin McMillan & Philip Abelson"
+    },
+    {
+      "symbol": "Pu",
+      "year": 1940,
+      "discoverer": "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl"
+    },
+    {
+      "symbol": "Am",
+      "year": 1944,
+      "discoverer": "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso"
+    },
+    {
+      "symbol": "Cm",
+      "year": 1944,
+      "discoverer": "Glenn Seaborg, Ralph James & Albert Ghiorso"
+    },
+    {
+      "symbol": "Pm",
+      "year": 1945,
+      "discoverer": "Jacob Marinsky, Lawrence Glendenin & Charles Coryell"
+    },
+    {
+      "symbol": "Bk",
+      "year": 1949,
+      "discoverer": "Glenn Seaborg, Stanley Thompson & Albert Ghiorso"
+    },
+    {
+      "symbol": "Cf",
+      "year": 1950,
+      "discoverer": "Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street"
+    },
+    {
+      "symbol": "Es",
+      "year": 1952,
+      "discoverer": "Albert Ghiorso et al."
+    },
+    {
+      "symbol": "Fm",
+      "year": 1952,
+      "discoverer": "Albert Ghiorso et al."
+    },
+    {
+      "symbol": "Md",
+      "year": 1955,
+      "discoverer": "Albert Ghiorso et al."
+    },
+    {
+      "symbol": "No",
+      "year": 1958,
+      "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg"
+    },
+    {
+      "symbol": "Lr",
+      "year": 1961,
+      "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer"
+    },
+    {
+      "symbol": "Rf",
+      "year": 1969,
+      "discoverer": "Albert Ghiorso et al."
+    },
+    {
+      "symbol": "Db",
+      "year": 1970,
+      "discoverer": "Albert Ghiorso et al."
+    },
+    {
+      "symbol": "Sg",
+      "year": 1974,
+      "discoverer": "Albert Ghiorso et al."
+    },
+    {
+      "symbol": "Bh",
+      "year": 1981,
+      "discoverer": "Peter Armbruster & Gottfried Münzenberg"
+    },
+    {
+      "symbol": "Mt",
+      "year": 1982,
+      "discoverer": "Peter Armbruster & Gottfried Münzenberg"
+    },
+    {
+      "symbol": "Hs",
+      "year": 1984,
+      "discoverer": "Peter Armbruster & Gottfried Münzenberg"
+    },
+    {
+      "symbol": "Ds",
+      "year": 1994,
+      "discoverer": "Sigurd Hofmann et al."
+    },
+    {
+      "symbol": "Rg",
+      "year": 1994,
+      "discoverer": "Sigurd Hofmann et al."
+    },
+    {
+      "symbol": "Cn",
+      "year": 1996,
+      "discoverer": "Sigurd Hofmann et al."
+    },
+    {
+      "symbol": "Fl",
+      "year": 1999,
+      "discoverer": "Yuri Oganessian et al."
+    },
+    {
+      "symbol": "Lv",
+      "year": 2000,
+      "discoverer": "Yuri Oganessian et al."
+    },
+    {
+      "symbol": "Og",
+      "year": 2002,
+      "discoverer": "Yuri Oganessian et al."
+    },
+    {
+      "symbol": "Nh",
+      "year": 2003,
+      "discoverer": "Kosuke Morita et al."
+    },
+    {
+      "symbol": "Mc",
+      "year": 2003,
+      "discoverer": "Yuri Oganessian et al."
+    },
+    {
+      "symbol": "Ts",
+      "year": 2010,
+      "discoverer": "Yuri Oganessian et al."
+    }
+  ]
+}

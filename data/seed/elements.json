@@ -38,7 +38,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1766,
+    "discoverer": "Henry Cavendish",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek hydro + genes: water-forming"
   },
   {
     "atomicNumber": 2,
@@ -80,7 +84,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1868,
+    "discoverer": "Pierre Janssen & Joseph Lockyer",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Greek helios: the Sun, first observed in solar spectrum"
   },
   {
     "atomicNumber": 3,
@@ -122,7 +130,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1817,
+    "discoverer": "Johan August Arfwedson",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek lithos: stone, discovered in mineral"
   },
   {
     "atomicNumber": 4,
@@ -164,7 +176,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1798,
+    "discoverer": "Louis Nicolas Vauquelin",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Greek beryllos: the mineral beryl"
   },
   {
     "atomicNumber": 5,
@@ -206,7 +222,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1808,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Arabic buraq: borax, a white mineral"
   },
   {
     "atomicNumber": 6,
@@ -248,7 +268,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin carbo: charcoal"
   },
   {
     "atomicNumber": 7,
@@ -290,7 +314,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1772,
+    "discoverer": "Daniel Rutherford",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek nitron + genes: niter-forming"
   },
   {
     "atomicNumber": 8,
@@ -332,7 +360,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1774,
+    "discoverer": "Joseph Priestley & Carl Wilhelm Scheele",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek oxys + genes: acid-forming"
   },
   {
     "atomicNumber": 9,
@@ -374,7 +406,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1886,
+    "discoverer": "Henri Moissan",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin fluere: to flow, from use as flux"
   },
   {
     "atomicNumber": 10,
@@ -416,7 +452,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "William Ramsay & Morris Travers",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek neos: new"
   },
   {
     "atomicNumber": 11,
@@ -458,7 +498,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1807,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "English soda; symbol from Latin natrium"
   },
   {
     "atomicNumber": 12,
@@ -500,7 +544,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1755,
+    "discoverer": "Joseph Black",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Magnesia, a district in Thessaly, Greece"
   },
   {
     "atomicNumber": 13,
@@ -542,7 +590,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1825,
+    "discoverer": "Hans Christian Ørsted",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Latin alumen: alum, a bitter salt"
   },
   {
     "atomicNumber": 14,
@@ -584,7 +636,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1824,
+    "discoverer": "Jöns Jacob Berzelius",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin silex: flint, hard stone"
   },
   {
     "atomicNumber": 15,
@@ -626,7 +682,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1669,
+    "discoverer": "Hennig Brand",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek phosphoros: light-bearer, from its glow"
   },
   {
     "atomicNumber": 16,
@@ -668,7 +728,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin sulphur: brimstone"
   },
   {
     "atomicNumber": 17,
@@ -710,7 +774,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1774,
+    "discoverer": "Carl Wilhelm Scheele",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek chloros: pale green"
   },
   {
     "atomicNumber": 18,
@@ -752,7 +820,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1894,
+    "discoverer": "Lord Rayleigh & William Ramsay",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek argon: inactive, lazy"
   },
   {
     "atomicNumber": 19,
@@ -794,7 +866,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1807,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "English potash; symbol from Latin kalium"
   },
   {
     "atomicNumber": 20,
@@ -836,7 +912,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1808,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin calx: lime"
   },
   {
     "atomicNumber": 21,
@@ -878,7 +958,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1879,
+    "discoverer": "Lars Fredrik Nilson",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Scandia: Scandinavia"
   },
   {
     "atomicNumber": 22,
@@ -920,7 +1004,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1791,
+    "discoverer": "William Gregor",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Titans: primordial gods of mythology"
   },
   {
     "atomicNumber": 23,
@@ -962,7 +1050,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1801,
+    "discoverer": "Andrés Manuel del Río",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Vanadis, Old Norse name for the goddess Freyja"
   },
   {
     "atomicNumber": 24,
@@ -1004,7 +1096,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1797,
+    "discoverer": "Louis Nicolas Vauquelin",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek chroma: color, from its vivid compounds"
   },
   {
     "atomicNumber": 25,
@@ -1046,7 +1142,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1774,
+    "discoverer": "Johan Gottlieb Gahn",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Latin magnes: magnet, from pyrolusite ore"
   },
   {
     "atomicNumber": 26,
@@ -1088,7 +1188,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon iron; symbol from Latin ferrum"
   },
   {
     "atomicNumber": 27,
@@ -1130,7 +1234,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1735,
+    "discoverer": "Georg Brandt",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "German Kobold: goblin, from miners' superstition"
   },
   {
     "atomicNumber": 28,
@@ -1172,7 +1280,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1751,
+    "discoverer": "Axel Fredrik Cronstedt",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "German Kupfernickel: devil's copper, a deceptive ore"
   },
   {
     "atomicNumber": 29,
@@ -1214,7 +1326,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin cuprum: from Cyprus, where it was mined"
   },
   {
     "atomicNumber": 30,
@@ -1256,7 +1372,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1746,
+    "discoverer": "Andreas Sigismund Marggraf",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "German Zink: prong or tooth, from crystal shape"
   },
   {
     "atomicNumber": 31,
@@ -1298,7 +1418,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1875,
+    "discoverer": "Paul Emile Lecoq de Boisbaudran",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Gallia: France"
   },
   {
     "atomicNumber": 32,
@@ -1340,7 +1464,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1886,
+    "discoverer": "Clemens Winkler",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Germania: Germany"
   },
   {
     "atomicNumber": 33,
@@ -1382,7 +1510,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1250,
+    "discoverer": "Albertus Magnus",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek arsenikon: potent, from its toxicity"
   },
   {
     "atomicNumber": 34,
@@ -1424,7 +1556,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1817,
+    "discoverer": "Jöns Jacob Berzelius",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Greek selene: the Moon"
   },
   {
     "atomicNumber": 35,
@@ -1466,7 +1602,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1826,
+    "discoverer": "Antoine Jérôme Balard",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek bromos: stench"
   },
   {
     "atomicNumber": 36,
@@ -1508,7 +1648,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "William Ramsay & Morris Travers",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek kryptos: hidden"
   },
   {
     "atomicNumber": 37,
@@ -1550,7 +1694,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1861,
+    "discoverer": "Robert Bunsen & Gustav Kirchhoff",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin rubidus: deep red, from its spectral lines"
   },
   {
     "atomicNumber": 38,
@@ -1592,7 +1740,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1790,
+    "discoverer": "Adair Crawford",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Strontian, a village in Scotland"
   },
   {
     "atomicNumber": 39,
@@ -1634,7 +1786,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1794,
+    "discoverer": "Johan Gadolin",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 40,
@@ -1676,7 +1832,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1789,
+    "discoverer": "Martin Heinrich Klaproth",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Arabic zargun: gold-colored, from zircon mineral"
   },
   {
     "atomicNumber": 41,
@@ -1718,7 +1878,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1801,
+    "discoverer": "Charles Hatchett",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Niobe: daughter of Tantalus in mythology"
   },
   {
     "atomicNumber": 42,
@@ -1760,7 +1924,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1781,
+    "discoverer": "Carl Wilhelm Scheele",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Greek molybdos: lead, from resemblance to lead ore"
   },
   {
     "atomicNumber": 43,
@@ -1802,7 +1970,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1937,
+    "discoverer": "Carlo Perrier & Emilio Segrè",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek technetos: artificial, first synthetic element"
   },
   {
     "atomicNumber": 44,
@@ -1844,7 +2016,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1844,
+    "discoverer": "Karl Ernst Claus",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Ruthenia: Russia"
   },
   {
     "atomicNumber": 45,
@@ -1886,7 +2062,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "William Hyde Wollaston",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek rhodon: rose, from its rose-red compounds"
   },
   {
     "atomicNumber": 46,
@@ -1928,7 +2108,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "William Hyde Wollaston",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Pallas, asteroid discovered two years prior"
   },
   {
     "atomicNumber": 47,
@@ -1970,7 +2154,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon silver; symbol from Latin argentum: shiny"
   },
   {
     "atomicNumber": 48,
@@ -2012,7 +2200,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1817,
+    "discoverer": "Friedrich Stromeyer",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Latin cadmia: calamine, the zinc ore where found"
   },
   {
     "atomicNumber": 49,
@@ -2054,7 +2246,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1863,
+    "discoverer": "Ferdinand Reich & Hieronymus Richter",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin indicum: indigo, from its spectral line color"
   },
   {
     "atomicNumber": 50,
@@ -2096,7 +2292,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon tin; symbol from Latin stannum"
   },
   {
     "atomicNumber": 51,
@@ -2138,7 +2338,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Greek anti + monos: not alone; symbol from Latin stibium"
   },
   {
     "atomicNumber": 52,
@@ -2180,7 +2384,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1783,
+    "discoverer": "Franz-Joseph Müller von Reichenstein",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Latin tellus: Earth"
   },
   {
     "atomicNumber": 53,
@@ -2222,7 +2430,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1811,
+    "discoverer": "Bernard Courtois",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek ioeides: violet, from its vapor color"
   },
   {
     "atomicNumber": 54,
@@ -2264,7 +2476,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "William Ramsay & Morris Travers",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek xenos: stranger, foreign"
   },
   {
     "atomicNumber": 55,
@@ -2306,7 +2522,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1860,
+    "discoverer": "Robert Bunsen & Gustav Kirchhoff",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin caesius: sky blue, from its spectral lines"
   },
   {
     "atomicNumber": 56,
@@ -2348,7 +2568,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1808,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek barys: heavy"
   },
   {
     "atomicNumber": 57,
@@ -2390,7 +2614,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1839,
+    "discoverer": "Carl Gustaf Mosander",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek lanthanein: to lie hidden"
   },
   {
     "atomicNumber": 58,
@@ -2432,7 +2660,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "Jöns Jacob Berzelius & Wilhelm Hisinger",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Ceres, the dwarf planet discovered two years prior"
   },
   {
     "atomicNumber": 59,
@@ -2474,7 +2706,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1885,
+    "discoverer": "Carl Auer von Welsbach",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek prasios + didymos: green twin"
   },
   {
     "atomicNumber": 60,
@@ -2516,7 +2752,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1885,
+    "discoverer": "Carl Auer von Welsbach",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek neos + didymos: new twin"
   },
   {
     "atomicNumber": 61,
@@ -2558,7 +2798,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1945,
+    "discoverer": "Jacob Marinsky, Lawrence Glendenin & Charles Coryell",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Prometheus, the Titan who stole fire from the gods"
   },
   {
     "atomicNumber": 62,
@@ -2600,7 +2844,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1879,
+    "discoverer": "Paul Emile Lecoq de Boisbaudran",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Samarskite mineral, named after Vasili Samarsky-Bykhovets"
   },
   {
     "atomicNumber": 63,
@@ -2642,7 +2890,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1901,
+    "discoverer": "Eugène-Anatole Demarçay",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Europe"
   },
   {
     "atomicNumber": 64,
@@ -2684,7 +2936,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1880,
+    "discoverer": "Jean Charles Galissard de Marignac",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Johan Gadolin, Finnish chemist and mineralogist"
   },
   {
     "atomicNumber": 65,
@@ -2726,7 +2982,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1843,
+    "discoverer": "Carl Gustaf Mosander",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 66,
@@ -2768,7 +3028,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1886,
+    "discoverer": "Paul Emile Lecoq de Boisbaudran",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek dysprositos: hard to get at"
   },
   {
     "atomicNumber": 67,
@@ -2810,7 +3074,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1878,
+    "discoverer": "Marc Delafontaine & Jacques-Louis Soret",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Holmia: Stockholm"
   },
   {
     "atomicNumber": 68,
@@ -2852,7 +3120,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1843,
+    "discoverer": "Carl Gustaf Mosander",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 69,
@@ -2894,7 +3166,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1879,
+    "discoverer": "Per Teodor Cleve",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Thule, ancient name for Scandinavia"
   },
   {
     "atomicNumber": 70,
@@ -2936,7 +3212,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1878,
+    "discoverer": "Jean Charles Galissard de Marignac",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 71,
@@ -2978,7 +3258,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1907,
+    "discoverer": "Georges Urbain",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Lutetia: ancient name for Paris"
   },
   {
     "atomicNumber": 72,
@@ -3020,7 +3304,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1923,
+    "discoverer": "Dirk Coster & George de Hevesy",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Hafnia: Copenhagen"
   },
   {
     "atomicNumber": 73,
@@ -3062,7 +3350,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1802,
+    "discoverer": "Anders Gustaf Ekeberg",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Tantalus: mythological king condemned to eternal hunger"
   },
   {
     "atomicNumber": 74,
@@ -3104,7 +3396,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1783,
+    "discoverer": "Juan José Elhuyar & Fausto Elhuyar",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Swedish tung sten: heavy stone; symbol from wolframite ore"
   },
   {
     "atomicNumber": 75,
@@ -3146,7 +3442,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1925,
+    "discoverer": "Walter Noddack, Ida Tacke & Otto Berg",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Rhenus: the Rhine river"
   },
   {
     "atomicNumber": 76,
@@ -3188,7 +3488,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "Smithson Tennant",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek osme: smell, from its pungent oxide"
   },
   {
     "atomicNumber": 77,
@@ -3230,7 +3534,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "Smithson Tennant",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Iris: goddess of the rainbow, from its colorful salts"
   },
   {
     "atomicNumber": 78,
@@ -3272,7 +3580,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1735,
+    "discoverer": "Antonio de Ulloa",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Spanish platina: little silver"
   },
   {
     "atomicNumber": 79,
@@ -3314,7 +3626,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon gold; symbol from Latin aurum: shining dawn"
   },
   {
     "atomicNumber": 80,
@@ -3356,7 +3672,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Mercury, the Roman messenger god; Latin hydrargyrum: liquid silver"
   },
   {
     "atomicNumber": 81,
@@ -3398,7 +3718,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1861,
+    "discoverer": "William Crookes",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek thallos: green twig, from its spectral line"
   },
   {
     "atomicNumber": 82,
@@ -3440,7 +3764,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon lead; symbol from Latin plumbum"
   },
   {
     "atomicNumber": 83,
@@ -3482,7 +3810,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1753,
+    "discoverer": "Claude François Geoffroy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "German Wismut: uncertain, possibly white mass"
   },
   {
     "atomicNumber": 84,
@@ -3524,7 +3856,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "Marie Curie & Pierre Curie",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Poland, homeland of Marie Curie"
   },
   {
     "atomicNumber": 85,
@@ -3566,7 +3902,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1940,
+    "discoverer": "Dale Corson, Kenneth MacKenzie & Emilio Segrè",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek astatos: unstable"
   },
   {
     "atomicNumber": 86,
@@ -3608,7 +3948,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1900,
+    "discoverer": "Friedrich Ernst Dorn",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "From radium, its parent element in decay chains"
   },
   {
     "atomicNumber": 87,
@@ -3650,7 +3994,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1939,
+    "discoverer": "Marguerite Perey",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "France"
   },
   {
     "atomicNumber": 88,
@@ -3692,7 +4040,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "Marie Curie & Pierre Curie",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin radius: ray, from its intense radioactivity"
   },
   {
     "atomicNumber": 89,
@@ -3734,7 +4086,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1899,
+    "discoverer": "André-Louis Debierne",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek aktinos: ray"
   },
   {
     "atomicNumber": 90,
@@ -3776,7 +4132,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1829,
+    "discoverer": "Jöns Jacob Berzelius",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Thor, the Norse god of thunder"
   },
   {
     "atomicNumber": 91,
@@ -3818,7 +4178,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1913,
+    "discoverer": "Kasimir Fajans & Oswald Helmuth Göhring",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek protos + aktinos: first ray, precursor to actinium"
   },
   {
     "atomicNumber": 92,
@@ -3860,7 +4224,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1789,
+    "discoverer": "Martin Heinrich Klaproth",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Uranus, the planet discovered eight years prior"
   },
   {
     "atomicNumber": 93,
@@ -3902,7 +4270,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1940,
+    "discoverer": "Edwin McMillan & Philip Abelson",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Neptune, the planet beyond Uranus"
   },
   {
     "atomicNumber": 94,
@@ -3944,7 +4316,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1940,
+    "discoverer": "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Pluto, the celestial body beyond Neptune"
   },
   {
     "atomicNumber": 95,
@@ -3986,7 +4362,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1944,
+    "discoverer": "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Americas, by analogy with europium"
   },
   {
     "atomicNumber": 96,
@@ -4028,7 +4408,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1944,
+    "discoverer": "Glenn Seaborg, Ralph James & Albert Ghiorso",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Marie and Pierre Curie, pioneers of radioactivity"
   },
   {
     "atomicNumber": 97,
@@ -4070,7 +4454,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1949,
+    "discoverer": "Glenn Seaborg, Stanley Thompson & Albert Ghiorso",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Berkeley, California, where it was synthesized"
   },
   {
     "atomicNumber": 98,
@@ -4112,7 +4500,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1950,
+    "discoverer": "Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "California, the state and university"
   },
   {
     "atomicNumber": 99,
@@ -4154,7 +4546,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1952,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Albert Einstein"
   },
   {
     "atomicNumber": 100,
@@ -4196,7 +4592,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1952,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Enrico Fermi, nuclear physics pioneer"
   },
   {
     "atomicNumber": 101,
@@ -4238,7 +4638,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1955,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Dmitri Mendeleev, creator of the periodic table"
   },
   {
     "atomicNumber": 102,
@@ -4280,7 +4684,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1958,
+    "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Alfred Nobel, inventor of dynamite"
   },
   {
     "atomicNumber": 103,
@@ -4322,7 +4730,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1961,
+    "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Ernest O. Lawrence, cyclotron inventor"
   },
   {
     "atomicNumber": 104,
@@ -4364,7 +4776,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1969,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Ernest Rutherford, father of nuclear physics"
   },
   {
     "atomicNumber": 105,
@@ -4406,7 +4822,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1970,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Dubna, Russian city with the Joint Institute for Nuclear Research"
   },
   {
     "atomicNumber": 106,
@@ -4448,7 +4868,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1974,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Glenn T. Seaborg, prolific element discoverer"
   },
   {
     "atomicNumber": 107,
@@ -4490,7 +4914,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1981,
+    "discoverer": "Peter Armbruster & Gottfried Münzenberg",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Niels Bohr, quantum mechanics pioneer"
   },
   {
     "atomicNumber": 108,
@@ -4532,7 +4960,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1984,
+    "discoverer": "Peter Armbruster & Gottfried Münzenberg",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Hassia: Hesse, the German state"
   },
   {
     "atomicNumber": 109,
@@ -4574,7 +5006,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1982,
+    "discoverer": "Peter Armbruster & Gottfried Münzenberg",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Lise Meitner, nuclear fission co-discoverer"
   },
   {
     "atomicNumber": 110,
@@ -4616,7 +5052,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1994,
+    "discoverer": "Sigurd Hofmann et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Darmstadt, German city with GSI Helmholtz Centre"
   },
   {
     "atomicNumber": 111,
@@ -4658,7 +5098,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1994,
+    "discoverer": "Sigurd Hofmann et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Wilhelm Conrad Röntgen, discoverer of X-rays"
   },
   {
     "atomicNumber": 112,
@@ -4700,7 +5144,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1996,
+    "discoverer": "Sigurd Hofmann et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Nicolaus Copernicus, heliocentric model pioneer"
   },
   {
     "atomicNumber": 113,
@@ -4742,7 +5190,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 2003,
+    "discoverer": "Kosuke Morita et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Nihon: Japan, in Japanese"
   },
   {
     "atomicNumber": 114,
@@ -4784,7 +5236,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 1999,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Flerov Laboratory, named after Georgy Flyorov"
   },
   {
     "atomicNumber": 115,
@@ -4826,7 +5282,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 2003,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Moscow Oblast, Russia"
   },
   {
     "atomicNumber": 116,
@@ -4868,7 +5328,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 2000,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Lawrence Livermore National Laboratory, California"
   },
   {
     "atomicNumber": 117,
@@ -4910,7 +5374,11 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 2010,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Tennessee, US state with Oak Ridge National Laboratory"
   },
   {
     "atomicNumber": 118,
@@ -4951,6 +5419,10 @@
         "license": "CC BY-SA 4.0",
         "accessDate": "2026-03-30"
       }
-    }
+    },
+    "discoveryYear": 2002,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Yuri Oganessian, prolific superheavy element researcher"
   }
 ]

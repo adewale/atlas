@@ -28,6 +28,10 @@ export type ElementRecord = {
   electronegativity: number | null;
   ionizationEnergy: number | null;
   radius: number | null;
+  discoveryYear: number | null;
+  discoverer: string;
+  etymologyOrigin: string;
+  etymologyDescription: string;
   summary: string;
   neighbors: string[];
   rankings: Record<string, number>;

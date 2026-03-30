@@ -13,6 +13,7 @@ import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
 import { DEEP_BLUE, WARM_RED, PAPER, toSlug } from '../lib/theme';
+import InfoTip from './InfoTip';
 
 const PLATE_WIDTH = 160;
 const PLATE_HEIGHT = 180;
@@ -312,7 +313,9 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
         {groupPhaseData && (
           <div style={{ marginTop: '16px' }}>
             <div style={{ fontSize: '10px', color: '#666', marginBottom: '4px' }}>
-              Phase at STP — Group {element.group}
+              <InfoTip label="STP = Standard Temperature and Pressure (0°C, 1 atm). This strip shows the physical state of each element in the same group at these conditions.">
+                <span>Phase at STP — Group {element.group}</span>
+              </InfoTip>
             </div>
             <GroupPhaseStrip
               phases={groupPhaseData.phases}
@@ -345,6 +348,36 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
               />
             );
           })}
+        </div>
+
+        {/* Etymology and discovery — educational context */}
+        <div
+          style={{
+            marginTop: '24px',
+            padding: '12px 0',
+            borderTop: `1px solid ${color}`,
+            fontSize: '13px',
+            lineHeight: 1.7,
+            color: '#333',
+            opacity: 0,
+            animation: animate ? 'folio-line-reveal 300ms var(--ease-out) 400ms forwards' : undefined,
+          }}
+        >
+          {element.etymologyDescription && (
+            <div style={{ marginBottom: '6px' }}>
+              <span style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Etymology</span>
+              <div>{element.etymologyDescription}</div>
+            </div>
+          )}
+          {element.discoverer && (
+            <div>
+              <span style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
+              <div>
+                {element.discoverer}
+                {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

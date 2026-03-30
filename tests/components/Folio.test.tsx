@@ -44,6 +44,10 @@ const FE: ElementRecord = {
   radius: 194,
   summary:
     'Iron is a chemical element; it has symbol Fe and atomic number 26. It is a metal that belongs to the first transition series and group 8 of the periodic table.',
+  discoveryYear: null,
+  discoverer: 'Known since antiquity',
+  etymologyOrigin: 'property',
+  etymologyDescription: 'Anglo-Saxon iron; symbol from Latin ferrum',
   neighbors: ['Mn', 'Co'],
   rankings: {
     mass: 93,

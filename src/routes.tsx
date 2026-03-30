@@ -14,6 +14,13 @@ const Compare = lazy(() => import('./pages/Compare'));
 const About = lazy(() => import('./pages/About'));
 const Credits = lazy(() => import('./pages/Credits'));
 const Design = lazy(() => import('./pages/Design'));
+const DiscoveryTimeline = lazy(() => import('./pages/DiscoveryTimeline'));
+const PhaseLandscape = lazy(() => import('./pages/PhaseLandscape'));
+const PropertyScatter = lazy(() => import('./pages/PropertyScatter'));
+const AnomalyExplorer = lazy(() => import('./pages/AnomalyExplorer'));
+const NeighborhoodGraph = lazy(() => import('./pages/NeighborhoodGraph'));
+const EtymologyMap = lazy(() => import('./pages/EtymologyMap'));
+const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
 
 export const router = createBrowserRouter([
   { path: '/', Component: Home },
@@ -100,4 +107,39 @@ export const router = createBrowserRouter([
     },
   },
   { path: '/design', Component: Design },
+  {
+    path: '/discovery-timeline',
+    Component: DiscoveryTimeline,
+    loader: async () => {
+      const mod = await import('../data/generated/timeline.json');
+      return mod.default;
+    },
+  },
+  { path: '/phase-landscape', Component: PhaseLandscape },
+  { path: '/property-scatter', Component: PropertyScatter },
+  {
+    path: '/anomaly-explorer',
+    Component: AnomalyExplorer,
+    loader: async () => {
+      const mod = await import('../data/generated/anomalies.json');
+      return { anomalies: mod.default };
+    },
+  },
+  { path: '/neighborhood-graph', Component: NeighborhoodGraph },
+  {
+    path: '/etymology-map',
+    Component: EtymologyMap,
+    loader: async () => {
+      const mod = await import('../data/generated/etymology.json');
+      return { etymology: mod.default };
+    },
+  },
+  {
+    path: '/discoverer-network',
+    Component: DiscovererNetwork,
+    loader: async () => {
+      const mod = await import('../data/generated/discoverers.json');
+      return { discoverers: mod.default };
+    },
+  },
 ]);

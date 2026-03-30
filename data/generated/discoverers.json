@@ -1,0 +1,495 @@
+[
+  {
+    "name": "Known since antiquity",
+    "elements": [
+      "C",
+      "S",
+      "Fe",
+      "Cu",
+      "Ag",
+      "Sn",
+      "Sb",
+      "Au",
+      "Hg",
+      "Pb"
+    ]
+  },
+  {
+    "name": "Albert Ghiorso et al.",
+    "elements": [
+      "Es",
+      "Fm",
+      "Md",
+      "Rf",
+      "Db",
+      "Sg"
+    ]
+  },
+  {
+    "name": "Humphry Davy",
+    "elements": [
+      "B",
+      "Na",
+      "K",
+      "Ca",
+      "Ba"
+    ]
+  },
+  {
+    "name": "Yuri Oganessian et al.",
+    "elements": [
+      "Fl",
+      "Mc",
+      "Lv",
+      "Ts",
+      "Og"
+    ]
+  },
+  {
+    "name": "William Ramsay & Morris Travers",
+    "elements": [
+      "Ne",
+      "Kr",
+      "Xe"
+    ]
+  },
+  {
+    "name": "Jöns Jacob Berzelius",
+    "elements": [
+      "Si",
+      "Se",
+      "Th"
+    ]
+  },
+  {
+    "name": "Paul Emile Lecoq de Boisbaudran",
+    "elements": [
+      "Ga",
+      "Sm",
+      "Dy"
+    ]
+  },
+  {
+    "name": "Carl Gustaf Mosander",
+    "elements": [
+      "La",
+      "Tb",
+      "Er"
+    ]
+  },
+  {
+    "name": "Peter Armbruster & Gottfried Münzenberg",
+    "elements": [
+      "Bh",
+      "Hs",
+      "Mt"
+    ]
+  },
+  {
+    "name": "Sigurd Hofmann et al.",
+    "elements": [
+      "Ds",
+      "Rg",
+      "Cn"
+    ]
+  },
+  {
+    "name": "Louis Nicolas Vauquelin",
+    "elements": [
+      "Be",
+      "Cr"
+    ]
+  },
+  {
+    "name": "Carl Wilhelm Scheele",
+    "elements": [
+      "Cl",
+      "Mo"
+    ]
+  },
+  {
+    "name": "Robert Bunsen & Gustav Kirchhoff",
+    "elements": [
+      "Rb",
+      "Cs"
+    ]
+  },
+  {
+    "name": "Martin Heinrich Klaproth",
+    "elements": [
+      "Zr",
+      "U"
+    ]
+  },
+  {
+    "name": "William Hyde Wollaston",
+    "elements": [
+      "Rh",
+      "Pd"
+    ]
+  },
+  {
+    "name": "Carl Auer von Welsbach",
+    "elements": [
+      "Pr",
+      "Nd"
+    ]
+  },
+  {
+    "name": "Jean Charles Galissard de Marignac",
+    "elements": [
+      "Gd",
+      "Yb"
+    ]
+  },
+  {
+    "name": "Smithson Tennant",
+    "elements": [
+      "Os",
+      "Ir"
+    ]
+  },
+  {
+    "name": "Marie Curie & Pierre Curie",
+    "elements": [
+      "Po",
+      "Ra"
+    ]
+  },
+  {
+    "name": "Henry Cavendish",
+    "elements": [
+      "H"
+    ]
+  },
+  {
+    "name": "Pierre Janssen & Joseph Lockyer",
+    "elements": [
+      "He"
+    ]
+  },
+  {
+    "name": "Johan August Arfwedson",
+    "elements": [
+      "Li"
+    ]
+  },
+  {
+    "name": "Daniel Rutherford",
+    "elements": [
+      "N"
+    ]
+  },
+  {
+    "name": "Joseph Priestley & Carl Wilhelm Scheele",
+    "elements": [
+      "O"
+    ]
+  },
+  {
+    "name": "Henri Moissan",
+    "elements": [
+      "F"
+    ]
+  },
+  {
+    "name": "Joseph Black",
+    "elements": [
+      "Mg"
+    ]
+  },
+  {
+    "name": "Hans Christian Ørsted",
+    "elements": [
+      "Al"
+    ]
+  },
+  {
+    "name": "Hennig Brand",
+    "elements": [
+      "P"
+    ]
+  },
+  {
+    "name": "Lord Rayleigh & William Ramsay",
+    "elements": [
+      "Ar"
+    ]
+  },
+  {
+    "name": "Lars Fredrik Nilson",
+    "elements": [
+      "Sc"
+    ]
+  },
+  {
+    "name": "William Gregor",
+    "elements": [
+      "Ti"
+    ]
+  },
+  {
+    "name": "Andrés Manuel del Río",
+    "elements": [
+      "V"
+    ]
+  },
+  {
+    "name": "Johan Gottlieb Gahn",
+    "elements": [
+      "Mn"
+    ]
+  },
+  {
+    "name": "Georg Brandt",
+    "elements": [
+      "Co"
+    ]
+  },
+  {
+    "name": "Axel Fredrik Cronstedt",
+    "elements": [
+      "Ni"
+    ]
+  },
+  {
+    "name": "Andreas Sigismund Marggraf",
+    "elements": [
+      "Zn"
+    ]
+  },
+  {
+    "name": "Clemens Winkler",
+    "elements": [
+      "Ge"
+    ]
+  },
+  {
+    "name": "Albertus Magnus",
+    "elements": [
+      "As"
+    ]
+  },
+  {
+    "name": "Antoine Jérôme Balard",
+    "elements": [
+      "Br"
+    ]
+  },
+  {
+    "name": "Adair Crawford",
+    "elements": [
+      "Sr"
+    ]
+  },
+  {
+    "name": "Johan Gadolin",
+    "elements": [
+      "Y"
+    ]
+  },
+  {
+    "name": "Charles Hatchett",
+    "elements": [
+      "Nb"
+    ]
+  },
+  {
+    "name": "Carlo Perrier & Emilio Segrè",
+    "elements": [
+      "Tc"
+    ]
+  },
+  {
+    "name": "Karl Ernst Claus",
+    "elements": [
+      "Ru"
+    ]
+  },
+  {
+    "name": "Friedrich Stromeyer",
+    "elements": [
+      "Cd"
+    ]
+  },
+  {
+    "name": "Ferdinand Reich & Hieronymus Richter",
+    "elements": [
+      "In"
+    ]
+  },
+  {
+    "name": "Franz-Joseph Müller von Reichenstein",
+    "elements": [
+      "Te"
+    ]
+  },
+  {
+    "name": "Bernard Courtois",
+    "elements": [
+      "I"
+    ]
+  },
+  {
+    "name": "Jöns Jacob Berzelius & Wilhelm Hisinger",
+    "elements": [
+      "Ce"
+    ]
+  },
+  {
+    "name": "Jacob Marinsky, Lawrence Glendenin & Charles Coryell",
+    "elements": [
+      "Pm"
+    ]
+  },
+  {
+    "name": "Eugène-Anatole Demarçay",
+    "elements": [
+      "Eu"
+    ]
+  },
+  {
+    "name": "Marc Delafontaine & Jacques-Louis Soret",
+    "elements": [
+      "Ho"
+    ]
+  },
+  {
+    "name": "Per Teodor Cleve",
+    "elements": [
+      "Tm"
+    ]
+  },
+  {
+    "name": "Georges Urbain",
+    "elements": [
+      "Lu"
+    ]
+  },
+  {
+    "name": "Dirk Coster & George de Hevesy",
+    "elements": [
+      "Hf"
+    ]
+  },
+  {
+    "name": "Anders Gustaf Ekeberg",
+    "elements": [
+      "Ta"
+    ]
+  },
+  {
+    "name": "Juan José Elhuyar & Fausto Elhuyar",
+    "elements": [
+      "W"
+    ]
+  },
+  {
+    "name": "Walter Noddack, Ida Tacke & Otto Berg",
+    "elements": [
+      "Re"
+    ]
+  },
+  {
+    "name": "Antonio de Ulloa",
+    "elements": [
+      "Pt"
+    ]
+  },
+  {
+    "name": "William Crookes",
+    "elements": [
+      "Tl"
+    ]
+  },
+  {
+    "name": "Claude François Geoffroy",
+    "elements": [
+      "Bi"
+    ]
+  },
+  {
+    "name": "Dale Corson, Kenneth MacKenzie & Emilio Segrè",
+    "elements": [
+      "At"
+    ]
+  },
+  {
+    "name": "Friedrich Ernst Dorn",
+    "elements": [
+      "Rn"
+    ]
+  },
+  {
+    "name": "Marguerite Perey",
+    "elements": [
+      "Fr"
+    ]
+  },
+  {
+    "name": "André-Louis Debierne",
+    "elements": [
+      "Ac"
+    ]
+  },
+  {
+    "name": "Kasimir Fajans & Oswald Helmuth Göhring",
+    "elements": [
+      "Pa"
+    ]
+  },
+  {
+    "name": "Edwin McMillan & Philip Abelson",
+    "elements": [
+      "Np"
+    ]
+  },
+  {
+    "name": "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl",
+    "elements": [
+      "Pu"
+    ]
+  },
+  {
+    "name": "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso",
+    "elements": [
+      "Am"
+    ]
+  },
+  {
+    "name": "Glenn Seaborg, Ralph James & Albert Ghiorso",
+    "elements": [
+      "Cm"
+    ]
+  },
+  {
+    "name": "Glenn Seaborg, Stanley Thompson & Albert Ghiorso",
+    "elements": [
+      "Bk"
+    ]
+  },
+  {
+    "name": "Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street",
+    "elements": [
+      "Cf"
+    ]
+  },
+  {
+    "name": "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg",
+    "elements": [
+      "No"
+    ]
+  },
+  {
+    "name": "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer",
+    "elements": [
+      "Lr"
+    ]
+  },
+  {
+    "name": "Kosuke Morita et al.",
+    "elements": [
+      "Nh"
+    ]
+  }
+]

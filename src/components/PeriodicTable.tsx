@@ -12,6 +12,7 @@ import {
 } from '../lib/grid';
 import { useGridNavigation } from '../hooks/useGridNavigation';
 import KeyboardHelp from './KeyboardHelp';
+import InfoTip from './InfoTip';
 
 // ---------------------------------------------------------------------------
 // Highlight modes
@@ -202,8 +203,8 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             Filter elements by name or symbol. Press / to focus, Escape to clear.
           </span>
         </div>
-        <div>
-          <label htmlFor="pt-highlight" className="sr-only">Highlight mode</label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <label htmlFor="pt-highlight" style={{ fontSize: '12px', color: '#666' }}>Color by</label>
           <select
             id="pt-highlight"
             value={highlightMode}
@@ -220,10 +221,13 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               <option key={o.value} value={o.value}>{o.label}</option>
             ))}
           </select>
+          <InfoTip label="Color each cell by group, period, block (s/p/d/f electron orbital), category (metal type), or a numeric property like mass or electronegativity. Darker = higher value in Property mode.">
+            <span />
+          </InfoTip>
         </div>
         {highlightMode === 'property' && (
-          <div>
-            <label htmlFor="pt-property" className="sr-only">Property</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <label htmlFor="pt-property" style={{ fontSize: '12px', color: '#666' }}>Property</label>
             <select
               id="pt-property"
               value={property}
@@ -240,6 +244,9 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 <option key={o.value} value={o.value}>{o.label}</option>
               ))}
             </select>
+            <InfoTip label="Mass: atomic weight in daltons. Electronegativity: tendency to attract electrons (Pauling scale). Ionization energy: energy to remove an electron. Radius: size of the atom in picometers.">
+              <span />
+            </InfoTip>
           </div>
         )}
         <button

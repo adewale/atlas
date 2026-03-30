@@ -24,7 +24,11 @@
       "electronegativity": 17,
       "ionizationEnergy": 8,
       "radius": 99
-    }
+    },
+    "discoveryYear": 1766,
+    "discoverer": "Henry Cavendish",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek hydro + genes: water-forming"
   },
   {
     "atomicNumber": 2,
@@ -52,7 +56,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 1,
       "radius": 95
-    }
+    },
+    "discoveryYear": 1868,
+    "discoverer": "Pierre Janssen & Joseph Lockyer",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Greek helios: the Sun, first observed in solar spectrum"
   },
   {
     "atomicNumber": 3,
@@ -80,7 +88,11 @@
       "electronegativity": 87,
       "ionizationEnergy": 94,
       "radius": 80
-    }
+    },
+    "discoveryYear": 1817,
+    "discoverer": "Johan August Arfwedson",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek lithos: stone, discovered in mineral"
   },
   {
     "atomicNumber": 4,
@@ -108,7 +120,11 @@
       "electronegativity": 51,
       "ionizationEnergy": 22,
       "radius": 93
-    }
+    },
+    "discoveryYear": 1798,
+    "discoverer": "Louis Nicolas Vauquelin",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Greek beryllos: the mineral beryl"
   },
   {
     "atomicNumber": 5,
@@ -136,7 +152,11 @@
       "electronegativity": 28,
       "ionizationEnergy": 32,
       "radius": 69
-    }
+    },
+    "discoveryYear": 1808,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Arabic buraq: borax, a white mineral"
   },
   {
     "atomicNumber": 6,
@@ -164,7 +184,11 @@
       "electronegativity": 10,
       "ionizationEnergy": 12,
       "radius": 87
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin carbo: charcoal"
   },
   {
     "atomicNumber": 7,
@@ -192,7 +216,11 @@
       "electronegativity": 4,
       "ionizationEnergy": 5,
       "radius": 91
-    }
+    },
+    "discoveryYear": 1772,
+    "discoverer": "Daniel Rutherford",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek nitron + genes: niter-forming"
   },
   {
     "atomicNumber": 8,
@@ -220,7 +248,11 @@
       "electronegativity": 2,
       "ionizationEnergy": 7,
       "radius": 94
-    }
+    },
+    "discoveryYear": 1774,
+    "discoverer": "Joseph Priestley & Carl Wilhelm Scheele",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek oxys + genes: acid-forming"
   },
   {
     "atomicNumber": 9,
@@ -248,7 +280,11 @@
       "electronegativity": 1,
       "ionizationEnergy": 3,
       "radius": 98
-    }
+    },
+    "discoveryYear": 1886,
+    "discoverer": "Henri Moissan",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin fluere: to flow, from use as flux"
   },
   {
     "atomicNumber": 10,
@@ -276,7 +312,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 2,
       "radius": 92
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "William Ramsay & Morris Travers",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek neos: new"
   },
   {
     "atomicNumber": 11,
@@ -304,7 +344,11 @@
       "electronegativity": 89,
       "ionizationEnergy": 98,
       "radius": 30
-    }
+    },
+    "discoveryYear": 1807,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "English soda; symbol from Latin natrium"
   },
   {
     "atomicNumber": 12,
@@ -332,7 +376,11 @@
       "electronegativity": 60,
       "ionizationEnergy": 41,
       "radius": 85
-    }
+    },
+    "discoveryYear": 1755,
+    "discoverer": "Joseph Black",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Magnesia, a district in Thessaly, Greece"
   },
   {
     "atomicNumber": 13,
@@ -360,7 +408,11 @@
       "electronegativity": 49,
       "ionizationEnergy": 80,
       "radius": 78
-    }
+    },
+    "discoveryYear": 1825,
+    "discoverer": "Hans Christian Ørsted",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Latin alumen: alum, a bitter salt"
   },
   {
     "atomicNumber": 14,
@@ -388,7 +440,11 @@
       "electronegativity": 36,
       "ionizationEnergy": 33,
       "radius": 46
-    }
+    },
+    "discoveryYear": 1824,
+    "discoverer": "Jöns Jacob Berzelius",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin silex: flint, hard stone"
   },
   {
     "atomicNumber": 15,
@@ -416,7 +472,11 @@
       "electronegativity": 23,
       "ionizationEnergy": 14,
       "radius": 81
-    }
+    },
+    "discoveryYear": 1669,
+    "discoverer": "Hennig Brand",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek phosphoros: light-bearer, from its glow"
   },
   {
     "atomicNumber": 16,
@@ -444,7 +504,11 @@
       "electronegativity": 9,
       "ionizationEnergy": 17,
       "radius": 82
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin sulphur: brimstone"
   },
   {
     "atomicNumber": 17,
@@ -472,7 +536,11 @@
       "electronegativity": 3,
       "ionizationEnergy": 9,
       "radius": 84
-    }
+    },
+    "discoveryYear": 1774,
+    "discoverer": "Carl Wilhelm Scheele",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek chloros: pale green"
   },
   {
     "atomicNumber": 18,
@@ -500,7 +568,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 4,
       "radius": 73
-    }
+    },
+    "discoveryYear": 1894,
+    "discoverer": "Lord Rayleigh & William Ramsay",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek argon: inactive, lazy"
   },
   {
     "atomicNumber": 19,
@@ -528,7 +600,11 @@
       "electronegativity": 92,
       "ionizationEnergy": 99,
       "radius": 5
-    }
+    },
+    "discoveryYear": 1807,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "English potash; symbol from Latin kalium"
   },
   {
     "atomicNumber": 20,
@@ -556,7 +632,11 @@
       "electronegativity": 86,
       "ionizationEnergy": 71,
       "radius": 26
-    }
+    },
+    "discoveryYear": 1808,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin calx: lime"
   },
   {
     "atomicNumber": 21,
@@ -584,7 +664,11 @@
       "electronegativity": 57,
       "ionizationEnergy": 60,
       "radius": 44
-    }
+    },
+    "discoveryYear": 1879,
+    "discoverer": "Lars Fredrik Nilson",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Scandia: Scandinavia"
   },
   {
     "atomicNumber": 22,
@@ -612,7 +696,11 @@
       "electronegativity": 53,
       "ionizationEnergy": 52,
       "radius": 74
-    }
+    },
+    "discoveryYear": 1791,
+    "discoverer": "William Gregor",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Titans: primordial gods of mythology"
   },
   {
     "atomicNumber": 23,
@@ -640,7 +728,11 @@
       "electronegativity": 47,
       "ionizationEnergy": 56,
       "radius": 83
-    }
+    },
+    "discoveryYear": 1801,
+    "discoverer": "Andrés Manuel del Río",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Vanadis, Old Norse name for the goddess Freyja"
   },
   {
     "atomicNumber": 24,
@@ -668,7 +760,11 @@
       "electronegativity": 45,
       "ionizationEnergy": 54,
       "radius": 72
-    }
+    },
+    "discoveryYear": 1797,
+    "discoverer": "Louis Nicolas Vauquelin",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek chroma: color, from its vivid compounds"
   },
   {
     "atomicNumber": 25,
@@ -696,7 +792,11 @@
       "electronegativity": 52,
       "ionizationEnergy": 45,
       "radius": 63
-    }
+    },
+    "discoveryYear": 1774,
+    "discoverer": "Johan Gottlieb Gahn",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Latin magnes: magnet, from pyrolusite ore"
   },
   {
     "atomicNumber": 26,
@@ -724,7 +824,11 @@
       "electronegativity": 41,
       "ionizationEnergy": 35,
       "radius": 67
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon iron; symbol from Latin ferrum"
   },
   {
     "atomicNumber": 27,
@@ -752,7 +856,11 @@
       "electronegativity": 40,
       "ionizationEnergy": 38,
       "radius": 70
-    }
+    },
+    "discoveryYear": 1735,
+    "discoverer": "Georg Brandt",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "German Kobold: goblin, from miners' superstition"
   },
   {
     "atomicNumber": 28,
@@ -780,7 +888,11 @@
       "electronegativity": 35,
       "ionizationEnergy": 42,
       "radius": 89
-    }
+    },
+    "discoveryYear": 1751,
+    "discoverer": "Axel Fredrik Cronstedt",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "German Kupfernickel: devil's copper, a deceptive ore"
   },
   {
     "atomicNumber": 29,
@@ -808,7 +920,11 @@
       "electronegativity": 37,
       "ionizationEnergy": 40,
       "radius": 96
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin cuprum: from Cyprus, where it was mined"
   },
   {
     "atomicNumber": 30,
@@ -836,7 +952,11 @@
       "electronegativity": 46,
       "ionizationEnergy": 21,
       "radius": 97
-    }
+    },
+    "discoveryYear": 1746,
+    "discoverer": "Andreas Sigismund Marggraf",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "German Zink: prong or tooth, from crystal shape"
   },
   {
     "atomicNumber": 31,
@@ -864,7 +984,11 @@
       "electronegativity": 42,
       "ionizationEnergy": 78,
       "radius": 75
-    }
+    },
+    "discoveryYear": 1875,
+    "discoverer": "Paul Emile Lecoq de Boisbaudran",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Gallia: France"
   },
   {
     "atomicNumber": 32,
@@ -892,7 +1016,11 @@
       "electronegativity": 30,
       "ionizationEnergy": 36,
       "radius": 45
-    }
+    },
+    "discoveryYear": 1886,
+    "discoverer": "Clemens Winkler",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Germania: Germany"
   },
   {
     "atomicNumber": 33,
@@ -920,7 +1048,11 @@
       "electronegativity": 24,
       "ionizationEnergy": 18,
       "radius": 77
-    }
+    },
+    "discoveryYear": 1250,
+    "discoverer": "Albertus Magnus",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek arsenikon: potent, from its toxicity"
   },
   {
     "atomicNumber": 34,
@@ -948,7 +1080,11 @@
       "electronegativity": 11,
       "ionizationEnergy": 19,
       "radius": 71
-    }
+    },
+    "discoveryYear": 1817,
+    "discoverer": "Jöns Jacob Berzelius",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Greek selene: the Moon"
   },
   {
     "atomicNumber": 35,
@@ -976,7 +1112,11 @@
       "electronegativity": 6,
       "ionizationEnergy": 11,
       "radius": 79
-    }
+    },
+    "discoveryYear": 1826,
+    "discoverer": "Antoine Jérôme Balard",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek bromos: stench"
   },
   {
     "atomicNumber": 36,
@@ -1004,7 +1144,11 @@
       "electronegativity": 5,
       "ionizationEnergy": 6,
       "radius": 57
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "William Ramsay & Morris Travers",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek kryptos: hidden"
   },
   {
     "atomicNumber": 37,
@@ -1032,7 +1176,11 @@
       "electronegativity": 93,
       "ionizationEnergy": 100,
       "radius": 3
-    }
+    },
+    "discoveryYear": 1861,
+    "discoverer": "Robert Bunsen & Gustav Kirchhoff",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin rubidus: deep red, from its spectral lines"
   },
   {
     "atomicNumber": 38,
@@ -1060,7 +1208,11 @@
       "electronegativity": 88,
       "ionizationEnergy": 85,
       "radius": 8
-    }
+    },
+    "discoveryYear": 1790,
+    "discoverer": "Adair Crawford",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Strontian, a village in Scotland"
   },
   {
     "atomicNumber": 39,
@@ -1088,7 +1240,11 @@
       "electronegativity": 77,
       "ionizationEnergy": 67,
       "radius": 36
-    }
+    },
+    "discoveryYear": 1794,
+    "discoverer": "Johan Gadolin",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 40,
@@ -1116,7 +1272,11 @@
       "electronegativity": 59,
       "ionizationEnergy": 58,
       "radius": 76
-    }
+    },
+    "discoveryYear": 1789,
+    "discoverer": "Martin Heinrich Klaproth",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Arabic zargun: gold-colored, from zircon mineral"
   },
   {
     "atomicNumber": 41,
@@ -1144,7 +1304,11 @@
       "electronegativity": 50,
       "ionizationEnergy": 55,
       "radius": 52
-    }
+    },
+    "discoveryYear": 1801,
+    "discoverer": "Charles Hatchett",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Niobe: daughter of Tantalus in mythology"
   },
   {
     "atomicNumber": 42,
@@ -1172,7 +1336,11 @@
       "electronegativity": 25,
       "ionizationEnergy": 51,
       "radius": 48
-    }
+    },
+    "discoveryYear": 1781,
+    "discoverer": "Carl Wilhelm Scheele",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Greek molybdos: lead, from resemblance to lead ore"
   },
   {
     "atomicNumber": 43,
@@ -1200,7 +1368,11 @@
       "electronegativity": 38,
       "ionizationEnergy": 50,
       "radius": 49
-    }
+    },
+    "discoveryYear": 1937,
+    "discoverer": "Carlo Perrier & Emilio Segrè",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek technetos: artificial, first synthetic element"
   },
   {
     "atomicNumber": 44,
@@ -1228,7 +1400,11 @@
       "electronegativity": 18,
       "ionizationEnergy": 47,
       "radius": 53
-    }
+    },
+    "discoveryYear": 1844,
+    "discoverer": "Karl Ernst Claus",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Ruthenia: Russia"
   },
   {
     "atomicNumber": 45,
@@ -1256,7 +1432,11 @@
       "electronegativity": 15,
       "ionizationEnergy": 44,
       "radius": 66
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "William Hyde Wollaston",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek rhodon: rose, from its rose-red compounds"
   },
   {
     "atomicNumber": 46,
@@ -1284,7 +1464,11 @@
       "electronegativity": 19,
       "ionizationEnergy": 31,
       "radius": 58
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "William Hyde Wollaston",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Pallas, asteroid discovered two years prior"
   },
   {
     "atomicNumber": 47,
@@ -1312,7 +1496,11 @@
       "electronegativity": 34,
       "ionizationEnergy": 43,
       "radius": 86
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon silver; symbol from Latin argentum: shiny"
   },
   {
     "atomicNumber": 48,
@@ -1340,7 +1528,11 @@
       "electronegativity": 44,
       "ionizationEnergy": 27,
       "radius": 90
-    }
+    },
+    "discoveryYear": 1817,
+    "discoverer": "Friedrich Stromeyer",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Latin cadmia: calamine, the zinc ore where found"
   },
   {
     "atomicNumber": 49,
@@ -1368,7 +1560,11 @@
       "electronegativity": 43,
       "ionizationEnergy": 84,
       "radius": 68
-    }
+    },
+    "discoveryYear": 1863,
+    "discoverer": "Ferdinand Reich & Hieronymus Richter",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin indicum: indigo, from its spectral line color"
   },
   {
     "atomicNumber": 50,
@@ -1396,7 +1592,11 @@
       "electronegativity": 33,
       "ionizationEnergy": 48,
       "radius": 37
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon tin; symbol from Latin stannum"
   },
   {
     "atomicNumber": 51,
@@ -1424,7 +1624,11 @@
       "electronegativity": 27,
       "ionizationEnergy": 29,
       "radius": 55
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Greek anti + monos: not alone; symbol from Latin stibium"
   },
   {
     "atomicNumber": 52,
@@ -1452,7 +1656,11 @@
       "electronegativity": 26,
       "ionizationEnergy": 25,
       "radius": 56
-    }
+    },
+    "discoveryYear": 1783,
+    "discoverer": "Franz-Joseph Müller von Reichenstein",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Latin tellus: Earth"
   },
   {
     "atomicNumber": 53,
@@ -1480,7 +1688,11 @@
       "electronegativity": 7,
       "ionizationEnergy": 15,
       "radius": 62
-    }
+    },
+    "discoveryYear": 1811,
+    "discoverer": "Bernard Courtois",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek ioeides: violet, from its vapor color"
   },
   {
     "atomicNumber": 54,
@@ -1508,7 +1720,11 @@
       "electronegativity": 8,
       "ionizationEnergy": 10,
       "radius": 40
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "William Ramsay & Morris Travers",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek xenos: stranger, foreign"
   },
   {
     "atomicNumber": 55,
@@ -1536,7 +1752,11 @@
       "electronegativity": 94,
       "ionizationEnergy": 102,
       "radius": 2
-    }
+    },
+    "discoveryYear": 1860,
+    "discoverer": "Robert Bunsen & Gustav Kirchhoff",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin caesius: sky blue, from its spectral lines"
   },
   {
     "atomicNumber": 56,
@@ -1564,7 +1784,11 @@
       "electronegativity": 91,
       "ionizationEnergy": 96,
       "radius": 6
-    }
+    },
+    "discoveryYear": 1808,
+    "discoverer": "Humphry Davy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek barys: heavy"
   },
   {
     "atomicNumber": 57,
@@ -1592,7 +1816,11 @@
       "electronegativity": 84,
       "ionizationEnergy": 88,
       "radius": 17
-    }
+    },
+    "discoveryYear": 1839,
+    "discoverer": "Carl Gustaf Mosander",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek lanthanein: to lie hidden"
   },
   {
     "atomicNumber": 58,
@@ -1620,7 +1848,11 @@
       "electronegativity": 83,
       "ionizationEnergy": 90,
       "radius": 23
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "Jöns Jacob Berzelius & Wilhelm Hisinger",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Ceres, the dwarf planet discovered two years prior"
   },
   {
     "atomicNumber": 59,
@@ -1648,7 +1880,11 @@
       "electronegativity": 82,
       "ionizationEnergy": 92,
       "radius": 19
-    }
+    },
+    "discoveryYear": 1885,
+    "discoverer": "Carl Auer von Welsbach",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek prasios + didymos: green twin"
   },
   {
     "atomicNumber": 60,
@@ -1676,7 +1912,11 @@
       "electronegativity": 81,
       "ionizationEnergy": 91,
       "radius": 27
-    }
+    },
+    "discoveryYear": 1885,
+    "discoverer": "Carl Auer von Welsbach",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek neos + didymos: new twin"
   },
   {
     "atomicNumber": 61,
@@ -1704,7 +1944,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 89,
       "radius": 22
-    }
+    },
+    "discoveryYear": 1945,
+    "discoverer": "Jacob Marinsky, Lawrence Glendenin & Charles Coryell",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Prometheus, the Titan who stole fire from the gods"
   },
   {
     "atomicNumber": 62,
@@ -1732,7 +1976,11 @@
       "electronegativity": 80,
       "ionizationEnergy": 87,
       "radius": 28
-    }
+    },
+    "discoveryYear": 1879,
+    "discoverer": "Paul Emile Lecoq de Boisbaudran",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Samarskite mineral, named after Vasili Samarsky-Bykhovets"
   },
   {
     "atomicNumber": 63,
@@ -1760,7 +2008,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 86,
       "radius": 25
-    }
+    },
+    "discoveryYear": 1901,
+    "discoverer": "Eugène-Anatole Demarçay",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Europe"
   },
   {
     "atomicNumber": 64,
@@ -1788,7 +2040,11 @@
       "electronegativity": 79,
       "ionizationEnergy": 70,
       "radius": 20
-    }
+    },
+    "discoveryYear": 1880,
+    "discoverer": "Jean Charles Galissard de Marignac",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Johan Gadolin, Finnish chemist and mineralogist"
   },
   {
     "atomicNumber": 65,
@@ -1816,7 +2072,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 83,
       "radius": 32
-    }
+    },
+    "discoveryYear": 1843,
+    "discoverer": "Carl Gustaf Mosander",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 66,
@@ -1844,7 +2104,11 @@
       "electronegativity": 78,
       "ionizationEnergy": 81,
       "radius": 29
-    }
+    },
+    "discoveryYear": 1886,
+    "discoverer": "Paul Emile Lecoq de Boisbaudran",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek dysprositos: hard to get at"
   },
   {
     "atomicNumber": 67,
@@ -1872,7 +2136,11 @@
       "electronegativity": 76,
       "ionizationEnergy": 76,
       "radius": 41
-    }
+    },
+    "discoveryYear": 1878,
+    "discoverer": "Marc Delafontaine & Jacques-Louis Soret",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Holmia: Stockholm"
   },
   {
     "atomicNumber": 68,
@@ -1900,7 +2168,11 @@
       "electronegativity": 75,
       "ionizationEnergy": 72,
       "radius": 24
-    }
+    },
+    "discoveryYear": 1843,
+    "discoverer": "Carl Gustaf Mosander",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 69,
@@ -1928,7 +2200,11 @@
       "electronegativity": 74,
       "ionizationEnergy": 69,
       "radius": 31
-    }
+    },
+    "discoveryYear": 1879,
+    "discoverer": "Per Teodor Cleve",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Thule, ancient name for Scandinavia"
   },
   {
     "atomicNumber": 70,
@@ -1956,7 +2232,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 65,
       "radius": 16
-    }
+    },
+    "discoveryYear": 1878,
+    "discoverer": "Jean Charles Galissard de Marignac",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Ytterby, a village in Sweden"
   },
   {
     "atomicNumber": 71,
@@ -1984,7 +2264,11 @@
       "electronegativity": 73,
       "ionizationEnergy": 93,
       "radius": 33
-    }
+    },
+    "discoveryYear": 1907,
+    "discoverer": "Georges Urbain",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Lutetia: ancient name for Paris"
   },
   {
     "atomicNumber": 72,
@@ -2012,7 +2296,11 @@
       "electronegativity": 61,
       "ionizationEnergy": 53,
       "radius": 43
-    }
+    },
+    "discoveryYear": 1923,
+    "discoverer": "Dirk Coster & George de Hevesy",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Hafnia: Copenhagen"
   },
   {
     "atomicNumber": 73,
@@ -2040,7 +2328,11 @@
       "electronegativity": 54,
       "ionizationEnergy": 37,
       "radius": 38
-    }
+    },
+    "discoveryYear": 1802,
+    "discoverer": "Anders Gustaf Ekeberg",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Tantalus: mythological king condemned to eternal hunger"
   },
   {
     "atomicNumber": 74,
@@ -2068,7 +2360,11 @@
       "electronegativity": 13,
       "ionizationEnergy": 34,
       "radius": 47
-    }
+    },
+    "discoveryYear": 1783,
+    "discoverer": "Juan José Elhuyar & Fausto Elhuyar",
+    "etymologyOrigin": "mineral",
+    "etymologyDescription": "Swedish tung sten: heavy stone; symbol from wolframite ore"
   },
   {
     "atomicNumber": 75,
@@ -2096,7 +2392,11 @@
       "electronegativity": 39,
       "ionizationEnergy": 39,
       "radius": 39
-    }
+    },
+    "discoveryYear": 1925,
+    "discoverer": "Walter Noddack, Ida Tacke & Otto Berg",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Rhenus: the Rhine river"
   },
   {
     "atomicNumber": 76,
@@ -2124,7 +2424,11 @@
       "electronegativity": 20,
       "ionizationEnergy": 28,
       "radius": 42
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "Smithson Tennant",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek osme: smell, from its pungent oxide"
   },
   {
     "atomicNumber": 77,
@@ -2152,7 +2456,11 @@
       "electronegativity": 21,
       "ionizationEnergy": 24,
       "radius": 59
-    }
+    },
+    "discoveryYear": 1803,
+    "discoverer": "Smithson Tennant",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Greek Iris: goddess of the rainbow, from its colorful salts"
   },
   {
     "atomicNumber": 78,
@@ -2180,7 +2488,11 @@
       "electronegativity": 16,
       "ionizationEnergy": 26,
       "radius": 50
-    }
+    },
+    "discoveryYear": 1735,
+    "discoverer": "Antonio de Ulloa",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Spanish platina: little silver"
   },
   {
     "atomicNumber": 79,
@@ -2208,7 +2520,11 @@
       "electronegativity": 12,
       "ionizationEnergy": 23,
       "radius": 88
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon gold; symbol from Latin aurum: shining dawn"
   },
   {
     "atomicNumber": 80,
@@ -2236,7 +2552,11 @@
       "electronegativity": 31,
       "ionizationEnergy": 16,
       "radius": 51
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Mercury, the Roman messenger god; Latin hydrargyrum: liquid silver"
   },
   {
     "atomicNumber": 81,
@@ -2264,7 +2584,11 @@
       "electronegativity": 48,
       "ionizationEnergy": 73,
       "radius": 65
-    }
+    },
+    "discoveryYear": 1861,
+    "discoverer": "William Crookes",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek thallos: green twig, from its spectral line"
   },
   {
     "atomicNumber": 82,
@@ -2292,7 +2616,11 @@
       "electronegativity": 14,
       "ionizationEnergy": 46,
       "radius": 60
-    }
+    },
+    "discoveryYear": null,
+    "discoverer": "Known since antiquity",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Anglo-Saxon lead; symbol from Latin plumbum"
   },
   {
     "atomicNumber": 83,
@@ -2320,7 +2648,11 @@
       "electronegativity": 29,
       "ionizationEnergy": 49,
       "radius": 54
-    }
+    },
+    "discoveryYear": 1753,
+    "discoverer": "Claude François Geoffroy",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "German Wismut: uncertain, possibly white mass"
   },
   {
     "atomicNumber": 84,
@@ -2348,7 +2680,11 @@
       "electronegativity": 32,
       "ionizationEnergy": 30,
       "radius": 64
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "Marie Curie & Pierre Curie",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Poland, homeland of Marie Curie"
   },
   {
     "atomicNumber": 85,
@@ -2376,7 +2712,11 @@
       "electronegativity": 22,
       "ionizationEnergy": 20,
       "radius": 61
-    }
+    },
+    "discoveryYear": 1940,
+    "discoverer": "Dale Corson, Kenneth MacKenzie & Emilio Segrè",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek astatos: unstable"
   },
   {
     "atomicNumber": 86,
@@ -2404,7 +2744,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 13,
       "radius": 35
-    }
+    },
+    "discoveryYear": 1900,
+    "discoverer": "Friedrich Ernst Dorn",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "From radium, its parent element in decay chains"
   },
   {
     "atomicNumber": 87,
@@ -2432,7 +2776,11 @@
       "electronegativity": 95,
       "ionizationEnergy": 101,
       "radius": 1
-    }
+    },
+    "discoveryYear": 1939,
+    "discoverer": "Marguerite Perey",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "France"
   },
   {
     "atomicNumber": 88,
@@ -2460,7 +2808,11 @@
       "electronegativity": 90,
       "ionizationEnergy": 95,
       "radius": 4
-    }
+    },
+    "discoveryYear": 1898,
+    "discoverer": "Marie Curie & Pierre Curie",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Latin radius: ray, from its intense radioactivity"
   },
   {
     "atomicNumber": 89,
@@ -2488,7 +2840,11 @@
       "electronegativity": 85,
       "ionizationEnergy": 97,
       "radius": 7
-    }
+    },
+    "discoveryYear": 1899,
+    "discoverer": "André-Louis Debierne",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek aktinos: ray"
   },
   {
     "atomicNumber": 90,
@@ -2516,7 +2872,11 @@
       "electronegativity": 62,
       "ionizationEnergy": 74,
       "radius": 21
-    }
+    },
+    "discoveryYear": 1829,
+    "discoverer": "Jöns Jacob Berzelius",
+    "etymologyOrigin": "mythology",
+    "etymologyDescription": "Thor, the Norse god of thunder"
   },
   {
     "atomicNumber": 91,
@@ -2544,7 +2904,11 @@
       "electronegativity": 55,
       "ionizationEnergy": 82,
       "radius": 14
-    }
+    },
+    "discoveryYear": 1913,
+    "discoverer": "Kasimir Fajans & Oswald Helmuth Göhring",
+    "etymologyOrigin": "property",
+    "etymologyDescription": "Greek protos + aktinos: first ray, precursor to actinium"
   },
   {
     "atomicNumber": 92,
@@ -2572,7 +2936,11 @@
       "electronegativity": 56,
       "ionizationEnergy": 68,
       "radius": 18
-    }
+    },
+    "discoveryYear": 1789,
+    "discoverer": "Martin Heinrich Klaproth",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Uranus, the planet discovered eight years prior"
   },
   {
     "atomicNumber": 93,
@@ -2600,7 +2968,11 @@
       "electronegativity": 58,
       "ionizationEnergy": 64,
       "radius": 34
-    }
+    },
+    "discoveryYear": 1940,
+    "discoverer": "Edwin McMillan & Philip Abelson",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Neptune, the planet beyond Uranus"
   },
   {
     "atomicNumber": 94,
@@ -2628,7 +3000,11 @@
       "electronegativity": 72,
       "ionizationEnergy": 75,
       "radius": 15
-    }
+    },
+    "discoveryYear": 1940,
+    "discoverer": "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl",
+    "etymologyOrigin": "astronomical",
+    "etymologyDescription": "Pluto, the celestial body beyond Neptune"
   },
   {
     "atomicNumber": 95,
@@ -2656,7 +3032,11 @@
       "electronegativity": 63,
       "ionizationEnergy": 79,
       "radius": 12
-    }
+    },
+    "discoveryYear": 1944,
+    "discoverer": "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Americas, by analogy with europium"
   },
   {
     "atomicNumber": 96,
@@ -2684,7 +3064,11 @@
       "electronegativity": 64,
       "ionizationEnergy": 77,
       "radius": 9
-    }
+    },
+    "discoveryYear": 1944,
+    "discoverer": "Glenn Seaborg, Ralph James & Albert Ghiorso",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Marie and Pierre Curie, pioneers of radioactivity"
   },
   {
     "atomicNumber": 97,
@@ -2712,7 +3096,11 @@
       "electronegativity": 65,
       "ionizationEnergy": 66,
       "radius": 13
-    }
+    },
+    "discoveryYear": 1949,
+    "discoverer": "Glenn Seaborg, Stanley Thompson & Albert Ghiorso",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Berkeley, California, where it was synthesized"
   },
   {
     "atomicNumber": 98,
@@ -2740,7 +3128,11 @@
       "electronegativity": 66,
       "ionizationEnergy": 63,
       "radius": 10
-    }
+    },
+    "discoveryYear": 1950,
+    "discoverer": "Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "California, the state and university"
   },
   {
     "atomicNumber": 99,
@@ -2768,7 +3160,11 @@
       "electronegativity": 67,
       "ionizationEnergy": 62,
       "radius": 11
-    }
+    },
+    "discoveryYear": 1952,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Albert Einstein"
   },
   {
     "atomicNumber": 100,
@@ -2796,7 +3192,11 @@
       "electronegativity": 68,
       "ionizationEnergy": 61,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1952,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Enrico Fermi, nuclear physics pioneer"
   },
   {
     "atomicNumber": 101,
@@ -2824,7 +3224,11 @@
       "electronegativity": 69,
       "ionizationEnergy": 59,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1955,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Dmitri Mendeleev, creator of the periodic table"
   },
   {
     "atomicNumber": 102,
@@ -2852,7 +3256,11 @@
       "electronegativity": 70,
       "ionizationEnergy": 57,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1958,
+    "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Alfred Nobel, inventor of dynamite"
   },
   {
     "atomicNumber": 103,
@@ -2880,7 +3288,11 @@
       "electronegativity": 71,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1961,
+    "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Ernest O. Lawrence, cyclotron inventor"
   },
   {
     "atomicNumber": 104,
@@ -2908,7 +3320,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1969,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Ernest Rutherford, father of nuclear physics"
   },
   {
     "atomicNumber": 105,
@@ -2936,7 +3352,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1970,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Dubna, Russian city with the Joint Institute for Nuclear Research"
   },
   {
     "atomicNumber": 106,
@@ -2964,7 +3384,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1974,
+    "discoverer": "Albert Ghiorso et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Glenn T. Seaborg, prolific element discoverer"
   },
   {
     "atomicNumber": 107,
@@ -2992,7 +3416,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1981,
+    "discoverer": "Peter Armbruster & Gottfried Münzenberg",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Niels Bohr, quantum mechanics pioneer"
   },
   {
     "atomicNumber": 108,
@@ -3020,7 +3448,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1984,
+    "discoverer": "Peter Armbruster & Gottfried Münzenberg",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Latin Hassia: Hesse, the German state"
   },
   {
     "atomicNumber": 109,
@@ -3048,7 +3480,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1982,
+    "discoverer": "Peter Armbruster & Gottfried Münzenberg",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Lise Meitner, nuclear fission co-discoverer"
   },
   {
     "atomicNumber": 110,
@@ -3076,7 +3512,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1994,
+    "discoverer": "Sigurd Hofmann et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Darmstadt, German city with GSI Helmholtz Centre"
   },
   {
     "atomicNumber": 111,
@@ -3104,7 +3544,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1994,
+    "discoverer": "Sigurd Hofmann et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Wilhelm Conrad Röntgen, discoverer of X-rays"
   },
   {
     "atomicNumber": 112,
@@ -3132,7 +3576,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1996,
+    "discoverer": "Sigurd Hofmann et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Nicolaus Copernicus, heliocentric model pioneer"
   },
   {
     "atomicNumber": 113,
@@ -3160,7 +3608,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 2003,
+    "discoverer": "Kosuke Morita et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Nihon: Japan, in Japanese"
   },
   {
     "atomicNumber": 114,
@@ -3188,7 +3640,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 1999,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Flerov Laboratory, named after Georgy Flyorov"
   },
   {
     "atomicNumber": 115,
@@ -3216,7 +3672,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 2003,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Moscow Oblast, Russia"
   },
   {
     "atomicNumber": 116,
@@ -3244,7 +3704,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 2000,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Lawrence Livermore National Laboratory, California"
   },
   {
     "atomicNumber": 117,
@@ -3272,7 +3736,11 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 2010,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "place",
+    "etymologyDescription": "Tennessee, US state with Oak Ridge National Laboratory"
   },
   {
     "atomicNumber": 118,
@@ -3299,6 +3767,10 @@
       "electronegativity": 0,
       "ionizationEnergy": 0,
       "radius": 0
-    }
+    },
+    "discoveryYear": 2002,
+    "discoverer": "Yuri Oganessian et al.",
+    "etymologyOrigin": "person",
+    "etymologyDescription": "Yuri Oganessian, prolific superheavy element researcher"
   }
 ]

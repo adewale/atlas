@@ -24,6 +24,10 @@ type SeedElement = {
   electronegativity: number | null;
   ionizationEnergy: number | null;
   radius: number | null;
+  discoveryYear: number | null;
+  discoverer: string;
+  etymologyOrigin: string;
+  etymologyDescription: string;
   summary: string;
   neighbors: string[];
   rankings: Record<string, number>;
@@ -168,6 +172,38 @@ function run() {
     elements: elements.filter(a.filter).map((e) => e.symbol),
   }));
   writeFileSync(join(outDir, 'anomalies.json'), JSON.stringify(anomalies, null, 2));
+
+  // Timeline — elements sorted by discovery year
+  const timeline = [...elements]
+    .filter((e) => e.discoveryYear != null)
+    .sort((a, b) => a.discoveryYear! - b.discoveryYear!)
+    .map((e) => ({ symbol: e.symbol, year: e.discoveryYear, discoverer: e.discoverer }));
+  const antiquity = elements
+    .filter((e) => e.discoveryYear == null)
+    .map((e) => ({ symbol: e.symbol, year: null, discoverer: e.discoverer }));
+  writeFileSync(join(outDir, 'timeline.json'), JSON.stringify({ antiquity, timeline }, null, 2));
+
+  // Etymology origins
+  const etymologyOrigins = [...new Set(elements.map((e) => e.etymologyOrigin))].sort();
+  const etymology = etymologyOrigins.map((origin) => ({
+    origin,
+    elements: elements
+      .filter((e) => e.etymologyOrigin === origin)
+      .map((e) => ({ symbol: e.symbol, description: e.etymologyDescription })),
+  }));
+  writeFileSync(join(outDir, 'etymology.json'), JSON.stringify(etymology, null, 2));
+
+  // Discoverers — grouped by discoverer name
+  const discovererMap = new Map<string, string[]>();
+  for (const el of elements) {
+    const d = el.discoverer;
+    if (!discovererMap.has(d)) discovererMap.set(d, []);
+    discovererMap.get(d)!.push(el.symbol);
+  }
+  const discoverers = [...discovererMap.entries()]
+    .map(([name, syms]) => ({ name, elements: syms }))
+    .sort((a, b) => b.elements.length - a.elements.length);
+  writeFileSync(join(outDir, 'discoverers.json'), JSON.stringify(discoverers, null, 2));
 
   // Credits
   const credits = {
