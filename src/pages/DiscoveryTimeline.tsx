@@ -196,9 +196,9 @@ export default function DiscoveryTimeline() {
               title="View the Antiquity discovery era"
               style={{
                 fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-                textTransform: 'uppercase', padding: '4px 10px',
+                textTransform: 'uppercase', padding: '10px 10px',
                 border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
-                textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
+                textDecoration: 'none',
               }}
             >
               Antiquity
@@ -210,9 +210,9 @@ export default function DiscoveryTimeline() {
                 title={`View the ${d}s discovery era`}
                 style={{
                   fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-                  padding: '4px 10px',
+                  padding: '10px 10px',
                   border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
-                  textDecoration: 'none', minHeight: 'unset', minWidth: 'unset',
+                  textDecoration: 'none',
                 }}
               >
                 {d}s
@@ -321,6 +321,22 @@ export default function DiscoveryTimeline() {
                     handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
                   }
                   onMouseLeave={handleSquareLeave}
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'touch') {
+                      e.preventDefault();
+                      setTooltip((prev) =>
+                        prev?.name === (el?.name ?? sq.entry.symbol)
+                          ? null
+                          : {
+                              x: sq.x + SQ / 2,
+                              y: sq.y - 10,
+                              name: el?.name ?? sq.entry.symbol,
+                              year: sq.entry.year != null ? String(sq.entry.year) : 'Antiquity',
+                              discoverer: sq.entry.discoverer,
+                            },
+                      );
+                    }
+                  }}
                   onClick={() => handleSquareClick(sq.entry.symbol)}
                   rectProps={{
                     role: 'button',
@@ -352,6 +368,22 @@ export default function DiscoveryTimeline() {
                     handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
                   }
                   onMouseLeave={handleSquareLeave}
+                  onPointerDown={(e) => {
+                    if (e.pointerType === 'touch') {
+                      e.preventDefault();
+                      setTooltip((prev) =>
+                        prev?.name === (el?.name ?? sq.entry.symbol)
+                          ? null
+                          : {
+                              x: sq.x + SQ / 2,
+                              y: sq.y - 10,
+                              name: el?.name ?? sq.entry.symbol,
+                              year: sq.entry.year != null ? String(sq.entry.year) : 'Antiquity',
+                              discoverer: sq.entry.discoverer,
+                            },
+                      );
+                    }
+                  }}
                   onClick={() => handleSquareClick(sq.entry.symbol)}
                   rectProps={{
                     role: 'button',

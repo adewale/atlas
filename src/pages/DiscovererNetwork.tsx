@@ -184,6 +184,22 @@ export default function DiscovererNetwork() {
                         })
                       }
                       onMouseLeave={() => setHovered(null)}
+                      onPointerDown={(e) => {
+                        if (e.pointerType === 'touch') {
+                          e.preventDefault();
+                          setHovered((prev) =>
+                            prev?.symbol === sym
+                              ? null
+                              : {
+                                  symbol: sym,
+                                  name: el.name,
+                                  year: el.discoveryYear,
+                                  x: LEFT_COL + ex + SQ / 2,
+                                  y: antiquityStartY,
+                                },
+                          );
+                        }
+                      }}
                     />
                   );
                 })}
@@ -253,6 +269,22 @@ export default function DiscovererNetwork() {
                           })
                         }
                         onMouseLeave={() => setHovered(null)}
+                        onPointerDown={(e) => {
+                          if (e.pointerType === 'touch') {
+                            e.preventDefault();
+                            setHovered((prev) =>
+                              prev?.symbol === sym
+                                ? null
+                                : {
+                                    symbol: sym,
+                                    name: el.name,
+                                    year: el.discoveryYear,
+                                    x: LEFT_COL + ex + SQ / 2,
+                                    y: rowY,
+                                  },
+                            );
+                          }
+                        }}
                       />
                     );
                   })}

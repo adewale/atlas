@@ -170,6 +170,12 @@ export default function NeighborhoodGraph() {
                 }}
                 onMouseEnter={() => setHoveredSymbol(el.symbol)}
                 onMouseLeave={() => setHoveredSymbol(null)}
+                onPointerDown={(e) => {
+                  if (e.pointerType === 'touch') {
+                    e.preventDefault();
+                    setHoveredSymbol(hoveredSymbol === el.symbol ? null : el.symbol);
+                  }
+                }}
                 onClick={() => navigate(`/element/${el.symbol}`)}
                 role="button"
                 aria-label={`${el.symbol} — ${el.name}, ${el.neighbors.length} neighbours`}

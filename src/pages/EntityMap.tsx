@@ -153,8 +153,8 @@ function EntityCard({ entity, highlight, onHover }: { entity: Entity; highlight:
         transition: 'border-color 150ms ease-out',
         background: highlight ? `${entity.colour}08` : 'transparent',
       }}
-      onMouseEnter={() => onHover(entity.id)}
-      onMouseLeave={() => onHover(null)}
+      onPointerEnter={() => onHover(entity.id)}
+      onPointerLeave={() => onHover(null)}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
         <span style={{ width: '10px', height: '10px', background: entity.colour, display: 'inline-block', flexShrink: 0 }} />
@@ -315,8 +315,8 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
               key={node.id}
               transform={`translate(${node.x}, ${node.y})`}
               style={{ cursor: 'pointer' }}
-              onMouseEnter={() => setHovered(node.id)}
-              onMouseLeave={() => setHovered(null)}
+              onPointerEnter={() => setHovered(node.id)}
+              onPointerLeave={() => setHovered(null)}
               onClick={() => setHovered(hovered === node.id ? null : node.id)}
               opacity={dimmed ? 0.2 : 1}
             >

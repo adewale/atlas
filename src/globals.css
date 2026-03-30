@@ -301,6 +301,11 @@ svg [role="button"] {
     max-width: 100%;
   }
 
+  /* SVG scaling: reduce horizontal scroll while keeping content readable */
+  .pt-scroll-container svg {
+    min-width: 600px !important;
+  }
+
   /* Giant numbers smaller on mobile — still dramatic */
   .folio-number {
     font-size: 64px !important;

@@ -35,6 +35,8 @@ export interface ElementSquareProps {
   onMouseEnter?: React.MouseEventHandler<SVGGElement>;
   /** Mouse-leave handler */
   onMouseLeave?: React.MouseEventHandler<SVGGElement>;
+  /** Pointer-down handler (useful for touch-friendly tooltips) */
+  onPointerDown?: React.PointerEventHandler<SVGGElement>;
 }
 
 export default function ElementSquare({
@@ -51,6 +53,7 @@ export default function ElementSquare({
   rectProps,
   onMouseEnter,
   onMouseLeave,
+  onPointerDown,
 }: ElementSquareProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -74,6 +77,7 @@ export default function ElementSquare({
         setHovered(false);
         onMouseLeave?.(e);
       }}
+      onPointerDown={onPointerDown}
     >
       {title && <title>{title}</title>}
       <rect

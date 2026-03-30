@@ -38,7 +38,7 @@ const MARGIN = { top: 24, right: 24, bottom: 48, left: 58 };
 const PLOT_W = SVG_W - MARGIN.left - MARGIN.right;
 const PLOT_H = SVG_H - MARGIN.top - MARGIN.bottom;
 const SQUARE_SIZE = 10;
-const HIT_SIZE = 14; // slightly larger clickable area
+const HIT_SIZE = 44; // mobile-friendly touch target
 const TICK_COUNT = 6;
 
 const INTRO_TEXT =
@@ -404,6 +404,12 @@ export default function PropertyScatter() {
                 style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setHovered(d.el)}
                 onMouseLeave={() => setHovered(null)}
+                onPointerDown={(e) => {
+                  if (e.pointerType === 'touch') {
+                    e.preventDefault();
+                    setHovered(hovered?.symbol === d.el.symbol ? null : d.el);
+                  }
+                }}
                 onClick={() => navigate(`/element/${d.el.symbol}`)}
               />
               {/* Dim non-hovered when something is hovered */}
