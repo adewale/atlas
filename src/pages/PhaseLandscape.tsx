@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
 import { allElements } from '../lib/data';
+import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import {
   getCellPosition,
   contrastTextColor,
@@ -45,6 +45,8 @@ const SVG_WIDTH = VIEWBOX_W;
 // ---------------------------------------------------------------------------
 export default function PhaseLandscape() {
   useDocumentTitle('Phase Landscape');
+  const transitionNavigate = useViewTransitionNavigate();
+  const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
@@ -88,46 +90,47 @@ export default function PhaseLandscape() {
             const textColor = contrastTextColor(fill);
 
             return (
-              <Link key={el.symbol} to={`/element/${el.symbol}`}>
+              <g
+                key={el.symbol}
+                transform={`translate(${pos.x}, ${pos.y})`}
+                role="button"
+                aria-label={`${el.symbol} — ${el.name}, ${el.phase} at STP`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+              >
+                <title>{el.name}</title>
                 <g
-                  transform={`translate(${pos.x}, ${pos.y})`}
-                  role="button"
-                  aria-label={`${el.symbol} — ${el.name}, ${el.phase} at STP`}
-                  style={{ cursor: 'pointer' }}
+                  style={{
+                    opacity: hasLoaded ? 1 : 0,
+                    transform: hasLoaded ? 'none' : 'translateY(4px)',
+                    transition: hasLoaded
+                      ? `opacity 200ms var(--ease-spring) ${el.atomicNumber * 4}ms, transform 200ms var(--ease-spring) ${el.atomicNumber * 4}ms`
+                      : 'none',
+                  }}
                 >
-                  <title>{el.name}</title>
-                  <g
-                    style={{
-                      opacity: hasLoaded ? 1 : 0,
-                      transform: hasLoaded ? 'none' : 'translateY(4px)',
-                      transition: hasLoaded
-                        ? `opacity 200ms var(--ease-spring) ${el.atomicNumber * 4}ms, transform 200ms var(--ease-spring) ${el.atomicNumber * 4}ms`
-                        : 'none',
-                    }}
+                  <rect
+                    x={1}
+                    y={1}
+                    width={CELL_WIDTH - 2}
+                    height={CELL_HEIGHT - 2}
+                    fill={fill}
+                    stroke={BLACK}
+                    strokeWidth={0.5}
+                  />
+                  <text
+                    x={CELL_WIDTH / 2}
+                    y={36}
+                    textAnchor="middle"
+                    fontSize={16}
+                    fontWeight="bold"
+                    fill={textColor}
+                    fontFamily="system-ui, sans-serif"
+                    style={{ viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
                   >
-                    <rect
-                      x={1}
-                      y={1}
-                      width={CELL_WIDTH - 2}
-                      height={CELL_HEIGHT - 2}
-                      fill={fill}
-                      stroke={BLACK}
-                      strokeWidth={0.5}
-                    />
-                    <text
-                      x={CELL_WIDTH / 2}
-                      y={36}
-                      textAnchor="middle"
-                      fontSize={16}
-                      fontWeight="bold"
-                      fill={textColor}
-                      fontFamily="system-ui, sans-serif"
-                    >
-                      {el.symbol}
-                    </text>
-                  </g>
+                    {el.symbol}
+                  </text>
                 </g>
-              </Link>
+              </g>
             );
           })}
         </svg>

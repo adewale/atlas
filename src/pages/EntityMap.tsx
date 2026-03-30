@@ -4,6 +4,8 @@ import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, DIM, GREY_MID, GREY_LIGHT, 
 import PageShell from '../components/PageShell';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { usePretextLines } from '../hooks/usePretextLines';
+import PretextSvg from '../components/PretextSvg';
 
 /* ------------------------------------------------------------------ */
 /* Entity catalogue                                                    */
@@ -114,7 +116,7 @@ const EDGES: Edge[] = [
 
 /* Node positions for the relationship graph */
 const GRAPH_W = 800;
-const GRAPH_H = 520;
+const GRAPH_H = 620;
 const GRAPH_CX = GRAPH_W / 2;
 const GRAPH_CY = GRAPH_H / 2;
 
@@ -183,6 +185,13 @@ function EntityCard({ entity, highlight, onHover }: { entity: Entity; highlight:
 }
 
 function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHovered: (id: string | null) => void }) {
+  const hoveredEntity = hovered ? entityMap.get(hovered) : null;
+  const { lines: descLines, lineHeight: descLH } = usePretextLines({
+    text: hoveredEntity?.description ?? '',
+    maxWidth: 200,
+    font: '12px system-ui',
+  });
+
   const activeEdges = hovered
     ? EDGES.filter((e) => e.from === hovered || e.to === hovered)
     : [];
@@ -218,7 +227,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
                 <path
                   d={`M ${cx + 10} ${cy + 14} C ${cx + 50} ${cy + 60}, ${cx - 50} ${cy + 60}, ${cx - 10} ${cy + 14}`}
                   fill="none"
-                  stroke={isActive ? (fromEntity?.colour ?? BLACK) : '#ddd'}
+                  stroke={isActive ? (fromEntity?.colour ?? BLACK) : DIM}
                   strokeWidth={isActive ? 2 : 1}
                   opacity={hovered && !isActive ? 0.15 : isActive ? 1 : 0.4}
                 />
@@ -253,7 +262,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
               <path
                 d={`M ${fromNode.x} ${fromNode.y} Q ${cx} ${cy} ${toNode.x} ${toNode.y}`}
                 fill="none"
-                stroke={isActive ? (fromEntity?.colour ?? BLACK) : '#ddd'}
+                stroke={isActive ? (fromEntity?.colour ?? BLACK) : DIM}
                 strokeWidth={isActive ? 2 : 1}
                 opacity={hovered && !isActive ? 0.15 : isActive ? 1 : 0.4}
                 strokeDasharray={edge.cardinality.includes('m') ? '4 2' : undefined}
@@ -348,6 +357,39 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
             </g>
           );
         })}
+
+        {/* Pretext description for hovered entity */}
+        {hoveredEntity && descLines.length > 0 && (() => {
+          const node = nodeMap.get(hovered!);
+          if (!node) return null;
+          const r = hovered === 'element' ? 32 : 22;
+          // Position text below the node's count badge
+          const textX = node.x - 100;
+          const textY = node.y + r + 28;
+          return (
+            <g style={{ opacity: 0, animation: 'folio-line-reveal 200ms var(--ease-out) forwards' }}>
+              {/* Background for readability */}
+              <rect
+                x={textX - 4}
+                y={textY - 2}
+                width={208}
+                height={descLines.length * descLH + 8}
+                fill={PAPER}
+                opacity={0.95}
+                rx={2}
+              />
+              <PretextSvg
+                lines={descLines}
+                lineHeight={descLH}
+                x={textX}
+                y={textY}
+                fontSize={12}
+                fill={BLACK}
+                maxWidth={200}
+              />
+            </g>
+          );
+        })()}
       </svg>
     </div>
   );

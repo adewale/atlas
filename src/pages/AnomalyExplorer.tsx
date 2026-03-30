@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { useLoaderData, Link, useNavigate } from 'react-router';
+import { useLoaderData } from 'react-router';
+import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { allElements } from '../lib/data';
 import {
   getCellPosition,
@@ -85,7 +86,8 @@ export default function AnomalyExplorer() {
   useDocumentTitle('Anomaly Explorer');
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const transitionNavigate = useViewTransitionNavigate();
+  const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
 
   const selected = anomalies.find((a) => a.slug === selectedSlug) ?? null;
   const highlightedSet = useMemo(
@@ -209,7 +211,7 @@ export default function AnomalyExplorer() {
                     }
                   : {}),
               }}
-              onClick={() => navigate(`/element/${el.symbol}`)}
+              onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
             >
               <title>{el.name}</title>
               <rect
@@ -229,7 +231,7 @@ export default function AnomalyExplorer() {
                 fontWeight={700}
                 fontFamily="system-ui, sans-serif"
                 fill={textColor}
-                style={{ transition: 'fill 250ms var(--ease-out)' }}
+                style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
               >
                 {el.symbol}
               </text>

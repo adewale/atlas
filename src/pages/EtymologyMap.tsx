@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
+import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { getElement } from '../lib/data';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
@@ -155,6 +156,8 @@ const styles = {
 export default function EtymologyMap() {
   useDocumentTitle('Etymology Map');
   const { etymology } = useLoaderData() as { etymology: EtymologyEntry[] };
+  const transitionNavigate = useViewTransitionNavigate();
+  const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const location = useLocation();
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -239,8 +242,9 @@ export default function EtymologyMap() {
                     className="etymology-card"
                     style={styles.card(color, stagger, hasLoaded)}
                     aria-label={`${el.symbol} — ${el.description}`}
+                    onClick={(e) => { e.preventDefault(); setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
                   >
-                    <span style={styles.symbol}>{el.symbol}</span>
+                    <span style={{ ...styles.symbol, viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}>{el.symbol}</span>
                     <span style={styles.desc as React.CSSProperties}>
                       {el.description}
                     </span>
