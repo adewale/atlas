@@ -126,15 +126,22 @@ describe('Folio', () => {
     expect(screen.getByText(/CC0 1.0/)).toBeInTheDocument();
     // Wikipedia title link (there are two "Iron" texts - heading + source link)
     const ironLinks = screen.getAllByText('Iron');
-    expect(ironLinks.length).toBeGreaterThanOrEqual(2); // heading + source strip link
+    expect(ironLinks).toHaveLength(2); // heading + source strip link
     expect(screen.getByText(/CC BY-SA 4.0/)).toBeInTheDocument();
     expect(screen.getByText(/No media in v1/)).toBeInTheDocument();
     expect(screen.getByText(/Fetched 2026-03-30/)).toBeInTheDocument();
   });
 
-  it('renders compare link', () => {
+  it('data plate shows em-dash for null group', () => {
+    const noGroup = { ...FE, group: null as number | null };
+    render(<MemoryRouter><Folio element={noGroup} animate={false} /></MemoryRouter>);
+    expect(screen.getByLabelText(/Data plate: Group —/)).toBeInTheDocument();
+  });
+
+  it('compare link points to correct URL', () => {
     renderFolio();
-    expect(screen.getByText('Compare →')).toBeInTheDocument();
+    const link = screen.getByText('Compare →');
+    expect(link).toHaveAttribute('href', '/compare/Fe/Mn');
   });
 
   it('shaped text lines are rendered in SVG', () => {

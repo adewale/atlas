@@ -20,19 +20,31 @@ describe('getElement', () => {
 });
 
 describe('searchElements', () => {
-  it('finds by exact symbol', () => {
-    const results = searchElements('Fe');
-    expect(results.some(r => r.symbol === 'Fe')).toBe(true);
+  it('empty query returns all 118 elements', () => {
+    expect(searchElements('')).toHaveLength(118);
+    expect(searchElements('  ')).toHaveLength(118);
   });
 
-  it('finds by name', () => {
+  it('exact symbol match appears in results', () => {
+    const results = searchElements('Fe');
+    expect(results[0].symbol).toBe('Fe');
+  });
+
+  it('exact name match appears in results', () => {
     const results = searchElements('Iron');
-    expect(results.some(r => r.symbol === 'Fe')).toBe(true);
+    expect(results[0].name).toBe('Iron');
+  });
+
+  it('partial symbol "F" matches both F and Fe', () => {
+    const results = searchElements('F');
+    const symbols = results.map(r => r.symbol);
+    expect(symbols).toContain('F');
+    expect(symbols).toContain('Fe');
   });
 
   it('is case-insensitive', () => {
     const results = searchElements('iron');
-    expect(results.some(r => r.symbol === 'Fe')).toBe(true);
+    expect(results[0].symbol).toBe('Fe');
   });
 
   it('returns empty for nonsense', () => {
@@ -42,7 +54,7 @@ describe('searchElements', () => {
 
   it('partial match on name', () => {
     const results = searchElements('Hyd');
-    expect(results.some(r => r.symbol === 'H')).toBe(true);
+    expect(results[0].symbol).toBe('H');
   });
 });
 

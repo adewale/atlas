@@ -10,35 +10,40 @@ async function loadElementFile(symbol: string): Promise<ElementRecord> {
 
 describe('Licensing: per-element sources', () => {
   it('every per-element JSON has a sources field', async () => {
-    // Test a sample of elements to keep test fast
-    const sample = ['H', 'He', 'Li', 'C', 'N', 'O', 'Fe', 'Au', 'U', 'Og'];
-    for (const sym of sample) {
-      const el = await loadElementFile(sym);
-      expect(el.sources).toBeDefined();
-      expect(el.sources!.structured).toBeDefined();
-      expect(el.sources!.identifiers).toBeDefined();
-      expect(el.sources!.summary).toBeDefined();
+    for (const { symbol } of allElements) {
+      const el = await loadElementFile(symbol);
+      expect(el.sources, `${symbol} missing sources`).toBeDefined();
+      expect(el.sources!.structured, `${symbol} missing sources.structured`).toBeDefined();
+      expect(el.sources!.identifiers, `${symbol} missing sources.identifiers`).toBeDefined();
+      expect(el.sources!.summary, `${symbol} missing sources.summary`).toBeDefined();
     }
   });
 
-  it('all sources.summary.license === "CC BY-SA 4.0"', async () => {
-    const sample = ['H', 'Fe', 'Au', 'Og', 'Na', 'Cl'];
-    for (const sym of sample) {
-      const el = await loadElementFile(sym);
-      expect(el.sources!.summary.license).toBe('CC BY-SA 4.0');
+  it('all 118 elements have sources.summary.license === "CC BY-SA 4.0"', async () => {
+    for (const { symbol } of allElements) {
+      const el = await loadElementFile(symbol);
+      expect(el.sources!.summary.license, `${symbol} summary license`).toBe('CC BY-SA 4.0');
     }
   });
 
-  it('all sources.summary.accessDate is a valid ISO date', async () => {
+  it('all 118 elements have sources.identifiers.license === "CC0 1.0"', async () => {
+    for (const { symbol } of allElements) {
+      const el = await loadElementFile(symbol);
+      expect(el.sources!.identifiers.license, `${symbol} identifiers license`).toBe('CC0 1.0');
+    }
+  });
+
+  it('all sources.summary.accessDate is a valid ISO date in reasonable range', async () => {
     const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    const sample = ['H', 'Fe', 'Au', 'Og', 'Ca', 'Si'];
-    for (const sym of sample) {
-      const el = await loadElementFile(sym);
+    for (const { symbol } of allElements) {
+      const el = await loadElementFile(symbol);
       const date = el.sources!.summary.accessDate!;
-      expect(date).toMatch(isoDateRegex);
-      // Verify it parses as a valid date
+      expect(date, `${symbol} accessDate format`).toMatch(isoDateRegex);
       const parsed = new Date(date);
-      expect(parsed.getTime()).not.toBeNaN();
+      expect(parsed.getTime(), `${symbol} accessDate parse`).not.toBeNaN();
+      const year = parsed.getFullYear();
+      expect(year, `${symbol} accessDate year`).toBeGreaterThanOrEqual(2024);
+      expect(year, `${symbol} accessDate year`).toBeLessThanOrEqual(2030);
     }
   });
 

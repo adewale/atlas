@@ -1,42 +1,23 @@
-import { describe, it, expect, vi, beforeAll } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as fc from 'fast-check';
 
-// Pretext requires canvas for font measurement which jsdom doesn't have.
-// We mock the core functions to test our wrapper logic and the invariants
-// that should hold regardless of the measurement backend.
-
-// Create mock implementations that simulate pretext behavior
-const mockPrepareWithSegments = vi.fn((text: string) => ({
-  segments: [text],
-  widths: Array.from(text, () => 8), // ~8px per char
-  lineEndFitAdvances: [],
-  lineEndPaintAdvances: [],
-  kinds: [],
-  simpleLineWalkFastPath: true,
-  segLevels: null,
-  breakableWidths: [],
-  breakablePrefixWidths: [],
-  discretionaryHyphenWidth: 0,
-  tabStopAdvance: 0,
-  chunks: [],
-  [Symbol.for('preparedTextBrand')]: true,
+// Mock @chenglou/pretext at the boundary - verify our wrappers use it correctly
+const mockPrepareWithSegments = vi.fn((_text: string, _font: string) => ({
+  __brand: 'prepared',
+  _text,
 }));
 
-const mockLayout = vi.fn((_prepared: unknown, maxWidth: number) => {
-  const text = (_prepared as { segments: string[] }).segments.join('');
-  const charWidth = 8;
-  const totalWidth = text.length * charWidth;
-  const lineCount = Math.max(1, Math.ceil(totalWidth / maxWidth));
-  const height = lineCount > 0 ? 20 : 0;
-  return { lineCount, height };
-});
+const mockLayout = vi.fn((_prepared: unknown, _maxWidth: number, _lineSpacing: number) => ({
+  lineCount: 1,
+  height: 20,
+}));
 
 const mockLayoutWithLines = vi.fn((_prepared: unknown, maxWidth: number, lineHeight: number) => {
-  const text = (_prepared as { segments: string[] }).segments.join('');
+  const text = (_prepared as { _text: string })._text;
+  // Simulate realistic line breaking: ~8px per char
   const charWidth = 8;
   const charsPerLine = Math.max(1, Math.floor(maxWidth / charWidth));
-  const lines: Array<{ text: string; width: number; start: { segmentIndex: number; graphemeIndex: number }; end: { segmentIndex: number; graphemeIndex: number } }> = [];
-
+  const lines = [];
   for (let i = 0; i < text.length; i += charsPerLine) {
     const lineText = text.slice(i, i + charsPerLine);
     lines.push({
@@ -46,20 +27,15 @@ const mockLayoutWithLines = vi.fn((_prepared: unknown, maxWidth: number, lineHei
       end: { segmentIndex: 0, graphemeIndex: Math.min(i + charsPerLine, text.length) },
     });
   }
-
-  const lineCount = lines.length;
-  const height = lineCount * (lineHeight || 20);
-  return { lineCount, height, lines };
+  return { lineCount: lines.length, height: lines.length * lineHeight, lines };
 });
 
 const mockLayoutNextLine = vi.fn((_prepared: unknown, start: { segmentIndex: number; graphemeIndex: number }, maxWidth: number) => {
-  const text = (_prepared as { segments: string[] }).segments.join('');
+  const text = (_prepared as { _text: string })._text;
   const charWidth = 8;
   const charsPerLine = Math.max(1, Math.floor(maxWidth / charWidth));
   const startIdx = start.graphemeIndex;
-
   if (startIdx >= text.length) return null;
-
   const lineText = text.slice(startIdx, startIdx + charsPerLine);
   return {
     text: lineText,
@@ -70,90 +46,171 @@ const mockLayoutNextLine = vi.fn((_prepared: unknown, start: { segmentIndex: num
 });
 
 vi.mock('@chenglou/pretext', () => ({
-  prepareWithSegments: (...args: unknown[]) => mockPrepareWithSegments(...(args as [string])),
-  layout: (...args: unknown[]) => mockLayout(...(args as [unknown, number])),
+  prepareWithSegments: (...args: unknown[]) => mockPrepareWithSegments(...(args as [string, string])),
+  layout: (...args: unknown[]) => mockLayout(...(args as [unknown, number, number])),
   layoutWithLines: (...args: unknown[]) => mockLayoutWithLines(...(args as [unknown, number, number])),
   layoutNextLine: (...args: unknown[]) => mockLayoutNextLine(...(args as [unknown, { segmentIndex: number; graphemeIndex: number }, number])),
 }));
 
-// Import our wrappers AFTER mock
-import { measureLines, shapeText, fitLabel } from '../src/lib/pretext';
+import { measureLines, shapeText, fitLabel, computeLineHeight } from '../src/lib/pretext';
 
-// Arbitrary for non-empty text strings
-const textArb = fc.string({ minLength: 1, maxLength: 500 }).filter((s) => s.trim().length > 0);
-const widthArb = fc.integer({ min: 16, max: 2000 });
+const textArb = fc.string({ minLength: 1, maxLength: 200 }).filter((s) => s.trim().length > 0);
+const widthArb = fc.integer({ min: 40, max: 2000 });
 
-describe('Pretext property-based tests', () => {
-  beforeAll(() => {
+describe('Pretext wrapper integration', () => {
+  beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('forAll(text, width): layoutWithLines is deterministic', () => {
-    fc.assert(
-      fc.property(textArb, widthArb, (text, width) => {
-        const lineHeight = 20;
-        const result1 = measureLines(text, '16px system-ui', width, lineHeight);
-        const result2 = measureLines(text, '16px system-ui', width, lineHeight);
-        expect(result1.length).toBe(result2.length);
-        for (let i = 0; i < result1.length; i++) {
-          expect(result1[i].text).toBe(result2[i].text);
-          expect(result1[i].width).toBe(result2[i].width);
-        }
-      }),
-      { numRuns: 50 },
-    );
-  });
+  describe('measureLines', () => {
+    it('passes font and maxWidth through to prepareWithSegments and layoutWithLines', () => {
+      measureLines('hello world', 'bold 14px serif', 300, 18);
+      expect(mockPrepareWithSegments).toHaveBeenCalledWith('hello world', 'bold 14px serif');
+      expect(mockLayoutWithLines).toHaveBeenCalledWith(
+        expect.objectContaining({ _text: 'hello world' }),
+        300,
+        18,
+      );
+    });
 
-  it('forAll(text, w1 < w2): lineCount at w1 >= lineCount at w2', () => {
-    fc.assert(
-      fc.property(
-        textArb,
-        widthArb,
-        widthArb,
-        (text, w1, w2) => {
+    it('transforms LayoutLine results into PositionedLine with correct y positions', () => {
+      const lines = measureLines('a]b'.repeat(30), '16px system-ui', 100, 22);
+      for (let i = 0; i < lines.length; i++) {
+        expect(lines[i].x).toBe(0);
+        expect(lines[i].y).toBe(i * 22);
+        expect(lines[i]).toHaveProperty('text');
+        expect(lines[i]).toHaveProperty('width');
+      }
+    });
+
+    it('forAll(text, width): produces at least one line for non-empty text', () => {
+      fc.assert(
+        fc.property(textArb, widthArb, (text, width) => {
+          const lines = measureLines(text, '16px system-ui', width, 20);
+          expect(lines.length).toBeGreaterThanOrEqual(1);
+          expect(lines[0].text.length).toBeGreaterThan(0);
+        }),
+        { numRuns: 50 },
+      );
+    });
+
+    it('forAll(text, w1 < w2): narrower width produces >= lines', () => {
+      fc.assert(
+        fc.property(textArb, widthArb, widthArb, (text, w1, w2) => {
           const small = Math.min(w1, w2);
           const large = Math.max(w1, w2);
           if (small === large) return;
-          const lineHeight = 20;
-          const narrowLines = measureLines(text, '16px system-ui', small, lineHeight);
-          const wideLines = measureLines(text, '16px system-ui', large, lineHeight);
+          const narrowLines = measureLines(text, '16px system-ui', small, 20);
+          const wideLines = measureLines(text, '16px system-ui', large, 20);
           expect(narrowLines.length).toBeGreaterThanOrEqual(wideLines.length);
-        },
-      ),
-      { numRuns: 50 },
-    );
+        }),
+        { numRuns: 50 },
+      );
+    });
+
+    it('forAll(text, width): all text content is preserved across lines', () => {
+      fc.assert(
+        fc.property(textArb, widthArb, (text, width) => {
+          const lines = measureLines(text, '16px system-ui', width, 20);
+          const reconstructed = lines.map((l) => l.text).join('');
+          expect(reconstructed).toBe(text);
+        }),
+        { numRuns: 50 },
+      );
+    });
+
+    it('forAll(text, width): line widths are non-negative', () => {
+      fc.assert(
+        fc.property(textArb, widthArb, (text, width) => {
+          const lines = measureLines(text, '16px system-ui', width, 20);
+          for (const line of lines) {
+            expect(line.width).toBeGreaterThanOrEqual(0);
+          }
+        }),
+        { numRuns: 30 },
+      );
+    });
   });
 
-  it('forAll(text, width): concatenating line.text reconstructs original', () => {
-    fc.assert(
-      fc.property(textArb, widthArb, (text, width) => {
-        const lineHeight = 20;
-        const lines = measureLines(text, '16px system-ui', width, lineHeight);
-        const reconstructed = lines.map((l) => l.text).join('');
-        expect(reconstructed).toBe(text);
-      }),
-      { numRuns: 50 },
-    );
+  describe('shapeText', () => {
+    it('passes font to prepareWithSegments and uses per-line widths', () => {
+      const widths = [200, 200, 400, 400];
+      shapeText('some text here for testing', '14px monospace', widths, 20);
+      expect(mockPrepareWithSegments).toHaveBeenCalledWith('some text here for testing', '14px monospace');
+      // layoutNextLine should have been called at least once
+      expect(mockLayoutNextLine).toHaveBeenCalled();
+    });
+
+    it('uses last width in array when lines exceed widthPerLine length', () => {
+      // Text long enough to exceed 2 lines at width 80
+      const longText = 'a'.repeat(100);
+      const widths = [80, 160]; // only 2 entries, last used for overflow
+      const lines = shapeText(longText, '16px system-ui', widths, 20);
+
+      // Verify layoutNextLine was called with width 80 first, then 160 for subsequent
+      const calls = mockLayoutNextLine.mock.calls;
+      expect(calls[0][2]).toBe(80); // first line uses widths[0]
+      expect(calls[1][2]).toBe(160); // second line uses widths[1]
+      if (calls.length > 2) {
+        expect(calls[2][2]).toBe(160); // third+ line uses last width
+      }
+    });
+
+    it('forAll(text): shaped text preserves all content', () => {
+      fc.assert(
+        fc.property(textArb, (text) => {
+          const widths = [200, 200, 400];
+          const lines = shapeText(text, '16px system-ui', widths, 20);
+          const reconstructed = lines.map((l) => l.text).join('');
+          expect(reconstructed).toBe(text);
+        }),
+        { numRuns: 30 },
+      );
+    });
+
+    it('produces PositionedLines with sequential y coordinates', () => {
+      const lines = shapeText('hello world test text', '16px system-ui', [100, 200], 18);
+      for (let i = 0; i < lines.length; i++) {
+        expect(lines[i].x).toBe(0);
+        expect(lines[i].y).toBe(i * 18);
+      }
+    });
   });
 
-  it('shapeText produces lines for non-empty text', () => {
-    fc.assert(
-      fc.property(textArb, (text) => {
-        const widths = [200, 200, 200, 400, 400];
-        const lines = shapeText(text, '16px system-ui', widths, 20);
-        expect(lines.length).toBeGreaterThan(0);
-      }),
-      { numRuns: 30 },
-    );
+  describe('fitLabel', () => {
+    it('passes font to prepareWithSegments and calls layout', () => {
+      fitLabel('Fe', 'bold 20px sans-serif', 100);
+      expect(mockPrepareWithSegments).toHaveBeenCalledWith('Fe', 'bold 20px sans-serif');
+      expect(mockLayout).toHaveBeenCalledWith(
+        expect.objectContaining({ _text: 'Fe' }),
+        100,
+        0,
+      );
+    });
+
+    it('returns true when layout.lineCount <= 1', () => {
+      mockLayout.mockReturnValueOnce({ lineCount: 1, height: 20 });
+      expect(fitLabel('short', '16px system-ui', 500)).toBe(true);
+    });
+
+    it('returns false when layout.lineCount > 1', () => {
+      mockLayout.mockReturnValueOnce({ lineCount: 2, height: 40 });
+      expect(fitLabel('very long text', '16px system-ui', 10)).toBe(false);
+    });
   });
 
-  it('fitLabel returns boolean', () => {
-    fc.assert(
-      fc.property(textArb, widthArb, (text, width) => {
-        const result = fitLabel(text, '16px system-ui', width);
-        expect(typeof result).toBe('boolean');
-      }),
-      { numRuns: 30 },
-    );
+  describe('computeLineHeight', () => {
+    it('calls prepareWithSegments with reference text "Xg"', () => {
+      mockLayout.mockReturnValueOnce({ lineCount: 1, height: 22 });
+      const h = computeLineHeight('18px serif');
+      expect(mockPrepareWithSegments).toHaveBeenCalledWith('Xg', '18px serif');
+      expect(h).toBe(22);
+    });
+
+    it('uses default font when none provided', () => {
+      mockLayout.mockReturnValueOnce({ lineCount: 1, height: 20 });
+      computeLineHeight();
+      expect(mockPrepareWithSegments).toHaveBeenCalledWith('Xg', '16px system-ui');
+    });
   });
 });

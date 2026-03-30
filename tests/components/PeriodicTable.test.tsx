@@ -44,9 +44,40 @@ describe('PeriodicTable', () => {
     renderTable();
     const select = screen.getByLabelText('Highlight mode');
     fireEvent.change(select, { target: { value: 'block' } });
-    // After changing to block mode, cells should have colored fills
-    // We check that the select value changed
+    // After changing to block mode, verify select updated
     expect((select as HTMLSelectElement).value).toBe('block');
+    // Also verify a d-block element got the warm red fill
+    const feCell = screen.getByLabelText(/^Iron,/);
+    const rect = feCell.querySelector('rect');
+    expect(rect).toHaveAttribute('fill', '#9e1c2c');
+  });
+
+  it('clicking an element calls onSelectElement', () => {
+    const onSelect = vi.fn();
+    renderTable(onSelect);
+    const feCell = screen.getByLabelText(/^Iron,/);
+    fireEvent.click(feCell);
+    expect(onSelect).toHaveBeenCalledWith('Fe');
+  });
+
+  it('search dims non-matching elements', () => {
+    renderTable();
+    const input = screen.getByPlaceholderText('Search name or symbol');
+    fireEvent.change(input, { target: { value: 'iron' } });
+    // He should be dimmed — fill changes to DIM color (#ece7db)
+    const heCell = screen.getByLabelText(/^Helium,/);
+    const rect = heCell.querySelector('rect');
+    expect(rect).toHaveAttribute('fill', '#ece7db');
+  });
+
+  it('block highlight mode colors cells by block', () => {
+    renderTable();
+    const select = screen.getByLabelText('Highlight mode');
+    fireEvent.change(select, { target: { value: 'block' } });
+    // H is s-block, should have deep blue fill (#133e7c)
+    const hCell = screen.getByLabelText(/^Hydrogen,/);
+    const rect = hCell.querySelector('rect');
+    expect(rect).toHaveAttribute('fill', '#133e7c');
   });
 
   it('shows property selector when property mode is selected', () => {

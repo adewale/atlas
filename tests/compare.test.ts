@@ -38,7 +38,8 @@ describe('generateComparisonNotes', () => {
     const a = makeElement({ block: 's' });
     const b = makeElement({ block: 'p' });
     const notes = generateComparisonNotes(a, b);
-    expect(notes.some((n) => n.includes('-block elements'))).toBe(false);
+    expect(notes).not.toContain('Both s-block elements.');
+    expect(notes).not.toContain('Both p-block elements.');
   });
 
   it('same-period elements produce "Share period" note', () => {
@@ -87,10 +88,10 @@ describe('generateComparisonNotes', () => {
     const a = makeElement({ rankings: { mass: 1 } });
     const b = makeElement({ rankings: { mass: 100 } });
     const notes = generateComparisonNotes(a, b);
-    expect(notes.some((n) => n.includes('Similar mass'))).toBe(false);
+    expect(notes.join(' ')).not.toContain('Similar mass');
   });
 
-  it('all-different elements produce longer note (more templates)', () => {
+  it('all-different elements produce phase and groups notes', () => {
     const a = makeElement({
       name: 'Hydrogen',
       block: 's',
@@ -110,17 +111,53 @@ describe('generateComparisonNotes', () => {
       rankings: { mass: 50 },
     });
     const notes = generateComparisonNotes(a, b);
-    // Should have at least phase difference + groups note
-    expect(notes.length).toBeGreaterThanOrEqual(2);
-    expect(notes.some((n) => n.includes('at STP'))).toBe(true);
-    expect(notes.some((n) => n.startsWith('Groups'))).toBe(true);
+    expect(notes).toContain('Hydrogen is gas; Iron is solid at STP.');
+    expect(notes).toContain('Groups 1 and 8.');
+    // block, period, category all differ so those notes should be absent
+    expect(notes.join(' ')).not.toContain('-block elements');
+    expect(notes.join(' ')).not.toContain('Share period');
+    expect(notes.join(' ')).not.toContain('Both classified as');
   });
 
-  it('same-everything elements produce maximum notes', () => {
+  it('same-everything elements produce exact expected notes', () => {
     const a = makeElement({ rankings: { mass: 50 } });
     const b = makeElement({ rankings: { mass: 50 } });
     const notes = generateComparisonNotes(a, b);
     // block, period, category, groups, mass ranking all match. Phase is same so no phase note.
-    expect(notes.length).toBeGreaterThanOrEqual(4);
+    expect(notes).toEqual([
+      'Both s-block elements.',
+      'Share period 1.',
+      'Both classified as nonmetal.',
+      'Groups 1 and 1.',
+      'Similar mass ranking (50 vs 50 of 118).',
+    ]);
+  });
+
+  it('same-phase elements do not produce phase note', () => {
+    const a = makeElement({ name: 'Alpha', phase: 'solid' });
+    const b = makeElement({ name: 'Beta', phase: 'solid' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('at STP');
+  });
+
+  it('same-group elements produce "Groups X and X" note', () => {
+    const a = makeElement({ group: 8 });
+    const b = makeElement({ group: 8 });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Groups 8 and 8.');
+  });
+
+  it('mass ranking boundary: diff of 5 is similar', () => {
+    const a = makeElement({ rankings: { mass: 50 } });
+    const b = makeElement({ rankings: { mass: 55 } });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Similar mass ranking (50 vs 55 of 118).');
+  });
+
+  it('mass ranking boundary: diff of 6 is not similar', () => {
+    const a = makeElement({ rankings: { mass: 50 } });
+    const b = makeElement({ rankings: { mass: 56 } });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('Similar mass');
   });
 });

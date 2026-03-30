@@ -64,6 +64,24 @@ describe('Property-based: grid layout', () => {
     );
   });
 
+  it('forAll(element): horizontal arrow navigation is reversible (left↔right)', () => {
+    fc.assert(
+      fc.property(elementArb, (el) => {
+        const entry = adjacencyMap.get(el.symbol)!;
+        // If we go right then left, we should get back
+        if (entry.right) {
+          const rightEntry = adjacencyMap.get(entry.right)!;
+          expect(rightEntry.left).toBe(el.symbol);
+        }
+        // If we go left then right, we should get back
+        if (entry.left) {
+          const leftEntry = adjacencyMap.get(entry.left)!;
+          expect(leftEntry.right).toBe(el.symbol);
+        }
+      }),
+    );
+  });
+
   it('forAll(element): all arrow directions lead to valid cell or no-op', () => {
     const validSymbols = new Set(allElements.map((e) => e.symbol));
     fc.assert(

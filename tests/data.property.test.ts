@@ -139,37 +139,26 @@ describe('Search property-based tests', () => {
   });
 });
 
-describe('Text layout property-based tests', () => {
-  it('shaped text with narrower first section produces at least as many lines as full-width', () => {
-    // measureLines / shapeText rely on canvas font metrics, which jsdom lacks.
-    // We verify the invariant structurally: narrower widths ⇒ more or equal lines.
-    // Use a simple char-width approximation (8px per char at 16px system-ui).
-    const CHAR_W = 8;
-    const FULL_WIDTH = 560;
-    const NARROW_WIDTH = 376;
-
+describe('Element summary quality', () => {
+  it('forAll(element): summary is a non-trivial paragraph', () => {
     fc.assert(
       fc.property(elementArb, (el) => {
-        if (!el.summary) return true;
-        const words = el.summary.split(/\s+/);
-        // Simulate line-breaking at full width
-        let fullLines = 1;
-        let lineW = 0;
-        for (const w of words) {
-          const wW = w.length * CHAR_W;
-          if (lineW + wW > FULL_WIDTH && lineW > 0) { fullLines++; lineW = wW + CHAR_W; }
-          else { lineW += wW + CHAR_W; }
-        }
-        // Simulate line-breaking at narrow width (first 9 lines narrow, rest full)
-        let shapedLines = 1;
-        lineW = 0;
-        for (const w of words) {
-          const maxW = shapedLines <= 9 ? NARROW_WIDTH : FULL_WIDTH;
-          const wW = w.length * CHAR_W;
-          if (lineW + wW > maxW && lineW > 0) { shapedLines++; lineW = wW + CHAR_W; }
-          else { lineW += wW + CHAR_W; }
-        }
-        return shapedLines >= fullLines;
+        expect(el.summary).toBeDefined();
+        expect(el.summary.length).toBeGreaterThan(50);
+        // Summary should mention the element's name or symbol
+        const lower = el.summary.toLowerCase();
+        const mentionsElement =
+          lower.includes(el.name.toLowerCase()) || lower.includes(el.symbol.toLowerCase());
+        expect(mentionsElement).toBe(true);
+      }),
+    );
+  });
+
+  it('forAll(element): summary ends with punctuation', () => {
+    fc.assert(
+      fc.property(elementArb, (el) => {
+        const lastChar = el.summary.trim().slice(-1);
+        expect('.!?'.includes(lastChar)).toBe(true);
       }),
     );
   });
