@@ -94,7 +94,7 @@ export default function AtlasPlate({
         aria-label={caption}
         style={{ maxWidth: '100%' }}
       >
-        {/* Caption strip — solid color band with Pretext-measured text */}
+        {/* Caption strip — solid colour band with Pretext-measured text */}
         <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} />
         <PretextSvg
           lines={captionLines}

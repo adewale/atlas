@@ -41,7 +41,7 @@ function buildSparklinePoints(
 
 export type DropCapConfig = {
   fontSize: number;    // e.g. 48
-  fill: string;        // block color
+  fill: string;        // block colour
   lineSpan?: number;   // how many body lines it spans (default: computed from fontSize / lineHeight)
 };
 
@@ -101,7 +101,7 @@ export default function PretextSvg({
 
   return (
     <g className={className} transform={`translate(${x}, ${y})`}>
-      {/* Drop cap initial — large colored first character */}
+      {/* Drop cap initial — large coloured first character */}
       {dropCapChar && dropCap && (
         <text
           x={0}

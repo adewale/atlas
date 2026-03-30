@@ -99,7 +99,7 @@ export default function DiscovererNetwork() {
             animationStagger={40}
           />
 
-          {/* Block color legend */}
+          {/* Block colour legend */}
           <g transform={`translate(0, ${introHeight - 8})`}>
             {[
               { label: 's-block', block: 's' },

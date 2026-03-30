@@ -6,7 +6,7 @@
   --warm-red: #9e1c2c;
   --mustard: #c59b1a;
 
-  /* Block colors */
+  /* Block colours */
   --block-s: var(--deep-blue);
   --block-p: var(--mustard);
   --block-d: var(--warm-red);
@@ -222,7 +222,7 @@ svg [role="button"] {
   animation-timing-function: var(--ease-out);
 }
 
-/* Reduced motion: keep opacity/color changes, remove movement */
+/* Reduced motion: keep opacity/colour changes, remove movement */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

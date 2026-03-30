@@ -6,7 +6,7 @@ import SiteNav from '../components/SiteNav';
 const SVG_MAX_WIDTH = 640;
 
 const INTRO_TEXT =
-  'Atlas is a structural exploration of the periodic table, drawing on the visual traditions of Oliver Byrne and the data-density principles of Edward Tufte. Every element is presented as a folio — a single, information-rich page where color is structural identity and the shape of the data is the data itself.';
+  'Atlas is a structural exploration of the periodic table, drawing on the visual traditions of Oliver Byrne and the data-density principles of Edward Tufte. Every element is presented as a folio — a single, information-rich page where colour is structural identity and the shape of the data is the data itself.';
 
 const DATA_SOURCES_TEXT =
   'Numeric properties (mass, electronegativity, ionisation energy, radius) come from PubChem (public domain). Identifiers and classification from Wikidata (CC0 1.0). Text summaries excerpted from Wikipedia under CC BY-SA 4.0. Full attribution on the credits page.';

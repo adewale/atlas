@@ -15,7 +15,7 @@ import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
 
 // ---------------------------------------------------------------------------
-// Phase → color mapping (Byrne: hard color fields, no gradients)
+// Phase → colour mapping (Byrne: hard colour fields, no gradients)
 // ---------------------------------------------------------------------------
 const PHASE_COLORS: Record<string, string> = {
   solid: BLACK,
@@ -73,7 +73,7 @@ export default function PhaseLandscape() {
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${totalHeight}`}
           role="img"
-          aria-label="Periodic table colored by element phase at standard temperature and pressure"
+          aria-label="Periodic table coloured by element phase at standard temperature and pressure"
           style={{
             width: '100%',
             minWidth: SVG_WIDTH,

@@ -14,7 +14,7 @@ type EtymologyEntry = {
 };
 
 // ---------------------------------------------------------------------------
-// Origin → color mapping (Byrne-style hard color categories)
+// Origin → colour mapping (Byrne-style hard colour categories)
 // ---------------------------------------------------------------------------
 const ORIGIN_COLORS: Record<string, string> = {
   place: DEEP_BLUE,

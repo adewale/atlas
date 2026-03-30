@@ -16,7 +16,7 @@ import type { AnomalyData } from '../lib/types';
 import SiteNav from '../components/SiteNav';
 
 /* ------------------------------------------------------------------ */
-/* Color key for anomaly buttons (cycle through Byrne palette)        */
+/* Colour key for anomaly buttons (cycle through Byrne palette)       */
 /* ------------------------------------------------------------------ */
 const BUTTON_COLORS = [WARM_RED, DEEP_BLUE, MUSTARD, BLACK, WARM_RED];
 
@@ -132,7 +132,7 @@ export default function AnomalyExplorer() {
         Anomaly Explorer
       </h1>
 
-      {/* ---- Byrne color key: one bold button per anomaly ---- */}
+      {/* ---- Byrne colour key: one bold button per anomaly ---- */}
       <div
         style={{
           display: 'flex',

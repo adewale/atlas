@@ -221,7 +221,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
   return (
     <div className="folio-layout" style={{ display: 'flex', gap: '48px', position: 'relative' }}>
-      {/* Left color bar */}
+      {/* Left colour bar */}
       <div
         aria-hidden="true"
         style={{
