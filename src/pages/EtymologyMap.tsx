@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
 import VizNav from '../components/VizNav';
+import { getElement } from '../lib/data';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
@@ -232,6 +233,7 @@ export default function EtymologyMap() {
                   <Link
                     key={el.symbol}
                     to={`/element/${el.symbol}`}
+                    title={getElement(el.symbol)?.name ?? el.symbol}
                     style={styles.card(color, stagger, hasLoaded)}
                     aria-label={`${el.symbol} — ${el.description}`}
                   >

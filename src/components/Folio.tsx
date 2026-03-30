@@ -342,7 +342,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
               {/* Group row — deep blue */}
-              <Link to={element.group != null ? `/atlas/group/${element.group}` : '#'} aria-label={`Group ${element.group ?? '—'}`} style={{ display: 'block', textDecoration: 'none' }}>
+              <Link to={element.group != null ? `/atlas/group/${element.group}` : '#'} aria-label={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} style={{ display: 'block', textDecoration: 'none' }}>
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={DEEP_BLUE} />
                   <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
@@ -350,7 +350,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 </svg>
               </Link>
               {/* Period row — warm red */}
-              <Link to={`/atlas/period/${element.period}`} aria-label={`Period ${element.period}`} style={{ display: 'block', textDecoration: 'none' }}>
+              <Link to={`/atlas/period/${element.period}`} aria-label={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} style={{ display: 'block', textDecoration: 'none' }}>
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={WARM_RED} />
                   <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
@@ -358,7 +358,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 </svg>
               </Link>
               {/* Block row — block colour */}
-              <Link to={`/atlas/block/${element.block}`} aria-label={`Block ${element.block}`} style={{ display: 'block', textDecoration: 'none' }}>
+              <Link to={`/atlas/block/${element.block}`} aria-label={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} style={{ display: 'block', textDecoration: 'none' }}>
                 <svg width={PLATE_WIDTH} height={56}>
                   <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={color} />
                   <text x={12} y={20} fontSize={10} fill={contrastTextColor(color)} fontFamily="system-ui">BLOCK</text>
@@ -417,7 +417,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             const rank = element.rankings[prop.key] ?? 0;
             const val = element[prop.key as keyof ElementRecord] as number | null;
             return (
-              <Link key={prop.key} to={`/atlas/rank/${prop.key}`} style={{ textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
+              <Link key={prop.key} to={`/atlas/rank/${prop.key}`} title={`View all 118 elements ranked by ${prop.label.toLowerCase()}`} style={{ textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
                 <PropertyBar
                   label={prop.label}
                   rank={rank}
@@ -449,6 +449,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               <Link
                 key={a.slug}
                 to={`/atlas/anomaly/${a.slug}`}
+                title={`${a.label} — view anomaly details`}
                 style={{
                   fontSize: '10px',
                   fontWeight: 'bold',
@@ -489,6 +490,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 {element.etymologyOrigin && element.etymologyOrigin !== 'unknown' && (
                   <Link
                     to={`/etymology-map#${element.etymologyOrigin?.toLowerCase()}`}
+                    title={`View all elements with ${element.etymologyOrigin} etymology`}
                     style={{ marginLeft: '6px', fontSize: '11px', color }}
                   >
                     ({element.etymologyOrigin} →)
@@ -501,7 +503,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   {sameEtymology.map((e, i) => (
                     <span key={e.symbol}>
                       {i > 0 && ', '}
-                      <Link to={`/element/${e.symbol}`} style={{ color }}>{e.symbol}</Link>
+                      <Link to={`/element/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
                     </span>
                   ))}
                 </div>
@@ -512,12 +514,13 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             <div>
               <span style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
               <div>
-                <Link to={`/discoverer/${encodeURIComponent(element.discoverer)}`} style={{ color, textDecoration: 'none' }}>
+                <Link to={`/discoverer/${encodeURIComponent(element.discoverer)}`} title={`View all elements discovered by ${element.discoverer}`} style={{ color, textDecoration: 'none' }}>
                   {element.discoverer}
                 </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
                 <Link
                   to={element.discoveryYear ? `/timeline/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
+                  title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
                   timeline →
@@ -529,7 +532,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   {sameDiscoverer.map((e, i) => (
                     <span key={e.symbol}>
                       {i > 0 && ', '}
-                      <Link to={`/element/${e.symbol}`} style={{ color }}>{e.symbol}</Link>
+                      <Link to={`/element/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
                     </span>
                   ))}
                 </div>
@@ -556,7 +559,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
             Category
           </div>
-          <Link to={`/atlas/category/${toSlug(element.category)}`} aria-label={element.category} style={{ textDecoration: 'none' }}>
+          <Link to={`/atlas/category/${toSlug(element.category)}`} aria-label={element.category} title={`View all ${element.category} elements`} style={{ textDecoration: 'none' }}>
             <svg
               width={MARGINALIA_WIDTH}
               height={catLines.length * catLH + catLH}

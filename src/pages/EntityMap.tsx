@@ -512,6 +512,47 @@ export default function EntityMapPage() {
         )}
       </section>
 
+      {/* Visualisation pages — where each entity type is surfaced */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', margin: '32px 0 12px' }}>
+          Visualisation Pages
+        </h2>
+        <p style={{ fontSize: '13px', color: GREY_MID, lineHeight: 1.7, marginBottom: '16px' }}>
+          Each visualisation page surfaces a different facet of the entity graph. Elements appear on every page;
+          other entity types are surfaced where they add context.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: mobile ? '1fr' : '1fr 1fr', gap: '12px' }}>
+          {[
+            { name: 'Periodic Table', path: '/', entities: 'Element, Group, Period, Block, Category' },
+            { name: 'Phase Landscape', path: '/phase-landscape', entities: 'Element, Block (colour)' },
+            { name: 'Property Scatter', path: '/property-scatter', entities: 'Element, Block (colour), Ranking (axes)' },
+            { name: 'Anomaly Explorer', path: '/anomaly-explorer', entities: 'Element, Anomaly' },
+            { name: 'Neighbourhood Graph', path: '/neighborhood-graph', entities: 'Element, Neighbour (edges)' },
+            { name: 'Discovery Timeline', path: '/discovery-timeline', entities: 'Element, Era, Discoverer' },
+            { name: 'Etymology Map', path: '/etymology-map', entities: 'Element, Etymology Origin' },
+            { name: 'Discoverer Network', path: '/discoverer-network', entities: 'Element, Discoverer' },
+          ].map((viz) => (
+            <Link
+              key={viz.path}
+              to={viz.path}
+              title={viz.name}
+              style={{
+                display: 'block',
+                padding: '10px 12px',
+                border: `1px solid ${DIM}`,
+                textDecoration: 'none',
+                color: BLACK,
+                fontSize: '12px',
+                lineHeight: 1.5,
+              }}
+            >
+              <div style={{ fontWeight: 'bold', marginBottom: '2px' }}>{viz.name}</div>
+              <div style={{ color: GREY_MID, fontSize: '11px' }}>{viz.entities}</div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <div style={{ fontSize: '13px' }}>
         <Link to="/design" style={{ color: WARM_RED }}>Design Language →</Link>
       </div>

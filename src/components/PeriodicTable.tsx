@@ -349,6 +349,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 cursor: 'pointer',
               }}
             >
+            <title>{`${el.name} (${el.symbol}) — ${el.category}`}</title>
             <g
               style={{
                 opacity: hasLoaded ? 1 : 0,

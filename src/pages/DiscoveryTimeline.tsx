@@ -259,30 +259,32 @@ export default function DiscoveryTimeline() {
             {antiquitySquares.map((sq) => {
               const el = getElement(sq.entry.symbol);
               return (
-                <rect
-                  key={`antiq-${sq.entry.symbol}`}
-                  x={sq.x}
-                  y={sq.y}
-                  width={SQ}
-                  height={SQ}
-                  fill={sq.color}
-                  stroke={BLACK}
-                  strokeWidth={0.25}
-                  style={{
-                    cursor: 'pointer',
-                    opacity: hasLoaded ? 1 : 0,
-                    transition: hasLoaded
-                      ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
-                      : 'none',
-                  }}
-                  onMouseEnter={() =>
-                    handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
-                  }
-                  onMouseLeave={handleSquareLeave}
-                  onClick={() => handleSquareClick(sq.entry.symbol)}
-                  role="button"
-                  aria-label={`${el?.name ?? sq.entry.symbol}, known since antiquity`}
-                />
+                <g key={`antiq-${sq.entry.symbol}`}>
+                  <title>{el?.name ?? sq.entry.symbol}</title>
+                  <rect
+                    x={sq.x}
+                    y={sq.y}
+                    width={SQ}
+                    height={SQ}
+                    fill={sq.color}
+                    stroke={BLACK}
+                    strokeWidth={0.25}
+                    style={{
+                      cursor: 'pointer',
+                      opacity: hasLoaded ? 1 : 0,
+                      transition: hasLoaded
+                        ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
+                        : 'none',
+                    }}
+                    onMouseEnter={() =>
+                      handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
+                    }
+                    onMouseLeave={handleSquareLeave}
+                    onClick={() => handleSquareClick(sq.entry.symbol)}
+                    role="button"
+                    aria-label={`${el?.name ?? sq.entry.symbol}, known since antiquity`}
+                  />
+                </g>
               );
             })}
 
@@ -290,30 +292,32 @@ export default function DiscoveryTimeline() {
             {squares.map((sq) => {
               const el = getElement(sq.entry.symbol);
               return (
-                <rect
-                  key={`tl-${sq.entry.symbol}`}
-                  x={sq.x}
-                  y={sq.y}
-                  width={SQ}
-                  height={SQ}
-                  fill={sq.color}
-                  stroke={BLACK}
-                  strokeWidth={0.25}
-                  style={{
-                    cursor: 'pointer',
-                    opacity: hasLoaded ? 1 : 0,
-                    transition: hasLoaded
-                      ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
-                      : 'none',
-                  }}
-                  onMouseEnter={() =>
-                    handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
-                  }
-                  onMouseLeave={handleSquareLeave}
-                  onClick={() => handleSquareClick(sq.entry.symbol)}
-                  role="button"
-                  aria-label={`${el?.name ?? sq.entry.symbol}, discovered ${sq.entry.year} by ${sq.entry.discoverer}`}
-                />
+                <g key={`tl-${sq.entry.symbol}`}>
+                  <title>{el?.name ?? sq.entry.symbol}</title>
+                  <rect
+                    x={sq.x}
+                    y={sq.y}
+                    width={SQ}
+                    height={SQ}
+                    fill={sq.color}
+                    stroke={BLACK}
+                    strokeWidth={0.25}
+                    style={{
+                      cursor: 'pointer',
+                      opacity: hasLoaded ? 1 : 0,
+                      transition: hasLoaded
+                        ? `opacity 300ms var(--ease-out) ${sq.delay}ms`
+                        : 'none',
+                    }}
+                    onMouseEnter={() =>
+                      handleSquareEnter(sq, sq.x + SQ / 2, sq.y)
+                    }
+                    onMouseLeave={handleSquareLeave}
+                    onClick={() => handleSquareClick(sq.entry.symbol)}
+                    role="button"
+                    aria-label={`${el?.name ?? sq.entry.symbol}, discovered ${sq.entry.year} by ${sq.entry.discoverer}`}
+                  />
+                </g>
               );
             })}
 
@@ -383,6 +387,7 @@ export default function DiscoveryTimeline() {
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
           <Link
             to="/timeline/antiquity"
+            title="View the Antiquity discovery era"
             style={{
               fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
               textTransform: 'uppercase', padding: '4px 10px',
@@ -396,6 +401,7 @@ export default function DiscoveryTimeline() {
             <Link
               key={d}
               to={`/timeline/${d}`}
+              title={`View the ${d}s discovery era`}
               style={{
                 fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
                 padding: '4px 10px',

@@ -205,6 +205,7 @@ export default function AnomalyExplorer() {
               }}
               onClick={() => navigate(`/element/${el.symbol}`)}
             >
+              <title>{el.name}</title>
               <rect
                 width={CELL_WIDTH}
                 height={CELL_HEIGHT}

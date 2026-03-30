@@ -82,12 +82,12 @@ export default function DiscovererDetail() {
         marginTop: '8px',
       }}>
         {prevDisc ? (
-          <Link to={`/discoverer/${encodeURIComponent(prevDisc.name)}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
+          <Link to={`/discoverer/${encodeURIComponent(prevDisc.name)}`} title={`View elements discovered by ${prevDisc.name}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             ← {prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name}
           </Link>
         ) : <span />}
         {nextDisc ? (
-          <Link to={`/discoverer/${encodeURIComponent(nextDisc.name)}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
+          <Link to={`/discoverer/${encodeURIComponent(nextDisc.name)}`} title={`View elements discovered by ${nextDisc.name}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             {nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name} →
           </Link>
         ) : <span />}
@@ -145,6 +145,7 @@ export default function DiscovererDetail() {
               <Link
                 key={d.name}
                 to={`/discoverer/${encodeURIComponent(d.name)}`}
+                title={`View elements discovered by ${d.name}`}
                 style={{
                   fontSize: '11px',
                   fontWeight: 'bold',
@@ -172,11 +173,11 @@ export default function DiscovererDetail() {
       {/* Link to timeline era for context */}
       <div style={{ marginTop: '24px', fontSize: '13px' }}>
         {years.length > 0 ? (
-          <Link to={`/timeline/${Math.floor(years[0] / 10) * 10}`} style={{ color: WARM_RED }}>
+          <Link to={`/timeline/${Math.floor(years[0] / 10) * 10}`} title={`View the ${Math.floor(years[0] / 10) * 10}s discovery era`} style={{ color: WARM_RED }}>
             View {Math.floor(years[0] / 10) * 10}s on Timeline →
           </Link>
         ) : (
-          <Link to="/timeline/antiquity" style={{ color: WARM_RED }}>
+          <Link to="/timeline/antiquity" title="View the Antiquity discovery era" style={{ color: WARM_RED }}>
             View Antiquity on Timeline →
           </Link>
         )}

@@ -122,6 +122,8 @@ export default function CompareView({
         />
 
         {/* Element A */}
+        <g>
+        <title>{elementA.name}</title>
         <text
           x={aCx}
           y={aCy + 80}
@@ -165,8 +167,11 @@ export default function CompareView({
         >
           {elementA.category} · {elementA.block}-block
         </text>
+        </g>
 
         {/* Element B */}
+        <g>
+        <title>{elementB.name}</title>
         <text
           x={bCx}
           y={bCy + 80}
@@ -210,6 +215,7 @@ export default function CompareView({
         >
           {elementB.category} · {elementB.block}-block
         </text>
+        </g>
 
         {/* Comparison bands */}
         {PROPERTIES.map((prop, i) => {

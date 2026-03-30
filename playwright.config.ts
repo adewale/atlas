@@ -26,5 +26,26 @@ export default defineConfig({
       name: 'mobile',
       use: { viewport: { width: 375, height: 812 } },
     },
+    {
+      name: 'iphone15promax',
+      use: {
+        viewport: { width: 430, height: 932 },
+        deviceScaleFactor: 3,
+      },
+    },
+    {
+      name: 'iphone16promax',
+      use: {
+        viewport: { width: 440, height: 956 },
+        deviceScaleFactor: 3,
+      },
+    },
+    {
+      name: 'iphone17',
+      use: {
+        viewport: { width: 440, height: 956 },
+        deviceScaleFactor: 3,
+      },
+    },
   ],
 });

@@ -137,6 +137,7 @@ export default function PhaseLandscape() {
                     aria-label={`${el.name}, ${el.phase} at STP`}
                     style={{ cursor: 'pointer' }}
                   >
+                    <title>{el.name}</title>
                     <g
                       style={{
                         opacity: hasLoaded ? 1 : 0,

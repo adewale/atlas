@@ -192,6 +192,7 @@ export default function NeighborhoodGraph() {
                   role="button"
                   aria-label={`${el.name} (${el.symbol}), ${el.neighbors.length} neighbours`}
                 >
+                  <title>{el.name}</title>
                   <circle
                     cx={cx}
                     cy={cy}

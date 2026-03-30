@@ -131,6 +131,7 @@ export default function DiscovererNetwork() {
           {antiquity && (
             <g transform={`translate(0, ${antiquityStartY})`}>
               <a href={`/discoverer/${encodeURIComponent(antiquity.name)}`}>
+                <title>{`View elements discovered by ${antiquity.name}`}</title>
                 <text
                   x={0}
                   y={SQ - 2}
@@ -173,6 +174,7 @@ export default function DiscovererNetwork() {
                       }
                       onMouseLeave={() => setHovered(null)}
                     >
+                      <title>{el.name}</title>
                       <rect width={SQ} height={SQ} fill={fill} rx={2} />
                       <text
                         x={SQ / 2}
@@ -200,6 +202,7 @@ export default function DiscovererNetwork() {
               <g key={disc.name} transform={`translate(0, ${rowY})`}>
                 {/* Discoverer name — links to detail page */}
                 <a href={`/discoverer/${encodeURIComponent(disc.name)}`}>
+                  <title>{`View elements discovered by ${disc.name}`}</title>
                   <text
                     x={0}
                     y={SQ - 2}
@@ -251,6 +254,7 @@ export default function DiscovererNetwork() {
                         }
                         onMouseLeave={() => setHovered(null)}
                       >
+                        <title>{el.name}</title>
                         <rect width={SQ} height={SQ} fill={fill} rx={2} />
                         <text
                           x={SQ / 2}

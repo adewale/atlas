@@ -215,6 +215,7 @@ export default function PropertyScatter() {
 
           return (
             <g key={d.el.symbol}>
+              <title>{d.el.name}</title>
               <rect
                 x={cx - SQUARE_SIZE / 2}
                 y={cy - SQUARE_SIZE / 2}

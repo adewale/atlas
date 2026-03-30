@@ -29,11 +29,11 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            width: '48px',
+            justifyContent: 'space-between',
+            width: '64px',
             flexShrink: 0,
             margin: 0,
-            padding: '0 4px',
+            padding: '8px 0',
             userSelect: 'none',
           }}
         >
@@ -41,12 +41,12 @@ export default function Home() {
             <span
               key={i}
               style={{
-                fontSize: '36px',
-                fontWeight: 'bold',
+                fontSize: '72px',
+                fontWeight: 900,
                 fontFamily: 'system-ui, sans-serif',
                 lineHeight: 1,
                 color: BLACK,
-                letterSpacing: '0.05em',
+                letterSpacing: '-0.02em',
               }}
             >
               {letter}

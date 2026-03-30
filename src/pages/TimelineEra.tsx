@@ -101,12 +101,12 @@ export default function TimelineEra() {
         marginTop: '8px',
       }}>
         {prevEra ? (
-          <Link to={`/timeline/${prevEra}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
+          <Link to={`/timeline/${prevEra}`} title={`View the ${prevEra === 'antiquity' ? 'Antiquity' : prevEra + 's'} discovery era`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             ← {prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`}
           </Link>
         ) : <span />}
         {nextEra ? (
-          <Link to={`/timeline/${nextEra}`} style={{ color: GREY_MID, textDecoration: 'none' }}>
+          <Link to={`/timeline/${nextEra}`} title={`View the ${nextEra}s discovery era`} style={{ color: GREY_MID, textDecoration: 'none' }}>
             {`${nextEra}s`} →
           </Link>
         ) : <span />}
@@ -164,6 +164,7 @@ export default function TimelineEra() {
               <Link
                 key={name}
                 to={`/discoverer/${encodeURIComponent(name)}`}
+                title={`View elements discovered by ${name}`}
                 style={{
                   fontSize: '11px',
                   fontWeight: 'bold',
@@ -208,6 +209,7 @@ export default function TimelineEra() {
                 <Link
                   key={d}
                   to={`/timeline/${d}`}
+                  title={`View the ${d}s discovery era`}
                   style={{
                     fontSize: '11px',
                     fontWeight: 'bold',

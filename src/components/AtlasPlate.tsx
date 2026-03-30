@@ -149,7 +149,7 @@ export default function AtlasPlate({
                 animation: `card-enter 250ms var(--ease-out) ${i * 15}ms forwards`,
               }}
             >
-              <Link to={`/element/${el.symbol}`}>
+              <Link to={`/element/${el.symbol}`} title={el.name}>
                 <rect x={x} y={y} width={CARD_W} height={CARD_H} fill={fill} />
                 <text
                   x={x + 6}
