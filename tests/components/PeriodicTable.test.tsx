@@ -25,30 +25,27 @@ describe('PeriodicTable', () => {
     expect(cells.length).toBe(118);
   });
 
-  it('search filters correctly — searching "iron" shows Fe', () => {
+  it('filter narrows visible elements — typing "iron" keeps Fe', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search · press / to focus');
+    const input = screen.getByLabelText(/Filter elements/);
     fireEvent.change(input, { target: { value: 'iron' } });
-    // Fe cell should still be visible (not dimmed)
     const feCell = screen.getByLabelText(/^Iron,/);
     expect(feCell).toBeInTheDocument();
   });
 
-  it('search for "Fe" by symbol works', () => {
+  it('filter by symbol "Fe" works', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search · press / to focus');
+    const input = screen.getByLabelText(/Filter elements/);
     fireEvent.change(input, { target: { value: 'Fe' } });
     const feCell = screen.getByLabelText(/^Iron,/);
     expect(feCell).toBeInTheDocument();
   });
 
-  it('highlight mode dropdown changes fill colors', () => {
+  it('block colour chip changes fill colours', () => {
     renderTable();
-    const select = screen.getByLabelText('Colour by');
-    fireEvent.change(select, { target: { value: 'block' } });
-    // After changing to block mode, verify select updated
-    expect((select as HTMLSelectElement).value).toBe('block');
-    // Also verify a d-block element got the warm red fill
+    const blockBtn = screen.getByRole('button', { name: /block/i });
+    fireEvent.click(blockBtn);
+    // d-block element (Iron) should get warm red fill
     const feCell = screen.getByLabelText(/^Iron,/);
     const rect = feCell.querySelector('rect');
     expect(rect).toHaveAttribute('fill', '#9e1c2c');
@@ -62,9 +59,9 @@ describe('PeriodicTable', () => {
     expect(onSelect).toHaveBeenCalledWith('Fe');
   });
 
-  it('search dims non-matching elements', () => {
+  it('filter dims non-matching elements', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search · press / to focus');
+    const input = screen.getByLabelText(/Filter elements/);
     fireEvent.change(input, { target: { value: 'iron' } });
     // He should be dimmed — fill changes to DIM color (#ece7db)
     const heCell = screen.getByLabelText(/^Helium,/);
@@ -72,33 +69,24 @@ describe('PeriodicTable', () => {
     expect(rect).toHaveAttribute('fill', '#ece7db');
   });
 
-  it('block highlight mode colors cells by block', () => {
+  it('block chip colours s-block elements with deep blue', () => {
     renderTable();
-    const select = screen.getByLabelText('Colour by');
-    fireEvent.change(select, { target: { value: 'block' } });
+    const blockBtn = screen.getByRole('button', { name: /block/i });
+    fireEvent.click(blockBtn);
     // H is s-block, should have deep blue fill (#133e7c)
     const hCell = screen.getByLabelText(/^Hydrogen,/);
     const rect = hCell.querySelector('rect');
     expect(rect).toHaveAttribute('fill', '#133e7c');
   });
 
-  it('shows property selector when property mode is selected', () => {
+  it('property chip reveals property sub-options', () => {
     renderTable();
-    const select = screen.getByLabelText('Colour by');
-    fireEvent.change(select, { target: { value: 'property' } });
-    const propSelect = screen.getByLabelText('Property');
-    expect(propSelect).toBeInTheDocument();
-  });
-
-  it('property selector includes all four numeric properties', () => {
-    renderTable();
-    const select = screen.getByLabelText('Colour by');
-    fireEvent.change(select, { target: { value: 'property' } });
-    const propSelect = screen.getByLabelText('Property') as HTMLSelectElement;
-    const options = Array.from(propSelect.options).map((o) => o.value);
-    expect(options).toContain('mass');
-    expect(options).toContain('electronegativity');
-    expect(options).toContain('ionizationEnergy');
-    expect(options).toContain('radius');
+    const propBtn = screen.getByRole('button', { name: /property/i });
+    fireEvent.click(propBtn);
+    // Should now see Mass, Electronegativity, Ionisation Energy, Radius buttons
+    expect(screen.getByRole('button', { name: /mass/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /electronegativity/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /ionisation energy/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /radius/i })).toBeInTheDocument();
   });
 });

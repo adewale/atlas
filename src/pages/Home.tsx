@@ -3,6 +3,9 @@ import PeriodicTable from '../components/PeriodicTable';
 import VizNav from '../components/VizNav';
 import SiteNav from '../components/SiteNav';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
+import { BLACK, PAPER } from '../lib/theme';
+
+const ATLAS_LETTERS = ['A', 'T', 'L', 'A', 'S'] as const;
 
 export default function Home() {
   const transitionNavigate = useViewTransitionNavigate();
@@ -16,11 +19,45 @@ export default function Home() {
 
   return (
     <main id="main-content">
-      <h1 style={{ letterSpacing: '0.3em', marginBottom: '12px', fontSize: '14px', fontWeight: 'bold', textTransform: 'uppercase' }}>
-        Atlas
-      </h1>
-      <VizNav />
-      <PeriodicTable onSelectElement={handleSelect} />
+      <div style={{ display: 'flex', gap: '0' }}>
+        {/* Vertical ATLAS wordmark in left gutter */}
+        <h1
+          aria-label="Atlas"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '48px',
+            flexShrink: 0,
+            margin: 0,
+            padding: '0 4px',
+            userSelect: 'none',
+          }}
+        >
+          {ATLAS_LETTERS.map((letter, i) => (
+            <span
+              key={i}
+              style={{
+                fontSize: '36px',
+                fontWeight: 'bold',
+                fontFamily: 'system-ui, sans-serif',
+                lineHeight: 1,
+                color: BLACK,
+                letterSpacing: '0.05em',
+              }}
+            >
+              {letter}
+            </span>
+          ))}
+        </h1>
+
+        {/* Main content area */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <VizNav />
+          <PeriodicTable onSelectElement={handleSelect} />
+        </div>
+      </div>
       <SiteNav />
     </main>
   );

@@ -11,7 +11,6 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { useGridNavigation } from '../hooks/useGridNavigation';
-import InfoTip from './InfoTip';
 
 // ---------------------------------------------------------------------------
 // Highlight modes
@@ -163,22 +162,32 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
 
   return (
     <div>
-      {/* Toolbar: search (primary) | colour controls (secondary) */}
+      {/* Unified filter bar: text filter + colour chips */}
       <div style={{
         display: 'flex',
-        gap: '16px',
-        marginBottom: '16px',
+        gap: '6px',
+        marginBottom: '12px',
         flexWrap: 'wrap',
-        alignItems: 'stretch',
+        alignItems: 'center',
       }}>
-        {/* Search — primary action, takes available space */}
-        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', flex: '1 1 200px', maxWidth: '320px' }}>
-          <label htmlFor="pt-search" className="sr-only">Search elements</label>
+        {/* Text filter */}
+        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+          <label htmlFor="pt-search" style={{
+            fontSize: '10px',
+            fontWeight: 'bold',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: '#666',
+            position: 'absolute',
+            left: '10px',
+            pointerEvents: 'none',
+          }}>
+            {query ? '' : 'Filter'}
+          </label>
           <input
             ref={searchRef}
             id="pt-search"
-            type="search"
-            placeholder="Search · press / to focus"
+            type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -188,16 +197,16 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               }
             }}
             aria-describedby="pt-search-desc"
-            aria-label={matchCount != null ? `Search elements — ${matchCount} of 118 match` : 'Search elements'}
+            aria-label={matchCount != null ? `Filter elements — ${matchCount} of 118 match` : 'Filter elements by name or symbol'}
             style={{
-              width: '100%',
-              padding: '8px 12px',
-              paddingRight: matchCount != null ? '56px' : '12px',
-              border: '1.5px solid #0f0f0f',
+              width: query ? '180px' : '90px',
+              padding: query ? '6px 48px 6px 10px' : '6px 10px',
+              border: `1.5px solid ${isFiltering ? BLACK : '#ccc'}`,
               background: PAPER,
               fontFamily: 'inherit',
-              fontSize: '14px',
+              fontSize: '13px',
               minHeight: '44px',
+              transition: 'width 200ms var(--ease-out), border-color 200ms var(--ease-out)',
             }}
           />
           {matchCount != null && (
@@ -206,7 +215,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               style={{
                 position: 'absolute',
                 right: '8px',
-                fontSize: '11px',
+                fontSize: '10px',
                 fontFamily: "'SF Mono', 'Cascadia Code', monospace",
                 color: matchCount === 0 ? WARM_RED : '#666',
                 pointerEvents: 'none',
@@ -220,86 +229,63 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           </span>
         </div>
 
-        {/* Colour controls — secondary, grouped together */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          borderLeft: '1px solid #ece7db',
-          paddingLeft: '16px',
-        }}>
-          <label
-            htmlFor="pt-highlight"
-            style={{
-              fontSize: '10px',
-              fontWeight: 'bold',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: '#666',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            Colour by
-          </label>
-          <select
-            id="pt-highlight"
-            value={highlightMode}
-            onChange={(e) => setHighlightMode(e.target.value as HighlightMode)}
-            style={{
-              padding: '8px 10px',
-              border: '1.5px solid #0f0f0f',
-              background: PAPER,
-              fontFamily: 'inherit',
-              fontSize: '13px',
-              minHeight: '44px',
-            }}
-          >
-            {HIGHLIGHT_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
-          </select>
-          <InfoTip label="Colour each cell by group, period, block (s/p/d/f electron orbital), category (metal type), or a numeric property like mass or electronegativity. Darker shading = higher value in Property mode.">
-            <span />
-          </InfoTip>
+        {/* Colour mode chips */}
+        {HIGHLIGHT_OPTIONS.map((o) => {
+          const isActive = highlightMode === o.value;
+          return (
+            <button
+              key={o.value}
+              onClick={() => setHighlightMode(isActive && o.value !== 'none' ? 'none' : o.value)}
+              aria-pressed={isActive}
+              style={{
+                fontSize: '10px',
+                fontWeight: 'bold',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                padding: '6px 10px',
+                border: `1.5px solid ${isActive ? BLACK : '#ccc'}`,
+                background: isActive ? BLACK : 'transparent',
+                color: isActive ? PAPER : '#666',
+                cursor: 'pointer',
+                minHeight: '44px',
+                minWidth: '44px',
+                fontFamily: 'inherit',
+                transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
+              }}
+            >
+              {o.label}
+            </button>
+          );
+        })}
 
-          {highlightMode === 'property' && (
-            <>
-              <label
-                htmlFor="pt-property"
-                style={{
-                  fontSize: '10px',
-                  fontWeight: 'bold',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: '#666',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                Property
-              </label>
-              <select
-                id="pt-property"
-                value={property}
-                onChange={(e) => setProperty(e.target.value as NumericProperty)}
-                style={{
-                  padding: '8px 10px',
-                  border: '1.5px solid #0f0f0f',
-                  background: PAPER,
-                  fontFamily: 'inherit',
-                  fontSize: '13px',
-                  minHeight: '44px',
-                }}
-              >
-                {PROPERTY_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
-              <InfoTip label="Mass: atomic weight in daltons. Electronegativity: tendency to attract electrons (Pauling scale). Ionisation energy: energy to remove an electron. Radius: size of the atom in picometres.">
-                <span />
-              </InfoTip>
-            </>
-          )}
-        </div>
+        {/* Property sub-selector — appears when Property mode is active */}
+        {highlightMode === 'property' && PROPERTY_OPTIONS.map((o) => {
+          const isActive = property === o.value;
+          return (
+            <button
+              key={o.value}
+              onClick={() => setProperty(o.value)}
+              aria-pressed={isActive}
+              style={{
+                fontSize: '10px',
+                fontWeight: 'bold',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                padding: '6px 10px',
+                border: `1.5px solid ${isActive ? DEEP_BLUE : '#ccc'}`,
+                background: isActive ? DEEP_BLUE : 'transparent',
+                color: isActive ? PAPER : '#666',
+                cursor: 'pointer',
+                minHeight: '44px',
+                minWidth: '44px',
+                fontFamily: 'inherit',
+                transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
+              }}
+            >
+              {o.label}
+            </button>
+          );
+        })}
       </div>
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg

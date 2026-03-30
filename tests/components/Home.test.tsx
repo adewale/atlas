@@ -18,7 +18,7 @@ function renderHome() {
 describe('Home', () => {
   it('renders the atlas heading', () => {
     renderHome();
-    expect(screen.getByRole('heading', { name: 'Atlas' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /atlas/i })).toBeInTheDocument();
   });
 
   it('renders the periodic table with 118 elements', () => {
