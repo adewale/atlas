@@ -23,7 +23,8 @@ export default function AtlasRank() {
   return (
     <main>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0' }}>Ranked by {label}</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE }}>Ranked by {label}</h1>
+      <div style={{ borderTop: `4px solid ${DEEP_BLUE}`, marginBottom: '16px' }} />
       {elements.length > 0 && (
         <AtlasPlate
           elements={elements}

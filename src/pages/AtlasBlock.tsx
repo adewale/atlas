@@ -16,7 +16,8 @@ export default function AtlasBlock() {
   return (
     <main>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0' }}>{block}-block</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color }}>{block}-block</h1>
+      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={`${block}-block elements`} captionColor={color} />
       )}

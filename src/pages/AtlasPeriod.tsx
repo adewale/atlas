@@ -17,7 +17,8 @@ export default function AtlasPeriod() {
   return (
     <main>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-      <h1 style={{ margin: '16px 0' }}>Period {n}</h1>
+      <h1 style={{ margin: '16px 0', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color }}>Period {n}</h1>
+      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={`Period ${n}`} captionColor={color} />
       )}
