@@ -89,6 +89,13 @@ test.describe('All routes load', () => {
     '/about',
     '/credits',
     '/design',
+    '/phase-landscape',
+    '/property-scatter',
+    '/anomaly-explorer',
+    '/neighborhood-graph',
+    '/discovery-timeline',
+    '/etymology-map',
+    '/discoverer-network',
   ];
 
   for (const route of routes) {
