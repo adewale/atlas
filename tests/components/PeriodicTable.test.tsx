@@ -27,7 +27,7 @@ describe('PeriodicTable', () => {
 
   it('search filters correctly — searching "iron" shows Fe', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search name or symbol');
+    const input = screen.getByPlaceholderText('Search · press / to focus');
     fireEvent.change(input, { target: { value: 'iron' } });
     // Fe cell should still be visible (not dimmed)
     const feCell = screen.getByLabelText(/^Iron,/);
@@ -36,7 +36,7 @@ describe('PeriodicTable', () => {
 
   it('search for "Fe" by symbol works', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search name or symbol');
+    const input = screen.getByPlaceholderText('Search · press / to focus');
     fireEvent.change(input, { target: { value: 'Fe' } });
     const feCell = screen.getByLabelText(/^Iron,/);
     expect(feCell).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe('PeriodicTable', () => {
 
   it('highlight mode dropdown changes fill colors', () => {
     renderTable();
-    const select = screen.getByLabelText('Color by');
+    const select = screen.getByLabelText('Colour by');
     fireEvent.change(select, { target: { value: 'block' } });
     // After changing to block mode, verify select updated
     expect((select as HTMLSelectElement).value).toBe('block');
@@ -64,7 +64,7 @@ describe('PeriodicTable', () => {
 
   it('search dims non-matching elements', () => {
     renderTable();
-    const input = screen.getByPlaceholderText('Search name or symbol');
+    const input = screen.getByPlaceholderText('Search · press / to focus');
     fireEvent.change(input, { target: { value: 'iron' } });
     // He should be dimmed — fill changes to DIM color (#ece7db)
     const heCell = screen.getByLabelText(/^Helium,/);
@@ -74,7 +74,7 @@ describe('PeriodicTable', () => {
 
   it('block highlight mode colors cells by block', () => {
     renderTable();
-    const select = screen.getByLabelText('Color by');
+    const select = screen.getByLabelText('Colour by');
     fireEvent.change(select, { target: { value: 'block' } });
     // H is s-block, should have deep blue fill (#133e7c)
     const hCell = screen.getByLabelText(/^Hydrogen,/);
@@ -84,7 +84,7 @@ describe('PeriodicTable', () => {
 
   it('shows property selector when property mode is selected', () => {
     renderTable();
-    const select = screen.getByLabelText('Color by');
+    const select = screen.getByLabelText('Colour by');
     fireEvent.change(select, { target: { value: 'property' } });
     const propSelect = screen.getByLabelText('Property');
     expect(propSelect).toBeInTheDocument();
@@ -92,7 +92,7 @@ describe('PeriodicTable', () => {
 
   it('property selector includes all four numeric properties', () => {
     renderTable();
-    const select = screen.getByLabelText('Color by');
+    const select = screen.getByLabelText('Colour by');
     fireEvent.change(select, { target: { value: 'property' } });
     const propSelect = screen.getByLabelText('Property') as HTMLSelectElement;
     const options = Array.from(propSelect.options).map((o) => o.value);

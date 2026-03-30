@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { Link } from 'react-router';
 import PeriodicTable from '../components/PeriodicTable';
 import VizNav from '../components/VizNav';
+import SiteNav from '../components/SiteNav';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 
 export default function Home() {
@@ -21,14 +21,7 @@ export default function Home() {
       </h1>
       <VizNav />
       <PeriodicTable onSelectElement={handleSelect} />
-      <footer style={{ marginTop: '12px', fontSize: '12px', color: '#666', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <span style={{ fontFamily: "'SF Mono', monospace", fontSize: '11px' }}>Press <strong>?</strong> for keyboard shortcuts</span>
-        <nav style={{ fontSize: '13px', display: 'flex', gap: '16px' }}>
-          <Link to="/about">About</Link>
-          <Link to="/credits">Credits</Link>
-          <Link to="/design">Design</Link>
-        </nav>
-      </footer>
+      <SiteNav />
     </main>
   );
 }

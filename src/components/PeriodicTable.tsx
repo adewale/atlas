@@ -163,14 +163,22 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
 
   return (
     <div>
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+      {/* Toolbar: search (primary) | colour controls (secondary) */}
+      <div style={{
+        display: 'flex',
+        gap: '16px',
+        marginBottom: '16px',
+        flexWrap: 'wrap',
+        alignItems: 'stretch',
+      }}>
+        {/* Search — primary action, takes available space */}
+        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', flex: '1 1 200px', maxWidth: '320px' }}>
           <label htmlFor="pt-search" className="sr-only">Search elements</label>
           <input
             ref={searchRef}
             id="pt-search"
             type="search"
-            placeholder="Search name or symbol"
+            placeholder="Search · press / to focus"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -182,9 +190,10 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             aria-describedby="pt-search-desc"
             aria-label={matchCount != null ? `Search elements — ${matchCount} of 118 match` : 'Search elements'}
             style={{
+              width: '100%',
               padding: '8px 12px',
               paddingRight: matchCount != null ? '56px' : '12px',
-              border: '1px solid #0f0f0f',
+              border: '1.5px solid #0f0f0f',
               background: PAPER,
               fontFamily: 'inherit',
               fontSize: '14px',
@@ -198,7 +207,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 position: 'absolute',
                 right: '8px',
                 fontSize: '11px',
-                fontFamily: "'SF Mono', monospace",
+                fontFamily: "'SF Mono', 'Cascadia Code', monospace",
                 color: matchCount === 0 ? WARM_RED : '#666',
                 pointerEvents: 'none',
               }}
@@ -210,52 +219,87 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             Filter elements by name or symbol. Press / to focus, Escape to clear.
           </span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <label htmlFor="pt-highlight" style={{ fontSize: '12px', color: '#666' }}>Color by</label>
+
+        {/* Colour controls — secondary, grouped together */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          borderLeft: '1px solid #ece7db',
+          paddingLeft: '16px',
+        }}>
+          <label
+            htmlFor="pt-highlight"
+            style={{
+              fontSize: '10px',
+              fontWeight: 'bold',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#666',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Colour by
+          </label>
           <select
             id="pt-highlight"
             value={highlightMode}
             onChange={(e) => setHighlightMode(e.target.value as HighlightMode)}
             style={{
-              padding: '8px 12px',
-              border: '1px solid #0f0f0f',
+              padding: '8px 10px',
+              border: '1.5px solid #0f0f0f',
               background: PAPER,
               fontFamily: 'inherit',
-              fontSize: '14px',
+              fontSize: '13px',
+              minHeight: '44px',
             }}
           >
             {HIGHLIGHT_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
             ))}
           </select>
-          <InfoTip label="Color each cell by group, period, block (s/p/d/f electron orbital), category (metal type), or a numeric property like mass or electronegativity. Darker = higher value in Property mode.">
+          <InfoTip label="Colour each cell by group, period, block (s/p/d/f electron orbital), category (metal type), or a numeric property like mass or electronegativity. Darker shading = higher value in Property mode.">
             <span />
           </InfoTip>
+
+          {highlightMode === 'property' && (
+            <>
+              <label
+                htmlFor="pt-property"
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: '#666',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Property
+              </label>
+              <select
+                id="pt-property"
+                value={property}
+                onChange={(e) => setProperty(e.target.value as NumericProperty)}
+                style={{
+                  padding: '8px 10px',
+                  border: '1.5px solid #0f0f0f',
+                  background: PAPER,
+                  fontFamily: 'inherit',
+                  fontSize: '13px',
+                  minHeight: '44px',
+                }}
+              >
+                {PROPERTY_OPTIONS.map((o) => (
+                  <option key={o.value} value={o.value}>{o.label}</option>
+                ))}
+              </select>
+              <InfoTip label="Mass: atomic weight in daltons. Electronegativity: tendency to attract electrons (Pauling scale). Ionisation energy: energy to remove an electron. Radius: size of the atom in picometres.">
+                <span />
+              </InfoTip>
+            </>
+          )}
         </div>
-        {highlightMode === 'property' && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <label htmlFor="pt-property" style={{ fontSize: '12px', color: '#666' }}>Property</label>
-            <select
-              id="pt-property"
-              value={property}
-              onChange={(e) => setProperty(e.target.value as NumericProperty)}
-              style={{
-                padding: '8px 12px',
-                border: '1px solid #0f0f0f',
-                background: PAPER,
-                fontFamily: 'inherit',
-                fontSize: '14px',
-              }}
-            >
-              {PROPERTY_OPTIONS.map((o) => (
-                <option key={o.value} value={o.value}>{o.label}</option>
-              ))}
-            </select>
-            <InfoTip label="Mass: atomic weight in daltons. Electronegativity: tendency to attract electrons (Pauling scale). Ionisation energy: energy to remove an electron. Radius: size of the atom in picometres.">
-              <span />
-            </InfoTip>
-          </div>
-        )}
       </div>
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg
