@@ -1,7 +1,8 @@
 import { Link } from 'react-router';
-import { usePretextLines } from '../hooks/usePretextLines';
+import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
+import { DEEP_BLUE } from '../lib/theme';
 
 const SVG_MAX_WIDTH = 640;
 
@@ -18,9 +19,10 @@ const TECHNOLOGY_TEXT =
   'Built with React, Vite, and @chenglou/pretext for text measurement. Deployed on Cloudflare Pages. System fonts throughout. No images in v1.';
 
 export default function About() {
-  const { lines: introLines, lineHeight: introLH } = usePretextLines({
+  const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_MAX_WIDTH,
+    dropCapFont: '72px system-ui',
   });
 
   const { lines: dataLines, lineHeight: dataLH } = usePretextLines({
@@ -53,7 +55,7 @@ export default function About() {
           role="img"
           style={{ maxWidth: '100%' }}
         >
-          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE }} />
         </svg>
       </section>
 

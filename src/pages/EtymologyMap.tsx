@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
-import { usePretextLines } from '../hooks/usePretextLines';
+import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
 
@@ -154,9 +154,10 @@ export default function EtymologyMap() {
   const location = useLocation();
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
-  const { lines, lineHeight } = usePretextLines({
+  const { lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: MAX_WIDTH,
+    dropCapFont: '72px system-ui',
   });
 
   useEffect(() => {
@@ -205,6 +206,7 @@ export default function EtymologyMap() {
           fill={BLACK}
           maxWidth={MAX_WIDTH}
           animationStagger={40}
+          dropCap={{ fontSize: 72, fill: DEEP_BLUE }}
         />
       </svg>
 

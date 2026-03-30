@@ -3,7 +3,7 @@ import { Link, useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED } from '../lib/theme';
-import { usePretextLines } from '../hooks/usePretextLines';
+import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
 
@@ -66,9 +66,10 @@ export default function DiscoveryTimeline() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [tooltip, setTooltip] = useState<Tooltip>(null);
 
-  const { lines, lineHeight } = usePretextLines({
+  const { lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_WIDTH,
+    dropCapFont: '80px system-ui',
   });
 
   useEffect(() => {
@@ -201,6 +202,7 @@ export default function DiscoveryTimeline() {
             fill={BLACK}
             maxWidth={SVG_WIDTH}
             animationStagger={40}
+            dropCap={{ fontSize: 80, fill: WARM_RED }}
           />
 
           {/* Timeline chart offset below intro */}

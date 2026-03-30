@@ -3,7 +3,7 @@ import { useLoaderData, Link, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
-import { usePretextLines } from '../hooks/usePretextLines';
+import { useDropCapText } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import SiteNav from '../components/SiteNav';
 
@@ -43,9 +43,10 @@ export default function DiscovererNetwork() {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  const { lines, lineHeight } = usePretextLines({
+  const { lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: INTRO_MAX_W,
+    dropCapFont: '72px system-ui',
   });
 
   // Separate antiquity group and prolific discoverers (2+ elements)
@@ -97,6 +98,7 @@ export default function DiscovererNetwork() {
             fill={BLACK}
             maxWidth={INTRO_MAX_W}
             animationStagger={40}
+            dropCap={{ fontSize: 72, fill: MUSTARD }}
           />
 
           {/* Block colour legend */}

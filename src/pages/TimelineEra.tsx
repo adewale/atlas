@@ -112,22 +112,35 @@ export default function TimelineEra() {
         ) : <span />}
       </nav>
 
-      <h1 style={{
-        margin: '12px 0',
-        fontSize: '13px',
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        letterSpacing: '0.2em',
-        color: DEEP_BLUE,
-      }}>
-        {eraLabel}
-      </h1>
+      {/* Giant era numeral + heading */}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', margin: '12px 0' }}>
+        <span style={{
+          fontSize: '96px',
+          fontWeight: 'bold',
+          fontFamily: "'SF Mono', 'Cascadia Code', monospace",
+          lineHeight: 1,
+          color,
+          letterSpacing: '-0.02em',
+        }}>
+          {isAntiquity ? '∞' : String(decade)}
+        </span>
+        <div>
+          <h1 style={{
+            fontSize: '13px',
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+            color: DEEP_BLUE,
+          }}>
+            {eraLabel}
+          </h1>
+          <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
+            {elements.length} element{elements.length !== 1 ? 's' : ''} discovered
+          </div>
+        </div>
+      </div>
 
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
-
-      <div style={{ fontSize: '13px', color: '#666', marginBottom: '16px' }}>
-        {elements.length} element{elements.length !== 1 ? 's' : ''} discovered
-      </div>
 
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={eraLabel} captionColor={color} />
