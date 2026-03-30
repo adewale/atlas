@@ -64,22 +64,25 @@ type Edge = {
   to: string;
   label: string;
   cardinality: string;
+  surfaced: 'both' | 'forward' | 'reverse' | 'none';
+  forwardVia?: string; // where the forward link lives
+  reverseVia?: string; // where the reverse link lives
 };
 
 const EDGES: Edge[] = [
-  { from: 'element', to: 'group', label: 'belongs to', cardinality: 'n:1' },
-  { from: 'element', to: 'period', label: 'belongs to', cardinality: 'n:1' },
-  { from: 'element', to: 'block', label: 'belongs to', cardinality: 'n:1' },
-  { from: 'element', to: 'category', label: 'classified as', cardinality: 'n:1' },
-  { from: 'element', to: 'ranking', label: 'ranked in', cardinality: 'n:m' },
-  { from: 'element', to: 'discoverer', label: 'discovered by', cardinality: 'n:1' },
-  { from: 'element', to: 'era', label: 'discovered in', cardinality: 'n:1' },
-  { from: 'element', to: 'etymology', label: 'named for', cardinality: 'n:1' },
-  { from: 'element', to: 'neighbor', label: 'adjacent to', cardinality: 'n:m' },
-  { from: 'element', to: 'comparison', label: 'compared in', cardinality: 'n:m' },
-  { from: 'anomaly', to: 'element', label: 'contains', cardinality: '1:n' },
-  { from: 'discoverer', to: 'era', label: 'active in', cardinality: 'n:m' },
-  { from: 'discoverer', to: 'discoverer', label: 'related to', cardinality: 'n:m' },
+  { from: 'element', to: 'group', label: 'belongs to', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio data plate', reverseVia: 'AtlasGroup plate' },
+  { from: 'element', to: 'period', label: 'belongs to', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio data plate', reverseVia: 'AtlasPeriod plate' },
+  { from: 'element', to: 'block', label: 'belongs to', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio data plate', reverseVia: 'AtlasBlock plate' },
+  { from: 'element', to: 'category', label: 'classified as', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio marginalia', reverseVia: 'AtlasCategory plate' },
+  { from: 'element', to: 'ranking', label: 'ranked in', cardinality: 'n:m', surfaced: 'both', forwardVia: 'Folio property bars', reverseVia: 'AtlasRank plate' },
+  { from: 'element', to: 'discoverer', label: 'discovered by', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio discovery section', reverseVia: 'DiscovererDetail plate' },
+  { from: 'element', to: 'era', label: 'discovered in', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio timeline link', reverseVia: 'TimelineEra plate' },
+  { from: 'element', to: 'etymology', label: 'named for', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio etymology section', reverseVia: 'EtymologyMap cards' },
+  { from: 'element', to: 'neighbor', label: 'adjacent to', cardinality: 'n:m', surfaced: 'both', forwardVia: 'Folio neighbors', reverseVia: 'symmetric' },
+  { from: 'element', to: 'comparison', label: 'compared in', cardinality: 'n:m', surfaced: 'both', forwardVia: 'Folio compare link', reverseVia: 'Compare page' },
+  { from: 'anomaly', to: 'element', label: 'contains', cardinality: '1:n', surfaced: 'both', forwardVia: 'AtlasAnomaly plate', reverseVia: 'Folio anomaly badges' },
+  { from: 'discoverer', to: 'era', label: 'active in', cardinality: 'n:m', surfaced: 'both', forwardVia: 'DiscovererDetail timeline link', reverseVia: 'TimelineEra discoverer list' },
+  { from: 'discoverer', to: 'discoverer', label: 'related to', cardinality: 'n:m', surfaced: 'both', forwardVia: 'DiscovererDetail related section', reverseVia: 'symmetric' },
 ];
 
 /* Node positions for the relationship graph (hand-tuned radial layout) */
@@ -344,13 +347,18 @@ function EntityCatalog() {
       {/* Relationship Table */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Relationships</h2>
+        <p style={{ fontSize: '13px', color: '#666', marginBottom: '12px', lineHeight: 1.6 }}>
+          All 13 edges are surfaced as navigable links in both directions. The "Via" column shows where each link lives in the UI.
+        </p>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
           <thead>
             <tr style={{ borderBottom: '2px solid #0f0f0f', textAlign: 'left' }}>
               <th style={{ padding: '4px 8px' }}>From</th>
               <th style={{ padding: '4px 8px' }}>Relationship</th>
               <th style={{ padding: '4px 8px' }}>To</th>
-              <th style={{ padding: '4px 8px' }}>Cardinality</th>
+              <th style={{ padding: '4px 8px' }}>Card.</th>
+              <th style={{ padding: '4px 8px' }}>Forward via</th>
+              <th style={{ padding: '4px 8px' }}>Reverse via</th>
             </tr>
           </thead>
           <tbody>
@@ -375,6 +383,8 @@ function EntityCatalog() {
                     <span style={{ color: toEntity?.color }}>{toEntity?.label ?? edge.to}</span>
                   </td>
                   <td style={{ padding: '4px 8px', fontFamily: "'SF Mono', monospace" }}>{edge.cardinality}</td>
+                  <td style={{ padding: '4px 8px', fontSize: '11px', color: '#666' }}>{edge.forwardVia ?? '—'}</td>
+                  <td style={{ padding: '4px 8px', fontSize: '11px', color: '#666' }}>{edge.reverseVia ?? '—'}</td>
                 </tr>
               );
             })}

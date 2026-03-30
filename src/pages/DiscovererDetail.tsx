@@ -154,11 +154,17 @@ export default function DiscovererDetail() {
         </section>
       )}
 
-      {/* Link to timeline for context */}
+      {/* Link to timeline era for context */}
       <div style={{ marginTop: '24px', fontSize: '13px' }}>
-        <Link to="/discovery-timeline" style={{ color: WARM_RED }}>
-          View on Discovery Timeline →
-        </Link>
+        {years.length > 0 ? (
+          <Link to={`/timeline/${Math.floor(years[0] / 10) * 10}`} style={{ color: WARM_RED }}>
+            View {Math.floor(years[0] / 10) * 10}s on Timeline →
+          </Link>
+        ) : (
+          <Link to="/timeline/antiquity" style={{ color: WARM_RED }}>
+            View Antiquity on Timeline →
+          </Link>
+        )}
       </div>
     </main>
   );

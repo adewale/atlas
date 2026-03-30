@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
-import type { ElementRecord, ElementSources } from '../lib/types';
+import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
@@ -94,10 +94,11 @@ type FolioProps = {
   element: ElementRecord;
   sources?: ElementSources;
   groups?: GroupData[];
+  anomalies?: AnomalyData[];
   animate?: boolean;
 };
 
-export default function Folio({ element, sources, groups, animate = true }: FolioProps) {
+export default function Folio({ element, sources, groups, anomalies, animate = true }: FolioProps) {
   const color = blockColor(element.block);
   const mobile = useIsMobile();
 
@@ -161,6 +162,12 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
       .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol)
       .slice(0, 6);
   }, [element]);
+
+  // Anomalies this element belongs to
+  const elementAnomalies = useMemo(() => {
+    if (!anomalies) return [];
+    return anomalies.filter((a) => a.elements.includes(element.symbol));
+  }, [anomalies, element.symbol]);
 
   const paddedNumber = String(element.atomicNumber).padStart(3, '0');
 
@@ -398,23 +405,59 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           </div>
         )}
 
-        {/* Property bars */}
+        {/* Property bars — each links to its ranking page */}
         <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {properties.map((prop, i) => {
             const rank = element.rankings[prop.key] ?? 0;
             return (
-              <PropertyBar
-                key={prop.key}
-                label={prop.label}
-                rank={rank}
-                color={color}
-                width={FULL_WIDTH - 60}
-                animate={animate}
-                delay={animate ? 200 + i * 50 : 0}
-              />
+              <Link key={prop.key} to={`/atlas/rank/${prop.key}`} style={{ textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
+                <PropertyBar
+                  label={prop.label}
+                  rank={rank}
+                  color={color}
+                  width={FULL_WIDTH - 60}
+                  animate={animate}
+                  delay={animate ? 200 + i * 50 : 0}
+                />
+              </Link>
             );
           })}
         </div>
+
+        {/* Anomaly badges — shows which anomalies this element belongs to */}
+        {elementAnomalies.length > 0 && (
+          <div
+            style={{
+              marginTop: '12px',
+              display: 'flex',
+              gap: '6px',
+              flexWrap: 'wrap',
+              opacity: 0,
+              animation: animate ? 'folio-line-reveal 300ms var(--ease-out) 350ms forwards' : undefined,
+            }}
+          >
+            {elementAnomalies.map((a) => (
+              <Link
+                key={a.slug}
+                to={`/atlas/anomaly/${a.slug}`}
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
+                  padding: '3px 8px',
+                  border: `1px solid ${color}`,
+                  color,
+                  textDecoration: 'none',
+                  minHeight: 'unset',
+                  minWidth: 'unset',
+                }}
+              >
+                {a.label}
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Etymology and discovery — educational context with lateral links */}
         <div

@@ -30,11 +30,12 @@ export const router = createBrowserRouter([
     path: '/element/:symbol',
     Component: Element,
     loader: async ({ params }: LoaderFunctionArgs) => {
-      const [elementMod, groupsMod] = await Promise.all([
+      const [elementMod, groupsMod, anomaliesMod] = await Promise.all([
         import(`../data/generated/element-${params.symbol}.json`),
         import('../data/generated/groups.json'),
+        import('../data/generated/anomalies.json'),
       ]);
-      return { element: elementMod.default, groups: groupsMod.default };
+      return { element: elementMod.default, groups: groupsMod.default, anomalies: anomaliesMod.default };
     },
   },
   {
