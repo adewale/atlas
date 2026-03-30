@@ -159,10 +159,17 @@ export default function AnomalyExplorer() {
       </div>
 
       {/* ---- Periodic table grid ---- */}
+      <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg
         viewBox={`0 0 ${VIEWBOX_W} ${totalHeight}`}
-        width="100%"
-        style={{ display: 'block', overflow: 'visible' }}
+        style={{
+          width: '100%',
+          minWidth: VIEWBOX_W,
+          maxWidth: VIEWBOX_W,
+          display: 'block',
+          overflow: 'visible',
+          touchAction: 'pinch-zoom',
+        }}
       >
         {/* Keyframes in globals.css + anomaly-ripple below */}
         <style>{`
@@ -258,6 +265,7 @@ export default function AnomalyExplorer() {
           />
         )}
       </svg>
+      </div>
     </PageShell>
   );
 }

@@ -24,7 +24,7 @@ const INTRO_TEXT =
 const SVG_WIDTH = VIEWBOX_W;
 const INTRO_HEIGHT = 80;
 const TABLE_OFFSET_Y = INTRO_HEIGHT + 16;
-const NODE_RADIUS = 8;
+const NODE_RADIUS = 10;
 
 // ---------------------------------------------------------------------------
 // Pre-compute edges (deduplicated: only draw A->B once, not B->A too)
@@ -210,9 +210,9 @@ export default function NeighborhoodGraph() {
                   />
                   <text
                     x={cx}
-                    y={cy - NODE_RADIUS - 2}
+                    y={cy - NODE_RADIUS - 3}
                     textAnchor="middle"
-                    fontSize={6}
+                    fontSize={8}
                     fill={BLACK}
                     fontFamily="system-ui, sans-serif"
                     style={{

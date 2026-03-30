@@ -23,7 +23,7 @@ export default function PropertyBar({
   rank,
   total = 118,
   color,
-  width = 200,
+  width = 320,
   height = 18,
   animate = false,
   delay = 0,
@@ -38,11 +38,11 @@ export default function PropertyBar({
   const valueLabel = value != null ? `${value}${unit ? ' ' + unit : ''}` : '';
 
   return (
-    <svg width={width + 80} height={height + 14} role="img" aria-label={`${label}: ${valueLabel || '—'}, ranked ${rank} of ${total}`}>
+    <svg width={width + 100} height={height + 16} role="img" aria-label={`${label}: ${valueLabel || '—'}, ranked ${rank} of ${total}`}>
       <text
         x={0}
         y={10}
-        fontSize={10}
+        fontSize={11}
         fill={BLACK}
         fontFamily={MONO_FONT}
       >
@@ -78,7 +78,7 @@ export default function PropertyBar({
           <text
             x={barWidth + 4}
             y={14 + height - 4}
-            fontSize={9}
+            fontSize={10}
             fill={BLACK}
             fontFamily={MONO_FONT}
           >
