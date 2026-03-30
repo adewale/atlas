@@ -49,6 +49,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--sp-6) var(--sp-4);
+  touch-action: manipulation;
 }
 
 a {
@@ -60,11 +61,19 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Touch hover gated behind fine pointer */
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
 code, .mono {
   font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
   font-size: 0.875rem;
 }
 
+/* Screen reader only */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -76,6 +85,41 @@ code, .mono {
   border: 0;
 }
 
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 1000;
+  padding: 8px 16px;
+  background: var(--black);
+  color: var(--paper);
+  font-size: 14px;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* Focus indicators: 2px warm red ring on all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--warm-red);
+  outline-offset: 2px;
+}
+
+/* Minimum touch targets */
+button, a, select, input, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* SVG elements don't need min dimensions from this rule */
+svg [role="button"] {
+  min-height: unset;
+  min-width: unset;
+}
+
+/* Reduced motion: keep opacity/color changes, remove movement */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -86,8 +130,62 @@ code, .mono {
   }
 }
 
+/* ----------------------------------------
+   Responsive breakpoints
+   ---------------------------------------- */
+
+/* Mobile (<768px) */
 @media (max-width: 768px) {
   body {
     padding: var(--sp-4) var(--sp-3);
+  }
+
+  /* Folio: single column */
+  .folio-layout {
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  .folio-marginalia {
+    width: 100% !important;
+  }
+  .folio-main {
+    padding-left: 16px !important;
+  }
+
+  /* Data plate: above summary on mobile */
+  .folio-summary-area {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .folio-data-plate {
+    position: static !important;
+    width: 100% !important;
+    margin-bottom: 16px;
+  }
+
+  /* Periodic table: horizontal scroll */
+  .pt-scroll-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Compare: vertical split */
+  .compare-svg {
+    max-width: 100%;
+  }
+
+  /* Giant numbers smaller on mobile */
+  .folio-number {
+    font-size: 48px !important;
+  }
+  .folio-symbol {
+    font-size: 40px !important;
+  }
+}
+
+/* Tablet (768-1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .folio-marginalia {
+    width: 180px !important;
   }
 }

@@ -58,9 +58,10 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
   ] as const;
 
   return (
-    <div style={{ display: 'flex', gap: '48px', position: 'relative' }}>
+    <div className="folio-layout" style={{ display: 'flex', gap: '48px', position: 'relative' }}>
       {/* Left color bar */}
       <div
+        aria-hidden="true"
         style={{
           position: 'absolute',
           left: 0,
@@ -72,9 +73,11 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
       />
 
       {/* Main content */}
-      <div style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
+      <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
         {/* Giant atomic number in block color */}
         <div
+          className="folio-number"
+          aria-hidden="true"
           style={{
             fontSize: '72px',
             fontWeight: 'bold',
@@ -88,6 +91,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
         {/* Giant symbol */}
         <div
+          className="folio-symbol"
           style={{
             fontSize: '56px',
             fontWeight: 'bold',
@@ -107,10 +111,11 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
         <div style={{ borderTop: `1px solid ${color}`, marginBottom: '16px' }} />
 
         {/* Summary text shaped around data plate */}
-        <div style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
+        <div className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
           {/* Data plate positioned at top-right */}
           <div
             data-testid="data-plate"
+            className="folio-data-plate"
             style={{
               position: 'absolute',
               top: 0,
@@ -233,6 +238,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
       {/* Marginalia panel */}
       <aside
+        className="folio-marginalia"
         style={{
           width: '200px',
           flexShrink: 0,

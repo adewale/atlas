@@ -13,7 +13,7 @@ export default function Home() {
   );
 
   return (
-    <main>
+    <main id="main-content">
       <h1 style={{ letterSpacing: '0.3em', marginBottom: '24px', fontSize: '24px' }}>
         A T L A S
       </h1>

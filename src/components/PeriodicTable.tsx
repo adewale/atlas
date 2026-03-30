@@ -140,18 +140,23 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           <label htmlFor="pt-search" className="sr-only">Search elements</label>
           <input
             id="pt-search"
-            type="text"
+            type="search"
             placeholder="Search elements…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            aria-describedby="pt-search-desc"
             style={{
               padding: '8px 12px',
               border: '1px solid #0f0f0f',
               background: PAPER,
               fontFamily: 'inherit',
               fontSize: '14px',
+              minHeight: '44px',
             }}
           />
+          <span id="pt-search-desc" className="sr-only">
+            Filter elements by name or symbol
+          </span>
         </div>
         <div>
           <label htmlFor="pt-highlight" className="sr-only">Highlight mode</label>
@@ -194,6 +199,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           </div>
         )}
       </div>
+      <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
       <svg
         ref={svgRef}
         viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
@@ -203,6 +209,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
         onKeyDown={onKeyDown}
         style={{
           width: '100%',
+          minWidth: VIEWBOX_W,
           maxWidth: VIEWBOX_W,
           touchAction: 'pinch-zoom',
         }}
@@ -282,6 +289,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           );
         })}
       </svg>
+      </div>
     </div>
   );
 }

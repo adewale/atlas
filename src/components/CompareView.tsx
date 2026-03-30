@@ -41,11 +41,12 @@ export default function CompareView({
   const totalH = notesY + notes.length * 22 + 24;
 
   return (
-    <div>
+    <div className="compare-svg">
       <svg
         width={WIDTH}
         height={totalH}
         viewBox={`0 0 ${WIDTH} ${totalH}`}
+        role="img"
         style={{ width: '100%', maxWidth: WIDTH }}
         aria-label={`Comparison of ${elementA.name} and ${elementB.name}`}
       >

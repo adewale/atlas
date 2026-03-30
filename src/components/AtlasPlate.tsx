@@ -5,35 +5,45 @@ import { blockColor, contrastTextColor } from '../lib/grid';
 const CARD_W = 100;
 const CARD_H = 80;
 const GAP = 4;
-const COLS = 4;
 
 type AtlasPlateProps = {
   elements: ElementRecord[];
   caption: string;
   captionColor?: string;
   propertyKey?: string;
+  columns?: number;
 };
 
 /**
  * SVG card grid for element sets.
  * Each card shows symbol, atomic number, and one property value.
  * Caption strip with solid color band behind Pretext-measured caption.
+ * Columns: 4 desktop, 2 mobile (passed by parent or default).
  */
 export default function AtlasPlate({
   elements,
   caption,
   captionColor = '#0f0f0f',
   propertyKey = 'mass',
+  columns = 4,
 }: AtlasPlateProps) {
-  const rows = Math.ceil(elements.length / COLS);
-  const gridW = COLS * (CARD_W + GAP) - GAP;
+  const cols = columns;
+  const rows = Math.ceil(elements.length / cols);
+  const gridW = cols * (CARD_W + GAP) - GAP;
   const captionH = 40;
   const gridH = rows * (CARD_H + GAP) - GAP;
   const totalH = captionH + 16 + gridH;
 
   return (
-    <div>
-      <svg width={gridW} height={totalH} aria-label={caption}>
+    <div style={{ overflowX: 'auto' }}>
+      <svg
+        width={gridW}
+        height={totalH}
+        viewBox={`0 0 ${gridW} ${totalH}`}
+        role="img"
+        aria-label={caption}
+        style={{ maxWidth: '100%' }}
+      >
         {/* Caption strip */}
         <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} />
         <text
@@ -49,8 +59,8 @@ export default function AtlasPlate({
 
         {/* Cards */}
         {elements.map((el, i) => {
-          const col = i % COLS;
-          const row = Math.floor(i / COLS);
+          const col = i % cols;
+          const row = Math.floor(i / cols);
           const x = col * (CARD_W + GAP);
           const y = captionH + 16 + row * (CARD_H + GAP);
           const fill = blockColor(el.block);
@@ -59,12 +69,11 @@ export default function AtlasPlate({
           const displayVal =
             propVal != null && typeof propVal !== 'object' ? String(propVal) : '—';
 
-          // Truncate label if needed (simple fit check)
           const label =
             el.name.length > 10 ? el.name.slice(0, 9) + '…' : el.name;
 
           return (
-            <g key={el.symbol}>
+            <g key={el.symbol} role="link" aria-label={`${el.name}, ${el.symbol}`}>
               <Link to={`/element/${el.symbol}`}>
                 <rect x={x} y={y} width={CARD_W} height={CARD_H} fill={fill} />
                 <text
