@@ -119,6 +119,18 @@ svg [role="button"] {
   min-width: unset;
 }
 
+/* Containment for animated elements */
+.compare-svg svg,
+.pt-scroll-container svg,
+.folio-layout {
+  contain: layout style paint;
+}
+
+/* Touch: allow pinch-zoom on periodic table */
+.pt-scroll-container {
+  touch-action: pinch-zoom;
+}
+
 /* Reduced motion: keep opacity/color changes, remove movement */
 @media (prefers-reduced-motion: reduce) {
   *,

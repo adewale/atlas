@@ -1,18 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import AtlasPlate from '../components/AtlasPlate';
 import type { CategoryData } from '../lib/types';
 
 export default function AtlasCategory() {
   const { slug } = useParams();
-  const [categories, setCategories] = useState<CategoryData[]>([]);
-
-  useEffect(() => {
-    import('../../data/generated/categories.json').then((m) =>
-      setCategories(m.default as CategoryData[]),
-    );
-  }, []);
+  const { categories } = useLoaderData() as { categories: CategoryData[] };
 
   const cat = categories.find((c) => c.slug === slug);
   const elements = cat ? cat.elements.map((s) => getElement(s)!).filter(Boolean) : [];

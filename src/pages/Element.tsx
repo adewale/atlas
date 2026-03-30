@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import type { ElementRecord, ElementSources, GroupData } from '../lib/types';
 import Folio from '../components/Folio';
@@ -7,29 +6,12 @@ import Folio from '../components/Folio';
 export default function Element() {
   const { symbol } = useParams();
   const element = symbol ? getElement(symbol) : undefined;
-  const [sources, setSources] = useState<ElementSources | undefined>();
-  const [groups, setGroups] = useState<GroupData[] | undefined>();
+  const loaderData = useLoaderData() as
+    | { element: ElementRecord; groups: GroupData[] }
+    | undefined;
 
-  useEffect(() => {
-    if (!symbol) return;
-    // Load per-element JSON with sources
-    import(`../../data/generated/element-${symbol}.json`)
-      .then((mod) => {
-        const data = mod.default as ElementRecord;
-        if (data.sources) setSources(data.sources);
-      })
-      .catch(() => {
-        // sources not available
-      });
-    // Load groups data for sparkline
-    import('../../data/generated/groups.json')
-      .then((mod) => {
-        setGroups(mod.default as GroupData[]);
-      })
-      .catch(() => {
-        // groups not available
-      });
-  }, [symbol]);
+  const sources: ElementSources | undefined = loaderData?.element?.sources;
+  const groups: GroupData[] | undefined = loaderData?.groups;
 
   if (!element) {
     return (
@@ -50,7 +32,9 @@ export default function Element() {
           ← Periodic Table
         </Link>
       </div>
-      <Folio element={element} sources={sources} groups={groups} animate={true} />
+      <article>
+        <Folio element={element} sources={sources} groups={groups} animate={true} />
+      </article>
 
       {/* Folio entry animations CSS */}
       <style>{`

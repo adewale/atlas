@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
@@ -7,11 +6,7 @@ import type { BlockData } from '../lib/types';
 
 export default function AtlasBlock() {
   const { block } = useParams();
-  const [blocks, setBlocks] = useState<BlockData[]>([]);
-
-  useEffect(() => {
-    import('../../data/generated/blocks.json').then((m) => setBlocks(m.default as BlockData[]));
-  }, []);
+  const { blocks } = useLoaderData() as { blocks: BlockData[] };
 
   const found = blocks.find((b) => b.block === block);
   const elements = found ? found.elements.map((s) => getElement(s)!).filter(Boolean) : [];

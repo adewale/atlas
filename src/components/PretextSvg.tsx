@@ -37,6 +37,9 @@ export default function PretextSvg({
       {lines.map((line, i) => {
         const lineY = line.y + lineHeight;
         const staggerDelay = animationStagger != null ? i * animationStagger : undefined;
+        const isTerminal = i === lines.length - 1;
+        const isShort = maxWidth && line.width < maxWidth * 0.7;
+        const lineX = isTerminal && isShort ? line.x + (maxWidth - line.width) / 2 : line.x;
         return (
           <g key={i}>
             {showRules && i > 0 && maxWidth && (
@@ -51,7 +54,7 @@ export default function PretextSvg({
               />
             )}
             <text
-              x={line.x}
+              x={lineX}
               y={lineY}
               fontSize={fontSize}
               fill={fill}

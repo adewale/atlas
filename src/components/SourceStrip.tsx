@@ -50,15 +50,16 @@ export default function SourceStrip({ sources, ruleColor = '#0f0f0f' }: SourceSt
         ) : (
           sources.summary.title
         )}{' '}
-        — Wikipedia excerpt,{' '}
+        (Wikipedia). Excerpt used under{' '}
         <a
           href="https://creativecommons.org/licenses/by-sa/4.0/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          {sources.summary.license}
+          CC BY-SA 4.0
         </a>
-        {sources.summary.accessDate && ` — fetched ${sources.summary.accessDate}`}
+        . Original article may contain additional content.
+        {sources.summary.accessDate && ` Fetched ${sources.summary.accessDate}.`}
       </div>
       <div>
         <strong>Media:</strong> No media in v1

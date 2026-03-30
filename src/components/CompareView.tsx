@@ -1,10 +1,12 @@
 import type { ElementRecord } from '../lib/types';
 import { generateComparisonNotes } from '../lib/compare';
+import { usePretextLines } from '../hooks/usePretextLines';
+import PretextSvg from './PretextSvg';
 
 const DEEP_BLUE = '#133e7c';
 const WARM_RED = '#9e1c2c';
 const PAPER = '#f7f2e8';
-const WIDTH = 800;
+const DEFAULT_WIDTH = 800;
 const SPLIT_H = 280;
 
 const PROPERTIES = [
@@ -18,27 +20,60 @@ type CompareViewProps = {
   elementA: ElementRecord;
   elementB: ElementRecord;
   animate?: boolean;
+  vertical?: boolean;
 };
 
 /**
  * Split-screen dramatic compare view.
- * Left half deep blue, right half warm red.
+ * Horizontal: Left half deep blue, right half warm red.
+ * Vertical (mobile): Top half deep blue, bottom half warm red.
  * Comparison bands below with horizontal bars per property.
  */
 export default function CompareView({
   elementA,
   elementB,
   animate = true,
+  vertical = false,
 }: CompareViewProps) {
+  const WIDTH = DEFAULT_WIDTH;
   const notes = generateComparisonNotes(elementA, elementB);
+  const notesText = notes.join(' ');
+
+  const { lines: notesLines, lineHeight: notesLineHeight } = usePretextLines({
+    text: notesText,
+    maxWidth: WIDTH - 8,
+    font: '14px system-ui',
+  });
 
   // Compute max values for bars
   const bandH = 48;
   const bandGap = 4;
-  const bandsY = SPLIT_H + 24;
+  const splitH = vertical ? SPLIT_H * 2 : SPLIT_H;
+  const bandsY = splitH + 24;
   const bandsH = PROPERTIES.length * (bandH + bandGap);
   const notesY = bandsY + bandsH + 24;
-  const totalH = notesY + notes.length * 22 + 24;
+  const notesBlockH = notesLines.length * notesLineHeight;
+  const totalH = notesY + notesBlockH + 24;
+
+  // Layout helpers for horizontal vs vertical
+  const halfW = WIDTH / 2;
+  const halfSplitH = SPLIT_H;
+
+  // Element A panel position
+  const panelA = vertical
+    ? { x: 0, y: 0, w: WIDTH, h: halfSplitH }
+    : { x: 0, y: 0, w: halfW, h: SPLIT_H };
+
+  // Element B panel position
+  const panelB = vertical
+    ? { x: 0, y: halfSplitH, w: WIDTH, h: halfSplitH }
+    : { x: halfW, y: 0, w: halfW, h: SPLIT_H };
+
+  // Center coords for element text
+  const aCx = panelA.x + panelA.w / 2;
+  const aCy = panelA.y;
+  const bCx = panelB.x + panelB.w / 2;
+  const bCy = panelB.y;
 
   return (
     <div className="compare-svg">
@@ -50,43 +85,47 @@ export default function CompareView({
         style={{ width: '100%', maxWidth: WIDTH }}
         aria-label={`Comparison of ${elementA.name} and ${elementB.name}`}
       >
-        {/* Left half — deep blue */}
+        {/* Panel A — deep blue */}
         <rect
-          x={0}
-          y={0}
-          width={WIDTH / 2}
-          height={SPLIT_H}
+          x={panelA.x}
+          y={panelA.y}
+          width={panelA.w}
+          height={panelA.h}
           fill={DEEP_BLUE}
           style={
             animate
               ? {
-                  clipPath: 'inset(0 50% 0 0)',
+                  clipPath: vertical
+                    ? 'inset(0 0 50% 0)'
+                    : 'inset(0 50% 0 0)',
                   animation: 'compare-expand 300ms var(--ease-out) forwards',
                 }
               : undefined
           }
         />
-        {/* Right half — warm red */}
+        {/* Panel B — warm red */}
         <rect
-          x={WIDTH / 2}
-          y={0}
-          width={WIDTH / 2}
-          height={SPLIT_H}
+          x={panelB.x}
+          y={panelB.y}
+          width={panelB.w}
+          height={panelB.h}
           fill={WARM_RED}
           style={
             animate
               ? {
-                  clipPath: 'inset(0 0 0 50%)',
+                  clipPath: vertical
+                    ? 'inset(50% 0 0 0)'
+                    : 'inset(0 0 0 50%)',
                   animation: 'compare-expand 300ms var(--ease-out) forwards',
                 }
               : undefined
           }
         />
 
-        {/* Element A — left side */}
+        {/* Element A */}
         <text
-          x={WIDTH / 4}
-          y={80}
+          x={aCx}
+          y={aCy + 80}
           textAnchor="middle"
           fontSize={10}
           fill={PAPER}
@@ -95,20 +134,20 @@ export default function CompareView({
           {elementA.atomicNumber}
         </text>
         <text
-          x={WIDTH / 4}
-          y={150}
+          x={aCx}
+          y={aCy + 150}
           textAnchor="middle"
           fontSize={72}
           fontWeight="bold"
           fill={PAPER}
           fontFamily="system-ui"
-          style={animate ? { transform: 'scale(0.95)', transformOrigin: `${WIDTH / 4}px 150px`, animation: 'compare-scale 300ms var(--ease-out) forwards' } : undefined}
+          style={animate ? { transform: 'scale(0.95)', transformOrigin: `${aCx}px ${aCy + 150}px`, animation: 'compare-scale 300ms var(--ease-out) forwards' } : undefined}
         >
           {elementA.symbol}
         </text>
         <text
-          x={WIDTH / 4}
-          y={190}
+          x={aCx}
+          y={aCy + 190}
           textAnchor="middle"
           fontSize={18}
           fill={PAPER}
@@ -117,8 +156,8 @@ export default function CompareView({
           {elementA.name}
         </text>
         <text
-          x={WIDTH / 4}
-          y={220}
+          x={aCx}
+          y={aCy + 220}
           textAnchor="middle"
           fontSize={11}
           fill={PAPER}
@@ -128,10 +167,10 @@ export default function CompareView({
           {elementA.category} · {elementA.block}-block
         </text>
 
-        {/* Element B — right side */}
+        {/* Element B */}
         <text
-          x={(3 * WIDTH) / 4}
-          y={80}
+          x={bCx}
+          y={bCy + 80}
           textAnchor="middle"
           fontSize={10}
           fill={PAPER}
@@ -140,20 +179,20 @@ export default function CompareView({
           {elementB.atomicNumber}
         </text>
         <text
-          x={(3 * WIDTH) / 4}
-          y={150}
+          x={bCx}
+          y={bCy + 150}
           textAnchor="middle"
           fontSize={72}
           fontWeight="bold"
           fill={PAPER}
           fontFamily="system-ui"
-          style={animate ? { transform: 'scale(0.95)', transformOrigin: `${(3 * WIDTH) / 4}px 150px`, animation: 'compare-scale 300ms var(--ease-out) forwards' } : undefined}
+          style={animate ? { transform: 'scale(0.95)', transformOrigin: `${bCx}px ${bCy + 150}px`, animation: 'compare-scale 300ms var(--ease-out) forwards' } : undefined}
         >
           {elementB.symbol}
         </text>
         <text
-          x={(3 * WIDTH) / 4}
-          y={190}
+          x={bCx}
+          y={bCy + 190}
           textAnchor="middle"
           fontSize={18}
           fill={PAPER}
@@ -162,8 +201,8 @@ export default function CompareView({
           {elementB.name}
         </text>
         <text
-          x={(3 * WIDTH) / 4}
-          y={220}
+          x={bCx}
+          y={bCy + 220}
           textAnchor="middle"
           fontSize={11}
           fill={PAPER}
@@ -251,27 +290,17 @@ export default function CompareView({
           );
         })}
 
-        {/* Relationship notes */}
-        {notes.map((note, i) => (
-          <text
-            key={i}
-            x={4}
-            y={notesY + i * 22}
-            fontSize={14}
-            fill="#0f0f0f"
-            fontFamily="system-ui"
-            style={
-              animate
-                ? {
-                    opacity: 0,
-                    animation: `folio-line-reveal 300ms var(--ease-out) ${300 + i * 30}ms forwards`,
-                  }
-                : undefined
-            }
-          >
-            {note}
-          </text>
-        ))}
+        {/* Relationship notes — Pretext Tier 1 */}
+        <PretextSvg
+          lines={notesLines}
+          lineHeight={notesLineHeight}
+          x={4}
+          y={notesY}
+          fontSize={14}
+          fill="#0f0f0f"
+          maxWidth={WIDTH - 8}
+          animationStagger={animate ? 30 : undefined}
+        />
       </svg>
     </div>
   );

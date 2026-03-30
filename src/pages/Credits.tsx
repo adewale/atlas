@@ -1,28 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
+import { useLoaderData, Link } from 'react-router';
 import type { CreditsData } from '../lib/types';
 
 export default function Credits() {
-  const [credits, setCredits] = useState<CreditsData | null>(null);
-
-  useEffect(() => {
-    import('../../data/generated/credits.json').then((m) =>
-      setCredits(m.default as CreditsData),
-    );
-  }, []);
-
-  if (!credits) {
-    return (
-      <main>
-        <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
-        <h1 style={{ margin: '16px 0' }}>Credits</h1>
-        <p>Loading…</p>
-      </main>
-    );
-  }
+  const { credits } = useLoaderData() as { credits: CreditsData };
 
   return (
-    <main style={{ maxWidth: '800px' }}>
+    <article style={{ maxWidth: '800px' }}>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
       <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.15em' }}>Credits</h1>
 
@@ -140,6 +123,6 @@ export default function Credits() {
           groupings, anomaly descriptions) and comparison templates are original content.
         </p>
       </section>
-    </main>
+    </article>
   );
 }

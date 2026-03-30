@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import AtlasPlate from '../components/AtlasPlate';
 import type { RankingsData } from '../lib/types';
@@ -13,13 +12,7 @@ const LABELS: Record<string, string> = {
 
 export default function AtlasRank() {
   const { property } = useParams();
-  const [rankings, setRankings] = useState<RankingsData>({});
-
-  useEffect(() => {
-    import('../../data/generated/rankings.json').then((m) =>
-      setRankings(m.default as RankingsData),
-    );
-  }, []);
+  const { rankings } = useLoaderData() as { rankings: RankingsData };
 
   const symbols = property ? rankings[property] ?? [] : [];
   const elements = symbols.map((s) => getElement(s)!).filter(Boolean);

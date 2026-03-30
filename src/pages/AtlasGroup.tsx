@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
@@ -7,11 +6,7 @@ import type { GroupData } from '../lib/types';
 
 export default function AtlasGroup() {
   const { n } = useParams();
-  const [groups, setGroups] = useState<GroupData[]>([]);
-
-  useEffect(() => {
-    import('../../data/generated/groups.json').then((m) => setGroups(m.default as GroupData[]));
-  }, []);
+  const { groups } = useLoaderData() as { groups: GroupData[] };
 
   const group = groups.find((g) => g.n === Number(n));
   const elements = group ? group.elements.map((s) => getElement(s)!).filter(Boolean) : [];

@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PeriodData } from '../lib/types';
 
 export default function AtlasPeriod() {
   const { n } = useParams();
-  const [periods, setPeriods] = useState<PeriodData[]>([]);
-
-  useEffect(() => {
-    import('../../data/generated/periods.json').then((m) => setPeriods(m.default as PeriodData[]));
-  }, []);
+  const { periods } = useLoaderData() as { periods: PeriodData[] };
 
   const period = periods.find((p) => p.n === Number(n));
   const elements = period ? period.elements.map((s) => getElement(s)!).filter(Boolean) : [];

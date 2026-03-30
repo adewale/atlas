@@ -1,10 +1,24 @@
 import { Link } from 'react-router';
 import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
+import { fitLabel, measureLines } from '../lib/pretext';
 
 const CARD_W = 100;
 const CARD_H = 80;
 const GAP = 4;
+const NAME_FONT = '8px system-ui';
+const NAME_MAX_W = CARD_W - 12; // 6px padding each side
+const CAPTION_FONT = 'bold 16px system-ui, sans-serif';
+const CAPTION_PADDING = 12;
+
+function truncateToFit(name: string, font: string, maxWidth: number): string {
+  if (fitLabel(name, font, maxWidth)) return name;
+  for (let i = name.length - 1; i > 0; i--) {
+    const truncated = name.slice(0, i) + '\u2026';
+    if (fitLabel(truncated, font, maxWidth)) return truncated;
+  }
+  return name[0] + '\u2026';
+}
 
 type AtlasPlateProps = {
   elements: ElementRecord[];
@@ -30,9 +44,14 @@ export default function AtlasPlate({
   const cols = columns;
   const rows = Math.ceil(elements.length / cols);
   const gridW = cols * (CARD_W + GAP) - GAP;
-  const captionH = 40;
+
+  // Measure caption text with Pretext
+  const captionLines = measureLines(caption, CAPTION_FONT, gridW - CAPTION_PADDING * 2, 20);
+  const captionTextH = captionLines.length * 20;
+  const captionH = captionTextH + CAPTION_PADDING * 2;
+
   const gridH = rows * (CARD_H + GAP) - GAP;
-  const totalH = captionH + 16 + gridH;
+  const totalH = captionH + 8 + gridH;
 
   return (
     <div style={{ overflowX: 'auto' }}>
@@ -44,33 +63,35 @@ export default function AtlasPlate({
         aria-label={caption}
         style={{ maxWidth: '100%' }}
       >
-        {/* Caption strip */}
-        <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} />
-        <text
-          x={12}
-          y={26}
-          fontSize={16}
-          fontWeight="bold"
-          fill={contrastTextColor(captionColor)}
-          fontFamily="system-ui, sans-serif"
-        >
-          {caption}
-        </text>
+        {/* Caption strip — solid color band with Pretext-measured text */}
+        <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} rx={2} />
+        {captionLines.map((line, i) => (
+          <text
+            key={i}
+            x={CAPTION_PADDING}
+            y={CAPTION_PADDING + line.y + 16}
+            fontSize={16}
+            fontWeight="bold"
+            fill={contrastTextColor(captionColor)}
+            fontFamily="system-ui, sans-serif"
+          >
+            {line.text}
+          </text>
+        ))}
 
         {/* Cards */}
         {elements.map((el, i) => {
           const col = i % cols;
           const row = Math.floor(i / cols);
           const x = col * (CARD_W + GAP);
-          const y = captionH + 16 + row * (CARD_H + GAP);
+          const y = captionH + 8 + row * (CARD_H + GAP);
           const fill = blockColor(el.block);
           const textFill = contrastTextColor(fill);
           const propVal = el[propertyKey as keyof ElementRecord];
           const displayVal =
             propVal != null && typeof propVal !== 'object' ? String(propVal) : '—';
 
-          const label =
-            el.name.length > 10 ? el.name.slice(0, 9) + '…' : el.name;
+          const label = truncateToFit(el.name, NAME_FONT, NAME_MAX_W);
 
           return (
             <g key={el.symbol} role="link" aria-label={`${el.name}, ${el.symbol}`}>

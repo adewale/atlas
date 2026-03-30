@@ -95,15 +95,15 @@ describe('Folio', () => {
     renderFolio();
     const plate = screen.getByTestId('data-plate');
     expect(plate).toBeInTheDocument();
-    expect(screen.getByLabelText('Element data plate')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Data plate: Group 8, Period 4, Block d/)).toBeInTheDocument();
   });
 
   it('renders property bars', () => {
     renderFolio();
-    expect(screen.getByLabelText(/Mass: rank 93/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/EN: rank 41/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/IE: rank 35/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Radius: rank 67/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Mass: ranked 93 of 118/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/EN: ranked 41 of 118/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/IE: ranked 35 of 118/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Radius: ranked 67 of 118/)).toBeInTheDocument();
   });
 
   it('renders neighbor links', () => {
@@ -123,7 +123,7 @@ describe('Folio', () => {
     expect(ironLinks.length).toBeGreaterThanOrEqual(2); // heading + source strip link
     expect(screen.getByText(/CC BY-SA 4.0/)).toBeInTheDocument();
     expect(screen.getByText(/No media in v1/)).toBeInTheDocument();
-    expect(screen.getByText(/fetched 2026-03-30/)).toBeInTheDocument();
+    expect(screen.getByText(/Fetched 2026-03-30/)).toBeInTheDocument();
   });
 
   it('renders compare link', () => {

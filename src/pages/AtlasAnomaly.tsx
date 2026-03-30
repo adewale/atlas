@@ -1,18 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import AtlasPlate from '../components/AtlasPlate';
 import type { AnomalyData } from '../lib/types';
 
 export default function AtlasAnomaly() {
   const { slug } = useParams();
-  const [anomalies, setAnomalies] = useState<AnomalyData[]>([]);
-
-  useEffect(() => {
-    import('../../data/generated/anomalies.json').then((m) =>
-      setAnomalies(m.default as AnomalyData[]),
-    );
-  }, []);
+  const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
 
   const anomaly = anomalies.find((a) => a.slug === slug);
   const elements = anomaly ? anomaly.elements.map((s) => getElement(s)!).filter(Boolean) : [];

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import type { ElementRecord, ElementSources } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { useShapedText } from '../hooks/usePretextLines';
@@ -8,6 +8,18 @@ import PropertyBar from './PropertyBar';
 import { GroupTrendSparkline, RankDotSparkline } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
+
+function useIsMobile(breakpoint = 768) {
+  const [mobile, setMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth < breakpoint : false
+  );
+  useEffect(() => {
+    const handler = () => setMobile(window.innerWidth < breakpoint);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, [breakpoint]);
+  return mobile;
+}
 
 const DEEP_BLUE = '#133e7c';
 const WARM_RED = '#9e1c2c';
@@ -27,11 +39,13 @@ type FolioProps = {
 
 export default function Folio({ element, sources, groups, animate = true }: FolioProps) {
   const color = blockColor(element.block);
+  const mobile = useIsMobile();
 
   const { lines, lineHeight, plateHeightInLines } = useShapedText({
     text: element.summary,
     fullWidth: FULL_WIDTH,
     narrowWidth: NARROW_WIDTH,
+    mobile,
   });
 
   // Group trend data for electronegativity sparkline
@@ -129,7 +143,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
                 : {}),
             }}
           >
-            <svg width={PLATE_WIDTH} height={PLATE_HEIGHT} aria-label="Element data plate">
+            <svg width={PLATE_WIDTH} height={PLATE_HEIGHT} role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
               {/* Group row — deep blue */}
               <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={DEEP_BLUE} />
               <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">

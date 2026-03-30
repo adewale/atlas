@@ -1,11 +1,31 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import CompareView from '../components/CompareView';
+
+const MOBILE_BREAKPOINT = 600;
+
+function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < breakpoint,
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < breakpoint);
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [breakpoint]);
+
+  return isMobile;
+}
 
 export default function Compare() {
   const { symbolA, symbolB } = useParams();
   const elementA = symbolA ? getElement(symbolA) : undefined;
   const elementB = symbolB ? getElement(symbolB) : undefined;
+  const vertical = useIsMobile();
 
   if (!elementA || !elementB) {
     return (
@@ -23,7 +43,7 @@ export default function Compare() {
     <main style={{ padding: '24px 0' }}>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
       <div style={{ marginTop: '16px' }}>
-        <CompareView elementA={elementA} elementB={elementB} />
+        <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />
       </div>
 
       <style>{`

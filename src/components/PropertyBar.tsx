@@ -28,7 +28,7 @@ export default function PropertyBar({
   const barWidth = fraction * width;
 
   return (
-    <svg width={width + 60} height={height + 14} aria-label={`${label}: rank ${rank} of ${total}`}>
+    <svg width={width + 60} height={height + 14} role="img" aria-label={`${label}: ranked ${rank} of ${total}`}>
       <text
         x={0}
         y={10}

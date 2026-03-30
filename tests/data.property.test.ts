@@ -1,11 +1,15 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
 import { allElements, getElement, searchElements } from '../src/lib/data';
-import type { GroupData, RankingsData } from '../src/lib/types';
+import type { GroupData, PeriodData, CategoryData, RankingsData } from '../src/lib/types';
 import groupsJson from '../data/generated/groups.json';
+import periodsJson from '../data/generated/periods.json';
+import categoriesJson from '../data/generated/categories.json';
 import rankingsJson from '../data/generated/rankings.json';
 
 const groups = groupsJson as GroupData[];
+const periods = periodsJson as PeriodData[];
+const categories = categoriesJson as CategoryData[];
 const rankings = rankingsJson as RankingsData;
 
 const validSymbols = new Set(allElements.map((e) => e.symbol));
@@ -89,6 +93,25 @@ describe('Data integrity property-based tests', () => {
         const el = getElement(sym)!;
         expect(el).toBeDefined();
         expect(el.group).toBe(group.n);
+      }
+    }
+  });
+
+  it('forAll(period n): listed elements have period === n', () => {
+    for (const period of periods) {
+      for (const sym of period.elements) {
+        const el = getElement(sym)!;
+        expect(el).toBeDefined();
+        expect(el.period).toBe(period.n);
+      }
+    }
+  });
+
+  it('forAll(category): slug matches at least one element', () => {
+    for (const cat of categories) {
+      expect(cat.elements.length).toBeGreaterThan(0);
+      for (const sym of cat.elements) {
+        expect(validSymbols.has(sym)).toBe(true);
       }
     }
   });

@@ -39,7 +39,7 @@ export function GroupTrendSparkline({
   });
 
   return (
-    <svg width={width} height={height} aria-label="Group trend sparkline">
+    <svg width={width} height={height} role="img" aria-label="Group trend sparkline">
       <polyline
         points={points.join(' ')}
         fill="none"
@@ -74,7 +74,7 @@ export function RankDotSparkline({
   const x = ((total - rank) / (total - 1)) * (width - 4) + 2;
 
   return (
-    <svg width={width} height={height} aria-label={`Rank ${rank} of ${total}`}>
+    <svg width={width} height={height} role="img" aria-label={`Rank ${rank} of ${total}`}>
       <line x1={0} y1={height / 2} x2={width} y2={height / 2} stroke="#ccc" strokeWidth={0.5} />
       <circle cx={x} cy={height / 2} r={3} fill={color} />
     </svg>

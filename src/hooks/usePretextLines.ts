@@ -35,6 +35,7 @@ type UseShapedTextOptions = {
   fullWidth: number;
   narrowWidth: number;
   font?: string;
+  mobile?: boolean;
 };
 
 /**
@@ -46,6 +47,7 @@ export function useShapedText({
   fullWidth,
   narrowWidth,
   font = BODY_FONT,
+  mobile = false,
 }: UseShapedTextOptions): {
   lines: PositionedLine[];
   lineHeight: number;
@@ -54,6 +56,11 @@ export function useShapedText({
   return useMemo(() => {
     const lineHeight = computeLineHeight(font);
     const plateHeightInLines = Math.ceil(PLATE_HEIGHT / lineHeight);
+
+    if (mobile) {
+      const lines = measureLines(text, font, fullWidth, lineHeight);
+      return { lines, lineHeight, plateHeightInLines };
+    }
 
     // Build width array: narrow for lines beside plate, full for lines below
     const widthPerLine: number[] = [];
@@ -64,5 +71,5 @@ export function useShapedText({
 
     const lines = shapeText(text, font, widthPerLine, lineHeight);
     return { lines, lineHeight, plateHeightInLines };
-  }, [text, fullWidth, narrowWidth, font]);
+  }, [text, fullWidth, narrowWidth, font, mobile]);
 }

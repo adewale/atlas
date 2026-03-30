@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 
 export default function About() {
   return (
-    <main style={{ maxWidth: '640px' }}>
+    <article style={{ maxWidth: '640px' }}>
       <Link to="/" style={{ fontSize: '14px' }}>← Periodic Table</Link>
       <h1 style={{ margin: '16px 0 24px', letterSpacing: '0.15em' }}>About Atlas</h1>
 
@@ -69,6 +69,6 @@ export default function About() {
           No images in v1.
         </p>
       </section>
-    </main>
+    </article>
   );
 }
