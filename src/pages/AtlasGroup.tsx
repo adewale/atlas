@@ -3,6 +3,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { GroupData } from '../lib/types';
+import SiteNav from '../components/SiteNav';
 
 export default function AtlasGroup() {
   const { n } = useParams();
@@ -19,6 +20,7 @@ export default function AtlasGroup() {
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={`Group ${n}`} captionColor={color} />
       )}
+      <SiteNav />
     </main>
   );
 }

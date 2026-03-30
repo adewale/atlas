@@ -3,6 +3,7 @@ import { getElement } from '../lib/data';
 import { DEEP_BLUE } from '../lib/theme';
 import AtlasPlate from '../components/AtlasPlate';
 import type { RankingsData } from '../lib/types';
+import SiteNav from '../components/SiteNav';
 
 const LABELS: Record<string, string> = {
   mass: 'Atomic Mass',
@@ -31,6 +32,7 @@ export default function AtlasRank() {
           propertyKey={property}
         />
       )}
+      <SiteNav />
     </main>
   );
 }

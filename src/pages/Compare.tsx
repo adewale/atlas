@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { useIsMobile } from '../hooks/useIsMobile';
 import CompareView from '../components/CompareView';
+import SiteNav from '../components/SiteNav';
 
 export default function Compare() {
   const { symbolA, symbolB } = useParams();
@@ -17,7 +18,8 @@ export default function Compare() {
           Could not find one or both elements.{' '}
           <Link to="/">Back to periodic table</Link>
         </p>
-      </main>
+        <SiteNav />
+    </main>
     );
   }
 
@@ -29,6 +31,7 @@ export default function Compare() {
       </div>
 
       {/* Keyframes now in globals.css */}
+      <SiteNav />
     </main>
   );
 }

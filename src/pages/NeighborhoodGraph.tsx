@@ -12,6 +12,7 @@ import {
 import { PAPER, BLACK, DIM } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
+import SiteNav from '../components/SiteNav';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -230,6 +231,7 @@ export default function NeighborhoodGraph() {
           </g>
         </svg>
       </div>
+      <SiteNav />
     </main>
   );
 }

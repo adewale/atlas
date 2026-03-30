@@ -7,6 +7,7 @@ import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
 import type { ElementRecord } from '../lib/types';
+import SiteNav from '../components/SiteNav';
 
 // ---------------------------------------------------------------------------
 // Property config
@@ -267,6 +268,7 @@ export default function PropertyScatter() {
           );
         })}
       </svg>
+      <SiteNav />
     </main>
   );
 }

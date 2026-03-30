@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
+import SiteNav from '../components/SiteNav';
 
 const PALETTE = [
   { name: 'Paper', hex: '#f7f2e8' },
@@ -38,25 +39,78 @@ type Entity = {
   id: string;
   label: string;
   route: string;
-  example: string;
+  examples: { name: string; href: string }[];
   count: string;
   color: string;
   description: string;
 };
 
 const ENTITIES: Entity[] = [
-  { id: 'element', label: 'Element', route: '/element/:symbol', example: 'Fe — Iron', count: '118', color: WARM_RED, description: 'Central entity. Every element is a folio page with properties, neighbors, discoverer, etymology, and rankings.' },
-  { id: 'group', label: 'Group', route: '/atlas/group/:n', example: 'Group 8', count: '18', color: DEEP_BLUE, description: 'IUPAC vertical column (1–18). Elements in a group share valence electron configuration.' },
-  { id: 'period', label: 'Period', route: '/atlas/period/:n', example: 'Period 4', count: '7', color: WARM_RED, description: 'Horizontal row (1–7). Elements in a period share the same highest energy level.' },
-  { id: 'block', label: 'Block', route: '/atlas/block/:b', example: 'd-block', count: '4', color: MUSTARD, description: 'Orbital family (s/p/d/f). The block determines the element\'s color identity throughout Atlas.' },
-  { id: 'category', label: 'Category', route: '/atlas/category/:slug', example: 'transition metal', count: '10', color: DEEP_BLUE, description: 'Chemical family (alkali metal, halogen, noble gas, etc.). Cross-cuts block boundaries.' },
-  { id: 'ranking', label: 'Ranking', route: '/atlas/rank/:property', example: 'Ranked by mass', count: '4', color: MUSTARD, description: 'Elements ordered by a numeric property: mass, electronegativity, ionization energy, or radius.' },
-  { id: 'anomaly', label: 'Anomaly', route: '/atlas/anomaly/:slug', example: 'electron config anomalies', count: '5', color: WARM_RED, description: 'Periodic table rule-breakers: aufbau deviations, diagonal relationships, metalloid boundary.' },
-  { id: 'discoverer', label: 'Discoverer', route: '/discoverer/:name', example: 'Humphry Davy', count: '50+', color: MUSTARD, description: 'Person or group who discovered elements. Graph-navigable with related discoverers by era or block.' },
-  { id: 'era', label: 'Timeline Era', route: '/timeline/:era', example: '1770s', count: '30+', color: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.' },
-  { id: 'etymology', label: 'Etymology Origin', route: '/etymology-map', example: 'mythology', count: '7', color: WARM_RED, description: 'Why elements are named: place, person, mythology, property, mineral, astronomical, unknown.' },
-  { id: 'comparison', label: 'Comparison', route: '/compare/:a/:b', example: 'Fe vs Cu', count: '6903', color: BLACK, description: 'Side-by-side element pair. Any two of 118 elements can be compared.' },
-  { id: 'neighbor', label: 'Neighbor', route: '—', example: 'Fe ↔ Mn, Co', count: '~236', color: BLACK, description: 'Positional adjacency in the periodic table grid. Implicit, computed from grid coordinates.' },
+  { id: 'element', label: 'Element', route: '/element/:symbol', count: '118', color: WARM_RED, description: 'Central entity. Every element is a folio page with properties, neighbors, discoverer, etymology, and rankings.', examples: [
+    { name: 'Fe — Iron', href: '/element/Fe' },
+    { name: 'O — Oxygen', href: '/element/O' },
+    { name: 'Au — Gold', href: '/element/Au' },
+    { name: 'Og — Oganesson', href: '/element/Og' },
+  ]},
+  { id: 'group', label: 'Group', route: '/atlas/group/:n', count: '18', color: DEEP_BLUE, description: 'IUPAC vertical column (1–18). Elements in a group share valence electron configuration.', examples: [
+    { name: 'Group 1 (Alkali)', href: '/atlas/group/1' },
+    { name: 'Group 8', href: '/atlas/group/8' },
+    { name: 'Group 17 (Halogens)', href: '/atlas/group/17' },
+    { name: 'Group 18 (Noble gases)', href: '/atlas/group/18' },
+  ]},
+  { id: 'period', label: 'Period', route: '/atlas/period/:n', count: '7', color: WARM_RED, description: 'Horizontal row (1–7). Elements in a period share the same highest energy level.', examples: [
+    { name: 'Period 1 (H, He)', href: '/atlas/period/1' },
+    { name: 'Period 4', href: '/atlas/period/4' },
+    { name: 'Period 7 (actinides+)', href: '/atlas/period/7' },
+  ]},
+  { id: 'block', label: 'Block', route: '/atlas/block/:b', count: '4', color: MUSTARD, description: 'Orbital family (s/p/d/f). The block determines the element\'s color identity throughout Atlas.', examples: [
+    { name: 's-block', href: '/atlas/block/s' },
+    { name: 'p-block', href: '/atlas/block/p' },
+    { name: 'd-block', href: '/atlas/block/d' },
+    { name: 'f-block', href: '/atlas/block/f' },
+  ]},
+  { id: 'category', label: 'Category', route: '/atlas/category/:slug', count: '10', color: DEEP_BLUE, description: 'Chemical family (alkali metal, halogen, noble gas, etc.). Cross-cuts block boundaries.', examples: [
+    { name: 'Transition metal', href: '/atlas/category/transition-metal' },
+    { name: 'Noble gas', href: '/atlas/category/noble-gas' },
+    { name: 'Alkali metal', href: '/atlas/category/alkali-metal' },
+    { name: 'Metalloid', href: '/atlas/category/metalloid' },
+  ]},
+  { id: 'ranking', label: 'Ranking', route: '/atlas/rank/:property', count: '4', color: MUSTARD, description: 'Elements ordered by a numeric property: mass, electronegativity, ionization energy, or radius.', examples: [
+    { name: 'Ranked by mass', href: '/atlas/rank/mass' },
+    { name: 'By electronegativity', href: '/atlas/rank/electronegativity' },
+    { name: 'By ionization energy', href: '/atlas/rank/ionizationEnergy' },
+    { name: 'By atomic radius', href: '/atlas/rank/radius' },
+  ]},
+  { id: 'anomaly', label: 'Anomaly', route: '/atlas/anomaly/:slug', count: '5', color: WARM_RED, description: 'Periodic table rule-breakers: aufbau deviations, diagonal relationships, metalloid boundary.', examples: [
+    { name: 'Electron config anomalies', href: '/atlas/anomaly/electron-configuration-anomalies' },
+    { name: 'Diagonal relationships', href: '/atlas/anomaly/diagonal-relationships' },
+    { name: 'Synthetic heavyweights', href: '/atlas/anomaly/synthetic-heavy' },
+  ]},
+  { id: 'discoverer', label: 'Discoverer', route: '/discoverer/:name', count: '50+', color: MUSTARD, description: 'Person or group who discovered elements. Graph-navigable with related discoverers by era or block.', examples: [
+    { name: 'Humphry Davy', href: '/discoverer/Humphry%20Davy' },
+    { name: 'Marie Curie', href: '/discoverer/Marie%20Curie' },
+    { name: 'Carl Wilhelm Scheele', href: '/discoverer/Carl%20Wilhelm%20Scheele' },
+  ]},
+  { id: 'era', label: 'Timeline Era', route: '/timeline/:era', count: '30+', color: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.', examples: [
+    { name: 'Antiquity', href: '/timeline/antiquity' },
+    { name: '1770s', href: '/timeline/1770' },
+    { name: '1890s', href: '/timeline/1890' },
+    { name: '1940s', href: '/timeline/1940' },
+  ]},
+  { id: 'etymology', label: 'Etymology Origin', route: '/etymology-map', count: '7', color: WARM_RED, description: 'Why elements are named: place, person, mythology, property, mineral, astronomical, unknown.', examples: [
+    { name: 'Place names', href: '/etymology-map' },
+    { name: 'Mythology', href: '/etymology-map' },
+    { name: 'Properties', href: '/etymology-map' },
+  ]},
+  { id: 'comparison', label: 'Comparison', route: '/compare/:a/:b', count: '6903', color: BLACK, description: 'Side-by-side element pair. Any two of 118 elements can be compared.', examples: [
+    { name: 'Fe vs Cu', href: '/compare/Fe/Cu' },
+    { name: 'Na vs K', href: '/compare/Na/K' },
+    { name: 'C vs Si', href: '/compare/C/Si' },
+  ]},
+  { id: 'neighbor', label: 'Neighbor', route: '—', count: '~236', color: BLACK, description: 'Positional adjacency in the periodic table grid. Implicit, computed from grid coordinates.', examples: [
+    { name: 'Fe ↔ Mn, Co', href: '/element/Fe' },
+    { name: 'O ↔ N, F', href: '/element/O' },
+  ]},
 ];
 
 type Edge = {
@@ -116,21 +170,7 @@ const nodeMap = new Map(NODE_POSITIONS.map((n) => [n.id, n]));
 const entityMap = new Map(ENTITIES.map((e) => [e.id, e]));
 
 function EntityCard({ entity, highlight, onHover }: { entity: Entity; highlight: boolean; onHover: (id: string | null) => void }) {
-  const isLink = entity.route !== '—';
-  const exampleRoute = entity.id === 'element' ? '/element/Fe'
-    : entity.id === 'group' ? '/atlas/group/8'
-    : entity.id === 'period' ? '/atlas/period/4'
-    : entity.id === 'block' ? '/atlas/block/d'
-    : entity.id === 'category' ? '/atlas/category/transition-metal'
-    : entity.id === 'ranking' ? '/atlas/rank/mass'
-    : entity.id === 'anomaly' ? '/atlas/anomaly/synthetic-heavy'
-    : entity.id === 'discoverer' ? '/discoverer/Humphry%20Davy'
-    : entity.id === 'era' ? '/timeline/1770'
-    : entity.id === 'etymology' ? '/etymology-map'
-    : entity.id === 'comparison' ? '/compare/Fe/Cu'
-    : null;
-
-  const card = (
+  return (
     <div
       style={{
         border: `2px solid ${highlight ? entity.color : '#ece7db'}`,
@@ -154,19 +194,22 @@ function EntityCard({ entity, highlight, onHover }: { entity: Entity; highlight:
       <div style={{ fontSize: '11px', color: '#666', lineHeight: 1.5, marginBottom: '6px' }}>
         {entity.description}
       </div>
-      <div style={{ fontSize: '10px', fontFamily: "'SF Mono', monospace", color: '#999' }}>
+      <div style={{ fontSize: '10px', fontFamily: "'SF Mono', monospace", color: '#999', marginBottom: '4px' }}>
         {entity.route}
       </div>
-      <div style={{ fontSize: '11px', color: entity.color, marginTop: '4px' }}>
-        e.g. {entity.example}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+        {entity.examples.map((ex) => (
+          <Link
+            key={ex.name}
+            to={ex.href}
+            style={{ fontSize: '11px', color: entity.color, textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}
+          >
+            {ex.name}
+          </Link>
+        ))}
       </div>
     </div>
   );
-
-  if (isLink && exampleRoute) {
-    return <Link to={exampleRoute} style={{ textDecoration: 'none', color: 'inherit', minHeight: 'unset', minWidth: 'unset' }}>{card}</Link>;
-  }
-  return card;
 }
 
 function EntityCatalog() {
@@ -543,11 +586,15 @@ export default function Design() {
       {/* Property Bars */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Property Bars</h2>
+        <p style={{ fontSize: '13px', color: '#666', marginBottom: '12px', lineHeight: 1.6 }}>
+          Tufte principle: the bar is the data, and the label shows the actual value with units.
+          No legend required — rank context (#N of 118) sits at top-right.
+        </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <PropertyBar label="Mass" rank={93} color="#9e1c2c" />
-          <PropertyBar label="EN" rank={41} color="#133e7c" />
-          <PropertyBar label="IE" rank={35} color="#c59b1a" />
-          <PropertyBar label="Radius" rank={67} color="#0f0f0f" />
+          <PropertyBar label="Atomic Mass" rank={93} color="#9e1c2c" value={55.845} unit="Da" />
+          <PropertyBar label="Electronegativity" rank={41} color="#133e7c" value={1.83} />
+          <PropertyBar label="Ionization Energy" rank={35} color="#c59b1a" value={762.5} unit="kJ/mol" />
+          <PropertyBar label="Atomic Radius" rank={67} color="#0f0f0f" value={126} unit="pm" />
         </div>
       </section>
 
@@ -594,6 +641,7 @@ export default function Design() {
           </ol>
         </div>
       </section>
+      <SiteNav />
     </main>
   );
 }

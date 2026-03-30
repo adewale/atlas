@@ -199,10 +199,10 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
   // Property bars data with search terms for marginalia alignment
   const properties = [
-    { label: 'Mass', key: 'mass', searchTerm: 'mass', unit: 'Da' },
-    { label: 'EN', key: 'electronegativity', searchTerm: 'electronegativity', unit: '' },
-    { label: 'IE', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
-    { label: 'Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
+    { label: 'Atomic Mass', key: 'mass', searchTerm: 'mass', unit: 'Da' },
+    { label: 'Electronegativity', key: 'electronegativity', searchTerm: 'electronegativity', unit: '' },
+    { label: 'Ionization Energy', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
+    { label: 'Atomic Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
   ] as const;
 
   // Compute y-positions for marginalia annotations aligned to summary text lines
@@ -409,6 +409,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {properties.map((prop, i) => {
             const rank = element.rankings[prop.key] ?? 0;
+            const val = element[prop.key as keyof ElementRecord] as number | null;
             return (
               <Link key={prop.key} to={`/atlas/rank/${prop.key}`} style={{ textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
                 <PropertyBar
@@ -418,6 +419,8 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   width={FULL_WIDTH - 60}
                   animate={animate}
                   delay={animate ? 200 + i * 50 : 0}
+                  value={val}
+                  unit={prop.unit}
                 />
               </Link>
             );
@@ -564,7 +567,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           properties.map((prop, i) => {
             const val = element[prop.key as keyof ElementRecord];
             const rank = element.rankings[prop.key] ?? 0;
-            const displayText = `${prop.label}: ${val != null ? String(val) : '—'}`;
+            const displayText = `${prop.label}: ${val != null ? String(val) + (prop.unit ? ' ' + prop.unit : '') : '—'}`;
             const targetY = annotationPositions[i];
 
             if (targetY != null) {
@@ -606,7 +609,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           properties.map((prop) => {
             const val = element[prop.key as keyof ElementRecord];
             const rank = element.rankings[prop.key] ?? 0;
-            const displayText = `${prop.label}: ${val != null ? String(val) : '—'}`;
+            const displayText = `${prop.label}: ${val != null ? String(val) + (prop.unit ? ' ' + prop.unit : '') : '—'}`;
             return (
               <MarginaliaProperty
                 key={prop.key}

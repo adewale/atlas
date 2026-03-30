@@ -2,6 +2,7 @@ import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import AtlasPlate from '../components/AtlasPlate';
 import type { AnomalyData } from '../lib/types';
+import SiteNav from '../components/SiteNav';
 
 export default function AtlasAnomaly() {
   const { slug } = useParams();
@@ -28,6 +29,7 @@ export default function AtlasAnomaly() {
       ) : (
         <p>Anomaly not found.</p>
       )}
+      <SiteNav />
     </main>
   );
 }

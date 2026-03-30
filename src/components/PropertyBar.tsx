@@ -7,11 +7,14 @@ type PropertyBarProps = {
   height?: number;
   animate?: boolean;
   delay?: number;
+  value?: number | null;
+  unit?: string;
 };
 
 /**
  * Horizontal bar showing where an element falls on a 1-N scale.
- * Filled in block color against paper background. Byrne-style: the bar IS the data.
+ * Tufte principle: the bar IS the data, and we label it with the actual
+ * measurement so nothing requires a legend or guesswork.
  */
 export default function PropertyBar({
   label,
@@ -22,15 +25,18 @@ export default function PropertyBar({
   height = 18,
   animate = false,
   delay = 0,
+  value,
+  unit,
 }: PropertyBarProps) {
   // rank=1 is highest, so bar should be longest for rank 1
   const fraction = rank > 0 ? (total - rank + 1) / total : 0;
   const barWidth = fraction * width;
 
-  const percentile = rank > 0 ? Math.round(((total - rank + 1) / total) * 100) : 0;
+  const rankLabel = rank > 0 ? `#${rank} of ${total}` : '';
+  const valueLabel = value != null ? `${value}${unit ? ' ' + unit : ''}` : '';
 
   return (
-    <svg width={width + 60} height={height + 14} role="img" aria-label={`${label}: ranked ${rank} of ${total}, ${percentile}th percentile`}>
+    <svg width={width + 80} height={height + 14} role="img" aria-label={`${label}: ${valueLabel || '—'}, ranked ${rank} of ${total}`}>
       <text
         x={0}
         y={10}
@@ -64,17 +70,28 @@ export default function PropertyBar({
             : undefined
         }
       />
-      {/* Byrne dual-coding: percentile number at bar end */}
+      {/* Tufte: value + unit at bar end, rank context below */}
       {rank > 0 && (
-        <text
-          x={barWidth + 4}
-          y={14 + height - 3}
-          fontSize={9}
-          fill="#666"
-          fontFamily="'SF Mono', 'Cascadia Code', 'Fira Code', monospace"
-        >
-          {percentile}
-        </text>
+        <>
+          <text
+            x={barWidth + 4}
+            y={14 + height - 4}
+            fontSize={9}
+            fill="#0f0f0f"
+            fontFamily="'SF Mono', 'Cascadia Code', 'Fira Code', monospace"
+          >
+            {valueLabel}
+          </text>
+          <text
+            x={width + 4}
+            y={10}
+            fontSize={8}
+            fill="#999"
+            fontFamily="'SF Mono', 'Cascadia Code', 'Fira Code', monospace"
+          >
+            {rankLabel}
+          </text>
+        </>
       )}
     </svg>
   );

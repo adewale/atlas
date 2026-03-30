@@ -12,6 +12,7 @@ import {
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
+import SiteNav from '../components/SiteNav';
 
 // ---------------------------------------------------------------------------
 // Phase → color mapping (Byrne: hard color fields, no gradients)
@@ -187,6 +188,7 @@ export default function PhaseLandscape() {
           </text>
         </svg>
       </div>
+      <SiteNav />
     </main>
   );
 }

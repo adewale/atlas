@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
+import SiteNav from '../components/SiteNav';
 
 const SVG_MAX_WIDTH = 640;
 
@@ -94,6 +95,7 @@ export default function About() {
           See the full <Link to="/design">Design Language</Link> reference for palette, spacing, typography, and animation details.
         </p>
       </section>
+      <SiteNav />
     </article>
   );
 }

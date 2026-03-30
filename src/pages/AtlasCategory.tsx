@@ -3,6 +3,7 @@ import { getElement } from '../lib/data';
 import { fromSlug, categoryColor } from '../lib/theme';
 import AtlasPlate from '../components/AtlasPlate';
 import type { CategoryData } from '../lib/types';
+import SiteNav from '../components/SiteNav';
 
 export default function AtlasCategory() {
   const { slug } = useParams();
@@ -20,6 +21,7 @@ export default function AtlasCategory() {
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={label} captionColor={color} />
       )}
+      <SiteNav />
     </main>
   );
 }

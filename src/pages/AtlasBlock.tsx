@@ -3,6 +3,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { BlockData } from '../lib/types';
+import SiteNav from '../components/SiteNav';
 
 export default function AtlasBlock() {
   const { block } = useParams();
@@ -19,6 +20,7 @@ export default function AtlasBlock() {
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={`${block}-block elements`} captionColor={color} />
       )}
+      <SiteNav />
     </main>
   );
 }

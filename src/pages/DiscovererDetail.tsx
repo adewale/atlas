@@ -4,6 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED } from '../lib/theme';
+import SiteNav from '../components/SiteNav';
 
 type DiscovererEntry = { name: string; elements: string[] };
 
@@ -20,7 +21,8 @@ export default function DiscovererDetail() {
       <main>
         <Link to="/discoverer-network" style={{ fontSize: '14px' }}>← Discoverer Network</Link>
         <h1 style={{ margin: '16px 0' }}>Discoverer not found</h1>
-      </main>
+        <SiteNav />
+    </main>
     );
   }
 
@@ -166,6 +168,7 @@ export default function DiscovererDetail() {
           </Link>
         )}
       </div>
+      <SiteNav />
     </main>
   );
 }

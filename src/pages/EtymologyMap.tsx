@@ -3,6 +3,7 @@ import { Link, useLoaderData } from 'react-router';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
+import SiteNav from '../components/SiteNav';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -230,6 +231,7 @@ export default function EtymologyMap() {
           </section>
         );
       })}
+      <SiteNav />
     </main>
   );
 }

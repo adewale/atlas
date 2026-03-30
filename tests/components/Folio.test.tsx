@@ -110,10 +110,10 @@ describe('Folio', () => {
 
   it('renders property bars', () => {
     renderFolio();
-    expect(screen.getByLabelText(/Mass: ranked 93 of 118/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/EN: ranked 41 of 118/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/IE: ranked 35 of 118/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Radius: ranked 67 of 118/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Atomic Mass: 55.84 Da, ranked 93 of 118/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Electronegativity: 1.83, ranked 41 of 118/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Ionization Energy: 7.902 kJ\/mol, ranked 35 of 118/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Atomic Radius: 194 pm, ranked 67 of 118/)).toBeInTheDocument();
   });
 
   it('renders neighbor links', () => {

@@ -5,6 +5,7 @@ import { blockColor, contrastTextColor } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
+import SiteNav from '../components/SiteNav';
 
 /* ------------------------------------------------------------------ */
 /* Constants                                                           */
@@ -310,6 +311,7 @@ export default function DiscovererNetwork() {
           )}
         </svg>
       </div>
+      <SiteNav />
     </main>
   );
 }

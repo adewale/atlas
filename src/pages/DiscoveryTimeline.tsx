@@ -5,6 +5,7 @@ import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
+import SiteNav from '../components/SiteNav';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -406,6 +407,7 @@ export default function DiscoveryTimeline() {
           ))}
         </div>
       </section>
+      <SiteNav />
     </main>
   );
 }

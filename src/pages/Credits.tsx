@@ -2,6 +2,7 @@ import { useLoaderData, Link } from 'react-router';
 import type { CreditsData } from '../lib/types';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
+import SiteNav from '../components/SiteNav';
 
 const TEXT_WIDTH = 720;
 
@@ -141,6 +142,7 @@ export default function Credits() {
           <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
         </svg>
       </section>
+      <SiteNav />
     </article>
   );
 }

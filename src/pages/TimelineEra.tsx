@@ -4,6 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, DEEP_BLUE, BLACK } from '../lib/theme';
+import SiteNav from '../components/SiteNav';
 
 type TimelineEntry = { symbol: string; year: number | null; discoverer: string };
 type TimelineData = { antiquity: TimelineEntry[]; timeline: TimelineEntry[] };
@@ -82,7 +83,8 @@ export default function TimelineEra() {
       <main>
         <Link to="/discovery-timeline" style={{ fontSize: '14px' }}>← Discovery Timeline</Link>
         <h1 style={{ margin: '16px 0' }}>No elements found for this era</h1>
-      </main>
+        <SiteNav />
+    </main>
     );
   }
 
@@ -216,6 +218,7 @@ export default function TimelineEra() {
           </div>
         </section>
       )}
+      <SiteNav />
     </main>
   );
 }

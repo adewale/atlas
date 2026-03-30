@@ -3,6 +3,7 @@ import { getElement } from '../lib/data';
 import type { ElementRecord, ElementSources, GroupData, AnomalyData } from '../lib/types';
 import Folio from '../components/Folio';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
+import SiteNav from '../components/SiteNav';
 
 export default function Element() {
   const { symbol } = useParams();
@@ -44,6 +45,7 @@ export default function Element() {
       </article>
 
       {/* Keyframes now in globals.css */}
+      <SiteNav />
     </main>
   );
 }

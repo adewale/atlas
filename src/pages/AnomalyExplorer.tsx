@@ -13,6 +13,7 @@ import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
+import SiteNav from '../components/SiteNav';
 
 /* ------------------------------------------------------------------ */
 /* Color key for anomaly buttons (cycle through Byrne palette)        */
@@ -266,6 +267,7 @@ export default function AnomalyExplorer() {
           />
         )}
       </svg>
+      <SiteNav />
     </main>
   );
 }
