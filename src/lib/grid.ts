@@ -2,7 +2,7 @@ import { allElements } from './data';
 import type { ElementRecord } from './types';
 
 // ---------------------------------------------------------------------------
-// Block colors
+// Block colours
 // ---------------------------------------------------------------------------
 const BLOCK_COLORS: Record<string, string> = {
   s: '#133e7c',
@@ -16,7 +16,7 @@ export function blockColor(block: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Contrast text color (WCAG relative luminance)
+// Contrast text colour (WCAG relative luminance)
 // ---------------------------------------------------------------------------
 function sRGBtoLinear(c: number): number {
   const s = c / 255;

@@ -279,7 +279,7 @@ test.describe('Readability: Property Scatter', () => {
 
     // Axis labels
     const xLabel = page.locator('text:has-text("Electronegativity")');
-    const yLabel = page.locator('text:has-text("Ionization energy")');
+    const yLabel = page.locator('text:has-text("Ionisation energy")');
     await expect(xLabel).toBeVisible();
     await expect(yLabel).toBeVisible();
 

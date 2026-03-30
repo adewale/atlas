@@ -8,7 +8,7 @@ import SiteNav from '../components/SiteNav';
 const LABELS: Record<string, string> = {
   mass: 'Atomic Mass',
   electronegativity: 'Electronegativity',
-  ionizationEnergy: 'Ionization Energy',
+  ionizationEnergy: 'Ionisation Energy',
   radius: 'Atomic Radius',
 };
 

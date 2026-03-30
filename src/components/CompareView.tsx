@@ -10,7 +10,7 @@ const SPLIT_H = 280;
 const PROPERTIES = [
   { key: 'mass', label: 'Atomic Mass' },
   { key: 'electronegativity', label: 'Electronegativity' },
-  { key: 'ionizationEnergy', label: 'Ionization Energy' },
+  { key: 'ionizationEnergy', label: 'Ionisation Energy' },
   { key: 'radius', label: 'Atomic Radius' },
 ] as const;
 

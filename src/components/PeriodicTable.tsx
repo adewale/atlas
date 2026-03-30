@@ -32,7 +32,7 @@ const HIGHLIGHT_OPTIONS: { value: HighlightMode; label: string }[] = [
 const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'mass', label: 'Mass' },
   { value: 'electronegativity', label: 'Electronegativity' },
-  { value: 'ionizationEnergy', label: 'Ionization Energy' },
+  { value: 'ionizationEnergy', label: 'Ionisation Energy' },
   { value: 'radius', label: 'Radius' },
 ];
 
@@ -257,7 +257,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 <option key={o.value} value={o.value}>{o.label}</option>
               ))}
             </select>
-            <InfoTip label="Mass: atomic weight in daltons. Electronegativity: tendency to attract electrons (Pauling scale). Ionization energy: energy to remove an electron. Radius: size of the atom in picometers.">
+            <InfoTip label="Mass: atomic weight in daltons. Electronegativity: tendency to attract electrons (Pauling scale). Ionisation energy: energy to remove an electron. Radius: size of the atom in picometres.">
               <span />
             </InfoTip>
           </div>

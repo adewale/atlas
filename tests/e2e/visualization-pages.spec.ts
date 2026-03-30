@@ -64,7 +64,7 @@ test.describe('Property Scatter', () => {
 
     // Axis labels should be visible
     await expect(page.locator('text:has-text("Electronegativity")')).toBeVisible();
-    await expect(page.locator('text:has-text("Ionization energy")')).toBeVisible();
+    await expect(page.locator('text:has-text("Ionisation energy")')).toBeVisible();
 
     // Should have element squares
     const squares = page.locator('svg rect[width="10"]');

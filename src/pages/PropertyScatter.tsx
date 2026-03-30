@@ -17,7 +17,7 @@ type PropertyKey = 'mass' | 'electronegativity' | 'ionizationEnergy' | 'radius';
 const PROPERTY_LABELS: Record<PropertyKey, string> = {
   mass: 'Atomic mass (u)',
   electronegativity: 'Electronegativity',
-  ionizationEnergy: 'Ionization energy (eV)',
+  ionizationEnergy: 'Ionisation energy (eV)',
   radius: 'Atomic radius (pm)',
 };
 
@@ -107,7 +107,7 @@ export default function PropertyScatter() {
 
       {/* Educational note */}
       <p style={{ fontSize: '14px', lineHeight: 1.6, marginTop: '8px', color: BLACK }}>
-        <InfoTip label="Electronegativity measures how strongly an atom attracts electrons in a chemical bond (Pauling scale). Ionization energy is the energy needed to remove an electron from a neutral atom. Noble gases cluster at high ionization energy because their filled shells resist electron removal.">
+        <InfoTip label="Electronegativity measures how strongly an atom attracts electrons in a chemical bond (Pauling scale). Ionisation energy is the energy needed to remove an electron from a neutral atom. Noble gases cluster at high ionisation energy because their filled shells resist electron removal.">
           What do these properties mean?
         </InfoTip>
       </p>
