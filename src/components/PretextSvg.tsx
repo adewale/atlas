@@ -88,8 +88,6 @@ export default function PretextSvg({
       {lines.map((line, i) => {
         const lineY = line.y + lineHeight;
         const staggerDelay = animationStagger != null ? i * animationStagger : undefined;
-        const isTerminal = i === lines.length - 1;
-        const isShort = maxWidth && line.width < maxWidth * 0.7;
         const lineX =
           textAlign === 'center' && maxWidth
             ? line.x + (maxWidth - line.width) / 2
@@ -129,6 +127,14 @@ export default function PretextSvg({
                 stroke={ruleColor}
                 strokeWidth={0.5}
                 opacity={0.2}
+                style={
+                  staggerDelay != null
+                    ? {
+                        clipPath: 'inset(0 100% 0 0)',
+                        animation: `rule-draw 400ms var(--ease-out) ${staggerDelay}ms forwards`,
+                      }
+                    : undefined
+                }
               />
             )}
             <text
@@ -150,7 +156,17 @@ export default function PretextSvg({
               {line.text}
             </text>
             {sparklineData && (
-              <g transform={`translate(${lineX + line.width + SPARKLINE_GAP}, ${lineY - SPARKLINE_HEIGHT + 2})`}>
+              <g
+                transform={`translate(${lineX + line.width + SPARKLINE_GAP}, ${lineY - SPARKLINE_HEIGHT + 2})`}
+                style={
+                  staggerDelay != null
+                    ? {
+                        opacity: 0,
+                        animation: `folio-line-reveal 400ms var(--ease-out) ${staggerDelay + 100}ms forwards`,
+                      }
+                    : undefined
+                }
+              >
                 <polyline
                   points={sparklineData.points}
                   fill="none"

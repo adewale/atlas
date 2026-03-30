@@ -2,6 +2,7 @@ import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import type { ElementRecord, ElementSources, GroupData } from '../lib/types';
 import Folio from '../components/Folio';
+import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 
 export default function Element() {
   const { symbol } = useParams();
@@ -12,6 +13,7 @@ export default function Element() {
 
   const sources: ElementSources | undefined = loaderData?.element?.sources;
   const groups: GroupData[] | undefined = loaderData?.groups;
+  const transitionNavigate = useViewTransitionNavigate();
 
   if (!element) {
     return (
@@ -28,9 +30,13 @@ export default function Element() {
   return (
     <main style={{ padding: '24px 0' }}>
       <div style={{ marginBottom: '16px' }}>
-        <Link to="/" style={{ fontSize: '14px' }}>
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}
+          style={{ fontSize: '14px' }}
+        >
           ← Periodic Table
-        </Link>
+        </a>
       </div>
       <article>
         <Folio element={element} sources={sources} groups={groups} animate={true} />

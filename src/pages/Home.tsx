@@ -1,15 +1,16 @@
 import { useCallback } from 'react';
-import { useNavigate, Link } from 'react-router';
+import { Link } from 'react-router';
 import PeriodicTable from '../components/PeriodicTable';
+import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 
 export default function Home() {
-  const navigate = useNavigate();
+  const transitionNavigate = useViewTransitionNavigate();
 
   const handleSelect = useCallback(
     (symbol: string) => {
-      navigate(`/element/${symbol}`);
+      transitionNavigate(`/element/${symbol}`);
     },
-    [navigate],
+    [transitionNavigate],
   );
 
   return (

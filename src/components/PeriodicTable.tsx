@@ -254,7 +254,10 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 fontSize={9}
                 fill={textColor}
                 fontFamily="system-ui, sans-serif"
-                style={{ transition: `fill 250ms ease ${dist * 8}ms` }}
+                style={{
+                  transition: `fill 250ms ease ${dist * 8}ms`,
+                  viewTransitionName: isActive ? 'element-number' : undefined,
+                } as React.CSSProperties}
               >
                 {el.atomicNumber}
               </text>
@@ -266,7 +269,10 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 fontWeight="bold"
                 fill={textColor}
                 fontFamily="system-ui, sans-serif"
-                style={{ transition: `fill 250ms ease ${dist * 8}ms` }}
+                style={{
+                  transition: `fill 250ms ease ${dist * 8}ms`,
+                  viewTransitionName: isActive ? 'element-symbol' : undefined,
+                } as React.CSSProperties}
               >
                 {el.symbol}
               </text>

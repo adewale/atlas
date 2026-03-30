@@ -83,6 +83,87 @@ export function GroupTrendSparkline({
   );
 }
 
+// ---------------------------------------------------------------------------
+// Group phase strip: phase-of-matter at STP for each element in the group
+// ---------------------------------------------------------------------------
+const PHASE_COLORS: Record<string, string> = {
+  solid: '#0f0f0f',
+  liquid: '#133e7c',
+  gas: '#9e1c2c',
+};
+
+type GroupPhaseStripProps = {
+  phases: (string | null)[];
+  symbols: string[];
+  highlightIndex: number;
+  width?: number;
+  height?: number;
+};
+
+/**
+ * Compact strip showing phase-of-matter at STP for each group member.
+ * Solid = black square, Liquid = blue, Gas = red, Unknown = outline only.
+ */
+export function GroupPhaseStrip({
+  phases,
+  symbols,
+  highlightIndex,
+  width = 300,
+  height = 24,
+}: GroupPhaseStripProps) {
+  if (phases.length === 0) return null;
+  const cellW = Math.min(width / phases.length, 28);
+  const cellH = height - 4;
+  const totalW = cellW * phases.length;
+
+  return (
+    <svg
+      width={totalW}
+      height={height}
+      role="img"
+      aria-label={`Phases at STP: ${symbols.map((s, i) => `${s} ${phases[i] ?? 'unknown'}`).join(', ')}`}
+    >
+      {phases.map((phase, i) => {
+        const x = i * cellW;
+        const isHighlight = i === highlightIndex;
+        const color = phase ? PHASE_COLORS[phase] ?? '#999' : '#999';
+        return (
+          <g key={i}>
+            <rect
+              x={x + 1}
+              y={2}
+              width={cellW - 2}
+              height={cellH}
+              fill={phase ? color : 'none'}
+              stroke={isHighlight ? '#0f0f0f' : color}
+              strokeWidth={isHighlight ? 1.5 : 0.5}
+              opacity={phase ? (isHighlight ? 1 : 0.6) : 0.3}
+              style={{
+                opacity: 0,
+                animation: `folio-line-reveal 200ms var(--ease-out) ${150 + i * 30}ms forwards`,
+              }}
+            />
+            <text
+              x={x + cellW / 2}
+              y={height / 2 + 3}
+              textAnchor="middle"
+              fontSize={8}
+              fontFamily="system-ui"
+              fill={phase ? (phase === 'solid' ? '#f7f2e8' : '#f7f2e8') : '#999'}
+              style={{
+                opacity: 0,
+                animation: `folio-line-reveal 200ms var(--ease-out) ${200 + i * 30}ms forwards`,
+              }}
+            >
+              {symbols[i]}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 type RankDotProps = {
   rank: number;
   total?: number;

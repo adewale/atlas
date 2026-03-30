@@ -171,10 +171,49 @@ svg [role="button"] {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Rule line draw from left */
+@keyframes rule-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
 /* Sparkline draw via stroke-dashoffset */
 @keyframes sparkline-draw {
   from { stroke-dashoffset: var(--dash-length); }
   to   { stroke-dashoffset: 0; }
+}
+
+/* ----------------------------------------
+   View Transitions API — shared element morphing
+   ---------------------------------------- */
+
+/* Default cross-fade for the full page */
+::view-transition-old(root) {
+  animation: 150ms ease-out both fade-out;
+}
+::view-transition-new(root) {
+  animation: 200ms ease-out 50ms both fade-in;
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+/* Element symbol morph: seamless transition between grid cell and folio hero */
+::view-transition-old(element-symbol),
+::view-transition-new(element-symbol) {
+  animation-duration: 250ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* Element number morph */
+::view-transition-old(element-number),
+::view-transition-new(element-number) {
+  animation-duration: 250ms;
+  animation-timing-function: var(--ease-out);
 }
 
 /* Reduced motion: keep opacity/color changes, remove movement */

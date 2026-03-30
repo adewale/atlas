@@ -8,7 +8,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement } from '../lib/data';
 import PretextSvg from './PretextSvg';
 import PropertyBar from './PropertyBar';
-import { GroupTrendSparkline, RankDotSparkline } from './Sparkline';
+import { GroupTrendSparkline, RankDotSparkline, GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
@@ -121,6 +121,19 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
     return { values, highlightIndex };
   }, [groups, element]);
 
+  // Group phase data for phase strip (replaces duplicate EN sparkline)
+  const groupPhaseData = useMemo(() => {
+    if (!groups || element.group === null) return null;
+    const group = groups.find((g) => g.n === element.group);
+    if (!group) return null;
+    const phases = group.elements.map((sym) => {
+      const el = getElement(sym);
+      return el?.phase ?? null;
+    });
+    const highlightIndex = group.elements.indexOf(element.symbol);
+    return { phases, symbols: group.elements, highlightIndex };
+  }, [groups, element]);
+
   const paddedNumber = String(element.atomicNumber).padStart(3, '0');
 
   // Refs for measuring vertical offset between summary area and marginalia
@@ -183,7 +196,7 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
 
       {/* Main content */}
       <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
-        {/* Giant atomic number in block color */}
+        {/* Giant atomic number in block color — morphs from grid cell */}
         <div
           className="folio-number"
           aria-hidden="true"
@@ -193,12 +206,13 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
             color,
             fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
             lineHeight: 1,
-          }}
+            viewTransitionName: 'element-number',
+          } as React.CSSProperties}
         >
           {paddedNumber}
         </div>
 
-        {/* Giant symbol */}
+        {/* Giant symbol — view-transition-name matches grid cell for morphing */}
         <div
           className="folio-symbol"
           style={{
@@ -206,7 +220,8 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
             fontWeight: 'bold',
             color: '#0f0f0f',
             lineHeight: 1.1,
-          }}
+            viewTransitionName: 'element-symbol',
+          } as React.CSSProperties}
         >
           {element.symbol}
         </div>
@@ -293,19 +308,24 @@ export default function Folio({ element, sources, groups, animate = true }: Foli
           </svg>
         </div>
 
-        {/* Group trend sparkline */}
-        {groupTrendData && (
+        {/* Group phase strip — shows phase at STP for each group member */}
+        {groupPhaseData && (
           <div style={{ marginTop: '16px' }}>
             <div style={{ fontSize: '10px', color: '#666', marginBottom: '4px' }}>
-              Electronegativity trend — Group {element.group}
+              Phase at STP — Group {element.group}
             </div>
-            <GroupTrendSparkline
-              values={groupTrendData.values}
-              highlightIndex={groupTrendData.highlightIndex}
-              color={color}
+            <GroupPhaseStrip
+              phases={groupPhaseData.phases}
+              symbols={groupPhaseData.symbols}
+              highlightIndex={groupPhaseData.highlightIndex}
               width={FULL_WIDTH}
-              height={40}
+              height={24}
             />
+            <div style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '9px', color: '#666' }}>
+              <span><span style={{ color: '#0f0f0f' }}>■</span> Solid</span>
+              <span><span style={{ color: '#133e7c' }}>■</span> Liquid</span>
+              <span><span style={{ color: '#9e1c2c' }}>■</span> Gas</span>
+            </div>
           </div>
         )}
 
