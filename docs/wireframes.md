@@ -108,15 +108,15 @@ The 18-column grid does NOT reflow to a list — spatial relationships are the p
 │   │                                                 │ │                        │ │
 │   │   SHAPED TEXT (narrow beside plate):            │ │  ◄── 55.845 Da        │ │
 │   │                                                 │ │       marginal         │ │
-│   │   ████ Iron is a chemical       ┌────────────┐  │ │       annotation at    │ │
-│   │   ████ element; it has symbol   │            │  │ │       exact y of the   │ │
-│   │   ████ Fe and atomic number     │  Group 8   │  │ │       line mentioning  │ │
-│   │   ░░░░ 26. It is by mass the    │  Period 4  │  │ │       mass             │ │
-│   │   ░░░░ most common element on   │  Block D   │  │ │                        │ │
-│   │   ░░░░ Earth, forming much of   │       Fe   │  │ │  ◄── 1.83 Pauling     │ │
-│   │        Earth's outer and        └────────────┘  │ │                        │ │
-│   │        inner core.  ╌╌╌╌╌╌╌╌∿∿                  │ │  ◄── 7.902 eV         │ │
-│   │                     ↑ sparkline                 │ │                        │ │
+│   │   Iron is a chemical element;   ┌────────────┐  │ │       annotation at    │ │
+│   │   it has symbol Fe and atomic   │████████████│  │ │       exact y of the   │ │
+│   │   number 26. It is by mass      │██ Group 8 █│  │ │       line mentioning  │ │
+│   │   the most common element on    │░░ Period 4 ░│  │ │       mass             │ │
+│   │   Earth, forming much of        │   Block D   │  │ │                        │ │
+│   │   Earth's outer and inner       │       Fe   │  │ │  ◄── 1.83 Pauling     │ │
+│   │   core.  ╌╌╌╌╌╌╌╌∿∿            └────────────┘  │ │                        │ │
+│   │          ↑ sparkline                            │ │  ◄── 7.902 eV         │ │
+│   │                                                 │ │                        │ │
 │   │   FULL WIDTH (below plate):                     │ │  Radius: 126 pm       │ │
 │   │                                                 │ │  Phase: solid          │ │
 │   │   It has a relatively high melting              │ │                        │ │
@@ -138,13 +138,13 @@ The 18-column grid does NOT reflow to a list — spatial relationships are the p
 
 Pretext features visible:
 - SHAPED TEXT: Lines beside data plate are narrower (layoutNextLine variable width)
-- BYRNE COLOR LINES: ████ = blue rects behind physical property lines,
-  ░░░░ = red rects behind chemistry/reactivity lines. Color IS classification.
+- DATA PLATE: Byrne color drama is structural — hard color fields for Group
+  (deep blue) and Period (warm red) on the plate, not on text lines
 - INLINE SPARKLINE: ∿∿ at end of line — trend drawn in remaining line space
 - MARGINAL ANNOTATIONS: ◄── property values aligned to exact y of relevant line
 
-Animation: Explosive moment 1 — Byrne color rects wipe in left-to-right,
-text fades in a beat later. Sparklines draw after their parent line appears.
+Animation: Explosive moment 1 — text lines reveal top-to-bottom with stagger,
+data plate wipes in from right via clip-path. Sparklines draw after parent line.
 
 ### Folio mobile (<768px)
 
@@ -163,13 +163,13 @@ text fades in a beat later. Sparklines draw after their parent line appears.
 │  │  Block D        Fe   │  │
 │  └──────────────────────┘  │
 │                            │
-│  ████ Iron is a chemical   │
-│  ████ element; it has      │
-│  ████ symbol Fe and atomic │
-│  ████ number 26.           │
-│  ░░░░ It is by mass the    │
-│  ░░░░ most common element  │
-│  ░░░░ on Earth. ╌╌╌∿∿      │
+│  Iron is a chemical        │
+│  element; it has symbol    │
+│  Fe and atomic number 26.  │
+│  It is by mass the most    │
+│  common element on Earth,  │
+│  forming much of Earth's   │
+│  outer core. ╌╌╌╌╌∿∿       │
 │                            │
 │  ──────────────────────    │
 │                            │
@@ -445,18 +445,18 @@ rendered in the actual design language. Inspired by print specimen sheets.
 │   Marginalia       Category: transition metal   system sans · 0.8125rem · 400    │
 │                                                                                  │
 │                                                                                  │
-│   BYRNE COLOUR LINES                                                             │
+│   BYRNE COLOUR DRAMA                                                             │
 │   ──────────────────                                                             │
 │                                                                                  │
-│   Colored rectangles behind text lines classify content by topic.                │
-│   The color IS the meaning, not decoration.                                      │
+│   Color is structural, not per-line. Hard color fields on data plates,           │
+│   compare splits, and highlight modes. Color IS identity, not decoration.        │
 │                                                                                  │
-│   ████ Iron is a chemical element; it has         ← physical (deep blue)         │
-│   ████ symbol Fe and atomic number 26.            ← physical (deep blue)         │
-│   ░░░░ It is by mass the most common element      ← chemistry (warm red)         │
-│   ░░░░ on Earth, forming much of Earth's core.    ← chemistry (warm red)         │
-│   ▓▓▓▓ It belongs to group 8, period 4.           ← structural (mustard)         │
-│        Uncolored lines are neutral context.        ← neutral (no rect)           │
+│   ┌──────────────────────────────────────┐                                       │
+│   │████████████████  Group 8              │  ← deep blue = group identity         │
+│   │░░░░░░░░░░░░░░░░  Period 4             │  ← warm red = period identity         │
+│   │                   Block D             │  ← neutral = context                  │
+│   │                          Fe           │  ← giant symbol                       │
+│   └──────────────────────────────────────┘                                       │
 │                                                                                  │
 │                                                                                  │
 │   INLINE SPARKLINES                                                              │

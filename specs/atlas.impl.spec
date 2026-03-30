@@ -47,20 +47,12 @@ Tier 2: Shaped text in folios (element folio view)
   The visual result: text that clearly wraps around the element's data plate,
   not just a rectangle of text next to a rectangle of data.
 
-Tier 3: Per-line styling and Byrne color drama
+Tier 3: Per-line styling
   layoutWithLines() returns per-line width. Use this for:
   - Right-align ragged text by offsetting each line's x by (maxWidth - line.width)
   - Insert thin SVG rules between specific lines (e.g., after the first sentence)
   - Center short terminal lines in atlas plate captions
-  - BYRNE COLOR LINES: Draw colored SVG <rect> behind specific text lines to
-    create geometric color fields integrated with text. E.g., in a folio summary,
-    lines mentioning physical properties get a deep blue rect behind them; lines
-    about reactivity get warm red. The text block becomes a Byrne diagram --
-    color IS the classification, not decoration.
-  - COMPARE WEDGE TEXT: In the compare view, use layoutNextLine() with a
-    V-shaped width profile (narrow at top, wide at bottom) so the relationship
-    note forms a triangular wedge between the two element halves. The shape
-    of the text echoes the visual split.
+  - Apply different opacity to individual lines for emphasis
 
 Tier 4: Tufte data integration
   Because Pretext gives exact per-line geometry (width, position), we can
@@ -181,11 +173,11 @@ Main content:
 - Summary text composed with Pretext shaped text (Tier 2): text flows around
   the data plate using variable-width layoutNextLine(). Lines beside the plate
   are narrower, lines below are full width.
-- Byrne color lines (Tier 3): lines about physical properties have deep blue
-  rects behind them; lines about reactivity/chemistry have warm red.
 - Inline sparklines (Tier 4): where a line mentions a trend (e.g., "increases
   across the period"), a tiny sparkline appears in the remaining line space.
 - SVG data plate showing group, period, block with hard color fields
+  (Byrne color drama lives here — in structural elements like the data plate,
+  compare split, and highlight modes, NOT in per-line text classification)
 
 Marginalia (right panel):
 - Category
@@ -212,7 +204,7 @@ it fits. Cards use consistent sizing. The grid itself is the visualization --
 Tufte's small multiples principle.
 
 Caption text composed with Pretext (Tier 1). Caption strips on atlas plates
-can use Byrne color rects behind the caption to tie the text visually to the
+use a solid color band behind the caption to tie the text visually to the
 color-coded element cards below.
 
 Routes:
@@ -272,14 +264,19 @@ Visual rules:
 - Monospace for numeric values and atomic data
 - Animation: 90% still, 10% explosive (see section 10)
 
-Byrne integration (via Pretext):
-- Colored rects behind individual text lines classify content by topic.
-  The color IS the meaning (physical=blue, chemical=red, structural=mustard),
-  exactly as Byrne used colored triangles to represent geometric propositions.
-- Atlas plate caption strips: solid color band behind Pretext-measured caption
-  text, matching the highlight color of the plate below.
+Byrne integration (structural, not per-line):
+- Data plate in folios: hard color fields for group (deep blue) and period
+  (warm red). Color IS the structural identity of the element.
+- Atlas plate caption strips: solid color band behind Pretext-measured caption,
+  matching the highlight color of the plate below.
 - Compare split: the two hard color fields (blue/red) are Byrne's boldest
   move -- color as identity, not decoration.
+- Highlight modes: the entire periodic table becomes a Byrne diagram when
+  a mode is active. Every cell's fill carries meaning.
+- NOT per-line text classification. Classifying individual summary lines
+  as "physical" vs "chemical" requires NLP or manual annotation on 118
+  Wikipedia extracts — fragile, error-prone, and not worth the complexity.
+  Byrne drama belongs in structural elements, not inline text.
 
 Tufte integration (via Pretext):
 - Inline sparklines placed in remaining line space after Pretext measurement.
@@ -326,16 +323,14 @@ Duration rules:
   - UI animations never exceed 300ms individually
 
 Explosive moment 1 -- Folio entry (navigate to /element/:symbol):
-  Byrne color rects wipe in via clip-path: inset(0 100% 0 0) -> inset(0 0 0 0),
-  ~30ms stagger per line, using --ease-out. clip-path is hardware-accelerated
-  and creates a clean directional reveal without layout cost.
-  Text on each line fades from opacity 0 + translateY(6px) a beat AFTER its
-  color rect lands. Never animate from scale(0) — start from scale(0.97).
+  Summary text lines reveal top-to-bottom, ~30ms stagger per line.
+  Each line fades from opacity 0 + translateY(6px) using --ease-out.
+  Never animate from scale(0) — start from scale(0.97) minimum.
   Inline sparklines draw left-to-right after their parent line appears.
   Shaped text around the data plate reveals the editorial composition as the
   lines cascade: narrow lines first, then the full-width lines below the plate.
-  The data plate fades in from the right edge simultaneously.
-  Duration: ~500ms total.
+  The data plate wipes in via clip-path from the right edge simultaneously.
+  Duration: ~400ms total.
 
 Explosive moment 2 -- Compare view split (navigate to /compare/:a/:b):
   The two color halves (deep blue / warm red) expand from center outward
@@ -511,6 +506,45 @@ Component tests (Vitest + React Testing Library):
 - Folio renders element data
 - Shaped text produces different line widths (narrow vs full)
 
+Property-based tests (Vitest + fast-check):
+  Library: fast-check (https://github.com/dubzzz/fast-check)
+
+  Data integrity invariants:
+  - forAll(element): atomicNumber in 1..118, period in 1..7
+  - forAll(element): if group !== null then group in 1..18
+  - forAll(element): block is one of 's','p','d','f'
+  - forAll(element): mass > 0 (no zero/negative masses)
+  - forAll(element): neighbors contains only symbols present in dataset
+  - forAll(element a, adjacent element b): a.neighbors.includes(b.symbol)
+    implies b.neighbors.includes(a.symbol) (neighbor symmetry)
+  - forAll(ranking property): ranking array has exactly 118 entries, no duplicates
+  - forAll(group n): every element listed in group n has group === n
+    (catches the Lu/group-17 bug from the Codex PR)
+  - forAll(period n): every element listed in period n has period === n
+  - forAll(category): category slug matches at least one element
+
+  Grid layout invariants:
+  - forAll(element): grid position is unique (no two elements share a cell)
+  - forAll(element): grid position is within SVG viewBox bounds
+  - forAll(two elements in same period): they share the same y-coordinate
+  - forAll(two elements in same group): they share the same x-coordinate
+
+  Pretext measurement invariants:
+  - forAll(text, width): layoutWithLines result is deterministic (same input
+    always produces same lineCount and same line texts)
+  - forAll(text, width1 < width2): lineCount at width1 >= lineCount at width2
+    (narrower container means same or more lines, never fewer)
+  - forAll(text, width): concatenating all line.text values reconstructs
+    the original text (no characters lost or added during line breaking)
+  - forAll(element summary): shaped text (narrow then wide) produces
+    lineCount >= standard full-width lineCount
+
+  Search invariants:
+  - forAll(element): searchElements(element.symbol) includes that element
+  - forAll(element): searchElements(element.name) includes that element
+  - forAll(random string not matching any name/symbol): searchElements
+    returns empty array
+
 Integration tests (Playwright):
 - Home page loads, periodic table is visible
 - Click element -> navigates to folio
@@ -557,11 +591,10 @@ atlas/
 │   │   └── Design.tsx                 # design language reference page
 │   ├── components/
 │   │   ├── PeriodicTable.tsx           # search, keyboard nav, highlight modes
-│   │   ├── Folio.tsx                   # shaped text, Byrne lines, sparklines
+│   │   ├── Folio.tsx                   # shaped text, data plate, sparklines
 │   │   ├── AtlasPlate.tsx             # card grid with fitted labels
-│   │   ├── CompareView.tsx            # split screen, wedge text, bars
+│   │   ├── CompareView.tsx            # split screen, comparison bars
 │   │   ├── PretextSvg.tsx            # renders Pretext-measured lines as SVG
-│   │   ├── ByrneLines.tsx            # colored rects behind text lines
 │   │   ├── Sparkline.tsx             # inline SVG sparkline
 │   │   └── SourceStrip.tsx           # data/text/media provenance
 │   ├── lib/
