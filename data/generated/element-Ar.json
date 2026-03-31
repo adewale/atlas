@@ -23,7 +23,11 @@
     "mass": 100,
     "electronegativity": 0,
     "ionizationEnergy": 4,
-    "radius": 73
+    "radius": 73,
+    "density": 90,
+    "meltingPoint": 97,
+    "boilingPoint": 88,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1894,
   "discoverer": "Lord Rayleigh & William Ramsay",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek argon: inactive, lazy"
+  "etymologyDescription": "Greek argon: inactive, lazy",
+  "density": 0.0017837,
+  "meltingPoint": 83.8,
+  "boilingPoint": 87.3,
+  "halfLife": null
 }

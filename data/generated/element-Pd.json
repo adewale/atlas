@@ -23,7 +23,11 @@
     "mass": 73,
     "electronegativity": 19,
     "ionizationEnergy": 31,
-    "radius": 58
+    "radius": 58,
+    "density": 19,
+    "meltingPoint": 23,
+    "boilingPoint": 34,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1803,
   "discoverer": "William Hyde Wollaston",
   "etymologyOrigin": "astronomical",
-  "etymologyDescription": "Pallas, asteroid discovered two years prior"
+  "etymologyDescription": "Pallas, asteroid discovered two years prior",
+  "density": 12,
+  "meltingPoint": 1828.05,
+  "boilingPoint": 3236,
+  "halfLife": null
 }

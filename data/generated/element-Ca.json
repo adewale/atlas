@@ -23,7 +23,11 @@
     "mass": 99,
     "electronegativity": 86,
     "ionizationEnergy": 71,
-    "radius": 26
+    "radius": 26,
+    "density": 81,
+    "meltingPoint": 55,
+    "boilingPoint": 61,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1808,
   "discoverer": "Humphry Davy",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin calx: lime"
+  "etymologyDescription": "Latin calx: lime",
+  "density": 1.54,
+  "meltingPoint": 1115,
+  "boilingPoint": 1757,
+  "halfLife": null
 }

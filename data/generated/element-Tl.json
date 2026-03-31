@@ -23,7 +23,11 @@
     "mass": 38,
     "electronegativity": 48,
     "ionizationEnergy": 73,
-    "radius": 65
+    "radius": 65,
+    "density": 20,
+    "meltingPoint": 74,
+    "boilingPoint": 62,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1861,
   "discoverer": "William Crookes",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek thallos: green twig, from its spectral line"
+  "etymologyDescription": "Greek thallos: green twig, from its spectral line",
+  "density": 11.8,
+  "meltingPoint": 577,
+  "boilingPoint": 1746,
+  "halfLife": null
 }

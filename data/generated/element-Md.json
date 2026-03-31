@@ -23,7 +23,11 @@
     "mass": 18,
     "electronegativity": 69,
     "ionizationEnergy": 59,
-    "radius": 0
+    "radius": 0,
+    "density": 0,
+    "meltingPoint": 56,
+    "boilingPoint": 0,
+    "halfLife": 15
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1955,
   "discoverer": "Albert Ghiorso et al.",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Dmitri Mendeleev, creator of the periodic table"
+  "etymologyDescription": "Dmitri Mendeleev, creator of the periodic table",
+  "density": null,
+  "meltingPoint": 1100,
+  "boilingPoint": null,
+  "halfLife": 4400000
 }

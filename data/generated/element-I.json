@@ -23,7 +23,11 @@
     "mass": 67,
     "electronegativity": 7,
     "ionizationEnergy": 15,
-    "radius": 62
+    "radius": 62,
+    "density": 64,
+    "meltingPoint": 83,
+    "boilingPoint": 81,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1811,
   "discoverer": "Bernard Courtois",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek ioeides: violet, from its vapor color"
+  "etymologyDescription": "Greek ioeides: violet, from its vapor color",
+  "density": 4.93,
+  "meltingPoint": 386.85,
+  "boilingPoint": 457.55,
+  "halfLife": null
 }

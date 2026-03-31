@@ -23,7 +23,11 @@
     "mass": 94,
     "electronegativity": 52,
     "ionizationEnergy": 45,
-    "radius": 63
+    "radius": 63,
+    "density": 44,
+    "meltingPoint": 39,
+    "boilingPoint": 52,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1774,
   "discoverer": "Johan Gottlieb Gahn",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Latin magnes: magnet, from pyrolusite ore"
+  "etymologyDescription": "Latin magnes: magnet, from pyrolusite ore",
+  "density": 7.3,
+  "meltingPoint": 1519,
+  "boilingPoint": 2334,
+  "halfLife": null
 }

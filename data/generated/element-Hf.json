@@ -23,7 +23,11 @@
     "mass": 47,
     "electronegativity": 61,
     "ionizationEnergy": 53,
-    "radius": 43
+    "radius": 43,
+    "density": 16,
+    "meltingPoint": 10,
+    "boilingPoint": 8,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1923,
   "discoverer": "Dirk Coster & George de Hevesy",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Hafnia: Copenhagen"
+  "etymologyDescription": "Latin Hafnia: Copenhagen",
+  "density": 13.3,
+  "meltingPoint": 2506,
+  "boilingPoint": 4876,
+  "halfLife": null
 }

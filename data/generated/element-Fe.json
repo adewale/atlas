@@ -23,7 +23,11 @@
     "mass": 93,
     "electronegativity": 41,
     "ionizationEnergy": 35,
-    "radius": 67
+    "radius": 67,
+    "density": 41,
+    "meltingPoint": 26,
+    "boilingPoint": 38,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Anglo-Saxon iron; symbol from Latin ferrum"
+  "etymologyDescription": "Anglo-Saxon iron; symbol from Latin ferrum",
+  "density": 7.874,
+  "meltingPoint": 1811,
+  "boilingPoint": 3134,
+  "halfLife": null
 }

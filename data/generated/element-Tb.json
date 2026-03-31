@@ -23,7 +23,11 @@
     "mass": 54,
     "electronegativity": 0,
     "ionizationEnergy": 83,
-    "radius": 32
+    "radius": 32,
+    "density": 39,
+    "meltingPoint": 35,
+    "boilingPoint": 28,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1843,
   "discoverer": "Carl Gustaf Mosander",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Ytterby, a village in Sweden"
+  "etymologyDescription": "Ytterby, a village in Sweden",
+  "density": 8.23,
+  "meltingPoint": 1629,
+  "boilingPoint": 3503,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 90,
     "electronegativity": 37,
     "ionizationEnergy": 40,
-    "radius": 96
+    "radius": 96,
+    "density": 32,
+    "meltingPoint": 42,
+    "boilingPoint": 46,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin cuprum: from Cyprus, where it was mined"
+  "etymologyDescription": "Latin cuprum: from Cyprus, where it was mined",
+  "density": 8.933,
+  "meltingPoint": 1357.77,
+  "boilingPoint": 2835,
+  "halfLife": null
 }

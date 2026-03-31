@@ -24,6 +24,10 @@ type SeedElement = {
   electronegativity: number | null;
   ionizationEnergy: number | null;
   radius: number | null;
+  density: number | null;
+  meltingPoint: number | null;
+  boilingPoint: number | null;
+  halfLife: number | null;
   discoveryYear: number | null;
   discoverer: string;
   etymologyOrigin: string;
@@ -43,7 +47,7 @@ function readSeed(): SeedElement[] {
 }
 
 function computeRankings(elements: SeedElement[]): void {
-  const properties = ['mass', 'electronegativity', 'ionizationEnergy', 'radius'] as const;
+  const properties = ['mass', 'electronegativity', 'ionizationEnergy', 'radius', 'density', 'meltingPoint', 'boilingPoint', 'halfLife'] as const;
 
   for (const prop of properties) {
     const sorted = [...elements]
@@ -379,7 +383,7 @@ function run() {
 
   // Rankings
   const rankings: Record<string, string[]> = {};
-  for (const prop of ['mass', 'electronegativity', 'ionizationEnergy', 'radius']) {
+  for (const prop of ['mass', 'electronegativity', 'ionizationEnergy', 'radius', 'density', 'meltingPoint', 'boilingPoint', 'halfLife']) {
     rankings[prop] = [...elements]
       .filter((e) => e.rankings[prop] > 0)
       .sort((a, b) => a.rankings[prop] - b.rankings[prop])

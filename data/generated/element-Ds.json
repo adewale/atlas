@@ -23,7 +23,11 @@
     "mass": 9,
     "electronegativity": 0,
     "ionizationEnergy": 0,
-    "radius": 0
+    "radius": 0,
+    "density": 0,
+    "meltingPoint": 0,
+    "boilingPoint": 0,
+    "halfLife": 29
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1994,
   "discoverer": "Sigurd Hofmann et al.",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Darmstadt, German city with GSI Helmholtz Centre"
+  "etymologyDescription": "Darmstadt, German city with GSI Helmholtz Centre",
+  "density": null,
+  "meltingPoint": null,
+  "boilingPoint": null,
+  "halfLife": 13
 }

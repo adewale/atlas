@@ -23,7 +23,11 @@
     "mass": 68,
     "electronegativity": 27,
     "ionizationEnergy": 29,
-    "radius": 55
+    "radius": 55,
+    "density": 54,
+    "meltingPoint": 69,
+    "boilingPoint": 58,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Greek anti + monos: not alone; symbol from Latin stibium"
+  "etymologyDescription": "Greek anti + monos: not alone; symbol from Latin stibium",
+  "density": 6.685,
+  "meltingPoint": 903.78,
+  "boilingPoint": 1860,
+  "halfLife": null
 }

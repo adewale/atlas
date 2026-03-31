@@ -23,7 +23,11 @@
     "mass": 115,
     "electronegativity": 51,
     "ionizationEnergy": 22,
-    "radius": 93
+    "radius": 93,
+    "density": 78,
+    "meltingPoint": 38,
+    "boilingPoint": 48,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1798,
   "discoverer": "Louis Nicolas Vauquelin",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Greek beryllos: the mineral beryl"
+  "etymologyDescription": "Greek beryllos: the mineral beryl",
+  "density": 1.85,
+  "meltingPoint": 1560,
+  "boilingPoint": 2744,
+  "halfLife": null
 }

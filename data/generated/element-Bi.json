@@ -23,7 +23,11 @@
     "mass": 36,
     "electronegativity": 29,
     "ionizationEnergy": 49,
-    "radius": 54
+    "radius": 54,
+    "density": 28,
+    "meltingPoint": 76,
+    "boilingPoint": 59,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1753,
   "discoverer": "Claude François Geoffroy",
   "etymologyOrigin": "property",
-  "etymologyDescription": "German Wismut: uncertain, possibly white mass"
+  "etymologyDescription": "German Wismut: uncertain, possibly white mass",
+  "density": 9.807,
+  "meltingPoint": 544.55,
+  "boilingPoint": 1837,
+  "halfLife": null
 }

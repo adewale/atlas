@@ -23,7 +23,11 @@
     "mass": 79,
     "electronegativity": 59,
     "ionizationEnergy": 58,
-    "radius": 76
+    "radius": 76,
+    "density": 55,
+    "meltingPoint": 16,
+    "boilingPoint": 10,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1789,
   "discoverer": "Martin Heinrich Klaproth",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Arabic zargun: gold-colored, from zircon mineral"
+  "etymologyDescription": "Arabic zargun: gold-colored, from zircon mineral",
+  "density": 6.52,
+  "meltingPoint": 2128,
+  "boilingPoint": 4682,
+  "halfLife": null
 }

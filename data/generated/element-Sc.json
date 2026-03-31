@@ -23,7 +23,11 @@
     "mass": 98,
     "electronegativity": 57,
     "ionizationEnergy": 60,
-    "radius": 44
+    "radius": 44,
+    "density": 70,
+    "meltingPoint": 25,
+    "boilingPoint": 40,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1879,
   "discoverer": "Lars Fredrik Nilson",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Scandia: Scandinavia"
+  "etymologyDescription": "Latin Scandia: Scandinavia",
+  "density": 2.99,
+  "meltingPoint": 1814,
+  "boilingPoint": 3109,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 75,
     "electronegativity": 18,
     "ionizationEnergy": 47,
-    "radius": 53
+    "radius": 53,
+    "density": 18,
+    "meltingPoint": 9,
+    "boilingPoint": 12,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1844,
   "discoverer": "Karl Ernst Claus",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Ruthenia: Russia"
+  "etymologyDescription": "Latin Ruthenia: Russia",
+  "density": 12.1,
+  "meltingPoint": 2607,
+  "boilingPoint": 4423,
+  "halfLife": null
 }

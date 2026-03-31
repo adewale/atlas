@@ -23,7 +23,11 @@
     "mass": 60,
     "electronegativity": 82,
     "ionizationEnergy": 92,
-    "radius": 19
+    "radius": 19,
+    "density": 53,
+    "meltingPoint": 51,
+    "boilingPoint": 19,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1885,
   "discoverer": "Carl Auer von Welsbach",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek prasios + didymos: green twin"
+  "etymologyDescription": "Greek prasios + didymos: green twin",
+  "density": 6.77,
+  "meltingPoint": 1204,
+  "boilingPoint": 3793,
+  "halfLife": null
 }

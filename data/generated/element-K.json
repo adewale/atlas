@@ -23,7 +23,11 @@
     "mass": 101,
     "electronegativity": 92,
     "ionizationEnergy": 99,
-    "radius": 5
+    "radius": 5,
+    "density": 84,
+    "meltingPoint": 85,
+    "boilingPoint": 73,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1807,
   "discoverer": "Humphry Davy",
   "etymologyOrigin": "property",
-  "etymologyDescription": "English potash; symbol from Latin kalium"
+  "etymologyDescription": "English potash; symbol from Latin kalium",
+  "density": 0.89,
+  "meltingPoint": 336.53,
+  "boilingPoint": 1032,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 50,
     "electronegativity": 74,
     "ionizationEnergy": 69,
-    "radius": 31
+    "radius": 31,
+    "density": 29,
+    "meltingPoint": 24,
+    "boilingPoint": 54,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1879,
   "discoverer": "Per Teodor Cleve",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Thule, ancient name for Scandinavia"
+  "etymologyDescription": "Thule, ancient name for Scandinavia",
+  "density": 9.32,
+  "meltingPoint": 1818,
+  "boilingPoint": 2223,
+  "halfLife": null
 }

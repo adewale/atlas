@@ -23,7 +23,11 @@
     "mass": 74,
     "electronegativity": 15,
     "ionizationEnergy": 44,
-    "radius": 66
+    "radius": 66,
+    "density": 17,
+    "meltingPoint": 13,
+    "boilingPoint": 18,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1803,
   "discoverer": "William Hyde Wollaston",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek rhodon: rose, from its rose-red compounds"
+  "etymologyDescription": "Greek rhodon: rose, from its rose-red compounds",
+  "density": 12.4,
+  "meltingPoint": 2237,
+  "boilingPoint": 3968,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 81,
     "electronegativity": 88,
     "ionizationEnergy": 85,
-    "radius": 8
+    "radius": 8,
+    "density": 72,
+    "meltingPoint": 62,
+    "boilingPoint": 63,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1790,
   "discoverer": "Adair Crawford",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Strontian, a village in Scotland"
+  "etymologyDescription": "Strontian, a village in Scotland",
+  "density": 2.64,
+  "meltingPoint": 1050,
+  "boilingPoint": 1655,
+  "halfLife": null
 }

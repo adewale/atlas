@@ -23,7 +23,11 @@
     "mass": 61,
     "electronegativity": 83,
     "ionizationEnergy": 90,
-    "radius": 23
+    "radius": 23,
+    "density": 52,
+    "meltingPoint": 61,
+    "boilingPoint": 21,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1803,
   "discoverer": "Jöns Jacob Berzelius & Wilhelm Hisinger",
   "etymologyOrigin": "astronomical",
-  "etymologyDescription": "Ceres, the dwarf planet discovered two years prior"
+  "etymologyDescription": "Ceres, the dwarf planet discovered two years prior",
+  "density": 6.77,
+  "meltingPoint": 1071,
+  "boilingPoint": 3697,
+  "halfLife": null
 }

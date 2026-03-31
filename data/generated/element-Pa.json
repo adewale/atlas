@@ -23,7 +23,11 @@
     "mass": 29,
     "electronegativity": 55,
     "ionizationEnergy": 82,
-    "radius": 14
+    "radius": 14,
+    "density": 11,
+    "meltingPoint": 22,
+    "boilingPoint": 0,
+    "halfLife": 5
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1913,
   "discoverer": "Kasimir Fajans & Oswald Helmuth Göhring",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek protos + aktinos: first ray, precursor to actinium"
+  "etymologyDescription": "Greek protos + aktinos: first ray, precursor to actinium",
+  "density": 15.37,
+  "meltingPoint": 1845,
+  "boilingPoint": null,
+  "halfLife": 1000000000000
 }

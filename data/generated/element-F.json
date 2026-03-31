@@ -23,7 +23,11 @@
     "mass": 110,
     "electronegativity": 1,
     "ionizationEnergy": 3,
-    "radius": 98
+    "radius": 98,
+    "density": 91,
+    "meltingPoint": 100,
+    "boilingPoint": 89,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1886,
   "discoverer": "Henri Moissan",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin fluere: to flow, from use as flux"
+  "etymologyDescription": "Latin fluere: to flow, from use as flux",
+  "density": 0.001696,
+  "meltingPoint": 53.53,
+  "boilingPoint": 85.03,
+  "halfLife": null
 }

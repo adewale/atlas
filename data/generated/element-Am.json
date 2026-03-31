@@ -23,7 +23,11 @@
     "mass": 25,
     "electronegativity": 63,
     "ionizationEnergy": 79,
-    "radius": 12
+    "radius": 12,
+    "density": 13,
+    "meltingPoint": 40,
+    "boilingPoint": 53,
+    "halfLife": 6
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1944,
   "discoverer": "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Americas, by analogy with europium"
+  "etymologyDescription": "Americas, by analogy with europium",
+  "density": 13.69,
+  "meltingPoint": 1449,
+  "boilingPoint": 2284,
+  "halfLife": 230000000000
 }

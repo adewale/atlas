@@ -23,7 +23,11 @@
     "mass": 80,
     "electronegativity": 77,
     "ionizationEnergy": 67,
-    "radius": 36
+    "radius": 36,
+    "density": 67,
+    "meltingPoint": 29,
+    "boilingPoint": 24,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1794,
   "discoverer": "Johan Gadolin",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Ytterby, a village in Sweden"
+  "etymologyDescription": "Ytterby, a village in Sweden",
+  "density": 4.47,
+  "meltingPoint": 1795,
+  "boilingPoint": 3618,
+  "halfLife": null
 }

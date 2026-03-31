@@ -23,7 +23,11 @@
     "mass": 43,
     "electronegativity": 20,
     "ionizationEnergy": 28,
-    "radius": 42
+    "radius": 42,
+    "density": 1,
+    "meltingPoint": 4,
+    "boilingPoint": 4,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1803,
   "discoverer": "Smithson Tennant",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek osme: smell, from its pungent oxide"
+  "etymologyDescription": "Greek osme: smell, from its pungent oxide",
+  "density": 22.57,
+  "meltingPoint": 3306,
+  "boilingPoint": 5285,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 78,
     "electronegativity": 50,
     "ionizationEnergy": 55,
-    "radius": 52
+    "radius": 52,
+    "density": 37,
+    "meltingPoint": 7,
+    "boilingPoint": 6,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1801,
   "discoverer": "Charles Hatchett",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Greek Niobe: daughter of Tantalus in mythology"
+  "etymologyDescription": "Greek Niobe: daughter of Tantalus in mythology",
+  "density": 8.57,
+  "meltingPoint": 2750,
+  "boilingPoint": 5017,
+  "halfLife": null
 }

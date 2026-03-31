@@ -23,7 +23,11 @@
     "mass": 30,
     "electronegativity": 85,
     "ionizationEnergy": 97,
-    "radius": 7
+    "radius": 7,
+    "density": 26,
+    "meltingPoint": 45,
+    "boilingPoint": 30,
+    "halfLife": 11
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1899,
   "discoverer": "André-Louis Debierne",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek aktinos: ray"
+  "etymologyDescription": "Greek aktinos: ray",
+  "density": 10.07,
+  "meltingPoint": 1324,
+  "boilingPoint": 3471,
+  "halfLife": 690000000
 }

@@ -23,7 +23,11 @@
     "mass": 97,
     "electronegativity": 53,
     "ionizationEnergy": 52,
-    "radius": 74
+    "radius": 74,
+    "density": 66,
+    "meltingPoint": 19,
+    "boilingPoint": 25,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1791,
   "discoverer": "William Gregor",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Greek Titans: primordial gods of mythology"
+  "etymologyDescription": "Greek Titans: primordial gods of mythology",
+  "density": 4.5,
+  "meltingPoint": 1941,
+  "boilingPoint": 3560,
+  "halfLife": null
 }

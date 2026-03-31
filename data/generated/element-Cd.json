@@ -23,7 +23,11 @@
     "mass": 71,
     "electronegativity": 44,
     "ionizationEnergy": 27,
-    "radius": 90
+    "radius": 90,
+    "density": 36,
+    "meltingPoint": 73,
+    "boilingPoint": 72,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1817,
   "discoverer": "Friedrich Stromeyer",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Latin cadmia: calamine, the zinc ore where found"
+  "etymologyDescription": "Latin cadmia: calamine, the zinc ore where found",
+  "density": 8.69,
+  "meltingPoint": 594.22,
+  "boilingPoint": 1040,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 45,
     "electronegativity": 13,
     "ionizationEnergy": 34,
-    "radius": 47
+    "radius": 47,
+    "density": 7,
+    "meltingPoint": 2,
+    "boilingPoint": 2,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1783,
   "discoverer": "Juan José Elhuyar & Fausto Elhuyar",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Swedish tung sten: heavy stone; symbol from wolframite ore"
+  "etymologyDescription": "Swedish tung sten: heavy stone; symbol from wolframite ore",
+  "density": 19.3,
+  "meltingPoint": 3695,
+  "boilingPoint": 5828,
+  "halfLife": null
 }

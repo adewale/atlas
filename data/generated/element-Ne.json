@@ -23,7 +23,11 @@
     "mass": 109,
     "electronegativity": 0,
     "ionizationEnergy": 2,
-    "radius": 92
+    "radius": 92,
+    "density": 94,
+    "meltingPoint": 101,
+    "boilingPoint": 91,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1898,
   "discoverer": "William Ramsay & Morris Travers",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek neos: new"
+  "etymologyDescription": "Greek neos: new",
+  "density": 0.0008999,
+  "meltingPoint": 24.56,
+  "boilingPoint": 27.07,
+  "halfLife": null
 }

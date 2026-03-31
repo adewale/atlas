@@ -23,7 +23,11 @@
     "mass": 40,
     "electronegativity": 12,
     "ionizationEnergy": 23,
-    "radius": 88
+    "radius": 88,
+    "density": 8,
+    "meltingPoint": 44,
+    "boilingPoint": 39,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Anglo-Saxon gold; symbol from Latin aurum: shining dawn"
+  "etymologyDescription": "Anglo-Saxon gold; symbol from Latin aurum: shining dawn",
+  "density": 19.282,
+  "meltingPoint": 1337.33,
+  "boilingPoint": 3129,
+  "halfLife": null
 }

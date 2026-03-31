@@ -23,7 +23,11 @@
     "mass": 44,
     "electronegativity": 39,
     "ionizationEnergy": 39,
-    "radius": 39
+    "radius": 39,
+    "density": 4,
+    "meltingPoint": 3,
+    "boilingPoint": 1,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1925,
   "discoverer": "Walter Noddack, Ida Tacke & Otto Berg",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Rhenus: the Rhine river"
+  "etymologyDescription": "Latin Rhenus: the Rhine river",
+  "density": 20.8,
+  "meltingPoint": 3459,
+  "boilingPoint": 5869,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 23,
     "electronegativity": 65,
     "ionizationEnergy": 66,
-    "radius": 13
+    "radius": 13,
+    "density": 12,
+    "meltingPoint": 46,
+    "boilingPoint": 0,
+    "halfLife": 8
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1949,
   "discoverer": "Glenn Seaborg, Stanley Thompson & Albert Ghiorso",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Berkeley, California, where it was synthesized"
+  "etymologyDescription": "Berkeley, California, where it was synthesized",
+  "density": 14,
+  "meltingPoint": 1323,
+  "boilingPoint": null,
+  "halfLife": 44000000000
 }

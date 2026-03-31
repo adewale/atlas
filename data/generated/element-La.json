@@ -23,7 +23,11 @@
     "mass": 62,
     "electronegativity": 84,
     "ionizationEnergy": 88,
-    "radius": 17
+    "radius": 17,
+    "density": 57,
+    "meltingPoint": 52,
+    "boilingPoint": 20,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1839,
   "discoverer": "Carl Gustaf Mosander",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek lanthanein: to lie hidden"
+  "etymologyDescription": "Greek lanthanein: to lie hidden",
+  "density": 6.15,
+  "meltingPoint": 1191,
+  "boilingPoint": 3737,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 82,
     "electronegativity": 93,
     "ionizationEnergy": 100,
-    "radius": 3
+    "radius": 3,
+    "density": 82,
+    "meltingPoint": 87,
+    "boilingPoint": 74,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1861,
   "discoverer": "Robert Bunsen & Gustav Kirchhoff",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin rubidus: deep red, from its spectral lines"
+  "etymologyDescription": "Latin rubidus: deep red, from its spectral lines",
+  "density": 1.53,
+  "meltingPoint": 312.46,
+  "boilingPoint": 961,
+  "halfLife": null
 }

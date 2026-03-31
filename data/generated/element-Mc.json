@@ -23,7 +23,11 @@
     "mass": 4,
     "electronegativity": 0,
     "ionizationEnergy": 0,
-    "radius": 0
+    "radius": 0,
+    "density": 0,
+    "meltingPoint": 0,
+    "boilingPoint": 0,
+    "halfLife": 32
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 2003,
   "discoverer": "Yuri Oganessian et al.",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Moscow Oblast, Russia"
+  "etymologyDescription": "Moscow Oblast, Russia",
+  "density": null,
+  "meltingPoint": null,
+  "boilingPoint": null,
+  "halfLife": 0.22
 }

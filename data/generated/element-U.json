@@ -23,7 +23,11 @@
     "mass": 26,
     "electronegativity": 56,
     "ionizationEnergy": 68,
-    "radius": 18
+    "radius": 18,
+    "density": 9,
+    "meltingPoint": 41,
+    "boilingPoint": 13,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1789,
   "discoverer": "Martin Heinrich Klaproth",
   "etymologyOrigin": "astronomical",
-  "etymologyDescription": "Uranus, the planet discovered eight years prior"
+  "etymologyDescription": "Uranus, the planet discovered eight years prior",
+  "density": 18.95,
+  "meltingPoint": 1408,
+  "boilingPoint": 4404,
+  "halfLife": null
 }

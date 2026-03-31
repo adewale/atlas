@@ -23,7 +23,11 @@
     "mass": 106,
     "electronegativity": 49,
     "ionizationEnergy": 80,
-    "radius": 78
+    "radius": 78,
+    "density": 71,
+    "meltingPoint": 65,
+    "boilingPoint": 47,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1825,
   "discoverer": "Hans Christian Ørsted",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Latin alumen: alum, a bitter salt"
+  "etymologyDescription": "Latin alumen: alum, a bitter salt",
+  "density": 2.7,
+  "meltingPoint": 933.437,
+  "boilingPoint": 2792,
+  "halfLife": null
 }

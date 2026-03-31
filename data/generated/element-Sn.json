@@ -23,7 +23,11 @@
     "mass": 69,
     "electronegativity": 33,
     "ionizationEnergy": 48,
-    "radius": 37
+    "radius": 37,
+    "density": 45,
+    "meltingPoint": 78,
+    "boilingPoint": 44,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Anglo-Saxon tin; symbol from Latin stannum"
+  "etymologyDescription": "Anglo-Saxon tin; symbol from Latin stannum",
+  "density": 7.287,
+  "meltingPoint": 505.08,
+  "boilingPoint": 2875,
+  "halfLife": null
 }

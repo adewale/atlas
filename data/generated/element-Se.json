@@ -23,7 +23,11 @@
     "mass": 85,
     "electronegativity": 11,
     "ionizationEnergy": 19,
-    "radius": 71
+    "radius": 71,
+    "density": 65,
+    "meltingPoint": 79,
+    "boilingPoint": 75,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1817,
   "discoverer": "Jöns Jacob Berzelius",
   "etymologyOrigin": "astronomical",
-  "etymologyDescription": "Greek selene: the Moon"
+  "etymologyDescription": "Greek selene: the Moon",
+  "density": 4.809,
+  "meltingPoint": 493.65,
+  "boilingPoint": 958,
+  "halfLife": null
 }

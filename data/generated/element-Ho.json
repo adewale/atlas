@@ -23,7 +23,11 @@
     "mass": 52,
     "electronegativity": 76,
     "ionizationEnergy": 76,
-    "radius": 41
+    "radius": 41,
+    "density": 35,
+    "meltingPoint": 31,
+    "boilingPoint": 42,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1878,
   "discoverer": "Marc Delafontaine & Jacques-Louis Soret",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Holmia: Stockholm"
+  "etymologyDescription": "Latin Holmia: Stockholm",
+  "density": 8.8,
+  "meltingPoint": 1747,
+  "boilingPoint": 2973,
+  "halfLife": null
 }

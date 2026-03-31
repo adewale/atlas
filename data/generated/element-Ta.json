@@ -23,7 +23,11 @@
     "mass": 46,
     "electronegativity": 54,
     "ionizationEnergy": 37,
-    "radius": 38
+    "radius": 38,
+    "density": 10,
+    "meltingPoint": 5,
+    "boilingPoint": 3,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1802,
   "discoverer": "Anders Gustaf Ekeberg",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Greek Tantalus: mythological king condemned to eternal hunger"
+  "etymologyDescription": "Greek Tantalus: mythological king condemned to eternal hunger",
+  "density": 16.4,
+  "meltingPoint": 3290,
+  "boilingPoint": 5731,
+  "halfLife": null
 }

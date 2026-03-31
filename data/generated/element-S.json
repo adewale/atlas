@@ -23,7 +23,11 @@
     "mass": 103,
     "electronegativity": 9,
     "ionizationEnergy": 17,
-    "radius": 82
+    "radius": 82,
+    "density": 76,
+    "meltingPoint": 82,
+    "boilingPoint": 78,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin sulphur: brimstone"
+  "etymologyDescription": "Latin sulphur: brimstone",
+  "density": 2.067,
+  "meltingPoint": 388.36,
+  "boilingPoint": 717.75,
+  "halfLife": null
 }

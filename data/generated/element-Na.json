@@ -23,7 +23,11 @@
     "mass": 108,
     "electronegativity": 89,
     "ionizationEnergy": 98,
-    "radius": 30
+    "radius": 30,
+    "density": 83,
+    "meltingPoint": 84,
+    "boilingPoint": 71,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1807,
   "discoverer": "Humphry Davy",
   "etymologyOrigin": "property",
-  "etymologyDescription": "English soda; symbol from Latin natrium"
+  "etymologyDescription": "English soda; symbol from Latin natrium",
+  "density": 0.97,
+  "meltingPoint": 370.95,
+  "boilingPoint": 1156,
+  "halfLife": null
 }

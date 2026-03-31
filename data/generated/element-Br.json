@@ -23,7 +23,11 @@
     "mass": 84,
     "electronegativity": 6,
     "ionizationEnergy": 11,
-    "radius": 79
+    "radius": 79,
+    "density": 69,
+    "meltingPoint": 91,
+    "boilingPoint": 82,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1826,
   "discoverer": "Antoine Jérôme Balard",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek bromos: stench"
+  "etymologyDescription": "Greek bromos: stench",
+  "density": 3.11,
+  "meltingPoint": 265.95,
+  "boilingPoint": 331.95,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 24,
     "electronegativity": 72,
     "ionizationEnergy": 75,
-    "radius": 15
+    "radius": 15,
+    "density": 6,
+    "meltingPoint": 68,
+    "boilingPoint": 29,
+    "halfLife": 1
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1940,
   "discoverer": "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl",
   "etymologyOrigin": "astronomical",
-  "etymologyDescription": "Pluto, the celestial body beyond Neptune"
+  "etymologyDescription": "Pluto, the celestial body beyond Neptune",
+  "density": 19.84,
+  "meltingPoint": 913,
+  "boilingPoint": 3501,
+  "halfLife": 2500000000000000
 }

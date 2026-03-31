@@ -23,7 +23,11 @@
     "mass": 65,
     "electronegativity": 8,
     "ionizationEnergy": 10,
-    "radius": 40
+    "radius": 40,
+    "density": 87,
+    "meltingPoint": 95,
+    "boilingPoint": 85,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1898,
   "discoverer": "William Ramsay & Morris Travers",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek xenos: stranger, foreign"
+  "etymologyDescription": "Greek xenos: stranger, foreign",
+  "density": 0.005887,
+  "meltingPoint": 161.36,
+  "boilingPoint": 165.03,
+  "halfLife": null
 }

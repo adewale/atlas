@@ -23,7 +23,11 @@
     "mass": 31,
     "electronegativity": 90,
     "ionizationEnergy": 95,
-    "radius": 4
+    "radius": 4,
+    "density": 63,
+    "meltingPoint": 64,
+    "boilingPoint": 66,
+    "halfLife": 7
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1898,
   "discoverer": "Marie Curie & Pierre Curie",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin radius: ray, from its intense radioactivity"
+  "etymologyDescription": "Latin radius: ray, from its intense radioactivity",
+  "density": 5,
+  "meltingPoint": 973,
+  "boilingPoint": 1413,
+  "halfLife": 51000000000
 }

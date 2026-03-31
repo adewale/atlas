@@ -23,7 +23,11 @@
     "mass": 83,
     "electronegativity": 5,
     "ionizationEnergy": 6,
-    "radius": 57
+    "radius": 57,
+    "density": 88,
+    "meltingPoint": 96,
+    "boilingPoint": 86,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1898,
   "discoverer": "William Ramsay & Morris Travers",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek kryptos: hidden"
+  "etymologyDescription": "Greek kryptos: hidden",
+  "density": 0.003733,
+  "meltingPoint": 115.79,
+  "boilingPoint": 119.93,
+  "halfLife": null
 }

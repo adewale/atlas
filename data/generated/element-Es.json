@@ -23,7 +23,11 @@
     "mass": 20,
     "electronegativity": 67,
     "ionizationEnergy": 62,
-    "radius": 11
+    "radius": 11,
+    "density": 0,
+    "meltingPoint": 54,
+    "boilingPoint": 0,
+    "halfLife": 13
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1952,
   "discoverer": "Albert Ghiorso et al.",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Albert Einstein"
+  "etymologyDescription": "Albert Einstein",
+  "density": null,
+  "meltingPoint": 1133,
+  "boilingPoint": null,
+  "halfLife": 35000000
 }

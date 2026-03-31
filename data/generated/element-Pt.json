@@ -23,7 +23,11 @@
     "mass": 41,
     "electronegativity": 16,
     "ionizationEnergy": 26,
-    "radius": 50
+    "radius": 50,
+    "density": 3,
+    "meltingPoint": 17,
+    "boilingPoint": 17,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1735,
   "discoverer": "Antonio de Ulloa",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Spanish platina: little silver"
+  "etymologyDescription": "Spanish platina: little silver",
+  "density": 21.46,
+  "meltingPoint": 2041.55,
+  "boilingPoint": 4098,
+  "halfLife": null
 }

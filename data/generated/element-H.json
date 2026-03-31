@@ -22,7 +22,11 @@
     "mass": 118,
     "electronegativity": 17,
     "ionizationEnergy": 8,
-    "radius": 99
+    "radius": 99,
+    "density": 96,
+    "meltingPoint": 102,
+    "boilingPoint": 92,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -46,5 +50,9 @@
   "discoveryYear": 1766,
   "discoverer": "Henry Cavendish",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek hydro + genes: water-forming"
+  "etymologyDescription": "Greek hydro + genes: water-forming",
+  "density": 0.00008988,
+  "meltingPoint": 13.81,
+  "boilingPoint": 20.28,
+  "halfLife": null
 }
