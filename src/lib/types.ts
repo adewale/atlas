@@ -28,6 +28,10 @@ export type ElementRecord = {
   electronegativity: number | null;
   ionizationEnergy: number | null;
   radius: number | null;
+  density: number | null;
+  meltingPoint: number | null;
+  boilingPoint: number | null;
+  halfLife: number | null;
   discoveryYear: number | null;
   discoverer: string;
   etymologyOrigin: string;

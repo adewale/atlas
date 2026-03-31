@@ -15,14 +15,18 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 // ---------------------------------------------------------------------------
 // Property config
 // ---------------------------------------------------------------------------
-type PropertyKey = 'mass' | 'electronegativity' | 'ionizationEnergy' | 'radius' | 'atomicNumber' | 'discoveryYear' | 'period' | 'group';
+type PropertyKey = 'mass' | 'electronegativity' | 'ionizationEnergy' | 'radius' | 'density' | 'meltingPoint' | 'boilingPoint' | 'halfLife' | 'atomicNumber' | 'discoveryYear' | 'period' | 'group';
 
 const PROPERTY_LABELS: Record<PropertyKey, string> = {
   atomicNumber: 'Atomic number',
   mass: 'Atomic mass (u)',
+  density: 'Density (g/cm³)',
   electronegativity: 'Electronegativity',
   ionizationEnergy: 'Ionisation energy (eV)',
   radius: 'Atomic radius (pm)',
+  meltingPoint: 'Melting point (K)',
+  boilingPoint: 'Boiling point (K)',
+  halfLife: 'Longest half-life (s)',
   period: 'Period',
   group: 'Group',
   discoveryYear: 'Discovery year',
@@ -31,9 +35,13 @@ const PROPERTY_LABELS: Record<PropertyKey, string> = {
 const PROPERTY_KEYS: PropertyKey[] = [
   'atomicNumber',
   'mass',
+  'density',
   'electronegativity',
   'ionizationEnergy',
   'radius',
+  'meltingPoint',
+  'boilingPoint',
+  'halfLife',
   'period',
   'group',
   'discoveryYear',
