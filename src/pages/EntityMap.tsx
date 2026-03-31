@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router';
 import { BLACK, WARM_RED, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE } from '../lib/theme';
 import { ENTITIES, VIZ_PAGES } from '../lib/routeMeta';
@@ -7,7 +7,7 @@ import PageShell from '../components/PageShell';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { usePretextLines } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 
 type Edge = {
@@ -107,6 +107,28 @@ function EntityCard({ entity, highlight, onHover }: { entity: EntityMeta; highli
   );
 }
 
+/** Font strings matching what the SVG labels use (bold, system-ui). */
+const LABEL_FONT = 'bold 10px system-ui, sans-serif';
+const LABEL_FONT_ELEMENT = 'bold 12px system-ui, sans-serif';
+
+/** Measure the displayed label for each node and return the max width across all. */
+function useMaxLabelWidth(): number {
+  return useMemo(() => {
+    let maxW = 0;
+    for (const node of NODE_POSITIONS) {
+      const entity = entityMap.get(node.id);
+      if (!entity) continue;
+      const display = entity.label.length > 10 ? entity.label.slice(0, 9) + '\u2026' : entity.label;
+      const font = node.id === 'element' ? LABEL_FONT_ELEMENT : LABEL_FONT;
+      const lines = measureLines(display.toUpperCase(), font, 9999, 20);
+      const w = lines[0]?.width ?? 0;
+      if (w > maxW) maxW = w;
+    }
+    // Add ~5% for CSS letter-spacing (0.05em) + 16px horizontal padding (8px each side)
+    return Math.ceil(maxW * 1.05) + 16;
+  }, []);
+}
+
 function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHovered: (id: string | null) => void }) {
   const hoveredEntity = hovered ? entityMap.get(hovered) : null;
   const { lines: descLines, lineHeight: descLH } = usePretextLines({
@@ -114,6 +136,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
     maxWidth: 200,
     font: `12px ${PRETEXT_SANS}`,
   });
+  const maxLabelW = useMaxLabelWidth();
 
   const activeEdges = hovered
     ? EDGES.filter((e) => e.from === hovered || e.to === hovered)
@@ -199,7 +222,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
                     width={80}
                     height={16}
                     fill={PAPER}
-                    opacity={0.9}
+                    opacity={1}
                     rx={2}
                   />
                   <text
@@ -228,7 +251,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
           const dimmed = hovered != null && !isActive;
           const r = node.id === 'element' ? 32 : 22;
           const barH = Math.round(r * 0.8);  // bar height
-          const barW = r * 2 + 12;           // bar extends 6px past ring on each side
+          const barW = Math.max(r * 2 + 12, maxLabelW); // at least as wide as the longest label
           const ringStroke = isHovered ? 5 : 3;
 
           return (
@@ -296,10 +319,10 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
             <g style={{ opacity: 0, animation: 'folio-line-reveal 200ms var(--ease-out) forwards' }}>
               {/* Background for readability */}
               <rect
-                x={textX - 4}
-                y={textY - 2}
-                width={208}
-                height={descLines.length * descLH + 8}
+                x={textX - 8}
+                y={textY - 6}
+                width={216}
+                height={descLines.length * descLH + 16}
                 fill={PAPER}
                 opacity={0.95}
                 rx={2}
