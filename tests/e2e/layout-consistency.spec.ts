@@ -34,8 +34,6 @@ const DROP_CAP_PAGES = [
   '/discoverer-network',
 ] as const;
 
-const DIM_COLOR = '#d5d0c4';
-
 // ---------------------------------------------------------------------------
 // 1. Wordmark consistency (desktop viewport)
 // ---------------------------------------------------------------------------

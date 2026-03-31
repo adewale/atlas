@@ -4,7 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PlateHoverInfo } from '../components/AtlasPlate';
-import { WARM_RED, DEEP_BLUE, BLACK, PAPER, MONO_FONT, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
+import { DEEP_BLUE, BLACK, PAPER, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
 import HeroHeader from '../components/HeroHeader';
 import { PRETEXT_SANS } from '../lib/pretext';
 import { DiscovererChip } from '../components/EntityChip';

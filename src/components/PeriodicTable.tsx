@@ -34,7 +34,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
@@ -96,7 +96,7 @@ function interpolateColor(from: string, to: string, t: number): string {
 // ---------------------------------------------------------------------------
 // Grid distance for ripple delay
 // ---------------------------------------------------------------------------
-function gridDistance(a: ElementRecord, b: ElementRecord): number {
+function _gridDistance(a: ElementRecord, b: ElementRecord): number {
   const pa = getCellPosition(a);
   const pb = getCellPosition(b);
   return Math.abs(pa.col - pb.col) + Math.abs(pa.row - pb.row);
@@ -133,7 +133,7 @@ const ElementCell = memo(
     fill,
     textColor,
     isActive,
-    isDimmed,
+    isDimmed: _isDimmed,
     hasLoaded,
     dist,
     onClick,

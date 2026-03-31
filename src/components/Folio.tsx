@@ -4,16 +4,16 @@ import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
 import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
-import { computeLineHeight, PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
 import PropertyBar from './PropertyBar';
-import { GroupTrendSparkline, RankDotSparkline, GroupPhaseStrip } from './Sparkline';
+import { RankDotSparkline, GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, MONO_FONT, toSlug } from '../lib/theme';
 import InfoTip from './InfoTip';
 import { NeighbourChip } from './EntityChip';
 import { AnomalyChip } from './EntityChip';
@@ -169,13 +169,20 @@ type FolioProps = {
   animate?: boolean;
 };
 
+const PROPERTIES = [
+  { label: 'Atomic Mass', key: 'mass', searchTerm: 'mass', unit: 'Da' },
+  { label: 'Electronegativity', key: 'electronegativity', searchTerm: 'electronegativity', unit: '' },
+  { label: 'Ionisation Energy', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
+  { label: 'Atomic Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
+] as const;
+
 export default function Folio({ element, sources, groups, anomalies, animate = true }: FolioProps) {
   const color = blockColor(element.block);
   const mobile = useIsMobile();
 
   const svgWidth = mobile ? 320 : FULL_WIDTH;
 
-  const { lines, lineHeight, plateHeightInLines, identityHeightInLines } = useShapedText({
+  const { lines, lineHeight } = useShapedText({
     text: element.summary,
     fullWidth: FULL_WIDTH,
     narrowWidth: NARROW_WIDTH,
@@ -184,7 +191,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   });
 
   // Group trend data for electronegativity sparkline
-  const groupTrendData = useMemo(() => {
+  const _groupTrendData = useMemo(() => {
     if (!groups || element.group === null) return null;
     const group = groups.find((g) => g.n === element.group);
     if (!group) return null;
@@ -296,13 +303,8 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     font: MARGINALIA_FONT,
   });
 
-  // Property bars data with search terms for marginalia alignment
-  const properties = [
-    { label: 'Atomic Mass', key: 'mass', searchTerm: 'mass', unit: 'Da' },
-    { label: 'Electronegativity', key: 'electronegativity', searchTerm: 'electronegativity', unit: '' },
-    { label: 'Ionisation Energy', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
-    { label: 'Atomic Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
-  ] as const;
+  // Property bars data with search terms for marginalia alignment — defined as
+  // module-level constant (PROPERTIES) to avoid re-creating on every render.
 
   // Available height for marginalia annotations: summary text height acts as boundary
   const summaryTextHeight = lines.length * lineHeight;
@@ -310,7 +312,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   // Compute y-positions for marginalia annotations aligned to summary text lines
   const annotationPositions = useMemo(() => {
     if (mobile) return null; // On mobile, use stacked layout
-    const rawPositions = properties.map((prop) =>
+    const rawPositions = PROPERTIES.map((prop) =>
       findLineYForKeyword(lines, prop.searchTerm, lineHeight),
     );
     return resolveOverlaps(rawPositions, summaryTextHeight);
@@ -463,7 +465,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
         {/* Property bars — each links to its ranking page */}
         <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {properties.map((prop, i) => {
+          {PROPERTIES.map((prop, i) => {
             const rank = element.rankings[prop.key] ?? 0;
             const val = element[prop.key as keyof ElementRecord] as number | null;
             return (
@@ -610,7 +612,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         {/* Key properties with rank dots — aligned to text lines on desktop, stacked on mobile */}
         {!mobile && annotationPositions ? (
           /* Desktop: absolutely positioned annotations aligned to summary text lines */
-          properties.map((prop, i) => {
+          PROPERTIES.map((prop, i) => {
             const val = element[prop.key as keyof ElementRecord];
             const rank = element.rankings[prop.key] ?? 0;
             const displayText = `${prop.label}: ${val != null ? String(val) + (prop.unit ? ' ' + prop.unit : '') : '—'}`;
@@ -652,7 +654,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           })
         ) : (
           /* Mobile / no positions: sequential stacked layout */
-          properties.map((prop) => {
+          PROPERTIES.map((prop) => {
             const val = element[prop.key as keyof ElementRecord];
             const rank = element.rankings[prop.key] ?? 0;
             const displayText = `${prop.label}: ${val != null ? String(val) + (prop.unit ? ' ' + prop.unit : '') : '—'}`;

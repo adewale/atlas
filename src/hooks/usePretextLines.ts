@@ -137,7 +137,7 @@ export function useShapedText({
     }
 
     return { lines, lineHeight, plateHeightInLines, identityHeightInLines };
-  }, [text, fullWidth, narrowWidth, font, mobile, leftIndent?.width, leftIndent?.height]);
+  }, [text, fullWidth, narrowWidth, font, mobile, leftIndent]);
 }
 
 type UseDropCapOptions = {

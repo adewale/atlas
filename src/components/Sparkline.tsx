@@ -20,6 +20,16 @@ export function GroupTrendSparkline({
   height = 40,
   color = BLACK,
 }: GroupTrendProps) {
+  const polyRef = useRef<SVGPolylineElement>(null);
+  const [pathLength, setPathLength] = useState(0);
+
+  useEffect(() => {
+    if (polyRef.current) {
+      const len = polyRef.current.getTotalLength();
+      setPathLength(len);
+    }
+  }, [values, width, height]);
+
   const validValues = values.filter((v): v is number => v != null);
   if (validValues.length < 2) return null;
 
@@ -41,16 +51,6 @@ export function GroupTrendSparkline({
       highlightY = y;
     }
   });
-
-  const polyRef = useRef<SVGPolylineElement>(null);
-  const [pathLength, setPathLength] = useState(0);
-
-  useEffect(() => {
-    if (polyRef.current) {
-      const len = polyRef.current.getTotalLength();
-      setPathLength(len);
-    }
-  }, [values, width, height]);
 
   return (
     <svg width={width} height={height} role="img" aria-label={`Group trend: ${values.map((v) => v !== null ? v.toFixed(1) : '—').join(', ')}`}>
