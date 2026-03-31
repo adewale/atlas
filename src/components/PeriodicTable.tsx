@@ -35,6 +35,13 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
 ];
 
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
+import PretextSvg from './PretextSvg';
+
+const INTRO_TEXT =
+  'One hundred and eighteen elements make up all known matter. Forty are transition metals, 28 occupy the f-block as lanthanides and actinides, and just 7 are noble gases. Use the buttons below to colour the table by group, period, block, category, or numeric property.';
+const INTRO_MAX_W = VIEWBOX_W;
 
 // Pre-compute cell positions once at module level (they never change)
 const CELL_POSITIONS = new Map(allElements.map(el => [el.symbol, getCellPosition(el)]));
@@ -232,6 +239,14 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   const [hasLoaded, setHasLoaded] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
+  const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
+    text: INTRO_TEXT,
+    maxWidth: INTRO_MAX_W,
+    dropCapFont: `80px ${PRETEXT_SANS}`,
+  });
+  const DROP_CAP_SIZE = 80;
+  const introHeight = Math.max(introLines.length * introLH + 16, DROP_CAP_SIZE + 4);
+
   const setHighlightMode = useCallback((mode: HighlightMode) => {
     setSearchParams(prev => {
       const next = new URLSearchParams(prev);
@@ -293,6 +308,24 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   return (
     <div>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+      {/* Intro paragraph with drop cap */}
+      <svg
+        width="100%"
+        viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
+        style={{ display: 'block', marginBottom: '12px' }}
+      >
+        <PretextSvg
+          lines={introLines}
+          lineHeight={introLH}
+          x={0}
+          y={0}
+          fill={BLACK}
+          maxWidth={INTRO_MAX_W}
+          animationStagger={40}
+          dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
+        />
+      </svg>
+
       {/* Colour mode chips */}
       <div style={{
         display: 'flex',
