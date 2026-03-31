@@ -35,15 +35,23 @@ describe('Licensing: per-element sources', () => {
 
   it('all sources.summary.accessDate is a valid ISO date in reasonable range', async () => {
     const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    const earliestAllowed = new Date('2000-01-01T00:00:00.000Z');
+    const today = new Date();
+    const currentYear = new Date().getUTCFullYear();
     for (const { symbol } of allElements) {
       const el = await loadElementFile(symbol);
       const date = el.sources!.summary.accessDate!;
       expect(date, `${symbol} accessDate format`).toMatch(isoDateRegex);
       const parsed = new Date(date);
       expect(parsed.getTime(), `${symbol} accessDate parse`).not.toBeNaN();
+      expect(parsed.getTime(), `${symbol} accessDate not too old`).toBeGreaterThanOrEqual(
+        earliestAllowed.getTime(),
+      );
+      expect(parsed.getTime(), `${symbol} accessDate not in the future`).toBeLessThanOrEqual(
+        today.getTime(),
+      );
       const year = parsed.getFullYear();
-      expect(year, `${symbol} accessDate year`).toBeGreaterThanOrEqual(2024);
-      expect(year, `${symbol} accessDate year`).toBeLessThanOrEqual(2030);
+      expect(year, `${symbol} accessDate year`).toBeLessThanOrEqual(currentYear);
     }
   });
 
