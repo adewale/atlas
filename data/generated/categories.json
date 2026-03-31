@@ -1,6 +1,8 @@
 [
   {
     "slug": "actinide",
+    "label": "Actinides",
+    "description": "The actinides fill the 5f electron shell, from actinium to nobelium. All are radioactive; uranium and plutonium are the best-known members due to their role in nuclear energy and weapons.",
     "elements": [
       "Ac",
       "Th",
@@ -20,6 +22,8 @@
   },
   {
     "slug": "alkali metal",
+    "label": "Alkali metals",
+    "description": "The alkali metals (lithium through francium) are soft, silvery metals with a single valence electron. They are the most reactive metals, reacting vigorously with water to produce hydroxides.",
     "elements": [
       "Li",
       "Na",
@@ -31,6 +35,8 @@
   },
   {
     "slug": "alkaline earth metal",
+    "label": "Alkaline earth metals",
+    "description": "The alkaline earth metals (beryllium through radium) have two valence electrons and are less reactive than the alkali metals. Calcium and magnesium are essential to biological systems.",
     "elements": [
       "Be",
       "Mg",
@@ -42,6 +48,8 @@
   },
   {
     "slug": "halogen",
+    "label": "Halogens",
+    "description": "The halogens are reactive nonmetals with seven valence electrons, making them eager to gain one more. They range from the pale yellow gas fluorine to the dark solid iodine.",
     "elements": [
       "F",
       "Cl",
@@ -53,6 +61,8 @@
   },
   {
     "slug": "lanthanide",
+    "label": "Lanthanides",
+    "description": "The lanthanides fill the 4f electron shell, from lanthanum to ytterbium. Often called rare earth elements, they are critical in magnets, lasers, and modern electronics.",
     "elements": [
       "La",
       "Ce",
@@ -72,6 +82,8 @@
   },
   {
     "slug": "metalloid",
+    "label": "Metalloids",
+    "description": "Metalloids sit on the boundary between metals and nonmetals, exhibiting intermediate properties such as semiconductivity. Silicon and germanium are the foundation of the electronics industry.",
     "elements": [
       "B",
       "Si",
@@ -84,6 +96,8 @@
   },
   {
     "slug": "noble gas",
+    "label": "Noble gases",
+    "description": "The noble gases have complete valence shells, making them exceptionally unreactive under normal conditions. They are colourless, odourless, and monatomic.",
     "elements": [
       "He",
       "Ne",
@@ -96,6 +110,8 @@
   },
   {
     "slug": "nonmetal",
+    "label": "Nonmetals",
+    "description": "The nonmetals are a diverse group of elements that lack metallic character. They include carbon, nitrogen, oxygen, and other elements essential to organic chemistry and life.",
     "elements": [
       "H",
       "C",
@@ -108,6 +124,8 @@
   },
   {
     "slug": "post-transition metal",
+    "label": "Post-transition metals",
+    "description": "Post-transition metals are softer and have lower melting points than transition metals. They include aluminium, tin, lead, and several heavier synthetic elements.",
     "elements": [
       "Al",
       "Ga",
@@ -124,6 +142,8 @@
   },
   {
     "slug": "transition metal",
+    "label": "Transition metals",
+    "description": "Transition metals occupy the d-block and are characterised by variable oxidation states, coloured ions, and catalytic properties. Iron, copper, and gold are among the most familiar.",
     "elements": [
       "Sc",
       "Ti",

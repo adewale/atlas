@@ -38,10 +38,10 @@ export type ElementRecord = {
   sources?: ElementSources;
 };
 
-export type GroupData = { n: number; elements: string[] };
-export type PeriodData = { n: number; elements: string[] };
-export type BlockData = { block: string; elements: string[] };
-export type CategoryData = { slug: string; elements: string[] };
+export type GroupData = { n: number; label: string; description: string; elements: string[] };
+export type PeriodData = { n: number; label: string; description: string; elements: string[] };
+export type BlockData = { block: string; label: string; description: string; elements: string[] };
+export type CategoryData = { slug: string; label: string; description: string; elements: string[] };
 export type RankingsData = Record<string, string[]>;
 export type AnomalyData = {
   slug: string;

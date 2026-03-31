@@ -1,6 +1,8 @@
 [
   {
     "block": "s",
+    "label": "s-block",
+    "description": "Elements filling their outermost s-orbital. The s-block spans groups 1-2 plus helium, containing the most electropositive metals and the universe's lightest elements.",
     "elements": [
       "H",
       "He",
@@ -20,6 +22,8 @@
   },
   {
     "block": "p",
+    "label": "p-block",
+    "description": "Elements filling their outermost p-orbitals. The p-block contains the nonmetals, metalloids, halogens, and noble gases, as well as several post-transition metals.",
     "elements": [
       "B",
       "C",
@@ -61,6 +65,8 @@
   },
   {
     "block": "d",
+    "label": "d-block",
+    "description": "The d-block houses the transition metals, known for variable oxidation states, coloured compounds, and catalytic activity. They fill the 3d through 6d orbitals across groups 3-12.",
     "elements": [
       "Sc",
       "Ti",
@@ -106,6 +112,8 @@
   },
   {
     "block": "f",
+    "label": "f-block",
+    "description": "The f-block contains the lanthanides and actinides, which fill 4f and 5f orbitals respectively. These elements are often separated below the main table due to their unique electron configurations.",
     "elements": [
       "La",
       "Ce",
