@@ -3,7 +3,8 @@
 ## Data Enrichment
 
 ### Melting & Boiling Points
-- Source melting point (Tm) and boiling point (Tb) in Kelvin from Wikidata/PubChem
+- [x] Source melting point (Tm) and boiling point (Tb) in Kelvin from PubChem (103/118 and 93/118 coverage)
+- [x] Add as scatter plot axes
 - Freezing point is the same phase boundary as melting point but approached from the liquid side — for pure elements at 1 atm they are identical, so a single Tm value suffices; note this equivalence in the UI
 - Build a **temperature slider** (0 K – 10,000 K) that recolours the periodic table by phase at the selected temperature
 - Add a **pressure dimension** for a 2D phase-state explorer (requires sourcing pressure–temperature phase diagrams, which are sparse for many elements)
@@ -20,15 +21,16 @@
 - Visualise how oxidation state variety correlates with position in the table (transition metals have many; s-block has few)
 
 ### Isotope Data
-- Source isotope count, most stable isotope mass, and half-life of longest-lived radioactive isotope
+- [x] Source half-life of longest-lived isotope for all radioactive elements (35/118; stable = null) from NUBASE2020
+- [x] Add as scatter plot axis
+- Source isotope count and most stable isotope mass
 - Build an **isotope abundance** pie chart or bar for each element
 - Create a **radioactive decay timeline** — slider showing which isotopes remain after N years
 - Flag synthetic/short-lived elements distinctly
 
 ### Density
-- Source density (g/cm³) at STP from PubChem
-- Add as a fifth numeric property alongside mass, electronegativity, ionisation energy, and radius
-- Enables property scatter plots that bridge phase and mass
+- [x] Source density (g/cm³) at STP from PubChem (96/118 coverage)
+- [x] Add as scatter plot axis alongside mass, electronegativity, ionisation energy, and radius
 - Density gradient colouring on the periodic table would reveal why metals cluster at the bottom-left
 
 ### Abundance & Crystal Structure
