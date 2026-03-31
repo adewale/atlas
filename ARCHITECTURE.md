@@ -184,3 +184,44 @@ Property-based testing (PBT) philosophy: tests assert universal properties acros
 **Cell grid**: 56px wide × 64px tall, 18 columns × 10 rows (with f-block gap). ViewBox: 1008×704px.
 
 **PageShell gutter**: 64px (exactly one cell width + 8px padding). Body padding: 24px top/bottom, 16px left/right (mobile: 16/12).
+
+## Faceted Navigation Ideas
+
+Interactive exploration concepts that could enrich Atlas. Each leverages existing element properties but notes where additional data sourcing would unlock richer interactions.
+
+### Interactive Property Sliders
+
+- Mass, electronegativity, ionisation energy, and radius sliders that filter the periodic table in real-time
+- As the user drags a slider, elements outside the range dim and elements inside glow
+- Multiple sliders can be combined for constraint-based exploration ("show elements where EN > 2.5 AND radius < 150")
+- **Caveat:** While we have these 4 properties, richer slider interactions would benefit from sourcing additional numeric data (melting/boiling points, density, abundance) from our three data providers (Wikidata, PubChem, Wikipedia)
+
+### Phase at STP
+
+- Temperature slider showing phase transitions as you drag from 0K to 10,000K
+- Pressure dimension could be added for a 2D phase explorer
+- Current static phase coloring on PhaseLandscape could become dynamic
+
+### Discovery Year and Discoverer
+
+- Timeline scrubber that builds the periodic table element-by-element as you drag through history
+- "Year 1850: 45 elements known" counter that updates in real-time
+- Discovery rate histogram showing elements/decade
+
+### Neighbours Array
+
+- Relationship type toggles (group, period, phase, category) with edges appearing/disappearing
+- Similarity search: "show elements like Copper" using custom distance metric
+- Periodic law proof: click an element, drag down its group, watch properties animate smoothly
+
+### Etymology Origin
+
+- Etymology network graph — nodes are origins (Curie, Mars, Ytterby), edges connect to named elements
+- Force-directed layout that clusters elements by naming pattern
+- Naming timeline showing how etymology categories shifted over centuries
+
+### Rankings
+
+- Drag-to-reorder the periodic table by any property
+- Side-by-side ranking comparison between two properties
+- "Where does element X fall?" interactive rank locator

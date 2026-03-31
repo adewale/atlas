@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import InfoTip from '../components/InfoTip';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_LIGHT, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_LIGHT, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -32,6 +32,15 @@ const EASINGS = [
   { name: '--ease-in-out', value: 'cubic-bezier(0.77, 0, 0.175, 1)', use: 'on-screen movement' },
   { name: '--ease-spring', value: 'cubic-bezier(0.34, 1.56, 0.64, 1)', use: 'playful overshoot' },
   { name: '--ease-snap', value: 'cubic-bezier(0.4, 0, 0.2, 1)', use: 'quick state toggles' },
+];
+
+const LINE_THICKNESSES = [
+  { tier: 'Hairline', value: STROKE_HAIRLINE, cssVar: '--stroke-hairline', use: 'Grid rules, dividers, subtle structure' },
+  { tier: 'Thin', value: STROKE_THIN, cssVar: '--stroke-thin', use: 'Accent lines, timeline rules, data lines' },
+  { tier: 'Regular', value: STROKE_REGULAR, cssVar: '--stroke-regular', use: 'Sparklines, button borders, interactive elements' },
+  { tier: 'Medium', value: STROKE_MEDIUM, cssVar: '--stroke-medium', use: 'Active/highlighted states, card borders, emphasis' },
+  { tier: 'Accent', value: STROKE_ACCENT, cssVar: '--stroke-accent', use: 'Left-border entity chips, category indicators' },
+  { tier: 'Heavy', value: STROKE_HEAVY, cssVar: '--stroke-heavy', use: 'Major section dividers, top borders' },
 ];
 
 export default function Design() {
@@ -361,7 +370,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>Timeline square — 14px stacked squares, block-coloured, with SVG title tooltip</div>
           <svg width={200} height={80}>
             {/* Axis line */}
-            <line x1={10} y1={65} x2={190} y2={65} stroke={BLACK} strokeWidth={0.75} />
+            <line x1={10} y1={65} x2={190} y2={65} stroke={BLACK} strokeWidth={1} />
             {[
               { x: 30, y: 49, block: 's', name: 'Sodium' },
               { x: 30, y: 33, block: 's', name: 'Potassium' },
@@ -372,7 +381,7 @@ export default function Design() {
             ].map((sq, i) => (
               <g key={i}>
                 <title>{sq.name}</title>
-                <rect x={sq.x} y={sq.y} width={14} height={14} fill={blockColor(sq.block)} stroke={BLACK} strokeWidth={0.25} />
+                <rect x={sq.x} y={sq.y} width={14} height={14} fill={blockColor(sq.block)} stroke={BLACK} strokeWidth={0.5} />
               </g>
             ))}
             <text x={30} y={78} textAnchor="middle" fontSize={9} fill={BLACK} fontFamily="system-ui">1807</text>
@@ -776,12 +785,48 @@ export default function Design() {
                 <rect x={i * 32 + 2} y={2} width={28} height={28}
                   fill={blockColor('d')}
                   stroke={el.anomaly ? WARM_RED : BLACK}
-                  strokeWidth={el.anomaly ? 2.5 : 0.5} />
+                  strokeWidth={el.anomaly ? 2 : 0.5} />
                 <text x={i * 32 + 16} y={20} textAnchor="middle" fontSize={9} fontWeight="bold"
                   fill={contrastTextColor(blockColor('d'))} fontFamily="system-ui">{el.sym}</text>
               </g>
             ))}
           </svg>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/* Line Thickness                                                */}
+      {/* ============================================================ */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Line Thickness</h2>
+        <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '24px', lineHeight: 1.6 }}>
+          Six standardised tiers govern all borders, strokes, and rules across Atlas.
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {LINE_THICKNESSES.map((t) => (
+            <div key={t.tier} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <svg width={120} height={Math.max(t.value * 2 + 8, 16)} style={{ flexShrink: 0 }}>
+                <line
+                  x1={0}
+                  y1={Math.max(t.value * 2 + 8, 16) / 2}
+                  x2={120}
+                  y2={Math.max(t.value * 2 + 8, 16) / 2}
+                  stroke={BLACK}
+                  strokeWidth={t.value}
+                />
+              </svg>
+              <div style={{ minWidth: '160px', flexShrink: 0 }}>
+                <div style={{ fontSize: '13px', fontWeight: 'bold' }}>
+                  {t.tier}
+                  <span style={{ fontWeight: 'normal', color: GREY_MID, marginLeft: '8px' }}>{t.value}px</span>
+                </div>
+                <code style={{ fontSize: '11px', color: DEEP_BLUE }}>{t.cssVar}</code>
+              </div>
+              <div style={{ fontSize: '12px', color: GREY_MID, lineHeight: 1.4 }}>
+                {t.use}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -887,7 +932,7 @@ function TooltipPatterns() {
                 height={14}
                 fill={blockColor(el.block)}
                 stroke={BLACK}
-                strokeWidth={0.25}
+                strokeWidth={0.5}
                 style={{ cursor: 'default' }}
               />
               <text x={el.cx} y={14} textAnchor="middle" fontSize={9} fill={BLACK} fontFamily="system-ui">
@@ -906,7 +951,7 @@ function TooltipPatterns() {
         </div>
         <svg width={340} height={100}>
           {/* Fake axis */}
-          <line x1={20} y1={80} x2={320} y2={80} stroke={BLACK} strokeWidth={0.75} />
+          <line x1={20} y1={80} x2={320} y2={80} stroke={BLACK} strokeWidth={1} />
           {[
             { x: 60, y: 60, sym: 'H', year: '1766', discoverer: 'Cavendish', block: 's' as const },
             { x: 140, y: 45, sym: 'O', year: '1774', discoverer: 'Priestley', block: 'p' as const },
@@ -921,7 +966,7 @@ function TooltipPatterns() {
                 height={10}
                 fill={blockColor(pt.block)}
                 stroke={BLACK}
-                strokeWidth={0.25}
+                strokeWidth={0.5}
                 style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setSvgTooltip({ x: pt.x, y: pt.y, label: `${pt.sym} (${pt.year}) — ${pt.discoverer}` })}
                 onMouseLeave={() => setSvgTooltip(null)}

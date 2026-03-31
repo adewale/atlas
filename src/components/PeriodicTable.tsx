@@ -478,7 +478,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             x2={18 * CELL_WIDTH}
             y2={period * CELL_HEIGHT}
             stroke={BLACK}
-            strokeWidth={0.3}
+            strokeWidth={0.5}
             opacity={0.15}
           />
         ))}

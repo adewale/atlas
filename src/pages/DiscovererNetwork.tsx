@@ -297,7 +297,7 @@ export default function DiscovererNetwork() {
                   x2={LEFT_COL + disc.elements.length * (SQ + SQ_GAP)}
                   y2={SQ + 6}
                   stroke={BLACK}
-                  strokeWidth={0.3}
+                  strokeWidth={0.5}
                   opacity={0.15}
                 />
               </g>

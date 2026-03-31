@@ -248,7 +248,7 @@ export default function DiscoveryTimeline() {
               x2={SVG_WIDTH - MARGIN_RIGHT}
               y2={axisY}
               stroke={BLACK}
-              strokeWidth={0.75}
+              strokeWidth={1}
             />
 
             {/* Century tick marks */}
@@ -262,7 +262,7 @@ export default function DiscoveryTimeline() {
                     x2={x}
                     y2={axisY + 6}
                     stroke={BLACK}
-                    strokeWidth={0.75}
+                    strokeWidth={1}
                   />
                   <text
                     x={x}

@@ -21,6 +21,14 @@ export const GREY_RULE = '#ccc';
 export const MINERAL_BROWN = '#5a3e1b';
 export const ASTRO_PURPLE = '#4a0e6b';
 
+/* Stroke widths — six standardised tiers for all borders, strokes, rules */
+export const STROKE_HAIRLINE = 0.5;
+export const STROKE_THIN = 1;
+export const STROKE_REGULAR = 1.5;
+export const STROKE_MEDIUM = 2;
+export const STROKE_ACCENT = 3;
+export const STROKE_HEAVY = 4;
+
 /* Typography — canonical monospace stack */
 export const MONO_FONT = "'SF Mono', 'Cascadia Code', 'Fira Code', monospace";
 

@@ -14,6 +14,14 @@
   --block-d: var(--warm-red);
   --block-f: var(--black);
 
+  /* Stroke / line-thickness tiers */
+  --stroke-hairline: 0.5px;
+  --stroke-thin: 1px;
+  --stroke-regular: 1.5px;
+  --stroke-medium: 2px;
+  --stroke-accent: 3px;
+  --stroke-heavy: 4px;
+
   /* Easing */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);

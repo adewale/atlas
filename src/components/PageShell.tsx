@@ -71,7 +71,7 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
             aria-hidden="true"
           >
             {/* Top rule — thin hairline */}
-            <line x1={10} y1={2} x2={BAR_W - 10} y2={2} stroke={RULE_COLOR} strokeWidth={0.75} />
+            <line x1={10} y1={2} x2={BAR_W - 10} y2={2} stroke={RULE_COLOR} strokeWidth={1} />
             {/* Small diamond accent below top rule */}
             <polygon
               points={`${BAR_W / 2},5 ${BAR_W / 2 + 2.5},8 ${BAR_W / 2},11 ${BAR_W / 2 - 2.5},8`}
@@ -101,7 +101,7 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
               x2={BAR_W - 10}
               y2={ATLAS_LETTERS.length * CELL + 10}
               stroke={RULE_COLOR}
-              strokeWidth={0.75}
+              strokeWidth={1}
             />
           </svg>
         </h1>
