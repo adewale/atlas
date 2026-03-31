@@ -58,6 +58,33 @@ export const SECTION_HEADING_STYLE = {
   marginBottom: '16px',
 } as const;
 
+export const LABEL_STYLE = {
+  fontSize: '10px',
+  textTransform: 'uppercase',
+  color: GREY_MID,
+} as const;
+
+export const NAV_PILL_STYLE = {
+  fontSize: '11px',
+  fontWeight: 'bold',
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+  textDecoration: 'none',
+} as const;
+
+/** Small uppercase section label: 11px bold with wide tracking */
+export const SECTION_LABEL_STYLE = {
+  fontSize: '11px',
+  fontWeight: 'bold',
+  textTransform: 'uppercase',
+  letterSpacing: '0.15em',
+  color: GREY_MID,
+  marginBottom: '8px',
+} as const;
+
 /** Map a category string to its display color. */
 export function categoryColor(category: string): string {
   const cat = category.toLowerCase();

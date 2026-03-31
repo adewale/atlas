@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { Link, useLoaderData, useNavigate } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, GREY_MID, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE } from '../lib/theme';
+import NavigationPill from '../components/NavigationPill';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -187,36 +188,26 @@ export default function DiscoveryTimeline() {
 
         {/* Era browse links */}
         <section style={{ marginBottom: '16px' }}>
-          <h2 style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px' }}>
+          <h2 style={SECTION_LABEL_STYLE}>
             Browse by Era
           </h2>
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            <Link
+            <NavigationPill
               to="/timeline/antiquity"
               title="View the Antiquity discovery era"
-              style={{
-                fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-                textTransform: 'uppercase', padding: '10px 10px',
-                border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
-                textDecoration: 'none',
-              }}
-            >
-              Antiquity
-            </Link>
+              label="Antiquity"
+              color={DEEP_BLUE}
+              dot={false}
+            />
             {allDecades.map((d) => (
-              <Link
+              <NavigationPill
                 key={d}
                 to={`/timeline/${d}`}
                 title={`View the ${d}s discovery era`}
-                style={{
-                  fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em',
-                  padding: '10px 10px',
-                  border: `1.5px solid ${DEEP_BLUE}`, color: DEEP_BLUE,
-                  textDecoration: 'none',
-                }}
-              >
-                {d}s
-              </Link>
+                label={`${d}s`}
+                color={DEEP_BLUE}
+                dot={false}
+              />
             ))}
           </div>
         </section>

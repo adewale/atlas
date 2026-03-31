@@ -4,8 +4,11 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PlateHoverInfo } from '../components/AtlasPlate';
-import { WARM_RED, DEEP_BLUE, BLACK, PAPER, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
+import { WARM_RED, DEEP_BLUE, BLACK, PAPER, MONO_FONT, BACK_LINK_STYLE, SECTION_LABEL_STYLE } from '../lib/theme';
+import PrevNextNav from '../components/PrevNextNav';
+import HeroHeader from '../components/HeroHeader';
 import { DiscovererChip } from '../components/EntityChip';
+import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -129,52 +132,19 @@ export default function TimelineEra() {
       <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
 
       {/* Prev / Next navigation */}
-      <nav style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        fontSize: '12px',
-        marginTop: '8px',
-      }}>
-        {prevEra ? (
-          <Link to={`/timeline/${prevEra}`} title={`View the ${prevEra === 'antiquity' ? 'Antiquity' : prevEra + 's'} discovery era`} style={{ color: GREY_MID, textDecoration: 'none' }}>
-            ← {prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`}
-          </Link>
-        ) : <span />}
-        {nextEra ? (
-          <Link to={`/timeline/${nextEra}`} title={`View the ${nextEra}s discovery era`} style={{ color: GREY_MID, textDecoration: 'none' }}>
-            {`${nextEra}s`} →
-          </Link>
-        ) : <span />}
-      </nav>
+      <PrevNextNav
+        prev={prevEra ? { label: prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`, to: `/timeline/${prevEra}` } : undefined}
+        next={nextEra ? { label: `${nextEra}s`, to: `/timeline/${nextEra}` } : undefined}
+        style={{ marginTop: '8px' }}
+      />
 
       {/* Giant era numeral + heading */}
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', margin: '12px 0' }}>
-        <span style={{
-          fontSize: '96px',
-          fontWeight: 'bold',
-          fontFamily: MONO_FONT,
-          lineHeight: 1,
-          color,
-          letterSpacing: '-0.02em',
-        }}>
-          {isAntiquity ? '∞' : String(decade)}
-        </span>
-        <div>
-          <h1 style={{
-            fontSize: '13px',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-            letterSpacing: '0.2em',
-            color: DEEP_BLUE,
-          }}>
-            {eraLabel}
-          </h1>
-          <div style={{ fontSize: '13px', color: GREY_MID, marginTop: '4px' }}>
-            {elements.length} element{elements.length !== 1 ? 's' : ''} discovered
-          </div>
-        </div>
-      </div>
+      <HeroHeader
+        numeral={isAntiquity ? '∞' : String(decade)}
+        numeralColor={color}
+        title={eraLabel}
+        subtitle={`${elements.length} element${elements.length !== 1 ? 's' : ''} discovered`}
+      />
 
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
 
@@ -215,14 +185,7 @@ export default function TimelineEra() {
       {/* Discoverers in this era */}
       {discoverers.length > 0 && (
         <section style={{ marginTop: '24px' }}>
-          <h2 style={{
-            fontSize: '11px',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-            letterSpacing: '0.15em',
-            color: GREY_MID,
-            marginBottom: '8px',
-          }}>
+          <h2 style={SECTION_LABEL_STYLE}>
             Discoverers
           </h2>
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
@@ -243,42 +206,20 @@ export default function TimelineEra() {
       {/* Nearby eras — graph navigation */}
       {nearbyEras.length > 0 && (
         <section style={{ marginTop: '24px' }}>
-          <h2 style={{
-            fontSize: '11px',
-            fontWeight: 'bold',
-            textTransform: 'uppercase',
-            letterSpacing: '0.15em',
-            color: GREY_MID,
-            marginBottom: '8px',
-          }}>
+          <h2 style={SECTION_LABEL_STYLE}>
             Nearby Eras
           </h2>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {nearbyEras.map((d) => {
               const count = timeline.filter((e) => e.year != null && decadeOf(e.year) === d).length;
               return (
-                <Link
+                <NavigationPill
                   key={d}
                   to={`/timeline/${d}`}
                   title={`View the ${d}s discovery era`}
-                  style={{
-                    fontSize: '11px',
-                    fontWeight: 'bold',
-                    letterSpacing: '0.08em',
-                    padding: '6px 12px',
-                    border: `1.5px solid ${DEEP_BLUE}`,
-                    color: DEEP_BLUE,
-                    textDecoration: 'none',
-                    minHeight: 'unset',
-                    minWidth: 'unset',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}
-                >
-                  <span style={{ width: '8px', height: '8px', background: DEEP_BLUE, display: 'inline-block', flexShrink: 0 }} />
-                  {d}s ({count})
-                </Link>
+                  label={`${d}s (${count})`}
+                  color={DEEP_BLUE}
+                />
               );
             })}
           </div>

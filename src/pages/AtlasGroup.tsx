@@ -1,50 +1,29 @@
-import { useParams, useLoaderData, Link } from 'react-router';
+import { useParams, useLoaderData } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, BACK_LINK_STYLE } from '../lib/theme';
-import { usePretextLines } from '../hooks/usePretextLines';
-import PretextSvg from '../components/PretextSvg';
-import AtlasPlate from '../components/AtlasPlate';
+import { BLACK } from '../lib/theme';
+import AtlasBrowsePage from '../components/AtlasBrowsePage';
 import type { GroupData } from '../lib/types';
-import PageShell from '../components/PageShell';
-import { useDocumentTitle } from '../hooks/useDocumentTitle';
-
-const DESC_MAX_W = 600;
 
 export default function AtlasGroup() {
   const { n } = useParams();
   const { groups } = useLoaderData() as { groups: GroupData[] };
 
   const group = groups.find((g) => g.n === Number(n));
-  const elements = group ? group.elements.map((s) => getElement(s)!).filter(Boolean) : [];
-  const color = elements.length > 0 ? blockColor(elements[0].block) : BLACK;
-
-  useDocumentTitle(`Group ${n}`);
-
-  const { lines, lineHeight } = usePretextLines({
-    text: group?.description ?? '',
-    maxWidth: DESC_MAX_W,
-  });
+  const symbols = group ? group.elements : [];
+  const firstEl = symbols.length > 0 ? getElement(symbols[0]) : null;
+  const color = firstEl ? blockColor(firstEl.block) : BLACK;
 
   return (
-    <PageShell>
-      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
-      <h1 style={{ margin: '12px 0 16px', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color, viewTransitionName: 'data-plate-group' } as React.CSSProperties}>Group {n}</h1>
-      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
-      {group?.description && (
-        <svg
-          width={DESC_MAX_W}
-          height={lines.length * lineHeight + lineHeight}
-          style={{ maxWidth: '100%', marginBottom: '24px' }}
-          role="img"
-          aria-label={group.description}
-        >
-          <PretextSvg lines={lines} lineHeight={lineHeight} x={0} y={0} maxWidth={DESC_MAX_W} showRules animationStagger={25} />
-        </svg>
-      )}
-      {elements.length > 0 && (
-        <AtlasPlate elements={elements} caption={`Group ${n}`} captionColor={color} />
-      )}
-    </PageShell>
+    <AtlasBrowsePage
+      backLink={{ label: '← Table', to: '/' }}
+      heading={`Group ${n}`}
+      color={color}
+      viewTransitionName="data-plate-group"
+      description={group?.description}
+      elements={symbols}
+      caption={`Group ${n}`}
+      captionColor={color}
+    />
   );
 }

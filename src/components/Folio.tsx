@@ -8,6 +8,7 @@ import { computeLineHeight, PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
+import PrevNextNav from './PrevNextNav';
 import PropertyBar from './PropertyBar';
 import { GroupTrendSparkline, RankDotSparkline, GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
@@ -28,6 +29,23 @@ const IDENTITY_WIDTH = 130;
 const IDENTITY_HEIGHT = 150;
 
 const MIN_ANNOTATION_GAP = 20;
+
+/** Reusable row for the data plate (Group / Period / Block). */
+function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, mobile }: {
+  label: string; value: string | number; fill: string; textFill?: string;
+  href: string; ariaLabel: string; title: string;
+  viewTransitionName?: string; mobile: boolean;
+}) {
+  return (
+    <Link to={href} aria-label={ariaLabel} title={title} style={{ display: 'block', textDecoration: 'none', viewTransitionName } as React.CSSProperties}>
+      <svg width={mobile ? '100%' : PLATE_WIDTH} height={56} viewBox={`0 0 ${PLATE_WIDTH} 56`}>
+        <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={fill} />
+        <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
+        <text x={12} y={46} fontSize={24} fontWeight="bold" fill={textFill} fontFamily={MONO_FONT}>{value}</text>
+      </svg>
+    </Link>
+  );
+}
 
 /** Find the y-position of the first text line containing `keyword`. */
 function findLineYForKeyword(
@@ -269,34 +287,15 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
       {/* Main content */}
       <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
         {/* Prev / Next navigation */}
-        <nav
+        <PrevNextNav
+          prev={prevElement ? { label: `${prevElement.symbol} ${prevElement.name}`, to: `/element/${prevElement.symbol}` } : undefined}
+          next={nextElement ? { label: `${nextElement.name} ${nextElement.symbol}`, to: `/element/${nextElement.symbol}` } : undefined}
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            fontSize: '12px',
             marginBottom: '8px',
             opacity: 0,
             animation: animate ? 'folio-line-reveal 200ms var(--ease-out) forwards' : undefined,
           }}
-        >
-          {prevElement ? (
-            <Link
-              to={`/element/${prevElement.symbol}`}
-              style={{ color: GREY_MID, textDecoration: 'none' }}
-            >
-              ← {prevElement.symbol} <span style={{ color: GREY_LIGHT }}>{prevElement.name}</span>
-            </Link>
-          ) : <span />}
-          {nextElement ? (
-            <Link
-              to={`/element/${nextElement.symbol}`}
-              style={{ color: GREY_MID, textDecoration: 'none' }}
-            >
-              <span style={{ color: GREY_LIGHT }}>{nextElement.name}</span> {nextElement.symbol} →
-            </Link>
-          ) : <span />}
-        </nav>
+        />
 
         {/* Summary area: identity block (left), text (centre), data plate (right) */}
         <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
@@ -374,29 +373,11 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
               {/* Group row — deep blue */}
-              <Link to={element.group != null ? `/atlas/group/${element.group}` : '#'} aria-label={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} style={{ display: 'block', textDecoration: 'none', viewTransitionName: 'data-plate-group' } as React.CSSProperties}>
-                <svg width={mobile ? '100%' : PLATE_WIDTH} height={56} viewBox={`0 0 ${PLATE_WIDTH} 56`}>
-                  <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={DEEP_BLUE} />
-                  <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
-                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>{element.group ?? '—'}</text>
-                </svg>
-              </Link>
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/atlas/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName="data-plate-group" mobile={mobile} />
               {/* Period row — warm red */}
-              <Link to={`/atlas/period/${element.period}`} aria-label={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} style={{ display: 'block', textDecoration: 'none', viewTransitionName: 'data-plate-period' } as React.CSSProperties}>
-                <svg width={mobile ? '100%' : PLATE_WIDTH} height={56} viewBox={`0 0 ${PLATE_WIDTH} 56`}>
-                  <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={WARM_RED} />
-                  <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
-                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>{element.period}</text>
-                </svg>
-              </Link>
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/atlas/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName="data-plate-period" mobile={mobile} />
               {/* Block row — block colour */}
-              <Link to={`/atlas/block/${element.block}`} aria-label={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} style={{ display: 'block', textDecoration: 'none', viewTransitionName: 'data-plate-block' } as React.CSSProperties}>
-                <svg width={mobile ? '100%' : PLATE_WIDTH} height={56} viewBox={`0 0 ${PLATE_WIDTH} 56`}>
-                  <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={color} />
-                  <text x={12} y={20} fontSize={10} fill={contrastTextColor(color)} fontFamily="system-ui">BLOCK</text>
-                  <text x={12} y={46} fontSize={24} fontWeight="bold" fill={contrastTextColor(color)} fontFamily={MONO_FONT}>{element.block}</text>
-                </svg>
-              </Link>
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName="data-plate-block" mobile={mobile} />
             </div>
           </div>
 
