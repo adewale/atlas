@@ -8,7 +8,6 @@ import { computeLineHeight, PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
-import PrevNextNav from './PrevNextNav';
 import PropertyBar from './PropertyBar';
 import { GroupTrendSparkline, RankDotSparkline, GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
@@ -286,17 +285,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
       {/* Main content */}
       <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
-        {/* Prev / Next navigation */}
-        <PrevNextNav
-          prev={prevElement ? { label: `${prevElement.symbol} ${prevElement.name}`, to: `/element/${prevElement.symbol}` } : undefined}
-          next={nextElement ? { label: `${nextElement.name} ${nextElement.symbol}`, to: `/element/${nextElement.symbol}` } : undefined}
-          style={{
-            marginBottom: '8px',
-            opacity: 0,
-            animation: animate ? 'folio-line-reveal 200ms var(--ease-out) forwards' : undefined,
-          }}
-        />
-
         {/* Summary area: identity block (left), text (centre), data plate (right) */}
         <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
           {/* Identity block — number + symbol + name, acts as dramatic drop cap */}
@@ -379,6 +367,45 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               {/* Block row — block colour */}
               <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName="data-plate-block" mobile={mobile} />
             </div>
+
+            {/* Prev / Next navigation — Pretext-styled SVG beneath the data plate */}
+            {(prevElement || nextElement) && (
+              <svg
+                width={mobile ? '100%' : PLATE_WIDTH}
+                height={24}
+                viewBox={`0 0 ${PLATE_WIDTH} 24`}
+                style={{ display: 'block', marginTop: '4px' }}
+                aria-label="Previous and next element navigation"
+              >
+                {prevElement && (
+                  <a href={`/element/${prevElement.symbol}`}>
+                    <text
+                      x={4}
+                      y={16}
+                      fontSize={11}
+                      fill={GREY_MID}
+                      fontFamily={PRETEXT_SANS}
+                    >
+                      ← {prevElement.symbol}
+                    </text>
+                  </a>
+                )}
+                {nextElement && (
+                  <a href={`/element/${nextElement.symbol}`}>
+                    <text
+                      x={PLATE_WIDTH - 4}
+                      y={16}
+                      fontSize={11}
+                      fill={GREY_MID}
+                      fontFamily={PRETEXT_SANS}
+                      textAnchor="end"
+                    >
+                      {nextElement.symbol} →
+                    </text>
+                  </a>
+                )}
+              </svg>
+            )}
           </div>
 
           {/* Shaped summary text — flows around identity block (left) and data plate (right) */}
