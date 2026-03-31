@@ -4,9 +4,9 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PlateHoverInfo } from '../components/AtlasPlate';
-import { WARM_RED, DEEP_BLUE, BLACK, PAPER, MONO_FONT, BACK_LINK_STYLE, SECTION_LABEL_STYLE } from '../lib/theme';
-import PrevNextNav from '../components/PrevNextNav';
+import { WARM_RED, DEEP_BLUE, BLACK, PAPER, MONO_FONT, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
 import HeroHeader from '../components/HeroHeader';
+import { PRETEXT_SANS } from '../lib/pretext';
 import { DiscovererChip } from '../components/EntityChip';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
@@ -131,13 +131,6 @@ export default function TimelineEra() {
     <PageShell>
       <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
 
-      {/* Prev / Next navigation */}
-      <PrevNextNav
-        prev={prevEra ? { label: prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`, to: `/timeline/${prevEra}` } : undefined}
-        next={nextEra ? { label: `${nextEra}s`, to: `/timeline/${nextEra}` } : undefined}
-        style={{ marginTop: '8px' }}
-      />
-
       {/* Giant era numeral + heading */}
       <HeroHeader
         numeral={isAntiquity ? '∞' : String(decade)}
@@ -145,6 +138,33 @@ export default function TimelineEra() {
         title={eraLabel}
         subtitle={`${elements.length} element${elements.length !== 1 ? 's' : ''} discovered`}
       />
+
+      {/* Prev / Next navigation — Pretext-styled, anchored beneath hero */}
+      {(prevEra || nextEra) && (
+        <svg
+          width="100%"
+          height={24}
+          viewBox="0 0 400 24"
+          preserveAspectRatio="xMidYMid meet"
+          style={{ display: 'block', maxWidth: 560 }}
+          aria-label="Previous and next era navigation"
+        >
+          {prevEra && (
+            <a href={`/timeline/${prevEra}`}>
+              <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
+                ← {prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`}
+              </text>
+            </a>
+          )}
+          {nextEra && (
+            <a href={`/timeline/${nextEra}`}>
+              <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
+                {`${nextEra}s`} →
+              </text>
+            </a>
+          )}
+        </svg>
+      )}
 
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
 

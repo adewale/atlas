@@ -3,9 +3,9 @@ import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
-import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE } from '../lib/theme';
-import PrevNextNav from '../components/PrevNextNav';
+import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
 import HeroHeader from '../components/HeroHeader';
+import { PRETEXT_SANS } from '../lib/pretext';
 import { DiscovererChip } from '../components/EntityChip';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
@@ -78,13 +78,6 @@ export default function DiscovererDetail() {
     <PageShell>
       <Link to="/discoverer-network" style={BACK_LINK_STYLE}>← Discoverers</Link>
 
-      {/* Prev / Next navigation */}
-      <PrevNextNav
-        prev={prevDisc ? { label: prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name, to: `/discoverer/${encodeURIComponent(prevDisc.name)}` } : undefined}
-        next={nextDisc ? { label: nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name, to: `/discoverer/${encodeURIComponent(nextDisc.name)}` } : undefined}
-        style={{ marginTop: '8px' }}
-      />
-
       {/* Giant element count + heading */}
       <HeroHeader
         numeral={elements.length}
@@ -93,6 +86,33 @@ export default function DiscovererDetail() {
         titleColor={WARM_RED}
         subtitle={`${elements.length} element${elements.length !== 1 ? 's' : ''} · ${yearRange}`}
       />
+
+      {/* Prev / Next navigation — Pretext-styled, anchored beneath hero */}
+      {(prevDisc || nextDisc) && (
+        <svg
+          width="100%"
+          height={24}
+          viewBox="0 0 400 24"
+          preserveAspectRatio="xMidYMid meet"
+          style={{ display: 'block', maxWidth: 560 }}
+          aria-label="Previous and next discoverer navigation"
+        >
+          {prevDisc && (
+            <a href={`/discoverer/${encodeURIComponent(prevDisc.name)}`}>
+              <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
+                ← {prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name}
+              </text>
+            </a>
+          )}
+          {nextDisc && (
+            <a href={`/discoverer/${encodeURIComponent(nextDisc.name)}`}>
+              <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
+                {nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name} →
+              </text>
+            </a>
+          )}
+        </svg>
+      )}
 
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
 
