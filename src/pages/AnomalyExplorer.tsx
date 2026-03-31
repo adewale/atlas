@@ -11,7 +11,8 @@ import {
   contrastTextColor,
 } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
-import { usePretextLines } from '../hooks/usePretextLines';
+import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
@@ -74,6 +75,13 @@ function computeRippleDelays(
 }
 
 /* ------------------------------------------------------------------ */
+/* Intro paragraph                                                    */
+/* ------------------------------------------------------------------ */
+const INTRO_TEXT =
+  'Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. Select a category below to see which elements break the rules.';
+const INTRO_MAX_W = VIEWBOX_W;
+
+/* ------------------------------------------------------------------ */
 /* Description text area dimensions                                   */
 /* ------------------------------------------------------------------ */
 const DESC_MAX_WIDTH = 560;
@@ -110,6 +118,14 @@ export default function AnomalyExplorer() {
     [highlightedSet],
   );
 
+  const DROP_CAP_SIZE = 80;
+  const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
+    text: INTRO_TEXT,
+    maxWidth: INTRO_MAX_W,
+    dropCapFont: `${DROP_CAP_SIZE}px ${PRETEXT_SANS}`,
+  });
+  const introHeight = Math.max(introLines.length * introLH + 16, DROP_CAP_SIZE + 4);
+
   const { lines, lineHeight } = usePretextLines({
     text: selected?.description ?? '',
     maxWidth: DESC_MAX_WIDTH,
@@ -129,6 +145,24 @@ export default function AnomalyExplorer() {
         >
           Anomaly Explorer
         </h1>
+
+        {/* ---- Intro paragraph with drop cap ---- */}
+        <svg
+          width="100%"
+          viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
+          style={{ display: 'block', marginBottom: '12px' }}
+        >
+          <PretextSvg
+            lines={introLines}
+            lineHeight={introLH}
+            x={0}
+            y={0}
+            fill={BLACK}
+            maxWidth={INTRO_MAX_W}
+            animationStagger={40}
+            dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
+          />
+        </svg>
 
         {/* ---- Byrne colour key: one bold button per anomaly ---- */}
         <div
