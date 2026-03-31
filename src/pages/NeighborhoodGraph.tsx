@@ -10,6 +10,9 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
+import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -54,11 +57,19 @@ for (const el of allElements) {
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
+const INTRO_MAX_W = VIEWBOX_W;
+
 export default function NeighborhoodGraph() {
   useDocumentTitle('Neighbourhood Graph');
   const navigate = useNavigate();
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+
+  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
+    text: INTRO_TEXT,
+    maxWidth: INTRO_MAX_W,
+    dropCapFont: `80px ${PRETEXT_SANS}`,
+  });
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setHasLoaded(true));
@@ -85,9 +96,22 @@ export default function NeighborhoodGraph() {
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK }}>Neighbourhood Graph</h1>
 
-        <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
-          {INTRO_TEXT}
-        </p>
+        <svg
+          width="100%"
+          viewBox={`0 0 ${INTRO_MAX_W} ${lines.length * lineHeight + 16}`}
+          style={{ display: 'block', marginBottom: '12px' }}
+        >
+          <PretextSvg
+            lines={lines}
+            lineHeight={lineHeight}
+            x={0}
+            y={0}
+            fill={BLACK}
+            maxWidth={INTRO_MAX_W}
+            animationStagger={40}
+            dropCap={{ fontSize: 80, fill: BLACK, char: introDC.char }}
+          />
+        </svg>
       </div>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>

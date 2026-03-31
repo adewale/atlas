@@ -10,6 +10,9 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID } from '../lib/theme';
+import { useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
+import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -43,21 +46,48 @@ const SVG_WIDTH = VIEWBOX_W;
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
+const INTRO_MAX_W = VIEWBOX_W;
+
 export default function PhaseLandscape() {
   useDocumentTitle('Phase Landscape');
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
+  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
+    text: INTRO_TEXT,
+    maxWidth: INTRO_MAX_W,
+    dropCapFont: `80px ${PRETEXT_SANS}`,
+  });
+
   useEffect(() => {
     const id = requestAnimationFrame(() => setHasLoaded(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
+  const introHeight = lines.length * lineHeight + 16;
+
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Phase Landscape at STP</h1>
+
+        <svg
+          width="100%"
+          viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
+          style={{ display: 'block', marginBottom: '12px' }}
+        >
+          <PretextSvg
+            lines={lines}
+            lineHeight={lineHeight}
+            x={0}
+            y={0}
+            fill={BLACK}
+            maxWidth={INTRO_MAX_W}
+            animationStagger={40}
+            dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
+          />
+        </svg>
 
         <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
           {LEGEND_ITEMS.map((item) => (
@@ -67,10 +97,6 @@ export default function PhaseLandscape() {
             </div>
           ))}
         </div>
-
-        <p style={{ fontSize: '14px', lineHeight: 1.6, color: BLACK, maxWidth: '600px', marginBottom: '16px' }}>
-          {INTRO_TEXT}
-        </p>
       </div>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>

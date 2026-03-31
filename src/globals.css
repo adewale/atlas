@@ -58,7 +58,7 @@ html {
 body {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--sp-6) var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
   touch-action: manipulation;
 }
 
@@ -191,6 +191,12 @@ svg [role="button"] {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* SVG-safe fade-in: opacity only (CSS transform conflicts with SVG transform attribute) */
+@keyframes svg-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* Help panel enter: drop + fade */
 @keyframes help-panel-enter {
   from { opacity: 0; transform: translateY(-8px); }
@@ -267,7 +273,7 @@ svg [role="button"] {
 /* Mobile (<768px) */
 @media (max-width: 768px) {
   body {
-    padding: var(--sp-4) var(--sp-3);
+    padding: var(--sp-2) var(--sp-3);
   }
 
   /* Folio: single column */

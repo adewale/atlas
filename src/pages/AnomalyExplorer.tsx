@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useSearchParams } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { allElements } from '../lib/data';
 import {
@@ -85,9 +85,19 @@ const DESC_Y_OFFSET = 24;
 export default function AnomalyExplorer() {
   useDocumentTitle('Anomaly Explorer');
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
-  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedSlug = searchParams.get('anomaly');
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
+
+  const setSelectedSlug = (slug: string | null) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      if (slug) next.set('anomaly', slug);
+      else next.delete('anomaly');
+      return next;
+    }, { replace: true });
+  };
 
   const selected = anomalies.find((a) => a.slug === selectedSlug) ?? null;
   const highlightedSet = useMemo(
@@ -199,51 +209,52 @@ export default function AnomalyExplorer() {
             <g
               key={el.symbol}
               transform={`translate(${pos.x}, ${pos.y})`}
-              style={{
-                cursor: 'pointer',
-                ...(isHighlighted
-                  ? {
-                      transformOrigin: `${pos.x + CELL_WIDTH / 2}px ${pos.y + CELL_HEIGHT / 2}px`,
-                      animation: `anomaly-ripple 350ms ease-out ${delay}ms both`,
-                    }
-                  : {}),
-              }}
+              style={{ cursor: 'pointer' }}
               onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
             >
               <title>{el.name}</title>
-              <rect
-                width={CELL_WIDTH}
-                height={CELL_HEIGHT}
-                fill={fill}
-                stroke={hasSelection && !isHighlighted ? DIM : BLACK}
-                strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
-                rx={0}
-                style={{ transition: 'fill 250ms var(--ease-out), stroke 250ms var(--ease-out)' }}
-              />
-              <text
-                x={CELL_WIDTH / 2}
-                y={26}
-                textAnchor="middle"
-                fontSize={16}
-                fontWeight={700}
-                fontFamily="system-ui, sans-serif"
-                fill={textColor}
-                style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
+              <g
+                style={isHighlighted
+                  ? {
+                      transformOrigin: `${CELL_WIDTH / 2}px ${CELL_HEIGHT / 2}px`,
+                      animation: `anomaly-ripple 350ms ease-out ${delay}ms both`,
+                    }
+                  : undefined}
               >
-                {el.symbol}
-              </text>
-              <text
-                x={CELL_WIDTH / 2}
-                y={42}
-                textAnchor="middle"
-                fontSize={8}
-                fontFamily="system-ui, sans-serif"
-                fill={textColor}
-                opacity={0.7}
-                style={{ transition: 'fill 250ms var(--ease-out)' }}
-              >
-                {el.atomicNumber}
-              </text>
+                <rect
+                  width={CELL_WIDTH}
+                  height={CELL_HEIGHT}
+                  fill={fill}
+                  stroke={hasSelection && !isHighlighted ? DIM : BLACK}
+                  strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
+                  rx={0}
+                  style={{ transition: 'fill 250ms var(--ease-out), stroke 250ms var(--ease-out)' }}
+                />
+                <text
+                  x={CELL_WIDTH / 2}
+                  y={26}
+                  textAnchor="middle"
+                  fontSize={16}
+                  fontWeight={700}
+                  fontFamily="system-ui, sans-serif"
+                  fill={textColor}
+                  style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
+                >
+                  {el.symbol}
+                </text>
+                <text
+                  x={CELL_WIDTH / 2}
+                  y={42}
+                  textAnchor="middle"
+                  fontSize={8}
+                  fontFamily="system-ui, sans-serif"
+                  fill={textColor}
+                  opacity={0.7}
+                  style={{ transition: 'fill 250ms var(--ease-out)' }}
+                >
+                  {el.atomicNumber}
+                </text>
+              </g>
             </g>
           );
         })}

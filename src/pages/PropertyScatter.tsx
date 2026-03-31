@@ -1,9 +1,10 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
-import { usePretextLines } from '../hooks/usePretextLines';
+import { useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import InfoTip from '../components/InfoTip';
 import type { ElementRecord } from '../lib/types';
@@ -90,36 +91,56 @@ function formatTick(v: number): string {
 // ---------------------------------------------------------------------------
 export default function PropertyScatter() {
   const navigate = useNavigate();
-  const [xKey, setXKey] = useState<PropertyKey>('electronegativity');
-  const [yKey, setYKey] = useState<PropertyKey>('ionizationEnergy');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const xKey = (searchParams.get('x') as PropertyKey) || 'electronegativity';
+  const yKey = (searchParams.get('y') as PropertyKey) || 'ionizationEnergy';
   const [hovered, setHovered] = useState<ElementRecord | null>(null);
 
-  const { lines, lineHeight } = usePretextLines({
+  const setXKey = useCallback((key: PropertyKey) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set('x', key);
+      return next;
+    }, { replace: true });
+  }, [setSearchParams]);
+
+  const setYKey = useCallback((key: PropertyKey) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set('y', key);
+      return next;
+    }, { replace: true });
+  }, [setSearchParams]);
+
+  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: 640,
+    maxWidth: 700,
+    dropCapFont: `80px ${PRETEXT_SANS}`,
   });
 
   // Coupled dropdowns: prevent same property on both axes
   const handleXChange = useCallback(
     (newX: PropertyKey) => {
-      if (newX === yKey) {
-        // Swap
-        setYKey(xKey);
-      }
-      setXKey(newX);
+      setSearchParams(prev => {
+        const next = new URLSearchParams(prev);
+        if (newX === yKey) next.set('y', xKey); // swap
+        next.set('x', newX);
+        return next;
+      }, { replace: true });
     },
-    [xKey, yKey],
+    [xKey, yKey, setSearchParams],
   );
 
   const handleYChange = useCallback(
     (newY: PropertyKey) => {
-      if (newY === xKey) {
-        // Swap
-        setXKey(yKey);
-      }
-      setYKey(newY);
+      setSearchParams(prev => {
+        const next = new URLSearchParams(prev);
+        if (newY === xKey) next.set('x', yKey); // swap
+        next.set('y', newY);
+        return next;
+      }, { replace: true });
     },
-    [xKey, yKey],
+    [xKey, yKey, setSearchParams],
   );
 
   // Filter & normalize
@@ -173,10 +194,19 @@ export default function PropertyScatter() {
         {/* Pretext intro */}
         <svg
           width="100%"
-          viewBox={`0 0 660 ${introHeight}`}
+          viewBox={`0 0 700 ${introHeight}`}
           style={{ display: 'block', marginTop: '16px' }}
         >
-          <PretextSvg lines={lines} lineHeight={lineHeight} x={10} y={0} />
+          <PretextSvg
+            lines={lines}
+            lineHeight={lineHeight}
+            x={0}
+            y={0}
+            fill={BLACK}
+            maxWidth={700}
+            animationStagger={40}
+            dropCap={{ fontSize: 80, fill: DEEP_BLUE, char: introDC.char }}
+          />
         </svg>
 
         {/* Educational note */}
@@ -390,7 +420,7 @@ export default function PropertyScatter() {
                 highlighted={isHovered}
                 style={{
                   opacity: 0,
-                  animation: `card-enter 300ms var(--ease-out) ${i * 15}ms forwards`,
+                  animation: `svg-fade-in 300ms var(--ease-out) ${i * 15}ms forwards`,
                   pointerEvents: 'none',
                 }}
               />

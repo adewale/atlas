@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
+import { useSearchParams } from 'react-router';
 import type { ElementRecord } from '../lib/types';
-import { allElements, searchElements } from '../lib/data';
+import { allElements } from '../lib/data';
 import {
   getCellPosition,
   contrastTextColor,
@@ -19,7 +20,6 @@ type HighlightMode = 'none' | 'group' | 'period' | 'block' | 'category' | 'prope
 type NumericProperty = 'mass' | 'electronegativity' | 'ionizationEnergy' | 'radius';
 
 const HIGHLIGHT_OPTIONS: { value: HighlightMode; label: string }[] = [
-  { value: 'none', label: 'None' },
   { value: 'group', label: 'Group' },
   { value: 'period', label: 'Period' },
   { value: 'block', label: 'Block' },
@@ -34,7 +34,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_LIGHT, GREY_RULE, MONO_FONT, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 
 // Pre-compute cell positions once at module level (they never change)
 const CELL_POSITIONS = new Map(allElements.map(el => [el.symbol, getCellPosition(el)]));
@@ -226,35 +226,48 @@ type PeriodicTableProps = {
 };
 
 export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
-  const [query, setQuery] = useState('');
-  const [highlightMode, setHighlightMode] = useState<HighlightMode>('none');
-  const [property, setProperty] = useState<NumericProperty>('mass');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const highlightMode = (searchParams.get('highlight') as HighlightMode) || 'none';
+  const property = (searchParams.get('property') as NumericProperty) || 'mass';
   const [hasLoaded, setHasLoaded] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
+
+  const setHighlightMode = useCallback((mode: HighlightMode) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      if (mode === 'none') {
+        next.delete('highlight');
+        next.delete('property');
+      } else {
+        next.set('highlight', mode);
+        if (mode === 'property') next.set('property', property);
+      }
+      return next;
+    }, { replace: true });
+  }, [setSearchParams, property]);
+
+  const setProperty = useCallback((prop: NumericProperty) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      next.set('property', prop);
+      return next;
+    }, { replace: true });
+  }, [setSearchParams]);
 
   const { activeSymbol, setActiveSymbol, onKeyDown } = useGridNavigation({
     onActivate: onSelectElement,
   });
 
-  const { filteredSymbols, isFiltering, matchCount } = useMemo(() => {
-    const results = searchElements(query);
-    const symbols = new Set(results.map((e) => e.symbol));
-    const filtering = query.trim().length > 0;
-    return { filteredSymbols: symbols, isFiltering: filtering, matchCount: filtering ? symbols.size : null };
-  }, [query]);
-
-  // Pre-compute all 118 fills and text colors so cells don't recompute on hover
-  const { fillMap, textColorMap, dimmedTextColor } = useMemo(() => {
+  // Pre-compute all 118 fills and text colours so cells don't recompute on hover
+  const { fillMap, textColorMap } = useMemo(() => {
     const fills = new Map<string, string>();
     const textColors = new Map<string, string>();
-    const dimText = contrastTextColor(DIM);
     for (const el of allElements) {
       const f = getCellFill(el, highlightMode, property);
       fills.set(el.symbol, f);
       textColors.set(el.symbol, contrastTextColor(f));
     }
-    return { fillMap: fills, textColorMap: textColors, dimmedTextColor: dimText };
+    return { fillMap: fills, textColorMap: textColors };
   }, [highlightMode, property]);
 
   // Find focused element position for ripple distance calculation
@@ -269,25 +282,6 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Local keyboard shortcuts: / to focus search, Escape to clear
-  useEffect(() => {
-    function handleGlobalKey(e: KeyboardEvent) {
-      const tag = (e.target as HTMLElement).tagName;
-      const isInput = tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA';
-
-      if (e.key === 'Escape' && query) {
-        setQuery('');
-        return;
-      }
-      if (e.key === '/' && !isInput) {
-        e.preventDefault();
-        searchRef.current?.focus();
-      }
-    }
-    window.addEventListener('keydown', handleGlobalKey);
-    return () => window.removeEventListener('keydown', handleGlobalKey);
-  }, [query]);
-
   const handleCellClick = useCallback(
     (symbol: string) => {
       setActiveSymbol(symbol);
@@ -299,7 +293,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   return (
     <div>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-      {/* Unified filter bar: text filter + colour chips */}
+      {/* Colour mode chips */}
       <div style={{
         display: 'flex',
         gap: '6px',
@@ -307,66 +301,6 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
         flexWrap: 'wrap',
         alignItems: 'center',
       }}>
-        {/* Text filter */}
-        <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-          <label htmlFor="pt-search" style={{
-            fontSize: '10px',
-            fontWeight: 'bold',
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: GREY_MID,
-            position: 'absolute',
-            left: '10px',
-            pointerEvents: 'none',
-          }}>
-            {query ? '' : 'Filter'}
-          </label>
-          <input
-            ref={searchRef}
-            id="pt-search"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape' && query) {
-                e.stopPropagation();
-                setQuery('');
-              }
-            }}
-            aria-describedby="pt-search-desc"
-            aria-label={matchCount != null ? `Filter elements — ${matchCount} of 118 match` : 'Filter elements by name or symbol'}
-            style={{
-              width: query ? '180px' : '90px',
-              padding: query ? '6px 48px 6px 10px' : '6px 10px',
-              border: `1.5px solid ${isFiltering ? BLACK : GREY_RULE}`,
-              background: PAPER,
-              fontFamily: 'inherit',
-              fontSize: '13px',
-              minHeight: '44px',
-              transition: 'width 200ms var(--ease-out), border-color 200ms var(--ease-out)',
-            }}
-          />
-          {matchCount != null && (
-            <span
-              aria-live="polite"
-              style={{
-                position: 'absolute',
-                right: '8px',
-                fontSize: '10px',
-                fontFamily: MONO_FONT,
-                color: matchCount === 0 ? WARM_RED : GREY_MID,
-                pointerEvents: 'none',
-              }}
-            >
-              {matchCount}/{118}
-            </span>
-          )}
-          <span id="pt-search-desc" className="sr-only">
-            Filter elements by name or symbol. Press / to focus, Escape to clear.
-          </span>
-        </div>
-
-        {/* Colour mode chips */}
         {HIGHLIGHT_OPTIONS.map((o) => {
           const isActive = highlightMode === o.value;
           return (
@@ -496,9 +430,8 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
         {allElements.map((el) => {
           const pos = CELL_POSITIONS.get(el.symbol)!;
           const isActive = el.symbol === activeSymbol;
-          const isDimmed = isFiltering && !filteredSymbols.has(el.symbol);
-          const fill = isDimmed ? DIM : fillMap.get(el.symbol)!;
-          const textColor = isDimmed ? dimmedTextColor : textColorMap.get(el.symbol)!;
+          const fill = fillMap.get(el.symbol)!;
+          const textColor = textColorMap.get(el.symbol)!;
           const dist = focusedPos
             ? Math.abs(pos.col - focusedPos.col) + Math.abs(pos.row - focusedPos.row)
             : 0;
@@ -515,7 +448,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               fill={fill}
               textColor={textColor}
               isActive={isActive}
-              isDimmed={isDimmed}
+              isDimmed={false}
               hasLoaded={hasLoaded}
               dist={dist}
               onClick={handleCellClick}
