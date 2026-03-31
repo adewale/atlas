@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
@@ -95,22 +95,6 @@ export default function PropertyScatter() {
   const xKey = (searchParams.get('x') as PropertyKey) || 'electronegativity';
   const yKey = (searchParams.get('y') as PropertyKey) || 'ionizationEnergy';
   const [hovered, setHovered] = useState<ElementRecord | null>(null);
-
-  const setXKey = useCallback((key: PropertyKey) => {
-    setSearchParams(prev => {
-      const next = new URLSearchParams(prev);
-      next.set('x', key);
-      return next;
-    }, { replace: true });
-  }, [setSearchParams]);
-
-  const setYKey = useCallback((key: PropertyKey) => {
-    setSearchParams(prev => {
-      const next = new URLSearchParams(prev);
-      next.set('y', key);
-      return next;
-    }, { replace: true });
-  }, [setSearchParams]);
 
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,

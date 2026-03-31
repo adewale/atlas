@@ -119,7 +119,7 @@ export function dropCapLayout(
 
   // Measure the drop cap character at its large font size
   const dropPrepared = prepareWithSegments(dropChar, dropCapFont);
-  const dropResult = layout(dropPrepared, 9999, 0);
+  layout(dropPrepared, 9999, 0);
   // For a single char, the prepared segments[0] width is the character width
   const dropWidth = dropPrepared.widths[0] ?? 40;
 

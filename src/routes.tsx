@@ -1,11 +1,12 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
+import type { GroupData, AnomalyData, DiscovererData, TimelineData } from './lib/types';
 
-let groupsCache: unknown = null;
-let anomaliesCache: unknown = null;
-let discoverersCache: unknown = null;
-let timelineCache: unknown = null;
+let groupsCache: GroupData[] | null = null;
+let anomaliesCache: AnomalyData[] | null = null;
+let discoverersCache: DiscovererData[] | null = null;
+let timelineCache: TimelineData | null = null;
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));

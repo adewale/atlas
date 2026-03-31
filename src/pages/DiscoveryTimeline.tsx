@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, MUSTARD, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -25,7 +25,6 @@ const SVG_HEIGHT = 300;
 
 const MARGIN_LEFT = 120; // room for antiquity cluster
 const MARGIN_RIGHT = 20;
-const MARGIN_TOP = 20;
 const MARGIN_BOTTOM = 50;
 
 const YEAR_MIN = 1650;
@@ -105,7 +104,7 @@ export default function DiscoveryTimeline() {
   }, [timeline]);
 
   // Memoize all layout computations — they depend only on loader data
-  const { squares, antiquitySquares, minYear } = useMemo(() => {
+  const { squares, antiquitySquares } = useMemo(() => {
     // Bin timeline entries by decade
     const decadeBins = new Map<number, TimelineEntry[]>();
     for (const entry of timeline) {
@@ -149,7 +148,7 @@ export default function DiscoveryTimeline() {
       };
     });
 
-    return { squares: sqs, antiquitySquares: antSqs, minYear: mYear };
+    return { squares: sqs, antiquitySquares: antSqs };
   }, [antiquity, timeline, axisY]);
 
   const handleSquareEnter = useCallback(

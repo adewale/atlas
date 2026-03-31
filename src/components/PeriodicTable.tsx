@@ -34,7 +34,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
@@ -94,15 +94,6 @@ function interpolateColor(from: string, to: string, t: number): string {
 }
 
 // ---------------------------------------------------------------------------
-// Grid distance for ripple delay
-// ---------------------------------------------------------------------------
-function gridDistance(a: ElementRecord, b: ElementRecord): number {
-  const pa = getCellPosition(a);
-  const pb = getCellPosition(b);
-  return Math.abs(pa.col - pb.col) + Math.abs(pa.row - pb.row);
-}
-
-// ---------------------------------------------------------------------------
 // Memoized cell component — only re-renders when its own props change
 // ---------------------------------------------------------------------------
 type ElementCellProps = {
@@ -115,7 +106,6 @@ type ElementCellProps = {
   fill: string;
   textColor: string;
   isActive: boolean;
-  isDimmed: boolean;
   hasLoaded: boolean;
   dist: number;
   onClick: (symbol: string) => void;
@@ -133,7 +123,6 @@ const ElementCell = memo(
     fill,
     textColor,
     isActive,
-    isDimmed,
     hasLoaded,
     dist,
     onClick,
@@ -220,7 +209,6 @@ const ElementCell = memo(
     prev.fill === next.fill &&
     prev.textColor === next.textColor &&
     prev.isActive === next.isActive &&
-    prev.isDimmed === next.isDimmed &&
     prev.hasLoaded === next.hasLoaded &&
     prev.dist === next.dist,
 );
@@ -481,7 +469,6 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               fill={fill}
               textColor={textColor}
               isActive={isActive}
-              isDimmed={false}
               hasLoaded={hasLoaded}
               dist={dist}
               onClick={handleCellClick}

@@ -102,10 +102,6 @@ test.describe('Etymology Map — property-based tests', () => {
       const boxShadow = await focused.evaluate(
         (el) => getComputedStyle(el).boxShadow,
       );
-      const borderColor = await focused.evaluate(
-        (el) => getComputedStyle(el).borderColor,
-      );
-
       // The element must have SOME visible focus indicator:
       // either a non-zero outline, a box-shadow, or a changed border
       const hasVisibleOutline =

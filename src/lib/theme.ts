@@ -1,6 +1,37 @@
 /**
  * Shared colour constants and category utilities.
  * Single source of truth — never hardcode hex values elsewhere.
+ *
+ * ## Style policy
+ *
+ * Atlas uses a hybrid approach with clear boundaries:
+ *
+ * **globals.css** owns:
+ * - CSS custom properties (--paper, --black, --deep-blue, etc.)
+ * - Keyframe animations (folio-line-reveal, plate-wipe, bar-grow, etc.)
+ * - View Transition API morphing rules
+ * - Responsive breakpoints (@media queries)
+ * - Component classes that need cascade (.etymology-card, .folio-layout, etc.)
+ * - Spacing scale (--sp-1 through --sp-12)
+ * - Easing functions (--ease-out, --ease-spring, etc.)
+ * - Stroke tiers (--stroke-hairline through --stroke-heavy)
+ *
+ * **theme.ts** owns:
+ * - Colour constants for use in JSX (DEEP_BLUE, WARM_RED, etc.)
+ * - Grey scale (GREY_DARK, GREY_MID, GREY_LIGHT, GREY_RULE)
+ * - Named style objects for typography (INSCRIPTION_STYLE, SECTION_HEADING_STYLE, etc.)
+ * - Computed values (categoryColor, toSlug/fromSlug)
+ * - Layout constants (CONTROL_SECTION_MIN_HEIGHT)
+ *
+ * **Inline styles** are appropriate for:
+ * - One-off layout (flex, gap, margin on a specific container)
+ * - Dynamic values (colours derived from data, positions from props)
+ * - SVG attributes (fill, stroke, transform)
+ *
+ * **Inline styles** should NOT:
+ * - Duplicate values already in theme.ts — use the constant
+ * - Hardcode hex colours — import from this file
+ * - Recreate animation/transition logic — use CSS classes
  */
 import type React from 'react';
 

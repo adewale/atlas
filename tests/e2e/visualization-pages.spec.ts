@@ -309,7 +309,6 @@ test.describe('Etymology Map', () => {
 
     // Click first element card
     const firstCard = page.locator('section a').first();
-    const href = await firstCard.getAttribute('href');
     await firstCard.click();
     await page.waitForTimeout(1000);
 

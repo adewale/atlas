@@ -2,13 +2,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import * as fc from 'fast-check';
 
 // Mock @chenglou/pretext at the boundary - verify our wrappers use it correctly
-const mockPrepareWithSegments = vi.fn((_text: string, _font: string) => ({
+const mockPrepareWithSegments = vi.fn((_text: string) => ({
   __brand: 'prepared',
   _text,
   widths: Array.from({ length: _text.length }, () => 8),
 }));
 
-const mockLayout = vi.fn((_prepared: unknown, _maxWidth: number, _lineSpacing: number) => ({
+const mockLayout = vi.fn((_prepared: unknown, _maxWidth?: number, _lineSpacing?: number) => ({
   lineCount: 1,
   height: 20,
 }));
@@ -47,7 +47,7 @@ const mockLayoutNextLine = vi.fn((_prepared: unknown, start: { segmentIndex: num
 });
 
 vi.mock('@chenglou/pretext', () => ({
-  prepareWithSegments: (...args: unknown[]) => mockPrepareWithSegments(...(args as [string, string])),
+  prepareWithSegments: (...args: unknown[]) => mockPrepareWithSegments(...(args as [string])),
   layout: (...args: unknown[]) => mockLayout(...(args as [unknown, number, number])),
   layoutWithLines: (...args: unknown[]) => mockLayoutWithLines(...(args as [unknown, number, number])),
   layoutNextLine: (...args: unknown[]) => mockLayoutNextLine(...(args as [unknown, { segmentIndex: number; graphemeIndex: number }, number])),
@@ -146,7 +146,7 @@ describe('Pretext wrapper integration', () => {
       // Text long enough to exceed 2 lines at width 80
       const longText = 'a'.repeat(100);
       const widths = [80, 160]; // only 2 entries, last used for overflow
-      const lines = shapeText(longText, '16px system-ui', widths, 20);
+      shapeText(longText, '16px system-ui', widths, 20);
 
       // Verify layoutNextLine was called with width 80 first, then 160 for subsequent
       const calls = mockLayoutNextLine.mock.calls;
