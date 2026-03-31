@@ -10,7 +10,9 @@
     "build": "npm run build:data && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "node scripts/run-playwright.mjs",
+    "profile:journeys": "node scripts/profile-journeys-http.mjs",
+    "perf:audit": "node --expose-gc --import tsx scripts/perf-audit.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "deploy": "npm run build && wrangler pages deploy dist/"

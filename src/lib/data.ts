@@ -7,6 +7,12 @@ const bySymbol = new Map<string, ElementRecord>(
   allElements.map((el) => [el.symbol, el]),
 );
 
+const searchable = allElements.map((el) => ({
+  el,
+  symbolLower: el.symbol.toLowerCase(),
+  nameLower: el.name.toLowerCase(),
+}));
+
 export function getElement(symbol: string): ElementRecord | undefined {
   return bySymbol.get(symbol);
 }
@@ -14,21 +20,29 @@ export function getElement(symbol: string): ElementRecord | undefined {
 export function searchElements(query: string): ElementRecord[] {
   if (!query.trim()) return allElements;
   const q = query.toLowerCase().trim();
-  const matches = allElements.filter(
-    (el) =>
-      el.name.toLowerCase().includes(q) ||
-      el.symbol.toLowerCase().includes(q),
-  );
+  const matches: { el: ElementRecord; score: number }[] = [];
+
+  for (const candidate of searchable) {
+    const symbolIncludes = candidate.symbolLower.includes(q);
+    const nameIncludes = candidate.nameLower.includes(q);
+    if (!symbolIncludes && !nameIncludes) continue;
+
+    const score =
+      candidate.symbolLower === q
+        ? 0
+        : candidate.nameLower === q
+          ? 1
+          : candidate.symbolLower.startsWith(q)
+            ? 2
+            : candidate.nameLower.startsWith(q)
+              ? 3
+              : 4;
+
+    matches.push({ el: candidate.el, score });
+  }
+
   // Sort by relevance: exact symbol > exact name > symbol starts-with > name starts-with > rest
-  return matches.sort((a, b) => {
-    const aSymL = a.symbol.toLowerCase();
-    const bSymL = b.symbol.toLowerCase();
-    const aNameL = a.name.toLowerCase();
-    const bNameL = b.name.toLowerCase();
-    const aScore =
-      aSymL === q ? 0 : aNameL === q ? 1 : aSymL.startsWith(q) ? 2 : aNameL.startsWith(q) ? 3 : 4;
-    const bScore =
-      bSymL === q ? 0 : bNameL === q ? 1 : bSymL.startsWith(q) ? 2 : bNameL.startsWith(q) ? 3 : 4;
-    return aScore - bScore || a.atomicNumber - b.atomicNumber;
-  });
+  matches.sort((a, b) => a.score - b.score || a.el.atomicNumber - b.el.atomicNumber);
+
+  return matches.map((match) => match.el);
 }

@@ -20,6 +20,27 @@ describe('getElement', () => {
 });
 
 describe('searchElements', () => {
+  function legacySearch(query: string) {
+    if (!query.trim()) return allElements;
+    const q = query.toLowerCase().trim();
+    const matches = allElements.filter(
+      (el) =>
+        el.name.toLowerCase().includes(q) ||
+        el.symbol.toLowerCase().includes(q),
+    );
+    return matches.sort((a, b) => {
+      const aSymL = a.symbol.toLowerCase();
+      const bSymL = b.symbol.toLowerCase();
+      const aNameL = a.name.toLowerCase();
+      const bNameL = b.name.toLowerCase();
+      const aScore =
+        aSymL === q ? 0 : aNameL === q ? 1 : aSymL.startsWith(q) ? 2 : aNameL.startsWith(q) ? 3 : 4;
+      const bScore =
+        bSymL === q ? 0 : bNameL === q ? 1 : bSymL.startsWith(q) ? 2 : bNameL.startsWith(q) ? 3 : 4;
+      return aScore - bScore || a.atomicNumber - b.atomicNumber;
+    });
+  }
+
   it('empty query returns all 118 elements', () => {
     expect(searchElements('')).toHaveLength(118);
     expect(searchElements('  ')).toHaveLength(118);
@@ -75,6 +96,30 @@ describe('searchElements', () => {
     // "Neon" contains "ne" but searching "Neon" should return Neon first
     const results = searchElements('Neon');
     expect(results[0].symbol).toBe('Ne');
+  });
+
+  it('matches the legacy ranking behavior exactly for representative queries', () => {
+    const queries = new Set<string>([
+      '',
+      ' ',
+      'Fe',
+      'fE',
+      'Iron',
+      'hyd',
+      'N',
+      'O',
+      'S',
+      'x',
+      'xyzzy123',
+      ...allElements.map((el) => el.symbol),
+      ...allElements.map((el) => el.name),
+    ]);
+
+    for (const query of queries) {
+      const current = searchElements(query).map((el) => el.symbol);
+      const legacy = legacySearch(query).map((el) => el.symbol);
+      expect(current, `query: ${query}`).toEqual(legacy);
+    }
   });
 });
 

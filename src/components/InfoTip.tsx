@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, type ReactNode } from 'react';
+import { useState, useRef, useCallback, useEffect, type ReactNode } from 'react';
 import { BLACK, PAPER, GREY_MID, GREY_LIGHT } from '../lib/theme';
 
 type InfoTipProps = {
@@ -21,6 +21,12 @@ export default function InfoTip({ label, children }: InfoTipProps) {
 
   const hide = useCallback(() => {
     timeoutRef.current = setTimeout(() => setOpen(false), 150);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePretextLines } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
@@ -24,6 +24,11 @@ const INTRO_TEXT =
  */
 export default function HelpOverlay() {
   const [open, setOpen] = useState(false);
+  const openRef = useRef(open);
+
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -33,13 +38,13 @@ export default function HelpOverlay() {
         e.preventDefault();
         setOpen((v) => !v);
       }
-      if (e.key === 'Escape' && open) {
+      if (e.key === 'Escape' && openRef.current) {
         setOpen(false);
       }
     }
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [open]);
+  }, []);
 
   if (!open) return null;
 
