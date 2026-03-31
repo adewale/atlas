@@ -190,19 +190,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },
   });
 
-  // Group trend data for electronegativity sparkline
-  const _groupTrendData = useMemo(() => {
-    if (!groups || element.group === null) return null;
-    const group = groups.find((g) => g.n === element.group);
-    if (!group) return null;
-    const values = group.elements.map((sym) => {
-      const el = getElement(sym);
-      return el?.electronegativity ?? null;
-    });
-    const highlightIndex = group.elements.indexOf(element.symbol);
-    return { values, highlightIndex };
-  }, [groups, element]);
-
   // Group phase data for phase strip (replaces duplicate EN sparkline)
   const groupPhaseData = useMemo(() => {
     if (!groups || element.group === null) return null;
