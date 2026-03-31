@@ -222,11 +222,6 @@ describe('Folio', () => {
     expect(ruLink).toBeNull();
   });
 
-  it('sequential prev/next navigation appears beneath data plate', () => {
-    renderFolio();
-    const navSvg = screen.getByLabelText('Previous and next element navigation');
-    expect(navSvg).toBeInTheDocument();
-  });
 
   it('category label links to atlas category page', () => {
     renderFolio();

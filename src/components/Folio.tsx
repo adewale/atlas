@@ -209,16 +209,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     return { phases, symbols: group.elements, highlightIndex };
   }, [groups, element]);
 
-  // Prev/next by atomic number for sequential navigation
-  const prevElement = useMemo(
-    () => (element.atomicNumber > 1 ? allElements.find((e) => e.atomicNumber === element.atomicNumber - 1) : null),
-    [element.atomicNumber],
-  );
-  const nextElement = useMemo(
-    () => (element.atomicNumber < 118 ? allElements.find((e) => e.atomicNumber === element.atomicNumber + 1) : null),
-    [element.atomicNumber],
-  );
-
   // Prev/next within group (vertical traversal)
   const { prevInGroup, nextInGroup } = useMemo(() => {
     if (element.group == null) return { prevInGroup: null, nextInGroup: null };
@@ -426,44 +416,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName="data-plate-block" mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
             </div>
 
-            {/* Prev / Next navigation — Pretext-styled SVG beneath the data plate */}
-            {(prevElement || nextElement) && (
-              <svg
-                width={mobile ? '100%' : PLATE_WIDTH}
-                height={24}
-                viewBox={`0 0 ${PLATE_WIDTH} 24`}
-                style={{ display: 'block', marginTop: '4px' }}
-                aria-label="Previous and next element navigation"
-              >
-                {prevElement && (
-                  <a href={`/element/${prevElement.symbol}`}>
-                    <text
-                      x={4}
-                      y={16}
-                      fontSize={11}
-                      fill={GREY_MID}
-                      fontFamily={PRETEXT_SANS}
-                    >
-                      ← {prevElement.symbol}
-                    </text>
-                  </a>
-                )}
-                {nextElement && (
-                  <a href={`/element/${nextElement.symbol}`}>
-                    <text
-                      x={PLATE_WIDTH - 4}
-                      y={16}
-                      fontSize={11}
-                      fill={GREY_MID}
-                      fontFamily={PRETEXT_SANS}
-                      textAnchor="end"
-                    >
-                      {nextElement.symbol} →
-                    </text>
-                  </a>
-                )}
-              </svg>
-            )}
           </div>
 
           {/* Shaped summary text — flows around identity block (left) and data plate (right) */}

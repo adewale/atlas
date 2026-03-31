@@ -59,12 +59,6 @@ test.describe('Data plate navigation arrows', () => {
     expect(page.url()).toContain('/element/Ru');
   });
 
-  test('sequential prev/next nav appears beneath data plate', async ({ page }) => {
-    await page.goto('/element/Fe', { waitUntil: 'commit' });
-    await page.waitForTimeout(1000);
-    const navSvg = page.locator('svg[aria-label="Previous and next element navigation"]');
-    await expect(navSvg).toBeVisible();
-  });
 });
 
 test.describe('Hero header navigation (TimelineEra)', () => {
