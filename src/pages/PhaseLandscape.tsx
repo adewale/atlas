@@ -65,7 +65,8 @@ export default function PhaseLandscape() {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  const introHeight = lines.length * lineHeight + 16;
+  const DROP_CAP_SIZE = 80;
+  const introHeight = Math.max(lines.length * lineHeight + 16, DROP_CAP_SIZE + 4);
 
   return (
     <PageShell vizNav>

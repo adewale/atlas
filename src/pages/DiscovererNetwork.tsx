@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, Link, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE } from '../lib/theme';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -14,7 +14,7 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 /* Constants                                                           */
 /* ------------------------------------------------------------------ */
 const INTRO_TEXT =
-  'Some scientists discovered a single element. Others reshaped the periodic table. Glenn Seaborg discovered ten elements. Humphry Davy electrolyzed his way to six. This chart maps the prolific discoverers.';
+  'Some scientists discovered a single element. Others reshaped the periodic table. Glenn Seaborg discovered ten elements. Humphry Davy electrolysed his way to six. This chart maps the prolific discoverers.';
 
 const SVG_WIDTH = 900;
 const LEFT_COL = 200;
@@ -77,9 +77,7 @@ export default function DiscovererNetwork() {
 
   return (
     <PageShell vizNav>
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
-      </div>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
 
       {/* bar-grow keyframe in globals.css */}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>

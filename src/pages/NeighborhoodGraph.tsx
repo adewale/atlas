@@ -98,7 +98,7 @@ export default function NeighborhoodGraph() {
 
         <svg
           width="100%"
-          viewBox={`0 0 ${INTRO_MAX_W} ${lines.length * lineHeight + 16}`}
+          viewBox={`0 0 ${INTRO_MAX_W} ${Math.max(lines.length * lineHeight + 16, 84)}`}
           style={{ display: 'block', marginBottom: '12px' }}
         >
           <PretextSvg

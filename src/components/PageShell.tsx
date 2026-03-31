@@ -12,9 +12,9 @@ const ATLAS_LETTERS = [
   { letter: 'S', color: MUSTARD },
 ];
 
-const FONT_SIZE = 22;
-const CELL = 32;
-const BAR_W = 48;
+const FONT_SIZE = 32;
+const CELL = 44;
+const BAR_W = 56;
 const RULE_COLOR = GREY_RULE;
 
 type PageShellProps = {
@@ -39,7 +39,7 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
       className="page-shell"
       style={{
         display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : '64px 1fr',
+        gridTemplateColumns: isMobile ? '1fr' : '72px 1fr',
         gridTemplateRows: 'auto 1fr auto',
         gap: 0,
         minHeight: '100vh',
@@ -59,7 +59,7 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
             justifyContent: 'flex-start',
             paddingTop: 0,
             gap: 0,
-            width: '64px',
+            width: '72px',
             margin: 0,
             userSelect: 'none',
           }}
@@ -86,7 +86,7 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
                 textAnchor="middle"
                 fontSize={FONT_SIZE}
                 fontFamily="Cinzel, Georgia, serif"
-                fontWeight="700"
+                fontWeight="900"
                 fill={item.color}
                 letterSpacing="0.15em"
               >

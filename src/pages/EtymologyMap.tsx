@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useLoaderData, useLocation } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { getElement } from '../lib/data';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID, INSCRIPTION_STYLE } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -194,28 +194,26 @@ export default function EtymologyMap() {
     <PageShell vizNav>
       <div style={styles.content}>
 
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={styles.title}>Etymology Map</h1>
+      <h1 style={styles.title}>Etymology Map</h1>
 
-        <svg
-          viewBox={`0 0 ${MAX_WIDTH} ${introSvgHeight}`}
-          overflow="visible"
-          style={styles.introSvg}
-          role="img"
-          aria-label="Introduction to etymology map"
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={MAX_WIDTH}
-            animationStagger={40}
-            dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }}
-          />
-        </svg>
-      </div>
+      <svg
+        viewBox={`0 0 ${MAX_WIDTH} ${Math.max(introSvgHeight, 76)}`}
+        overflow="visible"
+        style={{ ...styles.introSvg, marginBottom: 12 }}
+        role="img"
+        aria-label="Introduction to etymology map"
+      >
+        <PretextSvg
+          lines={lines}
+          lineHeight={lineHeight}
+          x={0}
+          y={0}
+          fill={BLACK}
+          maxWidth={MAX_WIDTH}
+          animationStagger={40}
+          dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }}
+        />
+      </svg>
 
       {orderedSections.map((section, sectionIdx) => {
         const color = originColor(section.origin);

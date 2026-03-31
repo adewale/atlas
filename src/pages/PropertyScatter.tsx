@@ -181,7 +181,8 @@ export default function PropertyScatter() {
   const xTicks = useMemo(() => niceTickValues(xMin, xMax, TICK_COUNT), [xMin, xMax]);
   const yTicks = useMemo(() => niceTickValues(yMin, yMax, TICK_COUNT), [yMin, yMax]);
 
-  const introHeight = lines.length * lineHeight + 16;
+  const DROP_CAP_SIZE = 80;
+  const introHeight = Math.max(lines.length * lineHeight + 16, DROP_CAP_SIZE + 4);
 
   useDocumentTitle('Property Scatter');
 

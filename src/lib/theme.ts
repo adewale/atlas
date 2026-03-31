@@ -38,7 +38,7 @@ export const MONO_FONT = "'SF Mono', 'Cascadia Code', 'Fira Code', monospace";
  * filters in a container with this minHeight so the SVG starts at the
  * same vertical position regardless of which tab is active.
  */
-export const CONTROL_SECTION_MIN_HEIGHT = 200;
+export const CONTROL_SECTION_MIN_HEIGHT = 140;
 
 /* Shared style objects */
 export const BACK_LINK_STYLE: React.CSSProperties = {

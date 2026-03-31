@@ -114,7 +114,7 @@ const ENRICHMENT: Record<string, EnrichmentRecord> = {
   Pu:  { discoveryYear: 1940, discoverer: 'Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl', etymologyOrigin: 'astronomical', etymologyDescription: 'Pluto, the celestial body beyond Neptune' },
   Am:  { discoveryYear: 1944, discoverer: 'Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso', etymologyOrigin: 'place', etymologyDescription: 'Americas, by analogy with europium' },
   Cm:  { discoveryYear: 1944, discoverer: 'Glenn Seaborg, Ralph James & Albert Ghiorso', etymologyOrigin: 'person', etymologyDescription: 'Marie and Pierre Curie, pioneers of radioactivity' },
-  Bk:  { discoveryYear: 1949, discoverer: 'Glenn Seaborg, Stanley Thompson & Albert Ghiorso', etymologyOrigin: 'place', etymologyDescription: 'Berkeley, California, where it was synthesized' },
+  Bk:  { discoveryYear: 1949, discoverer: 'Glenn Seaborg, Stanley Thompson & Albert Ghiorso', etymologyOrigin: 'place', etymologyDescription: 'Berkeley, California, where it was synthesised' },
   Cf:  { discoveryYear: 1950, discoverer: 'Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street', etymologyOrigin: 'place', etymologyDescription: 'California, the state and university' },
   Es:  { discoveryYear: 1952, discoverer: 'Albert Ghiorso et al.', etymologyOrigin: 'person', etymologyDescription: 'Albert Einstein' },
   Fm:  { discoveryYear: 1952, discoverer: 'Albert Ghiorso et al.', etymologyOrigin: 'person', etymologyDescription: 'Enrico Fermi, nuclear physics pioneer' },
