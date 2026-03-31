@@ -5,6 +5,7 @@ import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PlateHoverInfo } from '../components/AtlasPlate';
 import { WARM_RED, DEEP_BLUE, BLACK, PAPER, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
+import { DiscovererChip } from '../components/EntityChip';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -224,32 +225,17 @@ export default function TimelineEra() {
           }}>
             Discoverers
           </h2>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {discoverers.map((name) => (
-              <Link
-                key={name}
-                to={`/discoverer/${encodeURIComponent(name)}`}
-                title={`View elements discovered by ${name}`}
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  padding: '6px 12px',
-                  border: `1.5px solid ${WARM_RED}`,
-                  color: WARM_RED,
-                  textDecoration: 'none',
-                  minHeight: 'unset',
-                  minWidth: 'unset',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                }}
-              >
-                <span style={{ width: '8px', height: '8px', background: WARM_RED, display: 'inline-block', flexShrink: 0 }} />
-                {name}
-              </Link>
-            ))}
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+            {discoverers.map((name) => {
+              const count = entries.filter((e) => e.discoverer === name).length;
+              return (
+                <DiscovererChip
+                  key={name}
+                  name={name}
+                  elementCount={count}
+                />
+              );
+            })}
           </div>
         </section>
       )}

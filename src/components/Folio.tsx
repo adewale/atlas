@@ -2,7 +2,7 @@ import { useMemo, useState, useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import type { PositionedLine } from '../lib/pretext';
-import { blockColor, contrastTextColor } from '../lib/grid';
+import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
 import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
 import { computeLineHeight, PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -15,6 +15,8 @@ import type { GroupData } from '../lib/types';
 
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug } from '../lib/theme';
 import InfoTip from './InfoTip';
+import { NeighbourChip } from './EntityChip';
+import { AnomalyChip } from './EntityChip';
 
 const PLATE_WIDTH = 160;
 const PLATE_HEIGHT = 180;
@@ -476,23 +478,12 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             }}
           >
             {elementAnomalies.map((a) => (
-              <Link
+              <AnomalyChip
                 key={a.slug}
-                to={`/atlas/anomaly/${a.slug}`}
-                title={`${a.label} — view anomaly details`}
-                style={{
-                  fontSize: '10px',
-                  fontWeight: 'bold',
-                  letterSpacing: '0.05em',
-                  textTransform: 'uppercase',
-                  padding: '14px 10px',
-                  border: `1px solid ${color}`,
-                  color,
-                  textDecoration: 'none',
-                }}
-              >
-                {a.label}
-              </Link>
+                slug={a.slug}
+                label={a.label}
+                elementCount={a.elements.length}
+              />
             ))}
           </div>
         )}
@@ -665,12 +656,28 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
             Neighbours
           </div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            {element.neighbors.map((sym) => (
-              <Link key={sym} to={`/element/${sym}`}>
-                {sym}
-              </Link>
-            ))}
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+            {element.neighbors.map((sym) => {
+              const neighbour = getElement(sym);
+              if (!neighbour) return null;
+              const adj = adjacencyMap.get(element.symbol);
+              const dirLabels: Record<string, string> = { left: '← left', right: '→ right', up: '↑ above', down: '↓ below' };
+              let direction: string | undefined;
+              if (adj) {
+                for (const [dir, target] of Object.entries(adj)) {
+                  if (target === sym) { direction = dirLabels[dir]; break; }
+                }
+              }
+              return (
+                <NeighbourChip
+                  key={sym}
+                  symbol={sym}
+                  name={neighbour.name}
+                  color={blockColor(neighbour.block)}
+                  direction={direction}
+                />
+              );
+            })}
           </div>
         </div>
 

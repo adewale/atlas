@@ -4,6 +4,7 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, GREY_MID, BACK_LINK_STYLE, MONO_FONT } from '../lib/theme';
+import { DiscovererChip } from '../components/EntityChip';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -141,31 +142,13 @@ export default function DiscovererDetail() {
           }}>
             Related Discoverers
           </h2>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
             {related.map((d) => (
-              <Link
+              <DiscovererChip
                 key={d.name}
-                to={`/discoverer/${encodeURIComponent(d.name)}`}
-                title={`View elements discovered by ${d.name}`}
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 'bold',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  padding: '6px 12px',
-                  border: `1.5px solid ${WARM_RED}`,
-                  color: WARM_RED,
-                  textDecoration: 'none',
-                  minHeight: 'unset',
-                  minWidth: 'unset',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                }}
-              >
-                <span style={{ width: '8px', height: '8px', background: WARM_RED, display: 'inline-block', flexShrink: 0 }} />
-                {d.name} ({d.elements.length})
-              </Link>
+                name={d.name}
+                elementCount={d.elements.length}
+              />
             ))}
           </div>
         </section>
