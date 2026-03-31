@@ -30,19 +30,40 @@ const IDENTITY_HEIGHT = 150;
 const MIN_ANNOTATION_GAP = 20;
 
 /** Reusable row for the data plate (Group / Period / Block). */
-function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, mobile }: {
+function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, mobile, prev, next }: {
   label: string; value: string | number; fill: string; textFill?: string;
   href: string; ariaLabel: string; title: string;
   viewTransitionName?: string; mobile: boolean;
+  prev?: { symbol: string; name: string };
+  next?: { symbol: string; name: string };
 }) {
   return (
-    <Link to={href} aria-label={ariaLabel} title={title} style={{ display: 'block', textDecoration: 'none', viewTransitionName } as React.CSSProperties}>
+    <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
       <svg width={mobile ? '100%' : PLATE_WIDTH} height={56} viewBox={`0 0 ${PLATE_WIDTH} 56`}>
-        <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={fill} />
-        <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
-        <text x={12} y={46} fontSize={24} fontWeight="bold" fill={textFill} fontFamily={MONO_FONT}>{value}</text>
+        {/* Main area — links to listing page */}
+        <a href={href} aria-label={ariaLabel}>
+          <title>{title}</title>
+          <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={fill} />
+          <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
+          <text x={12} y={46} fontSize={24} fontWeight="bold" fill={textFill} fontFamily={MONO_FONT}>{value}</text>
+        </a>
+        {/* Prev/next arrows on the right */}
+        {prev && (
+          <a href={`/element/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
+            <title>← {prev.name}</title>
+            <rect x={PLATE_WIDTH - 48} y={2} width={24} height={52} fill={fill} />
+            <text x={PLATE_WIDTH - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
+          </a>
+        )}
+        {next && (
+          <a href={`/element/${next.symbol}`} aria-label={`Next: ${next.name}`}>
+            <title>{next.name} →</title>
+            <rect x={PLATE_WIDTH - 24} y={2} width={24} height={52} fill={fill} />
+            <text x={PLATE_WIDTH - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
+          </a>
+        )}
       </svg>
-    </Link>
+    </div>
   );
 }
 
@@ -197,6 +218,43 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     () => (element.atomicNumber < 118 ? allElements.find((e) => e.atomicNumber === element.atomicNumber + 1) : null),
     [element.atomicNumber],
   );
+
+  // Prev/next within group (vertical traversal)
+  const { prevInGroup, nextInGroup } = useMemo(() => {
+    if (element.group == null) return { prevInGroup: null, nextInGroup: null };
+    const groupMembers = allElements
+      .filter((e) => e.group === element.group)
+      .sort((a, b) => a.period - b.period);
+    const idx = groupMembers.findIndex((e) => e.symbol === element.symbol);
+    return {
+      prevInGroup: idx > 0 ? groupMembers[idx - 1] : null,
+      nextInGroup: idx < groupMembers.length - 1 ? groupMembers[idx + 1] : null,
+    };
+  }, [element.group, element.symbol]);
+
+  // Prev/next within period (horizontal traversal)
+  const { prevInPeriod, nextInPeriod } = useMemo(() => {
+    const periodMembers = allElements
+      .filter((e) => e.period === element.period)
+      .sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const idx = periodMembers.findIndex((e) => e.symbol === element.symbol);
+    return {
+      prevInPeriod: idx > 0 ? periodMembers[idx - 1] : null,
+      nextInPeriod: idx < periodMembers.length - 1 ? periodMembers[idx + 1] : null,
+    };
+  }, [element.period, element.symbol]);
+
+  // Prev/next within block
+  const { prevInBlock, nextInBlock } = useMemo(() => {
+    const blockMembers = allElements
+      .filter((e) => e.block === element.block)
+      .sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const idx = blockMembers.findIndex((e) => e.symbol === element.symbol);
+    return {
+      prevInBlock: idx > 0 ? blockMembers[idx - 1] : null,
+      nextInBlock: idx < blockMembers.length - 1 ? blockMembers[idx + 1] : null,
+    };
+  }, [element.block, element.symbol]);
 
   // Find elements sharing the same discoverer (lateral link)
   const sameDiscoverer = useMemo(() => {
@@ -361,11 +419,11 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
               {/* Group row — deep blue */}
-              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/atlas/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName="data-plate-group" mobile={mobile} />
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/atlas/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName="data-plate-group" mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
               {/* Period row — warm red */}
-              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/atlas/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName="data-plate-period" mobile={mobile} />
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/atlas/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName="data-plate-period" mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
               {/* Block row — block colour */}
-              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName="data-plate-block" mobile={mobile} />
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName="data-plate-block" mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
             </div>
 
             {/* Prev / Next navigation — Pretext-styled SVG beneath the data plate */}
