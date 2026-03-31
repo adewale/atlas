@@ -117,10 +117,15 @@ describe('Folio', () => {
     expect(screen.getByLabelText(/Atomic Radius: 194 pm, ranked 67 of 118/)).toBeInTheDocument();
   });
 
-  it('renders neighbor links', () => {
+  it('renders neighbor links in marginalia', () => {
     renderFolio();
-    expect(screen.getByText('Mn')).toBeInTheDocument();
-    expect(screen.getByText('Co')).toBeInTheDocument();
+    // Mn and Co appear as neighbor chips in the marginalia
+    const marginalia = document.querySelector('.folio-marginalia')!;
+    expect(marginalia).toBeTruthy();
+    const mnLink = marginalia.querySelector('a[href="/element/Mn"]');
+    const coLink = marginalia.querySelector('a[href="/element/Co"]');
+    expect(mnLink).toBeTruthy();
+    expect(coLink).toBeTruthy();
   });
 
   it('shows source strip with correct licensing text', () => {
@@ -157,10 +162,11 @@ describe('Folio', () => {
 
   it('neighbor links use client-side routing', () => {
     renderFolio();
-    const mnLink = screen.getByText('Mn');
-    expect(mnLink).toHaveAttribute('href', '/element/Mn');
+    const marginalia = document.querySelector('.folio-marginalia')!;
+    const mnLink = marginalia.querySelector('a[href="/element/Mn"]') as HTMLAnchorElement;
+    expect(mnLink).toBeTruthy();
     // React Router Link adds an onClick handler; plain <a> tags don't
-    expect(mnLink.onclick).not.toBeNull();
+    expect(mnLink!.onclick).not.toBeNull();
   });
 
   it('shaped text lines are rendered in SVG', () => {
@@ -180,6 +186,46 @@ describe('Folio', () => {
     // Block label should link to /atlas/block/d
     const blockLink = screen.getByRole('link', { name: /block d/i });
     expect(blockLink).toHaveAttribute('href', '/atlas/block/d');
+  });
+
+  it('data plate shows group prev/next arrows for elements with a group', () => {
+    renderFolio();
+    // Fe is first in Group 8 (period 4). Next in group is Ru (period 5).
+    const nextInGroup = screen.getByRole('link', { name: /Next: Ruthenium/i });
+    expect(nextInGroup).toHaveAttribute('href', '/element/Ru');
+  });
+
+  it('data plate shows period and block prev/next arrows', () => {
+    renderFolio();
+    // Fe (Z=26) — prev in period/block is Mn (Z=25), next is Co (Z=27)
+    // These appear in both the period and block rows, so use getAllByRole
+    const prevLinks = screen.getAllByRole('link', { name: /Previous: Manganese/i });
+    expect(prevLinks.length).toBeGreaterThanOrEqual(1);
+    expect(prevLinks[0]).toHaveAttribute('href', '/element/Mn');
+
+    const nextLinks = screen.getAllByRole('link', { name: /Next: Cobalt/i });
+    expect(nextLinks.length).toBeGreaterThanOrEqual(1);
+    expect(nextLinks[0]).toHaveAttribute('href', '/element/Co');
+  });
+
+  it('no group arrows for elements without a group', () => {
+    const noGroup = { ...FE, group: null as number | null, symbol: 'La', name: 'Lanthanum', atomicNumber: 57 };
+    render(<MemoryRouter><Folio element={noGroup} animate={false} /></MemoryRouter>);
+    expect(screen.getByLabelText(/Data plate: Group —/)).toBeInTheDocument();
+    // All arrow links should be /element/ links, none for group
+    const arrowLinks = screen.queryAllByRole('link', { name: /Previous:|Next:/i });
+    for (const link of arrowLinks) {
+      expect(link.getAttribute('href')).toMatch(/^\/element\//);
+    }
+    // Ruthenium (next in Group 8) should NOT appear since group is null
+    const ruLink = screen.queryByRole('link', { name: /Ruthenium/i });
+    expect(ruLink).toBeNull();
+  });
+
+  it('sequential prev/next navigation appears beneath data plate', () => {
+    renderFolio();
+    const navSvg = screen.getByLabelText('Previous and next element navigation');
+    expect(navSvg).toBeInTheDocument();
   });
 
   it('category label links to atlas category page', () => {

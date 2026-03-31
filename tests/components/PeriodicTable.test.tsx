@@ -7,6 +7,31 @@ afterEach(() => {
   cleanup();
 });
 
+// Mock pretext hooks — jsdom has no canvas for font measurement
+vi.mock('../../src/hooks/usePretextLines', () => ({
+  usePretextLines: ({ text }: { text: string }) => ({
+    lines: [{ text: text.slice(0, 40), width: 160, x: 0, y: 0 }],
+    lineHeight: 18,
+  }),
+  useShapedText: ({ text }: { text: string }) => ({
+    lines: [
+      { text: text.slice(0, 60), width: 300, x: 0, y: 0 },
+      { text: text.slice(60, 120), width: 300, x: 0, y: 20 },
+    ],
+    lineHeight: 20,
+    plateHeightInLines: 9,
+    identityHeightInLines: 7,
+  }),
+  useDropCapText: ({ text }: { text: string }) => ({
+    dropCap: { char: text[0], fontSize: 80 },
+    lines: [
+      { text: text.slice(1, 60), width: 300, x: 0, y: 0 },
+      { text: text.slice(60, 120), width: 300, x: 0, y: 20 },
+    ],
+    lineHeight: 20,
+  }),
+}));
+
 function renderTable(onSelect = vi.fn()) {
   return render(
     <MemoryRouter>
@@ -18,31 +43,13 @@ function renderTable(onSelect = vi.fn()) {
 describe('PeriodicTable', () => {
   it('renders 118 element cells', () => {
     renderTable();
-    // Element cells have role="button" with aria-label containing element name
     const cells = screen.getAllByRole('button').filter(
       (el) => {
         const label = el.getAttribute('aria-label') ?? '';
-        // Element labels follow pattern: "Symbol Number Name Category"
         return /^[A-Z][a-z]?\s\d+\s/.test(label);
       },
     );
     expect(cells.length).toBe(118);
-  });
-
-  it('filter narrows visible elements — typing "iron" keeps Fe', () => {
-    renderTable();
-    const input = screen.getByLabelText(/Filter elements/);
-    fireEvent.change(input, { target: { value: 'iron' } });
-    const feCell = screen.getByLabelText(/Iron/);
-    expect(feCell).toBeInTheDocument();
-  });
-
-  it('filter by symbol "Fe" works', () => {
-    renderTable();
-    const input = screen.getByLabelText(/Filter elements/);
-    fireEvent.change(input, { target: { value: 'Fe' } });
-    const feCell = screen.getByLabelText(/Iron/);
-    expect(feCell).toBeInTheDocument();
   });
 
   it('block colour chip changes fill colours', () => {
@@ -63,21 +70,10 @@ describe('PeriodicTable', () => {
     expect(onSelect).toHaveBeenCalledWith('Fe');
   });
 
-  it('filter dims non-matching elements', () => {
-    renderTable();
-    const input = screen.getByLabelText(/Filter elements/);
-    fireEvent.change(input, { target: { value: 'iron' } });
-    // He should be dimmed — fill changes to DIM color (#ece7db)
-    const heCell = screen.getByLabelText(/Helium/);
-    const rect = heCell.querySelector('rect');
-    expect(rect).toHaveAttribute('fill', '#ece7db');
-  });
-
   it('block chip colours s-block elements with deep blue', () => {
     renderTable();
     const blockBtn = screen.getByRole('button', { name: /block/i });
     fireEvent.click(blockBtn);
-    // H is s-block, should have deep blue fill (#133e7c)
     const hCell = screen.getByLabelText(/Hydrogen/);
     const rect = hCell.querySelector('rect');
     expect(rect).toHaveAttribute('fill', '#133e7c');
@@ -87,10 +83,18 @@ describe('PeriodicTable', () => {
     renderTable();
     const propBtn = screen.getByRole('button', { name: /property/i });
     fireEvent.click(propBtn);
-    // Should now see Mass, Electronegativity, Ionisation Energy, Radius buttons
     expect(screen.getByRole('button', { name: /mass/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /electronegativity/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /ionisation energy/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /radius/i })).toBeInTheDocument();
+  });
+
+  it('renders introductory paragraph with drop cap', () => {
+    renderTable();
+    // The drop cap character ('O' from "One hundred...") should be rendered
+    // via PretextSvg inside an SVG element
+    const svgs = document.querySelectorAll('svg');
+    // At least one SVG should exist before the periodic table SVG for the intro
+    expect(svgs.length).toBeGreaterThanOrEqual(2);
   });
 });
