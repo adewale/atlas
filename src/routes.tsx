@@ -1,5 +1,11 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
+import type { LoaderFunctionArgs } from 'react-router';
+
+let groupsCache: unknown = null;
+let anomaliesCache: unknown = null;
+let discoverersCache: unknown = null;
+let timelineCache: unknown = null;
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
@@ -13,18 +19,153 @@ const Compare = lazy(() => import('./pages/Compare'));
 const About = lazy(() => import('./pages/About'));
 const Credits = lazy(() => import('./pages/Credits'));
 const Design = lazy(() => import('./pages/Design'));
+const DiscoveryTimeline = lazy(() => import('./pages/DiscoveryTimeline'));
+const PhaseLandscape = lazy(() => import('./pages/PhaseLandscape'));
+const PropertyScatter = lazy(() => import('./pages/PropertyScatter'));
+const AnomalyExplorer = lazy(() => import('./pages/AnomalyExplorer'));
+const NeighborhoodGraph = lazy(() => import('./pages/NeighborhoodGraph'));
+const EtymologyMap = lazy(() => import('./pages/EtymologyMap'));
+const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
+const DiscovererDetail = lazy(() => import('./pages/DiscovererDetail'));
+const TimelineEra = lazy(() => import('./pages/TimelineEra'));
+const EntityMap = lazy(() => import('./pages/EntityMap'));
 
 export const router = createBrowserRouter([
   { path: '/', Component: Home },
-  { path: '/element/:symbol', Component: Element },
-  { path: '/atlas/group/:n', Component: AtlasGroup },
-  { path: '/atlas/period/:n', Component: AtlasPeriod },
-  { path: '/atlas/block/:block', Component: AtlasBlock },
-  { path: '/atlas/category/:slug', Component: AtlasCategory },
-  { path: '/atlas/rank/:property', Component: AtlasRank },
-  { path: '/atlas/anomaly/:slug', Component: AtlasAnomaly },
-  { path: '/compare/:symbolA/:symbolB', Component: Compare },
+  {
+    path: '/element/:symbol',
+    Component: Element,
+    loader: async ({ params }: LoaderFunctionArgs) => {
+      const [elementMod, groups, anomalies] = await Promise.all([
+        import(`../data/generated/element-${params.symbol}.json`),
+        groupsCache ?? import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
+        anomaliesCache ?? import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
+      ]);
+      return { element: elementMod.default, groups, anomalies };
+    },
+  },
+  {
+    path: '/atlas/group/:n',
+    Component: AtlasGroup,
+    loader: async () => {
+      groupsCache ??= await import('../data/generated/groups.json').then(m => m.default);
+      return { groups: groupsCache };
+    },
+  },
+  {
+    path: '/atlas/period/:n',
+    Component: AtlasPeriod,
+    loader: async () => {
+      const mod = await import('../data/generated/periods.json');
+      return { periods: mod.default };
+    },
+  },
+  {
+    path: '/atlas/block/:block',
+    Component: AtlasBlock,
+    loader: async () => {
+      const mod = await import('../data/generated/blocks.json');
+      return { blocks: mod.default };
+    },
+  },
+  {
+    path: '/atlas/category/:slug',
+    Component: AtlasCategory,
+    loader: async () => {
+      const mod = await import('../data/generated/categories.json');
+      return { categories: mod.default };
+    },
+  },
+  {
+    path: '/atlas/rank/:property',
+    Component: AtlasRank,
+    loader: async () => {
+      const [rankMod, elemMod] = await Promise.all([
+        import('../data/generated/rankings.json'),
+        import('../data/generated/elements.json'),
+      ]);
+      return { rankings: rankMod.default, elements: elemMod.default };
+    },
+  },
+  {
+    path: '/atlas/anomaly/:slug',
+    Component: AtlasAnomaly,
+    loader: async () => {
+      anomaliesCache ??= await import('../data/generated/anomalies.json').then(m => m.default);
+      return { anomalies: anomaliesCache };
+    },
+  },
+  {
+    path: '/compare/:symbolA/:symbolB',
+    Component: Compare,
+    loader: async ({ params }: LoaderFunctionArgs) => {
+      const [elA, elB] = await Promise.all([
+        import(`../data/generated/element-${params.symbolA}.json`),
+        import(`../data/generated/element-${params.symbolB}.json`),
+      ]);
+      return { elementA: elA.default, elementB: elB.default };
+    },
+  },
   { path: '/about', Component: About },
-  { path: '/credits', Component: Credits },
+  {
+    path: '/credits',
+    Component: Credits,
+    loader: async () => {
+      const mod = await import('../data/generated/credits.json');
+      return { credits: mod.default };
+    },
+  },
   { path: '/design', Component: Design },
+  { path: '/entity-map', Component: EntityMap },
+  {
+    path: '/discovery-timeline',
+    Component: DiscoveryTimeline,
+    loader: async () => {
+      timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
+      return timelineCache;
+    },
+  },
+  { path: '/phase-landscape', Component: PhaseLandscape },
+  { path: '/property-scatter', Component: PropertyScatter },
+  {
+    path: '/anomaly-explorer',
+    Component: AnomalyExplorer,
+    loader: async () => {
+      anomaliesCache ??= await import('../data/generated/anomalies.json').then(m => m.default);
+      return { anomalies: anomaliesCache };
+    },
+  },
+  { path: '/neighborhood-graph', Component: NeighborhoodGraph },
+  {
+    path: '/etymology-map',
+    Component: EtymologyMap,
+    loader: async () => {
+      const mod = await import('../data/generated/etymology.json');
+      return { etymology: mod.default };
+    },
+  },
+  {
+    path: '/discoverer-network',
+    Component: DiscovererNetwork,
+    loader: async () => {
+      discoverersCache ??= await import('../data/generated/discoverers.json').then(m => m.default);
+      return { discoverers: discoverersCache };
+    },
+  },
+  {
+    path: '/discoverer/:name',
+    Component: DiscovererDetail,
+    loader: async () => {
+      discoverersCache ??= await import('../data/generated/discoverers.json').then(m => m.default);
+      return { discoverers: discoverersCache };
+    },
+  },
+  {
+    path: '/timeline/:era',
+    Component: TimelineEra,
+    loader: async () => {
+      timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
+      return timelineCache;
+    },
+  },
 ]);

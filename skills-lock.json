@@ -36,6 +36,11 @@
       "sourceType": "github",
       "computedHash": "8bdf9e4e6de7a4969147bf4828a4ad2c5aacd9fba4b690b250a85e0467ca387d"
     },
+    "good-readme": {
+      "source": "adewale/good-readme",
+      "sourceType": "github",
+      "computedHash": "5158ef906f4fd385966df68752b1b1bc9547798dc551c246b3683d2e6185e9d8"
+    },
     "guardrails": {
       "source": "adewale/guardrails-skill",
       "sourceType": "github",

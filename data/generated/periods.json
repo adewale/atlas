@@ -1,6 +1,8 @@
 [
   {
     "n": 1,
+    "label": "Period 1",
+    "description": "The first period contains only hydrogen and helium -- the two lightest elements, formed in the Big Bang. They fill the 1s orbital.",
     "elements": [
       "H",
       "He"
@@ -8,6 +10,8 @@
   },
   {
     "n": 2,
+    "label": "Period 2",
+    "description": "Period 2 fills the 2s and 2p orbitals, spanning lithium to neon. It introduces the first nonmetals, the smallest halogens, and the lightest noble gas after helium.",
     "elements": [
       "Li",
       "Be",
@@ -21,6 +25,8 @@
   },
   {
     "n": 3,
+    "label": "Period 3",
+    "description": "Period 3 fills the 3s and 3p orbitals, from sodium to argon. It mirrors period 2 in structure but the elements are larger and more metallic.",
     "elements": [
       "Na",
       "Mg",
@@ -34,6 +40,8 @@
   },
   {
     "n": 4,
+    "label": "Period 4",
+    "description": "Period 4 is the first to include d-block elements, expanding from 8 to 18 elements. It runs from potassium to krypton and introduces the first row of transition metals.",
     "elements": [
       "K",
       "Ca",
@@ -57,6 +65,8 @@
   },
   {
     "n": 5,
+    "label": "Period 5",
+    "description": "Period 5 mirrors period 4 with a second row of transition metals, from rubidium to xenon. It includes technetium, the lightest element with no stable isotopes.",
     "elements": [
       "Rb",
       "Sr",
@@ -80,6 +90,8 @@
   },
   {
     "n": 6,
+    "label": "Period 6",
+    "description": "Period 6 expands to 32 elements by introducing the f-block lanthanides. It spans caesium to radon and contains some of the densest and rarest stable elements.",
     "elements": [
       "Cs",
       "Ba",
@@ -117,6 +129,8 @@
   },
   {
     "n": 7,
+    "label": "Period 7",
+    "description": "Period 7 includes the actinides and all known synthetic superheavy elements, from francium to oganesson. Many of its members are radioactive and exist only briefly in laboratories.",
     "elements": [
       "Fr",
       "Ra",

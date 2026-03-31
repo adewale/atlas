@@ -1,8 +1,128 @@
+import { Link } from 'react-router';
+import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
+import { PRETEXT_SANS } from '../lib/pretext';
+import PretextSvg from '../components/PretextSvg';
+import PageShell from '../components/PageShell';
+import { BLACK, DEEP_BLUE, BACK_LINK_STYLE } from '../lib/theme';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
+const SVG_MAX_WIDTH = 640;
+
+const INTRO_TEXT =
+  'Atlas is a structural exploration of the periodic table, drawing on the visual traditions of Oliver Byrne and the data-density principles of Edward Tufte. Every element is presented as a folio — a single, information-rich page where colour is structural identity and the shape of the data is the data itself.';
+
+const DATA_SOURCES_TEXT =
+  'Numeric properties (mass, electronegativity, ionisation energy, radius) come from PubChem (public domain). Identifiers and classification from Wikidata (CC0 1.0). Text summaries excerpted from Wikipedia under CC BY-SA 4.0. Full attribution on the credits page.';
+
+const STANDING_ON_SHOULDERS_TEXT =
+  'Atlas would not exist without PubChem, Wikidata, and Wikipedia. These open data projects represent decades of painstaking work by scientists, editors, and volunteers worldwide. What Atlas adds is a layer of cross-linked navigation, visual encoding, and computed relationships that make the periodic table explorable as a connected graph rather than a flat table. Every element connects to its group, period, block, category, discoverer, era, etymology, neighbours, anomalies, and rankings — thirteen relationship types, all surfaced as navigable links. But the data beneath it all comes from the community. We are grateful.';
+
+const TECHNOLOGY_TEXT =
+  'Built with React, Vite, and @chenglou/pretext for text measurement. Deployed on Cloudflare Pages. System fonts throughout. No images in v1.';
+
 export default function About() {
+  useDocumentTitle('About');
+  const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
+    text: INTRO_TEXT,
+    maxWidth: SVG_MAX_WIDTH,
+    dropCapFont: `72px ${PRETEXT_SANS}`,
+  });
+
+  const { lines: dataLines, lineHeight: dataLH } = usePretextLines({
+    text: DATA_SOURCES_TEXT,
+    maxWidth: SVG_MAX_WIDTH,
+  });
+
+  const { lines: techLines, lineHeight: techLH } = usePretextLines({
+    text: TECHNOLOGY_TEXT,
+    maxWidth: SVG_MAX_WIDTH,
+  });
+
+  const { lines: shoulderLines, lineHeight: shoulderLH } = usePretextLines({
+    text: STANDING_ON_SHOULDERS_TEXT,
+    maxWidth: SVG_MAX_WIDTH,
+  });
+
   return (
-    <main>
-      <h1>About Atlas</h1>
-      <p>About page — to be implemented.</p>
-    </main>
+    <PageShell>
+      <div style={{ maxWidth: '640px' }}>
+      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
+      <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>About Atlas</h1>
+
+      <div style={{ borderTop: `2px solid ${BLACK}`, marginBottom: '16px' }} />
+
+      <section style={{ marginBottom: '40px' }}>
+        <svg
+          width={SVG_MAX_WIDTH}
+          height={introLines.length * introLH + introLH}
+          aria-label="Introduction"
+          role="img"
+          style={{ maxWidth: '100%' }}
+        >
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
+        </svg>
+      </section>
+
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Principles</h2>
+        <ul style={{ paddingLeft: '1.2em', lineHeight: 1.7 }}>
+          <li>60% Byrne visual drama, 40% Tufte data density</li>
+          <li>Hard colour fields — solid rects, no gradients</li>
+          <li>Giant numerals and symbols as hero elements</li>
+          <li>High data-ink ratio: property bars where length IS the value</li>
+          <li>Block-colour identity: you recognise the block before reading a word</li>
+          <li>90% perfectly still, 10% explosive animation</li>
+          <li>Zero border-radius. Sharp corners. Printed, not digital.</li>
+        </ul>
+      </section>
+
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Data Sources</h2>
+        <svg
+          width={SVG_MAX_WIDTH}
+          height={dataLines.length * dataLH + dataLH}
+          aria-label="Data sources description"
+          role="img"
+          style={{ maxWidth: '100%' }}
+        >
+          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
+        </svg>
+      </section>
+
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Technology</h2>
+        <svg
+          width={SVG_MAX_WIDTH}
+          height={techLines.length * techLH + techLH}
+          aria-label="Technology description"
+          role="img"
+          style={{ maxWidth: '100%' }}
+        >
+          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
+        </svg>
+      </section>
+
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Standing on Shoulders</h2>
+        <svg
+          width={SVG_MAX_WIDTH}
+          height={shoulderLines.length * shoulderLH + shoulderLH}
+          aria-label="Standing on shoulders — acknowledgement of data sources"
+          role="img"
+          style={{ maxWidth: '100%' }}
+        >
+          <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
+        </svg>
+      </section>
+
+      <section>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Language</h2>
+        <p style={{ lineHeight: 1.7 }}>
+          Atlas follows a strict visual system: hard colour fields, sharp corners, giant numerals, and high data-ink ratio.
+          See the full <Link to="/design">Design Language</Link> reference for palette, spacing, typography, and animation details.
+        </p>
+      </section>
+      </div>
+    </PageShell>
   );
 }

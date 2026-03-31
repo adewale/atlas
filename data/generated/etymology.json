@@ -1,0 +1,504 @@
+[
+  {
+    "origin": "astronomical",
+    "elements": [
+      {
+        "symbol": "He",
+        "description": "Greek helios: the Sun, first observed in solar spectrum"
+      },
+      {
+        "symbol": "Se",
+        "description": "Greek selene: the Moon"
+      },
+      {
+        "symbol": "Pd",
+        "description": "Pallas, asteroid discovered two years prior"
+      },
+      {
+        "symbol": "Te",
+        "description": "Latin tellus: Earth"
+      },
+      {
+        "symbol": "Ce",
+        "description": "Ceres, the dwarf planet discovered two years prior"
+      },
+      {
+        "symbol": "U",
+        "description": "Uranus, the planet discovered eight years prior"
+      },
+      {
+        "symbol": "Np",
+        "description": "Neptune, the planet beyond Uranus"
+      },
+      {
+        "symbol": "Pu",
+        "description": "Pluto, the celestial body beyond Neptune"
+      }
+    ]
+  },
+  {
+    "origin": "mineral",
+    "elements": [
+      {
+        "symbol": "Be",
+        "description": "Greek beryllos: the mineral beryl"
+      },
+      {
+        "symbol": "B",
+        "description": "Arabic buraq: borax, a white mineral"
+      },
+      {
+        "symbol": "Al",
+        "description": "Latin alumen: alum, a bitter salt"
+      },
+      {
+        "symbol": "Mn",
+        "description": "Latin magnes: magnet, from pyrolusite ore"
+      },
+      {
+        "symbol": "Zr",
+        "description": "Arabic zargun: gold-colored, from zircon mineral"
+      },
+      {
+        "symbol": "Mo",
+        "description": "Greek molybdos: lead, from resemblance to lead ore"
+      },
+      {
+        "symbol": "Cd",
+        "description": "Latin cadmia: calamine, the zinc ore where found"
+      },
+      {
+        "symbol": "Sb",
+        "description": "Greek anti + monos: not alone; symbol from Latin stibium"
+      },
+      {
+        "symbol": "W",
+        "description": "Swedish tung sten: heavy stone; symbol from wolframite ore"
+      }
+    ]
+  },
+  {
+    "origin": "mythology",
+    "elements": [
+      {
+        "symbol": "P",
+        "description": "Greek phosphoros: light-bearer, from its glow"
+      },
+      {
+        "symbol": "Ti",
+        "description": "Greek Titans: primordial gods of mythology"
+      },
+      {
+        "symbol": "V",
+        "description": "Vanadis, Old Norse name for the goddess Freyja"
+      },
+      {
+        "symbol": "Co",
+        "description": "German Kobold: goblin, from miners' superstition"
+      },
+      {
+        "symbol": "Ni",
+        "description": "German Kupfernickel: devil's copper, a deceptive ore"
+      },
+      {
+        "symbol": "Nb",
+        "description": "Greek Niobe: daughter of Tantalus in mythology"
+      },
+      {
+        "symbol": "Pm",
+        "description": "Prometheus, the Titan who stole fire from the gods"
+      },
+      {
+        "symbol": "Ta",
+        "description": "Greek Tantalus: mythological king condemned to eternal hunger"
+      },
+      {
+        "symbol": "Ir",
+        "description": "Greek Iris: goddess of the rainbow, from its colorful salts"
+      },
+      {
+        "symbol": "Hg",
+        "description": "Mercury, the Roman messenger god; Latin hydrargyrum: liquid silver"
+      },
+      {
+        "symbol": "Th",
+        "description": "Thor, the Norse god of thunder"
+      }
+    ]
+  },
+  {
+    "origin": "person",
+    "elements": [
+      {
+        "symbol": "Sm",
+        "description": "Samarskite mineral, named after Vasili Samarsky-Bykhovets"
+      },
+      {
+        "symbol": "Gd",
+        "description": "Johan Gadolin, Finnish chemist and mineralogist"
+      },
+      {
+        "symbol": "Cm",
+        "description": "Marie and Pierre Curie, pioneers of radioactivity"
+      },
+      {
+        "symbol": "Es",
+        "description": "Albert Einstein"
+      },
+      {
+        "symbol": "Fm",
+        "description": "Enrico Fermi, nuclear physics pioneer"
+      },
+      {
+        "symbol": "Md",
+        "description": "Dmitri Mendeleev, creator of the periodic table"
+      },
+      {
+        "symbol": "No",
+        "description": "Alfred Nobel, inventor of dynamite"
+      },
+      {
+        "symbol": "Lr",
+        "description": "Ernest O. Lawrence, cyclotron inventor"
+      },
+      {
+        "symbol": "Rf",
+        "description": "Ernest Rutherford, father of nuclear physics"
+      },
+      {
+        "symbol": "Sg",
+        "description": "Glenn T. Seaborg, prolific element discoverer"
+      },
+      {
+        "symbol": "Bh",
+        "description": "Niels Bohr, quantum mechanics pioneer"
+      },
+      {
+        "symbol": "Mt",
+        "description": "Lise Meitner, nuclear fission co-discoverer"
+      },
+      {
+        "symbol": "Rg",
+        "description": "Wilhelm Conrad Röntgen, discoverer of X-rays"
+      },
+      {
+        "symbol": "Cn",
+        "description": "Nicolaus Copernicus, heliocentric model pioneer"
+      },
+      {
+        "symbol": "Og",
+        "description": "Yuri Oganessian, prolific superheavy element researcher"
+      }
+    ]
+  },
+  {
+    "origin": "place",
+    "elements": [
+      {
+        "symbol": "Mg",
+        "description": "Magnesia, a district in Thessaly, Greece"
+      },
+      {
+        "symbol": "Sc",
+        "description": "Latin Scandia: Scandinavia"
+      },
+      {
+        "symbol": "Cu",
+        "description": "Latin cuprum: from Cyprus, where it was mined"
+      },
+      {
+        "symbol": "Ga",
+        "description": "Latin Gallia: France"
+      },
+      {
+        "symbol": "Ge",
+        "description": "Latin Germania: Germany"
+      },
+      {
+        "symbol": "Sr",
+        "description": "Strontian, a village in Scotland"
+      },
+      {
+        "symbol": "Y",
+        "description": "Ytterby, a village in Sweden"
+      },
+      {
+        "symbol": "Ru",
+        "description": "Latin Ruthenia: Russia"
+      },
+      {
+        "symbol": "Eu",
+        "description": "Europe"
+      },
+      {
+        "symbol": "Tb",
+        "description": "Ytterby, a village in Sweden"
+      },
+      {
+        "symbol": "Ho",
+        "description": "Latin Holmia: Stockholm"
+      },
+      {
+        "symbol": "Er",
+        "description": "Ytterby, a village in Sweden"
+      },
+      {
+        "symbol": "Tm",
+        "description": "Thule, ancient name for Scandinavia"
+      },
+      {
+        "symbol": "Yb",
+        "description": "Ytterby, a village in Sweden"
+      },
+      {
+        "symbol": "Lu",
+        "description": "Latin Lutetia: ancient name for Paris"
+      },
+      {
+        "symbol": "Hf",
+        "description": "Latin Hafnia: Copenhagen"
+      },
+      {
+        "symbol": "Re",
+        "description": "Latin Rhenus: the Rhine river"
+      },
+      {
+        "symbol": "Po",
+        "description": "Poland, homeland of Marie Curie"
+      },
+      {
+        "symbol": "Fr",
+        "description": "France"
+      },
+      {
+        "symbol": "Am",
+        "description": "Americas, by analogy with europium"
+      },
+      {
+        "symbol": "Bk",
+        "description": "Berkeley, California, where it was synthesized"
+      },
+      {
+        "symbol": "Cf",
+        "description": "California, the state and university"
+      },
+      {
+        "symbol": "Db",
+        "description": "Dubna, Russian city with the Joint Institute for Nuclear Research"
+      },
+      {
+        "symbol": "Hs",
+        "description": "Latin Hassia: Hesse, the German state"
+      },
+      {
+        "symbol": "Ds",
+        "description": "Darmstadt, German city with GSI Helmholtz Centre"
+      },
+      {
+        "symbol": "Nh",
+        "description": "Nihon: Japan, in Japanese"
+      },
+      {
+        "symbol": "Fl",
+        "description": "Flerov Laboratory, named after Georgy Flyorov"
+      },
+      {
+        "symbol": "Mc",
+        "description": "Moscow Oblast, Russia"
+      },
+      {
+        "symbol": "Lv",
+        "description": "Lawrence Livermore National Laboratory, California"
+      },
+      {
+        "symbol": "Ts",
+        "description": "Tennessee, US state with Oak Ridge National Laboratory"
+      }
+    ]
+  },
+  {
+    "origin": "property",
+    "elements": [
+      {
+        "symbol": "H",
+        "description": "Greek hydro + genes: water-forming"
+      },
+      {
+        "symbol": "Li",
+        "description": "Greek lithos: stone, discovered in mineral"
+      },
+      {
+        "symbol": "C",
+        "description": "Latin carbo: charcoal"
+      },
+      {
+        "symbol": "N",
+        "description": "Greek nitron + genes: niter-forming"
+      },
+      {
+        "symbol": "O",
+        "description": "Greek oxys + genes: acid-forming"
+      },
+      {
+        "symbol": "F",
+        "description": "Latin fluere: to flow, from use as flux"
+      },
+      {
+        "symbol": "Ne",
+        "description": "Greek neos: new"
+      },
+      {
+        "symbol": "Na",
+        "description": "English soda; symbol from Latin natrium"
+      },
+      {
+        "symbol": "Si",
+        "description": "Latin silex: flint, hard stone"
+      },
+      {
+        "symbol": "S",
+        "description": "Latin sulphur: brimstone"
+      },
+      {
+        "symbol": "Cl",
+        "description": "Greek chloros: pale green"
+      },
+      {
+        "symbol": "Ar",
+        "description": "Greek argon: inactive, lazy"
+      },
+      {
+        "symbol": "K",
+        "description": "English potash; symbol from Latin kalium"
+      },
+      {
+        "symbol": "Ca",
+        "description": "Latin calx: lime"
+      },
+      {
+        "symbol": "Cr",
+        "description": "Greek chroma: color, from its vivid compounds"
+      },
+      {
+        "symbol": "Fe",
+        "description": "Anglo-Saxon iron; symbol from Latin ferrum"
+      },
+      {
+        "symbol": "Zn",
+        "description": "German Zink: prong or tooth, from crystal shape"
+      },
+      {
+        "symbol": "As",
+        "description": "Greek arsenikon: potent, from its toxicity"
+      },
+      {
+        "symbol": "Br",
+        "description": "Greek bromos: stench"
+      },
+      {
+        "symbol": "Kr",
+        "description": "Greek kryptos: hidden"
+      },
+      {
+        "symbol": "Rb",
+        "description": "Latin rubidus: deep red, from its spectral lines"
+      },
+      {
+        "symbol": "Tc",
+        "description": "Greek technetos: artificial, first synthetic element"
+      },
+      {
+        "symbol": "Rh",
+        "description": "Greek rhodon: rose, from its rose-red compounds"
+      },
+      {
+        "symbol": "Ag",
+        "description": "Anglo-Saxon silver; symbol from Latin argentum: shiny"
+      },
+      {
+        "symbol": "In",
+        "description": "Latin indicum: indigo, from its spectral line color"
+      },
+      {
+        "symbol": "Sn",
+        "description": "Anglo-Saxon tin; symbol from Latin stannum"
+      },
+      {
+        "symbol": "I",
+        "description": "Greek ioeides: violet, from its vapor color"
+      },
+      {
+        "symbol": "Xe",
+        "description": "Greek xenos: stranger, foreign"
+      },
+      {
+        "symbol": "Cs",
+        "description": "Latin caesius: sky blue, from its spectral lines"
+      },
+      {
+        "symbol": "Ba",
+        "description": "Greek barys: heavy"
+      },
+      {
+        "symbol": "La",
+        "description": "Greek lanthanein: to lie hidden"
+      },
+      {
+        "symbol": "Pr",
+        "description": "Greek prasios + didymos: green twin"
+      },
+      {
+        "symbol": "Nd",
+        "description": "Greek neos + didymos: new twin"
+      },
+      {
+        "symbol": "Dy",
+        "description": "Greek dysprositos: hard to get at"
+      },
+      {
+        "symbol": "Os",
+        "description": "Greek osme: smell, from its pungent oxide"
+      },
+      {
+        "symbol": "Pt",
+        "description": "Spanish platina: little silver"
+      },
+      {
+        "symbol": "Au",
+        "description": "Anglo-Saxon gold; symbol from Latin aurum: shining dawn"
+      },
+      {
+        "symbol": "Tl",
+        "description": "Greek thallos: green twig, from its spectral line"
+      },
+      {
+        "symbol": "Pb",
+        "description": "Anglo-Saxon lead; symbol from Latin plumbum"
+      },
+      {
+        "symbol": "Bi",
+        "description": "German Wismut: uncertain, possibly white mass"
+      },
+      {
+        "symbol": "At",
+        "description": "Greek astatos: unstable"
+      },
+      {
+        "symbol": "Rn",
+        "description": "From radium, its parent element in decay chains"
+      },
+      {
+        "symbol": "Ra",
+        "description": "Latin radius: ray, from its intense radioactivity"
+      },
+      {
+        "symbol": "Ac",
+        "description": "Greek aktinos: ray"
+      },
+      {
+        "symbol": "Pa",
+        "description": "Greek protos + aktinos: first ray, precursor to actinium"
+      }
+    ]
+  }
+]

@@ -4,13 +4,23 @@
   --black: #0f0f0f;
   --deep-blue: #133e7c;
   --warm-red: #9e1c2c;
-  --mustard: #c59b1a;
+  --mustard: #856912;
 
-  /* Block colors */
+  --dim: #ece7db;
+
+  /* Block colours */
   --block-s: var(--deep-blue);
   --block-p: var(--mustard);
   --block-d: var(--warm-red);
   --block-f: var(--black);
+
+  /* Stroke / line-thickness tiers */
+  --stroke-hairline: 0.5px;
+  --stroke-thin: 1px;
+  --stroke-regular: 1.5px;
+  --stroke-medium: 2px;
+  --stroke-accent: 3px;
+  --stroke-heavy: 4px;
 
   /* Easing */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -48,16 +58,36 @@ html {
 body {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--sp-6) var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
+  touch-action: manipulation;
 }
 
 a {
   color: var(--deep-blue);
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Touch hover gated behind fine pointer */
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* SVG links: inherit text colour, pointer only — no underline or colour shift */
+svg a,
+svg a:hover,
+svg a:visited,
+svg a:active {
+  color: inherit;
+  fill: inherit;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 code, .mono {
@@ -65,6 +95,7 @@ code, .mono {
   font-size: 0.875rem;
 }
 
+/* Screen reader only */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -76,6 +107,167 @@ code, .mono {
   border: 0;
 }
 
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 1000;
+  padding: 8px 16px;
+  background: var(--black);
+  color: var(--paper);
+  font-size: 14px;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* Focus indicators: 2px warm red ring on all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--warm-red);
+  outline-offset: 2px;
+}
+
+/* Minimum touch targets */
+button, a, select, input, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* SVG elements don't need min dimensions from this rule */
+svg [role="button"] {
+  min-height: unset;
+  min-width: unset;
+}
+
+/* Etymology card hover/focus styling */
+.etymology-card:hover {
+  border-width: 3px !important;
+  background: var(--dim) !important;
+}
+.etymology-card:focus-visible {
+  outline: 2px solid var(--warm-red);
+  outline-offset: 2px;
+}
+
+/* Containment for animated elements */
+.compare-svg svg,
+.pt-scroll-container svg,
+.folio-layout {
+  contain: layout style paint;
+}
+
+/* Touch: allow pinch-zoom on periodic table */
+.pt-scroll-container {
+  touch-action: pinch-zoom;
+}
+
+/* ----------------------------------------
+   Shared keyframes (single source of truth)
+   ---------------------------------------- */
+
+/* Text line stagger: opacity + translateY */
+@keyframes folio-line-reveal {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Data plate horizontal wipe */
+@keyframes plate-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Property bar grow from left */
+@keyframes bar-grow {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Compare panel expand from center */
+@keyframes compare-expand {
+  from { clip-path: inset(0 50% 0 50%); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Compare symbol scale */
+@keyframes compare-scale {
+  from { transform: scale(0.95); }
+  to   { transform: scale(1); }
+}
+
+/* AtlasPlate card stagger: opacity + translateY */
+@keyframes card-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* SVG-safe fade-in: opacity only (CSS transform conflicts with SVG transform attribute) */
+@keyframes svg-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Help panel enter: drop + fade */
+@keyframes help-panel-enter {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Rule line draw from left */
+@keyframes rule-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* Sparkline draw via stroke-dashoffset */
+@keyframes sparkline-draw {
+  from { stroke-dashoffset: var(--dash-length); }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ----------------------------------------
+   View Transitions API — shared element morphing
+   ---------------------------------------- */
+
+/* Default cross-fade for the full page */
+::view-transition-old(root) {
+  animation: 150ms ease-out both fade-out;
+}
+::view-transition-new(root) {
+  animation: 200ms ease-out 50ms both fade-in;
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+/* VizNav bar morph: persists across visualisation page transitions */
+::view-transition-old(viz-nav),
+::view-transition-new(viz-nav) {
+  animation-duration: 150ms;
+  animation-timing-function: var(--ease-snap);
+}
+
+/* Element symbol morph: seamless transition between grid cell and folio hero */
+::view-transition-old(element-symbol),
+::view-transition-new(element-symbol) {
+  animation-duration: 250ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* Element number morph */
+::view-transition-old(element-number),
+::view-transition-new(element-number) {
+  animation-duration: 250ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* Reduced motion: keep opacity/colour changes, remove movement */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -86,8 +278,72 @@ code, .mono {
   }
 }
 
+/* ----------------------------------------
+   Responsive breakpoints
+   ---------------------------------------- */
+
+/* Mobile (<768px) */
 @media (max-width: 768px) {
   body {
-    padding: var(--sp-4) var(--sp-3);
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  /* Folio: single column */
+  .folio-layout {
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  .folio-marginalia {
+    width: 100% !important;
+  }
+  .folio-main {
+    padding-left: 16px !important;
+  }
+
+  /* Identity block and data plate: stacked on mobile */
+  .folio-summary-area {
+    display: flex;
+    flex-direction: column;
+  }
+  .folio-identity {
+    position: static !important;
+    width: 100% !important;
+    margin-bottom: 12px;
+  }
+  .folio-data-plate {
+    position: static !important;
+    width: 100% !important;
+    margin-bottom: 16px;
+  }
+
+  /* Periodic table: horizontal scroll */
+  .pt-scroll-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Compare: vertical split */
+  .compare-svg {
+    max-width: 100%;
+  }
+
+  /* SVG scaling: reduce horizontal scroll while keeping content readable */
+  .pt-scroll-container svg {
+    min-width: 600px !important;
+  }
+
+  /* Giant numbers smaller on mobile — still dramatic */
+  .folio-number {
+    font-size: 64px !important;
+  }
+  .folio-symbol {
+    font-size: 40px !important;
+  }
+}
+
+/* Tablet (768-1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .folio-marginalia {
+    width: 180px !important;
   }
 }

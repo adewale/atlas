@@ -1,11 +1,33 @@
-import { useParams } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
+import { WARM_RED, BACK_LINK_STYLE } from '../lib/theme';
+import AtlasBrowsePage from '../components/AtlasBrowsePage';
+import type { AnomalyData } from '../lib/types';
+import PageShell from '../components/PageShell';
 
 export default function AtlasAnomaly() {
   const { slug } = useParams();
+  const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
+
+  const anomaly = anomalies.find((a) => a.slug === slug);
+
+  if (!anomaly) {
+    return (
+      <PageShell>
+        <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
+        <p>Anomaly not found.</p>
+      </PageShell>
+    );
+  }
+
   return (
-    <main>
-      <h1>Atlas — Anomaly {slug}</h1>
-      <p>Atlas plate — to be implemented.</p>
-    </main>
+    <AtlasBrowsePage
+      backLink={{ label: '← Table', to: '/' }}
+      heading={anomaly.label}
+      color={WARM_RED}
+      description={anomaly.description}
+      elements={anomaly.elements}
+      caption={anomaly.label}
+      captionColor={WARM_RED}
+    />
   );
 }

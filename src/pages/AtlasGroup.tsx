@@ -1,11 +1,29 @@
-import { useParams } from 'react-router';
+import { useParams, useLoaderData } from 'react-router';
+import { getElement } from '../lib/data';
+import { blockColor } from '../lib/grid';
+import { BLACK } from '../lib/theme';
+import AtlasBrowsePage from '../components/AtlasBrowsePage';
+import type { GroupData } from '../lib/types';
 
 export default function AtlasGroup() {
   const { n } = useParams();
+  const { groups } = useLoaderData() as { groups: GroupData[] };
+
+  const group = groups.find((g) => g.n === Number(n));
+  const symbols = group ? group.elements : [];
+  const firstEl = symbols.length > 0 ? getElement(symbols[0]) : null;
+  const color = firstEl ? blockColor(firstEl.block) : BLACK;
+
   return (
-    <main>
-      <h1>Atlas — Group {n}</h1>
-      <p>Atlas plate — to be implemented.</p>
-    </main>
+    <AtlasBrowsePage
+      backLink={{ label: '← Table', to: '/' }}
+      heading={`Group ${n}`}
+      color={color}
+      viewTransitionName="data-plate-group"
+      description={group?.description}
+      elements={symbols}
+      caption={`Group ${n}`}
+      captionColor={color}
+    />
   );
 }
