@@ -78,7 +78,7 @@ function computeRippleDelays(
 /* Intro paragraph                                                    */
 /* ------------------------------------------------------------------ */
 const INTRO_TEXT =
-  'Not every element falls neatly into the grid. Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. Select a category below to see which elements break the rules.';
+  'Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. Select a category below to see which elements break the rules.';
 const INTRO_MAX_W = VIEWBOX_W;
 
 /* ------------------------------------------------------------------ */
