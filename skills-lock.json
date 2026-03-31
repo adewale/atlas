@@ -36,6 +36,11 @@
       "sourceType": "github",
       "computedHash": "8bdf9e4e6de7a4969147bf4828a4ad2c5aacd9fba4b690b250a85e0467ca387d"
     },
+    "good-pr": {
+      "source": "adewale/good-pr",
+      "sourceType": "github",
+      "computedHash": "6de28dfff127548ecd0d95c9db79bfc45be3f9b635f213f756c0e70f4ad63d2b"
+    },
     "good-readme": {
       "source": "adewale/good-readme",
       "sourceType": "github",
