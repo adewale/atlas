@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
+import type { ElementRecord } from '../lib/types';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
@@ -27,7 +28,9 @@ export default function DiscovererDetail() {
   // NOTE: useMemo must be called unconditionally (before any early return)
   const related = useMemo(() => {
     if (!discoverer) return [];
-    const elems = discoverer.elements.map((s) => getElement(s)!).filter(Boolean);
+    const elems = discoverer.elements.map((s) => getElement(s)).filter(
+      (e): e is ElementRecord => e != null,
+    );
     const yrs = elems
       .map((e) => e.discoveryYear)
       .filter((y): y is number => y != null)
@@ -39,16 +42,18 @@ export default function DiscovererDetail() {
     return discoverers
       .filter((d) => {
         if (d.name === decodedName) return false;
-        const dElements = d.elements.map((s) => getElement(s)).filter(Boolean);
+        const dElements = d.elements.map((s) => getElement(s)).filter(
+          (e): e is ElementRecord => e != null,
+        );
         // Same era?
         if (minYear != null && maxYear != null) {
           const dYears = dElements
-            .map((e) => e!.discoveryYear)
+            .map((e) => e.discoveryYear)
             .filter((y): y is number => y != null);
           if (dYears.some((y) => y >= minYear - 20 && y <= maxYear + 20)) return true;
         }
         // Shared block?
-        if (dElements.some((e) => e && blocks.has(e.block))) return true;
+        if (dElements.some((e) => blocks.has(e.block))) return true;
         return false;
       })
       .slice(0, 8);
@@ -63,7 +68,9 @@ export default function DiscovererDetail() {
     );
   }
 
-  const elements = discoverer.elements.map((s) => getElement(s)!).filter(Boolean);
+  const elements = discoverer.elements.map((s) => getElement(s)).filter(
+    (e): e is ElementRecord => e != null,
+  );
   const color = elements.length > 0 ? blockColor(elements[0].block) : WARM_RED;
 
   // Year range

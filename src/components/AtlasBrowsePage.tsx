@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { getElement } from '../lib/data';
+import type { ElementRecord } from '../lib/types';
 import { BACK_LINK_STYLE } from '../lib/theme';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
@@ -45,7 +46,9 @@ export default function AtlasBrowsePage({
 }: AtlasBrowsePageProps) {
   useDocumentTitle(heading);
 
-  const elements = symbols.map((s) => getElement(s)!).filter(Boolean);
+  const elements = symbols.map((s) => getElement(s)).filter(
+    (e): e is ElementRecord => e != null,
+  );
 
   const { lines, lineHeight } = usePretextLines({
     text: description ?? '',

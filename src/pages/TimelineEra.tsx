@@ -1,6 +1,7 @@
 import { useMemo, useState, useCallback, useRef } from 'react';
 import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
+import type { ElementRecord } from '../lib/types';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PlateHoverInfo } from '../components/AtlasPlate';
@@ -33,7 +34,9 @@ export default function TimelineEra() {
     return timeline.filter((e) => e.year != null && decadeOf(e.year) === decade);
   }, [isAntiquity, decade, antiquity, timeline]);
 
-  const elements = entries.map((e) => getElement(e.symbol)!).filter(Boolean);
+  const elements = entries.map((e) => getElement(e.symbol)).filter(
+    (e): e is ElementRecord => e != null,
+  );
   const color = elements.length > 0 ? blockColor(elements[0].block) : DEEP_BLUE;
 
   // Tooltip state

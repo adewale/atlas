@@ -1,16 +1,6 @@
 import { Link, useLocation } from 'react-router';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from '../lib/theme';
-
-const VIZ_PAGES = [
-  { to: '/', label: 'Table', colour: BLACK },
-  { to: '/phase-landscape', label: 'Phase', colour: WARM_RED },
-  { to: '/neighborhood-graph', label: 'Neighbours', colour: BLACK },
-  { to: '/anomaly-explorer', label: 'Anomalies', colour: MUSTARD },
-  { to: '/property-scatter', label: 'Scatter', colour: DEEP_BLUE },
-  { to: '/discovery-timeline', label: 'Timeline', colour: WARM_RED },
-  { to: '/etymology-map', label: 'Etymology', colour: DEEP_BLUE },
-  { to: '/discoverer-network', label: 'Discoverers', colour: MUSTARD },
-] as const;
+import { PAPER } from '../lib/theme';
+import { VIZ_PAGES } from '../lib/routeMeta';
 
 /**
  * Horizontal nav bar for switching between visualisation pages.
@@ -31,12 +21,12 @@ export default function VizNav() {
       }}
       aria-label="Visualisation pages"
     >
-      {VIZ_PAGES.map(({ to, label, colour }) => {
-        const isActive = pathname === to;
+      {VIZ_PAGES.map(({ path, label, colour }) => {
+        const isActive = pathname === path;
         return (
           <Link
-            key={to}
-            to={to}
+            key={path}
+            to={path}
             style={{
               fontSize: '10px',
               fontWeight: 'bold',

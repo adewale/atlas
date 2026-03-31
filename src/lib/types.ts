@@ -50,6 +50,14 @@ export type AnomalyData = {
   elements: string[];
 };
 
+export type DiscovererData = { name: string; elements: string[] };
+
+export type TimelineEntry = { symbol: string; year: number | null; discoverer: string };
+export type TimelineData = {
+  antiquity: TimelineEntry[];
+  timeline: TimelineEntry[];
+};
+
 export type CreditsData = {
   structured: { provider: string; license: string; url: string };
   identifiers: { provider: string; license: string; url: string };
