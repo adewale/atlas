@@ -158,9 +158,9 @@ svg [role="button"] {
   contain: layout style paint;
 }
 
-/* Touch: allow pinch-zoom on periodic table */
+/* Touch: allow pan + pinch-zoom on scrollable SVG containers */
 .pt-scroll-container {
-  touch-action: pinch-zoom;
+  touch-action: pan-x pan-y pinch-zoom;
 }
 
 /* ----------------------------------------

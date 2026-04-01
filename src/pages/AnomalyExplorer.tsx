@@ -13,7 +13,7 @@ import {
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
+import { DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
@@ -174,7 +174,7 @@ export default function AnomalyExplorer() {
       </div>
 
       {/* ---- Periodic table grid ---- */}
-      <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
+      <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
       <svg
         viewBox={`0 0 ${VIEWBOX_W} ${totalHeight}`}
         style={{
@@ -183,7 +183,7 @@ export default function AnomalyExplorer() {
           maxWidth: VIEWBOX_W,
           display: 'block',
           overflow: 'visible',
-          touchAction: 'pinch-zoom',
+          touchAction: 'pan-x pan-y pinch-zoom',
         }}
       >
         {allElements.map((el) => {

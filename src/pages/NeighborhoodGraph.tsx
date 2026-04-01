@@ -115,7 +115,7 @@ export default function NeighborhoodGraph() {
         </svg>
       </div>
 
-      <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
+      <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${VIEWBOX_H + 24}`}
           overflow="visible"
@@ -125,7 +125,7 @@ export default function NeighborhoodGraph() {
             width: '100%',
             minWidth: SVG_WIDTH,
             maxWidth: SVG_WIDTH,
-            touchAction: 'pinch-zoom',
+            touchAction: 'pan-x pan-y pinch-zoom',
           }}
         >
           {/* Edges (lines between neighbors) */}

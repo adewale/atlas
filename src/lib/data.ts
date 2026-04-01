@@ -1,6 +1,13 @@
 import rawElements from '../../data/generated/elements.json';
 import type { ElementRecord } from './types';
 
+/**
+ * All 118 elements — loaded eagerly for modules that need sync access at
+ * module scope (grid.ts adjacency maps, PeriodicTable cell positions).
+ *
+ * Vite code-splits the JSON into its own chunk (`elements-*.js`) via the
+ * static import, so this does NOT bloat the index bundle.
+ */
 export const allElements: ElementRecord[] = rawElements as ElementRecord[];
 
 const bySymbol = new Map<string, ElementRecord>(
@@ -32,3 +39,4 @@ export function searchElements(query: string): ElementRecord[] {
     return aScore - bScore || a.atomicNumber - b.atomicNumber;
   });
 }
+

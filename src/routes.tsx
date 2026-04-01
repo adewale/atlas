@@ -38,12 +38,16 @@ export const router = createBrowserRouter([
     path: '/element/:symbol',
     Component: Element,
     loader: async ({ params }: LoaderFunctionArgs) => {
-      const [elementMod, groups, anomalies] = await Promise.all([
+      const [elementMod, groupsMod, anomaliesMod] = await Promise.all([
         import(`../data/generated/element-${params.symbol}.json`),
-        groupsCache ?? import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
-        anomaliesCache ?? import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
+        groupsCache
+          ? Promise.resolve(groupsCache)
+          : import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
+        anomaliesCache
+          ? Promise.resolve(anomaliesCache)
+          : import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
       ]);
-      return { element: elementMod.default, groups, anomalies };
+      return { element: elementMod.default, groups: groupsMod, anomalies: anomaliesMod };
     },
   },
   {
