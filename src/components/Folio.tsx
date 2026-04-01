@@ -361,7 +361,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               className="folio-symbol"
               style={{
                 fontSize: mobile ? '40px' : '44px',
-                fontWeight: 700,
+                fontWeight: 'bold',
                 color,
                 lineHeight: 1.1,
                 viewTransitionName: VT.SYMBOL,

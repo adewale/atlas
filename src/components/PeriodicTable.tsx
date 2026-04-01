@@ -181,7 +181,7 @@ const ElementCell = memo(
             y={36}
             textAnchor="middle"
             fontSize={16}
-            fontWeight={700}
+            fontWeight="bold"
             fill={textColor}
             fontFamily="system-ui, sans-serif"
             style={{
@@ -364,7 +364,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           maxHeight: highlightMode === 'property' ? '60px' : '0px',
           opacity: highlightMode === 'property' ? 1 : 0,
           transform: highlightMode === 'property' ? 'translateY(0)' : 'translateY(-8px)',
-          transition: 'max-height 250ms ease-in-out, opacity 200ms ease-in-out, transform 250ms ease-in-out, margin-top 250ms ease-in-out',
+          transition: 'max-height 250ms var(--ease-in-out), opacity 200ms var(--ease-in-out), transform 250ms var(--ease-in-out), margin-top 250ms var(--ease-in-out)',
           marginTop: highlightMode === 'property' ? '8px' : '0px',
           transformOrigin: 'top right',
         }}
@@ -404,7 +404,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                   minHeight: '44px',
                   minWidth: '44px',
                   fontFamily: 'inherit',
-                  transition: 'background 150ms ease-in-out, color 150ms ease-in-out, border-color 150ms ease-in-out',
+                  transition: 'background 150ms var(--ease-in-out), color 150ms var(--ease-in-out), border-color 150ms var(--ease-in-out)',
                 }}
               >
                 {o.label}

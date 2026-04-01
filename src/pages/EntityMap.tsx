@@ -72,7 +72,7 @@ function EntityCard({ entity, highlight, onHover }: { entity: EntityMeta; highli
         width: '220px',
         maxWidth: '100%',
         minHeight: '150px',
-        transition: 'border-color 150ms ease-out',
+        transition: 'border-color 150ms var(--ease-out)',
         background: highlight ? `${entity.colour}08` : 'transparent',
       }}
       onPointerEnter={() => onHover(entity.id)}
@@ -271,7 +271,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
                 fill="none"
                 stroke={entity.colour}
                 strokeWidth={ringStroke}
-                style={{ transition: 'stroke-width 150ms ease-out' }}
+                style={{ transition: 'stroke-width 150ms var(--ease-out)' }}
               />
               {/* Bar — extends past ring edges */}
               <rect

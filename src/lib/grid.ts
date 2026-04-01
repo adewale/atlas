@@ -1,18 +1,19 @@
 import { allElements } from './data';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER } from './theme';
 import type { ElementRecord } from './types';
 
 // ---------------------------------------------------------------------------
 // Block colours
 // ---------------------------------------------------------------------------
 const BLOCK_COLORS: Record<string, string> = {
-  s: '#133e7c',
-  p: '#856912',
-  d: '#9e1c2c',
-  f: '#0f0f0f',
+  s: DEEP_BLUE,
+  p: MUSTARD,
+  d: WARM_RED,
+  f: BLACK,
 };
 
 export function blockColor(block: string): string {
-  return BLOCK_COLORS[block] ?? '#0f0f0f';
+  return BLOCK_COLORS[block] ?? BLACK;
 }
 
 // ---------------------------------------------------------------------------
@@ -30,9 +31,9 @@ function relativeLuminance(hex: string): number {
   return 0.2126 * sRGBtoLinear(r) + 0.7152 * sRGBtoLinear(g) + 0.0722 * sRGBtoLinear(b);
 }
 
-/** Returns '#0f0f0f' (black) for light fills, '#f7f2e8' (paper) for dark fills. */
+/** Returns BLACK for light fills, PAPER for dark fills. */
 export function contrastTextColor(fillHex: string): string {
-  return relativeLuminance(fillHex) > 0.179 ? '#0f0f0f' : '#f7f2e8';
+  return relativeLuminance(fillHex) > 0.179 ? BLACK : PAPER;
 }
 
 // ---------------------------------------------------------------------------

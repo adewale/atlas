@@ -155,7 +155,7 @@ export default function AnomalyExplorer() {
                 style={{
                   fontFamily: 'system-ui, sans-serif',
                   fontSize: 13,
-                  fontWeight: 700,
+                  fontWeight: 'bold',
                   letterSpacing: '0.02em',
                   color: isActive ? contrastTextColor(bg) : BLACK,
                   background: isActive ? bg : 'transparent',
@@ -230,7 +230,7 @@ export default function AnomalyExplorer() {
                 y={26}
                 textAnchor="middle"
                 fontSize={16}
-                fontWeight={700}
+                fontWeight="bold"
                 fontFamily="system-ui, sans-serif"
                 fill={textColor}
                 style={{

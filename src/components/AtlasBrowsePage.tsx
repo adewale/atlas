@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { getElement } from '../lib/data';
 import type { ElementRecord } from '../lib/types';
-import { BACK_LINK_STYLE } from '../lib/theme';
+import { BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
@@ -61,11 +61,8 @@ export default function AtlasBrowsePage({
       <Link to={backLink.to} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>{backLink.label}</Link>
       <h1
         style={{
+          ...INSCRIPTION_STYLE,
           margin: '12px 0 16px',
-          fontSize: '13px',
-          fontWeight: 'bold',
-          textTransform: 'uppercase',
-          letterSpacing: '0.2em',
           color,
           ...(viewTransitionName ? { viewTransitionName } : {}),
         } as React.CSSProperties}

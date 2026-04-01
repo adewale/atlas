@@ -35,13 +35,13 @@ export default function Element() {
 
   return (
     <PageShell>
-      <a
-        href="/"
+      <Link
+        to="/"
         onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}
         style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}
       >
         ← Table
-      </a>
+      </Link>
       <article>
         <Folio element={element} sources={sources} groups={groups} anomalies={anomalies} animate={true} />
       </article>

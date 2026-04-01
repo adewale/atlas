@@ -209,7 +209,7 @@ export default function AtlasPlate({
                   x={x + 6}
                   y={y + 38}
                   fontSize={20}
-                  fontWeight={700}
+                  fontWeight="bold"
                   fill={textFill}
                   fontFamily="system-ui, sans-serif"
                   style={{ viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}

@@ -153,7 +153,7 @@ export default function PhaseLandscape() {
                     y={36}
                     textAnchor="middle"
                     fontSize={16}
-                    fontWeight={700}
+                    fontWeight="bold"
                     fill={textColor}
                     fontFamily="system-ui, sans-serif"
                     style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}

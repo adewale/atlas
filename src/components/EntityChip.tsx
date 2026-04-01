@@ -19,15 +19,17 @@ type BaseChipProps = {
   primary: string;
   secondary: string;
   title?: string;
+  'aria-label'?: string;
 };
 
-function BaseChip({ to, borderColor, primary, secondary, title }: BaseChipProps) {
+function BaseChip({ to, borderColor, primary, secondary, title, 'aria-label': ariaLabel }: BaseChipProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <Link
       to={to}
       title={title ?? primary}
+      aria-label={ariaLabel ?? title ?? primary}
       style={{
         display: 'inline-flex',
         flexDirection: 'column',
@@ -39,7 +41,7 @@ function BaseChip({ to, borderColor, primary, secondary, title }: BaseChipProps)
         borderLeft: `3px solid ${borderColor}`,
         background: hovered ? DIM : 'transparent',
         textDecoration: 'none',
-        transition: 'background 120ms ease-out',
+        transition: 'background 120ms var(--ease-out)',
         boxSizing: 'border-box',
       }}
       onMouseEnter={() => setHovered(true)}
@@ -100,6 +102,7 @@ export function DiscovererChip({ name, elementCount, yearRange }: DiscovererChip
       primary={name}
       secondary={secondary}
       title={`View elements discovered by ${name}`}
+      aria-label={`Discoverer: ${name}`}
     />
   );
 }
@@ -127,6 +130,7 @@ export function AnomalyChip({ slug, label, elementCount }: AnomalyChipProps) {
       primary={label}
       secondary={secondary}
       title={`${label} — view anomaly details`}
+      aria-label={`Anomaly: ${label}`}
     />
   );
 }
@@ -152,6 +156,7 @@ export function NeighbourChip({ symbol, name, color, direction }: NeighbourChipP
       primary={`${symbol} — ${name}`}
       secondary={direction ?? 'neighbour'}
       title={`${name} (${symbol})`}
+      aria-label={`Neighbour: ${name} (${symbol})`}
     />
   );
 }
