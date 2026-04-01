@@ -209,17 +209,17 @@ describe('Pretext wrapper integration', () => {
       expect(mockPrepareWithSegments).toHaveBeenCalledWith('ello world', '16px system-ui');
     });
 
-    it('drop cap height matches font size', () => {
+    it('drop cap height uses cap-height ratio', () => {
       const result = dropCapLayout('Abc', '16px system-ui', '48px system-ui', 400, 20);
       expect(result.dropCap.fontSize).toBe(48);
-      expect(result.dropCap.height).toBe(48);
+      // Cap height is ~75% of font size for serif fonts
+      expect(result.dropCap.height).toBe(Math.ceil(48 * 0.75));
     });
 
     it('lines beside drop cap have x offset', () => {
-      // With 48px drop cap font, dropHeight=48, lineHeight=20 => dropCapLines = ceil(48/20) = 3
-      // dropWidth = 8 (from mock widths[0]), gap = 8 => x offset = 16
+      // With 48px drop cap font, dropHeight=ceil(48*0.75)=36, lineHeight=20 => dropCapLines = ceil(36/20) = 2
       const result = dropCapLayout('A' + 'b'.repeat(150), '16px system-ui', '48px system-ui', 400, 20);
-      const dropCapLines = Math.ceil(48 / 20); // 3
+      const dropCapLines = Math.ceil(Math.ceil(48 * 0.75) / 20); // 2
       for (let i = 0; i < Math.min(dropCapLines, result.lines.length); i++) {
         expect(result.lines[i].x).toBeGreaterThan(0);
       }
@@ -227,7 +227,7 @@ describe('Pretext wrapper integration', () => {
 
     it('later lines return to x=0', () => {
       const result = dropCapLayout('A' + 'b'.repeat(150), '16px system-ui', '48px system-ui', 400, 20);
-      const dropCapLines = Math.ceil(48 / 20); // 3
+      const dropCapLines = Math.ceil(Math.ceil(48 * 0.75) / 20); // 2
       for (let i = dropCapLines; i < result.lines.length; i++) {
         expect(result.lines[i].x).toBe(0);
       }
