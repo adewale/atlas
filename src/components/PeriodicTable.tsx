@@ -159,7 +159,7 @@ const ElementCell = memo(
             stroke={isActive ? WARM_RED : BLACK}
             strokeWidth={isActive ? 2 : 0.5}
             style={{
-              transition: 'fill 250ms var(--ease-out)',
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
               viewTransitionName: isActive ? VT.CELL_BG : undefined,
             } as React.CSSProperties}
           />
@@ -170,7 +170,7 @@ const ElementCell = memo(
             fill={textColor}
             fontFamily="system-ui, sans-serif"
             style={{
-              transition: 'fill 250ms var(--ease-out)',
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
               viewTransitionName: isActive ? VT.NUMBER : undefined,
             } as React.CSSProperties}
           >
@@ -185,7 +185,7 @@ const ElementCell = memo(
             fill={textColor}
             fontFamily="system-ui, sans-serif"
             style={{
-              transition: 'fill 250ms var(--ease-out)',
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
               viewTransitionName: isActive ? VT.SYMBOL : undefined,
             } as React.CSSProperties}
           >
@@ -199,7 +199,7 @@ const ElementCell = memo(
             fill={textColor}
             fontFamily="system-ui, sans-serif"
             style={{
-              transition: 'fill 250ms var(--ease-out)',
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
               viewTransitionName: isActive ? VT.NAME : undefined,
             } as React.CSSProperties}
           >
