@@ -37,7 +37,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
 
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_MEDIUM } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
 
 const INTRO_TEXT =
@@ -235,7 +235,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: INTRO_MAX_W,
-    dropCapFont: `80px ${PRETEXT_SANS}`,
+    dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
   const DROP_CAP_SIZE = 80;
   const introHeight = Math.max(introLines.length * introLH + 16, DROP_CAP_SIZE + 4);

@@ -16,6 +16,7 @@ export type PositionedLine = {
 };
 
 export const PRETEXT_SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+export const DROP_CAP_FONT = 'Cinzel, Georgia, serif';
 
 const DEFAULT_FONT = `16px ${PRETEXT_SANS}`;
 
@@ -126,11 +127,12 @@ export function dropCapLayout(
   // Parse drop cap font size
   const match = dropCapFont.match(/(\d+(?:\.\d+)?)px/);
   const dropFontSize = match ? parseFloat(match[1]) : 48;
-  const dropHeight = dropFontSize; // height of the drop cap glyph
+  // Cap height is ~75% of font size for most serif fonts (Cinzel etc.)
+  const dropHeight = Math.ceil(dropFontSize * 0.75);
 
   // How many body lines the drop cap spans
   const dropCapLines = Math.ceil(dropHeight / lineHeight);
-  const gap = 8; // space between drop cap and body text
+  const gap = 4; // tight space between drop cap and body text
 
   // Build variable-width array: narrow beside drop cap, full after
   const narrowWidth = maxWidth - dropWidth - gap;

@@ -2,12 +2,12 @@ import { useState, useMemo, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
-import InfoTip from '../components/InfoTip';
+
 import type { ElementRecord } from '../lib/types';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
@@ -124,7 +124,7 @@ export default function PropertyScatter() {
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: 700,
-    dropCapFont: `80px ${PRETEXT_SANS}`,
+    dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
 
   // Coupled dropdowns: prevent same property on both axes
@@ -197,7 +197,35 @@ export default function PropertyScatter() {
 
   return (
     <PageShell vizNav>
-      <div style={{ maxWidth: '760px' }}>
+      <div style={{ maxWidth: '760px', position: 'relative' }}>
+      {/* Margin note — educational aside */}
+      <aside
+        className="scatter-margin-note"
+        style={{
+          position: 'absolute',
+          right: '-200px',
+          top: '80px',
+          width: '170px',
+          fontSize: '12px',
+          lineHeight: 1.6,
+          color: GREY_MID,
+          borderLeft: `2px solid ${DEEP_BLUE}`,
+          paddingLeft: '10px',
+        }}
+      >
+        <strong style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: DEEP_BLUE }}>
+          Properties
+        </strong>
+        <p style={{ margin: '6px 0 0' }}>
+          <strong>Electronegativity</strong> measures how strongly an atom attracts electrons in a bond (Pauling scale).
+        </p>
+        <p style={{ margin: '6px 0 0' }}>
+          <strong>Ionisation energy</strong> is the energy needed to remove an electron from a neutral atom.
+        </p>
+        <p style={{ margin: '6px 0 0' }}>
+          Noble gases cluster at high ionisation energy because their filled shells resist electron removal.
+        </p>
+      </aside>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Property Scatter</h1>
 
@@ -219,15 +247,8 @@ export default function PropertyScatter() {
           />
         </svg>
 
-        {/* Educational note */}
-        <p style={{ fontSize: '14px', lineHeight: 1.6, marginTop: '8px', color: BLACK }}>
-          <InfoTip label="Electronegativity measures how strongly an atom attracts electrons in a chemical bond (Pauling scale). Ionisation energy is the energy needed to remove an electron from a neutral atom. Noble gases cluster at high ionisation energy because their filled shells resist electron removal.">
-            What do these properties mean?
-          </InfoTip>
-        </p>
-
         {/* Axis selectors — coupled so you can't pick the same property for both */}
-        <div style={{ display: 'flex', gap: '24px', marginTop: '16px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '24px', marginTop: '16px', flexWrap: 'wrap', position: 'relative' }}>
           <label style={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
             X axis:
             <select

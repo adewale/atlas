@@ -6,7 +6,7 @@ import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, STROKE_HAIRLINE } f
 import { VT } from '../lib/transitions';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -51,7 +51,7 @@ export default function DiscovererNetwork() {
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: INTRO_MAX_W,
-    dropCapFont: `72px ${PRETEXT_SANS}`,
+    dropCapFont: `72px ${DROP_CAP_FONT}`,
   });
 
   // Separate antiquity group and prolific discoverers (2+ elements)
@@ -304,33 +304,37 @@ export default function DiscovererNetwork() {
           })}
 
           {/* Tooltip */}
-          {hovered && (
-            <g
-              transform={`translate(${hovered.x}, ${hovered.y - 10})`}
-              style={{ pointerEvents: 'none' }}
-            >
-              <rect
-                x={-60}
-                y={-28}
-                width={120}
-                height={24}
-                rx={3}
-                fill={BLACK}
-                opacity={0.92}
-              />
-              <text
-                x={0}
-                y={-12}
-                textAnchor="middle"
-                fontSize={11}
-                fill={PAPER}
-                fontFamily="system-ui, sans-serif"
+          {hovered && (() => {
+            const tipText = hovered.name + (hovered.year != null ? ` (${hovered.year})` : '');
+            const measured = measureLines(tipText, '11px system-ui, sans-serif', 9999, 16);
+            const tipW = (measured[0]?.width ?? 80) + 16;
+            return (
+              <g
+                transform={`translate(${hovered.x}, ${hovered.y - 10})`}
+                style={{ pointerEvents: 'none' }}
               >
-                {hovered.name}
-                {hovered.year != null ? ` (${hovered.year})` : ''}
-              </text>
-            </g>
-          )}
+                <rect
+                  x={-tipW / 2}
+                  y={-28}
+                  width={tipW}
+                  height={24}
+                  rx={3}
+                  fill={BLACK}
+                  opacity={0.92}
+                />
+                <text
+                  x={0}
+                  y={-12}
+                  textAnchor="middle"
+                  fontSize={11}
+                  fill={PAPER}
+                  fontFamily="system-ui, sans-serif"
+                >
+                  {tipText}
+                </text>
+              </g>
+            );
+          })()}
         </svg>
       </div>
     </PageShell>

@@ -5,7 +5,7 @@ import { getElement } from '../lib/data';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -164,7 +164,7 @@ export default function EtymologyMap() {
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: MAX_WIDTH,
-    dropCapFont: `72px ${PRETEXT_SANS}`,
+    dropCapFont: `72px ${DROP_CAP_FONT}`,
   });
 
   useEffect(() => {

@@ -16,18 +16,18 @@ export default function HeroHeader({
   subtitle,
 }: HeroHeaderProps) {
   return (
-    <div style={{ display: 'flex', alignItems: 'baseline', gap: '16px', margin: '12px 0' }}>
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', margin: '12px 0' }}>
       <span style={{
         fontSize: '96px',
         fontWeight: 'bold',
         fontFamily: MONO_FONT,
-        lineHeight: 1,
+        lineHeight: 0.78,
         color: numeralColor,
         letterSpacing: '-0.02em',
       }}>
         {numeral}
       </span>
-      <div>
+      <div style={{ paddingTop: '0.15em' }}>
         <h1 style={{
           ...INSCRIPTION_STYLE,
           margin: 0,

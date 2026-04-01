@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
@@ -26,7 +26,7 @@ export default function About() {
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_MAX_WIDTH,
-    dropCapFont: `72px ${PRETEXT_SANS}`,
+    dropCapFont: `72px ${DROP_CAP_FONT}`,
   });
 
   const { lines: dataLines, lineHeight: dataLH } = usePretextLines({
