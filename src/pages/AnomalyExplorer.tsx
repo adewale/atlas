@@ -12,7 +12,7 @@ import {
 } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
@@ -122,7 +122,7 @@ export default function AnomalyExplorer() {
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: INTRO_MAX_W,
-    dropCapFont: `${DROP_CAP_SIZE}px ${PRETEXT_SANS}`,
+    dropCapFont: `${DROP_CAP_SIZE}px ${DROP_CAP_FONT}`,
   });
   const introHeight = Math.max(introLines.length * introLH + 16, DROP_CAP_SIZE + 4);
 

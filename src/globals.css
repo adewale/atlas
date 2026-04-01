@@ -282,6 +282,13 @@ svg [role="button"] {
    Responsive breakpoints
    ---------------------------------------- */
 
+/* Margin notes — hide below 1100px (not enough room in the right margin) */
+@media (max-width: 1100px) {
+  .scatter-margin-note {
+    display: none;
+  }
+}
+
 /* Mobile (<768px) */
 @media (max-width: 768px) {
   body {
