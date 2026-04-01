@@ -2,6 +2,7 @@ import { useParams, useLoaderData } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import AtlasBrowsePage from '../components/AtlasBrowsePage';
 import type { GroupData } from '../lib/types';
 
@@ -19,7 +20,7 @@ export default function AtlasGroup() {
       backLink={{ label: '← Table', to: '/' }}
       heading={`Group ${n}`}
       color={color}
-      viewTransitionName="data-plate-group"
+      viewTransitionName={VT.DATA_PLATE_GROUP}
       description={group?.description}
       elements={symbols}
       caption={`Group ${n}`}

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -198,7 +199,7 @@ export default function PropertyScatter() {
     <PageShell vizNav>
       <div style={{ maxWidth: '760px' }}>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE }}>Property Scatter</h1>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Property Scatter</h1>
 
         {/* Pretext intro */}
         <svg

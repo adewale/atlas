@@ -12,6 +12,7 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { useGridNavigation } from '../hooks/useGridNavigation';
+import { VT, vt } from '../lib/transitions';
 
 // ---------------------------------------------------------------------------
 // Highlight modes
@@ -158,8 +159,9 @@ const ElementCell = memo(
             stroke={isActive ? WARM_RED : BLACK}
             strokeWidth={isActive ? 2 : 0.5}
             style={{
-              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-            }}
+              transition: 'fill 250ms var(--ease-out)',
+              viewTransitionName: isActive ? VT.CELL_BG : undefined,
+            } as React.CSSProperties}
           />
           <text
             x={4}
@@ -168,8 +170,8 @@ const ElementCell = memo(
             fill={textColor}
             fontFamily="system-ui, sans-serif"
             style={{
-              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-              viewTransitionName: isActive ? 'element-number' : undefined,
+              transition: 'fill 250ms var(--ease-out)',
+              viewTransitionName: isActive ? VT.NUMBER : undefined,
             } as React.CSSProperties}
           >
             {atomicNumber}
@@ -179,12 +181,12 @@ const ElementCell = memo(
             y={36}
             textAnchor="middle"
             fontSize={16}
-            fontWeight="bold"
+            fontWeight={700}
             fill={textColor}
             fontFamily="system-ui, sans-serif"
             style={{
-              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-              viewTransitionName: isActive ? 'element-symbol' : undefined,
+              transition: 'fill 250ms var(--ease-out)',
+              viewTransitionName: isActive ? VT.SYMBOL : undefined,
             } as React.CSSProperties}
           >
             {symbol}
@@ -196,7 +198,10 @@ const ElementCell = memo(
             fontSize={7}
             fill={textColor}
             fontFamily="system-ui, sans-serif"
-            style={{ transition: `fill 250ms var(--ease-out) ${dist * 8}ms` }}
+            style={{
+              transition: 'fill 250ms var(--ease-out)',
+              viewTransitionName: isActive ? VT.NAME : undefined,
+            } as React.CSSProperties}
           >
             {displayName}
           </text>

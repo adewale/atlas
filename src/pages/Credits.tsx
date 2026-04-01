@@ -4,6 +4,7 @@ import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { BLACK, DIM, BACK_LINK_STYLE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const TEXT_WIDTH = 720;
@@ -43,7 +44,7 @@ export default function Credits() {
   return (
     <PageShell>
       <div style={{ maxWidth: '800px' }}>
-      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
+      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Credits</h1>
 
       <div style={{ borderTop: `2px solid ${BLACK}`, marginBottom: '24px' }} />

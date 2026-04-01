@@ -11,6 +11,7 @@ import {
   contrastTextColor,
 } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
+import { VT, vt } from '../lib/transitions';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -141,7 +142,8 @@ export default function AnomalyExplorer() {
           style={{
             ...INSCRIPTION_STYLE,
             color: MUSTARD,
-          }}
+            viewTransitionName: VT.VIZ_TITLE,
+          } as React.CSSProperties}
         >
           Anomaly Explorer
         </h1>
@@ -262,7 +264,7 @@ export default function AnomalyExplorer() {
                   stroke={hasSelection && !isHighlighted ? DIM : BLACK}
                   strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
                   rx={0}
-                  style={{ transition: 'fill 250ms var(--ease-out), stroke 250ms var(--ease-out)' }}
+                  style={{ transition: 'fill 250ms var(--ease-out), stroke 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG) } as React.CSSProperties}
                 />
                 <text
                   x={CELL_WIDTH / 2}
@@ -272,7 +274,7 @@ export default function AnomalyExplorer() {
                   fontWeight={700}
                   fontFamily="system-ui, sans-serif"
                   fill={textColor}
-                  style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
+                  style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}
                 >
                   {el.symbol}
                 </text>
@@ -284,7 +286,7 @@ export default function AnomalyExplorer() {
                   fontFamily="system-ui, sans-serif"
                   fill={textColor}
                   opacity={0.7}
-                  style={{ transition: 'fill 250ms var(--ease-out)' }}
+                  style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.NUMBER) } as React.CSSProperties}
                 >
                   {el.atomicNumber}
                 </text>

@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -77,7 +78,7 @@ export default function DiscovererNetwork() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
 
       {/* bar-grow keyframe in globals.css */}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>

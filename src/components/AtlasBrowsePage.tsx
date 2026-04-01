@@ -1,12 +1,14 @@
 import { Link } from 'react-router';
 import { getElement } from '../lib/data';
 import type { ElementRecord } from '../lib/types';
-import { BACK_LINK_STYLE } from '../lib/theme';
+import { BACK_LINK_STYLE, PAPER, MONO_FONT } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
 import AtlasPlate from './AtlasPlate';
 import PageShell from './PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { contrastTextColor } from '../lib/grid';
 
 const DESC_MAX_W = 600;
 
@@ -55,23 +57,51 @@ export default function AtlasBrowsePage({
     maxWidth: DESC_MAX_W,
   });
 
+  const textFill = viewTransitionName ? contrastTextColor(color) : color;
+
   return (
     <PageShell>
-      <Link to={backLink.to} style={BACK_LINK_STYLE}>{backLink.label}</Link>
-      <h1
-        style={{
-          margin: '12px 0 16px',
-          fontSize: '13px',
-          fontWeight: 'bold',
-          textTransform: 'uppercase',
-          letterSpacing: '0.2em',
-          color,
-          ...(viewTransitionName ? { viewTransitionName } : {}),
-        } as React.CSSProperties}
-      >
-        {heading}
-      </h1>
-      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
+      <Link to={backLink.to} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>{backLink.label}</Link>
+      {viewTransitionName ? (
+        /* Data-plate badge: coloured background matching Folio plate rows
+           so the view transition morph is shape-preserving in both directions. */
+        <div
+          style={{
+            margin: '12px 0 16px',
+            padding: '8px 14px',
+            background: color,
+            display: 'inline-block',
+            viewTransitionName,
+          } as React.CSSProperties}
+        >
+          <span
+            style={{
+              fontSize: '13px',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.2em',
+              color: textFill,
+              fontFamily: MONO_FONT,
+            }}
+          >
+            {heading}
+          </span>
+        </div>
+      ) : (
+        <h1
+          style={{
+            margin: '12px 0 16px',
+            fontSize: '13px',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+            color,
+          }}
+        >
+          {heading}
+        </h1>
+      )}
+      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
       {description && (
         <svg
           width={DESC_MAX_W}

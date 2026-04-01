@@ -1,5 +1,6 @@
 import { useParams, useLoaderData } from 'react-router';
 import { WARM_RED, DEEP_BLUE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import AtlasBrowsePage from '../components/AtlasBrowsePage';
 import type { PeriodData } from '../lib/types';
 
@@ -15,7 +16,7 @@ export default function AtlasPeriod() {
       backLink={{ label: '← Table', to: '/' }}
       heading={`Period ${n}`}
       color={color}
-      viewTransitionName="data-plate-period"
+      viewTransitionName={VT.DATA_PLATE_PERIOD}
       description={period?.description}
       elements={period ? period.elements : []}
       caption={`Period ${n}`}

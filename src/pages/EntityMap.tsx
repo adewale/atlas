@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router';
 import { BLACK, WARM_RED, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { ENTITIES, VIZ_PAGES } from '../lib/routeMeta';
 import type { EntityMeta } from '../lib/routeMeta';
 import PageShell from '../components/PageShell';
@@ -362,7 +363,7 @@ export default function EntityMapPage() {
   return (
     <PageShell>
       <div style={{ maxWidth: '900px' }}>
-      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
+      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
       <h1 style={{ ...INSCRIPTION_STYLE, margin: '16px 0 8px', color: WARM_RED }}>
         Entity Map
       </h1>

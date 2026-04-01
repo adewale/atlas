@@ -10,6 +10,7 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID } from '../lib/theme';
+import { VT, vt } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -71,7 +72,7 @@ export default function PhaseLandscape() {
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Phase Landscape at STP</h1>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Phase Landscape at STP</h1>
 
         <svg
           width="100%"
@@ -145,16 +146,17 @@ export default function PhaseLandscape() {
                     fill={fill}
                     stroke={BLACK}
                     strokeWidth={0.5}
+                    style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG) } as React.CSSProperties}
                   />
                   <text
                     x={CELL_WIDTH / 2}
                     y={36}
                     textAnchor="middle"
                     fontSize={16}
-                    fontWeight="bold"
+                    fontWeight={700}
                     fill={textColor}
                     fontFamily="system-ui, sans-serif"
-                    style={{ viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
+                    style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}
                   >
                     {el.symbol}
                   </text>

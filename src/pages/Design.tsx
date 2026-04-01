@@ -4,6 +4,7 @@ import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import InfoTip from '../components/InfoTip';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -49,7 +50,7 @@ export default function Design() {
   return (
     <PageShell>
       <div style={{ maxWidth: '800px' }}>
-      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
+      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>
         Living reference for the Atlas visual system. 60% Kronecker-Wallis/Byrne visual drama,

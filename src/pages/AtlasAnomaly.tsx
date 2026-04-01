@@ -1,5 +1,6 @@
 import { useParams, useLoaderData, Link } from 'react-router';
 import { WARM_RED, BACK_LINK_STYLE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import AtlasBrowsePage from '../components/AtlasBrowsePage';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
@@ -13,7 +14,7 @@ export default function AtlasAnomaly() {
   if (!anomaly) {
     return (
       <PageShell>
-        <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
+        <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
         <p>Anomaly not found.</p>
       </PageShell>
     );

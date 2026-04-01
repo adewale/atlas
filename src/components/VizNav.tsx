@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router';
 import { PAPER } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { VIZ_PAGES } from '../lib/routeMeta';
 
 /**
@@ -17,7 +18,7 @@ export default function VizNav() {
         gap: '4px',
         flexWrap: 'wrap',
         marginBottom: '16px',
-        viewTransitionName: 'viz-nav',
+        viewTransitionName: VT.VIZ_NAV,
       }}
       aria-label="Visualisation pages"
     >
