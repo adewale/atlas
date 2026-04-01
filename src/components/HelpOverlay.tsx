@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { usePretextLines } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
-import { BLACK, PAPER, GREY_MID, MONO_FONT } from '../lib/theme';
+import { BLACK, PAPER, GREY_MID, MONO_FONT, STROKE_HAIRLINE } from '../lib/theme';
 
 const PANEL_WIDTH = 480;
 const INTRO_FONT = `14px ${PRETEXT_SANS}`;
@@ -140,7 +140,7 @@ function HelpPanel({ onClose }: { onClose: () => void }) {
                 x2={PANEL_WIDTH - 32}
                 y2={y}
                 stroke={BLACK}
-                strokeWidth={0.5}
+                strokeWidth={STROKE_HAIRLINE}
                 opacity={0.15}
                 style={{
                   clipPath: 'inset(0 100% 0 0)',

@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -420,7 +420,7 @@ export default function AnimationPalette() {
     <PageShell>
       <div style={{ maxWidth: '800px' }}>
         <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-        <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase' }}>
+        <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px' }}>
           Animation Palette
         </h1>
         <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>

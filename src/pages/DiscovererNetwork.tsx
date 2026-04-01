@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE } from '../lib/theme';
+import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
@@ -296,7 +296,7 @@ export default function DiscovererNetwork() {
                   x2={LEFT_COL + disc.elements.length * (SQ + SQ_GAP)}
                   y2={SQ + 6}
                   stroke={BLACK}
-                  strokeWidth={0.5}
+                  strokeWidth={STROKE_HAIRLINE}
                   opacity={0.15}
                 />
               </g>

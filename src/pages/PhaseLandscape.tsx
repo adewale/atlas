@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID, STROKE_HAIRLINE } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -145,7 +145,7 @@ export default function PhaseLandscape() {
                     height={CELL_HEIGHT - 2}
                     fill={fill}
                     stroke={BLACK}
-                    strokeWidth={0.5}
+                    strokeWidth={STROKE_HAIRLINE}
                     style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG) } as React.CSSProperties}
                   />
                   <text

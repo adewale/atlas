@@ -88,7 +88,7 @@ const styles = {
       padding: '0 12px',
       background: color,
       color: PAPER,
-      fontWeight: 700,
+      fontWeight: 'bold',
       fontSize: '15px',
       letterSpacing: '0.03em',
       textTransform: 'capitalize',
@@ -124,7 +124,7 @@ const styles = {
     }) as React.CSSProperties,
 
   symbol: {
-    fontWeight: 700,
+    fontWeight: 'bold',
     fontSize: 18,
     lineHeight: 1.1,
   } as React.CSSProperties,

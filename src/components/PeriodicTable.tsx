@@ -35,7 +35,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_MEDIUM } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
@@ -157,7 +157,7 @@ const ElementCell = memo(
             height={CELL_HEIGHT - 2}
             fill={fill}
             stroke={isActive ? WARM_RED : BLACK}
-            strokeWidth={isActive ? 2 : 0.5}
+            strokeWidth={isActive ? STROKE_MEDIUM : STROKE_HAIRLINE}
             style={{
               transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
               viewTransitionName: isActive ? VT.CELL_BG : undefined,

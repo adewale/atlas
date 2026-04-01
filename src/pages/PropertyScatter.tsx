@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -289,7 +289,7 @@ export default function PropertyScatter() {
               x2={x}
               y2={MARGIN.top + PLOT_H}
               stroke={GREY_RULE}
-              strokeWidth={0.5}
+              strokeWidth={STROKE_HAIRLINE}
               strokeDasharray="4 3"
             />
           );
@@ -304,7 +304,7 @@ export default function PropertyScatter() {
               x2={MARGIN.left + PLOT_W}
               y2={y}
               stroke={GREY_RULE}
-              strokeWidth={0.5}
+              strokeWidth={STROKE_HAIRLINE}
               strokeDasharray="4 3"
             />
           );
@@ -317,7 +317,7 @@ export default function PropertyScatter() {
           x2={MARGIN.left + PLOT_W}
           y2={MARGIN.top + PLOT_H}
           stroke={BLACK}
-          strokeWidth={2}
+          strokeWidth={STROKE_MEDIUM}
         />
         {/* Y axis line */}
         <line
@@ -326,7 +326,7 @@ export default function PropertyScatter() {
           x2={MARGIN.left}
           y2={MARGIN.top + PLOT_H}
           stroke={BLACK}
-          strokeWidth={2}
+          strokeWidth={STROKE_MEDIUM}
         />
 
         {/* X axis ticks and labels */}
@@ -340,7 +340,7 @@ export default function PropertyScatter() {
                 x2={x}
                 y2={MARGIN.top + PLOT_H + 5}
                 stroke={BLACK}
-                strokeWidth={1.5}
+                strokeWidth={STROKE_REGULAR}
               />
               <text
                 x={x}
@@ -367,7 +367,7 @@ export default function PropertyScatter() {
                 x2={MARGIN.left}
                 y2={y}
                 stroke={BLACK}
-                strokeWidth={1.5}
+                strokeWidth={STROKE_REGULAR}
               />
               <text
                 x={MARGIN.left - 8}

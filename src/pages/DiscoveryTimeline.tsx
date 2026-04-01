@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -247,7 +247,7 @@ export default function DiscoveryTimeline() {
               x2={SVG_WIDTH - MARGIN_RIGHT}
               y2={axisY}
               stroke={BLACK}
-              strokeWidth={1}
+              strokeWidth={STROKE_THIN}
             />
 
             {/* Century tick marks */}
@@ -261,7 +261,7 @@ export default function DiscoveryTimeline() {
                     x2={x}
                     y2={axisY + 6}
                     stroke={BLACK}
-                    strokeWidth={1}
+                    strokeWidth={STROKE_THIN}
                   />
                   <text
                     x={x}
