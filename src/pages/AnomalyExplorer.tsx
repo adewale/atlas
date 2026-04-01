@@ -65,10 +65,10 @@ function computeRippleDelays(
     }
   }
 
-  // Normalize to 0..300ms
+  // Normalize to 0..500ms — wide spread so the ripple travels visibly
   if (maxDist > 0) {
     for (const [sym, dist] of delays) {
-      delays.set(sym, (dist / maxDist) * 300);
+      delays.set(sym, (dist / maxDist) * 500);
     }
   }
 
@@ -219,8 +219,9 @@ export default function AnomalyExplorer() {
         {/* Keyframes in globals.css + anomaly-ripple below */}
         <style>{`
           @keyframes anomaly-ripple {
-            from { opacity: 0; transform: scale(0.85); }
-            to   { opacity: 1; transform: scale(1); }
+            0%   { opacity: 0; transform: scale(0.92); }
+            60%  { opacity: 1; }
+            100% { opacity: 1; transform: scale(1); }
           }
         `}</style>
 
@@ -253,7 +254,7 @@ export default function AnomalyExplorer() {
                 style={isHighlighted
                   ? {
                       transformOrigin: `${CELL_WIDTH / 2}px ${CELL_HEIGHT / 2}px`,
-                      animation: `anomaly-ripple 350ms ease-out ${delay}ms both`,
+                      animation: `anomaly-ripple 500ms var(--ease-out) ${delay}ms both`,
                     }
                   : undefined}
               >
