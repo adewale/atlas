@@ -65,10 +65,10 @@ function computeRippleDelays(
     }
   }
 
-  // Normalize to 0..500ms — wide spread so the ripple travels visibly
+  // Normalize to 0..600ms with sqrt curve (ink decelerates as it saturates)
   if (maxDist > 0) {
     for (const [sym, dist] of delays) {
-      delays.set(sym, (dist / maxDist) * 500);
+      delays.set(sym, Math.sqrt(dist / maxDist) * 600);
     }
   }
 
@@ -216,15 +216,6 @@ export default function AnomalyExplorer() {
           touchAction: 'pinch-zoom',
         }}
       >
-        {/* Keyframes in globals.css + anomaly-ripple below */}
-        <style>{`
-          @keyframes anomaly-ripple {
-            0%   { opacity: 0; transform: scale(0.92); }
-            60%  { opacity: 1; }
-            100% { opacity: 1; transform: scale(1); }
-          }
-        `}</style>
-
         {allElements.map((el) => {
           const pos = getCellPosition(el);
           const isHighlighted = highlightedSet.has(el.symbol);
@@ -240,7 +231,7 @@ export default function AnomalyExplorer() {
           }
 
           const textColor = contrastTextColor(fill);
-          const delay = rippleDelays.get(el.symbol) ?? 0;
+          const stainDelay = rippleDelays.get(el.symbol) ?? 0;
 
           return (
             <g
@@ -250,48 +241,48 @@ export default function AnomalyExplorer() {
               onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
             >
               <title>{el.name}</title>
-              <g
-                style={isHighlighted
-                  ? {
-                      transformOrigin: `${CELL_WIDTH / 2}px ${CELL_HEIGHT / 2}px`,
-                      animation: `anomaly-ripple 500ms var(--ease-out) ${delay}ms both`,
-                    }
-                  : undefined}
+              <rect
+                width={CELL_WIDTH}
+                height={CELL_HEIGHT}
+                fill={fill}
+                stroke={hasSelection && !isHighlighted ? DIM : BLACK}
+                strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
+                rx={0}
+                style={{
+                  transition: `fill 600ms var(--ease-out) ${isHighlighted ? stainDelay : 0}ms, stroke 250ms var(--ease-out)`,
+                  viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG),
+                } as React.CSSProperties}
+              />
+              <text
+                x={CELL_WIDTH / 2}
+                y={26}
+                textAnchor="middle"
+                fontSize={16}
+                fontWeight={700}
+                fontFamily="system-ui, sans-serif"
+                fill={textColor}
+                style={{
+                  transition: `fill 600ms var(--ease-out) ${isHighlighted ? stainDelay : 0}ms`,
+                  viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL),
+                } as React.CSSProperties}
               >
-                <rect
-                  width={CELL_WIDTH}
-                  height={CELL_HEIGHT}
-                  fill={fill}
-                  stroke={hasSelection && !isHighlighted ? DIM : BLACK}
-                  strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
-                  rx={0}
-                  style={{ transition: 'fill 250ms var(--ease-out), stroke 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG) } as React.CSSProperties}
-                />
-                <text
-                  x={CELL_WIDTH / 2}
-                  y={26}
-                  textAnchor="middle"
-                  fontSize={16}
-                  fontWeight={700}
-                  fontFamily="system-ui, sans-serif"
-                  fill={textColor}
-                  style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}
-                >
-                  {el.symbol}
-                </text>
-                <text
-                  x={CELL_WIDTH / 2}
-                  y={42}
-                  textAnchor="middle"
-                  fontSize={8}
-                  fontFamily="system-ui, sans-serif"
-                  fill={textColor}
-                  opacity={0.7}
-                  style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.NUMBER) } as React.CSSProperties}
-                >
-                  {el.atomicNumber}
-                </text>
-              </g>
+                {el.symbol}
+              </text>
+              <text
+                x={CELL_WIDTH / 2}
+                y={42}
+                textAnchor="middle"
+                fontSize={8}
+                fontFamily="system-ui, sans-serif"
+                fill={textColor}
+                opacity={0.7}
+                style={{
+                  transition: `fill 600ms var(--ease-out) ${isHighlighted ? stainDelay : 0}ms`,
+                  viewTransitionName: vt(activeSymbol, el.symbol, VT.NUMBER),
+                } as React.CSSProperties}
+              >
+                {el.atomicNumber}
+              </text>
             </g>
           );
         })}
