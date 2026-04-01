@@ -23,7 +23,11 @@
     "mass": 76,
     "electronegativity": 38,
     "ionizationEnergy": 50,
-    "radius": 49
+    "radius": 49,
+    "density": 23,
+    "meltingPoint": 11,
+    "boilingPoint": 11,
+    "halfLife": 3
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1937,
   "discoverer": "Carlo Perrier & Emilio Segrè",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek technetos: artificial, first synthetic element"
+  "etymologyDescription": "Greek technetos: artificial, first synthetic element",
+  "density": 11,
+  "meltingPoint": 2430,
+  "boilingPoint": 4538,
+  "halfLife": 130000000000000
 }

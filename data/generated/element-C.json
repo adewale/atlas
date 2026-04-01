@@ -23,7 +23,11 @@
     "mass": 113,
     "electronegativity": 10,
     "ionizationEnergy": 12,
-    "radius": 87
+    "radius": 87,
+    "density": 75,
+    "meltingPoint": 1,
+    "boilingPoint": 16,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin carbo: charcoal"
+  "etymologyDescription": "Latin carbo: charcoal",
+  "density": 2.267,
+  "meltingPoint": 3823,
+  "boilingPoint": 4098,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 28,
     "electronegativity": 62,
     "ionizationEnergy": 74,
-    "radius": 21
+    "radius": 21,
+    "density": 21,
+    "meltingPoint": 18,
+    "boilingPoint": 5,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1829,
   "discoverer": "Jöns Jacob Berzelius",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Thor, the Norse god of thunder"
+  "etymologyDescription": "Thor, the Norse god of thunder",
+  "density": 11.72,
+  "meltingPoint": 2023,
+  "boilingPoint": 5061,
+  "halfLife": null
 }

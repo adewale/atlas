@@ -23,7 +23,11 @@
     "mass": 111,
     "electronegativity": 2,
     "ionizationEnergy": 7,
-    "radius": 94
+    "radius": 94,
+    "density": 92,
+    "meltingPoint": 99,
+    "boilingPoint": 87,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1774,
   "discoverer": "Joseph Priestley & Carl Wilhelm Scheele",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek oxys + genes: acid-forming"
+  "etymologyDescription": "Greek oxys + genes: acid-forming",
+  "density": 0.001429,
+  "meltingPoint": 54.36,
+  "boilingPoint": 90.2,
+  "halfLife": null
 }

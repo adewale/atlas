@@ -23,7 +23,11 @@
     "mass": 72,
     "electronegativity": 34,
     "ionizationEnergy": 43,
-    "radius": 86
+    "radius": 86,
+    "density": 24,
+    "meltingPoint": 49,
+    "boilingPoint": 50,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Anglo-Saxon silver; symbol from Latin argentum: shiny"
+  "etymologyDescription": "Anglo-Saxon silver; symbol from Latin argentum: shiny",
+  "density": 10.501,
+  "meltingPoint": 1234.93,
+  "boilingPoint": 2435,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 49,
     "electronegativity": 0,
     "ionizationEnergy": 65,
-    "radius": 16
+    "radius": 16,
+    "density": 51,
+    "meltingPoint": 59,
+    "boilingPoint": 65,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1878,
   "discoverer": "Jean Charles Galissard de Marignac",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Ytterby, a village in Sweden"
+  "etymologyDescription": "Ytterby, a village in Sweden",
+  "density": 6.9,
+  "meltingPoint": 1092,
+  "boilingPoint": 1469,
+  "halfLife": null
 }

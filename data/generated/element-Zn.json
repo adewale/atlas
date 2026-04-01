@@ -23,7 +23,11 @@
     "mass": 89,
     "electronegativity": 46,
     "ionizationEnergy": 21,
-    "radius": 97
+    "radius": 97,
+    "density": 48,
+    "meltingPoint": 71,
+    "boilingPoint": 70,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1746,
   "discoverer": "Andreas Sigismund Marggraf",
   "etymologyOrigin": "property",
-  "etymologyDescription": "German Zink: prong or tooth, from crystal shape"
+  "etymologyDescription": "German Zink: prong or tooth, from crystal shape",
+  "density": 7.134,
+  "meltingPoint": 692.68,
+  "boilingPoint": 1180,
+  "halfLife": null
 }

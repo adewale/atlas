@@ -23,7 +23,11 @@
     "mass": 39,
     "electronegativity": 31,
     "ionizationEnergy": 16,
-    "radius": 51
+    "radius": 51,
+    "density": 14,
+    "meltingPoint": 92,
+    "boilingPoint": 79,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": null,
   "discoverer": "Known since antiquity",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Mercury, the Roman messenger god; Latin hydrargyrum: liquid silver"
+  "etymologyDescription": "Mercury, the Roman messenger god; Latin hydrargyrum: liquid silver",
+  "density": 13.5336,
+  "meltingPoint": 234.32,
+  "boilingPoint": 629.88,
+  "halfLife": null
 }

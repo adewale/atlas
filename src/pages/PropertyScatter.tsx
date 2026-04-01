@@ -15,19 +15,40 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 // ---------------------------------------------------------------------------
 // Property config
 // ---------------------------------------------------------------------------
-type PropertyKey = 'mass' | 'electronegativity' | 'ionizationEnergy' | 'radius';
+type PropertyKey = 'mass' | 'electronegativity' | 'ionizationEnergy' | 'radius' | 'density' | 'meltingPoint' | 'boilingPoint' | 'halfLife' | 'atomicNumber' | 'discoveryYear' | 'period' | 'group';
 
 const PROPERTY_LABELS: Record<PropertyKey, string> = {
+  atomicNumber: 'Atomic number',
   mass: 'Atomic mass (u)',
+  density: 'Density (g/cm³)',
   electronegativity: 'Electronegativity',
   ionizationEnergy: 'Ionisation energy (eV)',
   radius: 'Atomic radius (pm)',
+  meltingPoint: 'Melting point (K)',
+  boilingPoint: 'Boiling point (K)',
+  halfLife: 'Longest half-life (s)',
+  period: 'Period',
+  group: 'Group',
+  discoveryYear: 'Discovery year',
 };
 
-const PROPERTY_KEYS: PropertyKey[] = ['mass', 'electronegativity', 'ionizationEnergy', 'radius'];
+const PROPERTY_KEYS: PropertyKey[] = [
+  'atomicNumber',
+  'mass',
+  'density',
+  'electronegativity',
+  'ionizationEnergy',
+  'radius',
+  'meltingPoint',
+  'boilingPoint',
+  'halfLife',
+  'period',
+  'group',
+  'discoveryYear',
+];
 
 function getPropValue(el: ElementRecord, key: PropertyKey): number | null {
-  return el[key];
+  return el[key] ?? null;
 }
 
 // ---------------------------------------------------------------------------
@@ -79,12 +100,15 @@ function niceTickValues(min: number, max: number, count: number): number[] {
 }
 
 /** Format a tick value sensibly. */
-function formatTick(v: number): string {
+function formatTick(v: number, integer?: boolean): string {
+  if (integer) return v.toFixed(0);
   if (Math.abs(v) >= 1000) return v.toFixed(0);
   if (Math.abs(v) >= 10) return v.toFixed(1);
   if (Math.abs(v) >= 1) return v.toFixed(2);
   return v.toFixed(2);
 }
+
+const INTEGER_PROPERTIES: Set<PropertyKey> = new Set(['atomicNumber', 'discoveryYear', 'period', 'group']);
 
 // ---------------------------------------------------------------------------
 // Component
@@ -325,7 +349,7 @@ export default function PropertyScatter() {
                 fill={GREY_LIGHT}
                 fontFamily="system-ui, sans-serif"
               >
-                {formatTick(v)}
+                {formatTick(v, INTEGER_PROPERTIES.has(xKey))}
               </text>
             </g>
           );
@@ -352,7 +376,7 @@ export default function PropertyScatter() {
                 fill={GREY_LIGHT}
                 fontFamily="system-ui, sans-serif"
               >
-                {formatTick(v)}
+                {formatTick(v, INTEGER_PROPERTIES.has(yKey))}
               </text>
             </g>
           );
@@ -501,7 +525,7 @@ export default function PropertyScatter() {
                   fill={PAPER}
                   fontFamily="system-ui, sans-serif"
                 >
-                  {PROPERTY_LABELS[xKey]}: {hPt.xVal.toFixed(2)}
+                  {PROPERTY_LABELS[xKey]}: {INTEGER_PROPERTIES.has(xKey) ? hPt.xVal : hPt.xVal.toFixed(2)}
                 </text>
                 {/* Y property with label */}
                 <text
@@ -511,7 +535,7 @@ export default function PropertyScatter() {
                   fill={PAPER}
                   fontFamily="system-ui, sans-serif"
                 >
-                  {PROPERTY_LABELS[yKey]}: {hPt.yVal.toFixed(2)}
+                  {PROPERTY_LABELS[yKey]}: {INTEGER_PROPERTIES.has(yKey) ? hPt.yVal : hPt.yVal.toFixed(2)}
                 </text>
               </g>
             );

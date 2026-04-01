@@ -23,7 +23,11 @@
     "mass": 10,
     "electronegativity": 0,
     "ionizationEnergy": 0,
-    "radius": 0
+    "radius": 0,
+    "density": 0,
+    "meltingPoint": 0,
+    "boilingPoint": 0,
+    "halfLife": 26
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1982,
   "discoverer": "Peter Armbruster & Gottfried Münzenberg",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Lise Meitner, nuclear fission co-discoverer"
+  "etymologyDescription": "Lise Meitner, nuclear fission co-discoverer",
+  "density": null,
+  "meltingPoint": null,
+  "boilingPoint": null,
+  "halfLife": 44
 }

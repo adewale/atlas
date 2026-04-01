@@ -23,7 +23,11 @@
     "mass": 114,
     "electronegativity": 28,
     "ionizationEnergy": 32,
-    "radius": 69
+    "radius": 69,
+    "density": 73,
+    "meltingPoint": 12,
+    "boilingPoint": 14,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1808,
   "discoverer": "Humphry Davy",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Arabic buraq: borax, a white mineral"
+  "etymologyDescription": "Arabic buraq: borax, a white mineral",
+  "density": 2.37,
+  "meltingPoint": 2348,
+  "boilingPoint": 4273,
+  "halfLife": null
 }

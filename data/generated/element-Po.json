@@ -23,7 +23,11 @@
     "mass": 35,
     "electronegativity": 32,
     "ionizationEnergy": 30,
-    "radius": 64
+    "radius": 64,
+    "density": 30,
+    "meltingPoint": 77,
+    "boilingPoint": 69,
+    "halfLife": 10
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1898,
   "discoverer": "Marie Curie & Pierre Curie",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Poland, homeland of Marie Curie"
+  "etymologyDescription": "Poland, homeland of Marie Curie",
+  "density": 9.32,
+  "meltingPoint": 527,
+  "boilingPoint": 1235,
+  "halfLife": 3500000000
 }

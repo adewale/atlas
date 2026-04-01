@@ -23,7 +23,11 @@
     "mass": 104,
     "electronegativity": 23,
     "ionizationEnergy": 14,
-    "radius": 81
+    "radius": 81,
+    "density": 79,
+    "meltingPoint": 86,
+    "boilingPoint": 80,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1669,
   "discoverer": "Hennig Brand",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Greek phosphoros: light-bearer, from its glow"
+  "etymologyDescription": "Greek phosphoros: light-bearer, from its glow",
+  "density": 1.82,
+  "meltingPoint": 317.3,
+  "boilingPoint": 553.65,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 42,
     "electronegativity": 21,
     "ionizationEnergy": 24,
-    "radius": 59
+    "radius": 59,
+    "density": 2,
+    "meltingPoint": 8,
+    "boilingPoint": 9,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1803,
   "discoverer": "Smithson Tennant",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Greek Iris: goddess of the rainbow, from its colorful salts"
+  "etymologyDescription": "Greek Iris: goddess of the rainbow, from its colorful salts",
+  "density": 22.42,
+  "meltingPoint": 2719,
+  "boilingPoint": 4701,
+  "halfLife": null
 }

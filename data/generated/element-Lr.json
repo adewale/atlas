@@ -23,7 +23,11 @@
     "mass": 16,
     "electronegativity": 71,
     "ionizationEnergy": 0,
-    "radius": 0
+    "radius": 0,
+    "density": 0,
+    "meltingPoint": 21,
+    "boilingPoint": 0,
+    "halfLife": 19
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1961,
   "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Ernest O. Lawrence, cyclotron inventor"
+  "etymologyDescription": "Ernest O. Lawrence, cyclotron inventor",
+  "density": null,
+  "meltingPoint": 1900,
+  "boilingPoint": null,
+  "halfLife": 65000
 }

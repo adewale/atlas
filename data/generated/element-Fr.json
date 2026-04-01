@@ -23,7 +23,11 @@
     "mass": 32,
     "electronegativity": 95,
     "ionizationEnergy": 101,
-    "radius": 1
+    "radius": 1,
+    "density": 0,
+    "meltingPoint": 90,
+    "boilingPoint": 0,
+    "halfLife": 22
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1939,
   "discoverer": "Marguerite Perey",
   "etymologyOrigin": "place",
-  "etymologyDescription": "France"
+  "etymologyDescription": "France",
+  "density": null,
+  "meltingPoint": 300,
+  "boilingPoint": null,
+  "halfLife": 1300
 }

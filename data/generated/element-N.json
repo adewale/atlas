@@ -23,7 +23,11 @@
     "mass": 112,
     "electronegativity": 4,
     "ionizationEnergy": 5,
-    "radius": 91
+    "radius": 91,
+    "density": 93,
+    "meltingPoint": 98,
+    "boilingPoint": 90,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1772,
   "discoverer": "Daniel Rutherford",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek nitron + genes: niter-forming"
+  "etymologyDescription": "Greek nitron + genes: niter-forming",
+  "density": 0.0012506,
+  "meltingPoint": 63.15,
+  "boilingPoint": 77.36,
+  "halfLife": null
 }

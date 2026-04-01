@@ -23,7 +23,11 @@
     "mass": 70,
     "electronegativity": 43,
     "ionizationEnergy": 84,
-    "radius": 68
+    "radius": 68,
+    "density": 43,
+    "meltingPoint": 81,
+    "boilingPoint": 51,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1863,
   "discoverer": "Ferdinand Reich & Hieronymus Richter",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin indicum: indigo, from its spectral line color"
+  "etymologyDescription": "Latin indicum: indigo, from its spectral line color",
+  "density": 7.31,
+  "meltingPoint": 429.75,
+  "boilingPoint": 2345,
+  "halfLife": null
 }

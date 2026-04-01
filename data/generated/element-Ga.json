@@ -23,7 +23,11 @@
     "mass": 88,
     "electronegativity": 42,
     "ionizationEnergy": 78,
-    "radius": 75
+    "radius": 75,
+    "density": 59,
+    "meltingPoint": 88,
+    "boilingPoint": 49,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1875,
   "discoverer": "Paul Emile Lecoq de Boisbaudran",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Gallia: France"
+  "etymologyDescription": "Latin Gallia: France",
+  "density": 5.91,
+  "meltingPoint": 302.91,
+  "boilingPoint": 2477,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 22,
     "electronegativity": 64,
     "ionizationEnergy": 77,
-    "radius": 9
+    "radius": 9,
+    "density": 15,
+    "meltingPoint": 36,
+    "boilingPoint": 31,
+    "halfLife": 2
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1944,
   "discoverer": "Glenn Seaborg, Ralph James & Albert Ghiorso",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Marie and Pierre Curie, pioneers of radioactivity"
+  "etymologyDescription": "Marie and Pierre Curie, pioneers of radioactivity",
+  "density": 13.51,
+  "meltingPoint": 1618,
+  "boilingPoint": 3400,
+  "halfLife": 490000000000000
 }

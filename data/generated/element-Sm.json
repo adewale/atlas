@@ -23,7 +23,11 @@
     "mass": 57,
     "electronegativity": 80,
     "ionizationEnergy": 87,
-    "radius": 28
+    "radius": 28,
+    "density": 42,
+    "meltingPoint": 43,
+    "boilingPoint": 56,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1879,
   "discoverer": "Paul Emile Lecoq de Boisbaudran",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Samarskite mineral, named after Vasili Samarsky-Bykhovets"
+  "etymologyDescription": "Samarskite mineral, named after Vasili Samarsky-Bykhovets",
+  "density": 7.52,
+  "meltingPoint": 1347,
+  "boilingPoint": 2067,
+  "halfLife": null
 }

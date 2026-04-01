@@ -23,7 +23,11 @@
     "mass": 17,
     "electronegativity": 70,
     "ionizationEnergy": 57,
-    "radius": 0
+    "radius": 0,
+    "density": 0,
+    "meltingPoint": 57,
+    "boilingPoint": 0,
+    "halfLife": 21
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1958,
   "discoverer": "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Alfred Nobel, inventor of dynamite"
+  "etymologyDescription": "Alfred Nobel, inventor of dynamite",
+  "density": null,
+  "meltingPoint": 1100,
+  "boilingPoint": null,
+  "halfLife": 1700
 }

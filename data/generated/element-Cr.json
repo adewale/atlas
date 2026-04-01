@@ -23,7 +23,11 @@
     "mass": 95,
     "electronegativity": 45,
     "ionizationEnergy": 54,
-    "radius": 72
+    "radius": 72,
+    "density": 47,
+    "meltingPoint": 15,
+    "boilingPoint": 43,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1797,
   "discoverer": "Louis Nicolas Vauquelin",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek chroma: color, from its vivid compounds"
+  "etymologyDescription": "Greek chroma: color, from its vivid compounds",
+  "density": 7.15,
+  "meltingPoint": 2180,
+  "boilingPoint": 2944,
+  "halfLife": null
 }

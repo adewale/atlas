@@ -23,7 +23,11 @@
     "mass": 58,
     "electronegativity": 0,
     "ionizationEnergy": 89,
-    "radius": 22
+    "radius": 22,
+    "density": 46,
+    "meltingPoint": 47,
+    "boilingPoint": 33,
+    "halfLife": 12
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1945,
   "discoverer": "Jacob Marinsky, Lawrence Glendenin & Charles Coryell",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "Prometheus, the Titan who stole fire from the gods"
+  "etymologyDescription": "Prometheus, the Titan who stole fire from the gods",
+  "density": 7.26,
+  "meltingPoint": 1315,
+  "boilingPoint": 3273,
+  "halfLife": 560000000
 }

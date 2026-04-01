@@ -23,7 +23,11 @@
     "mass": 91,
     "electronegativity": 40,
     "ionizationEnergy": 38,
-    "radius": 70
+    "radius": 70,
+    "density": 34,
+    "meltingPoint": 30,
+    "boilingPoint": 35,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1735,
   "discoverer": "Georg Brandt",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "German Kobold: goblin, from miners' superstition"
+  "etymologyDescription": "German Kobold: goblin, from miners' superstition",
+  "density": 8.86,
+  "meltingPoint": 1768,
+  "boilingPoint": 3200,
+  "halfLife": null
 }

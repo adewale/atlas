@@ -23,7 +23,11 @@
     "mass": 59,
     "electronegativity": 81,
     "ionizationEnergy": 91,
-    "radius": 27
+    "radius": 27,
+    "density": 49,
+    "meltingPoint": 48,
+    "boilingPoint": 32,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1885,
   "discoverer": "Carl Auer von Welsbach",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek neos + didymos: new twin"
+  "etymologyDescription": "Greek neos + didymos: new twin",
+  "density": 7.01,
+  "meltingPoint": 1294,
+  "boilingPoint": 3347,
+  "halfLife": null
 }

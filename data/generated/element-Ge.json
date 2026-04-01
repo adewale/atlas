@@ -23,7 +23,11 @@
     "mass": 87,
     "electronegativity": 30,
     "ionizationEnergy": 36,
-    "radius": 45
+    "radius": 45,
+    "density": 61,
+    "meltingPoint": 50,
+    "boilingPoint": 41,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1886,
   "discoverer": "Clemens Winkler",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Germania: Germany"
+  "etymologyDescription": "Latin Germania: Germany",
+  "density": 5.323,
+  "meltingPoint": 1211.4,
+  "boilingPoint": 3106,
+  "halfLife": null
 }

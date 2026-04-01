@@ -23,7 +23,11 @@
     "mass": 55,
     "electronegativity": 79,
     "ionizationEnergy": 70,
-    "radius": 20
+    "radius": 20,
+    "density": 40,
+    "meltingPoint": 37,
+    "boilingPoint": 26,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1880,
   "discoverer": "Jean Charles Galissard de Marignac",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Johan Gadolin, Finnish chemist and mineralogist"
+  "etymologyDescription": "Johan Gadolin, Finnish chemist and mineralogist",
+  "density": 7.9,
+  "meltingPoint": 1586,
+  "boilingPoint": 3546,
+  "halfLife": null
 }

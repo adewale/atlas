@@ -23,7 +23,11 @@
     "mass": 77,
     "electronegativity": 25,
     "ionizationEnergy": 51,
-    "radius": 48
+    "radius": 48,
+    "density": 25,
+    "meltingPoint": 6,
+    "boilingPoint": 7,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1781,
   "discoverer": "Carl Wilhelm Scheele",
   "etymologyOrigin": "mineral",
-  "etymologyDescription": "Greek molybdos: lead, from resemblance to lead ore"
+  "etymologyDescription": "Greek molybdos: lead, from resemblance to lead ore",
+  "density": 10.2,
+  "meltingPoint": 2896,
+  "boilingPoint": 4912,
+  "halfLife": null
 }

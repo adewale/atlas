@@ -23,7 +23,11 @@
     "mass": 27,
     "electronegativity": 58,
     "ionizationEnergy": 64,
-    "radius": 34
+    "radius": 34,
+    "density": 5,
+    "meltingPoint": 67,
+    "boilingPoint": 15,
+    "halfLife": 4
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1940,
   "discoverer": "Edwin McMillan & Philip Abelson",
   "etymologyOrigin": "astronomical",
-  "etymologyDescription": "Neptune, the planet beyond Uranus"
+  "etymologyDescription": "Neptune, the planet beyond Uranus",
+  "density": 20.25,
+  "meltingPoint": 917,
+  "boilingPoint": 4175,
+  "halfLife": 68000000000000
 }

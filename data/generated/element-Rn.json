@@ -23,7 +23,11 @@
     "mass": 33,
     "electronegativity": 0,
     "ionizationEnergy": 13,
-    "radius": 35
+    "radius": 35,
+    "density": 86,
+    "meltingPoint": 93,
+    "boilingPoint": 84,
+    "halfLife": 16
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1900,
   "discoverer": "Friedrich Ernst Dorn",
   "etymologyOrigin": "property",
-  "etymologyDescription": "From radium, its parent element in decay chains"
+  "etymologyDescription": "From radium, its parent element in decay chains",
+  "density": 0.00973,
+  "meltingPoint": 202,
+  "boilingPoint": 211.45,
+  "halfLife": 330000
 }

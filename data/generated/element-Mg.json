@@ -23,7 +23,11 @@
     "mass": 107,
     "electronegativity": 60,
     "ionizationEnergy": 41,
-    "radius": 85
+    "radius": 85,
+    "density": 80,
+    "meltingPoint": 66,
+    "boilingPoint": 67,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1755,
   "discoverer": "Joseph Black",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Magnesia, a district in Thessaly, Greece"
+  "etymologyDescription": "Magnesia, a district in Thessaly, Greece",
+  "density": 1.74,
+  "meltingPoint": 923,
+  "boilingPoint": 1363,
+  "halfLife": null
 }

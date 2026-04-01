@@ -23,7 +23,11 @@
     "mass": 102,
     "electronegativity": 3,
     "ionizationEnergy": 9,
-    "radius": 84
+    "radius": 84,
+    "density": 89,
+    "meltingPoint": 94,
+    "boilingPoint": 83,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1774,
   "discoverer": "Carl Wilhelm Scheele",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek chloros: pale green"
+  "etymologyDescription": "Greek chloros: pale green",
+  "density": 0.003214,
+  "meltingPoint": 171.65,
+  "boilingPoint": 239.11,
+  "halfLife": null
 }

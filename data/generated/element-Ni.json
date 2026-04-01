@@ -23,7 +23,11 @@
     "mass": 92,
     "electronegativity": 35,
     "ionizationEnergy": 42,
-    "radius": 89
+    "radius": 89,
+    "density": 33,
+    "meltingPoint": 32,
+    "boilingPoint": 36,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1751,
   "discoverer": "Axel Fredrik Cronstedt",
   "etymologyOrigin": "mythology",
-  "etymologyDescription": "German Kupfernickel: devil's copper, a deceptive ore"
+  "etymologyDescription": "German Kupfernickel: devil's copper, a deceptive ore",
+  "density": 8.912,
+  "meltingPoint": 1728,
+  "boilingPoint": 3186,
+  "halfLife": null
 }

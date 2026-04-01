@@ -23,7 +23,11 @@
     "mass": 34,
     "electronegativity": 22,
     "ionizationEnergy": 20,
-    "radius": 61
+    "radius": 61,
+    "density": 50,
+    "meltingPoint": 75,
+    "boilingPoint": 0,
+    "halfLife": 20
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1940,
   "discoverer": "Dale Corson, Kenneth MacKenzie & Emilio Segrè",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek astatos: unstable"
+  "etymologyDescription": "Greek astatos: unstable",
+  "density": 7,
+  "meltingPoint": 575,
+  "boilingPoint": null,
+  "halfLife": 29000
 }

@@ -23,7 +23,11 @@
     "mass": 64,
     "electronegativity": 94,
     "ionizationEnergy": 102,
-    "radius": 2
+    "radius": 2,
+    "density": 77,
+    "meltingPoint": 89,
+    "boilingPoint": 76,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1860,
   "discoverer": "Robert Bunsen & Gustav Kirchhoff",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin caesius: sky blue, from its spectral lines"
+  "etymologyDescription": "Latin caesius: sky blue, from its spectral lines",
+  "density": 1.93,
+  "meltingPoint": 301.59,
+  "boilingPoint": 944,
+  "halfLife": null
 }

@@ -23,7 +23,11 @@
     "mass": 117,
     "electronegativity": 0,
     "ionizationEnergy": 1,
-    "radius": 95
+    "radius": 95,
+    "density": 95,
+    "meltingPoint": 103,
+    "boilingPoint": 93,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1868,
   "discoverer": "Pierre Janssen & Joseph Lockyer",
   "etymologyOrigin": "astronomical",
-  "etymologyDescription": "Greek helios: the Sun, first observed in solar spectrum"
+  "etymologyDescription": "Greek helios: the Sun, first observed in solar spectrum",
+  "density": 0.0001785,
+  "meltingPoint": 0.95,
+  "boilingPoint": 4.22,
+  "halfLife": null
 }

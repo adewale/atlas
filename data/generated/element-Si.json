@@ -23,7 +23,11 @@
     "mass": 105,
     "electronegativity": 36,
     "ionizationEnergy": 33,
-    "radius": 46
+    "radius": 46,
+    "density": 74,
+    "meltingPoint": 33,
+    "boilingPoint": 27,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1824,
   "discoverer": "Jöns Jacob Berzelius",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Latin silex: flint, hard stone"
+  "etymologyDescription": "Latin silex: flint, hard stone",
+  "density": 2.3296,
+  "meltingPoint": 1687,
+  "boilingPoint": 3538,
+  "halfLife": null
 }

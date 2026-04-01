@@ -23,7 +23,11 @@
     "mass": 63,
     "electronegativity": 91,
     "ionizationEnergy": 96,
-    "radius": 6
+    "radius": 6,
+    "density": 68,
+    "meltingPoint": 63,
+    "boilingPoint": 55,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1808,
   "discoverer": "Humphry Davy",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek barys: heavy"
+  "etymologyDescription": "Greek barys: heavy",
+  "density": 3.62,
+  "meltingPoint": 1000,
+  "boilingPoint": 2170,
+  "halfLife": null
 }

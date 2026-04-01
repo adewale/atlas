@@ -23,7 +23,11 @@
     "mass": 116,
     "electronegativity": 87,
     "ionizationEnergy": 94,
-    "radius": 80
+    "radius": 80,
+    "density": 85,
+    "meltingPoint": 80,
+    "boilingPoint": 64,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1817,
   "discoverer": "Johan August Arfwedson",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek lithos: stone, discovered in mineral"
+  "etymologyDescription": "Greek lithos: stone, discovered in mineral",
+  "density": 0.534,
+  "meltingPoint": 453.65,
+  "boilingPoint": 1615,
+  "halfLife": null
 }

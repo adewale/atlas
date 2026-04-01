@@ -23,7 +23,11 @@
     "mass": 48,
     "electronegativity": 73,
     "ionizationEnergy": 93,
-    "radius": 33
+    "radius": 33,
+    "density": 27,
+    "meltingPoint": 20,
+    "boilingPoint": 23,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1907,
   "discoverer": "Georges Urbain",
   "etymologyOrigin": "place",
-  "etymologyDescription": "Latin Lutetia: ancient name for Paris"
+  "etymologyDescription": "Latin Lutetia: ancient name for Paris",
+  "density": 9.84,
+  "meltingPoint": 1936,
+  "boilingPoint": 3675,
+  "halfLife": null
 }

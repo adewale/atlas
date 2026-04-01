@@ -23,7 +23,11 @@
     "mass": 19,
     "electronegativity": 68,
     "ionizationEnergy": 61,
-    "radius": 0
+    "radius": 0,
+    "density": 0,
+    "meltingPoint": 28,
+    "boilingPoint": 0,
+    "halfLife": 14
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1952,
   "discoverer": "Albert Ghiorso et al.",
   "etymologyOrigin": "person",
-  "etymologyDescription": "Enrico Fermi, nuclear physics pioneer"
+  "etymologyDescription": "Enrico Fermi, nuclear physics pioneer",
+  "density": null,
+  "meltingPoint": 1800,
+  "boilingPoint": null,
+  "halfLife": 8700000
 }

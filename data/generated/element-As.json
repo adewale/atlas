@@ -23,7 +23,11 @@
     "mass": 86,
     "electronegativity": 24,
     "ionizationEnergy": 18,
-    "radius": 77
+    "radius": 77,
+    "density": 60,
+    "meltingPoint": 60,
+    "boilingPoint": 77,
+    "halfLife": 0
   },
   "sources": {
     "structured": {
@@ -47,5 +51,9 @@
   "discoveryYear": 1250,
   "discoverer": "Albertus Magnus",
   "etymologyOrigin": "property",
-  "etymologyDescription": "Greek arsenikon: potent, from its toxicity"
+  "etymologyDescription": "Greek arsenikon: potent, from its toxicity",
+  "density": 5.776,
+  "meltingPoint": 1090,
+  "boilingPoint": 887,
+  "halfLife": null
 }
