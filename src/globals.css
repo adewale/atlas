@@ -291,6 +291,11 @@ svg [role="button"] {
   animation-timing-function: var(--ease-out);
 }
 
+/* Cell background snapshot must be transparent so the paper shows through */
+::view-transition-group(element-cell-bg) {
+  background: transparent;
+}
+
 /* Data plate rows ↔ browse page badges */
 ::view-transition-old(data-plate-group),
 ::view-transition-new(data-plate-group),
