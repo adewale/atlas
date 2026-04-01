@@ -5,7 +5,7 @@ import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
@@ -76,7 +76,7 @@ export default function DiscoveryTimeline() {
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_WIDTH,
-    dropCapFont: `80px ${PRETEXT_SANS}`,
+    dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
 
   useEffect(() => {
@@ -177,13 +177,32 @@ export default function DiscoveryTimeline() {
   const centuryMarks = [1700, 1800, 1900, 2000];
 
   const introHeight = lines.length * lineHeight + 16;
-  const eraLabelY = SVG_HEIGHT + introHeight + 16;
+  const eraLabelY = SVG_HEIGHT + 16;
   const totalHeight = eraLabelY + 30;
 
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Discovery Timeline</h1>
+
+        {/* Intro paragraph */}
+        <svg
+          viewBox={`0 0 ${SVG_WIDTH} ${introHeight}`}
+          style={{ width: '100%', maxWidth: SVG_WIDTH, marginBottom: '16px' }}
+          overflow="visible"
+        >
+          <PretextSvg
+            lines={lines}
+            lineHeight={lineHeight}
+            x={0}
+            y={0}
+            fontSize={16}
+            fill={BLACK}
+            maxWidth={SVG_WIDTH}
+            animationStagger={40}
+            dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
+          />
+        </svg>
 
         {/* Era browse links */}
         <section style={{ marginBottom: '16px' }}>
@@ -225,21 +244,8 @@ export default function DiscoveryTimeline() {
             touchAction: 'pinch-zoom',
           }}
         >
-          {/* Pretext intro */}
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fontSize={16}
-            fill={BLACK}
-            maxWidth={SVG_WIDTH}
-            animationStagger={40}
-            dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
-          />
-
-          {/* Timeline chart offset below intro */}
-          <g transform={`translate(0, ${introHeight})`}>
+          {/* Timeline chart */}
+          <g>
             {/* X axis line */}
             <line
               x1={MARGIN_LEFT}
@@ -384,43 +390,50 @@ export default function DiscoveryTimeline() {
             })}
 
             {/* Tooltip */}
-            {tooltip && (
-              <g
-                transform={`translate(${tooltip.x}, ${tooltip.y})`}
-                style={{ pointerEvents: 'none' }}
-              >
-                <rect
-                  x={-70}
-                  y={-52}
-                  width={140}
-                  height={48}
-                  fill={BLACK}
-                  rx={2}
-                />
-                <text
-                  x={0}
-                  y={-36}
-                  textAnchor="middle"
-                  fontSize={12}
-                  fontWeight="bold"
-                  fill={PAPER}
-                  fontFamily="system-ui, sans-serif"
+            {tooltip && (() => {
+              const line1 = `${tooltip.name} (${tooltip.year})`;
+              const line2 = tooltip.discoverer;
+              const m1 = measureLines(line1, 'bold 12px system-ui, sans-serif', 9999, 16);
+              const m2 = measureLines(line2, '10px system-ui, sans-serif', 9999, 16);
+              const tipW = Math.max(m1[0]?.width ?? 80, m2[0]?.width ?? 60) + 20;
+              return (
+                <g
+                  transform={`translate(${tooltip.x}, ${tooltip.y})`}
+                  style={{ pointerEvents: 'none' }}
                 >
-                  {tooltip.name} ({tooltip.year})
-                </text>
-                <text
-                  x={0}
-                  y={-18}
-                  textAnchor="middle"
-                  fontSize={10}
-                  fill={PAPER}
-                  fontFamily="system-ui, sans-serif"
-                  opacity={0.85}
-                >
-                  {tooltip.discoverer}
-                </text>
-              </g>
-            )}
+                  <rect
+                    x={-tipW / 2}
+                    y={-52}
+                    width={tipW}
+                    height={48}
+                    fill={BLACK}
+                    rx={2}
+                  />
+                  <text
+                    x={0}
+                    y={-36}
+                    textAnchor="middle"
+                    fontSize={12}
+                    fontWeight="bold"
+                    fill={PAPER}
+                    fontFamily="system-ui, sans-serif"
+                  >
+                    {line1}
+                  </text>
+                  <text
+                    x={0}
+                    y={-18}
+                    textAnchor="middle"
+                    fontSize={10}
+                    fill={PAPER}
+                    fontFamily="system-ui, sans-serif"
+                    opacity={0.85}
+                  >
+                    {line2}
+                  </text>
+                </g>
+              );
+            })()}
           </g>
 
           {/* Era labels below the timeline */}

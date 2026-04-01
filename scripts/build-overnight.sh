@@ -91,7 +91,7 @@ After writing all code:
 
 Do NOT implement folio, atlas plates, compare, or any other sections.
 PROMPT
-" --allowedTools "Read,Write,Edit,Bash,Glob,Grep"
+)" --allowedTools "Read,Write,Edit,Bash,Glob,Grep"
 
 echo "Step 1 complete: $(date)"
 echo ""
@@ -185,7 +185,7 @@ After writing all code:
 - Run: npm run typecheck && npm run test
 - Fix ALL errors until both pass clean
 PROMPT
-" --allowedTools "Read,Write,Edit,Bash,Glob,Grep,WebFetch"
+)" --allowedTools "Read,Write,Edit,Bash,Glob,Grep,WebFetch"
 
 echo "Step 2 complete: $(date)"
 echo ""
@@ -257,7 +257,7 @@ After writing all code:
 - Run: npm run typecheck && npm run test
 - Fix ALL errors until both pass clean
 PROMPT
-" --allowedTools "Read,Write,Edit,Bash,Glob,Grep"
+)" --allowedTools "Read,Write,Edit,Bash,Glob,Grep"
 
 echo "Step 3 complete: $(date)"
 echo ""
@@ -323,7 +323,7 @@ Implement:
 
 Fix any issues found. The build MUST succeed clean.
 PROMPT
-" --allowedTools "Read,Write,Edit,Bash,Glob,Grep"
+)" --allowedTools "Read,Write,Edit,Bash,Glob,Grep"
 
 echo "Step 4 complete: $(date)"
 echo ""

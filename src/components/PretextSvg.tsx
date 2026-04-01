@@ -1,5 +1,5 @@
 import type { PositionedLine } from '../lib/pretext';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import { BLACK } from '../lib/theme';
 
 export type InlineSparklineConfig = {
@@ -103,8 +103,8 @@ export default function PretextSvg({
   const dropCapLineSpan = dropCap
     ? dropCap.lineSpan ?? Math.ceil(dropCap.fontSize / lineHeight)
     : 0;
-  // Estimate drop cap glyph width (~0.65× fontSize for most fonts) + 8px gap
-  const dropCapIndent = dropCap ? Math.ceil(dropCap.fontSize * 0.65) + 8 : 0;
+  // Estimate drop cap glyph width (~0.65× fontSize for most fonts) + 4px gap
+  const dropCapIndent = dropCap ? Math.ceil(dropCap.fontSize * 0.65) + 4 : 0;
 
   return (
     <g className={className} transform={`translate(${x}, ${y})`}>
@@ -116,7 +116,7 @@ export default function PretextSvg({
           fontSize={dropCap.fontSize}
           fontWeight="bold"
           fill={dropCap.fill}
-          fontFamily={PRETEXT_SANS}
+          fontFamily={DROP_CAP_FONT}
           style={
             animationStagger != null
               ? {

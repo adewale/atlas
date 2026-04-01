@@ -5,6 +5,7 @@ import {
   dropCapLayout,
   computeLineHeight,
   PRETEXT_SANS,
+  DROP_CAP_FONT,
   type PositionedLine,
 } from '../lib/pretext';
 
@@ -155,7 +156,7 @@ export function useDropCapText({
   text,
   maxWidth,
   font = BODY_FONT,
-  dropCapFont = `48px ${PRETEXT_SANS}`,
+  dropCapFont = `48px ${DROP_CAP_FONT}`,
 }: UseDropCapOptions): {
   dropCap: { char: string; width: number; height: number; fontSize: number };
   lines: PositionedLine[];

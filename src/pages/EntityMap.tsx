@@ -213,31 +213,36 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
                 opacity={hovered && !isActive ? 0.15 : isActive ? 1 : 0.4}
                 strokeDasharray={edge.cardinality.includes('m') ? '4 2' : undefined}
               />
-              {isActive && (
-                <>
-                  {/* Background for readability */}
-                  <rect
-                    x={cx - 40}
-                    y={cy - 14}
-                    width={80}
-                    height={16}
-                    fill={PAPER}
-                    opacity={1}
-                    rx={2}
-                  />
-                  <text
-                    x={cx}
-                    y={cy - 2}
-                    textAnchor="middle"
-                    fontSize={11}
-                    fill={fromEntity?.colour ?? BLACK}
-                    fontFamily="system-ui, sans-serif"
-                    fontWeight="bold"
-                  >
-                    {edge.label} ({edge.cardinality})
-                  </text>
-                </>
-              )}
+              {isActive && (() => {
+                const labelText = `${edge.label} (${edge.cardinality})`;
+                const measured = measureLines(labelText, 'bold 11px system-ui, sans-serif', 9999, 16);
+                const labelW = (measured[0]?.width ?? 60) + 12;
+                return (
+                  <>
+                    {/* Background for readability */}
+                    <rect
+                      x={cx - labelW / 2}
+                      y={cy - 14}
+                      width={labelW}
+                      height={18}
+                      fill={PAPER}
+                      opacity={0.95}
+                      rx={2}
+                    />
+                    <text
+                      x={cx}
+                      y={cy - 2}
+                      textAnchor="middle"
+                      fontSize={11}
+                      fill={fromEntity?.colour ?? BLACK}
+                      fontFamily="system-ui, sans-serif"
+                      fontWeight="bold"
+                    >
+                      {labelText}
+                    </text>
+                  </>
+                );
+              })()}
             </g>
           );
         })}

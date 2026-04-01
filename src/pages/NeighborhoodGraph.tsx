@@ -11,7 +11,7 @@ import {
 } from '../lib/grid';
 import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -68,7 +68,7 @@ export default function NeighborhoodGraph() {
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: INTRO_MAX_W,
-    dropCapFont: `80px ${PRETEXT_SANS}`,
+    dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
 
   useEffect(() => {

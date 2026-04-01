@@ -541,10 +541,10 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             5. Folio identity (large) — 96 px monospace number, 44 px symbol, uppercase name caption
           </div>
-          <svg width={200} height={110}>
-            <text x={0} y={60} fontSize={96} fontWeight="bold" fontFamily={MONO_FONT} fill={blockColor('d')}>026</text>
-            <text x={0} y={85} fontSize={44} fontWeight="bold" fontFamily="system-ui" fill={BLACK}>Fe</text>
-            <text x={0} y={104} fontSize={14} fill={GREY_MID} fontFamily="system-ui" style={{ textTransform: 'uppercase' } as React.CSSProperties} letterSpacing="0.3em">IRON</text>
+          <svg width={260} height={150} viewBox="0 0 260 150">
+            <text x={0} y={72} fontSize={96} fontWeight="bold" fontFamily={MONO_FONT} fill={blockColor('d')}>026</text>
+            <text x={0} y={112} fontSize={44} fontWeight="bold" fontFamily="system-ui" fill={BLACK}>Fe</text>
+            <text x={0} y={140} fontSize={14} fill={GREY_MID} fontFamily="system-ui" style={{ textTransform: 'uppercase' } as React.CSSProperties} letterSpacing="0.3em">IRON</text>
           </svg>
         </div>
 

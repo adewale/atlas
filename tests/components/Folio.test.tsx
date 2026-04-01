@@ -27,6 +27,10 @@ const FE: ElementRecord = {
   electronegativity: 1.83,
   ionizationEnergy: 7.902,
   radius: 194,
+  density: 7.874,
+  meltingPoint: 1811,
+  boilingPoint: 3134,
+  halfLife: null,
   summary:
     'Iron is a chemical element; it has symbol Fe and atomic number 26. It is a metal that belongs to the first transition series and group 8 of the periodic table.',
   discoveryYear: null,
