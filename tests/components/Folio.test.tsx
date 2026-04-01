@@ -1,6 +1,7 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
+import '../mocks/usePretextLines.mock';
 import Folio from '../../src/components/Folio';
 import type { ElementRecord, ElementSources } from '../../src/lib/types';
 
@@ -8,24 +9,7 @@ afterEach(() => {
   cleanup();
 });
 
-// Mock pretext since jsdom has no canvas for font measurement
-vi.mock('../../src/hooks/usePretextLines', () => ({
-  usePretextLines: ({ text }: { text: string }) => ({
-    lines: [
-      { text: text.slice(0, 40), width: 160, x: 0, y: 0 },
-    ],
-    lineHeight: 18,
-  }),
-  useShapedText: ({ text }: { text: string }) => ({
-    lines: [
-      { text: text.slice(0, 60), width: 300, x: 0, y: 0 },
-      { text: text.slice(60, 120), width: 300, x: 0, y: 20 },
-    ],
-    lineHeight: 20,
-    plateHeightInLines: 9,
-    identityHeightInLines: 7,
-  }),
-}));
+const TEST_ACCESS_DATE = new Date().toISOString().slice(0, 10);
 
 const FE: ElementRecord = {
   atomicNumber: 26,
@@ -74,7 +58,7 @@ const FE_SOURCES: ElementSources = {
     title: 'Iron',
     url: 'https://en.wikipedia.org/wiki/Iron',
     license: 'CC BY-SA 4.0',
-    accessDate: '2026-03-30',
+    accessDate: TEST_ACCESS_DATE,
   },
 };
 
@@ -139,7 +123,7 @@ describe('Folio', () => {
     expect(ironLinks).toHaveLength(2); // heading + source strip link
     expect(screen.getByText(/CC BY-SA 4.0/)).toBeInTheDocument();
     expect(screen.getByText(/No media in v1/)).toBeInTheDocument();
-    expect(screen.getByText(/Fetched 2026-03-30/)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`Fetched ${TEST_ACCESS_DATE}`))).toBeInTheDocument();
   });
 
   it('data plate shows em-dash for null group', () => {
