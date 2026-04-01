@@ -29,6 +29,7 @@ export default function SiteNav() {
         <Link to="/about" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>About</Link>
         <Link to="/credits" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Credits</Link>
         <Link to="/design" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Design</Link>
+        <Link to="/animation-palette" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Animation</Link>
         <Link to="/entity-map" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Entity Map</Link>
       </div>
     </nav>
