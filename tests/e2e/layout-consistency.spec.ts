@@ -46,7 +46,7 @@ test.describe('Wordmark consistency (desktop)', () => {
 
     for (const route of ALL_PAGES) {
       await page.goto(route);
-      await page.waitForTimeout(2000);
+      await expect(page.locator('h1[aria-label="Atlas"]')).toBeVisible();
 
       const wordmark = page.locator('h1[aria-label="Atlas"]');
       await expect(wordmark, `Wordmark should be visible on ${route}`).toBeVisible();
@@ -82,7 +82,7 @@ test.describe('PageShell grid structure', () => {
   for (const route of ALL_PAGES) {
     test(`${route} has correct PageShell grid layout`, async ({ page }) => {
       await page.goto(route);
-      await page.waitForTimeout(2000);
+      await expect(page.locator('.page-shell')).toBeVisible();
 
       // .page-shell exists and uses CSS grid
       const shell = page.locator('.page-shell');
@@ -123,7 +123,7 @@ test.describe('Anomaly Explorer filter visibility', () => {
     page,
   }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('button').first()).toBeVisible();
 
     // Gather all anomaly filter buttons
     const buttons = page.locator('button');
@@ -135,7 +135,7 @@ test.describe('Anomaly Explorer filter visibility', () => {
 
       // Click the anomaly button and wait for ripple animations to finish
       await buttons.nth(b).click();
-      await page.waitForTimeout(1500);
+      await expect(page.locator('svg g[style*="cursor: pointer"]').first()).toBeVisible();
 
       // Find highlighted element cells by querying the DOM for rects with
       // the highlight colour (WARM_RED = #9e1c2c). Each element <g> has a
@@ -200,7 +200,7 @@ test.describe('Drop cap text readability', () => {
       page,
     }) => {
       await page.goto(route);
-      await page.waitForTimeout(2000);
+      await expect(page.locator('.page-shell-content svg text').first()).toBeVisible();
 
       // Find SVG text elements near the top of the page content.
       // The intro/drop-cap text is rendered as SVG <text> elements within

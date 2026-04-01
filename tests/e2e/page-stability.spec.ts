@@ -27,7 +27,6 @@ test.describe('VizNav stability', () => {
 
     for (const route of VIZ_ROUTES) {
       await page.goto(route);
-      await page.waitForTimeout(1000);
 
       const vizNav = page.locator('nav[aria-label="Visualisation pages"]');
       await expect(vizNav).toBeVisible();
@@ -60,7 +59,6 @@ test.describe('VizNav stability', () => {
 
     for (const route of VIZ_ROUTES) {
       await page.goto(route);
-      await page.waitForTimeout(1000);
 
       const vizNav = page.locator('nav[aria-label="Visualisation pages"]');
       await expect(vizNav).toBeVisible();
@@ -95,7 +93,6 @@ test.describe('SiteNav footer stability', () => {
   test('SiteNav footer exists and contains correct links on every page', async ({ page }) => {
     for (const route of ALL_PAGES) {
       await page.goto(route);
-      await page.waitForTimeout(1000);
 
       // SiteNav is the nav at the bottom with the keyboard shortcut hint
       const siteNav = page.locator('nav').filter({ hasText: 'keyboard shortcuts' });
@@ -115,9 +112,9 @@ test.describe('SiteNav footer stability', () => {
 
     for (const route of ALL_PAGES) {
       await page.goto(route);
-      await page.waitForTimeout(1000);
 
       const siteNav = page.locator('nav').filter({ hasText: 'keyboard shortcuts' });
+      await expect(siteNav).toBeVisible();
       const linkCount = await siteNav.locator('a').count();
 
       if (expectedCount === null) {
@@ -135,9 +132,9 @@ test.describe('SiteNav footer stability', () => {
 
 test.describe('Navigation round-trip stability', () => {
   test('Home -> Fe -> Home produces consistent layout', async ({ page }) => {
-    // First visit: wait for all staggered entry animations to complete
+    // First visit: wait for layout to stabilise
     await page.goto('/');
-    await page.waitForTimeout(4000);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     const vizNavBefore = await page
       .locator('nav[aria-label="Visualisation pages"]')
@@ -146,7 +143,7 @@ test.describe('Navigation round-trip stability', () => {
 
     // Navigate to Fe
     await page.goto('/element/Fe');
-    await page.waitForTimeout(3000);
+    await expect(page.locator('[data-testid="data-plate"]')).toBeVisible();
     await page.screenshot({
       path: 'tests/e2e/screenshots/stability-roundtrip-fe.png',
       fullPage: true,
@@ -154,7 +151,7 @@ test.describe('Navigation round-trip stability', () => {
 
     // Navigate back to home
     await page.locator('a[href="/"]').first().click();
-    await page.waitForTimeout(4000);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     // Verify VizNav is present and at same position
     const vizNav = page.locator('nav[aria-label="Visualisation pages"]');
@@ -179,7 +176,7 @@ test.describe('Navigation round-trip stability', () => {
 
   test('Home -> About -> Home produces consistent layout', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     const vizNavBefore = await page
       .locator('nav[aria-label="Visualisation pages"]')
@@ -188,7 +185,7 @@ test.describe('Navigation round-trip stability', () => {
 
     // Go to About
     await page.locator('a[href="/about"]').first().click();
-    await page.waitForTimeout(1000);
+    await expect(page.locator('h1')).toBeVisible();
     await page.screenshot({
       path: 'tests/e2e/screenshots/stability-roundtrip-about.png',
       fullPage: true,
@@ -196,7 +193,7 @@ test.describe('Navigation round-trip stability', () => {
 
     // Back to Home
     await page.locator('a[href="/"]').first().click();
-    await page.waitForTimeout(2000);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     const vizNavAfter = await page
       .locator('nav[aria-label="Visualisation pages"]')
@@ -220,7 +217,7 @@ test.describe('Navigation round-trip stability', () => {
 
   test('Home -> Discovery Timeline -> Home produces consistent layout', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     const vizNavBefore = await page
       .locator('nav[aria-label="Visualisation pages"]')
@@ -232,7 +229,7 @@ test.describe('Navigation round-trip stability', () => {
       'nav[aria-label="Visualisation pages"] a:has-text("Timeline")',
     );
     await timelineLink.click();
-    await page.waitForTimeout(1500);
+    await expect(page.locator('h1')).toBeVisible();
     await page.screenshot({
       path: 'tests/e2e/screenshots/stability-roundtrip-timeline.png',
       fullPage: true,
@@ -243,7 +240,7 @@ test.describe('Navigation round-trip stability', () => {
       'nav[aria-label="Visualisation pages"] a:has-text("Table")',
     );
     await tableLink.click();
-    await page.waitForTimeout(2000);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     const vizNavAfter = await page
       .locator('nav[aria-label="Visualisation pages"]')
@@ -268,10 +265,7 @@ test.describe('No content layout shift', () => {
   for (const route of VIZ_ROUTES) {
     test(`no layout shift on ${route}`, async ({ page }) => {
       await page.goto(route);
-      // Wait for animations to fully settle (staggered entry animations take up to ~2s)
-      await page.waitForTimeout(3000);
-
-      // Measure positions after animations are done
+      // Wait for layout to stabilise
       const vizNav = page.locator('nav[aria-label="Visualisation pages"]');
       await expect(vizNav).toBeVisible();
       const navBoxBefore = await vizNav.boundingBox();
@@ -313,9 +307,6 @@ test.describe('No content layout shift', () => {
   for (const route of ['/about', '/credits', '/design', '/element/Fe']) {
     test(`no layout shift on ${route}`, async ({ page }) => {
       await page.goto(route);
-      // Wait for animations to settle (element folios have long staggered animations)
-      await page.waitForTimeout(4000);
-
       // Use SiteNav as the stability anchor on non-viz pages
       const siteNav = page.locator('nav').filter({ hasText: 'keyboard shortcuts' });
       await expect(siteNav).toBeVisible();
@@ -362,9 +353,9 @@ test.describe('Cross-page structural consistency', () => {
 
     for (const route of nonHomeRoutes) {
       await page.goto(route);
-      await page.waitForTimeout(1000);
 
       const vizNav = page.locator('nav[aria-label="Visualisation pages"]');
+      await expect(vizNav).toBeVisible();
       const box = await vizNav.boundingBox();
       expect(box, `VizNav should be visible on ${route}`).not.toBeNull();
       dimensions.push({
@@ -394,7 +385,6 @@ test.describe('Cross-page structural consistency', () => {
 
     for (const route of ALL_PAGES) {
       await page.goto(route);
-      await page.waitForTimeout(1000);
 
       const siteNav = page.locator('nav').filter({ hasText: 'keyboard shortcuts' });
       await expect(siteNav).toBeVisible();
@@ -432,7 +422,6 @@ test.describe('Cross-page structural consistency', () => {
 
     for (const route of detailPages) {
       await page.goto(route);
-      await page.waitForTimeout(1000);
 
       // Every detail page should have a link back to home
       const homeLink = page.locator('a[href="/"]');

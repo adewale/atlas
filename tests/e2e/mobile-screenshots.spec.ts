@@ -1,4 +1,5 @@
-import { test, expect, type Page, type BrowserContext } from '@playwright/test';
+import { test, expect, type BrowserContext } from '@playwright/test';
+import { filterBenignErrors, SCREENSHOT_DIR } from './helpers';
 
 /**
  * Mobile Screenshot Test Suite
@@ -49,21 +50,6 @@ const routes: { path: string; label: string }[] = [
   { path: '/timeline/1770', label: 'timeline-1770' },
 ];
 
-// ---------------------------------------------------------------------------
-// Screenshot directory
-// ---------------------------------------------------------------------------
-
-const SCREENSHOT_DIR = 'tests/e2e/screenshots';
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-/** Wait for load animations to settle. */
-async function waitForAnimations(page: Page, timeout = 2500) {
-  await page.waitForTimeout(timeout);
-}
-
 /**
  * Assert that the page has no horizontal overflow — the document's scroll
  * width should not exceed the viewport width.
@@ -105,9 +91,9 @@ for (const device of devices) {
           }
         });
 
-        // Navigate and wait for animations
+        // Navigate and wait for meaningful content
         await page.goto(route.path);
-        await waitForAnimations(page);
+        await expect(page.locator('.page-shell')).toBeVisible();
 
         // Take full-page screenshot
         const screenshotPath = `${SCREENSHOT_DIR}/mobile-${device.name}-${route.label}.png`;
@@ -117,12 +103,7 @@ for (const device of devices) {
         await assertNoHorizontalOverflow(page, device.width, `${device.name}/${route.label}`);
 
         // Assert no console errors (filter out known benign messages)
-        const realErrors = consoleErrors.filter(
-          (msg) =>
-            !msg.includes('favicon') &&
-            !msg.includes('Failed to load resource') &&
-            !msg.includes('DevTools'),
-        );
+        const realErrors = filterBenignErrors(consoleErrors);
         expect(
           realErrors,
           `${device.name}/${route.label}: unexpected console errors:\n${realErrors.join('\n')}`,

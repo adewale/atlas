@@ -30,7 +30,7 @@ test.describe('Etymology Map — property-based tests', () => {
   // -------------------------------------------------------------------------
   test('each origin section uses a semantic <h2> heading', async ({ page }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     const sections = page.locator('section');
     const sectionCount = await sections.count();
@@ -54,7 +54,7 @@ test.describe('Etymology Map — property-based tests', () => {
   // -------------------------------------------------------------------------
   test('no elements use hardcoded non-theme colors', async ({ page }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     // Check for inline style color: '#555'
     const elemsWith555 = page.locator('[style*="color: #555"], [style*="color:#555"]');
@@ -79,7 +79,7 @@ test.describe('Etymology Map — property-based tests', () => {
   // -------------------------------------------------------------------------
   test('cards have visible focus styling when tabbed', async ({ page }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     // Tab several times to reach the first card link
     // (skip past nav links by tabbing enough times)
@@ -123,7 +123,7 @@ test.describe('Etymology Map — property-based tests', () => {
     page,
   }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     const sections = page.locator('section');
     const sectionCount = await sections.count();
@@ -175,7 +175,7 @@ test.describe('Etymology Map — property-based tests', () => {
     page,
   }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     const introSvg = page.locator(
       'svg[role="img"][aria-label="Introduction to etymology map"]',
@@ -220,7 +220,7 @@ test.describe('Etymology Map — property-based tests', () => {
     page,
   }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     const sections = page.locator('section');
     const sectionCount = await sections.count();
@@ -268,7 +268,7 @@ test.describe('Etymology Map — property-based tests', () => {
   // -------------------------------------------------------------------------
   test('all expected origin sections are present', async ({ page }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     const sections = page.locator('section');
     const sectionCount = await sections.count();
@@ -306,7 +306,7 @@ test.describe('Etymology Map — property-based tests', () => {
     page,
   }) => {
     await page.goto(ETYMOLOGY_URL);
-    await page.waitForTimeout(2000);
+    await expect(page.locator('section').first()).toBeVisible();
 
     const sections = page.locator('section');
     const sectionCount = await sections.count();

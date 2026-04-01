@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { filterBenignErrors } from './helpers';
 
 test.describe('Home page', () => {
   test('loads and shows 118 element cells', async ({ page }) => {
@@ -103,10 +104,10 @@ test.describe('All routes load', () => {
       const errors: string[] = [];
       page.on('pageerror', (err) => errors.push(err.message));
       await page.goto(route);
-      // Allow dynamic imports to settle
-      await page.waitForTimeout(500);
-      // No uncaught JS errors
-      expect(errors).toEqual([]);
+      // Wait for the page shell to be rendered instead of an arbitrary timeout
+      await expect(page.locator('.page-shell')).toBeVisible();
+      // No uncaught JS errors (filtering out benign sandbox noise)
+      expect(filterBenignErrors(errors)).toEqual([]);
     });
   }
 });

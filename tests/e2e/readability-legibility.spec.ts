@@ -1,4 +1,4 @@
-import { test, expect, type Page, type Locator } from '@playwright/test';
+import { test, expect, type Locator } from '@playwright/test';
 
 /**
  * Readability & Legibility Test Suite
@@ -58,10 +58,6 @@ async function assertAllVisible(locators: Locator, label: string, minSize = 5) {
   }
 }
 
-/** Wait for all animations to complete and check opacity reaches 1. */
-async function waitForAnimations(page: Page, timeout = 2500) {
-  await page.waitForTimeout(timeout);
-}
 
 // ---------------------------------------------------------------------------
 // Per-page readability tests
@@ -70,7 +66,7 @@ async function waitForAnimations(page: Page, timeout = 2500) {
 test.describe('Readability: Home / Periodic Table', () => {
   test('all 118 cells are positioned distinctly (no stacking)', async ({ page }) => {
     await page.goto('/');
-    await waitForAnimations(page);
+    await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-home.png', fullPage: true });
 
     const cells = page.locator('svg g[role="button"]');
@@ -91,7 +87,7 @@ test.describe('Readability: Home / Periodic Table', () => {
 
   test('element text is readable after load animation', async ({ page }) => {
     await page.goto('/');
-    await waitForAnimations(page);
+    await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
 
     // After animation, all cells should reach opacity 1
     const lastEl = page.locator('g[aria-label*="Oganesson"] g').first();
@@ -107,7 +103,7 @@ test.describe('Readability: Home / Periodic Table', () => {
 
   test('explore navigation links are readable and not overlapping', async ({ page }) => {
     await page.goto('/');
-    await waitForAnimations(page);
+    await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
 
     const navLinks = page.locator('nav a[href*="/"]').filter({ hasText: /Landscape|Scatter|Explorer|Graph|Timeline|Etymology|Network/ });
     const count = await navLinks.count();
@@ -119,7 +115,7 @@ test.describe('Readability: Home / Periodic Table', () => {
 test.describe('Readability: Element Folio', () => {
   test('folio content is laid out without overlap', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-folio-fe.png', fullPage: true });
 
     // Prev/next nav, symbol, name, data plate should all be at distinct y positions
@@ -136,7 +132,7 @@ test.describe('Readability: Element Folio', () => {
 
   test('prev/next navigation links are present and separated', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     // Prev link (Mn) and next link (Co) should exist
     const prevLink = page.locator('nav a[href="/element/Mn"]');
@@ -152,14 +148,14 @@ test.describe('Readability: Element Folio', () => {
 
   test('H has no prev link, Og has no next link', async ({ page }) => {
     await page.goto('/element/H');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
     // Should have next (He) but no prev
     await expect(page.locator('nav a[href="/element/He"]')).toBeVisible();
     const prevLinks = page.locator('nav a:has-text("←")');
     await expect(prevLinks).toHaveCount(0);
 
     await page.goto('/element/Og');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
     // Should have prev (Ts) but no next
     await expect(page.locator('nav a[href="/element/Ts"]')).toBeVisible();
     const nextLinks = page.locator('nav a:has-text("→")');
@@ -168,7 +164,7 @@ test.describe('Readability: Element Folio', () => {
 
   test('etymology and discovery sections readable with links', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     // Etymology section should be visible
     const etymologyLabel = page.locator('text=Etymology').first();
@@ -189,7 +185,7 @@ test.describe('Readability: Element Folio', () => {
 
   test('property bars are readable after animation', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     const bars = page.locator('[aria-label*="ranked"]');
     await expect(bars).toHaveCount(4);
@@ -198,7 +194,7 @@ test.describe('Readability: Element Folio', () => {
 
   test('summary text lines are not overlapping', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     const summarySvg = page.locator('svg[aria-label="Element summary"]');
     const textLines = summarySvg.locator('text');
@@ -219,7 +215,7 @@ test.describe('Readability: Element Folio', () => {
   test('mobile folio layout is readable', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-folio-mobile.png', fullPage: true });
 
     // Symbol and name should be visible
@@ -235,7 +231,7 @@ test.describe('Readability: Element Folio', () => {
 test.describe('Readability: Compare Page', () => {
   test('both elements are readable and separated', async ({ page }) => {
     await page.goto('/compare/Fe/Cu');
-    await waitForAnimations(page);
+    await expect(page.locator('svg[aria-label*="Comparison"]')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-compare.png', fullPage: true });
 
     await expect(page.locator('text=Iron')).toBeVisible();
@@ -252,7 +248,7 @@ test.describe('Readability: Compare Page', () => {
 test.describe('Readability: Phase Landscape', () => {
   test('all cells are distinct and text is readable', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await waitForAnimations(page);
+    await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-phase.png', fullPage: true });
 
     const cells = page.locator('svg g[role="button"]');
@@ -274,7 +270,7 @@ test.describe('Readability: Phase Landscape', () => {
 test.describe('Readability: Property Scatter', () => {
   test('axis labels are readable and not overlapping plot', async ({ page }) => {
     await page.goto('/property-scatter');
-    await waitForAnimations(page);
+    await expect(page.locator('text:has-text("Electronegativity")')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-scatter.png', fullPage: true });
 
     // Axis labels
@@ -294,7 +290,7 @@ test.describe('Readability: Property Scatter', () => {
 
   test('element squares have non-zero size after animation', async ({ page }) => {
     await page.goto('/property-scatter');
-    await waitForAnimations(page, 4000); // Staggered animation: 118 * 15ms = ~1.8s
+    await expect(page.locator('svg rect[width="10"]').first()).toBeVisible();
 
     const squares = page.locator('svg rect[width="10"]');
     const count = await squares.count();
@@ -311,7 +307,7 @@ test.describe('Readability: Property Scatter', () => {
 test.describe('Readability: Anomaly Explorer', () => {
   test('grid cells are distinct with and without selection', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await waitForAnimations(page);
+    await expect(page.locator('svg g[style*="cursor: pointer"]').first()).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-anomaly.png', fullPage: true });
 
     // Without selection: all cells should be paper color and spaced
@@ -334,7 +330,7 @@ test.describe('Readability: Anomaly Explorer', () => {
 test.describe('Readability: Neighborhood Graph', () => {
   test('node labels are readable and distinct', async ({ page }) => {
     await page.goto('/neighborhood-graph');
-    await waitForAnimations(page);
+    await expect(page.locator('svg circle').first()).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-neighborhood.png', fullPage: true });
 
     // Circles should not all be at the same position
@@ -352,7 +348,7 @@ test.describe('Readability: Neighborhood Graph', () => {
 
   test('intro text is readable', async ({ page }) => {
     await page.goto('/neighborhood-graph');
-    await waitForAnimations(page);
+    await expect(page.locator('svg circle').first()).toBeVisible();
 
     // Pretext intro should have non-zero height
     const introText = page.locator('svg text').first();
@@ -365,7 +361,7 @@ test.describe('Readability: Neighborhood Graph', () => {
 test.describe('Readability: Discovery Timeline', () => {
   test('timeline elements do not overflow or stack illegibly', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await waitForAnimations(page);
+    await expect(page.locator('text:text-is("1700")')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-timeline.png', fullPage: true });
 
     // Century marks should be horizontally separated
@@ -387,7 +383,7 @@ test.describe('Readability: Discovery Timeline', () => {
 
   test('antiquity squares are visible and not clipped', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await waitForAnimations(page);
+    await expect(page.locator('text:text-is("1700")')).toBeVisible();
 
     const antiqSquares = page.locator('rect[aria-label*="known since antiquity"]');
     const count = await antiqSquares.count();
@@ -401,7 +397,7 @@ test.describe('Readability: Discovery Timeline', () => {
 test.describe('Readability: Etymology Map', () => {
   test('section headers and cards are readable', async ({ page }) => {
     await page.goto('/etymology-map');
-    await waitForAnimations(page);
+    await expect(page.locator('section').first()).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-etymology.png', fullPage: true });
 
     // Section headers
@@ -418,7 +414,7 @@ test.describe('Readability: Etymology Map', () => {
 
   test('element cards within section are not overlapping', async ({ page }) => {
     await page.goto('/etymology-map');
-    await waitForAnimations(page);
+    await expect(page.locator('section').first()).toBeVisible();
 
     // Check first section's cards for overlap
     const firstSection = page.locator('section').first();
@@ -430,7 +426,7 @@ test.describe('Readability: Etymology Map', () => {
 test.describe('Readability: Discoverer Network', () => {
   test('discoverer rows are vertically separated', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await waitForAnimations(page);
+    await expect(page.locator('h1')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-discoverer.png', fullPage: true });
 
     // Verify specific discoverer names are at different y positions
@@ -452,7 +448,7 @@ test.describe('Readability: Discoverer Network', () => {
 
   test('element squares in bars are distinct', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await waitForAnimations(page);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Check antiquity group squares
     const antiquitySquares = page.locator('svg g[style*="cursor: pointer"]');
@@ -464,7 +460,7 @@ test.describe('Readability: Discoverer Network', () => {
 test.describe('Readability: Atlas Index Pages', () => {
   test('group page cards are readable and non-overlapping', async ({ page }) => {
     await page.goto('/atlas/group/8');
-    await waitForAnimations(page);
+    await expect(page.locator('g[role="link"]').first()).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-atlas-group.png', fullPage: true });
 
     const cards = page.locator('g[role="link"]');
@@ -474,7 +470,7 @@ test.describe('Readability: Atlas Index Pages', () => {
 
   test('rank page shows all 118 elements without stacking', async ({ page }) => {
     await page.goto('/atlas/rank/mass');
-    await waitForAnimations(page);
+    await expect(page.locator('g[role="link"]').first()).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-atlas-rank.png', fullPage: true });
 
     const cards = page.locator('g[role="link"]');
@@ -498,14 +494,14 @@ test.describe('Page transitions: content readable after navigation', () => {
   test('home → folio → home: content readable at each step', async ({ page }) => {
     // Step 1: Home
     await page.goto('/');
-    await waitForAnimations(page);
+    await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
     const cellCount1 = await page.locator('svg g[role="button"]').count();
     expect(cellCount1).toBe(118);
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-home-start.png', fullPage: true });
 
     // Step 2: Navigate to folio
     await page.locator('g[aria-label*="Iron"]').click();
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
     await expect(page.locator('.folio-symbol')).toHaveText('Fe');
     const symbolBox = await page.locator('.folio-symbol').boundingBox();
     expect(symbolBox).not.toBeNull();
@@ -514,7 +510,7 @@ test.describe('Page transitions: content readable after navigation', () => {
 
     // Step 3: Navigate back
     await page.locator('a[href="/"]').click();
-    await waitForAnimations(page);
+    await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
     const cellCount2 = await page.locator('svg g[role="button"]').count();
     expect(cellCount2).toBe(118);
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-home-return.png', fullPage: true });
@@ -522,48 +518,48 @@ test.describe('Page transitions: content readable after navigation', () => {
 
   test('folio → prev/next → folio: each page readable', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('h2')).toBeVisible();
     await expect(page.locator('h2')).toHaveText('Iron');
 
     // Navigate to next element
     await page.locator('nav a:has-text("→")').click();
-    await waitForAnimations(page);
+    await expect(page.locator('h2')).toBeVisible();
     await expect(page.locator('h2')).toHaveText('Cobalt');
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-next-element.png', fullPage: true });
 
     // Navigate back to prev
     await page.locator('nav a:has-text("←")').first().click();
-    await waitForAnimations(page);
+    await expect(page.locator('h2')).toBeVisible();
     await expect(page.locator('h2')).toHaveText('Iron');
   });
 
   test('folio → discoverer detail → network: readable at each step', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     // Click discoverer link (now points to /discoverer/:name)
     const discLink = page.locator('a[href*="/discoverer/"]').first();
     await expect(discLink).toBeVisible();
     await discLink.click();
-    await waitForAnimations(page);
+    await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
     // Should be on a discoverer detail page with back link to network
     await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-discoverer.png', fullPage: true });
 
     // Navigate to network
     await page.locator('a[href="/discoverer-network"]').click();
-    await waitForAnimations(page);
+    await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('h1')).toHaveText('Discoverer Network');
   });
 
   test('folio → etymology map: readable after transition', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     const etymLink = page.locator('a[href="/etymology-map"]');
     if ((await etymLink.count()) > 0) {
       await etymLink.click();
-      await waitForAnimations(page);
+      await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('h1')).toHaveText('Etymology Map');
       await page.screenshot({ path: 'tests/e2e/screenshots/transition-etymology.png', fullPage: true });
     }
@@ -572,13 +568,13 @@ test.describe('Page transitions: content readable after navigation', () => {
   test('folio → timeline era: readable after transition', async ({ page }) => {
     // Use Oxygen (discoveryYear = 1774) to test era links, since Fe is antiquity (no year)
     await page.goto('/element/O');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     // O discovery link goes to /timeline/1770
     const timeLink = page.locator('a[href*="/timeline/"]').first();
     await expect(timeLink).toBeVisible();
     await timeLink.click();
-    await waitForAnimations(page);
+    await expect(page.locator('a[href="/discovery-timeline"]')).toBeVisible();
     // Should be on a timeline era page with back link
     await expect(page.locator('a[href="/discovery-timeline"]')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-timeline-era.png', fullPage: true });
@@ -586,10 +582,9 @@ test.describe('Page transitions: content readable after navigation', () => {
 
   test('folio → compare → back: no broken state', async ({ page }) => {
     await page.goto('/element/Fe');
-    await waitForAnimations(page);
+    await expect(page.locator('.folio-symbol')).toBeVisible();
 
     await page.locator('a:has-text("Compare →")').click();
-    await waitForAnimations(page);
     await expect(page.locator('text=Iron')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-compare.png', fullPage: true });
   });
@@ -608,13 +603,13 @@ test.describe('Page transitions: content readable after navigation', () => {
 
     for (const { path, heading } of vizPages) {
       await page.goto('/');
-      await waitForAnimations(page);
+      await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
 
       // Navigate to viz page
       const link = page.locator(`a[href="${path}"]`);
       await expect(link).toBeVisible();
       await link.click();
-      await waitForAnimations(page);
+      await expect(page.locator('h1')).toBeVisible();
 
       // Verify heading is readable
       await expect(page.locator('h1')).toContainText(heading);
@@ -623,7 +618,7 @@ test.describe('Page transitions: content readable after navigation', () => {
       const backLink = page.locator('a[href="/"]');
       await expect(backLink).toBeVisible();
       await backLink.click();
-      await waitForAnimations(page);
+      await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
 
       // Home should be intact
       const cells = page.locator('svg g[role="button"]');

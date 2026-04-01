@@ -7,10 +7,8 @@ import { test, expect } from '@playwright/test';
 test.describe('Phase Landscape', () => {
   test('renders 118 elements colored by phase', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/phase-landscape.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('Phase Landscape at STP');
+    await page.screenshot({ path: 'tests/e2e/screenshots/phase-landscape.png', fullPage: true });
 
     // Should have 118 element cells
     const cells = page.locator('svg g[role="button"]');
@@ -22,7 +20,7 @@ test.describe('Phase Landscape', () => {
 
   test('element cells are not stacked — spot-check corners', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // H (top-left) and He (top-right) should be far apart
     const h = page.locator('g[aria-label*="Hydrogen"]');
@@ -48,7 +46,7 @@ test.describe('Phase Landscape', () => {
 
   test('clicking element navigates to folio', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('g[aria-label*="Iron"]')).toBeVisible();
     // Click on Iron
     await page.locator('g[aria-label*="Iron"]').locator('..').click();
     await page.waitForURL(/\/element\/Fe/);
@@ -59,11 +57,10 @@ test.describe('Phase Landscape', () => {
 test.describe('Property Scatter', () => {
   test('renders scatter plot with element squares', async ({ page }) => {
     await page.goto('/property-scatter');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('text:has-text("Electronegativity")')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/property-scatter.png', fullPage: true });
 
     // Axis labels should be visible
-    await expect(page.locator('text:has-text("Electronegativity")')).toBeVisible();
     await expect(page.locator('text:has-text("Ionisation energy")')).toBeVisible();
 
     // Should have element squares
@@ -74,21 +71,20 @@ test.describe('Property Scatter', () => {
 
   test('changing axes updates the plot', async ({ page }) => {
     await page.goto('/property-scatter');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('text:has-text("Electronegativity")')).toBeVisible();
 
     // Change X axis to mass
     await page.selectOption('select >> nth=0', 'mass');
-    await page.waitForTimeout(500);
+    await expect(page.locator('text:has-text("Atomic mass")')).toBeVisible();
 
     // X axis label should update
-    await expect(page.locator('text:has-text("Atomic mass")')).toBeVisible();
 
     await page.screenshot({ path: 'tests/e2e/screenshots/property-scatter-mass.png', fullPage: true });
   });
 
   test('hover shows tooltip that does not overflow', async ({ page }) => {
     await page.goto('/property-scatter');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('text:has-text("Electronegativity")')).toBeVisible();
 
     // Hover over the first square
     const firstSquare = page.locator('svg rect[width="10"]').first();
@@ -105,10 +101,8 @@ test.describe('Property Scatter', () => {
 test.describe('Anomaly Explorer', () => {
   test('renders periodic table with anomaly buttons', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/anomaly-explorer.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('Anomaly Explorer');
+    await page.screenshot({ path: 'tests/e2e/screenshots/anomaly-explorer.png', fullPage: true });
 
     // Should have anomaly buttons
     const buttons = page.locator('button');
@@ -123,11 +117,10 @@ test.describe('Anomaly Explorer', () => {
 
   test('selecting anomaly highlights elements and shows description', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Click first anomaly button
     await page.locator('button').first().click();
-    await page.waitForTimeout(500);
     await page.screenshot({ path: 'tests/e2e/screenshots/anomaly-selected.png', fullPage: true });
 
     // Description text should appear below the grid
@@ -137,11 +130,10 @@ test.describe('Anomaly Explorer', () => {
 
   test('elements are not stacked when anomaly is selected', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Select an anomaly
     await page.locator('button').first().click();
-    await page.waitForTimeout(500);
 
     // Check that H and He are still at different positions
     const h = page.locator('g:has(text:text-is("H")) >> nth=0');
@@ -157,10 +149,8 @@ test.describe('Anomaly Explorer', () => {
 test.describe('Neighborhood Graph', () => {
   test('renders nodes and edges', async ({ page }) => {
     await page.goto('/neighborhood-graph');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/neighborhood-graph.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('Neighbourhood Graph');
+    await page.screenshot({ path: 'tests/e2e/screenshots/neighborhood-graph.png', fullPage: true });
 
     // Should have node circles (118 elements)
     const circles = page.locator('svg circle');
@@ -175,7 +165,7 @@ test.describe('Neighborhood Graph', () => {
 
   test('nodes are not stacked — corners separated', async ({ page }) => {
     await page.goto('/neighborhood-graph');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Check a few node labels aren't at the same position
     const nodeButtons = page.locator('g[role="button"]');
@@ -192,7 +182,7 @@ test.describe('Neighborhood Graph', () => {
 
   test('hover highlights neighborhood', async ({ page }) => {
     await page.goto('/neighborhood-graph');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Hover over a node
     const feNode = page.locator('g[aria-label*="Iron"]');
@@ -203,7 +193,7 @@ test.describe('Neighborhood Graph', () => {
 
   test('clicking node navigates to element', async ({ page }) => {
     await page.goto('/neighborhood-graph');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     await page.locator('g[aria-label*="Iron"]').click();
     await page.waitForURL(/\/element\/Fe/);
@@ -214,10 +204,8 @@ test.describe('Neighborhood Graph', () => {
 test.describe('Discovery Timeline', () => {
   test('renders timeline with antiquity and historical elements', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/discovery-timeline.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('Discovery Timeline');
+    await page.screenshot({ path: 'tests/e2e/screenshots/discovery-timeline.png', fullPage: true });
 
     // Century marks should be visible
     await expect(page.locator('text:text-is("1700")')).toBeVisible();
@@ -234,7 +222,7 @@ test.describe('Discovery Timeline', () => {
 
   test('timeline squares are not vertically stacked beyond viewbox', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // All squares should be within the SVG viewport
     const svg = page.locator('svg[aria-label*="Timeline"]');
@@ -254,7 +242,7 @@ test.describe('Discovery Timeline', () => {
 
   test('hover shows tooltip', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Hover over an antiquity square
     const square = page.locator('rect[aria-label*="known since antiquity"]').first();
@@ -270,10 +258,8 @@ test.describe('Discovery Timeline', () => {
 test.describe('Etymology Map', () => {
   test('renders all origin sections with element cards', async ({ page }) => {
     await page.goto('/etymology-map');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/etymology-map.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('Etymology Map');
+    await page.screenshot({ path: 'tests/e2e/screenshots/etymology-map.png', fullPage: true });
 
     // Should have origin section headers
     const headers = page.locator('section');
@@ -283,7 +269,7 @@ test.describe('Etymology Map', () => {
 
   test('cards are not overlapping — flex wrap works', async ({ page }) => {
     await page.goto('/etymology-map');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Get all element cards in the first section
     const firstSection = page.locator('section').first();
@@ -305,12 +291,12 @@ test.describe('Etymology Map', () => {
 
   test('clicking element card navigates to folio', async ({ page }) => {
     await page.goto('/etymology-map');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Click first element card
     const firstCard = page.locator('section a').first();
     await firstCard.click();
-    await page.waitForTimeout(1000);
+    await page.waitForURL(/\/element\//);
 
     expect(page.url()).toContain('/element/');
   });
@@ -319,12 +305,11 @@ test.describe('Etymology Map', () => {
 test.describe('Drop cap text flow', () => {
   test('drop cap initial does not overlap body text', async ({ page }) => {
     await page.goto('/element/Fe');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('svg[aria-label="Element summary"]')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-fe.png', fullPage: true });
 
     // The summary SVG contains the drop cap and body text
     const summarySvg = page.locator('svg[aria-label="Element summary"]');
-    await expect(summarySvg).toBeVisible();
 
     // The drop cap is a large <text> element (font-size ~48px)
     const dropCap = summarySvg.locator('text[font-size="48"]');
@@ -364,11 +349,10 @@ test.describe('Drop cap text flow', () => {
 
   test('drop cap flows text on Hydrogen (short summary)', async ({ page }) => {
     await page.goto('/element/H');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('svg[aria-label="Element summary"]')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-h.png', fullPage: true });
 
     const summarySvg = page.locator('svg[aria-label="Element summary"]');
-    await expect(summarySvg).toBeVisible();
 
     // Drop cap should still exist
     const dropCap = summarySvg.locator('text[font-size="48"]');
@@ -377,10 +361,9 @@ test.describe('Drop cap text flow', () => {
 
   test('drop cap flows text on Oganesson (long summary)', async ({ page }) => {
     await page.goto('/element/Og');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('svg[aria-label="Element summary"]')).toBeVisible();
 
     const summarySvg = page.locator('svg[aria-label="Element summary"]');
-    await expect(summarySvg).toBeVisible();
 
     const dropCap = summarySvg.locator('text[font-size="48"]');
     await expect(dropCap).toBeVisible();
@@ -403,10 +386,8 @@ test.describe('Drop cap text flow', () => {
 test.describe('Discoverer Detail', () => {
   test('renders discoverer page with elements', async ({ page }) => {
     await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-davy.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('Humphry Davy');
+    await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-davy.png', fullPage: true });
 
     // Should show element count
     await expect(page.locator('text=element')).toBeVisible();
@@ -420,7 +401,7 @@ test.describe('Discoverer Detail', () => {
 
   test('prev/next navigation works', async ({ page }) => {
     await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
-    await page.waitForTimeout(1500);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Should have prev or next links
     const navLinks = page.locator('nav a');
@@ -429,7 +410,7 @@ test.describe('Discoverer Detail', () => {
 
     // Click a nav link
     await navLinks.first().click();
-    await page.waitForTimeout(1500);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Should be on a different discoverer page
     await expect(page.locator('h1')).toBeVisible();
@@ -437,13 +418,13 @@ test.describe('Discoverer Detail', () => {
 
   test('related discoverer links navigate correctly', async ({ page }) => {
     await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
-    await page.waitForTimeout(1500);
+    await expect(page.locator('h1')).toBeVisible();
 
     const relatedLinks = page.locator('section:has(h2:has-text("Related")) a');
     const count = await relatedLinks.count();
     if (count > 0) {
       await relatedLinks.first().click();
-      await page.waitForTimeout(1500);
+      await expect(page.locator('h1')).toBeVisible();
       // Should be on another discoverer detail page
       await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
     }
@@ -453,10 +434,8 @@ test.describe('Discoverer Detail', () => {
 test.describe('Timeline Era', () => {
   test('renders era page with elements', async ({ page }) => {
     await page.goto('/timeline/1770');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/timeline-1770s.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('1770s');
+    await page.screenshot({ path: 'tests/e2e/screenshots/timeline-1770s.png', fullPage: true });
 
     // Should show element count
     await expect(page.locator('text=element')).toBeVisible();
@@ -470,34 +449,31 @@ test.describe('Timeline Era', () => {
 
   test('antiquity era page works', async ({ page }) => {
     await page.goto('/timeline/antiquity');
-    await page.waitForTimeout(2000);
-
     await expect(page.locator('h1')).toHaveText('Antiquity');
     await expect(page.locator('text=element')).toBeVisible();
   });
 
   test('prev/next era navigation works', async ({ page }) => {
     await page.goto('/timeline/1770');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('h1')).toBeVisible();
 
     const navLinks = page.locator('nav a');
     const count = await navLinks.count();
     expect(count).toBeGreaterThan(0);
 
     await navLinks.first().click();
-    await page.waitForTimeout(1500);
     await expect(page.locator('h1')).toBeVisible();
   });
 
   test('discoverer links from era page work', async ({ page }) => {
     await page.goto('/timeline/1770');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('h1')).toBeVisible();
 
     const discovererLinks = page.locator('section:has(h2:has-text("Discoverers")) a');
     const count = await discovererLinks.count();
     if (count > 0) {
       await discovererLinks.first().click();
-      await page.waitForTimeout(1500);
+      await expect(page.locator('h1')).toBeVisible();
       // Should be on a discoverer detail page
       await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
     }
@@ -507,7 +483,7 @@ test.describe('Timeline Era', () => {
 test.describe('Entity Map', () => {
   test('renders graph, catalogue, and relationships', async ({ page }) => {
     await page.goto('/entity-map');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('svg[aria-label*="Entity relationship"]')).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/entity-map.png', fullPage: true });
 
     await expect(page.locator('h1')).toHaveText('Entity Map');
@@ -532,7 +508,7 @@ test.describe('Entity Map', () => {
 
   test('graph labels are readable — bounding boxes have positive size', async ({ page }) => {
     await page.goto('/entity-map');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('svg[aria-label*="Entity relationship"]')).toBeVisible();
 
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
     const nodeLabels = graphSvg.locator('text[font-weight="bold"]');
@@ -551,10 +527,8 @@ test.describe('Entity Map', () => {
 test.describe('Discoverer Network', () => {
   test('renders discoverer rows with element squares', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-network.png', fullPage: true });
-
     await expect(page.locator('h1')).toHaveText('Discoverer Network');
+    await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-network.png', fullPage: true });
 
     // Should have element squares (rects with block colors)
     const squares = page.locator('svg rect[rx="2"]');
@@ -564,7 +538,7 @@ test.describe('Discoverer Network', () => {
 
   test('discoverer names are readable — not truncated to empty', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Check that discoverer name text elements have content
     // Use exact matches to avoid collisions with intro paragraph text
@@ -574,7 +548,7 @@ test.describe('Discoverer Network', () => {
 
   test('rows are vertically separated — not overlapping', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Verify specific discoverer names are at different y positions
     // These are the prolific discoverer row labels (not block legend, not intro text)
@@ -596,7 +570,7 @@ test.describe('Discoverer Network', () => {
 
   test('hover shows tooltip', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('h1')).toBeVisible();
 
     // Hover over an element square
     const firstSquare = page.locator('svg g[style*="cursor: pointer"]').first();

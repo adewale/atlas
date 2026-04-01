@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Text readability', () => {
   test('periodic table element names are readable (non-zero size)', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('svg g[role="button"]').first()).toBeVisible();
 
     // Every element cell should have text with a non-zero bounding box
     const cells = page.locator('svg g[role="button"]');
@@ -22,7 +22,7 @@ test.describe('Text readability', () => {
 
   test('folio summary text is readable (proper line height, non-overlapping)', async ({ page }) => {
     await page.goto('/element/Fe');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('svg[aria-label="Element summary"]')).toBeVisible();
 
     // The summary SVG should have visible text
     const summarySvg = page.locator('svg[aria-label="Element summary"]');
@@ -50,7 +50,7 @@ test.describe('Text readability', () => {
 
   test('About page SVG text sections have readable content', async ({ page }) => {
     await page.goto('/about');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('svg[aria-label="Introduction"]')).toBeVisible();
 
     // Introduction SVG should have real height and text
     const introSvg = page.locator('svg[aria-label="Introduction"]');
@@ -74,7 +74,7 @@ test.describe('Text readability', () => {
 
   test('AtlasPlate cards have readable text (category labels not clipped)', async ({ page }) => {
     await page.goto('/atlas/group/8');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('g[role="link"]').first()).toBeVisible();
 
     // Each card should have visible text
     const cards = page.locator('g[role="link"]');
@@ -91,7 +91,7 @@ test.describe('Text readability', () => {
 
   test('compare view text is readable on colored backgrounds', async ({ page }) => {
     await page.goto('/compare/Fe/Cu');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('svg[aria-label*="Comparison"]')).toBeVisible();
 
     // Both element names should be visible
     await expect(page.locator('text:has-text("Iron")')).toBeVisible();
@@ -107,7 +107,7 @@ test.describe('Text readability', () => {
 
   test('folio data plate text is readable (white on colored background)', async ({ page }) => {
     await page.goto('/element/Fe');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('[data-testid="data-plate"]')).toBeVisible();
 
     // Data plate should have visible GROUP, PERIOD, BLOCK text
     const plate = page.locator('[data-testid="data-plate"]');
@@ -131,7 +131,7 @@ test.describe('Animation transitions', () => {
   test('periodic table load animation completes (cells reach full opacity)', async ({ page }) => {
     await page.goto('/');
     // Wait for staggered load animation (118 elements × 4ms delay + 200ms duration)
-    await page.waitForTimeout(2000);
+    await expect(page.locator('g[aria-label*="Oganesson"]')).toBeVisible();
 
     // After animation completes, cells should be fully opaque
     // Check a late element (high atomic number = long delay)
@@ -148,7 +148,7 @@ test.describe('Animation transitions', () => {
 
   test('highlight mode transition produces visual change', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('g[aria-label*="Iron"] rect')).toBeVisible();
 
     // Get initial fill of a cell
     const feRect = page.locator('g[aria-label*="Iron"] rect');
@@ -156,7 +156,7 @@ test.describe('Animation transitions', () => {
 
     // Switch to block highlight mode
     await page.selectOption('#pt-highlight', 'block');
-    await page.waitForTimeout(500);
+    await expect(feRect).toHaveAttribute('fill', /.+/);
 
     // Fill should have changed
     const newFill = await feRect.getAttribute('fill');
@@ -166,7 +166,7 @@ test.describe('Animation transitions', () => {
   test('folio data plate wipe animation completes', async ({ page }) => {
     await page.goto('/element/Fe');
     // Wait for plate-wipe animation (350ms + 150ms delay)
-    await page.waitForTimeout(1500);
+    await expect(page.locator('[data-testid="data-plate"]')).toBeVisible();
 
     // Data plate should be fully visible after animation
     const plate = page.locator('[data-testid="data-plate"]');
@@ -181,7 +181,7 @@ test.describe('Animation transitions', () => {
   test('property bar grow animation completes', async ({ page }) => {
     await page.goto('/element/Fe');
     // Wait for bar-grow animation (300ms + staggered delay)
-    await page.waitForTimeout(1500);
+    await expect(page.locator('[aria-label*="ranked"]').first()).toBeVisible();
 
     // Property bars should have visible colored fill
     const bars = page.locator('[aria-label*="ranked"]');
@@ -198,7 +198,7 @@ test.describe('Animation transitions', () => {
   test('compare view split animation completes', async ({ page }) => {
     await page.goto('/compare/Fe/Cu');
     // Wait for compare-expand + compare-scale animations
-    await page.waitForTimeout(1500);
+    await expect(page.locator('svg[aria-label*="Comparison"]')).toBeVisible();
 
     // Both panels should be visible with full dimensions
     const svg = page.locator('svg[aria-label*="Comparison"]');
@@ -215,7 +215,7 @@ test.describe('Animation transitions', () => {
 
   test('search filter produces dimming transition', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('#pt-search')).toBeVisible();
 
     // Type "Fe" in search — most cells should dim
     await page.fill('#pt-search', 'Fe');
@@ -238,7 +238,7 @@ test.describe('Animation transitions', () => {
     // Emulate reduced motion preference
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/element/Fe');
-    await page.waitForTimeout(500);
+    await expect(page.locator('[data-testid="data-plate"]')).toBeVisible();
 
     // Data plate should be immediately visible (no animation delay)
     const plate = page.locator('[data-testid="data-plate"]');

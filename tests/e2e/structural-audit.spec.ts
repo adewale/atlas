@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { filterBenignErrors } from './helpers';
 
 // All visualization pages that show in VizNav
 const VIZ_PAGES = [
@@ -26,7 +27,7 @@ test.describe('Structural audit — PBT constraints', () => {
   // 1. VizNav tab order: table-showing pages should appear first
   test('VizNav tabs show table-pages before non-table pages', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     const navLinks = page.locator('nav[aria-label="Visualisation pages"] a');
     const count = await navLinks.count();
@@ -52,7 +53,7 @@ test.describe('Structural audit — PBT constraints', () => {
   test('every visualization page has a visible h1 title', async ({ page }) => {
     for (const path of VIZ_PAGES) {
       await page.goto(path);
-      await page.waitForTimeout(1500);
+      await expect(page.locator('h1')).toBeVisible();
 
       const h1 = page.locator('h1');
       const h1Count = await h1.count();
@@ -75,11 +76,11 @@ test.describe('Structural audit — PBT constraints', () => {
 
     for (const path of VIZ_PAGES) {
       await page.goto(path);
-      await page.waitForTimeout(1500);
+      await expect(page.locator('h1')).toBeVisible();
     }
 
     // Filter out known benign errors (like failed network requests in test env)
-    const realErrors = errors.filter(e => !e.includes('favicon') && !e.includes('net::'));
+    const realErrors = filterBenignErrors(errors);
     expect(
       realErrors,
       `Console errors found: ${realErrors.join(', ')}`
@@ -89,7 +90,7 @@ test.describe('Structural audit — PBT constraints', () => {
   // 4. Keyboard overlay is accessible via ? key
   test('keyboard help overlay opens with ? key and closes with Escape', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('nav[aria-label="Visualisation pages"]')).toBeVisible();
 
     // Press ? to open — dispatch key event directly since Shift+/ varies by layout
     await page.evaluate(() => {
@@ -111,7 +112,7 @@ test.describe('Structural audit — PBT constraints', () => {
   // 5. Entity Graph nodes use roundel design (always filled, white text)
   test('Entity Graph nodes have white text on colored backgrounds', async ({ page }) => {
     await page.goto('/entity-map');
-    await page.waitForTimeout(2000);
+    await expect(page.locator('svg[aria-label*="Entity"]')).toBeVisible();
 
     // Find SVG node text elements
     const nodeTexts = page.locator('svg[aria-label*="Entity"] g[style*="cursor: pointer"] text[text-anchor="middle"][dominant-baseline="middle"]');
@@ -131,7 +132,7 @@ test.describe('Structural audit — PBT constraints', () => {
   // 6. Timeline has filters above visualization
   test('Timeline page has era browse links above the SVG chart', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(1500);
+    await expect(page.locator('h2:has-text("Browse by Era")')).toBeVisible();
 
     const browseSection = page.locator('h2:has-text("Browse by Era")');
     const svg = page.locator('svg[role="img"]');
