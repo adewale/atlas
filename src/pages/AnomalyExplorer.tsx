@@ -29,50 +29,20 @@ function buttonColorFor(index: number): string {
 }
 
 /* ------------------------------------------------------------------ */
-/* Ripple delay: distance from centroid of highlighted set             */
+/* Stain origin: first highlighted element's grid position            */
 /* ------------------------------------------------------------------ */
-function computeRippleDelays(
+function computeStainOrigin(
   highlightedSymbols: Set<string>,
-): Map<string, number> {
-  const delays = new Map<string, number>();
-  if (highlightedSymbols.size === 0) return delays;
-
-  // Compute centroid of highlighted elements
-  let cx = 0;
-  let cy = 0;
-  let count = 0;
+): { col: number; row: number } | null {
+  if (highlightedSymbols.size === 0) return null;
+  // Use the first highlighted element (lowest atomic number) as origin
   for (const el of allElements) {
     if (highlightedSymbols.has(el.symbol)) {
       const pos = getCellPosition(el);
-      cx += pos.x + CELL_WIDTH / 2;
-      cy += pos.y + CELL_HEIGHT / 2;
-      count++;
+      return { col: pos.col, row: pos.row };
     }
   }
-  cx /= count;
-  cy /= count;
-
-  // Compute distances for highlighted elements
-  let maxDist = 0;
-  for (const el of allElements) {
-    if (highlightedSymbols.has(el.symbol)) {
-      const pos = getCellPosition(el);
-      const dx = pos.x + CELL_WIDTH / 2 - cx;
-      const dy = pos.y + CELL_HEIGHT / 2 - cy;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist > maxDist) maxDist = dist;
-      delays.set(el.symbol, dist);
-    }
-  }
-
-  // Normalize to 0..600ms with sqrt curve (ink decelerates as it saturates)
-  if (maxDist > 0) {
-    for (const [sym, dist] of delays) {
-      delays.set(sym, Math.sqrt(dist / maxDist) * 600);
-    }
-  }
-
-  return delays;
+  return null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -114,8 +84,8 @@ export default function AnomalyExplorer() {
     [selected],
   );
 
-  const rippleDelays = useMemo(
-    () => computeRippleDelays(highlightedSet),
+  const stainOrigin = useMemo(
+    () => computeStainOrigin(highlightedSet),
     [highlightedSet],
   );
 
@@ -231,7 +201,9 @@ export default function AnomalyExplorer() {
           }
 
           const textColor = contrastTextColor(fill);
-          const stainDelay = rippleDelays.get(el.symbol) ?? 0;
+          const dist = stainOrigin
+            ? Math.abs(pos.col - stainOrigin.col) + Math.abs(pos.row - stainOrigin.row)
+            : 0;
 
           return (
             <g
@@ -249,7 +221,7 @@ export default function AnomalyExplorer() {
                 strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
                 rx={0}
                 style={{
-                  transition: `fill 600ms var(--ease-out) ${isHighlighted ? stainDelay : 0}ms, stroke 250ms var(--ease-out)`,
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms, stroke 250ms var(--ease-out)`,
                   viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG),
                 } as React.CSSProperties}
               />
@@ -262,7 +234,7 @@ export default function AnomalyExplorer() {
                 fontFamily="system-ui, sans-serif"
                 fill={textColor}
                 style={{
-                  transition: `fill 600ms var(--ease-out) ${isHighlighted ? stainDelay : 0}ms`,
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
                   viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL),
                 } as React.CSSProperties}
               >
@@ -277,7 +249,7 @@ export default function AnomalyExplorer() {
                 fill={textColor}
                 opacity={0.7}
                 style={{
-                  transition: `fill 600ms var(--ease-out) ${isHighlighted ? stainDelay : 0}ms`,
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
                   viewTransitionName: vt(activeSymbol, el.symbol, VT.NUMBER),
                 } as React.CSSProperties}
               >
