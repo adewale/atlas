@@ -76,21 +76,28 @@ function getCellFill(el: ElementRecord, mode: HighlightMode, property: NumericPr
       const { min, max } = PROPERTY_RANGES[property];
       if (max === min) return PAPER;
       const t = (val - min) / (max - min);
-      return interpolateColor(PAPER, DEEP_BLUE, t);
+      return interpolateColor(PAPER_RGB, DEEP_BLUE_RGB, t);
     }
   }
 }
 
-function interpolateColor(from: string, to: string, t: number): string {
-  const fr = parseInt(from.slice(1, 3), 16);
-  const fg = parseInt(from.slice(3, 5), 16);
-  const fb = parseInt(from.slice(5, 7), 16);
-  const tr = parseInt(to.slice(1, 3), 16);
-  const tg = parseInt(to.slice(3, 5), 16);
-  const tb = parseInt(to.slice(5, 7), 16);
-  const r = Math.round(fr + (tr - fr) * t);
-  const g = Math.round(fg + (tg - fg) * t);
-  const b = Math.round(fb + (tb - fb) * t);
+// Pre-parse static hex endpoints to avoid repeated parseInt in hot path
+function parseHex(hex: string): [number, number, number] {
+  return [
+    parseInt(hex.slice(1, 3), 16),
+    parseInt(hex.slice(3, 5), 16),
+    parseInt(hex.slice(5, 7), 16),
+  ];
+}
+const PAPER_RGB = parseHex(PAPER);
+const DEEP_BLUE_RGB = parseHex(DEEP_BLUE);
+
+const POINTER_STYLE = { cursor: 'pointer' } as const;
+
+function interpolateColor(fromRgb: [number, number, number], toRgb: [number, number, number], t: number): string {
+  const r = Math.round(fromRgb[0] + (toRgb[0] - fromRgb[0]) * t);
+  const g = Math.round(fromRgb[1] + (toRgb[1] - fromRgb[1]) * t);
+  const b = Math.round(fromRgb[2] + (toRgb[2] - fromRgb[2]) * t);
   return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 }
 
@@ -138,7 +145,7 @@ const ElementCell = memo(
         role="button"
         aria-label={`${symbol} ${atomicNumber} ${name} ${category}`}
         tabIndex={-1}
-        style={{ cursor: 'pointer' }}
+        style={POINTER_STYLE}
       >
         <title>{`${symbol} ${atomicNumber} ${name} ${category}`}</title>
         <g

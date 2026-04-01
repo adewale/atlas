@@ -1,12 +1,15 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
-import type { GroupData, AnomalyData, DiscovererData, TimelineData } from './lib/types';
+import type { GroupData, AnomalyData, DiscovererData, TimelineData, PeriodData, BlockData, CategoryData } from './lib/types';
 
 let groupsCache: GroupData[] | null = null;
 let anomaliesCache: AnomalyData[] | null = null;
 let discoverersCache: DiscovererData[] | null = null;
 let timelineCache: TimelineData | null = null;
+let periodsCache: PeriodData[] | null = null;
+let blocksCache: BlockData[] | null = null;
+let categoriesCache: CategoryData[] | null = null;
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
@@ -62,24 +65,24 @@ export const router = createBrowserRouter([
     path: '/atlas/period/:n',
     Component: AtlasPeriod,
     loader: async () => {
-      const mod = await import('../data/generated/periods.json');
-      return { periods: mod.default };
+      periodsCache ??= await import('../data/generated/periods.json').then(m => m.default);
+      return { periods: periodsCache };
     },
   },
   {
     path: '/atlas/block/:block',
     Component: AtlasBlock,
     loader: async () => {
-      const mod = await import('../data/generated/blocks.json');
-      return { blocks: mod.default };
+      blocksCache ??= await import('../data/generated/blocks.json').then(m => m.default);
+      return { blocks: blocksCache };
     },
   },
   {
     path: '/atlas/category/:slug',
     Component: AtlasCategory,
     loader: async () => {
-      const mod = await import('../data/generated/categories.json');
-      return { categories: mod.default };
+      categoriesCache ??= await import('../data/generated/categories.json').then(m => m.default);
+      return { categories: categoriesCache };
     },
   },
   {
