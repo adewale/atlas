@@ -1,6 +1,7 @@
 import { useParams, useLoaderData } from 'react-router';
 import { blockColor } from '../lib/grid';
 import { BLACK } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import AtlasBrowsePage from '../components/AtlasBrowsePage';
 import type { BlockData } from '../lib/types';
 
@@ -16,7 +17,7 @@ export default function AtlasBlock() {
       backLink={{ label: '← Table', to: '/' }}
       heading={`${block}-block`}
       color={color}
-      viewTransitionName="data-plate-block"
+      viewTransitionName={VT.DATA_PLATE_BLOCK}
       description={found?.description}
       elements={found ? found.elements : []}
       caption={`${block}-block elements`}

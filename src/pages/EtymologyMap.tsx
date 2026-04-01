@@ -3,6 +3,7 @@ import { Link, useLoaderData, useLocation } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { getElement } from '../lib/data';
 import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, PAPER, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, GREY_MID, INSCRIPTION_STYLE } from '../lib/theme';
+import { VT, vt } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -87,7 +88,7 @@ const styles = {
       padding: '0 12px',
       background: color,
       color: PAPER,
-      fontWeight: 700,
+      fontWeight: 'bold',
       fontSize: '15px',
       letterSpacing: '0.03em',
       textTransform: 'capitalize',
@@ -123,7 +124,7 @@ const styles = {
     }) as React.CSSProperties,
 
   symbol: {
-    fontWeight: 700,
+    fontWeight: 'bold',
     fontSize: 18,
     lineHeight: 1.1,
   } as React.CSSProperties,
@@ -194,7 +195,7 @@ export default function EtymologyMap() {
     <PageShell vizNav>
       <div style={styles.content}>
 
-      <h1 style={styles.title}>Etymology Map</h1>
+      <h1 style={{ ...styles.title, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Etymology Map</h1>
 
       <svg
         viewBox={`0 0 ${MAX_WIDTH} ${Math.max(introSvgHeight, 76)}`}
@@ -242,7 +243,7 @@ export default function EtymologyMap() {
                     aria-label={`${el.symbol} — ${el.description}`}
                     onClick={(e) => { e.preventDefault(); setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
                   >
-                    <span style={{ ...styles.symbol, viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}>{el.symbol}</span>
+                    <span style={{ ...styles.symbol, viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}>{el.symbol}</span>
                     <span style={styles.desc as React.CSSProperties}>
                       {el.description}
                     </span>

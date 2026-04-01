@@ -173,19 +173,29 @@ svg [role="button"] {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Data plate horizontal wipe */
+/*
+ * Canonical wipe: clip-path reveal from left.
+ * plate-wipe, bar-grow, and rule-draw are aliases — same keyframe,
+ * kept as separate names so call-sites read clearly.
+ */
+@keyframes wipe-left {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
 @keyframes plate-wipe {
   from { clip-path: inset(0 100% 0 0); }
   to   { clip-path: inset(0 0 0 0); }
 }
-
-/* Property bar grow from left */
 @keyframes bar-grow {
   from { clip-path: inset(0 100% 0 0); }
   to   { clip-path: inset(0 0 0 0); }
 }
+@keyframes rule-draw {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
 
-/* Compare panel expand from center */
+/* Compare panel expand from center (variant of wipe) */
 @keyframes compare-expand {
   from { clip-path: inset(0 50% 0 50%); }
   to   { clip-path: inset(0 0 0 0); }
@@ -209,16 +219,10 @@ svg [role="button"] {
   to   { opacity: 1; }
 }
 
-/* Help panel enter: drop + fade */
+/* Help panel enter: drop + fade (reverse-Y variant of folio-line-reveal) */
 @keyframes help-panel-enter {
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Rule line draw from left */
-@keyframes rule-draw {
-  from { clip-path: inset(0 100% 0 0); }
-  to   { clip-path: inset(0 0 0 0); }
 }
 
 /* Sparkline draw via stroke-dashoffset */
@@ -229,40 +233,76 @@ svg [role="button"] {
 
 /* ----------------------------------------
    View Transitions API — shared element morphing
+   ----------------------------------------
+   Two duration tiers:
+     Fast     (150ms) — persistent chrome (nav, back link, colour rule)
+     Standard (250ms) — identity morphs (symbol, number, name, cell bg, data plate)
+   Two easing curves:
+     --ease-out    — default for all view transitions
+     --ease-spring — hero accent for element-symbol only (bounce)
    ---------------------------------------- */
 
-/* Default cross-fade for the full page */
+/* Default cross-fade for the full page — directional slide */
 ::view-transition-old(root) {
-  animation: 150ms ease-out both fade-out;
+  animation: 150ms var(--ease-out) both vt-exit;
 }
 ::view-transition-new(root) {
-  animation: 200ms ease-out 50ms both fade-in;
+  animation: 150ms var(--ease-out) both vt-enter;
 }
 
-@keyframes fade-out {
-  to { opacity: 0; }
+@keyframes vt-exit {
+  to   { opacity: 0; transform: translateY(3px); }
 }
-@keyframes fade-in {
-  from { opacity: 0; }
+@keyframes vt-enter {
+  from { opacity: 0; transform: translateY(-3px); }
 }
 
-/* VizNav bar morph: persists across visualisation page transitions */
+/* ── Fast tier (150ms) — persistent chrome ────────────── */
+
 ::view-transition-old(viz-nav),
-::view-transition-new(viz-nav) {
+::view-transition-new(viz-nav),
+::view-transition-old(viz-title),
+::view-transition-new(viz-title),
+::view-transition-old(nav-back),
+::view-transition-new(nav-back),
+::view-transition-old(color-rule),
+::view-transition-new(color-rule) {
   animation-duration: 150ms;
-  animation-timing-function: var(--ease-snap);
+  animation-timing-function: var(--ease-out);
 }
 
-/* Element symbol morph: seamless transition between grid cell and folio hero */
+/* ── Standard tier (250ms) — identity morphs ──────────── */
+
+/* Element symbol — spring easing for hero bounce */
 ::view-transition-old(element-symbol),
 ::view-transition-new(element-symbol) {
+  animation-duration: 250ms;
+  animation-timing-function: var(--ease-spring);
+}
+
+/* Element number, name, cell background */
+::view-transition-old(element-number),
+::view-transition-new(element-number),
+::view-transition-old(element-name),
+::view-transition-new(element-name),
+::view-transition-old(element-cell-bg),
+::view-transition-new(element-cell-bg) {
   animation-duration: 250ms;
   animation-timing-function: var(--ease-out);
 }
 
-/* Element number morph */
-::view-transition-old(element-number),
-::view-transition-new(element-number) {
+/* Cell background snapshot must be transparent so the paper shows through */
+::view-transition-group(element-cell-bg) {
+  background: transparent;
+}
+
+/* Data plate rows ↔ browse page badges */
+::view-transition-old(data-plate-group),
+::view-transition-new(data-plate-group),
+::view-transition-old(data-plate-period),
+::view-transition-new(data-plate-period),
+::view-transition-old(data-plate-block),
+::view-transition-new(data-plate-block) {
   animation-duration: 250ms;
   animation-timing-function: var(--ease-out);
 }

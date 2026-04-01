@@ -5,6 +5,7 @@ import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { fitLabel, measureLines, PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
+import { VT, vt } from '../lib/transitions';
 import PretextSvg from './PretextSvg';
 
 const CARD_W = 100;
@@ -193,13 +194,14 @@ export default function AtlasPlate({
                 onMouseLeave={handleCardLeave}
               >
                 <title>{el.name}</title>
-                <rect x={x} y={y} width={CARD_W} height={CARD_H} fill={fill} />
+                <rect x={x} y={y} width={CARD_W} height={CARD_H} fill={fill} style={{ viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG) } as React.CSSProperties} />
                 <text
                   x={x + 6}
                   y={y + 14}
                   fontSize={9}
                   fill={textFill}
-                  fontFamily="system-ui"
+                  fontFamily="system-ui, sans-serif"
+                  style={{ viewTransitionName: vt(activeSymbol, el.symbol, VT.NUMBER) } as React.CSSProperties}
                 >
                   {String(el.atomicNumber).padStart(3, '0')}
                 </text>
@@ -209,8 +211,8 @@ export default function AtlasPlate({
                   fontSize={20}
                   fontWeight="bold"
                   fill={textFill}
-                  fontFamily="system-ui"
-                  style={{ viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
+                  fontFamily="system-ui, sans-serif"
+                  style={{ viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}
                 >
                   {el.symbol}
                 </text>

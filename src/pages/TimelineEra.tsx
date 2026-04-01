@@ -6,6 +6,7 @@ import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PlateHoverInfo } from '../components/AtlasPlate';
 import { DEEP_BLUE, BLACK, PAPER, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
 import { PRETEXT_SANS } from '../lib/pretext';
 import { DiscovererChip } from '../components/EntityChip';
@@ -124,7 +125,7 @@ export default function TimelineEra() {
   if (entries.length === 0) {
     return (
       <PageShell>
-        <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
+        <Link to="/discovery-timeline" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Timeline</Link>
         <h1 style={{ margin: '12px 0 16px' }}>No elements found for this era</h1>
       </PageShell>
     );
@@ -169,7 +170,7 @@ export default function TimelineEra() {
         </svg>
       )}
 
-      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
+      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
 
       {elements.length > 0 && (
         <div ref={containerRef} style={{ position: 'relative' }}>

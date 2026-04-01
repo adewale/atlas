@@ -4,6 +4,7 @@ import type { ElementRecord, ElementSources, GroupData, AnomalyData } from '../l
 import Folio from '../components/Folio';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { BACK_LINK_STYLE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -34,13 +35,13 @@ export default function Element() {
 
   return (
     <PageShell>
-      <a
-        href="/"
+      <Link
+        to="/"
         onClick={(e) => { e.preventDefault(); transitionNavigate('/'); }}
-        style={BACK_LINK_STYLE}
+        style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}
       >
         ← Table
-      </a>
+      </Link>
       <article>
         <Folio element={element} sources={sources} groups={groups} anomalies={anomalies} animate={true} />
       </article>

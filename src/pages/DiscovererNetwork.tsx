@@ -2,7 +2,8 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE } from '../lib/theme';
+import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, STROKE_HAIRLINE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT, measureLines } from '../lib/pretext';
@@ -77,7 +78,7 @@ export default function DiscovererNetwork() {
 
   return (
     <PageShell vizNav>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
 
       {/* bar-grow keyframe in globals.css */}
       <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
@@ -295,7 +296,7 @@ export default function DiscovererNetwork() {
                   x2={LEFT_COL + disc.elements.length * (SQ + SQ_GAP)}
                   y2={SQ + 6}
                   stroke={BLACK}
-                  strokeWidth={0.5}
+                  strokeWidth={STROKE_HAIRLINE}
                   opacity={0.15}
                 />
               </g>

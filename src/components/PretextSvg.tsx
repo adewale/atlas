@@ -1,6 +1,6 @@
 import type { PositionedLine } from '../lib/pretext';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
-import { BLACK } from '../lib/theme';
+import { BLACK, STROKE_HAIRLINE, STROKE_THIN } from '../lib/theme';
 
 export type InlineSparklineConfig = {
   lineIndex: number; // which line to attach to (-1 = last line)
@@ -174,7 +174,7 @@ export default function PretextSvg({
                 x2={maxWidth}
                 y2={line.y}
                 stroke={ruleColor}
-                strokeWidth={0.5}
+                strokeWidth={STROKE_HAIRLINE}
                 opacity={0.2}
                 style={
                   staggerDelay != null
@@ -220,7 +220,7 @@ export default function PretextSvg({
                   points={sparklineData.points}
                   fill="none"
                   stroke={inlineSparkline!.color || BLACK}
-                  strokeWidth={1}
+                  strokeWidth={STROKE_THIN}
                   opacity={0.6}
                 />
                 {inlineSparkline!.highlightIndex != null && (

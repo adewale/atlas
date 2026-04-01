@@ -11,6 +11,7 @@ import {
   contrastTextColor,
 } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
+import { VT, vt } from '../lib/transitions';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -28,50 +29,20 @@ function buttonColorFor(index: number): string {
 }
 
 /* ------------------------------------------------------------------ */
-/* Ripple delay: distance from centroid of highlighted set             */
+/* Stain origin: first highlighted element's grid position            */
 /* ------------------------------------------------------------------ */
-function computeRippleDelays(
+function computeStainOrigin(
   highlightedSymbols: Set<string>,
-): Map<string, number> {
-  const delays = new Map<string, number>();
-  if (highlightedSymbols.size === 0) return delays;
-
-  // Compute centroid of highlighted elements
-  let cx = 0;
-  let cy = 0;
-  let count = 0;
+): { col: number; row: number } | null {
+  if (highlightedSymbols.size === 0) return null;
+  // Use the first highlighted element (lowest atomic number) as origin
   for (const el of allElements) {
     if (highlightedSymbols.has(el.symbol)) {
       const pos = getCellPosition(el);
-      cx += pos.x + CELL_WIDTH / 2;
-      cy += pos.y + CELL_HEIGHT / 2;
-      count++;
+      return { col: pos.col, row: pos.row };
     }
   }
-  cx /= count;
-  cy /= count;
-
-  // Compute distances for highlighted elements
-  let maxDist = 0;
-  for (const el of allElements) {
-    if (highlightedSymbols.has(el.symbol)) {
-      const pos = getCellPosition(el);
-      const dx = pos.x + CELL_WIDTH / 2 - cx;
-      const dy = pos.y + CELL_HEIGHT / 2 - cy;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist > maxDist) maxDist = dist;
-      delays.set(el.symbol, dist);
-    }
-  }
-
-  // Normalize to 0..300ms
-  if (maxDist > 0) {
-    for (const [sym, dist] of delays) {
-      delays.set(sym, (dist / maxDist) * 300);
-    }
-  }
-
-  return delays;
+  return null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -113,8 +84,8 @@ export default function AnomalyExplorer() {
     [selected],
   );
 
-  const rippleDelays = useMemo(
-    () => computeRippleDelays(highlightedSet),
+  const stainOrigin = useMemo(
+    () => computeStainOrigin(highlightedSet),
     [highlightedSet],
   );
 
@@ -141,7 +112,8 @@ export default function AnomalyExplorer() {
           style={{
             ...INSCRIPTION_STYLE,
             color: MUSTARD,
-          }}
+            viewTransitionName: VT.VIZ_TITLE,
+          } as React.CSSProperties}
         >
           Anomaly Explorer
         </h1>
@@ -183,7 +155,7 @@ export default function AnomalyExplorer() {
                 style={{
                   fontFamily: 'system-ui, sans-serif',
                   fontSize: 13,
-                  fontWeight: 700,
+                  fontWeight: 'bold',
                   letterSpacing: '0.02em',
                   color: isActive ? contrastTextColor(bg) : BLACK,
                   background: isActive ? bg : 'transparent',
@@ -214,14 +186,6 @@ export default function AnomalyExplorer() {
           touchAction: 'pinch-zoom',
         }}
       >
-        {/* Keyframes in globals.css + anomaly-ripple below */}
-        <style>{`
-          @keyframes anomaly-ripple {
-            from { opacity: 0; transform: scale(0.85); }
-            to   { opacity: 1; transform: scale(1); }
-          }
-        `}</style>
-
         {allElements.map((el) => {
           const pos = getCellPosition(el);
           const isHighlighted = highlightedSet.has(el.symbol);
@@ -237,7 +201,9 @@ export default function AnomalyExplorer() {
           }
 
           const textColor = contrastTextColor(fill);
-          const delay = rippleDelays.get(el.symbol) ?? 0;
+          const dist = stainOrigin
+            ? Math.abs(pos.col - stainOrigin.col) + Math.abs(pos.row - stainOrigin.row)
+            : 0;
 
           return (
             <g
@@ -247,48 +213,48 @@ export default function AnomalyExplorer() {
               onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
             >
               <title>{el.name}</title>
-              <g
-                style={isHighlighted
-                  ? {
-                      transformOrigin: `${CELL_WIDTH / 2}px ${CELL_HEIGHT / 2}px`,
-                      animation: `anomaly-ripple 350ms ease-out ${delay}ms both`,
-                    }
-                  : undefined}
+              <rect
+                width={CELL_WIDTH}
+                height={CELL_HEIGHT}
+                fill={fill}
+                stroke={hasSelection && !isHighlighted ? DIM : BLACK}
+                strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
+                rx={0}
+                style={{
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms, stroke 250ms var(--ease-out)`,
+                  viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG),
+                } as React.CSSProperties}
+              />
+              <text
+                x={CELL_WIDTH / 2}
+                y={26}
+                textAnchor="middle"
+                fontSize={16}
+                fontWeight="bold"
+                fontFamily="system-ui, sans-serif"
+                fill={textColor}
+                style={{
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
+                  viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL),
+                } as React.CSSProperties}
               >
-                <rect
-                  width={CELL_WIDTH}
-                  height={CELL_HEIGHT}
-                  fill={fill}
-                  stroke={hasSelection && !isHighlighted ? DIM : BLACK}
-                  strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
-                  rx={0}
-                  style={{ transition: 'fill 250ms var(--ease-out), stroke 250ms var(--ease-out)' }}
-                />
-                <text
-                  x={CELL_WIDTH / 2}
-                  y={26}
-                  textAnchor="middle"
-                  fontSize={16}
-                  fontWeight={700}
-                  fontFamily="system-ui, sans-serif"
-                  fill={textColor}
-                  style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: activeSymbol === el.symbol ? 'element-symbol' : undefined } as React.CSSProperties}
-                >
-                  {el.symbol}
-                </text>
-                <text
-                  x={CELL_WIDTH / 2}
-                  y={42}
-                  textAnchor="middle"
-                  fontSize={8}
-                  fontFamily="system-ui, sans-serif"
-                  fill={textColor}
-                  opacity={0.7}
-                  style={{ transition: 'fill 250ms var(--ease-out)' }}
-                >
-                  {el.atomicNumber}
-                </text>
-              </g>
+                {el.symbol}
+              </text>
+              <text
+                x={CELL_WIDTH / 2}
+                y={42}
+                textAnchor="middle"
+                fontSize={8}
+                fontFamily="system-ui, sans-serif"
+                fill={textColor}
+                opacity={0.7}
+                style={{
+                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
+                  viewTransitionName: vt(activeSymbol, el.symbol, VT.NUMBER),
+                } as React.CSSProperties}
+              >
+                {el.atomicNumber}
+              </text>
             </g>
           );
         })}

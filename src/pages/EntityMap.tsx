@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router';
 import { BLACK, WARM_RED, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { ENTITIES, VIZ_PAGES } from '../lib/routeMeta';
 import type { EntityMeta } from '../lib/routeMeta';
 import PageShell from '../components/PageShell';
@@ -71,7 +72,7 @@ function EntityCard({ entity, highlight, onHover }: { entity: EntityMeta; highli
         width: '220px',
         maxWidth: '100%',
         minHeight: '150px',
-        transition: 'border-color 150ms ease-out',
+        transition: 'border-color 150ms var(--ease-out)',
         background: highlight ? `${entity.colour}08` : 'transparent',
       }}
       onPointerEnter={() => onHover(entity.id)}
@@ -275,7 +276,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
                 fill="none"
                 stroke={entity.colour}
                 strokeWidth={ringStroke}
-                style={{ transition: 'stroke-width 150ms ease-out' }}
+                style={{ transition: 'stroke-width 150ms var(--ease-out)' }}
               />
               {/* Bar — extends past ring edges */}
               <rect
@@ -367,7 +368,7 @@ export default function EntityMapPage() {
   return (
     <PageShell>
       <div style={{ maxWidth: '900px' }}>
-      <Link to="/" style={BACK_LINK_STYLE}>← Table</Link>
+      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
       <h1 style={{ ...INSCRIPTION_STYLE, margin: '16px 0 8px', color: WARM_RED }}>
         Entity Map
       </h1>

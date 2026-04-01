@@ -14,6 +14,7 @@ import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, MONO_FONT, toSlug } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
 import { NeighbourChip } from './EntityChip';
 import { AnomalyChip } from './EntityChip';
@@ -307,7 +308,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
   return (
     <div className="folio-layout" style={{ display: 'flex', gap: '48px', position: 'relative' }}>
-      {/* Left colour bar */}
+      {/* Left colour bar — morph target for element-cell-bg */}
       <div
         aria-hidden="true"
         style={{
@@ -317,7 +318,8 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           bottom: 0,
           width: '4px',
           background: color,
-        }}
+          viewTransitionName: VT.CELL_BG,
+        } as React.CSSProperties}
       />
 
       {/* Main content */}
@@ -350,7 +352,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 color,
                 fontFamily: MONO_FONT,
                 lineHeight: 1,
-                viewTransitionName: 'element-number',
+                viewTransitionName: VT.NUMBER,
               } as React.CSSProperties}
             >
               {paddedNumber}
@@ -362,7 +364,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 fontWeight: 'bold',
                 color,
                 lineHeight: 1.1,
-                viewTransitionName: 'element-symbol',
+                viewTransitionName: VT.SYMBOL,
               } as React.CSSProperties}
             >
               {element.symbol}
@@ -374,7 +376,8 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               textTransform: 'uppercase',
               letterSpacing: '0.2em',
               color: GREY_MID,
-            }}>
+              viewTransitionName: VT.NAME,
+            } as React.CSSProperties}>
               {element.name}
             </h2>
           </div>
@@ -398,11 +401,11 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
               {/* Group row — deep blue */}
-              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/atlas/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName="data-plate-group" mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/atlas/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
               {/* Period row — warm red */}
-              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/atlas/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName="data-plate-period" mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/atlas/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
               {/* Block row — block colour */}
-              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName="data-plate-block" mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
             </div>
 
           </div>
@@ -425,7 +428,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         </div>
 
         {/* Thick rule in block colour */}
-        <div style={{ borderTop: `4px solid ${color}`, margin: '16px 0' }} />
+        <div style={{ borderTop: `4px solid ${color}`, margin: '16px 0', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
 
         {/* Group phase strip — shows phase at STP for each group member */}
         {groupPhaseData && (

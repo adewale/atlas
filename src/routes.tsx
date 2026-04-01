@@ -30,6 +30,7 @@ const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
 const DiscovererDetail = lazy(() => import('./pages/DiscovererDetail'));
 const TimelineEra = lazy(() => import('./pages/TimelineEra'));
 const EntityMap = lazy(() => import('./pages/EntityMap'));
+const AnimationPalette = lazy(() => import('./pages/AnimationPalette'));
 
 export const router = createBrowserRouter([
   { path: '/', Component: Home },
@@ -117,6 +118,7 @@ export const router = createBrowserRouter([
     },
   },
   { path: '/design', Component: Design },
+  { path: '/animation-palette', Component: AnimationPalette },
   { path: '/entity-map', Component: EntityMap },
   {
     path: '/discovery-timeline',

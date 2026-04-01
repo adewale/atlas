@@ -1,4 +1,4 @@
-import { BLACK, PAPER, GREY_LIGHT, MONO_FONT } from '../lib/theme';
+import { BLACK, PAPER, GREY_LIGHT, MONO_FONT, STROKE_HAIRLINE } from '../lib/theme';
 
 type PropertyBarProps = {
   label: string;
@@ -55,7 +55,7 @@ export default function PropertyBar({
         height={height}
         fill={PAPER}
         stroke={BLACK}
-        strokeWidth={0.5}
+        strokeWidth={STROKE_HAIRLINE}
       />
       <rect
         x={0}

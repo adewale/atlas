@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_LIGHT, GREY_RULE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_LIGHT, GREY_RULE, STROKE_HAIRLINE, STROKE_REGULAR } from '../lib/theme';
 
 type GroupTrendProps = {
   values: (number | null)[];
@@ -59,7 +59,7 @@ export function GroupTrendSparkline({
         points={points.join(' ')}
         fill="none"
         stroke={color}
-        strokeWidth={1.5}
+        strokeWidth={STROKE_REGULAR}
         style={
           pathLength > 0
             ? {
@@ -137,7 +137,7 @@ export function GroupPhaseStrip({
               height={cellH}
               fill={phase ? color : 'none'}
               stroke={isHighlight ? BLACK : color}
-              strokeWidth={isHighlight ? 1.5 : 0.5}
+              strokeWidth={isHighlight ? STROKE_REGULAR : STROKE_HAIRLINE}
               opacity={phase ? (isHighlight ? 1 : 0.6) : 0.3}
               style={{
                 opacity: 0,
@@ -190,7 +190,7 @@ export function RankDotSparkline({
 
   return (
     <svg width={width} height={height} role="img" aria-label={`Rank ${rank} of ${total}`}>
-      <line x1={0} y1={height / 2} x2={width} y2={height / 2} stroke={GREY_RULE} strokeWidth={0.5} />
+      <line x1={0} y1={height / 2} x2={width} y2={height / 2} stroke={GREY_RULE} strokeWidth={STROKE_HAIRLINE} />
       <circle
         cx={x}
         cy={height / 2}

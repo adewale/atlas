@@ -12,6 +12,7 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { useGridNavigation } from '../hooks/useGridNavigation';
+import { VT, vt } from '../lib/transitions';
 
 // ---------------------------------------------------------------------------
 // Highlight modes
@@ -34,7 +35,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_MEDIUM } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
@@ -156,10 +157,11 @@ const ElementCell = memo(
             height={CELL_HEIGHT - 2}
             fill={fill}
             stroke={isActive ? WARM_RED : BLACK}
-            strokeWidth={isActive ? 2 : 0.5}
+            strokeWidth={isActive ? STROKE_MEDIUM : STROKE_HAIRLINE}
             style={{
               transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-            }}
+              viewTransitionName: isActive ? VT.CELL_BG : undefined,
+            } as React.CSSProperties}
           />
           <text
             x={4}
@@ -169,7 +171,7 @@ const ElementCell = memo(
             fontFamily="system-ui, sans-serif"
             style={{
               transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-              viewTransitionName: isActive ? 'element-number' : undefined,
+              viewTransitionName: isActive ? VT.NUMBER : undefined,
             } as React.CSSProperties}
           >
             {atomicNumber}
@@ -184,7 +186,7 @@ const ElementCell = memo(
             fontFamily="system-ui, sans-serif"
             style={{
               transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-              viewTransitionName: isActive ? 'element-symbol' : undefined,
+              viewTransitionName: isActive ? VT.SYMBOL : undefined,
             } as React.CSSProperties}
           >
             {symbol}
@@ -196,7 +198,10 @@ const ElementCell = memo(
             fontSize={7}
             fill={textColor}
             fontFamily="system-ui, sans-serif"
-            style={{ transition: `fill 250ms var(--ease-out) ${dist * 8}ms` }}
+            style={{
+              transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
+              viewTransitionName: isActive ? VT.NAME : undefined,
+            } as React.CSSProperties}
           >
             {displayName}
           </text>
@@ -359,7 +364,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           maxHeight: highlightMode === 'property' ? '60px' : '0px',
           opacity: highlightMode === 'property' ? 1 : 0,
           transform: highlightMode === 'property' ? 'translateY(0)' : 'translateY(-8px)',
-          transition: 'max-height 250ms ease-in-out, opacity 200ms ease-in-out, transform 250ms ease-in-out, margin-top 250ms ease-in-out',
+          transition: 'max-height 250ms var(--ease-in-out), opacity 200ms var(--ease-in-out), transform 250ms var(--ease-in-out), margin-top 250ms var(--ease-in-out)',
           marginTop: highlightMode === 'property' ? '8px' : '0px',
           transformOrigin: 'top right',
         }}
@@ -399,7 +404,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                   minHeight: '44px',
                   minWidth: '44px',
                   fontFamily: 'inherit',
-                  transition: 'background 150ms ease-in-out, color 150ms ease-in-out, border-color 150ms ease-in-out',
+                  transition: 'background 150ms var(--ease-in-out), color 150ms var(--ease-in-out), border-color 150ms var(--ease-in-out)',
                 }}
               >
                 {o.label}

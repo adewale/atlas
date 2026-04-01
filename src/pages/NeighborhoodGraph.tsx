@@ -10,6 +10,7 @@ import {
   CELL_HEIGHT,
 } from '../lib/grid';
 import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
@@ -94,7 +95,7 @@ export default function NeighborhoodGraph() {
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK }}>Neighbourhood Graph</h1>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
 
         <svg
           width="100%"

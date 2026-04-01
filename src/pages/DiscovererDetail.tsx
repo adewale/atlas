@@ -5,6 +5,7 @@ import type { ElementRecord } from '../lib/types';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
 import { PRETEXT_SANS } from '../lib/pretext';
 import { DiscovererChip } from '../components/EntityChip';
@@ -62,7 +63,7 @@ export default function DiscovererDetail() {
   if (!discoverer) {
     return (
       <PageShell>
-        <Link to="/discoverer-network" style={BACK_LINK_STYLE}>← Discoverers</Link>
+        <Link to="/discoverer-network" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Discoverers</Link>
         <h1 style={{ margin: '16px 0' }}>Discoverer not found</h1>
       </PageShell>
     );
@@ -129,7 +130,7 @@ export default function DiscovererDetail() {
         </svg>
       )}
 
-      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
+      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
 
       {elements.length > 0 && (
         <AtlasPlate elements={elements} caption={discoverer.name} captionColor={color} />

@@ -1,7 +1,8 @@
 import { Link } from 'react-router';
 import { getElement } from '../lib/data';
 import type { ElementRecord } from '../lib/types';
-import { BACK_LINK_STYLE } from '../lib/theme';
+import { BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
+import { VT } from '../lib/transitions';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
 import AtlasPlate from './AtlasPlate';
@@ -57,21 +58,18 @@ export default function AtlasBrowsePage({
 
   return (
     <PageShell>
-      <Link to={backLink.to} style={BACK_LINK_STYLE}>{backLink.label}</Link>
+      <Link to={backLink.to} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>{backLink.label}</Link>
       <h1
         style={{
+          ...INSCRIPTION_STYLE,
           margin: '12px 0 16px',
-          fontSize: '13px',
-          fontWeight: 'bold',
-          textTransform: 'uppercase',
-          letterSpacing: '0.2em',
           color,
           ...(viewTransitionName ? { viewTransitionName } : {}),
         } as React.CSSProperties}
       >
         {heading}
       </h1>
-      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px' }} />
+      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
       {description && (
         <svg
           width={DESC_MAX_W}
