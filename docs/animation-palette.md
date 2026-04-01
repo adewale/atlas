@@ -113,16 +113,38 @@ animation). They exist as separate names so call-sites read clearly:
 - `bar-grow` — property bar expansion
 - `rule-draw` — horizontal rule drawing
 
-### Stagger Patterns
+### Stagger & Ripple Patterns
 
-Entry animations are staggered by element index:
+Two categories of staggered animation exist in Atlas:
 
-| Context | Stagger | Example |
-|---------|---------|---------|
-| Periodic table cells | `atomicNumber * 4ms` | H at 4ms, Og at 472ms |
-| AtlasPlate cards | `index * 15ms` | First card at 0ms, 10th at 150ms |
-| Text lines | Configurable `animationStagger` prop | Typically 25-40ms |
-| Discoverer rows | `rowIdx * 40ms` | Cascading row reveal |
+#### Spatial ripple (fill transitions — cells change colour in place)
+
+Cells are always visible. Colour changes propagate outward from an origin
+point using Manhattan distance. The cell *stains* rather than appearing.
+
+| Surface | Trigger | Origin | Delay | Duration | Easing |
+|---------|---------|--------|-------|----------|--------|
+| PeriodicTable highlight | Mode/property change | Last hovered cell | `dist * 8ms` (Manhattan) | 250ms | `--ease-out` |
+| AnomalyExplorer stain | Anomaly category selection | First highlighted element | `dist * 8ms` (Manhattan) | 250ms | `--ease-out` |
+
+Both use the same mechanism: `transition: fill 250ms var(--ease-out) ${dist * 8}ms`.
+The `dist` is Manhattan distance (|Δcol| + |Δrow|) from the origin cell.
+
+#### Sequential cascade (entry animations — elements appear on page load)
+
+Elements are initially invisible. They fade/slide/wipe in with index-based
+delays, creating a top-to-bottom or first-to-last cascade.
+
+| Surface | Keyframe | Delay | Duration | Easing |
+|---------|----------|-------|----------|--------|
+| PeriodicTable cells | opacity + translateY | `atomicNumber * 4ms` | 200ms | `--ease-spring` |
+| PhaseLandscape cells | opacity + translateY | `atomicNumber * 4ms` | 200ms | `--ease-spring` |
+| AtlasPlate cards | `card-enter` | `index * 15ms` | 250ms | `--ease-out` |
+| PretextSvg text lines | `folio-line-reveal` | `i * animationStagger` (25-60ms) | 300-400ms | `--ease-out` |
+| PropertyBar / CompareView | `bar-grow` | index-based | 300ms | `--ease-out` |
+| DiscovererNetwork rows | `bar-grow` | `rowIdx * 40ms` | 500ms | `--ease-out` |
+| DiscoveryTimeline squares | opacity | `sq.delay` | 300ms | `--ease-out` |
+| NeighborhoodGraph edges | `rule-draw` | `atomicNumber * 6ms` | 400ms | `--ease-out` |
 
 ---
 
