@@ -2,14 +2,17 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, STROKE_HAIRLINE } from '../lib/theme';
+import { WARM_RED, MUSTARD, BLACK, PAPER, DEEP_BLUE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
+import SectionedCardList from '../components/SectionedCardList';
+import type { Section } from '../components/SectionedCardList';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 /* ------------------------------------------------------------------ */
 /* Constants                                                           */
@@ -25,11 +28,15 @@ const ROW_HEIGHT = 36;
 const INTRO_Y = 0;
 const INTRO_MAX_W = SVG_WIDTH;
 
+/* Colour cycle for discoverer sections */
+const DISCOVERER_COLORS = [WARM_RED, DEEP_BLUE, MUSTARD, BLACK];
+
 /* ------------------------------------------------------------------ */
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 export default function DiscovererNetwork() {
   useDocumentTitle('Discoverer Network', 'Network graph of scientists and their element discoveries, showing collaboration clusters and prolific discoverers.');
+  const isMobile = useIsMobile();
   const { discoverers } = useLoaderData() as { discoverers: { name: string; elements: string[] }[] };
   const navigate = useNavigate();
 
@@ -50,7 +57,7 @@ export default function DiscovererNetwork() {
 
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: INTRO_MAX_W,
+    maxWidth: isMobile ? 360 : INTRO_MAX_W,
     dropCapFont: `72px ${DROP_CAP_FONT}`,
   });
 
@@ -65,6 +72,23 @@ export default function DiscovererNetwork() {
     return { antiquity: antiq, prolific: rest };
   }, [discoverers]);
 
+  // Build sections for mobile view
+  const discovererSections: Section[] = useMemo(() => {
+    const all = [
+      ...(antiquity ? [antiquity] : []),
+      ...prolific,
+    ];
+    return all.map((disc, i) => ({
+      id: disc.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      label: disc.name,
+      color: DISCOVERER_COLORS[i % DISCOVERER_COLORS.length],
+      items: disc.elements.map(sym => {
+        const el = getElement(sym);
+        return { symbol: sym, description: el?.name ?? sym };
+      }),
+    }));
+  }, [antiquity, prolific]);
+
   // Layout measurements
   const introTextHeight = lines.length * lineHeight + 16;
   const legendY = introTextHeight + 16;          // clear gap below intro text
@@ -76,6 +100,43 @@ export default function DiscovererNetwork() {
   const totalRows = prolific.length;
   const totalHeight = barsStartY + totalRows * ROW_HEIGHT + 40;
 
+  // ---------------------------------------------------------------------------
+  // Mobile: sectioned card layout
+  // ---------------------------------------------------------------------------
+  if (isMobile) {
+    const introH = Math.max(introTextHeight, 76);
+    return (
+      <PageShell vizNav>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Discoverer Network</h1>
+
+          <svg
+            width="100%"
+            viewBox={`0 0 360 ${introH}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              fontSize={16}
+              fill={BLACK}
+              maxWidth={360}
+              animationStagger={40}
+              dropCap={{ fontSize: 72, fill: MUSTARD, char: introDC.char }}
+            />
+          </svg>
+        </div>
+
+        <SectionedCardList sections={discovererSections} accordion defaultCollapsed={false} />
+      </PageShell>
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Desktop: SVG bar chart
+  // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
       <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>

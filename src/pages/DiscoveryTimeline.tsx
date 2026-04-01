@@ -9,7 +9,10 @@ import { DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
+import SectionedCardList from '../components/SectionedCardList';
+import type { Section } from '../components/SectionedCardList';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -47,6 +50,17 @@ const ERA_LABELS: { x: number; label: string }[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// Era definitions for mobile sections
+// ---------------------------------------------------------------------------
+const ERA_SECTIONS = [
+  { id: 'antiquity', label: 'Antiquity', yearRange: null as [number, number] | null },
+  { id: '1700s', label: '1700s — Gases & Alkalis', yearRange: [1700, 1800] as [number, number] },
+  { id: '1800s', label: '1800s — Spectroscopy Era', yearRange: [1800, 1900] as [number, number] },
+  { id: '1900s', label: '1900s — Atomic Age', yearRange: [1900, 2000] as [number, number] },
+  { id: '2000s', label: '2000s — Synthesis Frontier', yearRange: [2000, 2100] as [number, number] },
+];
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 function yearToX(year: number): number {
@@ -68,6 +82,7 @@ type Tooltip = { x: number; y: number; name: string; year: string; discoverer: s
 // ---------------------------------------------------------------------------
 export default function DiscoveryTimeline() {
   useDocumentTitle('Discovery Timeline', 'Interactive timeline of element discoveries from antiquity to the present, grouped by decade and coloured by block.');
+  const isMobile = useIsMobile();
   const { antiquity, timeline } = useLoaderData() as TimelineData;
   const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -75,7 +90,7 @@ export default function DiscoveryTimeline() {
 
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: SVG_WIDTH,
+    maxWidth: isMobile ? 360 : SVG_WIDTH,
     dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
 
@@ -151,6 +166,33 @@ export default function DiscoveryTimeline() {
     return { squares: sqs, antiquitySquares: antSqs };
   }, [antiquity, timeline, axisY]);
 
+  // Build sections for mobile view
+  const eraSections: Section[] = useMemo(() => {
+    return ERA_SECTIONS.map(era => {
+      let entries: TimelineEntry[];
+      if (era.yearRange === null) {
+        entries = antiquity;
+      } else {
+        const [lo, hi] = era.yearRange;
+        entries = timeline.filter(e => e.year != null && e.year >= lo && e.year < hi);
+      }
+
+      return {
+        id: era.id,
+        label: era.label,
+        color: DEEP_BLUE,
+        items: entries.map(e => {
+          const el = getElement(e.symbol);
+          const yearStr = e.year != null ? ` (${e.year})` : '';
+          return {
+            symbol: e.symbol,
+            description: `${el?.name ?? e.symbol}${yearStr}`,
+          };
+        }),
+      };
+    }).filter(s => s.items.length > 0);
+  }, [antiquity, timeline]);
+
   const handleSquareEnter = useCallback(
     (sq: PlacedSquare, svgX: number, svgY: number) => {
       const el = getElement(sq.entry.symbol);
@@ -180,6 +222,42 @@ export default function DiscoveryTimeline() {
   const eraLabelY = SVG_HEIGHT + 16;
   const totalHeight = eraLabelY + 30;
 
+  // ---------------------------------------------------------------------------
+  // Mobile: sectioned card layout
+  // ---------------------------------------------------------------------------
+  if (isMobile) {
+    return (
+      <PageShell vizNav>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Discovery Timeline</h1>
+
+          <svg
+            width="100%"
+            viewBox={`0 0 360 ${introHeight}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              fontSize={16}
+              fill={BLACK}
+              maxWidth={360}
+              animationStagger={40}
+              dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
+            />
+          </svg>
+        </div>
+
+        <SectionedCardList sections={eraSections} accordion defaultCollapsed={false} />
+      </PageShell>
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Desktop: SVG timeline chart
+  // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
