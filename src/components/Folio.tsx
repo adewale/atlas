@@ -476,7 +476,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         }}
       >
         {/* Neighbors */}
-        <div style={{ marginBottom: '12px', borderLeft: `3px solid ${color}`, paddingLeft: '10px' }}>
+        <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
             Neighbours
           </div>
