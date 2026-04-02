@@ -193,7 +193,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   return (
     <div className="folio-layout" style={{ display: 'flex', gap: '48px' }}>
       {/* Main content */}
-      <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
+      <div className="folio-main" style={{ flex: '0 1 auto', paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
         {/* Left colour bar — morph target for element-cell-bg */}
         <div
           aria-hidden="true"
@@ -297,10 +297,9 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
           {/* Shaped summary text — flows around identity block (left) and data plate (right) */}
           <svg
-            width={svgWidth}
-            height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
+            width="100%"
             aria-label="Element summary"
-            style={{ maxWidth: '100%' }}
+            viewBox={`0 0 ${svgWidth} ${Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}`}
           >
             <PretextSvg
               lines={lines}
