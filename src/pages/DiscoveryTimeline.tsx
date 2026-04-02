@@ -89,9 +89,10 @@ export default function DiscoveryTimeline() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [tooltip, setTooltip] = useState<Tooltip>(null);
 
+  const introWidth = isMobile ? 360 : 760;
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: isMobile ? 360 : SVG_WIDTH,
+    maxWidth: introWidth,
     dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
 
@@ -212,7 +213,7 @@ export default function DiscoveryTimeline() {
 
   const handleSquareClick = useCallback(
     (symbol: string) => {
-      navigate(`/element/${symbol}`);
+      navigate(`/elements/${symbol}`);
     },
     [navigate],
   );
@@ -249,6 +250,7 @@ export default function DiscoveryTimeline() {
               dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
             />
           </svg>
+
         </div>
 
         <SectionedCardList sections={eraSections} accordion defaultCollapsed={false} />
@@ -261,53 +263,55 @@ export default function DiscoveryTimeline() {
   // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
+      <div style={{ maxWidth: 760 }}>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
 
-        {/* Intro paragraph */}
-        <svg
-          viewBox={`0 0 ${SVG_WIDTH} ${introHeight}`}
-          style={{ width: '100%', maxWidth: SVG_WIDTH, marginBottom: '16px' }}
-          overflow="visible"
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fontSize={16}
-            fill={BLACK}
-            maxWidth={SVG_WIDTH}
-            animationStagger={40}
-            dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
-          />
-        </svg>
-
-        {/* Era browse links */}
-        <section style={{ marginBottom: '16px' }}>
-          <h2 style={SECTION_LABEL_STYLE}>
-            Browse by Era
-          </h2>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            <NavigationPill
-              to="/timeline/antiquity"
-              title="View the Antiquity discovery era"
-              label="Antiquity"
-              color={DEEP_BLUE}
-              dot={false}
+          {/* Intro paragraph */}
+          <svg
+            viewBox={`0 0 ${introWidth} ${introHeight}`}
+            style={{ width: '100%', maxWidth: introWidth, marginBottom: '16px' }}
+            overflow="visible"
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              fontSize={16}
+              fill={BLACK}
+              maxWidth={introWidth}
+              animationStagger={40}
+              dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
             />
-            {allDecades.map((d) => (
+          </svg>
+
+          {/* Era browse links */}
+          <section style={{ marginBottom: '16px' }}>
+            <h2 style={SECTION_LABEL_STYLE}>
+              Browse by Era
+            </h2>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
               <NavigationPill
-                key={d}
-                to={`/timeline/${d}`}
-                title={`View the ${d}s discovery era`}
-                label={`${d}s`}
+                to="/eras/antiquity"
+                title="View the Antiquity discovery era"
+                label="Antiquity"
                 color={DEEP_BLUE}
                 dot={false}
               />
-            ))}
-          </div>
-        </section>
+              {allDecades.map((d) => (
+                <NavigationPill
+                  key={d}
+                  to={`/eras/${d}`}
+                  title={`View the ${d}s discovery era`}
+                  label={`${d}s`}
+                  color={DEEP_BLUE}
+                  dot={false}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>

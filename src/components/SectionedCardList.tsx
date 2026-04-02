@@ -253,7 +253,7 @@ export default function SectionedCardList({
                   return (
                     <Link
                       key={item.symbol}
-                      to={`/element/${item.symbol}`}
+                      to={`/elements/${item.symbol}`}
                       title={`${getElement(item.symbol)?.name ?? item.symbol}: ${item.description}`}
                       className="etymology-card"
                       style={cardStyle(section.color, stagger, hasLoaded)}
@@ -261,7 +261,7 @@ export default function SectionedCardList({
                       onClick={(e) => {
                         e.preventDefault();
                         setActiveSymbol(item.symbol);
-                        transitionNavigate(`/element/${item.symbol}`);
+                        transitionNavigate(`/elements/${item.symbol}`);
                       }}
                     >
                       <span

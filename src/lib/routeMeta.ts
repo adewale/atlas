@@ -34,69 +34,69 @@ export type EntityMeta = {
 };
 
 export const ENTITIES: EntityMeta[] = [
-  { id: 'element', label: 'Element', route: '/element/:symbol', count: '118', colour: WARM_RED, description: 'Central entity. Every element is a folio page with properties, neighbours, discoverer, etymology, and rankings.', examples: [
-    { name: 'Fe — Iron', href: '/element/Fe' },
-    { name: 'O — Oxygen', href: '/element/O' },
-    { name: 'Au — Gold', href: '/element/Au' },
-    { name: 'Og — Oganesson', href: '/element/Og' },
+  { id: 'element', label: 'Element', route: '/elements/:symbol', count: '118', colour: WARM_RED, description: 'Central entity. Every element is a folio page with properties, neighbours, discoverer, etymology, and rankings.', examples: [
+    { name: 'Fe — Iron', href: '/elements/Fe' },
+    { name: 'O — Oxygen', href: '/elements/O' },
+    { name: 'Au — Gold', href: '/elements/Au' },
+    { name: 'Og — Oganesson', href: '/elements/Og' },
   ]},
-  { id: 'group', label: 'Group', route: '/atlas/group/:n', count: '18', colour: DEEP_BLUE, description: 'IUPAC vertical column (1–18). Elements in a group share valence electron configuration.', examples: [
-    { name: 'Group 1 (Alkali)', href: '/atlas/group/1' },
-    { name: 'Group 8', href: '/atlas/group/8' },
-    { name: 'Group 17 (Halogens)', href: '/atlas/group/17' },
-    { name: 'Group 18 (Noble gases)', href: '/atlas/group/18' },
+  { id: 'group', label: 'Group', route: '/groups/:n', count: '18', colour: DEEP_BLUE, description: 'IUPAC vertical column (1–18). Elements in a group share valence electron configuration.', examples: [
+    { name: 'Group 1 (Alkali)', href: '/groups/1' },
+    { name: 'Group 8', href: '/groups/8' },
+    { name: 'Group 17 (Halogens)', href: '/groups/17' },
+    { name: 'Group 18 (Noble gases)', href: '/groups/18' },
   ]},
-  { id: 'period', label: 'Period', route: '/atlas/period/:n', count: '7', colour: WARM_RED, description: 'Horizontal row (1–7). Elements in a period share the same highest energy level.', examples: [
-    { name: 'Period 1 (H, He)', href: '/atlas/period/1' },
-    { name: 'Period 4', href: '/atlas/period/4' },
-    { name: 'Period 7 (actinides+)', href: '/atlas/period/7' },
+  { id: 'period', label: 'Period', route: '/periods/:n', count: '7', colour: WARM_RED, description: 'Horizontal row (1–7). Elements in a period share the same highest energy level.', examples: [
+    { name: 'Period 1 (H, He)', href: '/periods/1' },
+    { name: 'Period 4', href: '/periods/4' },
+    { name: 'Period 7 (actinides+)', href: '/periods/7' },
   ]},
-  { id: 'block', label: 'Block', route: '/atlas/block/:b', count: '4', colour: MUSTARD, description: 'Orbital family (s/p/d/f). The block determines the element\'s colour identity throughout Atlas.', examples: [
-    { name: 's-block', href: '/atlas/block/s' },
-    { name: 'p-block', href: '/atlas/block/p' },
-    { name: 'd-block', href: '/atlas/block/d' },
-    { name: 'f-block', href: '/atlas/block/f' },
+  { id: 'block', label: 'Block', route: '/blocks/:block', count: '4', colour: MUSTARD, description: 'Orbital family (s/p/d/f). The block determines the element\'s colour identity throughout Atlas.', examples: [
+    { name: 's-block', href: '/blocks/s' },
+    { name: 'p-block', href: '/blocks/p' },
+    { name: 'd-block', href: '/blocks/d' },
+    { name: 'f-block', href: '/blocks/f' },
   ]},
-  { id: 'category', label: 'Category', route: '/atlas/category/:slug', count: '10', colour: DEEP_BLUE, description: 'Chemical family (alkali metal, halogen, noble gas, etc.). Cross-cuts block boundaries.', examples: [
-    { name: 'Transition metal', href: '/atlas/category/transition-metal' },
-    { name: 'Noble gas', href: '/atlas/category/noble-gas' },
-    { name: 'Alkali metal', href: '/atlas/category/alkali-metal' },
-    { name: 'Metalloid', href: '/atlas/category/metalloid' },
+  { id: 'category', label: 'Category', route: '/categories/:slug', count: '10', colour: DEEP_BLUE, description: 'Chemical family (alkali metal, halogen, noble gas, etc.). Cross-cuts block boundaries.', examples: [
+    { name: 'Transition metal', href: '/categories/transition-metal' },
+    { name: 'Noble gas', href: '/categories/noble-gas' },
+    { name: 'Alkali metal', href: '/categories/alkali-metal' },
+    { name: 'Metalloid', href: '/categories/metalloid' },
   ]},
-  { id: 'ranking', label: 'Ranking', route: '/atlas/rank/:property', count: '4', colour: MUSTARD, description: 'Elements ordered by a numeric property: mass, electronegativity, ionisation energy, or radius.', examples: [
-    { name: 'Ranked by mass', href: '/atlas/rank/mass' },
-    { name: 'By electronegativity', href: '/atlas/rank/electronegativity' },
-    { name: 'By ionisation energy', href: '/atlas/rank/ionizationEnergy' },
-    { name: 'By atomic radius', href: '/atlas/rank/radius' },
+  { id: 'property', label: 'Property', route: '/properties/:property', count: '4', colour: MUSTARD, description: 'Elements ordered by a numeric property: mass, electronegativity, ionisation energy, or radius.', examples: [
+    { name: 'Ranked by mass', href: '/properties/mass' },
+    { name: 'By electronegativity', href: '/properties/electronegativity' },
+    { name: 'By ionisation energy', href: '/properties/ionizationEnergy' },
+    { name: 'By atomic radius', href: '/properties/radius' },
   ]},
-  { id: 'anomaly', label: 'Anomaly', route: '/atlas/anomaly/:slug', count: '5', colour: WARM_RED, description: 'Periodic table rule-breakers: aufbau deviations, diagonal relationships, metalloid boundary.', examples: [
-    { name: 'Electron config anomalies', href: '/atlas/anomaly/electron-configuration-anomalies' },
-    { name: 'Diagonal relationships', href: '/atlas/anomaly/diagonal-relationships' },
-    { name: 'Synthetic heavyweights', href: '/atlas/anomaly/synthetic-heavy' },
+  { id: 'anomaly', label: 'Anomaly', route: '/anomalies/:slug', count: '5', colour: WARM_RED, description: 'Periodic table rule-breakers: aufbau deviations, diagonal relationships, metalloid boundary.', examples: [
+    { name: 'Electron config anomalies', href: '/anomalies/electron-configuration-anomalies' },
+    { name: 'Diagonal relationships', href: '/anomalies/diagonal-relationships' },
+    { name: 'Synthetic heavyweights', href: '/anomalies/synthetic-heavy' },
   ]},
-  { id: 'discoverer', label: 'Discoverer', route: '/discoverer/:name', count: '50+', colour: MUSTARD, description: 'Person or group who discovered elements. Graph-navigable with related discoverers by era or block.', examples: [
-    { name: 'Humphry Davy', href: '/discoverer/Humphry%20Davy' },
-    { name: 'Marie Curie & Pierre Curie', href: '/discoverer/Marie%20Curie%20%26%20Pierre%20Curie' },
-    { name: 'Carl Wilhelm Scheele', href: '/discoverer/Carl%20Wilhelm%20Scheele' },
+  { id: 'discoverer', label: 'Discoverer', route: '/discoverers/:name', count: '50+', colour: MUSTARD, description: 'Person or group who discovered elements. Graph-navigable with related discoverers by era or block.', examples: [
+    { name: 'Humphry Davy', href: '/discoverers/Humphry%20Davy' },
+    { name: 'Marie Curie & Pierre Curie', href: '/discoverers/Marie%20Curie%20%26%20Pierre%20Curie' },
+    { name: 'Carl Wilhelm Scheele', href: '/discoverers/Carl%20Wilhelm%20Scheele' },
   ]},
-  { id: 'era', label: 'Timeline Era', route: '/timeline/:era', count: '30+', colour: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.', examples: [
-    { name: 'Antiquity', href: '/timeline/antiquity' },
-    { name: '1770s', href: '/timeline/1770' },
-    { name: '1890s', href: '/timeline/1890' },
-    { name: '1940s', href: '/timeline/1940' },
+  { id: 'era', label: 'Timeline Era', route: '/eras/:era', count: '30+', colour: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.', examples: [
+    { name: 'Antiquity', href: '/eras/antiquity' },
+    { name: '1770s', href: '/eras/1770' },
+    { name: '1890s', href: '/eras/1890' },
+    { name: '1940s', href: '/eras/1940' },
   ]},
   { id: 'etymology', label: 'Etymology Origin', route: '/etymology-map#:origin', count: '7', colour: WARM_RED, description: 'Why elements are named: place, person, mythology, property, mineral, astronomical, unknown.', examples: [
     { name: 'Place names', href: '/etymology-map#place' },
     { name: 'Mythology', href: '/etymology-map#mythology' },
     { name: 'Properties', href: '/etymology-map#property' },
   ]},
-  { id: 'comparison', label: 'Comparison', route: '/compare/:a/:b', count: '6903', colour: BLACK, description: 'Side-by-side element pair. Any two of 118 elements can be compared.', examples: [
-    { name: 'Fe vs Cu', href: '/compare/Fe/Cu' },
-    { name: 'Na vs K', href: '/compare/Na/K' },
-    { name: 'C vs Si', href: '/compare/C/Si' },
+  { id: 'comparison', label: 'Comparison', route: '/elements/:symbol/compare/:other', count: '6903', colour: BLACK, description: 'Side-by-side element pair. Any two of 118 elements can be compared. The first symbol is the origin element.', examples: [
+    { name: 'Fe vs Cu', href: '/elements/Fe/compare/Cu' },
+    { name: 'Na vs K', href: '/elements/Na/compare/K' },
+    { name: 'C vs Si', href: '/elements/C/compare/Si' },
   ]},
   { id: 'neighbour', label: 'Neighbour', route: '—', count: '~236', colour: BLACK, description: 'Positional adjacency in the periodic table grid. Implicit, computed from grid coordinates.', examples: [
-    { name: 'Fe ↔ Mn, Co', href: '/element/Fe' },
-    { name: 'O ↔ N, F', href: '/element/O' },
+    { name: 'Fe ↔ Mn, Co', href: '/elements/Fe' },
+    { name: 'O ↔ N, F', href: '/elements/O' },
   ]},
 ];

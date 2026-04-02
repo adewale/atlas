@@ -125,7 +125,7 @@ export default function TimelineEra() {
   if (entries.length === 0) {
     return (
       <PageShell>
-        <Link to="/discovery-timeline" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Timeline</Link>
+        <Link to="/discovery-timeline" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Discovery Timeline</Link>
         <h1 style={{ margin: '12px 0 16px' }}>No elements found for this era</h1>
       </PageShell>
     );
@@ -133,7 +133,7 @@ export default function TimelineEra() {
 
   return (
     <PageShell>
-      <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
+      <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Discovery Timeline</Link>
 
       {/* Giant era numeral + heading */}
       <HeroHeader
@@ -154,14 +154,14 @@ export default function TimelineEra() {
           aria-label="Previous and next era navigation"
         >
           {prevEra && (
-            <a href={`/timeline/${prevEra}`}>
+            <a href={`/eras/${prevEra}`}>
               <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
                 ← {prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`}
               </text>
             </a>
           )}
           {nextEra && (
-            <a href={`/timeline/${nextEra}`}>
+            <a href={`/eras/${nextEra}`}>
               <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
                 {`${nextEra}s`} →
               </text>
@@ -239,7 +239,7 @@ export default function TimelineEra() {
               return (
                 <NavigationPill
                   key={d}
-                  to={`/timeline/${d}`}
+                  to={`/eras/${d}`}
                   title={`View the ${d}s discovery era`}
                   label={`${d}s (${count})`}
                   color={DEEP_BLUE}

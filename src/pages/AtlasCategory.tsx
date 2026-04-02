@@ -1,6 +1,7 @@
 import { useParams, useLoaderData } from 'react-router';
 import { fromSlug, categoryColor } from '../lib/theme';
 import AtlasBrowsePage from '../components/AtlasBrowsePage';
+import MarginNote from '../components/MarginNote';
 import type { CategoryData } from '../lib/types';
 
 export default function AtlasCategory() {
@@ -20,6 +21,13 @@ export default function AtlasCategory() {
       caption={label}
       captionColor={color}
       description={cat?.description}
+      marginNote={
+        <MarginNote label="Categories" color={color} top={60}>
+          <p style={{ margin: 0 }}>
+            Element categories group elements by shared physical and chemical properties — metals, nonmetals, metalloids, and noble gases each behave distinctly.
+          </p>
+        </MarginNote>
+      }
     />
   );
 }

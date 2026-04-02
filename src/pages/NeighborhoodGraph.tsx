@@ -25,6 +25,7 @@ const INTRO_TEXT =
   'Every element has neighbours — elements adjacent in the periodic table. This graph maps those relationships. Hover to see an element\u2019s neighbourhood.';
 
 const SVG_WIDTH = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 const NODE_RADIUS = 10;
 
 // ---------------------------------------------------------------------------
@@ -59,8 +60,6 @@ for (const el of allElements) {
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
-const INTRO_MAX_W = VIEWBOX_W;
-
 export default function NeighborhoodGraph() {
   useDocumentTitle('Neighbourhood Graph', 'Force-directed graph showing which elements share the most properties, revealing unexpected neighbourhoods across the periodic table.');
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
@@ -69,6 +68,7 @@ export default function NeighborhoodGraph() {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const introWidth = isMobile ? 360 : INTRO_MAX_W;
+  const introColor = BLACK;
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: introWidth,
@@ -97,25 +97,27 @@ export default function NeighborhoodGraph() {
 
   return (
     <PageShell vizNav>
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
+      <div style={{ maxWidth: INTRO_MAX_W }}>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
 
-        <svg
-          width="100%"
-          viewBox={`0 0 ${introWidth} ${Math.max(lines.length * lineHeight + 16, 84)}`}
-          style={{ display: 'block', marginBottom: '12px' }}
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={introWidth}
-            animationStagger={40}
-            dropCap={{ fontSize: 80, fill: BLACK, char: introDC.char }}
-          />
-        </svg>
+          <svg
+            width="100%"
+            viewBox={`0 0 ${introWidth} ${Math.max(lines.length * lineHeight + 16, 84)}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              fill={BLACK}
+              maxWidth={introWidth}
+              animationStagger={40}
+              dropCap={{ fontSize: 80, fill: BLACK, char: introDC.char }}
+            />
+          </svg>
+        </div>
       </div>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
@@ -204,7 +206,7 @@ export default function NeighborhoodGraph() {
                     setHoveredSymbol(hoveredSymbol === el.symbol ? null : el.symbol);
                   }
                 }}
-                onClick={() => navigate(`/element/${el.symbol}`)}
+                onClick={() => navigate(`/elements/${el.symbol}`)}
                 role="button"
                 aria-label={`${el.symbol} — ${el.name}, ${el.neighbors.length} neighbours`}
               >

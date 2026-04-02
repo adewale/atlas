@@ -329,6 +329,24 @@ svg [role="button"] {
   }
 }
 
+/* Inline margin-note disclosure (mobile replacement for margin notes) */
+.margin-note-disclosure {
+  margin: 12px 0;
+}
+.margin-note-disclosure summary {
+  min-height: unset;
+  min-width: unset;
+}
+.margin-note-disclosure summary::-webkit-details-marker {
+  display: none;
+}
+.margin-note-disclosure[open] .margin-note-chevron {
+  transform: rotate(90deg);
+}
+.margin-note-chevron {
+  transition: transform 200ms var(--ease-out);
+}
+
 /* Mobile (<768px) */
 @media (max-width: 768px) {
   body {
@@ -347,20 +365,24 @@ svg [role="button"] {
     padding-left: 16px !important;
   }
 
-  /* Identity block and data plate: stacked on mobile */
+  /* Mobile element page: identity → paragraph → data plate */
   .folio-summary-area {
     display: flex;
     flex-direction: column;
+    gap: 8px;
   }
   .folio-identity {
     position: static !important;
-    width: 100% !important;
-    margin-bottom: 12px;
+    width: auto !important;
+    order: 1;
+  }
+  .folio-summary-area > svg {
+    order: 2;
   }
   .folio-data-plate {
     position: static !important;
     width: 100% !important;
-    margin-bottom: 16px;
+    order: 3;
   }
 
   /* Periodic table: horizontal scroll */

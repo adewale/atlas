@@ -892,7 +892,7 @@ export default function Design() {
           <div style={{ marginBottom: '16px', padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
             <strong style={{ color: DEEP_BLUE }}>1. Browse pages share a single template</strong>
             <br />
-            AtlasGroup, AtlasPeriod, AtlasBlock, AtlasCategory, and AtlasRank pages
+            AtlasGroup, AtlasPeriod, AtlasBlock, AtlasCategory, and AtlasProperty pages
             all follow the same layout: coloured caption strip, AtlasPlate card grid,
             and optional sparkline. These could be collapsed into a single
             parameterised <code style={{ fontSize: 12 }}>AtlasBrowsePage</code> component

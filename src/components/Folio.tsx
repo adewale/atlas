@@ -1,163 +1,72 @@
-import { useMemo, useState, useRef, useLayoutEffect } from 'react';
+import { useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
-import type { PositionedLine } from '../lib/pretext';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
-import { usePretextLines, useShapedText } from '../hooks/usePretextLines';
+import { useShapedText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
-import PropertyBar from './PropertyBar';
-import { RankDotSparkline, GroupPhaseStrip } from './Sparkline';
+import { GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, MONO_FONT, toSlug } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug, categoryColor } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
 import { NeighbourChip } from './EntityChip';
 import { AnomalyChip } from './EntityChip';
 
 const PLATE_WIDTH = 160;
-const PLATE_HEIGHT = 180;
+const PLATE_ROW_H = 56;
+const PLATE_ROWS = 4; // Group, Period, Block, Category
+const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS; // 224
+const RANK_ROW_H = 24;
 const FULL_WIDTH = 560;
-const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - 24;
+const PLATE_GAP = 8;
+const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
 const IDENTITY_WIDTH = 130;
 const IDENTITY_HEIGHT = 150;
 
-const MIN_ANNOTATION_GAP = 20;
-
-/** Reusable row for the data plate (Group / Period / Block). */
-function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, mobile, prev, next }: {
+/** Reusable row for the data plate (Group / Period / Block / Category). */
+function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, rowWidth, prev, next }: {
   label: string; value: string | number; fill: string; textFill?: string;
   href: string; ariaLabel: string; title: string;
-  viewTransitionName?: string; mobile: boolean;
+  viewTransitionName?: string; rowWidth: number;
   prev?: { symbol: string; name: string };
   next?: { symbol: string; name: string };
 }) {
+  const strValue = String(value);
+  const valueFontSize = strValue.length > 6 ? 13 : strValue.length > 3 ? 18 : 24;
+  const valueY = strValue.length > 6 ? 42 : 46;
   return (
     <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
-      <svg width={mobile ? '100%' : PLATE_WIDTH} height={56} viewBox={`0 0 ${PLATE_WIDTH} 56`}>
+      <svg width={rowWidth} height={56} viewBox={`0 0 ${rowWidth} 56`}>
         {/* Main area — links to listing page */}
         <a href={href} aria-label={ariaLabel}>
           <title>{title}</title>
-          <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={fill} />
+          <rect x={0} y={0} width={rowWidth} height={56} fill={fill} />
           <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
-          <text x={12} y={46} fontSize={24} fontWeight="bold" fill={textFill} fontFamily={MONO_FONT}>{value}</text>
+          <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}>{strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue}</text>
         </a>
         {/* Prev/next arrows on the right */}
         {prev && (
-          <a href={`/element/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
+          <a href={`/elements/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
             <title>← {prev.name}</title>
-            <rect x={PLATE_WIDTH - 48} y={2} width={24} height={52} fill={fill} />
-            <text x={PLATE_WIDTH - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
+            <rect x={rowWidth - 48} y={2} width={24} height={52} fill={fill} />
+            <text x={rowWidth - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
           </a>
         )}
         {next && (
-          <a href={`/element/${next.symbol}`} aria-label={`Next: ${next.name}`}>
+          <a href={`/elements/${next.symbol}`} aria-label={`Next: ${next.name}`}>
             <title>{next.name} →</title>
-            <rect x={PLATE_WIDTH - 24} y={2} width={24} height={52} fill={fill} />
-            <text x={PLATE_WIDTH - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
+            <rect x={rowWidth - 24} y={2} width={24} height={52} fill={fill} />
+            <text x={rowWidth - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
           </a>
         )}
       </svg>
-    </div>
-  );
-}
-
-/** Find the y-position of the first text line containing `keyword`. */
-function findLineYForKeyword(
-  lines: PositionedLine[],
-  keyword: string,
-  lineHeight: number,
-): number | null {
-  const kw = keyword.toLowerCase();
-  for (const line of lines) {
-    if (line.text.toLowerCase().includes(kw)) {
-      return line.y + lineHeight;
-    }
-  }
-  return null;
-}
-
-/** Resolve overlap: if two annotations are within MIN_ANNOTATION_GAP, push later ones down.
- *  If maxY is provided, clamp annotations so they don't exceed that boundary;
- *  overflow items are stacked upward from maxY with MIN_ANNOTATION_GAP spacing. */
-function resolveOverlaps(positions: (number | null)[], maxY?: number): (number | null)[] {
-  const result = [...positions];
-  // Sort indices by their non-null y values, preserving order for nulls
-  const nonNullIndices = result
-    .map((y, i) => ({ y, i }))
-    .filter((e): e is { y: number; i: number } => e.y != null)
-    .sort((a, b) => a.y - b.y);
-
-  for (let j = 1; j < nonNullIndices.length; j++) {
-    const prev = nonNullIndices[j - 1];
-    const curr = nonNullIndices[j];
-    const prevY = result[prev.i]!;
-    const currY = result[curr.i]!;
-    if (currY - prevY < MIN_ANNOTATION_GAP) {
-      result[curr.i] = prevY + MIN_ANNOTATION_GAP;
-    }
-  }
-
-  // Clamp to maxY: if any annotation exceeds the available height,
-  // stack them upward from maxY with MIN_ANNOTATION_GAP spacing.
-  if (maxY != null && nonNullIndices.length > 0) {
-    // Walk backwards through sorted annotations and pull any that exceed maxY
-    for (let j = nonNullIndices.length - 1; j >= 0; j--) {
-      const idx = nonNullIndices[j].i;
-      const y = result[idx]!;
-      const limit = maxY - (nonNullIndices.length - 1 - j) * MIN_ANNOTATION_GAP;
-      if (y > limit) {
-        result[idx] = limit;
-      }
-    }
-    // Re-enforce minimum gap from top to bottom after clamping
-    for (let j = 1; j < nonNullIndices.length; j++) {
-      const prev = nonNullIndices[j - 1];
-      const curr = nonNullIndices[j];
-      const prevY = result[prev.i]!;
-      const currY = result[curr.i]!;
-      if (currY - prevY < MIN_ANNOTATION_GAP) {
-        result[curr.i] = prevY + MIN_ANNOTATION_GAP;
-      }
-    }
-  }
-
-  return result;
-}
-
-type MarginaliaPropertyProps = {
-  text: string;
-  rank: number;
-  color: string;
-  maxWidth: number;
-  font: string;
-};
-
-function MarginaliaProperty({ text, rank, color, maxWidth, font }: MarginaliaPropertyProps) {
-  const { lines: propLines, lineHeight: propLH } = usePretextLines({
-    text,
-    maxWidth,
-    font,
-  });
-
-  return (
-    <div style={{ marginBottom: '8px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <svg
-          width={maxWidth}
-          height={propLines.length * propLH + propLH}
-          style={{ maxWidth: '100%', display: 'block', flexShrink: 1 }}
-        >
-          <PretextSvg lines={propLines} lineHeight={propLH} fontSize={14} />
-        </svg>
-        <RankDotSparkline rank={rank} color={color} />
-      </div>
     </div>
   );
 }
@@ -181,12 +90,40 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const color = blockColor(element.block);
   const mobile = useIsMobile();
 
-  const svgWidth = mobile ? 320 : FULL_WIDTH;
+  // Measure actual container width so layout fills available space
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [measuredWidth, setMeasuredWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    // Use content box (excludes padding) so SVG fits exactly
+    const style = getComputedStyle(el);
+    const padL = parseFloat(style.paddingLeft) || 0;
+    const padR = parseFloat(style.paddingRight) || 0;
+    setMeasuredWidth(el.clientWidth - padL - padR);
+    const observer = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentBoxSize?.[0]?.inlineSize;
+      if (w != null && w > 0) {
+        setMeasuredWidth(w);
+      } else {
+        const rect = entries[0]?.contentRect;
+        if (rect && rect.width > 0) setMeasuredWidth(rect.width);
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Use measured width once available, fall back to hardcoded defaults
+  const effectiveWidth = measuredWidth > 0 ? measuredWidth : (mobile ? 320 : FULL_WIDTH);
+  const effectiveNarrow = effectiveWidth - PLATE_WIDTH - PLATE_GAP;
 
   const { lines, lineHeight } = useShapedText({
     text: element.summary,
-    fullWidth: FULL_WIDTH,
-    narrowWidth: NARROW_WIDTH,
+    fullWidth: effectiveWidth,
+    narrowWidth: effectiveNarrow,
+    plateHeight: PLATE_HEIGHT,
     mobile,
     leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },
   });
@@ -241,6 +178,18 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     };
   }, [element.block, element.symbol]);
 
+  // Prev/next within category
+  const { prevInCategory, nextInCategory } = useMemo(() => {
+    const catMembers = allElements
+      .filter((e) => e.category === element.category)
+      .sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const idx = catMembers.findIndex((e) => e.symbol === element.symbol);
+    return {
+      prevInCategory: idx > 0 ? catMembers[idx - 1] : null,
+      nextInCategory: idx < catMembers.length - 1 ? catMembers[idx + 1] : null,
+    };
+  }, [element.category, element.symbol]);
+
   // Find elements sharing the same discoverer (lateral link)
   const sameDiscoverer = useMemo(() => {
     if (!element.discoverer || element.discoverer.toLowerCase().includes('antiquity')) return [];
@@ -265,65 +214,26 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
   const paddedNumber = String(element.atomicNumber).padStart(3, '0');
 
-  // Refs for measuring vertical offset between summary area and marginalia
   const summaryRef = useRef<HTMLDivElement>(null);
   const marginaliaRef = useRef<HTMLElement>(null);
-  const [summaryOffsetInMarginalia, setSummaryOffsetInMarginalia] = useState(0);
-
-  useLayoutEffect(() => {
-    if (mobile) return;
-    const summaryEl = summaryRef.current;
-    const marginaliaEl = marginaliaRef.current;
-    if (summaryEl && marginaliaEl) {
-      const summaryTop = summaryEl.getBoundingClientRect().top;
-      const marginaliaTop = marginaliaEl.getBoundingClientRect().top;
-      setSummaryOffsetInMarginalia(summaryTop - marginaliaTop);
-    }
-  }, [mobile, lines, lineHeight]);
-
-  // Pretext-measured marginalia text
-  const MARGINALIA_WIDTH = 180;
-  const MARGINALIA_FONT = `14px ${PRETEXT_SANS}`;
-
-  const { lines: catLines, lineHeight: catLH } = usePretextLines({
-    text: element.category,
-    maxWidth: MARGINALIA_WIDTH,
-    font: MARGINALIA_FONT,
-  });
-
-  // Property bars data with search terms for marginalia alignment — defined as
-  // module-level constant (PROPERTIES) to avoid re-creating on every render.
-
-  // Available height for marginalia annotations: summary text height acts as boundary
-  const summaryTextHeight = lines.length * lineHeight;
-
-  // Compute y-positions for marginalia annotations aligned to summary text lines
-  const annotationPositions = useMemo(() => {
-    if (mobile) return null; // On mobile, use stacked layout
-    const rawPositions = PROPERTIES.map((prop) =>
-      findLineYForKeyword(lines, prop.searchTerm, lineHeight),
-    );
-    return resolveOverlaps(rawPositions, summaryTextHeight);
-  }, [lines, lineHeight, mobile, summaryTextHeight]);
 
   return (
-    <div className="folio-layout" style={{ display: 'flex', gap: '48px', position: 'relative' }}>
-      {/* Left colour bar — morph target for element-cell-bg */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: '4px',
-          background: color,
-          viewTransitionName: VT.CELL_BG,
-        } as React.CSSProperties}
-      />
-
+    <div className="folio-layout" style={{ display: 'flex', gap: '48px' }}>
       {/* Main content */}
-      <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
+      <div ref={mainRef} className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
+        {/* Left colour bar — morph target for element-cell-bg */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: '4px',
+            background: color,
+            viewTransitionName: VT.CELL_BG,
+          } as React.CSSProperties}
+        />
         {/* Summary area: identity block (left), text (centre), data plate (right) */}
         <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
           {/* Identity block — number + symbol + name, acts as dramatic drop cap */}
@@ -333,8 +243,8 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               position: mobile ? 'static' : 'absolute',
               top: 0,
               left: 0,
-              width: mobile ? '100%' : IDENTITY_WIDTH,
-              marginBottom: mobile ? '12px' : 0,
+              width: mobile ? 'auto' : IDENTITY_WIDTH,
+              marginBottom: mobile ? 0 : 0,
               ...(animate
                 ? {
                     opacity: 0,
@@ -399,32 +309,63 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 : {}),
             }}
           >
-            <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}`}>
+            <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}, ${element.category}`}>
               {/* Group row — deep blue */}
-              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/atlas/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/groups/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
               {/* Period row — warm red */}
-              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/atlas/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/periods/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
               {/* Block row — block colour */}
-              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/blocks/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
+              {/* Category row */}
+              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
             </div>
 
           </div>
 
           {/* Shaped summary text — flows around identity block (left) and data plate (right) */}
           <svg
-            width={svgWidth}
+            width={effectiveWidth}
             height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
+            viewBox={`0 0 ${effectiveWidth} ${Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}`}
             aria-label="Element summary"
-            style={{ maxWidth: '100%' }}
           >
             <PretextSvg
               lines={lines}
               lineHeight={lineHeight}
               y={0}
-              maxWidth={svgWidth}
+              maxWidth={effectiveWidth}
               animationStagger={animate ? 30 : undefined}
             />
           </svg>
+        </div>
+
+        {/* Rank sub-rows — full width, beneath summary area */}
+        <div className="folio-rank-rows" style={{ display: 'flex', gap: '2px', marginTop: '8px', flexWrap: 'wrap' }}>
+          {PROPERTIES.map((prop) => {
+            const rank = element.rankings[prop.key] ?? 0;
+            const total = 118;
+            const fraction = rank > 0 ? (total - rank + 1) / total : 0;
+            const rowW = mobile ? effectiveWidth : Math.floor((effectiveWidth - 6) / 2);
+            return (
+              <Link
+                key={prop.key}
+                to={`/properties/${prop.key}`}
+                title={`View all 118 elements ranked by ${prop.label.toLowerCase()}`}
+                style={{ textDecoration: 'none', display: 'block', flex: mobile ? '1 1 100%' : `0 0 ${rowW}px` }}
+              >
+                <svg width="100%" height={RANK_ROW_H} viewBox={`0 0 ${rowW} ${RANK_ROW_H}`} preserveAspectRatio="none">
+                  <rect x={0} y={0} width={rowW} height={RANK_ROW_H} fill={PAPER} stroke={BLACK} strokeWidth={0.5} />
+                  <rect x={0} y={0} width={fraction * rowW} height={RANK_ROW_H} fill={color} opacity={0.15} />
+                  <text x={6} y={16} fontSize={9} fill={BLACK} fontFamily={MONO_FONT} fontWeight="bold">
+                    {prop.label}
+                  </text>
+                  <text x={rowW - 6} y={16} fontSize={9} fill={GREY_MID} fontFamily={MONO_FONT} textAnchor="end">
+                    {rank > 0 ? `#${rank}` : '—'} →
+                  </text>
+                </svg>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Thick rule in block colour */}
@@ -442,7 +383,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               phases={groupPhaseData.phases}
               symbols={groupPhaseData.symbols}
               highlightIndex={groupPhaseData.highlightIndex}
-              width={svgWidth}
+              width={effectiveWidth}
               height={24}
             />
             <div style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '9px', color: GREY_MID }}>
@@ -452,28 +393,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             </div>
           </div>
         )}
-
-        {/* Property bars — each links to its ranking page */}
-        <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {PROPERTIES.map((prop, i) => {
-            const rank = element.rankings[prop.key] ?? 0;
-            const val = element[prop.key as keyof ElementRecord] as number | null;
-            return (
-              <Link key={prop.key} to={`/atlas/rank/${prop.key}`} title={`View all 118 elements ranked by ${prop.label.toLowerCase()}`} style={{ textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
-                <PropertyBar
-                  label={prop.label}
-                  rank={rank}
-                  color={color}
-                  width={svgWidth - 60}
-                  animate={animate}
-                  delay={animate ? 200 + i * 50 : 0}
-                  value={val}
-                  unit={prop.unit}
-                />
-              </Link>
-            );
-          })}
-        </div>
 
         {/* Anomaly badges — shows which anomalies this element belongs to */}
         {elementAnomalies.length > 0 && (
@@ -532,7 +451,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   {sameEtymology.map((e, i) => (
                     <span key={e.symbol}>
                       {i > 0 && ', '}
-                      <Link to={`/element/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
+                      <Link to={`/elements/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
                     </span>
                   ))}
                 </div>
@@ -543,12 +462,12 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             <div>
               <span style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
               <div>
-                <Link to={`/discoverer/${encodeURIComponent(element.discoverer)}`} title={`View all elements discovered by ${element.discoverer}`} style={{ color, textDecoration: 'none' }}>
+                <Link to={`/discoverers/${encodeURIComponent(element.discoverer)}`} title={`View all elements discovered by ${element.discoverer}`} style={{ color, textDecoration: 'none' }}>
                   {element.discoverer}
                 </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
                 <Link
-                  to={element.discoveryYear ? `/timeline/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
+                  to={element.discoveryYear ? `/eras/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
                   title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
@@ -561,7 +480,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   {sameDiscoverer.map((e, i) => (
                     <span key={e.symbol}>
                       {i > 0 && ', '}
-                      <Link to={`/element/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
+                      <Link to={`/elements/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
                     </span>
                   ))}
                 </div>
@@ -583,84 +502,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           position: 'relative',
         }}
       >
-        {/* Category — Pretext Tier 1 measured text */}
-        <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
-            Category
-          </div>
-          <Link to={`/atlas/category/${toSlug(element.category)}`} aria-label={element.category} title={`View all ${element.category} elements`} style={{ textDecoration: 'none' }}>
-            <svg
-              width={MARGINALIA_WIDTH}
-              height={catLines.length * catLH + catLH}
-              style={{ maxWidth: '100%', display: 'block' }}
-            >
-              <PretextSvg lines={catLines} lineHeight={catLH} fontSize={14} />
-            </svg>
-          </Link>
-        </div>
-
-        {/* Key properties with rank dots — aligned to text lines on desktop, stacked on mobile */}
-        {!mobile && annotationPositions ? (
-          /* Desktop: absolutely positioned annotations aligned to summary text lines */
-          PROPERTIES.map((prop, i) => {
-            const val = element[prop.key as keyof ElementRecord];
-            const rank = element.rankings[prop.key] ?? 0;
-            const displayText = `${prop.label}: ${val != null ? String(val) + (prop.unit ? ' ' + prop.unit : '') : '—'}`;
-            const targetY = annotationPositions[i];
-
-            if (targetY != null) {
-              return (
-                <div
-                  key={prop.key}
-                  style={{
-                    position: 'absolute',
-                    top: summaryOffsetInMarginalia + targetY,
-                    left: 0,
-                    right: 0,
-                  }}
-                >
-                  <MarginaliaProperty
-                    text={`◄ ${displayText}`}
-                    rank={rank}
-                    color={color}
-                    maxWidth={MARGINALIA_WIDTH}
-                    font={MARGINALIA_FONT}
-                  />
-                </div>
-              );
-            }
-
-            /* Fallback: no keyword match, render in flow */
-            return (
-              <MarginaliaProperty
-                key={prop.key}
-                text={displayText}
-                rank={rank}
-                color={color}
-                maxWidth={MARGINALIA_WIDTH}
-                font={MARGINALIA_FONT}
-              />
-            );
-          })
-        ) : (
-          /* Mobile / no positions: sequential stacked layout */
-          PROPERTIES.map((prop) => {
-            const val = element[prop.key as keyof ElementRecord];
-            const rank = element.rankings[prop.key] ?? 0;
-            const displayText = `${prop.label}: ${val != null ? String(val) + (prop.unit ? ' ' + prop.unit : '') : '—'}`;
-            return (
-              <MarginaliaProperty
-                key={prop.key}
-                text={displayText}
-                rank={rank}
-                color={color}
-                maxWidth={MARGINALIA_WIDTH}
-                font={MARGINALIA_FONT}
-              />
-            );
-          })
-        )}
-
         {/* Neighbors */}
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
@@ -692,11 +533,15 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         </div>
 
         {/* Source strip (mandatory CC BY-SA) */}
-        {sources && <SourceStrip sources={sources} ruleColor={color} />}
+        {sources && (
+          <div style={{ borderLeft: `3px solid ${color}`, paddingLeft: '10px' }}>
+            <SourceStrip sources={sources} ruleColor={color} />
+          </div>
+        )}
 
         {/* Compare link */}
         <div style={{ marginTop: '12px' }}>
-          <Link to={`/compare/${element.symbol}/${element.neighbors[0] ?? 'O'}`}>
+          <Link to={`/elements/${element.symbol}/compare/${element.neighbors[0] ?? 'O'}`}>
             Compare →
           </Link>
         </div>

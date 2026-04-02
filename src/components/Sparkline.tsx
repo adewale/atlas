@@ -129,7 +129,7 @@ export function GroupPhaseStrip({
         const isHighlight = i === highlightIndex;
         const color = phase ? PHASE_COLORS[phase] ?? GREY_LIGHT : GREY_LIGHT;
         return (
-          <a key={i} href={`/element/${symbols[i]}`} style={{ cursor: 'pointer' }}>
+          <a key={i} href={`/elements/${symbols[i]}`} style={{ cursor: 'pointer' }}>
             <rect
               x={x + 1}
               y={2}

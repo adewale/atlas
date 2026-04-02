@@ -8,7 +8,7 @@ export default function Home() {
 
   const handleSelect = useCallback(
     (symbol: string) => {
-      transitionNavigate(`/element/${symbol}`);
+      transitionNavigate(`/elements/${symbol}`);
     },
     [transitionNavigate],
   );

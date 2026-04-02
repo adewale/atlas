@@ -12,6 +12,7 @@ import PretextSvg from '../components/PretextSvg';
 import type { ElementRecord } from '../lib/types';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
+import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -112,6 +113,22 @@ function formatTick(v: number, integer?: boolean): string {
 
 const INTEGER_PROPERTIES: Set<PropertyKey> = new Set(['atomicNumber', 'discoveryYear', 'period', 'group']);
 
+/** Short educational gloss for each property, shown in the margin. */
+const PROPERTY_DESCRIPTIONS: Record<PropertyKey, string> = {
+  atomicNumber: 'The number of protons in the nucleus. It uniquely identifies an element and determines its position in the periodic table.',
+  mass: 'The weighted average mass of an element\u2019s naturally occurring isotopes, measured in unified atomic mass units (u).',
+  density: 'Mass per unit volume at standard conditions. Osmium and iridium are the densest elements; hydrogen the least dense.',
+  electronegativity: 'How strongly an atom attracts electrons in a chemical bond (Pauling scale). Fluorine is the most electronegative element.',
+  ionizationEnergy: 'The energy needed to remove the outermost electron from a neutral atom. Noble gases have the highest values.',
+  radius: 'The distance from the nucleus to the outermost electron shell. Atoms shrink across a period and grow down a group.',
+  meltingPoint: 'The temperature at which a solid becomes liquid. Tungsten has the highest melting point of any element (3695 K).',
+  boilingPoint: 'The temperature at which a liquid becomes gas. Rhenium and tungsten have the highest boiling points.',
+  halfLife: 'For radioactive elements, the time for half of a sample to decay. Ranges from microseconds (Og) to billions of years (U-238).',
+  period: 'The horizontal row in the periodic table. Each period adds a new principal electron shell.',
+  group: 'The vertical column in the periodic table. Elements in the same group share the same number of valence electrons.',
+  discoveryYear: 'The year the element was first identified or synthesised. Ancient elements have no recorded discovery date.',
+};
+
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
@@ -201,34 +218,16 @@ export default function PropertyScatter() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: '760px', position: 'relative' }}>
-      {/* Margin note — educational aside */}
-      <aside
-        className="scatter-margin-note"
-        style={{
-          position: 'absolute',
-          right: '-200px',
-          top: '80px',
-          width: '170px',
-          fontSize: '12px',
-          lineHeight: 1.6,
-          color: GREY_MID,
-          borderLeft: `2px solid ${DEEP_BLUE}`,
-          paddingLeft: '10px',
-        }}
-      >
-        <strong style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: DEEP_BLUE }}>
-          Properties
-        </strong>
-        <p style={{ margin: '6px 0 0' }}>
-          <strong>Electronegativity</strong> measures how strongly an atom attracts electrons in a bond (Pauling scale).
+      <MarginNote label="Axes" color={DEEP_BLUE} top={80}>
+        <p style={{ margin: '0 0 6px' }}>
+          <strong style={{ fontSize: '11px' }}>X: {PROPERTY_LABELS[xKey]}</strong><br />
+          {PROPERTY_DESCRIPTIONS[xKey]}
         </p>
-        <p style={{ margin: '6px 0 0' }}>
-          <strong>Ionisation energy</strong> is the energy needed to remove an electron from a neutral atom.
+        <p style={{ margin: 0 }}>
+          <strong style={{ fontSize: '11px' }}>Y: {PROPERTY_LABELS[yKey]}</strong><br />
+          {PROPERTY_DESCRIPTIONS[yKey]}
         </p>
-        <p style={{ margin: '6px 0 0' }}>
-          Noble gases cluster at high ionisation energy because their filled shells resist electron removal.
-        </p>
-      </aside>
+      </MarginNote>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Property Scatter</h1>
 
@@ -474,7 +473,7 @@ export default function PropertyScatter() {
                     setHovered(hovered?.symbol === d.el.symbol ? null : d.el);
                   }
                 }}
-                onClick={() => navigate(`/element/${d.el.symbol}`)}
+                onClick={() => navigate(`/elements/${d.el.symbol}`)}
               />
               {/* Dim non-hovered when something is hovered */}
               {hovered && !isHovered && (

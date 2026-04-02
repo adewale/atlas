@@ -8,9 +8,9 @@ import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Compare() {
-  const { symbolA, symbolB } = useParams();
-  const elementA = symbolA ? getElement(symbolA) : undefined;
-  const elementB = symbolB ? getElement(symbolB) : undefined;
+  const { symbol, other } = useParams();
+  const elementA = symbol ? getElement(symbol) : undefined;
+  const elementB = other ? getElement(other) : undefined;
   const vertical = useIsMobile(600);
   useDocumentTitle(
     elementA && elementB ? `${elementA.name} vs ${elementB.name}` : 'Compare Not Found',
@@ -33,7 +33,7 @@ export default function Compare() {
 
   return (
     <PageShell>
-      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
+      <Link to={`/elements/${symbol}`} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← {elementA.name}</Link>
       <div style={{ marginTop: '16px' }}>
         <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />
       </div>

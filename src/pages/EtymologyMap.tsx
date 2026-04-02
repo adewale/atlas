@@ -50,7 +50,7 @@ const ORIGIN_LABELS: Record<string, string> = {
 const INTRO_TEXT =
   'Element names tell the story of science. Some honour places, some honour people, some invoke mythology. The etymology reveals centuries of discovery and human ambition.';
 
-const MAX_WIDTH = 960;
+const MAX_WIDTH = 760;
 
 // ---------------------------------------------------------------------------
 // Component

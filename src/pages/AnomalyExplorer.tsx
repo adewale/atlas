@@ -52,7 +52,7 @@ function computeStainOrigin(
 /* Intro paragraph                                                    */
 /* ------------------------------------------------------------------ */
 const INTRO_TEXT =
-  'Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. Select a category below to see which elements break the rules.';
+  'Not all elements follow textbook rules. Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. These exceptions are often explained by relativistic effects, electron\u2013electron repulsion, or the near-degeneracy of energy levels in heavier atoms. Select a category below to see which elements break the rules.';
 const INTRO_MAX_W = VIEWBOX_W;
 
 /* ------------------------------------------------------------------ */
@@ -160,69 +160,69 @@ export default function AnomalyExplorer() {
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1
-          style={{
-            ...INSCRIPTION_STYLE,
-            color: MUSTARD,
-            viewTransitionName: VT.VIZ_TITLE,
-          } as React.CSSProperties}
-        >
-          Anomaly Explorer
-        </h1>
+          <h1
+            style={{
+              ...INSCRIPTION_STYLE,
+              color: MUSTARD,
+              viewTransitionName: VT.VIZ_TITLE,
+            } as React.CSSProperties}
+          >
+            Anomaly Explorer
+          </h1>
 
-        {/* ---- Intro paragraph with drop cap ---- */}
-        <svg
-          width="100%"
-          viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
-          style={{ display: 'block', marginBottom: '12px' }}
-        >
-          <PretextSvg
-            lines={introLines}
-            lineHeight={introLH}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={INTRO_MAX_W}
-            animationStagger={40}
-            dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
-          />
-        </svg>
+          {/* ---- Intro paragraph with drop cap ---- */}
+          <svg
+            width="100%"
+            viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={introLines}
+              lineHeight={introLH}
+              x={0}
+              y={0}
+              fill={BLACK}
+              maxWidth={INTRO_MAX_W}
+              animationStagger={40}
+              dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
+            />
+          </svg>
 
-        {/* ---- Byrne colour key: one bold button per anomaly ---- */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 8,
-            marginBottom: 24,
-          }}
-        >
-          {anomalies.map((a, i) => {
-            const isActive = selectedSlug === a.slug;
-            const bg = buttonColorFor(i);
-            return (
-              <button
-                key={a.slug}
-                onClick={() => setSelectedSlug(isActive ? null : a.slug)}
-                style={{
-                  fontFamily: 'system-ui, sans-serif',
-                  fontSize: 13,
-                  fontWeight: 'bold',
-                  letterSpacing: '0.02em',
-                  color: isActive ? contrastTextColor(bg) : BLACK,
-                  background: isActive ? bg : 'transparent',
-                  border: `2px solid ${bg}`,
-                  borderRadius: 0,
-                  padding: '6px 14px',
-                  cursor: 'pointer',
-                  transition: 'background 200ms var(--ease-out), color 200ms var(--ease-out)',
-                }}
-              >
-                {a.label}
-              </button>
-            );
-          })}
-        </div>
+          {/* ---- Byrne colour key: one bold button per anomaly ---- */}
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 8,
+              marginBottom: 24,
+            }}
+          >
+            {anomalies.map((a, i) => {
+              const isActive = selectedSlug === a.slug;
+              const bg = buttonColorFor(i);
+              return (
+                <button
+                  key={a.slug}
+                  onClick={() => setSelectedSlug(isActive ? null : a.slug)}
+                  style={{
+                    fontFamily: 'system-ui, sans-serif',
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    letterSpacing: '0.02em',
+                    color: isActive ? contrastTextColor(bg) : BLACK,
+                    background: isActive ? bg : 'transparent',
+                    border: `2px solid ${bg}`,
+                    borderRadius: 0,
+                    padding: '6px 14px',
+                    cursor: 'pointer',
+                    transition: 'background 200ms var(--ease-out), color 200ms var(--ease-out)',
+                  }}
+                >
+                  {a.label}
+                </button>
+              );
+            })}
+          </div>
       </div>
 
       {/* ---- Periodic table grid ---- */}
@@ -262,7 +262,7 @@ export default function AnomalyExplorer() {
               key={el.symbol}
               transform={`translate(${pos.x}, ${pos.y})`}
               style={{ cursor: 'pointer' }}
-              onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+              onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/elements/${el.symbol}`); }}
             >
               <title>{el.name}</title>
               <rect

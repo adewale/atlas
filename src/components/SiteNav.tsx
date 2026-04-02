@@ -28,10 +28,10 @@ export default function SiteNav() {
       <div style={{ display: 'flex', gap: '16px' }}>
         <Link to="/" aria-label="Atlas home" style={{ color: GREY_MID, textDecoration: 'none' }}>Atlas</Link>
         <Link to="/about" aria-label="About Atlas" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>About</Link>
-        <Link to="/credits" aria-label="Credits" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Credits</Link>
-        <Link to="/design" aria-label="Design system" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Design</Link>
-        <Link to="/animation-palette" aria-label="Animation palette" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Animation</Link>
-        <Link to="/entity-map" aria-label="Entity map" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Entity Map</Link>
+        <Link to="/about/credits" aria-label="Credits" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Credits</Link>
+        <Link to="/about/design" aria-label="Design system" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Design</Link>
+        <Link to="/about/animation-palette" aria-label="Animation palette" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Animation</Link>
+        <Link to="/about/entity-map" aria-label="Entity map" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Entity Map</Link>
       </div>
     </nav>
   );

@@ -17,6 +17,7 @@ import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
+import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { phaseAtTemperature } from '../lib/phase';
@@ -97,7 +98,7 @@ const INTRO_TEXT =
   'At standard temperature and pressure, only 2 elements are liquid — mercury (Hg) and bromine (Br). Just 11 elements exist as gases, all nonmetals or noble gases. The remaining 105 elements are solid, the vast majority of which are metals.';
 
 const SVG_WIDTH = VIEWBOX_W;
-const INTRO_MAX_W = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 
 // ---------------------------------------------------------------------------
 // Sparkline Ruler constants
@@ -376,40 +377,41 @@ export default function PhaseLandscape() {
 
   return (
     <PageShell vizNav>
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
-          Phase Landscape{isAtSTP ? ' at STP' : ''}
-        </h1>
-
-        <svg
-          width="100%"
-          viewBox={`0 0 ${isMobile ? 360 : INTRO_MAX_W} ${introHeight}`}
-          style={{ display: 'block', marginBottom: '12px' }}
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={isMobile ? 360 : INTRO_MAX_W}
-            animationStagger={40}
-            dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
-          />
-        </svg>
-
-        {temperatureRuler}
-
+      <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
         {!isMobile && (
-          <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
+          <MarginNote label="Legend" color={WARM_RED} top={80}>
             {LEGEND_ITEMS.map((item) => (
-              <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ width: '24px', height: '16px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}` }} />
-                <span style={{ fontSize: '13px', fontWeight: 'bold' }}>{item.phase}</span>
+              <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <span style={{ width: '20px', height: '14px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}`, flexShrink: 0 }} />
+                <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.phase}</span>
               </div>
             ))}
-          </div>
+          </MarginNote>
         )}
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
+            Phase Landscape{isAtSTP ? ' at STP' : ''}
+          </h1>
+
+          <svg
+            width="100%"
+            viewBox={`0 0 ${isMobile ? 360 : INTRO_MAX_W} ${introHeight}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              fill={BLACK}
+              maxWidth={isMobile ? 360 : INTRO_MAX_W}
+              animationStagger={40}
+              dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
+            />
+          </svg>
+
+          {temperatureRuler}
+        </div>
       </div>
 
       {isMobile ? (
@@ -441,7 +443,7 @@ export default function PhaseLandscape() {
                     role="button"
                     aria-label={`${el.symbol} — ${el.name}, ${phase} at ${tempK} K`}
                     style={{ cursor: 'pointer' }}
-                    onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+                    onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/elements/${el.symbol}`); }}
                   >
                     <title>{el.name}</title>
                     <g
