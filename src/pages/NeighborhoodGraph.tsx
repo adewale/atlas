@@ -16,7 +16,6 @@ import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -98,15 +97,7 @@ export default function NeighborhoodGraph() {
 
   return (
     <PageShell vizNav>
-      <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
-        <MarginNote label="Neighbours" color={introColor} top={80}>
-          <p style={{ margin: '0 0 6px' }}>
-            <strong>Neighbours</strong> are elements directly adjacent in the standard periodic table — up, down, left, or right. Edge elements have fewer neighbours.
-          </p>
-          <p style={{ margin: 0 }}>
-            Elements in the same block (colour) often share chemical properties with their neighbours, creating families of related behaviour.
-          </p>
-        </MarginNote>
+      <div style={{ maxWidth: INTRO_MAX_W }}>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
 

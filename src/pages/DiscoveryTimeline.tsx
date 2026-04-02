@@ -12,7 +12,6 @@ import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
-import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 
@@ -252,14 +251,6 @@ export default function DiscoveryTimeline() {
             />
           </svg>
 
-          <MarginNote label="Reading the timeline" color={WARM_RED}>
-            <p style={{ margin: '0 0 6px' }}>
-              Squares are binned by decade and stacked vertically. Colour encodes the electron block.
-            </p>
-            <p style={{ margin: 0 }}>
-              The 1800s saw the most discoveries thanks to spectroscopy, which could identify elements by their characteristic light emission.
-            </p>
-          </MarginNote>
         </div>
 
         <SectionedCardList sections={eraSections} accordion defaultCollapsed={false} />
@@ -272,15 +263,7 @@ export default function DiscoveryTimeline() {
   // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
-      <div style={{ maxWidth: 760, position: 'relative' }}>
-        <MarginNote label="Reading the timeline" color={WARM_RED} top={80}>
-          <p style={{ margin: '0 0 6px' }}>
-            Squares are binned by decade and stacked vertically. Colour encodes the electron block.
-          </p>
-          <p style={{ margin: 0 }}>
-            The 1800s saw the most discoveries thanks to spectroscopy, which could identify elements by their characteristic light emission.
-          </p>
-        </MarginNote>
+      <div style={{ maxWidth: 760 }}>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
 
