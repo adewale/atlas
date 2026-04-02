@@ -23,7 +23,8 @@ const PLATE_ROWS = 4; // Group, Period, Block, Category
 const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS; // 224
 const RANK_ROW_H = 24;
 const FULL_WIDTH = 560;
-const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - 24;
+const PLATE_GAP = 8;
+const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
 const IDENTITY_WIDTH = 130;
@@ -95,6 +96,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     text: element.summary,
     fullWidth: FULL_WIDTH,
     narrowWidth: NARROW_WIDTH,
+    plateHeight: PLATE_HEIGHT,
     mobile,
     leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },
   });
@@ -512,7 +514,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
         {/* Compare link */}
         <div style={{ marginTop: '12px' }}>
-          <Link to={`/compare?a=${element.symbol}&b=${element.neighbors[0] ?? 'O'}`}>
+          <Link to={`/element/${element.symbol}/compare/${element.neighbors[0] ?? 'O'}`}>
             Compare →
           </Link>
         </div>

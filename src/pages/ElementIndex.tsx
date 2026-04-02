@@ -1,7 +1,7 @@
 import { useLoaderData } from 'react-router';
 import { Link } from 'react-router';
 import { blockColor } from '../lib/grid';
-import { BLACK, BACK_LINK_STYLE, INSCRIPTION_STYLE, WARM_RED } from '../lib/theme';
+import { BACK_LINK_STYLE, INSCRIPTION_STYLE, WARM_RED } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
@@ -13,26 +13,25 @@ export default function ElementIndex() {
   useDocumentTitle('All Elements');
   const { elements } = useLoaderData() as { elements: ElementRecord[] };
 
-  // Group elements by block
-  const byBlock: Record<string, ElementRecord[]> = {};
-  for (const el of elements) {
-    (byBlock[el.block] ??= []).push(el);
+  // Sort alphabetically by name, single section
+  const sorted = [...elements].sort((a, b) => a.name.localeCompare(b.name));
+
+  // Group into A–Z sections
+  const byLetter = new Map<string, ElementRecord[]>();
+  for (const el of sorted) {
+    const letter = el.name[0].toUpperCase();
+    (byLetter.get(letter) ?? byLetter.set(letter, []).get(letter)!).push(el);
   }
 
-  const blockOrder = ['s', 'p', 'd', 'f'];
-  const blockLabels: Record<string, string> = { s: 's-block', p: 'p-block', d: 'd-block', f: 'f-block' };
-
-  const sections: Section[] = blockOrder
-    .filter((b) => byBlock[b])
-    .map((b) => ({
-      id: `block-${b}`,
-      label: `${blockLabels[b]} (${byBlock[b].length} elements)`,
-      color: blockColor(b),
-      items: byBlock[b].map((el) => ({
-        symbol: el.symbol,
-        description: el.name,
-      })),
-    }));
+  const sections: Section[] = Array.from(byLetter.entries()).map(([letter, els]) => ({
+    id: letter,
+    label: `${letter} (${els.length})`,
+    color: blockColor(els[0].block),
+    items: els.map((el) => ({
+      symbol: el.symbol,
+      description: el.name,
+    })),
+  }));
 
   return (
     <PageShell>

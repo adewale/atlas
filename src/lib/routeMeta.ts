@@ -90,10 +90,10 @@ export const ENTITIES: EntityMeta[] = [
     { name: 'Mythology', href: '/etymology-map#mythology' },
     { name: 'Properties', href: '/etymology-map#property' },
   ]},
-  { id: 'comparison', label: 'Comparison', route: '/compare?a=:a&b=:b', count: '6903', colour: BLACK, description: 'Side-by-side element pair. Any two of 118 elements can be compared.', examples: [
-    { name: 'Fe vs Cu', href: '/compare?a=Fe&b=Cu' },
-    { name: 'Na vs K', href: '/compare?a=Na&b=K' },
-    { name: 'C vs Si', href: '/compare?a=C&b=Si' },
+  { id: 'comparison', label: 'Comparison', route: '/element/:symbol/compare/:other', count: '6903', colour: BLACK, description: 'Side-by-side element pair. Any two of 118 elements can be compared. The first symbol is the origin element.', examples: [
+    { name: 'Fe vs Cu', href: '/element/Fe/compare/Cu' },
+    { name: 'Na vs K', href: '/element/Na/compare/K' },
+    { name: 'C vs Si', href: '/element/C/compare/Si' },
   ]},
   { id: 'neighbour', label: 'Neighbour', route: '—', count: '~236', colour: BLACK, description: 'Positional adjacency in the periodic table grid. Implicit, computed from grid coordinates.', examples: [
     { name: 'Fe ↔ Mn, Co', href: '/element/Fe' },

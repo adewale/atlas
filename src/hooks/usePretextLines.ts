@@ -10,8 +10,6 @@ import {
 } from '../lib/pretext';
 
 const BODY_FONT = `16px ${PRETEXT_SANS}`;
-const PLATE_HEIGHT = 180;
-
 type UsePretextLinesOptions = {
   text: string;
   maxWidth: number;
@@ -37,6 +35,7 @@ type UseShapedTextOptions = {
   text: string;
   fullWidth: number;
   narrowWidth: number;
+  plateHeight: number;
   font?: string;
   mobile?: boolean;
   leftIndent?: { width: number; height: number };
@@ -90,6 +89,7 @@ export function useShapedText({
   text,
   fullWidth,
   narrowWidth,
+  plateHeight,
   font = BODY_FONT,
   mobile = false,
   leftIndent,
@@ -101,7 +101,7 @@ export function useShapedText({
 } {
   return useMemo(() => {
     const lineHeight = computeLineHeight(font);
-    const plateHeightInLines = Math.ceil(PLATE_HEIGHT / lineHeight);
+    const plateHeightInLines = Math.ceil(plateHeight / lineHeight);
     const identityHeightInLines = leftIndent
       ? Math.ceil(leftIndent.height / lineHeight)
       : 0;
@@ -138,7 +138,7 @@ export function useShapedText({
     }
 
     return { lines, lineHeight, plateHeightInLines, identityHeightInLines };
-  }, [text, fullWidth, narrowWidth, font, mobile, leftIndent]);
+  }, [text, fullWidth, narrowWidth, plateHeight, font, mobile, leftIndent]);
 }
 
 type UseDropCapOptions = {

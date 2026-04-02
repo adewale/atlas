@@ -179,8 +179,8 @@ export const router = createBrowserRouter([
     },
   },
 
-  /* ── Compare (query params: ?a=Fe&b=Cu) ──── */
-  { path: '/compare', Component: Compare },
+  /* ── Compare (sub-resource of element) ────── */
+  { path: '/element/:symbol/compare/:other', Component: Compare },
 
   /* ── About & meta pages ──────────────────── */
   { path: '/about', Component: About },
