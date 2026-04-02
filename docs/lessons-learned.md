@@ -225,3 +225,333 @@ identify which text measurement tier each page needs.
 verifies actual contrast ratios meet AA standards. Font sizes below 10px
 (7px element names, 8px category labels) should be explicitly justified
 in the spec as acceptable for decorative/symbolic contexts.
+
+---
+---
+
+# Part 2 — Lessons from Iterative Development
+
+The sections above capture bugs found during the initial quality audit.
+The sections below capture lessons that emerged across 13 merged PRs and
+130+ commits of iterative development — patterns discovered while building
+features, not just while fixing bugs.
+
+---
+
+## 9. Font loading is a hidden measurement dependency
+
+**Context:** PR #14 (fix-numeric-layout-shift)
+
+**Bug:** Pretext SVG text measurements were cached using fallback font
+metrics (Georgia) before the custom web font (Cinzel) loaded. Once the
+font arrived, previously measured text no longer matched the rendered
+glyphs — causing layout shift, text overflow, and dropcap crowding.
+
+**Root cause:** Canvas-based text measurement libraries compute glyph
+widths at call time. If the call happens before `document.fonts.ready`
+resolves, measurements are based on the fallback font.
+
+**Fix:** A `useFontsReady()` hook that listens for font load events and
+calls `clearCache()` on the Pretext library, triggering re-measurement
+with correct metrics.
+
+**What should have been in the spec:**
+- "Any component that measures text must wait for custom fonts to load
+  before caching metrics. Use `useFontsReady()` as a dependency."
+- "Pretext cache must be invalidated when fonts transition from
+  fallback → loaded."
+
+---
+
+## 10. Responsive SVG requires multiple fallback strategies
+
+**Context:** PRs #13 (mobile-optimization), #14 (layout-shift), #16
+(improve-margin-layout)
+
+**Problem:** Wide SVGs designed for desktop (700–1008px coordinate
+space) either forced horizontal scroll on mobile or scaled text to
+unreadable sizes via viewBox.
+
+**What emerged:** Three distinct strategies were needed, discovered
+incrementally across three PRs:
+1. **Component replacement:** `SectionedCardList` accordion replaces
+   SVG entirely on mobile (PR #13).
+2. **Width capping:** Intro SVGs use `maxWidth` to prevent stretching
+   beyond their coordinate space (PR #14).
+3. **Dynamic measurement:** `ResizeObserver` measures actual container
+   width so SVG coordinates match available pixels (PR #16).
+
+**What should have been in the spec:**
+- "Every SVG visualization must declare its mobile strategy: replace,
+  cap, or measure. CSS media queries alone are insufficient for SVG
+  coordinate-space problems."
+- "Wide SVGs (>600px) must be tested at 320px, 375px, and 768px
+  viewports."
+
+---
+
+## 11. Layout shift from conditional rendering
+
+**Context:** PR #14 (fix-numeric-layout-shift)
+
+**Bug:** The STP reset button on PhaseLandscape was conditionally
+rendered (`{show && <button>}`), causing the flex container to reflow
+when it appeared. Phase annotation text that wrapped from 1 to 2 lines
+during temperature scrubbing also shifted content below.
+
+**Root cause:** Adding/removing DOM elements in a flex layout changes
+the layout calculation. Dynamic text that changes line count has the
+same effect.
+
+**Fix:** Use `visibility: hidden` instead of conditional rendering to
+reserve space. Use `minHeight: 2.4em` for multi-line text regions.
+
+**What should have been in the spec:**
+- "Dynamic UI elements in flex layouts must reserve space with
+  `visibility: hidden` or `min-width`/`min-height`, not conditional
+  DOM insertion."
+- "Any text that changes content dynamically must have a minimum height
+  equal to its maximum expected line count."
+
+---
+
+## 12. Tabular numerals prevent numeric layout shift
+
+**Context:** PR #14 (fix-numeric-layout-shift)
+
+**Bug:** Dynamic numbers (temperatures, tick labels, atomic numbers)
+caused flex reflow as digit count changed — e.g., switching from "99"
+to "100" shifted all adjacent elements.
+
+**Root cause:** Proportional numerals have different widths per digit
+(1 is narrower than 0). When numbers update, total width changes.
+
+**Fix:** Apply `font-variant-numeric: tabular-nums` to any element
+displaying dynamic numbers.
+
+**What should have been in the spec:**
+- "All dynamic numeric displays must use `tabular-nums`. This is a
+  mandatory style rule, not optional polish."
+
+---
+
+## 13. Animation tokens must be centralized
+
+**Context:** PR #12 (audit-shared-transitions)
+
+**Problem:** 22 raw view-transition name strings were scattered across
+files. Easing keywords were inconsistent (`ease-out` vs
+`var(--ease-out)`). `fontWeight: 700` and `fontWeight: 'bold'` coexisted.
+
+**Fix:** Consolidated to `transitions.ts` with 11 named constants, a
+`vt()` helper for browser-safe view transition names, and unified easing
+curves. Added an Animation Palette page as living documentation.
+
+**What should have been in the spec:**
+- "All animation timing, easing, and view-transition names must be
+  defined in `transitions.ts`. No raw strings in components."
+- "An Animation Palette page must exist as living documentation for
+  every animation pattern in the app."
+
+---
+
+## 14. URL structure changes ripple everywhere
+
+**Context:** PR #16 (improve-margin-layout)
+
+**Problem:** Removing the `/atlas` prefix from browse routes and
+pluralizing collection URLs (`/ranks` → `/properties`, `/timelines` →
+`/eras`) required changes in:
+- `routeMeta.ts` (route definitions)
+- Every page consuming route metadata (VizNav, EntityMap, Design)
+- Back-link labels ("← Timeline" not "← Discovery Timeline")
+- Stale text from old specs ("property bars" references)
+- Route parameter names (`/blocks/:block` not `/blocks/:b`)
+
+**What should have been in the spec:**
+- "URL taxonomy must be documented separately (route name, path,
+  param names, plural/singular convention). Changes to URLs require
+  a checklist: routes, nav links, back-links, labels, and tests."
+- "Route parameter names must match the resource name (`/blocks/:block`,
+  not `/blocks/:b`)."
+
+---
+
+## 15. Type guards over non-null assertions
+
+**Context:** PR #3 (audit-internal-consistency)
+
+**Problem:** `getElement(symbol)!` was scattered through the codebase,
+hiding potential null-dereference bugs. TypeScript's `!` compiles away
+silently — it lies to the type checker rather than handling the error.
+
+**Fix:** Replace `!` assertions with type guard filters:
+`(e): e is ElementRecord => e != null` so TypeScript narrows correctly.
+
+**What should have been in the spec:**
+- "Never use non-null assertions (`!`) on data lookups. Use type guard
+  functions so TypeScript can narrow the type safely."
+- "Nullable lookups (elements, groups, anomalies) must be handled with
+  explicit guards, not assertions."
+
+---
+
+## 16. Theme tokens must be the single source of truth
+
+**Context:** PRs #2 (periodic-table-grid), #3 (audit-internal-consistency)
+
+**Problem:** The MUSTARD color appeared as `#c59b1a` in `grid.ts` and
+`globals.css` (incorrect, low WCAG contrast) while `theme.ts` had the
+correct `#856912`. Hardcoded `#fff` and `#555` appeared in multiple
+files instead of PAPER and GREY_MID tokens.
+
+**Fix:** Centralized all color values in `theme.ts`. Added regression
+tests (12 tests, 82 assertions) that verify components import from the
+token source rather than using raw hex values.
+
+**What should have been in the spec:**
+- "No raw color hex values in components. All colors must be imported
+  from `theme.ts`."
+- "Regression tests must verify token usage — color consistency is a
+  testing concern, not just a style concern."
+
+---
+
+## 17. Test fixtures must track the data model
+
+**Context:** PRs #8 (scatter-configurable-axes), #11 (add-ci)
+
+**Problem:** PR #8 added physical properties (density, melting/boiling
+points, half-life) to the element data. PR #11's CI then failed because
+test fixtures in the `tests/` directory still used the old schema — they
+were manually maintained and silently drifted from reality.
+
+**Fix:** Updated fixtures manually for PR #11. But the structural
+problem remains: fixtures should be generated from actual data or
+validated against a schema.
+
+**What should have been in the spec:**
+- "Test fixtures must be validated against the data pipeline's output
+  schema. When the data model changes, CI must fail if fixtures are
+  stale."
+- "Prefer generating test fixtures from seed data over hand-writing
+  them."
+
+---
+
+## 18. Margin notes need explicit mobile degradation
+
+**Context:** PR #16 (improve-margin-layout)
+
+**Problem:** Tufte-style margin notes work at ≥1100px viewport width
+where physical margins exist. On mobile, there are no margins — the
+content simply overflows or disappears.
+
+**Fix:** `MarginNote` component renders as absolutely-positioned text on
+desktop and as a `<details>` accordion (progressive disclosure) on mobile.
+
+**What should have been in the spec:**
+- "Any desktop-only layout feature (margins, sidebars, multi-column)
+  must declare its mobile degradation strategy before implementation."
+- "Progressive disclosure (`<details>`) is the default mobile fallback
+  for supplementary content."
+
+---
+
+## 19. View Transitions API requires naming taxonomy and snapshot discipline
+
+**Context:** PR #12 (audit-shared-transitions)
+
+**Problem:** View transitions (element morphing across page navigations)
+require explicit `viewTransitionName` on each shared surface. Without a
+naming convention, names collided or were missed. Additionally, the
+browser snapshot captured white corners on element cells because the
+snapshot background was opaque.
+
+**Fix:** Established three naming tiers:
+1. **Element surfaces:** `symbol`, `number`, `name`
+2. **UI surfaces:** `cell-bg`, `data-plate-group`
+3. **Navigation surfaces:** `nav-back`, `viz-title`
+
+Used a `vt()` helper for browser detection fallback and fixed snapshot
+backgrounds to transparent.
+
+**What should have been in the spec:**
+- "View transition names must follow the three-tier taxonomy: element,
+  UI surface, navigation."
+- "Test view transitions with transparent snapshot backgrounds to avoid
+  opaque-corner artifacts."
+
+---
+
+## 20. Flex + SVG sizing requires three dimensions of thought
+
+**Context:** PR #16 (improve-margin-layout)
+
+**Problem:** The Folio layout went through three failed iterations:
+1. Side-by-side flex (identity + plate left, SVG text right) — failed
+   on mobile due to line wrapping.
+2. Wrapped flex (identity + plate row, text row) — text clipped at
+   320px because SVG had hardcoded `width`.
+3. ResizeObserver-driven dynamic widths — finally correct, measuring
+   actual container width rather than assuming it.
+
+**Root cause:** CSS flex layout and SVG coordinate space use different
+sizing models. CSS controls the container; SVG `viewBox` controls
+internal coordinates; `width`/`height` attributes control the bridge
+between them. All three must agree.
+
+**What should have been in the spec:**
+- "SVG inside flex containers must use ResizeObserver or container
+  queries to determine available width — never hardcode pixel values."
+- "Document the three sizing dimensions: CSS container width, SVG
+  `viewBox` coordinate space, and SVG `width`/`height` attributes."
+
+---
+
+## Updated Summary
+
+### Audit-phase lessons (1–8)
+Focused on bugs caught after the fact: CSS/SVG transform conflicts,
+zero-height measurements, broken category pages, unsorted search,
+same-value comparison edge cases, orphaned routes, plain `<a>` tags,
+and mock-heavy tests.
+
+### Development-phase lessons (9–20)
+Focused on patterns discovered while building features:
+
+| # | Lesson | Key Principle |
+|---|--------|---------------|
+| 9 | Font loading is a measurement dependency | Invalidate caches when fonts load |
+| 10 | Responsive SVG needs multiple strategies | Replace, cap, or measure — not just CSS |
+| 11 | Conditional rendering causes layout shift | Reserve space with visibility/min-size |
+| 12 | Tabular numerals for dynamic numbers | `tabular-nums` is mandatory, not optional |
+| 13 | Centralize animation tokens | One file, one palette page, no raw strings |
+| 14 | URL changes ripple everywhere | Document URL taxonomy with a change checklist |
+| 15 | Type guards over non-null assertions | Let TypeScript narrow, don't lie to it |
+| 16 | Theme tokens as single source of truth | Test for token usage, not just correctness |
+| 17 | Test fixtures must track the data model | Validate or generate fixtures from schema |
+| 18 | Margin notes need mobile degradation | `<details>` as default mobile fallback |
+| 19 | View Transitions need naming taxonomy | Three tiers: element, surface, navigation |
+| 20 | Flex + SVG sizing needs three dimensions | Container width, viewBox, and attributes |
+
+### Cross-cutting themes
+
+1. **Measure, don't assume.** Whether it's font metrics, container
+   widths, or SVG coordinate space — the recurring failure mode is
+   hardcoding values that should be measured at runtime.
+
+2. **Centralize tokens, decentralize usage.** Colors, animations, URLs,
+   and view-transition names all suffered from duplication drift.
+   Centralizing the definition (and testing that components use it) is
+   more reliable than code review alone.
+
+3. **Mobile is a different layout, not a smaller desktop.** CSS media
+   queries alone don't solve SVG coordinate-space problems, margin
+   layouts, or progressive disclosure. Mobile needs its own component
+   strategy per page.
+
+4. **Tests must match reality.** Mocks that lie, fixtures that drift,
+   and assertions that check the wrong thing (set membership instead of
+   ordering, DOM existence instead of visual position) are worse than
+   no tests — they provide false confidence.
