@@ -62,7 +62,8 @@ const SVG_H = 500;
 const MARGIN = { top: 24, right: 24, bottom: 48, left: 58 };
 const PLOT_W = SVG_W - MARGIN.left - MARGIN.right;
 const PLOT_H = SVG_H - MARGIN.top - MARGIN.bottom;
-const SQUARE_SIZE = 10;
+const SQUARE_SIZE_DESKTOP = 10;
+const SQUARE_SIZE_MOBILE = 16;
 const HIT_SIZE = 44; // mobile-friendly touch target
 const TICK_COUNT = 6;
 
@@ -134,6 +135,7 @@ const PROPERTY_DESCRIPTIONS: Record<PropertyKey, string> = {
 // ---------------------------------------------------------------------------
 export default function PropertyScatter() {
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
+  const SQUARE_SIZE = isMobile ? SQUARE_SIZE_MOBILE : SQUARE_SIZE_DESKTOP;
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const xKey = (searchParams.get('x') as PropertyKey) || 'electronegativity';

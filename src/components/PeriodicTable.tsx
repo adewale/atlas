@@ -358,11 +358,11 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               onClick={() => setHighlightMode(isActive && o.value !== 'none' ? 'none' : o.value)}
               aria-pressed={isActive}
               style={{
-                fontSize: '10px',
+                fontSize: isMobile ? '12px' : '10px',
                 fontWeight: 'bold',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                padding: '6px 10px',
+                padding: isMobile ? '8px 12px' : '6px 10px',
                 border: `1.5px solid ${isActive ? BLACK : GREY_RULE}`,
                 background: isActive ? BLACK : 'transparent',
                 color: isActive ? PAPER : GREY_MID,
