@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { allElements } from '../lib/data';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import {
@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, MUSTARD, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID, GREY_LIGHT, STROKE_HAIRLINE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
@@ -23,7 +23,7 @@ import { phaseAtTemperature } from '../lib/phase';
 import type { Phase } from '../lib/phase';
 
 // ---------------------------------------------------------------------------
-// Phase → colour mapping (Byrne: hard colour fields, no gradients)
+// Phase → colour mapping
 // ---------------------------------------------------------------------------
 const PHASE_COLORS: Record<Phase, string> = {
   solid: BLACK,
@@ -32,9 +32,6 @@ const PHASE_COLORS: Record<Phase, string> = {
   unknown: GREY_LIGHT,
 };
 
-// ---------------------------------------------------------------------------
-// Phase order and labels
-// ---------------------------------------------------------------------------
 const PHASE_ORDER: Phase[] = ['solid', 'liquid', 'gas', 'unknown'];
 
 const PHASE_LABELS: Record<Phase, string> = {
@@ -47,23 +44,47 @@ const PHASE_LABELS: Record<Phase, string> = {
 // ---------------------------------------------------------------------------
 // Temperature constants
 // ---------------------------------------------------------------------------
-const DEFAULT_TEMP = 273; // STP in Kelvin
+const DEFAULT_TEMP = 273;
 const TEMP_MIN = 0;
 const TEMP_MAX = 6000;
-const TEMP_STEP = 10;
 
-/** Notable temperature landmarks for the slider. */
-const TEMP_TICKS = [
-  { k: 0, label: '0 K' },
-  { k: 273, label: 'STP' },
-  { k: 373, label: 'H₂O boils' },
-  { k: 1811, label: 'Fe melts' },
-  { k: 3695, label: 'W melts' },
-  { k: 5778, label: 'Sun surface' },
+/** Landmark temperatures — the "story stops". */
+const LANDMARKS = [
+  { k: 4, label: 'He boils', color: WARM_RED },
+  { k: 77, label: 'N₂ boils', color: WARM_RED },
+  { k: 234, label: 'Hg melts', color: DEEP_BLUE },
+  { k: 273, label: 'STP', color: BLACK },
+  { k: 373, label: 'H₂O boils', color: WARM_RED },
+  { k: 1811, label: 'Fe melts', color: BLACK },
+  { k: 3695, label: 'W melts', color: BLACK },
+  { k: 5778, label: '☉ surface', color: WARM_RED },
 ];
 
 // ---------------------------------------------------------------------------
-// Legend and intro constants
+// Pre-compute sparkline: count of phase transitions at each temperature
+// ---------------------------------------------------------------------------
+const SPARKLINE_BINS = 120;
+const BIN_WIDTH = TEMP_MAX / SPARKLINE_BINS;
+
+function buildTransitionSparkline(): number[] {
+  const transitions: number[] = [];
+  for (const el of allElements) {
+    if (el.meltingPoint != null) transitions.push(el.meltingPoint);
+    if (el.boilingPoint != null) transitions.push(el.boilingPoint);
+  }
+  const counts = new Array(SPARKLINE_BINS).fill(0);
+  for (const t of transitions) {
+    const bin = Math.min(Math.floor(t / BIN_WIDTH), SPARKLINE_BINS - 1);
+    counts[bin]++;
+  }
+  return counts;
+}
+
+const SPARKLINE_DATA = buildTransitionSparkline();
+const SPARKLINE_MAX = Math.max(...SPARKLINE_DATA);
+
+// ---------------------------------------------------------------------------
+// Legend items
 // ---------------------------------------------------------------------------
 const LEGEND_ITEMS = [
   { phase: 'Solid', color: BLACK },
@@ -72,6 +93,9 @@ const LEGEND_ITEMS = [
   { phase: 'Unknown', color: GREY_LIGHT },
 ];
 
+// ---------------------------------------------------------------------------
+// Intro
+// ---------------------------------------------------------------------------
 const INTRO_TEXT =
   'At standard temperature and pressure, only 2 elements are liquid — mercury (Hg) and bromine (Br). Just 11 elements exist as gases, all nonmetals or noble gases. The remaining 105 elements are solid, the vast majority of which are metals.';
 
@@ -79,48 +103,13 @@ const SVG_WIDTH = VIEWBOX_W;
 const INTRO_MAX_W = VIEWBOX_W;
 
 // ---------------------------------------------------------------------------
-// Slider styles
+// Sparkline Ruler constants
 // ---------------------------------------------------------------------------
-const sliderContainerStyle: React.CSSProperties = {
-  marginBottom: 16,
-};
-
-const sliderStyle: React.CSSProperties = {
-  width: '100%',
-  height: 6,
-  appearance: 'none',
-  WebkitAppearance: 'none',
-  background: GREY_MID,
-  outline: 'none',
-  cursor: 'pointer',
-};
-
-const tempDisplayStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'baseline',
-  marginBottom: 8,
-};
-
-const tempValueStyle: React.CSSProperties = {
-  fontSize: 20,
-  fontWeight: 'bold',
-  fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
-  color: BLACK,
-};
-
-const tempUnitStyle: React.CSSProperties = {
-  fontSize: 13,
-  color: GREY_MID,
-};
-
-const tickContainerStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginTop: 4,
-  fontSize: 9,
-  color: GREY_MID,
-};
+const RULER_H = 48;
+const SPARK_H = 24;
+const SPARK_Y = 0;
+const TICK_Y = SPARK_H + 4;
+const LABEL_Y = SPARK_H + 16;
 
 // ---------------------------------------------------------------------------
 // Component
@@ -132,6 +121,8 @@ export default function PhaseLandscape() {
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [tempK, setTempK] = useState(DEFAULT_TEMP);
+  const rulerRef = useRef<SVGSVGElement>(null);
+  const isDragging = useRef(false);
 
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
@@ -152,6 +143,15 @@ export default function PhaseLandscape() {
     }
     return map;
   }, [tempK]);
+
+  // Phase counts for the ruler annotation
+  const phaseCounts = useMemo(() => {
+    const counts: Record<Phase, number> = { solid: 0, liquid: 0, gas: 0, unknown: 0 };
+    for (const phase of elementPhases.values()) {
+      counts[phase]++;
+    }
+    return counts;
+  }, [elementPhases]);
 
   // Build sections for mobile view
   const phaseSections: Section[] = useMemo(() => {
@@ -176,22 +176,86 @@ export default function PhaseLandscape() {
   const tempC = tempK - 273;
   const DROP_CAP_SIZE = 80;
   const introHeight = Math.max(lines.length * lineHeight + 16, DROP_CAP_SIZE + 4);
-
   const isAtSTP = tempK === DEFAULT_TEMP;
 
-  // ---- Temperature slider (shared between mobile and desktop) ----
-  const temperatureSlider = (
-    <div style={sliderContainerStyle}>
-      <div style={tempDisplayStyle}>
-        <div data-testid="temp-display">
-          <span style={tempValueStyle}>{tempK} K</span>
-          <span style={tempUnitStyle}> / {tempC}°C</span>
-        </div>
+  // ---- Ruler interaction: convert pointer position to temperature ----
+  const tempFromPointer = useCallback((clientX: number) => {
+    const svg = rulerRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const t = Math.round((x / rect.width) * TEMP_MAX / 10) * 10;
+    setTempK(Math.max(TEMP_MIN, Math.min(TEMP_MAX, t)));
+  }, []);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    isDragging.current = true;
+    (e.target as Element).setPointerCapture(e.pointerId);
+    tempFromPointer(e.clientX);
+  }, [tempFromPointer]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    tempFromPointer(e.clientX);
+  }, [tempFromPointer]);
+
+  const handlePointerUp = useCallback(() => {
+    isDragging.current = false;
+  }, []);
+
+  // Snap to landmark
+  const snapToLandmark = useCallback((k: number) => {
+    setTempK(k);
+  }, []);
+
+  // ---- Ruler width adapts to context ----
+  const rulerWidth = isMobile ? 360 : 700;
+
+  // ---- Sparkline path ----
+  const sparklinePath = useMemo(() => {
+    const points = SPARKLINE_DATA.map((count, i) => {
+      const x = (i / SPARKLINE_BINS) * rulerWidth;
+      const y = SPARK_Y + SPARK_H - (count / SPARKLINE_MAX) * SPARK_H;
+      return `${x},${y}`;
+    });
+    // Close the area path
+    return `M0,${SPARK_Y + SPARK_H} L${points.join(' L')} L${rulerWidth},${SPARK_Y + SPARK_H} Z`;
+  }, [rulerWidth]);
+
+  // ---- Cursor x position ----
+  const cursorX = (tempK / TEMP_MAX) * rulerWidth;
+
+  // ---- Phase count annotation ----
+  const phaseAnnotation = [
+    phaseCounts.solid > 0 ? `${phaseCounts.solid} solid` : null,
+    phaseCounts.liquid > 0 ? `${phaseCounts.liquid} liquid` : null,
+    phaseCounts.gas > 0 ? `${phaseCounts.gas} gas` : null,
+    phaseCounts.unknown > 0 ? `${phaseCounts.unknown} unknown` : null,
+  ].filter(Boolean).join(' · ');
+
+  // ---- Temperature ruler SVG (shared) ----
+  const temperatureRuler = (
+    <div style={{ marginBottom: 16 }}>
+      {/* Phase counts + temperature readout */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'baseline',
+        marginBottom: 6,
+      }}>
+        <span data-testid="temp-display" style={{
+          fontSize: 13,
+          fontWeight: 'bold',
+          fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
+          color: BLACK,
+        }}>
+          {tempK} K <span style={{ fontWeight: 'normal', color: GREY_MID, fontFamily: 'system-ui, sans-serif' }}>/ {tempC}°C</span>
+        </span>
         {!isAtSTP && (
           <button
             onClick={() => setTempK(DEFAULT_TEMP)}
             style={{
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 'bold',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
@@ -202,25 +266,105 @@ export default function PhaseLandscape() {
               color: BLACK,
             }}
           >
-            Reset to STP
+            STP
           </button>
         )}
       </div>
-      <input
-        type="range"
-        min={TEMP_MIN}
-        max={TEMP_MAX}
-        step={TEMP_STEP}
-        value={tempK}
-        onChange={(e) => setTempK(Number(e.target.value))}
-        aria-label="Temperature in Kelvin"
-        style={sliderStyle}
-      />
-      <div style={tickContainerStyle}>
-        {TEMP_TICKS.map(t => (
-          <span key={t.k}>{t.label}</span>
-        ))}
+
+      <div style={{
+        fontSize: 11,
+        color: GREY_MID,
+        marginBottom: 6,
+        letterSpacing: '0.02em',
+      }}>
+        {phaseAnnotation}
       </div>
+
+      {/* Sparkline ruler SVG */}
+      <svg
+        ref={rulerRef}
+        viewBox={`0 0 ${rulerWidth} ${RULER_H}`}
+        width="100%"
+        style={{
+          display: 'block',
+          cursor: 'crosshair',
+          touchAction: 'none',
+          userSelect: 'none',
+        }}
+        aria-label="Temperature ruler — drag or tap to change temperature"
+        role="slider"
+        aria-valuemin={TEMP_MIN}
+        aria-valuemax={TEMP_MAX}
+        aria-valuenow={tempK}
+        aria-valuetext={`${tempK} Kelvin`}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+      >
+        {/* Sparkline area — phase transition density */}
+        <path
+          d={sparklinePath}
+          fill={GREY_RULE}
+          opacity={0.5}
+        />
+
+        {/* Baseline */}
+        <line
+          x1={0} y1={SPARK_Y + SPARK_H}
+          x2={rulerWidth} y2={SPARK_Y + SPARK_H}
+          stroke={BLACK}
+          strokeWidth={STROKE_THIN}
+        />
+
+        {/* Landmark markers — small coloured squares on the baseline */}
+        {LANDMARKS.map(lm => {
+          const x = (lm.k / TEMP_MAX) * rulerWidth;
+          return (
+            <g key={lm.k} onClick={(e) => { e.stopPropagation(); snapToLandmark(lm.k); }} style={{ cursor: 'pointer' }}>
+              <rect
+                x={x - 3}
+                y={SPARK_Y + SPARK_H - 3}
+                width={6}
+                height={6}
+                fill={lm.color}
+              />
+              <line
+                x1={x} y1={SPARK_Y + SPARK_H}
+                x2={x} y2={TICK_Y}
+                stroke={lm.color}
+                strokeWidth={STROKE_HAIRLINE}
+                opacity={0.4}
+              />
+              <text
+                x={x}
+                y={LABEL_Y}
+                textAnchor="middle"
+                fontSize={isMobile ? 6 : 8}
+                fill={GREY_MID}
+                fontFamily="system-ui, sans-serif"
+              >
+                {lm.label}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* Cursor — vertical black hairline */}
+        <line
+          x1={cursorX} y1={0}
+          x2={cursorX} y2={SPARK_Y + SPARK_H}
+          stroke={BLACK}
+          strokeWidth={1.5}
+          style={{ pointerEvents: 'none' }}
+        />
+        {/* Cursor cap — small triangle */}
+        <polygon
+          points={`${cursorX - 3},${SPARK_Y + SPARK_H} ${cursorX + 3},${SPARK_Y + SPARK_H} ${cursorX},${SPARK_Y + SPARK_H + 4}`}
+          fill={BLACK}
+          style={{ pointerEvents: 'none' }}
+        />
+      </svg>
     </div>
   );
 
@@ -248,7 +392,7 @@ export default function PhaseLandscape() {
           />
         </svg>
 
-        {temperatureSlider}
+        {temperatureRuler}
 
         {!isMobile && (
           <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
@@ -270,7 +414,7 @@ export default function PhaseLandscape() {
             <svg
               viewBox={`0 0 ${SVG_WIDTH} ${VIEWBOX_H}`}
               role="img"
-              aria-label="Periodic table coloured by element phase at standard temperature and pressure"
+              aria-label="Periodic table coloured by element phase"
               style={{
                 width: '100%',
                 minWidth: SVG_WIDTH,
@@ -335,7 +479,7 @@ export default function PhaseLandscape() {
           <p style={{ fontSize: '13px', color: GREY_MID, marginTop: '12px' }}>
             {isAtSTP
               ? 'STP = Standard Temperature and Pressure (0°C, 1 atm). Most elements are solid metals at room temperature.'
-              : `Showing element phases at ${tempK} K (${tempC}°C). Drag the slider to explore how matter changes state.`}
+              : `Showing element phases at ${tempK} K (${tempC}°C). Drag the ruler to explore how matter changes state.`}
           </p>
         </>
       )}
