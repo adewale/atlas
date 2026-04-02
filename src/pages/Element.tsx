@@ -19,7 +19,12 @@ export default function Element() {
   const groups: GroupData[] | undefined = loaderData?.groups;
   const anomalies: AnomalyData[] | undefined = loaderData?.anomalies;
   const transitionNavigate = useViewTransitionNavigate();
-  useDocumentTitle(element ? element.name : 'Element Not Found');
+  useDocumentTitle(
+    element ? element.name : 'Element Not Found',
+    element
+      ? `${element.name} (${element.symbol}) — atomic number ${element.atomicNumber}, ${element.category}. Discovery, properties, and relationships.`
+      : undefined,
+  );
 
   if (!element) {
     return (

@@ -363,7 +363,7 @@ export default function EntityMapPage() {
       : [],
   );
 
-  useDocumentTitle('Entity Map');
+  useDocumentTitle('Entity Map', 'All navigable entities in Atlas — elements, groups, periods, blocks, categories, discoverers, and anomalies — as an interconnected map.');
 
   return (
     <PageShell>

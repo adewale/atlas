@@ -62,7 +62,7 @@ const DESC_Y_OFFSET = 24;
 /* Component                                                          */
 /* ------------------------------------------------------------------ */
 export default function AnomalyExplorer() {
-  useDocumentTitle('Anomaly Explorer');
+  useDocumentTitle('Anomaly Explorer', 'Elements that break the expected periodic trends — diagonal relationships, relativistic effects, and the uniqueness of hydrogen.');
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedSlug = searchParams.get('anomaly');

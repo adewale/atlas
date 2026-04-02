@@ -12,7 +12,12 @@ export default function Compare() {
   const elementA = symbolA ? getElement(symbolA) : undefined;
   const elementB = symbolB ? getElement(symbolB) : undefined;
   const vertical = useIsMobile(600);
-  useDocumentTitle(elementA && elementB ? `${elementA.name} vs ${elementB.name}` : 'Compare Not Found');
+  useDocumentTitle(
+    elementA && elementB ? `${elementA.name} vs ${elementB.name}` : 'Compare Not Found',
+    elementA && elementB
+      ? `Side-by-side comparison of ${elementA.name} and ${elementB.name} — mass, electronegativity, ionisation energy, and atomic radius.`
+      : undefined,
+  );
 
   if (!elementA || !elementB) {
     return (

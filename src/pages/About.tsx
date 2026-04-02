@@ -22,7 +22,7 @@ const TECHNOLOGY_TEXT =
   'Built with React, Vite, and @chenglou/pretext for text measurement. Deployed on Cloudflare Pages. System fonts throughout. No images in v1.';
 
 export default function About() {
-  useDocumentTitle('About');
+  useDocumentTitle('About', 'About Atlas — a structural exploration of the periodic table inspired by Oliver Byrne and Edward Tufte. Built with React, Vite, and open data from PubChem, Wikidata, and Wikipedia.');
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_MAX_WIDTH,

@@ -67,7 +67,7 @@ type Tooltip = { x: number; y: number; name: string; year: string; discoverer: s
 // Component
 // ---------------------------------------------------------------------------
 export default function DiscoveryTimeline() {
-  useDocumentTitle('Discovery Timeline');
+  useDocumentTitle('Discovery Timeline', 'Interactive timeline of element discoveries from antiquity to the present, grouped by decade and coloured by block.');
   const { antiquity, timeline } = useLoaderData() as TimelineData;
   const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);

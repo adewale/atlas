@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePretextLines } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
@@ -41,14 +41,42 @@ export default function HelpOverlay() {
     return () => window.removeEventListener('keydown', handleKey);
   }, [open]);
 
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  // Focus trap: keep Tab cycling within the dialog
+  const handleTrapTab = useCallback((e: React.KeyboardEvent) => {
+    if (e.key !== 'Tab' || !dialogRef.current) return;
+    const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }, []);
+
+  // Auto-focus the dialog when it opens
+  useEffect(() => {
+    if (open && dialogRef.current) {
+      const closeBtn = dialogRef.current.querySelector<HTMLElement>('button');
+      if (closeBtn) closeBtn.focus();
+    }
+  }, [open]);
+
   if (!open) return null;
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-label="Keyboard shortcuts"
       aria-modal="true"
       onClick={(e) => { if (e.target === e.currentTarget) setOpen(false); }}
+      onKeyDown={handleTrapTab}
       style={{
         position: 'fixed',
         inset: 0,

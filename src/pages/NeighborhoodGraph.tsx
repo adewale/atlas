@@ -61,7 +61,7 @@ for (const el of allElements) {
 const INTRO_MAX_W = VIEWBOX_W;
 
 export default function NeighborhoodGraph() {
-  useDocumentTitle('Neighbourhood Graph');
+  useDocumentTitle('Neighbourhood Graph', 'Force-directed graph showing which elements share the most properties, revealing unexpected neighbourhoods across the periodic table.');
   const navigate = useNavigate();
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);

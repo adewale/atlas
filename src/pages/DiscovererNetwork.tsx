@@ -29,7 +29,7 @@ const INTRO_MAX_W = SVG_WIDTH;
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 export default function DiscovererNetwork() {
-  useDocumentTitle('Discoverer Network');
+  useDocumentTitle('Discoverer Network', 'Network graph of scientists and their element discoveries, showing collaboration clusters and prolific discoverers.');
   const { discoverers } = useLoaderData() as { discoverers: { name: string; elements: string[] }[] };
   const navigate = useNavigate();
 
