@@ -1,19 +1,24 @@
+import { useMemo } from 'react';
 import { useLoaderData, Link } from 'react-router';
 import type { CreditsData } from '../lib/types';
 import { usePretextLines } from '../hooks/usePretextLines';
+import { useFontsReady } from '../hooks/useFontsReady';
+import { PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import { BLACK, DIM, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
+import { BLACK, DEEP_BLUE, DIM, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 
 const TEXT_WIDTH = 720;
+const BODY_FONT = `16px ${PRETEXT_SANS}`;
 
 export default function Credits() {
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const textWidth = isMobile ? 360 : TEXT_WIDTH;
   const { credits } = useLoaderData() as { credits: CreditsData };
+  const fontsReady = useFontsReady();
 
   const structuredText = `${credits.structured.provider} — ${credits.structured.license}. Atomic mass, electronegativity, ionisation energy, radius, and phase data.`;
   const identifiersText = `${credits.identifiers.provider} — ${credits.identifiers.license}. QIDs (Wikidata identifiers), Wikipedia sitelinks, category classification, group/periods/block.`;
@@ -41,6 +46,44 @@ export default function Credits() {
     text: mediaText,
     maxWidth: textWidth,
   });
+
+  /* ---- Software list: measure each item, track name positions for links ---- */
+  const softwareData = useMemo(() => {
+    const lh = computeLineHeight(BODY_FONT);
+    const allLines: Array<{ text: string; width: number; x: number; y: number }> = [];
+    const links: Array<{ x: number; y: number; width: number; lineY: number; url: string; name: string }> = [];
+    let yOffset = 0;
+    const ITEM_GAP = 6;
+
+    const canvas = typeof document !== 'undefined' ? document.createElement('canvas') : null;
+    const ctx = canvas?.getContext('2d') ?? null;
+    if (ctx) ctx.font = BODY_FONT;
+
+    credits.software.forEach((s, idx) => {
+      const text = `• ${s.name} — ${s.license}`;
+      const lines = measureLines(text, BODY_FONT, textWidth, lh);
+
+      // Name always starts after "• " on line 0
+      const bulletW = ctx ? ctx.measureText('• ').width : 0;
+      const nameW = ctx ? ctx.measureText(s.name).width : 0;
+      links.push({
+        x: bulletW,
+        y: yOffset,
+        width: nameW,
+        lineY: yOffset + lh,
+        url: s.url,
+        name: s.name,
+      });
+
+      lines.forEach((line) => {
+        allLines.push({ ...line, y: line.y + yOffset });
+      });
+      yOffset += lines.length * lh;
+      if (idx < credits.software.length - 1) yOffset += ITEM_GAP;
+    });
+
+    return { allLines, links, lineHeight: lh, totalHeight: yOffset };
+  }, [credits.software, textWidth, fontsReady]);
 
   useDocumentTitle('Credits', 'Data sources and licensing — PubChem, Wikidata, and Wikipedia attributions for all element data in Atlas.');
 
@@ -132,16 +175,92 @@ export default function Credits() {
       {/* Software */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Software</h2>
-        <ul style={{ paddingLeft: '20px', lineHeight: 1.7 }}>
-          {credits.software.map((s) => (
-            <li key={s.name}>
-              <a href={s.url} target="_blank" rel="noopener noreferrer">
-                {s.name}
-              </a>{' '}
-              — {s.license}
-            </li>
-          ))}
-        </ul>
+        <svg
+          width="100%"
+          viewBox={`0 0 ${textWidth} ${softwareData.totalHeight + softwareData.lineHeight}`}
+          aria-label="Software dependencies and licenses"
+          role="img"
+          style={{ display: 'block' }}
+        >
+          {softwareData.allLines.map((line, i) => {
+            const lineY = line.y + softwareData.lineHeight;
+            const delay = i * 25;
+            const animStyle = {
+              opacity: 0 as const,
+              transform: 'translateY(6px)',
+              animation: `folio-line-reveal 300ms var(--ease-out) ${delay}ms forwards`,
+            };
+
+            // Find if this line's y position matches a link entry (first line of an item)
+            const linkEntry = softwareData.links.find((l) => l.y === line.y);
+
+            return (
+              <g key={i}>
+                {i > 0 && (
+                  <line
+                    x1={0}
+                    y1={line.y}
+                    x2={textWidth}
+                    y2={line.y}
+                    stroke={BLACK}
+                    strokeWidth={STROKE_HAIRLINE}
+                    opacity={0.2}
+                    style={{
+                      clipPath: 'inset(0 100% 0 0)',
+                      animation: `rule-draw 400ms var(--ease-out) ${delay}ms forwards`,
+                    }}
+                  />
+                )}
+                <text
+                  x={line.x}
+                  y={lineY}
+                  fontSize={16}
+                  fill={BLACK}
+                  fontFamily={PRETEXT_SANS}
+                  style={animStyle}
+                >
+                  {linkEntry ? (
+                    <>
+                      {'• '}
+                      <tspan fill={DEEP_BLUE}>{linkEntry.name}</tspan>
+                      {line.text.slice(line.text.indexOf(linkEntry.name) + linkEntry.name.length)}
+                    </>
+                  ) : (
+                    line.text
+                  )}
+                </text>
+                {linkEntry && (
+                  <>
+                    <line
+                      x1={linkEntry.x}
+                      y1={lineY + 2}
+                      x2={linkEntry.x + linkEntry.width}
+                      y2={lineY + 2}
+                      stroke={DEEP_BLUE}
+                      strokeWidth={1}
+                      style={animStyle}
+                    />
+                    <rect
+                      x={linkEntry.x}
+                      y={line.y}
+                      width={linkEntry.width}
+                      height={softwareData.lineHeight}
+                      fill="transparent"
+                      style={{ cursor: 'pointer' }}
+                      role="link"
+                      tabIndex={0}
+                      aria-label={`${linkEntry.name} on GitHub`}
+                      onClick={() => window.open(linkEntry.url, '_blank', 'noopener,noreferrer')}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') window.open(linkEntry.url, '_blank', 'noopener,noreferrer');
+                      }}
+                    />
+                  </>
+                )}
+              </g>
+            );
+          })}
+        </svg>
       </section>
 
       {/* About Atlas */}
