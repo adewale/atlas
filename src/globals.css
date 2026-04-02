@@ -369,8 +369,13 @@ svg [role="button"] {
   .folio-summary-area {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: 8px;
+  }
+  .folio-summary-area > svg {
+    flex-basis: 100%;
+    min-width: 0;
   }
   .folio-identity {
     position: static !important;
