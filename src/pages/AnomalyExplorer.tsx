@@ -19,7 +19,6 @@ import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
-import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 
@@ -53,8 +52,8 @@ function computeStainOrigin(
 /* Intro paragraph                                                    */
 /* ------------------------------------------------------------------ */
 const INTRO_TEXT =
-  'Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. Select a category below to see which elements break the rules.';
-const INTRO_MAX_W = 760;
+  'Not all elements follow textbook rules. Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. These exceptions are often explained by relativistic effects, electron\u2013electron repulsion, or the near-degeneracy of energy levels in heavier atoms. Select a category below to see which elements break the rules.';
+const INTRO_MAX_W = VIEWBOX_W;
 
 /* ------------------------------------------------------------------ */
 /* Description text area dimensions                                   */
@@ -148,15 +147,6 @@ export default function AnomalyExplorer() {
               dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
             />
           </svg>
-
-          <MarginNote label="Why anomalies matter" color={MUSTARD}>
-            <p style={{ margin: '0 0 6px' }}>
-              Not all elements follow textbook rules. Electron configurations, oxidation states, and periodic trends all have exceptions.
-            </p>
-            <p style={{ margin: 0 }}>
-              These are often explained by relativistic effects, electron–electron repulsion, or the near-degeneracy of energy levels in heavier atoms.
-            </p>
-          </MarginNote>
         </div>
 
         <SectionedCardList sections={anomalySections} accordion defaultCollapsed={false} />
@@ -169,16 +159,7 @@ export default function AnomalyExplorer() {
   // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
-      <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
-        <MarginNote label="Why anomalies matter" color={MUSTARD} top={80}>
-          <p style={{ margin: '0 0 6px' }}>
-            Not all elements follow textbook rules. Electron configurations, oxidation states, and periodic trends all have exceptions.
-          </p>
-          <p style={{ margin: 0 }}>
-            These are often explained by relativistic effects, electron–electron repulsion, or the near-degeneracy of energy levels in heavier atoms.
-          </p>
-        </MarginNote>
-        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1
             style={{
               ...INSCRIPTION_STYLE,
@@ -242,7 +223,6 @@ export default function AnomalyExplorer() {
               );
             })}
           </div>
-        </div>
       </div>
 
       {/* ---- Periodic table grid ---- */}

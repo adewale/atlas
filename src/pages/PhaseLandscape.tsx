@@ -378,13 +378,13 @@ export default function PhaseLandscape() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
-        <MarginNote label="Phase transitions" color={WARM_RED} top={80}>
-          <p style={{ margin: '0 0 6px' }}>
-            A phase transition occurs when thermal energy overcomes intermolecular forces. Metals generally have high melting points due to strong metallic bonding.
-          </p>
-          <p style={{ margin: 0 }}>
-            Mercury and bromine are the only elements liquid at STP — both have unusually weak interatomic forces for their position in the table.
-          </p>
+        <MarginNote label="Legend" color={WARM_RED} top={80}>
+          {LEGEND_ITEMS.map((item) => (
+            <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span style={{ width: '20px', height: '14px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}`, flexShrink: 0 }} />
+              <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.phase}</span>
+            </div>
+          ))}
         </MarginNote>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
@@ -409,17 +409,6 @@ export default function PhaseLandscape() {
           </svg>
 
           {temperatureRuler}
-
-          {!isMobile && (
-          <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
-            {LEGEND_ITEMS.map((item) => (
-              <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span style={{ width: '24px', height: '16px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}` }} />
-                <span style={{ fontSize: '13px', fontWeight: 'bold' }}>{item.phase}</span>
-              </div>
-            ))}
-          </div>
-        )}
         </div>
       </div>
 

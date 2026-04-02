@@ -90,11 +90,9 @@ export default function DiscovererNetwork() {
     }));
   }, [antiquity, prolific]);
 
-  // Layout measurements
+  // Layout measurements (legend moved to margin — no longer in SVG)
   const introTextHeight = lines.length * lineHeight + 16;
-  const legendY = introTextHeight + 16;          // clear gap below intro text
-  const legendHeight = SQ + 12;                   // legend row height
-  const introHeight = legendY + legendHeight + 12; // total intro section
+  const introHeight = introTextHeight + 12;
   const antiquityStartY = introHeight + 8;
   const antiquityHeight = antiquity ? ROW_HEIGHT + 16 : 0;
   const barsStartY = antiquityStartY + antiquityHeight + 8;
@@ -129,13 +127,18 @@ export default function DiscovererNetwork() {
             />
           </svg>
 
-          <MarginNote label="Collaboration" color={MUSTARD}>
-            <p style={{ margin: '0 0 6px' }}>
-              Element discovery is often collaborative. Many "discoverers" worked in teams, and priority disputes are common in the history of chemistry.
-            </p>
-            <p style={{ margin: 0 }}>
-              Colour encodes the electron block: s (blue), p (gold), d (red), f (black).
-            </p>
+          <MarginNote label="Block colours" color={MUSTARD}>
+            {[
+              { label: 's-block', block: 's' },
+              { label: 'p-block', block: 'p' },
+              { label: 'd-block', block: 'd' },
+              { label: 'f-block', block: 'f' },
+            ].map((item) => (
+              <div key={item.block} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                <span style={{ width: '20px', height: '14px', background: blockColor(item.block), display: 'inline-block', flexShrink: 0 }} />
+                <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.label}</span>
+              </div>
+            ))}
           </MarginNote>
         </div>
 
@@ -150,13 +153,18 @@ export default function DiscovererNetwork() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
-        <MarginNote label="Collaboration" color={MUSTARD} top={40}>
-          <p style={{ margin: '0 0 6px' }}>
-            Element discovery is often collaborative. Many "discoverers" worked in teams, and priority disputes are common in the history of chemistry.
-          </p>
-          <p style={{ margin: 0 }}>
-            Colour encodes the electron block: s (blue), p (gold), d (red), f (black).
-          </p>
+        <MarginNote label="Block colours" color={MUSTARD} top={40}>
+          {[
+            { label: 's-block', block: 's' },
+            { label: 'p-block', block: 'p' },
+            { label: 'd-block', block: 'd' },
+            { label: 'f-block', block: 'f' },
+          ].map((item) => (
+            <div key={item.block} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span style={{ width: '20px', height: '14px', background: blockColor(item.block), display: 'inline-block', flexShrink: 0 }} />
+              <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.label}</span>
+            </div>
+          ))}
         </MarginNote>
         <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
       </div>
@@ -187,33 +195,6 @@ export default function DiscovererNetwork() {
             animationStagger={40}
             dropCap={{ fontSize: 72, fill: MUSTARD, char: introDC.char }}
           />
-
-          {/* Block colour legend */}
-          <g transform={`translate(0, ${legendY})`}>
-            {[
-              { label: 's-block', block: 's' },
-              { label: 'p-block', block: 'p' },
-              { label: 'd-block', block: 'd' },
-              { label: 'f-block', block: 'f' },
-            ].map((item, i) => {
-              const xOff = i * 130;
-              const fill = blockColor(item.block);
-              return (
-                <g key={item.block} transform={`translate(${xOff}, 0)`}>
-                  <rect x={0} y={2} width={SQ} height={SQ} fill={fill} />
-                  <text
-                    x={SQ + 6}
-                    y={SQ - 4}
-                    fontSize={13}
-                    fill={BLACK}
-                    fontFamily="system-ui, sans-serif"
-                  >
-                    {item.label}
-                  </text>
-                </g>
-              );
-            })}
-          </g>
 
           {/* Antiquity group */}
           {antiquity && (
