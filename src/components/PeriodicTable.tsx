@@ -43,7 +43,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 
 const INTRO_TEXT =
   'One hundred and eighteen elements make up all known matter. Forty are transition metals, 28 occupy the f-block as lanthanides and actinides, and just 7 are noble gases. Use the buttons below to colour the table by group, period, block, category, or numeric property.';
-const INTRO_MAX_W = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 
 // Pre-compute cell positions once at module level (they never change)
 const CELL_POSITIONS = new Map(allElements.map(el => [el.symbol, getCellPosition(el)]));

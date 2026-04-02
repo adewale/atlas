@@ -1,9 +1,10 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { fitLabel, measureLines, PRETEXT_SANS } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useFontsReady } from '../hooks/useFontsReady';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { VT, vt } from '../lib/transitions';
 import PretextSvg from './PretextSvg';
@@ -96,6 +97,7 @@ export default function AtlasPlate({
   onHover,
 }: AtlasPlateProps) {
   const isMobile = useIsMobile();
+  const fontsReady = useFontsReady();
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -103,10 +105,12 @@ export default function AtlasPlate({
   const rows = Math.ceil(elements.length / cols);
   const gridW = cols * (CARD_W + GAP) - GAP;
 
-  // Measure caption text with Pretext
-  const captionLines = measureLines(caption, CAPTION_FONT, gridW - CAPTION_PADDING * 2, 20);
-  const captionTextH = captionLines.length * 20;
-  const captionH = captionTextH + CAPTION_PADDING * 2;
+  // Measure caption text with Pretext (re-measure when fonts load)
+  const { captionLines, captionH } = useMemo(() => {
+    const lines = measureLines(caption, CAPTION_FONT, gridW - CAPTION_PADDING * 2, 20);
+    const textH = lines.length * 20;
+    return { captionLines: lines, captionH: textH + CAPTION_PADDING * 2 };
+  }, [caption, gridW, fontsReady]);
 
   const gridH = rows * (CARD_H + GAP) - GAP;
   const totalH = captionH + 8 + gridH;

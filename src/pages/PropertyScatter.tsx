@@ -140,7 +140,7 @@ export default function PropertyScatter() {
   const yKey = (searchParams.get('y') as PropertyKey) || 'ionizationEnergy';
   const [hovered, setHovered] = useState<ElementRecord | null>(null);
 
-  const introWidth = isMobile ? 360 : 700;
+  const introWidth = isMobile ? 360 : 760;
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: introWidth,

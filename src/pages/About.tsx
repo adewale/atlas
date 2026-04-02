@@ -109,7 +109,7 @@ export default function About() {
       y: line.y,
       width: ctx.measureText(LINK_TEXT).width,
     };
-  }, [designLines]);
+  }, [designLines, fontsReady]);
 
   const handleDesignLinkClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
