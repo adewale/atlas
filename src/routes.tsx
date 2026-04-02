@@ -15,9 +15,13 @@ let categoriesCache: CategoryData[] | null = null;
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
 const AtlasGroup = lazy(() => import('./pages/AtlasGroup'));
+const AtlasGroupIndex = lazy(() => import('./pages/AtlasGroupIndex'));
 const AtlasPeriod = lazy(() => import('./pages/AtlasPeriod'));
+const AtlasPeriodIndex = lazy(() => import('./pages/AtlasPeriodIndex'));
 const AtlasBlock = lazy(() => import('./pages/AtlasBlock'));
+const AtlasBlockIndex = lazy(() => import('./pages/AtlasBlockIndex'));
 const AtlasCategory = lazy(() => import('./pages/AtlasCategory'));
+const AtlasCategoryIndex = lazy(() => import('./pages/AtlasCategoryIndex'));
 const AtlasRank = lazy(() => import('./pages/AtlasRank'));
 const AtlasAnomaly = lazy(() => import('./pages/AtlasAnomaly'));
 const Compare = lazy(() => import('./pages/Compare'));
@@ -56,11 +60,27 @@ export const router = createBrowserRouter([
     },
   },
   {
+    path: '/atlas/group',
+    Component: AtlasGroupIndex,
+    loader: async () => {
+      groupsCache ??= await import('../data/generated/groups.json').then(m => m.default);
+      return { groups: groupsCache };
+    },
+  },
+  {
     path: '/atlas/group/:n',
     Component: AtlasGroup,
     loader: async () => {
       groupsCache ??= await import('../data/generated/groups.json').then(m => m.default);
       return { groups: groupsCache };
+    },
+  },
+  {
+    path: '/atlas/period',
+    Component: AtlasPeriodIndex,
+    loader: async () => {
+      periodsCache ??= await import('../data/generated/periods.json').then(m => m.default);
+      return { periods: periodsCache };
     },
   },
   {
@@ -72,11 +92,27 @@ export const router = createBrowserRouter([
     },
   },
   {
+    path: '/atlas/block',
+    Component: AtlasBlockIndex,
+    loader: async () => {
+      blocksCache ??= await import('../data/generated/blocks.json').then(m => m.default);
+      return { blocks: blocksCache };
+    },
+  },
+  {
     path: '/atlas/block/:block',
     Component: AtlasBlock,
     loader: async () => {
       blocksCache ??= await import('../data/generated/blocks.json').then(m => m.default);
       return { blocks: blocksCache };
+    },
+  },
+  {
+    path: '/atlas/category',
+    Component: AtlasCategoryIndex,
+    loader: async () => {
+      categoriesCache ??= await import('../data/generated/categories.json').then(m => m.default);
+      return { categories: categoriesCache };
     },
   },
   {
