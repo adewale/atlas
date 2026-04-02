@@ -250,24 +250,23 @@ export default function PhaseLandscape() {
         }}>
           {tempK} K <span style={{ fontWeight: 'normal', color: GREY_MID, fontFamily: 'system-ui, sans-serif', fontVariantNumeric: 'tabular-nums' }}>/ {tempC}°C</span>
         </span>
-        {!isAtSTP && (
-          <button
-            onClick={() => setTempK(DEFAULT_TEMP)}
-            style={{
-              fontSize: 10,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              background: 'none',
-              border: `1px solid ${BLACK}`,
-              padding: '2px 8px',
-              cursor: 'pointer',
-              color: BLACK,
-            }}
-          >
-            STP
-          </button>
-        )}
+        <button
+          onClick={() => setTempK(DEFAULT_TEMP)}
+          style={{
+            fontSize: 10,
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            background: 'none',
+            border: `1px solid ${BLACK}`,
+            padding: '2px 8px',
+            cursor: isAtSTP ? 'default' : 'pointer',
+            color: BLACK,
+            visibility: isAtSTP ? 'hidden' : 'visible',
+          }}
+        >
+          STP
+        </button>
       </div>
 
       <div style={{
