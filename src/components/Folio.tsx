@@ -297,9 +297,11 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
           {/* Shaped summary text — flows around identity block (left) and data plate (right) */}
           <svg
-            width="100%"
-            aria-label="Element summary"
+            width={svgWidth}
+            height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
             viewBox={`0 0 ${svgWidth} ${Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}`}
+            aria-label="Element summary"
+            style={{ maxWidth: '100%', height: 'auto' }}
           >
             <PretextSvg
               lines={lines}
