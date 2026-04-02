@@ -132,6 +132,7 @@ export default function CompareView({
           fontSize={10}
           fill={PAPER}
           fontFamily="system-ui"
+          style={{ fontVariantNumeric: 'tabular-nums' }}
         >
           {elementA.atomicNumber}
         </text>
@@ -180,6 +181,7 @@ export default function CompareView({
           fontSize={10}
           fill={PAPER}
           fontFamily="system-ui"
+          style={{ fontVariantNumeric: 'tabular-nums' }}
         >
           {elementB.atomicNumber}
         </text>

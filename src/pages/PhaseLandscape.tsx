@@ -243,9 +243,12 @@ export default function PhaseLandscape() {
           fontSize: 13,
           fontWeight: 'bold',
           fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
+          fontVariantNumeric: 'tabular-nums',
           color: BLACK,
+          minWidth: '12ch',
+          display: 'inline-block',
         }}>
-          {tempK} K <span style={{ fontWeight: 'normal', color: GREY_MID, fontFamily: 'system-ui, sans-serif' }}>/ {tempC}°C</span>
+          {tempK} K <span style={{ fontWeight: 'normal', color: GREY_MID, fontFamily: 'system-ui, sans-serif', fontVariantNumeric: 'tabular-nums' }}>/ {tempC}°C</span>
         </span>
         {!isAtSTP && (
           <button
@@ -272,6 +275,7 @@ export default function PhaseLandscape() {
         color: GREY_MID,
         marginBottom: 6,
         letterSpacing: '0.02em',
+        fontVariantNumeric: 'tabular-nums',
       }}>
         {phaseAnnotation}
         <span style={{ opacity: 0.7 }}> · peaks show where elements change state</span>
@@ -484,7 +488,7 @@ export default function PhaseLandscape() {
             </svg>
           </div>
 
-          <p style={{ fontSize: '13px', color: GREY_MID, marginTop: '12px' }}>
+          <p style={{ fontSize: '13px', color: GREY_MID, marginTop: '12px', fontVariantNumeric: 'tabular-nums' }}>
             {isAtSTP
               ? 'STP = Standard Temperature and Pressure (0°C, 1 atm). Most elements are solid metals at room temperature.'
               : `Showing element phases at ${tempK} K (${tempC}°C). Drag the ruler to explore how matter changes state.`}

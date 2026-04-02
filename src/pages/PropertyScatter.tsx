@@ -372,6 +372,7 @@ export default function PropertyScatter() {
                 fontSize={9}
                 fill={GREY_LIGHT}
                 fontFamily="system-ui, sans-serif"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
               >
                 {formatTick(v, INTEGER_PROPERTIES.has(xKey))}
               </text>
@@ -399,6 +400,7 @@ export default function PropertyScatter() {
                 fontSize={9}
                 fill={GREY_LIGHT}
                 fontFamily="system-ui, sans-serif"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
               >
                 {formatTick(v, INTEGER_PROPERTIES.has(yKey))}
               </text>
@@ -548,6 +550,7 @@ export default function PropertyScatter() {
                   fontSize={10}
                   fill={PAPER}
                   fontFamily="system-ui, sans-serif"
+                  style={{ fontVariantNumeric: 'tabular-nums' }}
                 >
                   {PROPERTY_LABELS[xKey]}: {INTEGER_PROPERTIES.has(xKey) ? hPt.xVal : hPt.xVal.toFixed(2)}
                 </text>
@@ -558,6 +561,7 @@ export default function PropertyScatter() {
                   fontSize={10}
                   fill={PAPER}
                   fontFamily="system-ui, sans-serif"
+                  style={{ fontVariantNumeric: 'tabular-nums' }}
                 >
                   {PROPERTY_LABELS[yKey]}: {INTEGER_PROPERTIES.has(yKey) ? hPt.yVal : hPt.yVal.toFixed(2)}
                 </text>
