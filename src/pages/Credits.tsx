@@ -3,13 +3,16 @@ import type { CreditsData } from '../lib/types';
 import { usePretextLines } from '../hooks/usePretextLines';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import { BLACK, DIM, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
+import { BLACK, DIM, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const TEXT_WIDTH = 720;
 
 export default function Credits() {
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
+  const textWidth = isMobile ? 360 : TEXT_WIDTH;
   const { credits } = useLoaderData() as { credits: CreditsData };
 
   const structuredText = `${credits.structured.provider} — ${credits.structured.license}. Atomic mass, electronegativity, ionisation energy, radius, and phase data.`;
@@ -20,23 +23,23 @@ export default function Credits() {
 
   const { lines: structuredLines, lineHeight: structuredLH } = usePretextLines({
     text: structuredText,
-    maxWidth: TEXT_WIDTH,
+    maxWidth: textWidth,
   });
   const { lines: identifiersLines, lineHeight: identifiersLH } = usePretextLines({
     text: identifiersText,
-    maxWidth: TEXT_WIDTH,
+    maxWidth: textWidth,
   });
   const { lines: summariesNoteLines, lineHeight: summariesNoteLH } = usePretextLines({
     text: summariesNoteText,
-    maxWidth: TEXT_WIDTH,
+    maxWidth: textWidth,
   });
   const { lines: aboutLines, lineHeight: aboutLH } = usePretextLines({
     text: aboutText,
-    maxWidth: TEXT_WIDTH,
+    maxWidth: textWidth,
   });
   const { lines: mediaLines, lineHeight: mediaLH } = usePretextLines({
     text: mediaText,
-    maxWidth: TEXT_WIDTH,
+    maxWidth: textWidth,
   });
 
   useDocumentTitle('Credits', 'Data sources and licensing — PubChem, Wikidata, and Wikipedia attributions for all element data in Atlas.');
@@ -52,24 +55,24 @@ export default function Credits() {
       {/* Structured Data */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Structured Data</h2>
-        <svg width={TEXT_WIDTH} height={structuredLines.length * structuredLH + structuredLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={structuredLines} lineHeight={structuredLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
+        <svg width="100%" viewBox={`0 0 ${textWidth} ${structuredLines.length * structuredLH + structuredLH}`} style={{ display: 'block' }}>
+          <PretextSvg lines={structuredLines} lineHeight={structuredLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
 
       {/* Identifiers */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Identifiers</h2>
-        <svg width={TEXT_WIDTH} height={identifiersLines.length * identifiersLH + identifiersLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
+        <svg width="100%" viewBox={`0 0 ${textWidth} ${identifiersLines.length * identifiersLH + identifiersLH}`} style={{ display: 'block' }}>
+          <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
 
       {/* Text Summaries */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Text Summaries</h2>
-        <svg width={TEXT_WIDTH} height={summariesNoteLines.length * summariesNoteLH + summariesNoteLH} style={{ maxWidth: '100%', marginBottom: '12px' }}>
-          <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
+        <svg width="100%" viewBox={`0 0 ${textWidth} ${summariesNoteLines.length * summariesNoteLH + summariesNoteLH}`} style={{ display: 'block', marginBottom: '12px' }}>
+          <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
         <table
           style={{
@@ -121,8 +124,8 @@ export default function Credits() {
       {/* Media */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Media</h2>
-        <svg width={TEXT_WIDTH} height={mediaLines.length * mediaLH + mediaLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={mediaLines} lineHeight={mediaLH} maxWidth={TEXT_WIDTH} animationStagger={25} />
+        <svg width="100%" viewBox={`0 0 ${textWidth} ${mediaLines.length * mediaLH + mediaLH}`} style={{ display: 'block' }}>
+          <PretextSvg lines={mediaLines} lineHeight={mediaLH} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -144,8 +147,8 @@ export default function Credits() {
       {/* About Atlas */}
       <section>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>About Atlas</h2>
-        <svg width={TEXT_WIDTH} height={aboutLines.length * aboutLH + aboutLH} style={{ maxWidth: '100%' }}>
-          <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={TEXT_WIDTH} showRules animationStagger={25} />
+        <svg width="100%" viewBox={`0 0 ${textWidth} ${aboutLines.length * aboutLH + aboutLH}`} style={{ display: 'block' }}>
+          <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
       </div>

@@ -3,9 +3,10 @@ import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const SVG_MAX_WIDTH = 640;
 
@@ -22,26 +23,28 @@ const TECHNOLOGY_TEXT =
   'Built with React, Vite, and @chenglou/pretext for text measurement. Deployed on Cloudflare Pages. System fonts throughout. No images in v1.';
 
 export default function About() {
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
+  const textWidth = isMobile ? 360 : SVG_MAX_WIDTH;
   useDocumentTitle('About', 'About Atlas — a structural exploration of the periodic table inspired by Oliver Byrne and Edward Tufte. Built with React, Vite, and open data from PubChem, Wikidata, and Wikipedia.');
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: SVG_MAX_WIDTH,
+    maxWidth: textWidth,
     dropCapFont: `72px ${DROP_CAP_FONT}`,
   });
 
   const { lines: dataLines, lineHeight: dataLH } = usePretextLines({
     text: DATA_SOURCES_TEXT,
-    maxWidth: SVG_MAX_WIDTH,
+    maxWidth: textWidth,
   });
 
   const { lines: techLines, lineHeight: techLH } = usePretextLines({
     text: TECHNOLOGY_TEXT,
-    maxWidth: SVG_MAX_WIDTH,
+    maxWidth: textWidth,
   });
 
   const { lines: shoulderLines, lineHeight: shoulderLH } = usePretextLines({
     text: STANDING_ON_SHOULDERS_TEXT,
-    maxWidth: SVG_MAX_WIDTH,
+    maxWidth: textWidth,
   });
 
   return (
@@ -54,13 +57,13 @@ export default function About() {
 
       <section style={{ marginBottom: '40px' }}>
         <svg
-          width={SVG_MAX_WIDTH}
-          height={introLines.length * introLH + introLH}
+          width="100%"
+          viewBox={`0 0 ${textWidth} ${introLines.length * introLH + introLH}`}
           aria-label="Introduction"
           role="img"
-          style={{ maxWidth: '100%' }}
+          style={{ display: 'block' }}
         >
-          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
         </svg>
       </section>
 
@@ -80,39 +83,39 @@ export default function About() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Data Sources</h2>
         <svg
-          width={SVG_MAX_WIDTH}
-          height={dataLines.length * dataLH + dataLH}
+          width="100%"
+          viewBox={`0 0 ${textWidth} ${dataLines.length * dataLH + dataLH}`}
           aria-label="Data sources description"
           role="img"
-          style={{ maxWidth: '100%' }}
+          style={{ display: 'block' }}
         >
-          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
+          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
 
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Technology</h2>
         <svg
-          width={SVG_MAX_WIDTH}
-          height={techLines.length * techLH + techLH}
+          width="100%"
+          viewBox={`0 0 ${textWidth} ${techLines.length * techLH + techLH}`}
           aria-label="Technology description"
           role="img"
-          style={{ maxWidth: '100%' }}
+          style={{ display: 'block' }}
         >
-          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
+          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
 
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Standing on Shoulders</h2>
         <svg
-          width={SVG_MAX_WIDTH}
-          height={shoulderLines.length * shoulderLH + shoulderLH}
+          width="100%"
+          viewBox={`0 0 ${textWidth} ${shoulderLines.length * shoulderLH + shoulderLH}`}
           aria-label="Standing on shoulders — acknowledgement of data sources"
           role="img"
-          style={{ maxWidth: '100%' }}
+          style={{ display: 'block' }}
         >
-          <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={SVG_MAX_WIDTH} showRules animationStagger={25} />
+          <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
 

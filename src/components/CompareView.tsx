@@ -34,7 +34,7 @@ export default function CompareView({
   animate = true,
   vertical = false,
 }: CompareViewProps) {
-  const WIDTH = DEFAULT_WIDTH;
+  const WIDTH = vertical ? 400 : DEFAULT_WIDTH;
   const notes = generateComparisonNotes(elementA, elementB);
   const notesText = notes.join(' ');
 

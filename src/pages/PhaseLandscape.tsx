@@ -276,6 +276,7 @@ export default function PhaseLandscape() {
         marginBottom: 6,
         letterSpacing: '0.02em',
         fontVariantNumeric: 'tabular-nums',
+        minHeight: '2.4em',
       }}>
         {phaseAnnotation}
         <span style={{ opacity: 0.7 }}> · peaks show where elements change state</span>
