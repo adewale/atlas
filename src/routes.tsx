@@ -1,7 +1,8 @@
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, redirect } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
 import type { GroupData, AnomalyData, DiscovererData, TimelineData, PeriodData, BlockData, CategoryData } from './lib/types';
+import { getElement } from './lib/data';
 
 let groupsCache: GroupData[] | null = null;
 let anomaliesCache: AnomalyData[] | null = null;
@@ -41,6 +42,7 @@ export const router = createBrowserRouter([
     path: '/element/:symbol',
     Component: Element,
     loader: async ({ params }: LoaderFunctionArgs) => {
+      if (!params.symbol || !getElement(params.symbol)) return redirect('/');
       const [elementMod, groupsMod, anomaliesMod] = await Promise.all([
         import(`../data/generated/element-${params.symbol}.json`),
         groupsCache
@@ -108,6 +110,7 @@ export const router = createBrowserRouter([
     path: '/compare/:symbolA/:symbolB',
     Component: Compare,
     loader: async ({ params }: LoaderFunctionArgs) => {
+      if (!params.symbolA || !params.symbolB || !getElement(params.symbolA) || !getElement(params.symbolB)) return redirect('/');
       const [elA, elB] = await Promise.all([
         import(`../data/generated/element-${params.symbolA}.json`),
         import(`../data/generated/element-${params.symbolB}.json`),
