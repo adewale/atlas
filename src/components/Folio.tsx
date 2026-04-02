@@ -322,7 +322,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             return (
               <Link
                 key={prop.key}
-                to={`/ranks/${prop.key}`}
+                to={`/properties/${prop.key}`}
                 title={`View all 118 elements ranked by ${prop.label.toLowerCase()}`}
                 style={{ textDecoration: 'none', display: 'block', flex: mobile ? '1 1 100%' : `0 0 ${rowW}px` }}
               >
@@ -440,7 +440,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
                 <Link
-                  to={element.discoveryYear ? `/timelines/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
+                  to={element.discoveryYear ? `/timeline/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
                   title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >

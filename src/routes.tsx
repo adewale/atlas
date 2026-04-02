@@ -148,9 +148,9 @@ export const router = createBrowserRouter([
   },
 
   /* ── Rank ─────────────────────────────────── */
-  { path: '/ranks', Component: RankIndex },
+  { path: '/properties', Component: RankIndex },
   {
-    path: '/ranks/:property',
+    path: '/properties/:property',
     Component: AtlasRank,
     loader: async () => {
       const [rankMod, elemMod] = await Promise.all([
@@ -216,7 +216,7 @@ export const router = createBrowserRouter([
 
   /* ── Timeline ────────────────────────────── */
   {
-    path: '/timelines',
+    path: '/timeline',
     Component: TimelineIndex,
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
@@ -224,7 +224,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/timelines/:era',
+    path: '/timeline/:era',
     Component: TimelineEra,
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);

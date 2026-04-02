@@ -154,14 +154,14 @@ export default function TimelineEra() {
           aria-label="Previous and next era navigation"
         >
           {prevEra && (
-            <a href={`/timelines/${prevEra}`}>
+            <a href={`/timeline/${prevEra}`}>
               <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
                 ← {prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`}
               </text>
             </a>
           )}
           {nextEra && (
-            <a href={`/timelines/${nextEra}`}>
+            <a href={`/timeline/${nextEra}`}>
               <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
                 {`${nextEra}s`} →
               </text>
@@ -239,7 +239,7 @@ export default function TimelineEra() {
               return (
                 <NavigationPill
                   key={d}
-                  to={`/timelines/${d}`}
+                  to={`/timeline/${d}`}
                   title={`View the ${d}s discovery era`}
                   label={`${d}s (${count})`}
                   color={DEEP_BLUE}

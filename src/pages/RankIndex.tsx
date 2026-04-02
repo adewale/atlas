@@ -26,7 +26,7 @@ export default function RankIndex() {
         {PROPERTIES.map((p) => (
           <li key={p.key}>
             <Link
-              to={`/ranks/${p.key}`}
+              to={`/properties/${p.key}`}
               style={{
                 display: 'block',
                 padding: '12px 16px',
