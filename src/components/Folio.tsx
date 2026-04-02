@@ -208,7 +208,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           } as React.CSSProperties}
         />
         {/* Summary area: identity block (left), text (centre), data plate (right) */}
-        <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
+        <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT, maxWidth: mobile ? undefined : svgWidth }}>
           {/* Identity block — number + symbol + name, acts as dramatic drop cap */}
           <div
             className="folio-identity"
