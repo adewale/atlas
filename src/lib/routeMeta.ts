@@ -63,7 +63,7 @@ export const ENTITIES: EntityMeta[] = [
     { name: 'Alkali metal', href: '/categories/alkali-metal' },
     { name: 'Metalloid', href: '/categories/metalloid' },
   ]},
-  { id: 'ranking', label: 'Ranking', route: '/properties/:property', count: '4', colour: MUSTARD, description: 'Elements ordered by a numeric property: mass, electronegativity, ionisation energy, or radius.', examples: [
+  { id: 'property', label: 'Property', route: '/properties/:property', count: '4', colour: MUSTARD, description: 'Elements ordered by a numeric property: mass, electronegativity, ionisation energy, or radius.', examples: [
     { name: 'Ranked by mass', href: '/properties/mass' },
     { name: 'By electronegativity', href: '/properties/electronegativity' },
     { name: 'By ionisation energy', href: '/properties/ionizationEnergy' },
@@ -79,11 +79,11 @@ export const ENTITIES: EntityMeta[] = [
     { name: 'Marie Curie & Pierre Curie', href: '/discoverers/Marie%20Curie%20%26%20Pierre%20Curie' },
     { name: 'Carl Wilhelm Scheele', href: '/discoverers/Carl%20Wilhelm%20Scheele' },
   ]},
-  { id: 'era', label: 'Timeline Era', route: '/timeline/:era', count: '30+', colour: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.', examples: [
-    { name: 'Antiquity', href: '/timeline/antiquity' },
-    { name: '1770s', href: '/timeline/1770' },
-    { name: '1890s', href: '/timeline/1890' },
-    { name: '1940s', href: '/timeline/1940' },
+  { id: 'era', label: 'Timeline Era', route: '/eras/:era', count: '30+', colour: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.', examples: [
+    { name: 'Antiquity', href: '/eras/antiquity' },
+    { name: '1770s', href: '/eras/1770' },
+    { name: '1890s', href: '/eras/1890' },
+    { name: '1940s', href: '/eras/1940' },
   ]},
   { id: 'etymology', label: 'Etymology Origin', route: '/etymology-map#:origin', count: '7', colour: WARM_RED, description: 'Why elements are named: place, person, mythology, property, mineral, astronomical, unknown.', examples: [
     { name: 'Place names', href: '/etymology-map#place' },

@@ -216,7 +216,7 @@ export const router = createBrowserRouter([
 
   /* ── Timeline ────────────────────────────── */
   {
-    path: '/timeline',
+    path: '/eras',
     Component: TimelineIndex,
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
@@ -224,7 +224,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/timeline/:era',
+    path: '/eras/:era',
     Component: TimelineEra,
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);

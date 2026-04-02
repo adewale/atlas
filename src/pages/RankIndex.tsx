@@ -15,12 +15,12 @@ const PROPERTIES = [
 ];
 
 export default function RankIndex() {
-  useDocumentTitle('All Rankings');
+  useDocumentTitle('All Properties');
 
   return (
     <PageShell>
       <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: MUSTARD }}>Rankings</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: MUSTARD }}>Properties</h1>
       <div style={{ borderTop: `4px solid ${MUSTARD}`, marginBottom: '16px' }} />
       <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '2px' }}>
         {PROPERTIES.map((p) => (

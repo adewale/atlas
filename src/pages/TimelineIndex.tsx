@@ -11,7 +11,7 @@ import type { TimelineData } from '../lib/types';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function TimelineIndex() {
-  useDocumentTitle('All Timeline Eras');
+  useDocumentTitle('All Eras');
   const data = useLoaderData() as TimelineData;
 
   // Build decade groups from timeline entries
@@ -58,7 +58,7 @@ export default function TimelineIndex() {
   return (
     <PageShell>
       <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: DEEP_BLUE }}>Discovery Timeline</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: DEEP_BLUE }}>Discovery Eras</h1>
       <div style={{ borderTop: `4px solid ${DEEP_BLUE}`, marginBottom: '16px' }} />
       <SectionedCardList sections={sections} accordion defaultCollapsed />
     </PageShell>

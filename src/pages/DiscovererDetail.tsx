@@ -158,7 +158,7 @@ export default function DiscovererDetail() {
       <div style={{ marginTop: '24px' }}>
         {years.length > 0 ? (
           <NavigationPill
-            to={`/timeline/${Math.floor(years[0] / 10) * 10}`}
+            to={`/eras/${Math.floor(years[0] / 10) * 10}`}
             title={`View the ${Math.floor(years[0] / 10) * 10}s discovery era`}
             label={`View ${Math.floor(years[0] / 10) * 10}s on Timeline →`}
             color={WARM_RED}
@@ -166,7 +166,7 @@ export default function DiscovererDetail() {
           />
         ) : (
           <NavigationPill
-            to="/timeline/antiquity"
+            to="/eras/antiquity"
             title="View the Antiquity discovery era"
             label="View Antiquity on Timeline →"
             color={WARM_RED}

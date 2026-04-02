@@ -293,7 +293,7 @@ export default function DiscoveryTimeline() {
             </h2>
             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
               <NavigationPill
-                to="/timeline/antiquity"
+                to="/eras/antiquity"
                 title="View the Antiquity discovery era"
                 label="Antiquity"
                 color={DEEP_BLUE}
@@ -302,7 +302,7 @@ export default function DiscoveryTimeline() {
               {allDecades.map((d) => (
                 <NavigationPill
                   key={d}
-                  to={`/timeline/${d}`}
+                  to={`/eras/${d}`}
                   title={`View the ${d}s discovery era`}
                   label={`${d}s`}
                   color={DEEP_BLUE}
