@@ -2,7 +2,8 @@ import { useState, useMemo, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { VT } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
@@ -115,15 +116,17 @@ const INTEGER_PROPERTIES: Set<PropertyKey> = new Set(['atomicNumber', 'discovery
 // Component
 // ---------------------------------------------------------------------------
 export default function PropertyScatter() {
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const xKey = (searchParams.get('x') as PropertyKey) || 'electronegativity';
   const yKey = (searchParams.get('y') as PropertyKey) || 'ionizationEnergy';
   const [hovered, setHovered] = useState<ElementRecord | null>(null);
 
+  const introWidth = isMobile ? 360 : 700;
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: 700,
+    maxWidth: introWidth,
     dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
 
@@ -232,7 +235,7 @@ export default function PropertyScatter() {
         {/* Pretext intro */}
         <svg
           width="100%"
-          viewBox={`0 0 700 ${introHeight}`}
+          viewBox={`0 0 ${introWidth} ${introHeight}`}
           style={{ display: 'block', marginTop: '16px' }}
         >
           <PretextSvg
@@ -241,7 +244,7 @@ export default function PropertyScatter() {
             x={0}
             y={0}
             fill={BLACK}
-            maxWidth={700}
+            maxWidth={introWidth}
             animationStagger={40}
             dropCap={{ fontSize: 80, fill: DEEP_BLUE, char: introDC.char }}
           />

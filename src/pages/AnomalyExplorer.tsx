@@ -10,14 +10,17 @@ import {
   CELL_HEIGHT,
   contrastTextColor,
 } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
+import SectionedCardList from '../components/SectionedCardList';
+import type { Section } from '../components/SectionedCardList';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 /* ------------------------------------------------------------------ */
 /* Colour key for anomaly buttons (cycle through Byrne palette)       */
@@ -63,6 +66,7 @@ const DESC_Y_OFFSET = 24;
 /* ------------------------------------------------------------------ */
 export default function AnomalyExplorer() {
   useDocumentTitle('Anomaly Explorer', 'Elements that break the expected periodic trends — diagonal relationships, relativistic effects, and the uniqueness of hydrogen.');
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedSlug = searchParams.get('anomaly');
@@ -92,7 +96,7 @@ export default function AnomalyExplorer() {
   const DROP_CAP_SIZE = 80;
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: INTRO_MAX_W,
+    maxWidth: isMobile ? 360 : INTRO_MAX_W,
     dropCapFont: `${DROP_CAP_SIZE}px ${DROP_CAP_FONT}`,
   });
   const introHeight = Math.max(introLines.length * introLH + 16, DROP_CAP_SIZE + 4);
@@ -105,6 +109,54 @@ export default function AnomalyExplorer() {
   const descSvgHeight = lines.length * lineHeight + 16;
   const totalHeight = VIEWBOX_H + DESC_Y_OFFSET + (selected ? descSvgHeight : 0);
 
+  // Build sections for mobile view
+  const anomalySections: Section[] = useMemo(() => {
+    return anomalies.map((a, i) => ({
+      id: a.slug,
+      label: a.label,
+      color: buttonColorFor(i),
+      items: a.elements.map(sym => {
+        const el = allElements.find(e => e.symbol === sym);
+        return { symbol: sym, description: el?.name ?? sym };
+      }),
+    }));
+  }, [anomalies]);
+
+  // ---------------------------------------------------------------------------
+  // Mobile: sectioned card layout
+  // ---------------------------------------------------------------------------
+  if (isMobile) {
+    return (
+      <PageShell vizNav>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Anomaly Explorer</h1>
+
+          <svg
+            width="100%"
+            viewBox={`0 0 360 ${introHeight}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={introLines}
+              lineHeight={introLH}
+              x={0}
+              y={0}
+              fill={BLACK}
+              maxWidth={360}
+              animationStagger={40}
+              dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
+            />
+          </svg>
+        </div>
+
+        <SectionedCardList sections={anomalySections} accordion defaultCollapsed={false} />
+      </PageShell>
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Desktop: periodic table grid with filter buttons
+  // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>

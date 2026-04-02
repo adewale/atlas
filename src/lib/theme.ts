@@ -71,6 +71,13 @@ export const MONO_FONT = "'SF Mono', 'Cascadia Code', 'Fira Code', monospace";
  */
 export const CONTROL_SECTION_MIN_HEIGHT = 140;
 
+/**
+ * Breakpoint for switching viz pages to the sectioned card layout.
+ * Set to 1024px so landscape phones (≤932px) also get the card view
+ * instead of the wide SVG that produces tiny, unreadable text.
+ */
+export const MOBILE_VIZ_BREAKPOINT = 1024;
+
 /* Shared style objects */
 export const BACK_LINK_STYLE: React.CSSProperties = {
   fontSize: '12px',

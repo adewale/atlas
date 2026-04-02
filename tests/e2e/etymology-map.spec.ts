@@ -233,7 +233,7 @@ test.describe('Etymology Map — property-based tests', () => {
 
       // The count badge is the second <span> inside the section header
       // (the first <span> is the origin name)
-      const headerSpans = section.locator('div > span, h2 > span');
+      const headerSpans = section.locator('div > span, h2 > span, h2 button > span');
       const spanCount = await headerSpans.count();
 
       // Find the count span (last span in the header area)
