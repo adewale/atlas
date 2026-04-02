@@ -98,7 +98,7 @@ export default function Credits() {
       {/* Structured Data */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Structured Data</h2>
-        <svg width="100%" viewBox={`0 0 ${textWidth} ${structuredLines.length * structuredLH + structuredLH}`} style={{ display: 'block' }}>
+        <svg viewBox={`0 0 ${textWidth} ${structuredLines.length * structuredLH + structuredLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block' }}>
           <PretextSvg lines={structuredLines} lineHeight={structuredLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
@@ -106,7 +106,7 @@ export default function Credits() {
       {/* Identifiers */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Identifiers</h2>
-        <svg width="100%" viewBox={`0 0 ${textWidth} ${identifiersLines.length * identifiersLH + identifiersLH}`} style={{ display: 'block' }}>
+        <svg viewBox={`0 0 ${textWidth} ${identifiersLines.length * identifiersLH + identifiersLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block' }}>
           <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>
@@ -114,7 +114,7 @@ export default function Credits() {
       {/* Text Summaries */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Text Summaries</h2>
-        <svg width="100%" viewBox={`0 0 ${textWidth} ${summariesNoteLines.length * summariesNoteLH + summariesNoteLH}`} style={{ display: 'block', marginBottom: '12px' }}>
+        <svg viewBox={`0 0 ${textWidth} ${summariesNoteLines.length * summariesNoteLH + summariesNoteLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block', marginBottom: '12px' }}>
           <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
         <table
@@ -167,7 +167,7 @@ export default function Credits() {
       {/* Media */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Media</h2>
-        <svg width="100%" viewBox={`0 0 ${textWidth} ${mediaLines.length * mediaLH + mediaLH}`} style={{ display: 'block' }}>
+        <svg viewBox={`0 0 ${textWidth} ${mediaLines.length * mediaLH + mediaLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block' }}>
           <PretextSvg lines={mediaLines} lineHeight={mediaLH} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
@@ -176,11 +176,10 @@ export default function Credits() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Software</h2>
         <svg
-          width="100%"
           viewBox={`0 0 ${textWidth} ${softwareData.totalHeight + softwareData.lineHeight}`}
           aria-label="Software dependencies and licenses"
           role="img"
-          style={{ display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
         >
           {softwareData.allLines.map((line, i) => {
             const lineY = line.y + softwareData.lineHeight;
@@ -266,7 +265,7 @@ export default function Credits() {
       {/* About Atlas */}
       <section>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>About Atlas</h2>
-        <svg width="100%" viewBox={`0 0 ${textWidth} ${aboutLines.length * aboutLH + aboutLH}`} style={{ display: 'block' }}>
+        <svg viewBox={`0 0 ${textWidth} ${aboutLines.length * aboutLH + aboutLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block' }}>
           <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
       </section>

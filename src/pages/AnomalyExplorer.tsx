@@ -172,9 +172,8 @@ export default function AnomalyExplorer() {
 
           {/* ---- Intro paragraph with drop cap ---- */}
           <svg
-            width="100%"
             viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
-            style={{ display: 'block', marginBottom: '12px' }}
+            style={{ width: '100%', maxWidth: INTRO_MAX_W, display: 'block', marginBottom: '12px' }}
           >
             <PretextSvg
               lines={introLines}

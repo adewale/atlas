@@ -126,11 +126,10 @@ export default function About() {
 
       <section style={{ marginBottom: '40px' }}>
         <svg
-          width="100%"
           viewBox={`0 0 ${textWidth} ${introLines.length * introLH + introLH}`}
           aria-label="Introduction"
           role="img"
-          style={{ display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
         >
           <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
         </svg>
@@ -139,11 +138,10 @@ export default function About() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Principles</h2>
         <svg
-          width="100%"
           viewBox={`0 0 ${textWidth} ${bulletData.totalHeight + bulletData.lineHeight}`}
           aria-label="Design principles"
           role="img"
-          style={{ display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
         >
           <PretextSvg lines={bulletData.lines} lineHeight={bulletData.lineHeight} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
@@ -152,11 +150,10 @@ export default function About() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Data Sources</h2>
         <svg
-          width="100%"
           viewBox={`0 0 ${textWidth} ${dataLines.length * dataLH + dataLH}`}
           aria-label="Data sources description"
           role="img"
-          style={{ display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
         >
           <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
@@ -165,11 +162,10 @@ export default function About() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Technology</h2>
         <svg
-          width="100%"
           viewBox={`0 0 ${textWidth} ${techLines.length * techLH + techLH}`}
           aria-label="Technology description"
           role="img"
-          style={{ display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
         >
           <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
@@ -178,11 +174,10 @@ export default function About() {
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Standing on Shoulders</h2>
         <svg
-          width="100%"
           viewBox={`0 0 ${textWidth} ${shoulderLines.length * shoulderLH + shoulderLH}`}
           aria-label="Standing on shoulders — acknowledgement of data sources"
           role="img"
-          style={{ display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
         >
           <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
@@ -191,11 +186,10 @@ export default function About() {
       <section>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Language</h2>
         <svg
-          width="100%"
           viewBox={`0 0 ${textWidth} ${designLines.length * designLH + designLH}`}
           aria-label="Design language description"
           role="img"
-          style={{ display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
         >
           {designLines.map((line, i) => {
             const lineY = line.y + designLH;

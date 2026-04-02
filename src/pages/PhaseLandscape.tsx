@@ -398,9 +398,8 @@ export default function PhaseLandscape() {
           </h1>
 
           <svg
-            width="100%"
             viewBox={`0 0 ${isMobile ? 360 : INTRO_MAX_W} ${introHeight}`}
-            style={{ display: 'block', marginBottom: '12px' }}
+            style={{ width: '100%', maxWidth: isMobile ? 360 : INTRO_MAX_W, display: 'block', marginBottom: '12px' }}
           >
             <PretextSvg
               lines={lines}

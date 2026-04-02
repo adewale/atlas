@@ -233,9 +233,8 @@ export default function PropertyScatter() {
 
         {/* Pretext intro */}
         <svg
-          width="100%"
           viewBox={`0 0 ${introWidth} ${introHeight}`}
-          style={{ display: 'block', marginTop: '16px' }}
+          style={{ width: '100%', maxWidth: introWidth, display: 'block', marginTop: '16px' }}
         >
           <PretextSvg
             lines={lines}
