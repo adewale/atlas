@@ -48,13 +48,11 @@ const DEFAULT_TEMP = 273;
 const TEMP_MIN = 0;
 const TEMP_MAX = 6000;
 
-/** Landmark temperatures — the "story stops". */
+/** Landmark temperatures — the "story stops".
+ *  Spaced so labels don't collide on a linear 0–6000 K axis. */
 const LANDMARKS = [
-  { k: 4, label: 'He boils', color: WARM_RED },
-  { k: 77, label: 'N₂ boils', color: WARM_RED },
-  { k: 234, label: 'Hg melts', color: DEEP_BLUE },
   { k: 273, label: 'STP', color: BLACK },
-  { k: 373, label: 'H₂O boils', color: WARM_RED },
+  { k: 600, label: 'Hg boils', color: DEEP_BLUE },
   { k: 1811, label: 'Fe melts', color: BLACK },
   { k: 3695, label: 'W melts', color: BLACK },
   { k: 5778, label: '☉ surface', color: WARM_RED },
@@ -105,11 +103,9 @@ const INTRO_MAX_W = VIEWBOX_W;
 // ---------------------------------------------------------------------------
 // Sparkline Ruler constants
 // ---------------------------------------------------------------------------
-const RULER_H = 48;
 const SPARK_H = 24;
 const SPARK_Y = 0;
-const TICK_Y = SPARK_H + 4;
-const LABEL_Y = SPARK_H + 16;
+const SVG_RULER_H = SPARK_H + 6; // sparkline + baseline + cap
 
 // ---------------------------------------------------------------------------
 // Component
@@ -233,15 +229,15 @@ export default function PhaseLandscape() {
     phaseCounts.unknown > 0 ? `${phaseCounts.unknown} unknown` : null,
   ].filter(Boolean).join(' · ');
 
-  // ---- Temperature ruler SVG (shared) ----
+  // ---- Temperature ruler ----
   const temperatureRuler = (
     <div style={{ marginBottom: 16 }}>
-      {/* Phase counts + temperature readout */}
+      {/* Temperature readout + phase counts */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'baseline',
-        marginBottom: 6,
+        marginBottom: 4,
       }}>
         <span data-testid="temp-display" style={{
           fontSize: 13,
@@ -280,14 +276,16 @@ export default function PhaseLandscape() {
         {phaseAnnotation}
       </div>
 
-      {/* Sparkline ruler SVG */}
+      {/* Sparkline SVG — just the chart, no text labels */}
       <svg
         ref={rulerRef}
-        viewBox={`0 0 ${rulerWidth} ${RULER_H}`}
+        viewBox={`0 0 ${rulerWidth} ${SVG_RULER_H}`}
+        preserveAspectRatio="none"
         width="100%"
         style={{
           display: 'block',
-          cursor: 'crosshair',
+          height: SVG_RULER_H,
+          cursor: 'ew-resize',
           touchAction: 'none',
           userSelect: 'none',
         }}
@@ -302,69 +300,73 @@ export default function PhaseLandscape() {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       >
-        {/* Sparkline area — phase transition density */}
-        <path
-          d={sparklinePath}
-          fill={GREY_RULE}
-          opacity={0.5}
-        />
+        {/* Sparkline area fill */}
+        <path d={sparklinePath} fill={GREY_RULE} opacity={0.5} />
 
         {/* Baseline */}
         <line
           x1={0} y1={SPARK_Y + SPARK_H}
           x2={rulerWidth} y2={SPARK_Y + SPARK_H}
-          stroke={BLACK}
-          strokeWidth={STROKE_THIN}
+          stroke={BLACK} strokeWidth={STROKE_THIN}
         />
 
-        {/* Landmark markers — small coloured squares on the baseline */}
+        {/* Landmark tick marks on baseline */}
         {LANDMARKS.map(lm => {
           const x = (lm.k / TEMP_MAX) * rulerWidth;
           return (
             <g key={lm.k} onClick={(e) => { e.stopPropagation(); snapToLandmark(lm.k); }} style={{ cursor: 'pointer' }}>
               <rect
-                x={x - 3}
-                y={SPARK_Y + SPARK_H - 3}
-                width={6}
-                height={6}
+                x={x - 3} y={SPARK_Y + SPARK_H - 3}
+                width={6} height={6}
                 fill={lm.color}
               />
-              <line
-                x1={x} y1={SPARK_Y + SPARK_H}
-                x2={x} y2={TICK_Y}
-                stroke={lm.color}
-                strokeWidth={STROKE_HAIRLINE}
-                opacity={0.4}
-              />
-              <text
-                x={x}
-                y={LABEL_Y}
-                textAnchor="middle"
-                fontSize={isMobile ? 6 : 8}
-                fill={GREY_MID}
-                fontFamily="system-ui, sans-serif"
-              >
-                {lm.label}
-              </text>
             </g>
           );
         })}
 
-        {/* Cursor — vertical black hairline */}
+        {/* Cursor — vertical rule with square cap */}
         <line
           x1={cursorX} y1={0}
           x2={cursorX} y2={SPARK_Y + SPARK_H}
-          stroke={BLACK}
-          strokeWidth={1.5}
+          stroke={BLACK} strokeWidth={1.5}
           style={{ pointerEvents: 'none' }}
         />
-        {/* Cursor cap — small triangle */}
-        <polygon
-          points={`${cursorX - 3},${SPARK_Y + SPARK_H} ${cursorX + 3},${SPARK_Y + SPARK_H} ${cursorX},${SPARK_Y + SPARK_H + 4}`}
+        <rect
+          x={cursorX - 3} y={SPARK_Y + SPARK_H}
+          width={6} height={4}
           fill={BLACK}
           style={{ pointerEvents: 'none' }}
         />
       </svg>
+
+      {/* Landmark labels — rendered as HTML so they're always readable */}
+      <div style={{ position: 'relative', height: 16, marginTop: 2 }}>
+        {LANDMARKS.map(lm => {
+          const pct = (lm.k / TEMP_MAX) * 100;
+          return (
+            <button
+              key={lm.k}
+              onClick={() => snapToLandmark(lm.k)}
+              style={{
+                position: 'absolute',
+                left: `${pct}%`,
+                transform: 'translateX(-50%)',
+                fontSize: 10,
+                color: GREY_MID,
+                background: 'none',
+                border: 'none',
+                padding: '0 2px',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                lineHeight: 1,
+                fontFamily: 'system-ui, sans-serif',
+              }}
+            >
+              {lm.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 
