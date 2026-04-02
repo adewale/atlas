@@ -14,6 +14,10 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:links": "tsx scripts/lint-internal-links.ts",
+    "lint:colors": "tsx scripts/lint-color-tokens.ts",
+    "lint:assertions": "tsx scripts/lint-non-null-assertions.ts",
+    "lint:animations": "tsx scripts/lint-animation-tokens.ts",
+    "lint:all": "npm run lint && npm run lint:links && npm run lint:assertions && npm run lint:animations",
     "deploy": "npm run build && wrangler pages deploy dist/"
   },
   "dependencies": {
