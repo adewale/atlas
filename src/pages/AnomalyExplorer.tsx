@@ -19,6 +19,7 @@ import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
+import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 
@@ -53,7 +54,7 @@ function computeStainOrigin(
 /* ------------------------------------------------------------------ */
 const INTRO_TEXT =
   'Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. Select a category below to see which elements break the rules.';
-const INTRO_MAX_W = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 
 /* ------------------------------------------------------------------ */
 /* Description text area dimensions                                   */
@@ -147,6 +148,15 @@ export default function AnomalyExplorer() {
               dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
             />
           </svg>
+
+          <MarginNote label="Why anomalies matter" color={MUSTARD}>
+            <p style={{ margin: '0 0 6px' }}>
+              Not all elements follow textbook rules. Electron configurations, oxidation states, and periodic trends all have exceptions.
+            </p>
+            <p style={{ margin: 0 }}>
+              These are often explained by relativistic effects, electron–electron repulsion, or the near-degeneracy of energy levels in heavier atoms.
+            </p>
+          </MarginNote>
         </div>
 
         <SectionedCardList sections={anomalySections} accordion defaultCollapsed={false} />
@@ -159,69 +169,79 @@ export default function AnomalyExplorer() {
   // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1
-          style={{
-            ...INSCRIPTION_STYLE,
-            color: MUSTARD,
-            viewTransitionName: VT.VIZ_TITLE,
-          } as React.CSSProperties}
-        >
-          Anomaly Explorer
-        </h1>
+      <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
+        <MarginNote label="Why anomalies matter" color={MUSTARD} top={80}>
+          <p style={{ margin: '0 0 6px' }}>
+            Not all elements follow textbook rules. Electron configurations, oxidation states, and periodic trends all have exceptions.
+          </p>
+          <p style={{ margin: 0 }}>
+            These are often explained by relativistic effects, electron–electron repulsion, or the near-degeneracy of energy levels in heavier atoms.
+          </p>
+        </MarginNote>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1
+            style={{
+              ...INSCRIPTION_STYLE,
+              color: MUSTARD,
+              viewTransitionName: VT.VIZ_TITLE,
+            } as React.CSSProperties}
+          >
+            Anomaly Explorer
+          </h1>
 
-        {/* ---- Intro paragraph with drop cap ---- */}
-        <svg
-          width="100%"
-          viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
-          style={{ display: 'block', marginBottom: '12px' }}
-        >
-          <PretextSvg
-            lines={introLines}
-            lineHeight={introLH}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={INTRO_MAX_W}
-            animationStagger={40}
-            dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
-          />
-        </svg>
+          {/* ---- Intro paragraph with drop cap ---- */}
+          <svg
+            width="100%"
+            viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={introLines}
+              lineHeight={introLH}
+              x={0}
+              y={0}
+              fill={BLACK}
+              maxWidth={INTRO_MAX_W}
+              animationStagger={40}
+              dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
+            />
+          </svg>
 
-        {/* ---- Byrne colour key: one bold button per anomaly ---- */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 8,
-            marginBottom: 24,
-          }}
-        >
-          {anomalies.map((a, i) => {
-            const isActive = selectedSlug === a.slug;
-            const bg = buttonColorFor(i);
-            return (
-              <button
-                key={a.slug}
-                onClick={() => setSelectedSlug(isActive ? null : a.slug)}
-                style={{
-                  fontFamily: 'system-ui, sans-serif',
-                  fontSize: 13,
-                  fontWeight: 'bold',
-                  letterSpacing: '0.02em',
-                  color: isActive ? contrastTextColor(bg) : BLACK,
-                  background: isActive ? bg : 'transparent',
-                  border: `2px solid ${bg}`,
-                  borderRadius: 0,
-                  padding: '6px 14px',
-                  cursor: 'pointer',
-                  transition: 'background 200ms var(--ease-out), color 200ms var(--ease-out)',
-                }}
-              >
-                {a.label}
-              </button>
-            );
-          })}
+          {/* ---- Byrne colour key: one bold button per anomaly ---- */}
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 8,
+              marginBottom: 24,
+            }}
+          >
+            {anomalies.map((a, i) => {
+              const isActive = selectedSlug === a.slug;
+              const bg = buttonColorFor(i);
+              return (
+                <button
+                  key={a.slug}
+                  onClick={() => setSelectedSlug(isActive ? null : a.slug)}
+                  style={{
+                    fontFamily: 'system-ui, sans-serif',
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    letterSpacing: '0.02em',
+                    color: isActive ? contrastTextColor(bg) : BLACK,
+                    background: isActive ? bg : 'transparent',
+                    border: `2px solid ${bg}`,
+                    borderRadius: 0,
+                    padding: '6px 14px',
+                    cursor: 'pointer',
+                    transition: 'background 200ms var(--ease-out), color 200ms var(--ease-out)',
+                  }}
+                >
+                  {a.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 

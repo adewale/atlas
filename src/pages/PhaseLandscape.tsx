@@ -17,6 +17,7 @@ import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
+import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { phaseAtTemperature } from '../lib/phase';
@@ -97,7 +98,7 @@ const INTRO_TEXT =
   'At standard temperature and pressure, only 2 elements are liquid — mercury (Hg) and bromine (Br). Just 11 elements exist as gases, all nonmetals or noble gases. The remaining 105 elements are solid, the vast majority of which are metals.';
 
 const SVG_WIDTH = VIEWBOX_W;
-const INTRO_MAX_W = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 
 // ---------------------------------------------------------------------------
 // Sparkline Ruler constants
@@ -376,31 +377,40 @@ export default function PhaseLandscape() {
 
   return (
     <PageShell vizNav>
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
-          Phase Landscape{isAtSTP ? ' at STP' : ''}
-        </h1>
+      <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
+        <MarginNote label="Phase transitions" color={WARM_RED} top={80}>
+          <p style={{ margin: '0 0 6px' }}>
+            A phase transition occurs when thermal energy overcomes intermolecular forces. Metals generally have high melting points due to strong metallic bonding.
+          </p>
+          <p style={{ margin: 0 }}>
+            Mercury and bromine are the only elements liquid at STP — both have unusually weak interatomic forces for their position in the table.
+          </p>
+        </MarginNote>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
+            Phase Landscape{isAtSTP ? ' at STP' : ''}
+          </h1>
 
-        <svg
-          width="100%"
-          viewBox={`0 0 ${isMobile ? 360 : INTRO_MAX_W} ${introHeight}`}
-          style={{ display: 'block', marginBottom: '12px' }}
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={isMobile ? 360 : INTRO_MAX_W}
-            animationStagger={40}
-            dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
-          />
-        </svg>
+          <svg
+            width="100%"
+            viewBox={`0 0 ${isMobile ? 360 : INTRO_MAX_W} ${introHeight}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              fill={BLACK}
+              maxWidth={isMobile ? 360 : INTRO_MAX_W}
+              animationStagger={40}
+              dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
+            />
+          </svg>
 
-        {temperatureRuler}
+          {temperatureRuler}
 
-        {!isMobile && (
+          {!isMobile && (
           <div style={{ display: 'flex', gap: '24px', marginBottom: '12px' }}>
             {LEGEND_ITEMS.map((item) => (
               <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -410,6 +420,7 @@ export default function PhaseLandscape() {
             ))}
           </div>
         )}
+        </div>
       </div>
 
       {isMobile ? (

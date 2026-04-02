@@ -16,6 +16,7 @@ import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
+import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -25,6 +26,7 @@ const INTRO_TEXT =
   'Every element has neighbours — elements adjacent in the periodic table. This graph maps those relationships. Hover to see an element\u2019s neighbourhood.';
 
 const SVG_WIDTH = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 const NODE_RADIUS = 10;
 
 // ---------------------------------------------------------------------------
@@ -59,8 +61,6 @@ for (const el of allElements) {
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
-const INTRO_MAX_W = VIEWBOX_W;
-
 export default function NeighborhoodGraph() {
   useDocumentTitle('Neighbourhood Graph', 'Force-directed graph showing which elements share the most properties, revealing unexpected neighbourhoods across the periodic table.');
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
@@ -69,6 +69,7 @@ export default function NeighborhoodGraph() {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   const introWidth = isMobile ? 360 : INTRO_MAX_W;
+  const introColor = BLACK;
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: introWidth,
@@ -97,25 +98,35 @@ export default function NeighborhoodGraph() {
 
   return (
     <PageShell vizNav>
-      <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
+      <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
+        <MarginNote label="Neighbours" color={introColor} top={80}>
+          <p style={{ margin: '0 0 6px' }}>
+            <strong>Neighbours</strong> are elements directly adjacent in the standard periodic table — up, down, left, or right. Edge elements have fewer neighbours.
+          </p>
+          <p style={{ margin: 0 }}>
+            Elements in the same block (colour) often share chemical properties with their neighbours, creating families of related behaviour.
+          </p>
+        </MarginNote>
+        <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
 
-        <svg
-          width="100%"
-          viewBox={`0 0 ${introWidth} ${Math.max(lines.length * lineHeight + 16, 84)}`}
-          style={{ display: 'block', marginBottom: '12px' }}
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={introWidth}
-            animationStagger={40}
-            dropCap={{ fontSize: 80, fill: BLACK, char: introDC.char }}
-          />
-        </svg>
+          <svg
+            width="100%"
+            viewBox={`0 0 ${introWidth} ${Math.max(lines.length * lineHeight + 16, 84)}`}
+            style={{ display: 'block', marginBottom: '12px' }}
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              fill={BLACK}
+              maxWidth={introWidth}
+              animationStagger={40}
+              dropCap={{ fontSize: 80, fill: BLACK, char: introDC.char }}
+            />
+          </svg>
+        </div>
       </div>
 
       <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>

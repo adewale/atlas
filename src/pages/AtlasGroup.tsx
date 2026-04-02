@@ -4,6 +4,7 @@ import { blockColor } from '../lib/grid';
 import { BLACK } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import AtlasBrowsePage from '../components/AtlasBrowsePage';
+import MarginNote from '../components/MarginNote';
 import type { GroupData } from '../lib/types';
 
 export default function AtlasGroup() {
@@ -25,6 +26,13 @@ export default function AtlasGroup() {
       elements={symbols}
       caption={`Group ${n}`}
       captionColor={color}
+      marginNote={
+        <MarginNote label="Groups" color={color} top={60}>
+          <p style={{ margin: 0 }}>
+            A <strong>group</strong> is a vertical column in the periodic table. Elements in the same group share the same number of valence electrons, giving them similar chemical reactivity.
+          </p>
+        </MarginNote>
+      }
     />
   );
 }

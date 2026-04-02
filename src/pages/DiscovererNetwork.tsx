@@ -9,6 +9,7 @@ import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
+import MarginNote from '../components/MarginNote';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -26,7 +27,7 @@ const SQ = 24;
 const SQ_GAP = 3;
 const ROW_HEIGHT = 36;
 const INTRO_Y = 0;
-const INTRO_MAX_W = SVG_WIDTH;
+const INTRO_MAX_W = 760;
 
 /* Colour cycle for discoverer sections */
 const DISCOVERER_COLORS = [WARM_RED, DEEP_BLUE, MUSTARD, BLACK];
@@ -127,6 +128,15 @@ export default function DiscovererNetwork() {
               dropCap={{ fontSize: 72, fill: MUSTARD, char: introDC.char }}
             />
           </svg>
+
+          <MarginNote label="Collaboration" color={MUSTARD}>
+            <p style={{ margin: '0 0 6px' }}>
+              Element discovery is often collaborative. Many "discoverers" worked in teams, and priority disputes are common in the history of chemistry.
+            </p>
+            <p style={{ margin: 0 }}>
+              Colour encodes the electron block: s (blue), p (gold), d (red), f (black).
+            </p>
+          </MarginNote>
         </div>
 
         <SectionedCardList sections={discovererSections} accordion defaultCollapsed={false} />
@@ -139,7 +149,17 @@ export default function DiscovererNetwork() {
   // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
-      <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
+      <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
+        <MarginNote label="Collaboration" color={MUSTARD} top={40}>
+          <p style={{ margin: '0 0 6px' }}>
+            Element discovery is often collaborative. Many "discoverers" worked in teams, and priority disputes are common in the history of chemistry.
+          </p>
+          <p style={{ margin: 0 }}>
+            Colour encodes the electron block: s (blue), p (gold), d (red), f (black).
+          </p>
+        </MarginNote>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
+      </div>
 
       {/* bar-grow keyframe in globals.css */}
       <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>

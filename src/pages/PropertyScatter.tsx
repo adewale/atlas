@@ -12,6 +12,7 @@ import PretextSvg from '../components/PretextSvg';
 import type { ElementRecord } from '../lib/types';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
+import MarginNote from '../components/MarginNote';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 // ---------------------------------------------------------------------------
@@ -201,34 +202,17 @@ export default function PropertyScatter() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: '760px', position: 'relative' }}>
-      {/* Margin note — educational aside */}
-      <aside
-        className="scatter-margin-note"
-        style={{
-          position: 'absolute',
-          right: '-200px',
-          top: '80px',
-          width: '170px',
-          fontSize: '12px',
-          lineHeight: 1.6,
-          color: GREY_MID,
-          borderLeft: `2px solid ${DEEP_BLUE}`,
-          paddingLeft: '10px',
-        }}
-      >
-        <strong style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: DEEP_BLUE }}>
-          Properties
-        </strong>
-        <p style={{ margin: '6px 0 0' }}>
+      <MarginNote label="Properties" color={DEEP_BLUE} top={80}>
+        <p style={{ margin: '0 0 6px' }}>
           <strong>Electronegativity</strong> measures how strongly an atom attracts electrons in a bond (Pauling scale).
         </p>
-        <p style={{ margin: '6px 0 0' }}>
+        <p style={{ margin: '0 0 6px' }}>
           <strong>Ionisation energy</strong> is the energy needed to remove an electron from a neutral atom.
         </p>
-        <p style={{ margin: '6px 0 0' }}>
+        <p style={{ margin: 0 }}>
           Noble gases cluster at high ionisation energy because their filled shells resist electron removal.
         </p>
-      </aside>
+      </MarginNote>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Property Scatter</h1>
 

@@ -6,6 +6,7 @@ import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
+import MarginNote from '../components/MarginNote';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -50,7 +51,7 @@ const ORIGIN_LABELS: Record<string, string> = {
 const INTRO_TEXT =
   'Element names tell the story of science. Some honour places, some honour people, some invoke mythology. The etymology reveals centuries of discovery and human ambition.';
 
-const MAX_WIDTH = 960;
+const MAX_WIDTH = 760;
 
 // ---------------------------------------------------------------------------
 // Component
@@ -92,7 +93,15 @@ export default function EtymologyMap() {
 
   return (
     <PageShell vizNav>
-      <div style={{ maxWidth: MAX_WIDTH }}>
+      <div style={{ maxWidth: MAX_WIDTH, position: 'relative' }}>
+        <MarginNote label="Naming patterns" color={DEEP_BLUE} top={80}>
+          <p style={{ margin: '0 0 6px' }}>
+            Early elements took names from their observable properties — <em>chlorine</em> from the Greek for "green", <em>argon</em> for "lazy".
+          </p>
+          <p style={{ margin: 0 }}>
+            Later discoveries honoured places (Ytterby, a Swedish village, gave its name to four elements) and people (curium, einsteinium, mendelevium).
+          </p>
+        </MarginNote>
         <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, margin: '0 0 16px', viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Etymology Map</h1>
 
         <svg

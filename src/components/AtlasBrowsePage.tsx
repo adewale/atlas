@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { getElement } from '../lib/data';
 import type { ElementRecord } from '../lib/types';
@@ -26,6 +27,8 @@ type AtlasBrowsePageProps = {
     highlightIndex?: number;
     color?: string;
   };
+  /** Optional margin note rendered in the right margin on desktop, inline disclosure on mobile. */
+  marginNote?: ReactNode;
 };
 
 /**
@@ -44,6 +47,7 @@ export default function AtlasBrowsePage({
   captionColor,
   propertyKey,
   sparkline,
+  marginNote,
 }: AtlasBrowsePageProps) {
   useDocumentTitle(heading);
 
@@ -58,37 +62,40 @@ export default function AtlasBrowsePage({
 
   return (
     <PageShell>
-      <Link to={backLink.to} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>{backLink.label}</Link>
-      <h1
-        style={{
-          ...INSCRIPTION_STYLE,
-          margin: '12px 0 16px',
-          color,
-          ...(viewTransitionName ? { viewTransitionName } : {}),
-        } as React.CSSProperties}
-      >
-        {heading}
-      </h1>
-      <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
-      {description && (
-        <svg
-          width={DESC_MAX_W}
-          height={lines.length * lineHeight + lineHeight}
-          style={{ maxWidth: '100%', marginBottom: '24px' }}
-          role="img"
-          aria-label={description}
+      <div style={marginNote ? { maxWidth: 760, position: 'relative' as const } : undefined}>
+        {marginNote}
+        <Link to={backLink.to} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>{backLink.label}</Link>
+        <h1
+          style={{
+            ...INSCRIPTION_STYLE,
+            margin: '12px 0 16px',
+            color,
+            ...(viewTransitionName ? { viewTransitionName } : {}),
+          } as React.CSSProperties}
         >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            maxWidth={DESC_MAX_W}
-            showRules
-            animationStagger={25}
-          />
-        </svg>
-      )}
+          {heading}
+        </h1>
+        <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
+        {description && (
+          <svg
+            width={DESC_MAX_W}
+            height={lines.length * lineHeight + lineHeight}
+            style={{ maxWidth: '100%', marginBottom: '24px' }}
+            role="img"
+            aria-label={description}
+          >
+            <PretextSvg
+              lines={lines}
+              lineHeight={lineHeight}
+              x={0}
+              y={0}
+              maxWidth={DESC_MAX_W}
+              showRules
+              animationStagger={25}
+            />
+          </svg>
+        )}
+      </div>
       {elements.length > 0 && (
         <AtlasPlate
           elements={elements}

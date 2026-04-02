@@ -329,6 +329,24 @@ svg [role="button"] {
   }
 }
 
+/* Inline margin-note disclosure (mobile replacement for margin notes) */
+.margin-note-disclosure {
+  margin: 12px 0;
+}
+.margin-note-disclosure summary {
+  min-height: unset;
+  min-width: unset;
+}
+.margin-note-disclosure summary::-webkit-details-marker {
+  display: none;
+}
+.margin-note-disclosure[open] .margin-note-chevron {
+  transform: rotate(90deg);
+}
+.margin-note-chevron {
+  transition: transform 200ms var(--ease-out);
+}
+
 /* Mobile (<768px) */
 @media (max-width: 768px) {
   body {
