@@ -584,7 +584,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         }}
       >
         {/* Category — Pretext Tier 1 measured text */}
-        <div style={{ marginBottom: '12px' }}>
+        <div style={{ marginBottom: '12px', borderLeft: `3px solid ${color}`, paddingLeft: '10px' }}>
           <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
             Category
           </div>
@@ -662,7 +662,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         )}
 
         {/* Neighbors */}
-        <div style={{ marginBottom: '12px' }}>
+        <div style={{ marginBottom: '12px', borderLeft: `3px solid ${color}`, paddingLeft: '10px' }}>
           <div style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase' }}>
             Neighbours
           </div>
@@ -692,7 +692,11 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         </div>
 
         {/* Source strip (mandatory CC BY-SA) */}
-        {sources && <SourceStrip sources={sources} ruleColor={color} />}
+        {sources && (
+          <div style={{ borderLeft: `3px solid ${color}`, paddingLeft: '10px' }}>
+            <SourceStrip sources={sources} ruleColor={color} />
+          </div>
+        )}
 
         {/* Compare link */}
         <div style={{ marginTop: '12px' }}>
