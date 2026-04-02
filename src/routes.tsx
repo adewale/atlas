@@ -1,8 +1,18 @@
 import { lazy } from 'react';
-import { createBrowserRouter, redirect } from 'react-router';
+import { createBrowserRouter, redirect, Outlet, ScrollRestoration } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
 import type { GroupData, AnomalyData, DiscovererData, TimelineData, PeriodData, BlockData, CategoryData } from './lib/types';
 import { getElement } from './lib/data';
+
+/** Root layout that provides scroll restoration for all routes. */
+function RootLayout() {
+  return (
+    <>
+      <ScrollRestoration />
+      <Outlet />
+    </>
+  );
+}
 
 let groupsCache: GroupData[] | null = null;
 let anomaliesCache: AnomalyData[] | null = null;
@@ -46,6 +56,9 @@ const EntityMap = lazy(() => import('./pages/EntityMap'));
 const AnimationPalette = lazy(() => import('./pages/AnimationPalette'));
 
 export const router = createBrowserRouter([
+  {
+    Component: RootLayout,
+    children: [
   { path: '/', Component: Home },
 
   /* ── Element ─────────────────────────────── */
@@ -267,5 +280,7 @@ export const router = createBrowserRouter([
       discoverersCache ??= await import('../data/generated/discoverers.json').then(m => m.default);
       return { discoverers: discoverersCache };
     },
+  },
+    ],
   },
 ]);

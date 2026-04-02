@@ -69,7 +69,7 @@ export default function About() {
 
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Principles</h2>
-        <ul style={{ paddingLeft: '1.2em', lineHeight: 1.4 }}>
+        <ul style={{ paddingLeft: '1.2em', lineHeight: 1.7 }}>
           <li>60% Byrne visual drama, 40% Tufte data density</li>
           <li>Hard colour fields — solid rects, no gradients</li>
           <li>Giant numerals and symbols as hero elements</li>
@@ -121,7 +121,7 @@ export default function About() {
 
       <section>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Language</h2>
-        <p style={{ lineHeight: 1.4 }}>
+        <p style={{ lineHeight: 1.7 }}>
           Atlas follows a strict visual system: hard colour fields, sharp corners, giant numerals, and high data-ink ratio.
           See the full <Link to="/about/design">Design Language</Link> reference for palette, spacing, typography, and animation details.
         </p>
