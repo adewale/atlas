@@ -24,6 +24,9 @@ const ENTRY_KEYFRAMES = [
   { name: 'wipe-left', desc: 'clip-path reveal from left', duration: '350ms', easing: 'var(--ease-out)' },
   { name: 'sparkline-draw', desc: 'stroke-dashoffset draw', duration: '400ms', easing: 'var(--ease-out)' },
   { name: 'svg-fade-in', desc: 'Opacity only (SVG-safe)', duration: '300ms', easing: 'var(--ease-out)' },
+  { name: 'compare-expand', desc: 'clip-path from centre outward', duration: '300ms', easing: 'var(--ease-out)' },
+  { name: 'compare-scale', desc: 'scale(0.95) to scale(1)', duration: '250ms', easing: 'var(--ease-out)' },
+  { name: 'help-panel-enter', desc: 'Opacity + translateY(-8px)', duration: '250ms', easing: 'var(--ease-out)' },
 ] as const;
 
 const VT_NAMES = [
@@ -132,27 +135,35 @@ function KeyframeDemo({ name, desc, duration, easing }: {
   const [key, setKey] = useState(0);
   const replay = useCallback(() => setKey((k) => k + 1), []);
 
+  const clipPathAnimations = ['wipe-left', 'compare-expand'];
+  const transformOnlyAnimations = ['compare-scale'];
   const animationStyle: React.CSSProperties =
     name === 'sparkline-draw'
       ? {
           width: '200px',
           height: '24px',
         }
-      : name === 'wipe-left'
+      : clipPathAnimations.includes(name)
         ? {
             width: '200px',
             height: '24px',
             background: DEEP_BLUE,
-            opacity: 0,
             animation: `${name} ${duration} ${easing} forwards`,
           }
-        : {
-            width: '200px',
-            height: '24px',
-            background: DEEP_BLUE,
-            opacity: 0,
-            animation: `${name} ${duration} ${easing} forwards`,
-          };
+        : transformOnlyAnimations.includes(name)
+          ? {
+              width: '200px',
+              height: '24px',
+              background: DEEP_BLUE,
+              animation: `${name} ${duration} ${easing} forwards`,
+            }
+          : {
+              width: '200px',
+              height: '24px',
+              background: DEEP_BLUE,
+              opacity: 0,
+              animation: `${name} ${duration} ${easing} forwards`,
+            };
 
   return (
     <div style={{ marginBottom: '20px' }}>
@@ -481,8 +492,8 @@ export default function AnimationPalette() {
         <section style={SECTION_STYLE}>
           <h2 style={H2_STYLE}>Entry Keyframes</h2>
           <p style={{ fontSize: '13px', marginBottom: '16px', color: GREY_MID }}>
-            Five canonical keyframes for on-page entry. Three aliases (plate-wipe, bar-grow, rule-draw)
-            share the wipe-left implementation.
+            Eight canonical keyframes for on-page entry and interactive moments. Three aliases
+            (plate-wipe, bar-grow, rule-draw) share the wipe-left implementation.
           </p>
           {ENTRY_KEYFRAMES.map((k) => (
             <KeyframeDemo key={k.name} name={k.name} desc={k.desc} duration={k.duration} easing={k.easing} />
