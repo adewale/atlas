@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import '../mocks/usePretextLines.mock';
 import SectionedCardList from '../../src/components/SectionedCardList';
@@ -79,12 +79,12 @@ describe('SectionedCardList — structure', () => {
     renderComponent();
     const links = screen.getAllByRole('link');
     const hrefs = links.map(l => l.getAttribute('href'));
-    expect(hrefs).toContain('/element/H');
-    expect(hrefs).toContain('/element/He');
-    expect(hrefs).toContain('/element/Li');
-    expect(hrefs).toContain('/element/Be');
-    expect(hrefs).toContain('/element/B');
-    expect(hrefs).toContain('/element/C');
+    expect(hrefs).toContain('/elements/H');
+    expect(hrefs).toContain('/elements/He');
+    expect(hrefs).toContain('/elements/Li');
+    expect(hrefs).toContain('/elements/Be');
+    expect(hrefs).toContain('/elements/B');
+    expect(hrefs).toContain('/elements/C');
   });
 
   it('displays element symbol text inside each card', () => {

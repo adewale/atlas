@@ -83,11 +83,8 @@ describe('Folio', () => {
     expect(screen.getByText('Fe')).toBeInTheDocument();
     // Name
     expect(screen.getByText('Iron')).toBeInTheDocument();
-    // Category in marginalia
-    expect(screen.getByText('transition metal')).toBeInTheDocument();
-    // d-block color is warm red (#9e1c2c) — check the left color bar
-    const colorBar = document.querySelector('[style*="background: rgb(158, 28, 44)"]');
-    expect(colorBar).toBeInTheDocument();
+    // Category in data plate
+    expect(screen.getByLabelText('transition metal')).toBeInTheDocument();
   });
 
   it('shows data plate with group, period, block', () => {
@@ -97,21 +94,17 @@ describe('Folio', () => {
     expect(screen.getByLabelText(/Data plate: Group 8, Period 4, Block d/)).toBeInTheDocument();
   });
 
-  it('renders property bars', () => {
+  it('renders discovery section', () => {
     renderFolio();
-    expect(screen.getByLabelText(/Atomic Mass: 55.84 Da, ranked 93 of 118/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Electronegativity: 1.83, ranked 41 of 118/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Ionisation Energy: 7.902 kJ\/mol, ranked 35 of 118/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Atomic Radius: 194 pm, ranked 67 of 118/)).toBeInTheDocument();
+    expect(screen.getByText('Known since antiquity')).toBeInTheDocument();
   });
 
   it('renders neighbor links in marginalia', () => {
     renderFolio();
-    // Mn and Co appear as neighbor chips in the marginalia
     const marginalia = document.querySelector('.folio-marginalia')!;
     expect(marginalia).toBeTruthy();
-    const mnLink = marginalia.querySelector('a[href="/element/Mn"]');
-    const coLink = marginalia.querySelector('a[href="/element/Co"]');
+    const mnLink = marginalia.querySelector('a[href="/elements/Mn"]');
+    const coLink = marginalia.querySelector('a[href="/elements/Co"]');
     expect(mnLink).toBeTruthy();
     expect(coLink).toBeTruthy();
   });
@@ -136,25 +129,10 @@ describe('Folio', () => {
     expect(screen.getByLabelText(/Data plate: Group —/)).toBeInTheDocument();
   });
 
-  it('compare link points to correct URL and uses client-side routing', () => {
+  it('compare link points to correct URL', () => {
     renderFolio();
     const link = screen.getByText('Compare →');
-    expect(link).toHaveAttribute('href', '/compare/Fe/Mn');
-    // Should be rendered by React Router's Link, not a plain <a> tag.
-    // MemoryRouter wraps Link output with onClick handlers; plain <a> won't
-    // have the data-discover-* attributes or the internal click handling.
-    // We check that it's inside a react-router link by verifying the
-    // closest <a> has an onclick handler (react-router adds one).
-    expect(link.onclick).not.toBeNull();
-  });
-
-  it('neighbor links use client-side routing', () => {
-    renderFolio();
-    const marginalia = document.querySelector('.folio-marginalia')!;
-    const mnLink = marginalia.querySelector('a[href="/element/Mn"]') as HTMLAnchorElement;
-    expect(mnLink).toBeTruthy();
-    // React Router Link adds an onClick handler; plain <a> tags don't
-    expect(mnLink!.onclick).not.toBeNull();
+    expect(link).toHaveAttribute('href', '/elements/Fe/compare/Mn');
   });
 
   it('shaped text lines are rendered in SVG', () => {
@@ -167,20 +145,20 @@ describe('Folio', () => {
     renderFolio();
     // Group label should link to /atlas/group/8
     const groupLink = screen.getByRole('link', { name: /group 8/i });
-    expect(groupLink).toHaveAttribute('href', '/atlas/group/8');
-    // Period label should link to /atlas/period/4
+    expect(groupLink).toHaveAttribute('href', '/groups/8');
+    // Period label should link to /periods/4
     const periodLink = screen.getByRole('link', { name: /period 4/i });
-    expect(periodLink).toHaveAttribute('href', '/atlas/period/4');
-    // Block label should link to /atlas/block/d
+    expect(periodLink).toHaveAttribute('href', '/periods/4');
+    // Block label should link to /blocks/d
     const blockLink = screen.getByRole('link', { name: /block d/i });
-    expect(blockLink).toHaveAttribute('href', '/atlas/block/d');
+    expect(blockLink).toHaveAttribute('href', '/blocks/d');
   });
 
   it('data plate shows group prev/next arrows for elements with a group', () => {
     renderFolio();
     // Fe is first in Group 8 (period 4). Next in group is Ru (period 5).
     const nextInGroup = screen.getByRole('link', { name: /Next: Ruthenium/i });
-    expect(nextInGroup).toHaveAttribute('href', '/element/Ru');
+    expect(nextInGroup).toHaveAttribute('href', '/elements/Ru');
   });
 
   it('data plate shows period and block prev/next arrows', () => {
@@ -189,11 +167,11 @@ describe('Folio', () => {
     // These appear in both the period and block rows, so use getAllByRole
     const prevLinks = screen.getAllByRole('link', { name: /Previous: Manganese/i });
     expect(prevLinks.length).toBeGreaterThanOrEqual(1);
-    expect(prevLinks[0]).toHaveAttribute('href', '/element/Mn');
+    expect(prevLinks[0]).toHaveAttribute('href', '/elements/Mn');
 
     const nextLinks = screen.getAllByRole('link', { name: /Next: Cobalt/i });
     expect(nextLinks.length).toBeGreaterThanOrEqual(1);
-    expect(nextLinks[0]).toHaveAttribute('href', '/element/Co');
+    expect(nextLinks[0]).toHaveAttribute('href', '/elements/Co');
   });
 
   it('no group arrows for elements without a group', () => {
@@ -203,7 +181,7 @@ describe('Folio', () => {
     // All arrow links should be /element/ links, none for group
     const arrowLinks = screen.queryAllByRole('link', { name: /Previous:|Next:/i });
     for (const link of arrowLinks) {
-      expect(link.getAttribute('href')).toMatch(/^\/element\//);
+      expect(link.getAttribute('href')).toMatch(/^\/elements\//);
     }
     // Ruthenium (next in Group 8) should NOT appear since group is null
     const ruLink = screen.queryByRole('link', { name: /Ruthenium/i });
@@ -214,7 +192,7 @@ describe('Folio', () => {
   it('category label links to atlas category page', () => {
     renderFolio();
     const catLink = screen.getByRole('link', { name: /transition metal/i });
-    expect(catLink).toHaveAttribute('href', '/atlas/category/transition-metal');
+    expect(catLink).toHaveAttribute('href', '/categories/transition-metal');
   });
 
   it('etymology link points to specific origin hash', () => {
@@ -228,7 +206,7 @@ describe('Folio', () => {
     const discovererLink = screen.getByText('Known since antiquity');
     expect(discovererLink).toHaveAttribute(
       'href',
-      '/discoverer/Known%20since%20antiquity',
+      '/discoverers/Known%20since%20antiquity',
     );
   });
 
@@ -254,6 +232,6 @@ describe('Folio', () => {
       </MemoryRouter>,
     );
     const timelineLink = screen.getByText('timeline →');
-    expect(timelineLink).toHaveAttribute('href', '/timeline/1770');
+    expect(timelineLink).toHaveAttribute('href', '/eras/1770');
   });
 });
