@@ -830,6 +830,57 @@ export default function Design() {
       </section>
 
       {/* ============================================================ */}
+      {/* Inter-line Rules                                              */}
+      {/* ============================================================ */}
+      <section style={{ marginBottom: '40px' }}>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Inter-line Rules</h2>
+        <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
+          PretextSvg's <code style={{ fontSize: 12 }}>showRules</code> prop draws faint horizontal lines between text lines —
+          a classic typographic device that helps the eye track across wider columns of prose.
+          Rules use the Hairline tier ({STROKE_HAIRLINE}px) at 20% opacity with a clip-path wipe animation.
+        </p>
+
+        {/* Live demo */}
+        <div style={{ marginBottom: '24px' }}>
+          <svg width={320} height={72} style={{ display: 'block' }}>
+            {[0, 1, 2].map((i) => {
+              const y = i * 24 + 16;
+              return (
+                <g key={i}>
+                  <text x={0} y={y} fontSize={14} fill={BLACK} fontFamily="system-ui">
+                    {['Body text with inter-line rules enabled.', 'The faint lines aid readability on wider', 'columns of multi-line paragraph text.'][i]}
+                  </text>
+                  {i > 0 && (
+                    <line x1={0} y1={y - 14} x2={320} y2={y - 14} stroke={BLACK} strokeWidth={STROKE_HAIRLINE} opacity={0.2} />
+                  )}
+                </g>
+              );
+            })}
+          </svg>
+        </div>
+
+        {/* When to use / when not to use */}
+        <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', fontSize: '13px', lineHeight: 1.6 }}>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <div style={{ fontWeight: 'bold', color: DEEP_BLUE, marginBottom: '6px' }}>Use rules for</div>
+            <ul style={{ margin: 0, paddingLeft: '18px', color: GREY_MID }}>
+              <li>Multi-line prose and body text (About, Credits)</li>
+              <li>Browse-page descriptions (AtlasBrowsePage)</li>
+              <li>Help overlay body copy</li>
+            </ul>
+          </div>
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <div style={{ fontWeight: 'bold', color: WARM_RED, marginBottom: '6px' }}>Omit rules for</div>
+            <ul style={{ margin: 0, paddingLeft: '18px', color: GREY_MID }}>
+              <li>Short labels, captions, and property lists</li>
+              <li>Text inside data visualisations (charts, graphs, maps)</li>
+              <li>Compact UI elements (Folio, AtlasPlate, tooltips)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
       {/* Consolidation Opportunities                                   */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
