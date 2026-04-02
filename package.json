@@ -13,6 +13,7 @@
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
+    "lint:links": "tsx scripts/lint-internal-links.ts",
     "deploy": "npm run build && wrangler pages deploy dist/"
   },
   "dependencies": {
