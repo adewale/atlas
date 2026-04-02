@@ -274,6 +274,7 @@ export default function PhaseLandscape() {
         letterSpacing: '0.02em',
       }}>
         {phaseAnnotation}
+        <span style={{ opacity: 0.7 }}> · peaks show where elements change state</span>
       </div>
 
       {/* Sparkline SVG — just the chart, no text labels */}

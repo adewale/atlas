@@ -9,7 +9,8 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { VT } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
@@ -62,13 +63,15 @@ const INTRO_MAX_W = VIEWBOX_W;
 
 export default function NeighborhoodGraph() {
   useDocumentTitle('Neighbourhood Graph', 'Force-directed graph showing which elements share the most properties, revealing unexpected neighbourhoods across the periodic table.');
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const navigate = useNavigate();
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
+  const introWidth = isMobile ? 360 : INTRO_MAX_W;
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: INTRO_MAX_W,
+    maxWidth: introWidth,
     dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
 
@@ -99,7 +102,7 @@ export default function NeighborhoodGraph() {
 
         <svg
           width="100%"
-          viewBox={`0 0 ${INTRO_MAX_W} ${Math.max(lines.length * lineHeight + 16, 84)}`}
+          viewBox={`0 0 ${introWidth} ${Math.max(lines.length * lineHeight + 16, 84)}`}
           style={{ display: 'block', marginBottom: '12px' }}
         >
           <PretextSvg
@@ -108,7 +111,7 @@ export default function NeighborhoodGraph() {
             x={0}
             y={0}
             fill={BLACK}
-            maxWidth={INTRO_MAX_W}
+            maxWidth={introWidth}
             animationStagger={40}
             dropCap={{ fontSize: 80, fill: BLACK, char: introDC.char }}
           />
