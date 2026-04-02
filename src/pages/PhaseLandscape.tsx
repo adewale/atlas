@@ -378,14 +378,16 @@ export default function PhaseLandscape() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: INTRO_MAX_W, position: 'relative' }}>
-        <MarginNote label="Legend" color={WARM_RED} top={80}>
-          {LEGEND_ITEMS.map((item) => (
-            <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-              <span style={{ width: '20px', height: '14px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}`, flexShrink: 0 }} />
-              <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.phase}</span>
-            </div>
-          ))}
-        </MarginNote>
+        {!isMobile && (
+          <MarginNote label="Legend" color={WARM_RED} top={80}>
+            {LEGEND_ITEMS.map((item) => (
+              <div key={item.phase} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <span style={{ width: '20px', height: '14px', background: item.color, display: 'inline-block', border: `0.5px solid ${BLACK}`, flexShrink: 0 }} />
+                <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.phase}</span>
+              </div>
+            ))}
+          </MarginNote>
+        )}
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
             Phase Landscape{isAtSTP ? ' at STP' : ''}

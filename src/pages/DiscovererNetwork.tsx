@@ -127,19 +127,21 @@ export default function DiscovererNetwork() {
             />
           </svg>
 
-          <MarginNote label="Block colours" color={MUSTARD}>
-            {[
-              { label: 's-block', block: 's' },
-              { label: 'p-block', block: 'p' },
-              { label: 'd-block', block: 'd' },
-              { label: 'f-block', block: 'f' },
-            ].map((item) => (
-              <div key={item.block} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                <span style={{ width: '20px', height: '14px', background: blockColor(item.block), display: 'inline-block', flexShrink: 0 }} />
-                <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.label}</span>
-              </div>
-            ))}
-          </MarginNote>
+          {!isMobile && (
+            <MarginNote label="Block colours" color={MUSTARD}>
+              {[
+                { label: 's-block', block: 's' },
+                { label: 'p-block', block: 'p' },
+                { label: 'd-block', block: 'd' },
+                { label: 'f-block', block: 'f' },
+              ].map((item) => (
+                <div key={item.block} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <span style={{ width: '20px', height: '14px', background: blockColor(item.block), display: 'inline-block', flexShrink: 0 }} />
+                  <span style={{ fontSize: '12px', fontWeight: 'bold' }}>{item.label}</span>
+                </div>
+              ))}
+            </MarginNote>
+          )}
         </div>
 
         <SectionedCardList sections={discovererSections} accordion defaultCollapsed={false} />
