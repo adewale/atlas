@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router';
+import { useSearchParams, Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { BACK_LINK_STYLE } from '../lib/theme';
@@ -8,7 +8,9 @@ import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Compare() {
-  const { symbolA, symbolB } = useParams();
+  const [searchParams] = useSearchParams();
+  const symbolA = searchParams.get('a');
+  const symbolB = searchParams.get('b');
   const elementA = symbolA ? getElement(symbolA) : undefined;
   const elementB = symbolB ? getElement(symbolB) : undefined;
   const vertical = useIsMobile(600);

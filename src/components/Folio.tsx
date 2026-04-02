@@ -512,7 +512,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
         {/* Compare link */}
         <div style={{ marginTop: '12px' }}>
-          <Link to={`/compare/${element.symbol}/${element.neighbors[0] ?? 'O'}`}>
+          <Link to={`/compare?a=${element.symbol}&b=${element.neighbors[0] ?? 'O'}`}>
             Compare →
           </Link>
         </div>

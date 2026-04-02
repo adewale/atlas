@@ -120,7 +120,7 @@ export default function About() {
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Language</h2>
         <p style={{ lineHeight: 1.7 }}>
           Atlas follows a strict visual system: hard colour fields, sharp corners, giant numerals, and high data-ink ratio.
-          See the full <Link to="/design">Design Language</Link> reference for palette, spacing, typography, and animation details.
+          See the full <Link to="/about/design">Design Language</Link> reference for palette, spacing, typography, and animation details.
         </p>
       </section>
       </div>
