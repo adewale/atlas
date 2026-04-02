@@ -23,7 +23,7 @@ const PLATE_ROWS = 4; // Group, Period, Block, Category
 const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS; // 224
 const RANK_ROW_H = 24;
 const FULL_WIDTH = 560;
-const PLATE_GAP = 8;
+const PLATE_GAP = 24;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
