@@ -884,37 +884,33 @@ export default function Design() {
       {/* Consolidation Opportunities                                   */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Consolidation Opportunities</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Consolidation Status</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
-          Patterns that could be unified to reduce duplication and improve consistency.
+          Patterns that were unified to reduce duplication and improve consistency.
         </p>
         <div style={{ fontSize: '13px', lineHeight: 1.8 }}>
           <div style={{ marginBottom: '16px', padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
             <strong style={{ color: DEEP_BLUE }}>1. Browse pages share a single template</strong>
             <br />
-            AtlasGroup, AtlasPeriod, AtlasBlock, AtlasCategory, and AtlasProperty pages
-            all follow the same layout: coloured caption strip, AtlasPlate card grid,
-            and optional sparkline. These could be collapsed into a single
-            parameterised <code style={{ fontSize: 12 }}>AtlasBrowsePage</code> component
-            that accepts entity type, colour, and data loader.
+            AtlasGroup, AtlasPeriod, AtlasBlock, AtlasCategory, AtlasAnomaly, and AtlasProperty
+            pages all use the shared <code style={{ fontSize: 12 }}>AtlasBrowsePage</code> component,
+            which provides a coloured caption strip, AtlasPlate card grid, Pretext description,
+            and optional sparkline. Each page passes entity type, colour, and data loader.
           </div>
           <div style={{ marginBottom: '16px', padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
             <strong style={{ color: WARM_RED }}>2. ElementSquare unifies small squares</strong>
             <br />
             Timeline stacked squares, Scatter plot points, and Network graph nodes
-            all render small block-coloured squares with a symbol label. The
-            <code style={{ fontSize: 12 }}> ElementSquare</code> component (24 px default)
-            already serves this role and is used in DiscovererNetwork, PropertyScatter,
-            and DiscoveryTimeline. Any remaining inline SVG squares should migrate to it.
+            all use the <code style={{ fontSize: 12 }}>ElementSquare</code> component (24 px default).
+            DiscovererNetwork, PropertyScatter, and DiscoveryTimeline have been migrated.
           </div>
           <div style={{ padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
-            <strong style={{ color: MUSTARD }}>3. Folio data plate rows could be reorganised</strong>
+            <strong style={{ color: MUSTARD }}>3. Folio data plate rows use DataPlateRow</strong>
             <br />
-            The three data plate rows (Group, Period, Block) in the Folio sidebar are
-            hard-coded as separate SVG rects with repeated styling. Extracting a
-            <code style={{ fontSize: 12 }}> DataPlateRow</code> component would reduce
-            the Folio file size and make it trivial to add or reorder rows (e.g. add
-            Category or Phase).
+            The three data plate rows (Group, Period, Block) in the Folio use the
+            <code style={{ fontSize: 12 }}> DataPlateRow</code> component, which provides
+            consistent styling, navigation links to browse pages, and prev/next arrows
+            for moving between elements within a group, period, or block.
           </div>
         </div>
       </section>

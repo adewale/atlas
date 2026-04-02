@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react';
+import { type ReactNode, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import { useIsMobile } from '../hooks/useIsMobile';
 import VizNav from './VizNav';
 import SiteNav from './SiteNav';
@@ -33,6 +34,12 @@ type PageShellProps = {
  */
 export default function PageShell({ children, vizNav = false }: PageShellProps) {
   const isMobile = useIsMobile();
+  const { pathname } = useLocation();
+
+  // Scroll to top on route change (footer links are client-side navigations)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div
