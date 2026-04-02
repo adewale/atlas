@@ -365,20 +365,25 @@ svg [role="button"] {
     padding-left: 16px !important;
   }
 
-  /* Identity block and data plate: stacked on mobile */
+  /* Identity block and data plate: side-by-side on mobile */
   .folio-summary-area {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
   }
   .folio-identity {
     position: static !important;
-    width: 100% !important;
-    margin-bottom: 12px;
+    width: auto !important;
+    flex-shrink: 0;
+    margin-bottom: 0 !important;
   }
   .folio-data-plate {
     position: static !important;
-    width: 100% !important;
-    margin-bottom: 16px;
+    width: 160px !important;
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-bottom: 0;
   }
 
   /* Periodic table: horizontal scroll */

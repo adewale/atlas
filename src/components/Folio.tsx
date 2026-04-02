@@ -18,7 +18,9 @@ import { NeighbourChip } from './EntityChip';
 import { AnomalyChip } from './EntityChip';
 
 const PLATE_WIDTH = 160;
-const PLATE_HEIGHT = 320;
+const PLATE_ROW_H = 56;
+const PLATE_ROWS = 4; // Group, Period, Block, Category
+const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS; // 224
 const RANK_ROW_H = 24;
 const FULL_WIDTH = 560;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - 24;
@@ -187,23 +189,22 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const marginaliaRef = useRef<HTMLElement>(null);
 
   return (
-    <div className="folio-layout" style={{ display: 'flex', gap: '48px', position: 'relative' }}>
-      {/* Left colour bar — morph target for element-cell-bg */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: '4px',
-          background: color,
-          viewTransitionName: VT.CELL_BG,
-        } as React.CSSProperties}
-      />
-
+    <div className="folio-layout" style={{ display: 'flex', gap: '48px' }}>
       {/* Main content */}
-      <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0 }}>
+      <div className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
+        {/* Left colour bar — morph target for element-cell-bg */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: '4px',
+            background: color,
+            viewTransitionName: VT.CELL_BG,
+          } as React.CSSProperties}
+        />
         {/* Summary area: identity block (left), text (centre), data plate (right) */}
         <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
           {/* Identity block — number + symbol + name, acts as dramatic drop cap */}
@@ -213,8 +214,8 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               position: mobile ? 'static' : 'absolute',
               top: 0,
               left: 0,
-              width: mobile ? '100%' : IDENTITY_WIDTH,
-              marginBottom: mobile ? '12px' : 0,
+              width: mobile ? 'auto' : IDENTITY_WIDTH,
+              marginBottom: mobile ? 0 : 0,
               ...(animate
                 ? {
                     opacity: 0,
@@ -281,45 +282,13 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}, ${element.category}`}>
               {/* Group row — deep blue */}
-              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/atlas/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
               {/* Period row — warm red */}
-              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/atlas/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
               {/* Block row — block colour */}
-              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/atlas/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
               {/* Category row */}
-              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/atlas/category/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} mobile={mobile} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
-            </div>
-
-            {/* Rank sub-rows — compact, visibly clickable */}
-            <div style={{ marginTop: '2px' }}>
-              {PROPERTIES.map((prop) => {
-                const rank = element.rankings[prop.key] ?? 0;
-                const total = 118;
-                const fraction = rank > 0 ? (total - rank + 1) / total : 0;
-                return (
-                  <Link
-                    key={prop.key}
-                    to={`/atlas/rank/${prop.key}`}
-                    title={`View all 118 elements ranked by ${prop.label.toLowerCase()}`}
-                    style={{ textDecoration: 'none', display: 'block' }}
-                  >
-                    <svg width={mobile ? '100%' : PLATE_WIDTH} height={RANK_ROW_H} viewBox={`0 0 ${PLATE_WIDTH} ${RANK_ROW_H}`}>
-                      {/* Background */}
-                      <rect x={0} y={0} width={PLATE_WIDTH} height={RANK_ROW_H} fill={PAPER} stroke={BLACK} strokeWidth={0.5} />
-                      {/* Filled portion */}
-                      <rect x={0} y={0} width={fraction * PLATE_WIDTH} height={RANK_ROW_H} fill={color} opacity={0.15} />
-                      {/* Label */}
-                      <text x={6} y={16} fontSize={9} fill={BLACK} fontFamily={MONO_FONT} fontWeight="bold">
-                        {prop.label}
-                      </text>
-                      {/* Rank */}
-                      <text x={PLATE_WIDTH - 6} y={16} fontSize={9} fill={GREY_MID} fontFamily={MONO_FONT} textAnchor="end">
-                        {rank > 0 ? `#${rank}` : '—'} →
-                      </text>
-                    </svg>
-                  </Link>
-                );
-              })}
+              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/category/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} mobile={mobile} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
             </div>
 
           </div>
@@ -339,6 +308,35 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               animationStagger={animate ? 30 : undefined}
             />
           </svg>
+        </div>
+
+        {/* Rank sub-rows — full width, beneath summary area */}
+        <div className="folio-rank-rows" style={{ display: 'flex', gap: '2px', marginTop: '8px', flexWrap: 'wrap' }}>
+          {PROPERTIES.map((prop) => {
+            const rank = element.rankings[prop.key] ?? 0;
+            const total = 118;
+            const fraction = rank > 0 ? (total - rank + 1) / total : 0;
+            const rowW = mobile ? svgWidth : Math.floor((svgWidth - 6) / 2);
+            return (
+              <Link
+                key={prop.key}
+                to={`/rank/${prop.key}`}
+                title={`View all 118 elements ranked by ${prop.label.toLowerCase()}`}
+                style={{ textDecoration: 'none', display: 'block', flex: mobile ? '1 1 100%' : `0 0 ${rowW}px` }}
+              >
+                <svg width="100%" height={RANK_ROW_H} viewBox={`0 0 ${rowW} ${RANK_ROW_H}`} preserveAspectRatio="none">
+                  <rect x={0} y={0} width={rowW} height={RANK_ROW_H} fill={PAPER} stroke={BLACK} strokeWidth={0.5} />
+                  <rect x={0} y={0} width={fraction * rowW} height={RANK_ROW_H} fill={color} opacity={0.15} />
+                  <text x={6} y={16} fontSize={9} fill={BLACK} fontFamily={MONO_FONT} fontWeight="bold">
+                    {prop.label}
+                  </text>
+                  <text x={rowW - 6} y={16} fontSize={9} fill={GREY_MID} fontFamily={MONO_FONT} textAnchor="end">
+                    {rank > 0 ? `#${rank}` : '—'} →
+                  </text>
+                </svg>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Thick rule in block colour */}

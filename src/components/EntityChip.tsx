@@ -125,7 +125,7 @@ export function AnomalyChip({ slug, label, elementCount }: AnomalyChipProps) {
 
   return (
     <BaseChip
-      to={`/atlas/anomaly/${slug}`}
+      to={`/anomaly/${slug}`}
       borderColor={WARM_RED}
       primary={label}
       secondary={secondary}
