@@ -50,7 +50,7 @@ const SVG_WIDTH = VIEWBOX_W;
 const INTRO_MAX_W = VIEWBOX_W;
 
 export default function PhaseLandscape() {
-  useDocumentTitle('Phase Landscape');
+  useDocumentTitle('Phase Landscape', 'Melting and boiling points of all 118 elements visualised as a landscape, coloured by block.');
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -101,7 +101,7 @@ export default function PhaseLandscape() {
         </div>
       </div>
 
-      <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
+      <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${VIEWBOX_H}`}
           role="img"
@@ -110,7 +110,7 @@ export default function PhaseLandscape() {
             width: '100%',
             minWidth: SVG_WIDTH,
             maxWidth: SVG_WIDTH,
-            touchAction: 'pinch-zoom',
+            touchAction: 'pan-x pan-y pinch-zoom',
           }}
         >
           {/* Periodic table grid */}

@@ -11,5 +11,14 @@ export default defineConfig({
   },
   build: {
     target: 'es2022',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'react-router': ['react-router'],
+          'pretext': ['@chenglou/pretext'],
+        },
+      },
+    },
   },
 });

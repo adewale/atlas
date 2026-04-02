@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
+import { DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
@@ -22,7 +22,7 @@ const TECHNOLOGY_TEXT =
   'Built with React, Vite, and @chenglou/pretext for text measurement. Deployed on Cloudflare Pages. System fonts throughout. No images in v1.';
 
 export default function About() {
-  useDocumentTitle('About');
+  useDocumentTitle('About', 'About Atlas — a structural exploration of the periodic table inspired by Oliver Byrne and Edward Tufte. Built with React, Vite, and open data from PubChem, Wikidata, and Wikipedia.');
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: SVG_MAX_WIDTH,

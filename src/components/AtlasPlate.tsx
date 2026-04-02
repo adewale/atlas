@@ -45,13 +45,21 @@ function truncateToFit(name: string, font: string, maxWidth: number): string {
   const abbrev = ABBREV[name];
   if (abbrev && fitLabel(abbrev, font, maxWidth)) return abbrev;
 
-  // Last resort: truncate with ellipsis (using abbreviation if available, else original)
+  // Binary search for the longest prefix + ellipsis that fits
   const base = abbrev ?? name;
-  for (let i = base.length - 1; i > 0; i--) {
-    const truncated = base.slice(0, i) + '\u2026';
-    if (fitLabel(truncated, font, maxWidth)) return truncated;
+  let lo = 1;
+  let hi = base.length - 1;
+  let best = 0;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (fitLabel(base.slice(0, mid) + '\u2026', font, maxWidth)) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
   }
-  return base[0] + '\u2026';
+  return best > 0 ? base.slice(0, best) + '\u2026' : base[0] + '\u2026';
 }
 
 

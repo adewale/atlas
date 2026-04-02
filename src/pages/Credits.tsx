@@ -39,7 +39,7 @@ export default function Credits() {
     maxWidth: TEXT_WIDTH,
   });
 
-  useDocumentTitle('Credits');
+  useDocumentTitle('Credits', 'Data sources and licensing — PubChem, Wikidata, and Wikipedia attributions for all element data in Atlas.');
 
   return (
     <PageShell>

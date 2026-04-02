@@ -32,8 +32,15 @@ function relativeLuminance(hex: string): number {
 }
 
 /** Returns BLACK for light fills, PAPER for dark fills. */
+const contrastCache = new Map<string, string>();
+
 export function contrastTextColor(fillHex: string): string {
-  return relativeLuminance(fillHex) > 0.179 ? BLACK : PAPER;
+  let result = contrastCache.get(fillHex);
+  if (result === undefined) {
+    result = relativeLuminance(fillHex) > 0.179 ? BLACK : PAPER;
+    contrastCache.set(fillHex, result);
+  }
+  return result;
 }
 
 // ---------------------------------------------------------------------------

@@ -5,7 +5,7 @@ import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS, DROP_CAP_FONT, measureLines } from '../lib/pretext';
+import { DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
@@ -67,7 +67,7 @@ type Tooltip = { x: number; y: number; name: string; year: string; discoverer: s
 // Component
 // ---------------------------------------------------------------------------
 export default function DiscoveryTimeline() {
-  useDocumentTitle('Discovery Timeline');
+  useDocumentTitle('Discovery Timeline', 'Interactive timeline of element discoveries from antiquity to the present, grouped by decade and coloured by block.');
   const { antiquity, timeline } = useLoaderData() as TimelineData;
   const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -231,7 +231,7 @@ export default function DiscoveryTimeline() {
         </section>
       </div>
 
-      <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
+      <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${totalHeight}`}
           overflow="visible"
@@ -241,7 +241,7 @@ export default function DiscoveryTimeline() {
             width: '100%',
             minWidth: SVG_WIDTH,
             maxWidth: SVG_WIDTH,
-            touchAction: 'pinch-zoom',
+            touchAction: 'pan-x pan-y pinch-zoom',
           }}
         >
           {/* Timeline chart */}

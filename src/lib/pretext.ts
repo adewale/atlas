@@ -89,8 +89,10 @@ export function fitLabel(
  * The previous approach — layout(ref, 9999, 0) — always returned 0
  * because pretext's layout returns lineCount × lineHeight.
  */
+const FONT_SIZE_RE = /(\d+(?:\.\d+)?)px/;
+
 export function computeLineHeight(font: string = DEFAULT_FONT): number {
-  const match = font.match(/(\d+(?:\.\d+)?)px/);
+  const match = font.match(FONT_SIZE_RE);
   const fontSize = match ? parseFloat(match[1]) : 16;
   return Math.ceil(fontSize * 1.2);
 }

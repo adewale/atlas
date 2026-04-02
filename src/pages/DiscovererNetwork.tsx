@@ -6,7 +6,7 @@ import { WARM_RED, MUSTARD, BLACK, PAPER, INSCRIPTION_STYLE, STROKE_HAIRLINE } f
 import { VT } from '../lib/transitions';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS, DROP_CAP_FONT, measureLines } from '../lib/pretext';
+import { DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -29,7 +29,7 @@ const INTRO_MAX_W = SVG_WIDTH;
 /* Component                                                           */
 /* ------------------------------------------------------------------ */
 export default function DiscovererNetwork() {
-  useDocumentTitle('Discoverer Network');
+  useDocumentTitle('Discoverer Network', 'Network graph of scientists and their element discoveries, showing collaboration clusters and prolific discoverers.');
   const { discoverers } = useLoaderData() as { discoverers: { name: string; elements: string[] }[] };
   const navigate = useNavigate();
 
@@ -81,7 +81,7 @@ export default function DiscovererNetwork() {
       <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
 
       {/* bar-grow keyframe in globals.css */}
-      <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
+      <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
         <svg
           viewBox={`0 0 ${SVG_WIDTH} ${totalHeight}`}
           overflow="visible"
@@ -91,7 +91,7 @@ export default function DiscovererNetwork() {
             width: '100%',
             minWidth: SVG_WIDTH,
             maxWidth: SVG_WIDTH,
-            touchAction: 'pinch-zoom',
+            touchAction: 'pan-x pan-y pinch-zoom',
           }}
         >
           {/* Intro text */}

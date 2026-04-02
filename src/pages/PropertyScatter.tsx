@@ -193,7 +193,7 @@ export default function PropertyScatter() {
   const DROP_CAP_SIZE = 80;
   const introHeight = Math.max(lines.length * lineHeight + 16, DROP_CAP_SIZE + 4);
 
-  useDocumentTitle('Property Scatter');
+  useDocumentTitle('Property Scatter', 'Scatter plot of element properties — electronegativity, ionisation energy, mass, and atomic radius — with block colouring and anomaly highlights.');
 
   return (
     <PageShell vizNav>

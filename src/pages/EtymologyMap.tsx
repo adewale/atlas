@@ -153,7 +153,7 @@ const styles = {
 // Component
 // ---------------------------------------------------------------------------
 export default function EtymologyMap() {
-  useDocumentTitle('Etymology Map');
+  useDocumentTitle('Etymology Map', 'Origins of element names — grouped by language, place, person, property, and mythology.');
   const { etymology } = useLoaderData() as { etymology: EtymologyEntry[] };
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);

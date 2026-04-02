@@ -149,7 +149,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
   );
 
   return (
-    <div className="pt-scroll-container" style={{ touchAction: 'pinch-zoom' }}>
+    <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
       <svg
         viewBox={`0 0 ${GRAPH_W} ${GRAPH_H}`}
         style={{ width: '100%', maxWidth: GRAPH_W }}
@@ -363,7 +363,7 @@ export default function EntityMapPage() {
       : [],
   );
 
-  useDocumentTitle('Entity Map');
+  useDocumentTitle('Entity Map', 'All navigable entities in Atlas — elements, groups, periods, blocks, categories, discoverers, and anomalies — as an interconnected map.');
 
   return (
     <PageShell>

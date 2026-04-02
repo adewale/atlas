@@ -1,12 +1,16 @@
 import { lazy } from 'react';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, redirect } from 'react-router';
 import type { LoaderFunctionArgs } from 'react-router';
-import type { GroupData, AnomalyData, DiscovererData, TimelineData } from './lib/types';
+import type { GroupData, AnomalyData, DiscovererData, TimelineData, PeriodData, BlockData, CategoryData } from './lib/types';
+import { getElement } from './lib/data';
 
 let groupsCache: GroupData[] | null = null;
 let anomaliesCache: AnomalyData[] | null = null;
 let discoverersCache: DiscovererData[] | null = null;
 let timelineCache: TimelineData | null = null;
+let periodsCache: PeriodData[] | null = null;
+let blocksCache: BlockData[] | null = null;
+let categoriesCache: CategoryData[] | null = null;
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
@@ -38,12 +42,17 @@ export const router = createBrowserRouter([
     path: '/element/:symbol',
     Component: Element,
     loader: async ({ params }: LoaderFunctionArgs) => {
-      const [elementMod, groups, anomalies] = await Promise.all([
+      if (!params.symbol || !getElement(params.symbol)) return redirect('/');
+      const [elementMod, groupsMod, anomaliesMod] = await Promise.all([
         import(`../data/generated/element-${params.symbol}.json`),
-        groupsCache ?? import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
-        anomaliesCache ?? import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
+        groupsCache
+          ? Promise.resolve(groupsCache)
+          : import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
+        anomaliesCache
+          ? Promise.resolve(anomaliesCache)
+          : import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
       ]);
-      return { element: elementMod.default, groups, anomalies };
+      return { element: elementMod.default, groups: groupsMod, anomalies: anomaliesMod };
     },
   },
   {
@@ -58,24 +67,24 @@ export const router = createBrowserRouter([
     path: '/atlas/period/:n',
     Component: AtlasPeriod,
     loader: async () => {
-      const mod = await import('../data/generated/periods.json');
-      return { periods: mod.default };
+      periodsCache ??= await import('../data/generated/periods.json').then(m => m.default);
+      return { periods: periodsCache };
     },
   },
   {
     path: '/atlas/block/:block',
     Component: AtlasBlock,
     loader: async () => {
-      const mod = await import('../data/generated/blocks.json');
-      return { blocks: mod.default };
+      blocksCache ??= await import('../data/generated/blocks.json').then(m => m.default);
+      return { blocks: blocksCache };
     },
   },
   {
     path: '/atlas/category/:slug',
     Component: AtlasCategory,
     loader: async () => {
-      const mod = await import('../data/generated/categories.json');
-      return { categories: mod.default };
+      categoriesCache ??= await import('../data/generated/categories.json').then(m => m.default);
+      return { categories: categoriesCache };
     },
   },
   {
@@ -101,6 +110,7 @@ export const router = createBrowserRouter([
     path: '/compare/:symbolA/:symbolB',
     Component: Compare,
     loader: async ({ params }: LoaderFunctionArgs) => {
+      if (!params.symbolA || !params.symbolB || !getElement(params.symbolA) || !getElement(params.symbolB)) return redirect('/');
       const [elA, elB] = await Promise.all([
         import(`../data/generated/element-${params.symbolA}.json`),
         import(`../data/generated/element-${params.symbolB}.json`),
