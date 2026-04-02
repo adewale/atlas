@@ -53,7 +53,7 @@ function computeStainOrigin(
 /* ------------------------------------------------------------------ */
 const INTRO_TEXT =
   'Not all elements follow textbook rules. Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. These exceptions are often explained by relativistic effects, electron\u2013electron repulsion, or the near-degeneracy of energy levels in heavier atoms. Select a category below to see which elements break the rules.';
-const INTRO_MAX_W = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 
 /* ------------------------------------------------------------------ */
 /* Description text area dimensions                                   */
