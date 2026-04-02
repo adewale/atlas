@@ -129,7 +129,7 @@ export default function AnomalyExplorer() {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Anomaly Explorer</h1>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Anomaly Explorer</h1>
 
           <svg
             width="100%"

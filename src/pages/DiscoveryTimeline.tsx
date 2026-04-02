@@ -5,6 +5,7 @@ import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
 import { useDropCapText } from '../hooks/usePretextLines';
+import { VT } from '../lib/transitions';
 import { DROP_CAP_FONT, measureLines } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
@@ -229,7 +230,7 @@ export default function DiscoveryTimeline() {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Discovery Timeline</h1>
+          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
 
           <svg
             width="100%"
@@ -261,7 +262,7 @@ export default function DiscoveryTimeline() {
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED }}>Discovery Timeline</h1>
+        <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
 
         {/* Intro paragraph */}
         <svg
