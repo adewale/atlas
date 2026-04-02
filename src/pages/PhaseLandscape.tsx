@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
@@ -116,7 +116,7 @@ const LABEL_Y = SPARK_H + 16;
 // ---------------------------------------------------------------------------
 export default function PhaseLandscape() {
   useDocumentTitle('Phase Landscape', 'Melting and boiling points of all 118 elements visualised as a landscape, coloured by block.');
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);

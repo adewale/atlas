@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { VT } from '../lib/transitions';
@@ -83,7 +83,7 @@ type Tooltip = { x: number; y: number; name: string; year: string; discoverer: s
 // ---------------------------------------------------------------------------
 export default function DiscoveryTimeline() {
   useDocumentTitle('Discovery Timeline', 'Interactive timeline of element discoveries from antiquity to the present, grouped by decade and coloured by block.');
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const { antiquity, timeline } = useLoaderData() as TimelineData;
   const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);

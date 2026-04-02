@@ -10,7 +10,7 @@ import {
   CELL_HEIGHT,
   contrastTextColor,
 } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
@@ -66,7 +66,7 @@ const DESC_Y_OFFSET = 24;
 /* ------------------------------------------------------------------ */
 export default function AnomalyExplorer() {
   useDocumentTitle('Anomaly Explorer', 'Elements that break the expected periodic trends — diagonal relationships, relativistic effects, and the uniqueness of hydrogen.');
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedSlug = searchParams.get('anomaly');

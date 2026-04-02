@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { WARM_RED, MUSTARD, BLACK, PAPER, DEEP_BLUE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE } from '../lib/theme';
+import { WARM_RED, MUSTARD, BLACK, PAPER, DEEP_BLUE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import ElementSquare from '../components/ElementSquare';
 import { useDropCapText } from '../hooks/usePretextLines';
@@ -36,7 +36,7 @@ const DISCOVERER_COLORS = [WARM_RED, DEEP_BLUE, MUSTARD, BLACK];
 /* ------------------------------------------------------------------ */
 export default function DiscovererNetwork() {
   useDocumentTitle('Discoverer Network', 'Network graph of scientists and their element discoveries, showing collaboration clusters and prolific discoverers.');
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const { discoverers } = useLoaderData() as { discoverers: { name: string; elements: string[] }[] };
   const navigate = useNavigate();
 

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useLoaderData } from 'react-router';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
@@ -57,7 +57,7 @@ const MAX_WIDTH = 960;
 // ---------------------------------------------------------------------------
 export default function EtymologyMap() {
   useDocumentTitle('Etymology Map', 'Origins of element names — grouped by language, place, person, property, and mythology.');
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const { etymology } = useLoaderData() as { etymology: EtymologyEntry[] };
 
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
