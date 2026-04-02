@@ -409,6 +409,12 @@ svg [role="button"] {
   .folio-symbol {
     font-size: 40px !important;
   }
+
+  /* Design page: cap all inline SVGs to viewport width */
+  .design-page svg {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 /* Tablet (768-1024px) */

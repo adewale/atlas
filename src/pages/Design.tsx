@@ -8,6 +8,7 @@ import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { DiscovererChip, AnomalyChip, NeighbourChip } from '../components/EntityChip';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const PALETTE = [
   { name: 'Paper', hex: '#f7f2e8' },
@@ -60,10 +61,12 @@ const LINE_THICKNESSES = [
 
 export default function Design() {
   useDocumentTitle('Design Language');
+  const mobile = useIsMobile();
+  const swatchSize = mobile ? 60 : 80;
 
   return (
     <PageShell>
-      <div style={{ maxWidth: '800px' }}>
+      <div className="design-page" style={{ maxWidth: '800px' }}>
       <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
       <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>
@@ -79,8 +82,8 @@ export default function Design() {
             <div key={c.hex} style={{ textAlign: 'center' }}>
               <div
                 style={{
-                  width: '80px',
-                  height: '80px',
+                  width: swatchSize,
+                  height: swatchSize,
                   background: c.hex,
                   border: `1px solid ${BLACK}`,
                   display: 'flex',
@@ -105,8 +108,8 @@ export default function Design() {
             <div key={c.hex} style={{ textAlign: 'center' }}>
               <div
                 style={{
-                  width: '80px',
-                  height: '80px',
+                  width: swatchSize,
+                  height: swatchSize,
                   background: c.hex,
                   border: `1px solid ${BLACK}`,
                   display: 'flex',
@@ -132,8 +135,8 @@ export default function Design() {
             <div key={c.hex} style={{ textAlign: 'center' }}>
               <div
                 style={{
-                  width: '80px',
-                  height: '80px',
+                  width: swatchSize,
+                  height: swatchSize,
                   background: c.hex,
                   border: `1px solid ${BLACK}`,
                   display: 'flex',
@@ -156,15 +159,15 @@ export default function Design() {
       {/* Block Colours */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Block Colours</h2>
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {BLOCKS.map((b) => {
             const color = blockColor(b);
             return (
               <div
                 key={b}
                 style={{
-                  width: '80px',
-                  height: '60px',
+                  width: swatchSize,
+                  height: mobile ? 48 : 60,
                   background: color,
                   display: 'flex',
                   alignItems: 'center',
@@ -193,10 +196,10 @@ export default function Design() {
           <p className="mono">118 elements · 7 periods · 18 groups</p>
         </div>
         <div style={{ marginBottom: '16px' }}>
-          <div style={{ fontSize: '12px', color: GREY_MID }}>Giant numerals — 96px, monospace, block-coloured</div>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Giant numerals — {mobile ? 64 : 96}px, monospace, block-coloured</div>
           <span
             style={{
-              fontSize: '96px',
+              fontSize: mobile ? '64px' : '96px',
               fontWeight: 'bold',
               fontFamily: MONO_FONT,
               color: WARM_RED,
@@ -258,7 +261,7 @@ export default function Design() {
       {/* Data Plate */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Data Plate</h2>
-        <svg width={160} height={224}>
+        <svg width={160} height={224} style={{ maxWidth: '100%', height: 'auto' }}>
           <rect x={0} y={0} width={160} height={56} fill={DEEP_BLUE} />
           <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
           <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>8</text>

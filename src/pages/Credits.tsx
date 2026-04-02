@@ -6,7 +6,7 @@ import { useFontsReady } from '../hooks/useFontsReady';
 import { PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import { BLACK, DEEP_BLUE, DIM, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, DIM, GREY_MID, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -117,51 +117,77 @@ export default function Credits() {
         <svg viewBox={`0 0 ${textWidth} ${summariesNoteLines.length * summariesNoteLH + summariesNoteLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block', marginBottom: '12px' }}>
           <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} maxWidth={textWidth} showRules animationStagger={25} />
         </svg>
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontSize: '13px',
-            lineHeight: 1.5,
-          }}
-        >
-          <thead>
-            <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
-              <th style={{ padding: '4px 8px' }}>Element</th>
-              <th style={{ padding: '4px 8px' }}>Wikipedia Article</th>
-              <th style={{ padding: '4px 8px' }}>Access Date</th>
-              <th style={{ padding: '4px 8px' }}>License</th>
-            </tr>
-          </thead>
-          <tbody>
+        {isMobile ? (
+          /* Stacked cards for mobile — each element gets its own card */
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {credits.summaries.map((s) => (
-              <tr key={s.symbol} style={{ borderBottom: `1px solid ${DIM}` }}>
-                <td style={{ padding: '4px 8px' }}>
-                  <Link to={`/elements/${s.symbol}`}>
-                    {s.symbol} — {s.name}
-                  </Link>
-                </td>
-                <td style={{ padding: '4px 8px' }}>
-                  <a href={s.url} target="_blank" rel="noopener noreferrer">
-                    {s.title}
-                  </a>
-                </td>
-                <td style={{ padding: '4px 8px' }} className="mono">
-                  {s.accessDate}
-                </td>
-                <td style={{ padding: '4px 8px' }}>
-                  <a
-                    href="https://creativecommons.org/licenses/by-sa/4.0/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {s.license}
-                  </a>
-                </td>
-              </tr>
+              <div key={s.symbol} style={{ borderBottom: `1px solid ${DIM}`, paddingBottom: '12px', fontSize: '13px', lineHeight: 1.6 }}>
+                <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
+                  <Link to={`/elements/${s.symbol}`}>{s.symbol} — {s.name}</Link>
+                </div>
+                <div>
+                  <span style={{ color: GREY_MID, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Source: </span>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a>
+                </div>
+                <div>
+                  <span style={{ color: GREY_MID, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Fetched: </span>
+                  <span className="mono">{s.accessDate}</span>
+                </div>
+                <div>
+                  <span style={{ color: GREY_MID, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>License: </span>
+                  <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">{s.license}</a>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        ) : (
+          /* Desktop table */
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              fontSize: '13px',
+              lineHeight: 1.5,
+            }}
+          >
+            <thead>
+              <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
+                <th style={{ padding: '4px 8px' }}>Element</th>
+                <th style={{ padding: '4px 8px' }}>Wikipedia Article</th>
+                <th style={{ padding: '4px 8px' }}>Access Date</th>
+                <th style={{ padding: '4px 8px' }}>License</th>
+              </tr>
+            </thead>
+            <tbody>
+              {credits.summaries.map((s) => (
+                <tr key={s.symbol} style={{ borderBottom: `1px solid ${DIM}` }}>
+                  <td style={{ padding: '4px 8px' }}>
+                    <Link to={`/elements/${s.symbol}`}>
+                      {s.symbol} — {s.name}
+                    </Link>
+                  </td>
+                  <td style={{ padding: '4px 8px' }}>
+                    <a href={s.url} target="_blank" rel="noopener noreferrer">
+                      {s.title}
+                    </a>
+                  </td>
+                  <td style={{ padding: '4px 8px' }} className="mono">
+                    {s.accessDate}
+                  </td>
+                  <td style={{ padding: '4px 8px' }}>
+                    <a
+                      href="https://creativecommons.org/licenses/by-sa/4.0/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {s.license}
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
 
       {/* Media */}
