@@ -106,6 +106,7 @@ const countStyle: React.CSSProperties = {
   fontWeight: 400,
   fontSize: 13,
   opacity: 0.85,
+  fontVariantNumeric: 'tabular-nums',
 };
 
 const chevronStyle = (expanded: boolean): React.CSSProperties => ({

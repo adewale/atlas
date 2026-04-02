@@ -17,7 +17,7 @@ export const VIZ_PAGES: VizPage[] = [
   { path: '/phase-landscape', label: 'Phase', colour: WARM_RED, entities: 'Element, Block (colour)' },
   { path: '/neighborhood-graph', label: 'Neighbours', colour: BLACK, entities: 'Element, Neighbour (edges)' },
   { path: '/anomaly-explorer', label: 'Anomalies', colour: MUSTARD, entities: 'Element, Anomaly' },
-  { path: '/property-scatter', label: 'Scatter', colour: DEEP_BLUE, entities: 'Element, Block (colour), Ranking (axes)' },
+  { path: '/property-scatter', label: 'Scatter', colour: DEEP_BLUE, entities: 'Element, Block (colour), Property (axes)' },
   { path: '/discovery-timeline', label: 'Timeline', colour: WARM_RED, entities: 'Element, Era, Discoverer' },
   { path: '/etymology-map', label: 'Etymology', colour: DEEP_BLUE, entities: 'Element, Etymology Origin' },
   { path: '/discoverer-network', label: 'Discoverers', colour: MUSTARD, entities: 'Element, Discoverer' },
@@ -34,7 +34,7 @@ export type EntityMeta = {
 };
 
 export const ENTITIES: EntityMeta[] = [
-  { id: 'element', label: 'Element', route: '/elements/:symbol', count: '118', colour: WARM_RED, description: 'Central entity. Every element is a folio page with properties, neighbours, discoverer, etymology, and rankings.', examples: [
+  { id: 'element', label: 'Element', route: '/elements/:symbol', count: '118', colour: WARM_RED, description: 'Central entity. Every element is a folio page with properties, neighbours, discoverer, etymology, and property rankings.', examples: [
     { name: 'Fe — Iron', href: '/elements/Fe' },
     { name: 'O — Oxygen', href: '/elements/O' },
     { name: 'Au — Gold', href: '/elements/Au' },

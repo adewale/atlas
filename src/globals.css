@@ -360,6 +360,7 @@ svg [role="button"] {
   }
   .folio-marginalia {
     width: 100% !important;
+    padding-left: 16px !important;
   }
   .folio-main {
     padding-left: 16px !important;

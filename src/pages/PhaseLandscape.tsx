@@ -243,28 +243,30 @@ export default function PhaseLandscape() {
           fontSize: 13,
           fontWeight: 'bold',
           fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
+          fontVariantNumeric: 'tabular-nums',
           color: BLACK,
+          minWidth: '12ch',
+          display: 'inline-block',
         }}>
-          {tempK} K <span style={{ fontWeight: 'normal', color: GREY_MID, fontFamily: 'system-ui, sans-serif' }}>/ {tempC}°C</span>
+          {tempK} K <span style={{ fontWeight: 'normal', color: GREY_MID, fontFamily: 'system-ui, sans-serif', fontVariantNumeric: 'tabular-nums' }}>/ {tempC}°C</span>
         </span>
-        {!isAtSTP && (
-          <button
-            onClick={() => setTempK(DEFAULT_TEMP)}
-            style={{
-              fontSize: 10,
-              fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              background: 'none',
-              border: `1px solid ${BLACK}`,
-              padding: '2px 8px',
-              cursor: 'pointer',
-              color: BLACK,
-            }}
-          >
-            STP
-          </button>
-        )}
+        <button
+          onClick={() => setTempK(DEFAULT_TEMP)}
+          style={{
+            fontSize: 10,
+            fontWeight: 'bold',
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            background: 'none',
+            border: `1px solid ${BLACK}`,
+            padding: '2px 8px',
+            cursor: isAtSTP ? 'default' : 'pointer',
+            color: BLACK,
+            visibility: isAtSTP ? 'hidden' : 'visible',
+          }}
+        >
+          STP
+        </button>
       </div>
 
       <div style={{
@@ -272,9 +274,10 @@ export default function PhaseLandscape() {
         color: GREY_MID,
         marginBottom: 6,
         letterSpacing: '0.02em',
+        fontVariantNumeric: 'tabular-nums',
       }}>
-        {phaseAnnotation}
-        <span style={{ opacity: 0.7 }}> · peaks show where elements change state</span>
+        <div>{phaseAnnotation}</div>
+        <div style={{ opacity: 0.7 }}>peaks show where elements change state</div>
       </div>
 
       {/* Sparkline SVG — just the chart, no text labels */}
@@ -394,9 +397,8 @@ export default function PhaseLandscape() {
           </h1>
 
           <svg
-            width="100%"
             viewBox={`0 0 ${isMobile ? 360 : INTRO_MAX_W} ${introHeight}`}
-            style={{ display: 'block', marginBottom: '12px' }}
+            style={{ width: '100%', maxWidth: isMobile ? 360 : INTRO_MAX_W, display: 'block', marginBottom: '12px' }}
           >
             <PretextSvg
               lines={lines}
@@ -484,7 +486,7 @@ export default function PhaseLandscape() {
             </svg>
           </div>
 
-          <p style={{ fontSize: '13px', color: GREY_MID, marginTop: '12px' }}>
+          <p style={{ fontSize: '13px', color: GREY_MID, marginTop: '12px', fontVariantNumeric: 'tabular-nums' }}>
             {isAtSTP
               ? 'STP = Standard Temperature and Pressure (0°C, 1 atm). Most elements are solid metals at room temperature.'
               : `Showing element phases at ${tempK} K (${tempC}°C). Drag the ruler to explore how matter changes state.`}

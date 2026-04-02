@@ -17,6 +17,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom'],
           'react-router': ['react-router'],
           'pretext': ['@chenglou/pretext'],
+          'elements': ['./data/generated/elements.json'],
         },
       },
     },

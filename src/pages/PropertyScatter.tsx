@@ -140,7 +140,7 @@ export default function PropertyScatter() {
   const yKey = (searchParams.get('y') as PropertyKey) || 'ionizationEnergy';
   const [hovered, setHovered] = useState<ElementRecord | null>(null);
 
-  const introWidth = isMobile ? 360 : 700;
+  const introWidth = isMobile ? 360 : 760;
   const { dropCap: introDC, lines, lineHeight } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: introWidth,
@@ -233,9 +233,8 @@ export default function PropertyScatter() {
 
         {/* Pretext intro */}
         <svg
-          width="100%"
           viewBox={`0 0 ${introWidth} ${introHeight}`}
-          style={{ display: 'block', marginTop: '16px' }}
+          style={{ width: '100%', maxWidth: introWidth, display: 'block', marginTop: '16px' }}
         >
           <PretextSvg
             lines={lines}
@@ -372,6 +371,7 @@ export default function PropertyScatter() {
                 fontSize={9}
                 fill={GREY_LIGHT}
                 fontFamily="system-ui, sans-serif"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
               >
                 {formatTick(v, INTEGER_PROPERTIES.has(xKey))}
               </text>
@@ -399,6 +399,7 @@ export default function PropertyScatter() {
                 fontSize={9}
                 fill={GREY_LIGHT}
                 fontFamily="system-ui, sans-serif"
+                style={{ fontVariantNumeric: 'tabular-nums' }}
               >
                 {formatTick(v, INTEGER_PROPERTIES.has(yKey))}
               </text>
@@ -548,6 +549,7 @@ export default function PropertyScatter() {
                   fontSize={10}
                   fill={PAPER}
                   fontFamily="system-ui, sans-serif"
+                  style={{ fontVariantNumeric: 'tabular-nums' }}
                 >
                   {PROPERTY_LABELS[xKey]}: {INTEGER_PROPERTIES.has(xKey) ? hPt.xVal : hPt.xVal.toFixed(2)}
                 </text>
@@ -558,6 +560,7 @@ export default function PropertyScatter() {
                   fontSize={10}
                   fill={PAPER}
                   fontFamily="system-ui, sans-serif"
+                  style={{ fontVariantNumeric: 'tabular-nums' }}
                 >
                   {PROPERTY_LABELS[yKey]}: {INTEGER_PROPERTIES.has(yKey) ? hPt.yVal : hPt.yVal.toFixed(2)}
                 </text>

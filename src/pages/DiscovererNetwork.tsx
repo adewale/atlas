@@ -75,9 +75,8 @@ export default function DiscovererNetwork() {
         <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
 
         <svg
-          width="100%"
           viewBox={`0 0 ${introWidth} ${introH}`}
-          style={{ display: 'block', marginBottom: '12px' }}
+          style={{ width: '100%', maxWidth: introWidth, display: 'block', marginBottom: '12px' }}
         >
           <PretextSvg
             lines={lines}

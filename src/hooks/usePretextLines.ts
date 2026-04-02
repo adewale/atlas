@@ -8,8 +8,10 @@ import {
   DROP_CAP_FONT,
   type PositionedLine,
 } from '../lib/pretext';
+import { useFontsReady } from './useFontsReady';
 
 const BODY_FONT = `16px ${PRETEXT_SANS}`;
+
 type UsePretextLinesOptions = {
   text: string;
   maxWidth: number;
@@ -24,11 +26,12 @@ export function usePretextLines({
   maxWidth,
   font = BODY_FONT,
 }: UsePretextLinesOptions): { lines: PositionedLine[]; lineHeight: number } {
+  const fontsReady = useFontsReady();
   return useMemo(() => {
     const lineHeight = computeLineHeight(font);
     const lines = measureLines(text, font, maxWidth, lineHeight);
     return { lines, lineHeight };
-  }, [text, maxWidth, font]);
+  }, [text, maxWidth, font, fontsReady]);
 }
 
 type UseShapedTextOptions = {
@@ -58,7 +61,8 @@ export function useWedgeText({
   maxWidth,
   font = BODY_FONT,
 }: UseWedgeTextOptions): { lines: PositionedLine[]; lineHeight: number } {
-  const lh = useMemo(() => computeLineHeight(font), [font]);
+  const fontsReady = useFontsReady();
+  const lh = useMemo(() => computeLineHeight(font), [font, fontsReady]);
 
   const lines = useMemo(() => {
     if (!text) return [];
@@ -76,7 +80,7 @@ export function useWedgeText({
     });
 
     return shapeText(text, font, widths, lh);
-  }, [text, font, minWidth, maxWidth, lh]);
+  }, [text, font, minWidth, maxWidth, lh, fontsReady]);
 
   return { lines, lineHeight: lh };
 }
@@ -99,6 +103,7 @@ export function useShapedText({
   plateHeightInLines: number;
   identityHeightInLines: number;
 } {
+  const fontsReady = useFontsReady();
   return useMemo(() => {
     const lineHeight = computeLineHeight(font);
     const plateHeightInLines = Math.ceil(plateHeight / lineHeight);
@@ -138,7 +143,7 @@ export function useShapedText({
     }
 
     return { lines, lineHeight, plateHeightInLines, identityHeightInLines };
-  }, [text, fullWidth, narrowWidth, plateHeight, font, mobile, leftIndent]);
+  }, [text, fullWidth, narrowWidth, plateHeight, font, mobile, leftIndent, fontsReady]);
 }
 
 type UseDropCapOptions = {
@@ -162,6 +167,7 @@ export function useDropCapText({
   lines: PositionedLine[];
   lineHeight: number;
 } {
+  const fontsReady = useFontsReady();
   return useMemo(() => {
     const lineHeight = computeLineHeight(font);
     if (!text) {
@@ -169,5 +175,5 @@ export function useDropCapText({
     }
     const result = dropCapLayout(text, font, dropCapFont, maxWidth, lineHeight);
     return { ...result, lineHeight };
-  }, [text, maxWidth, font, dropCapFont]);
+  }, [text, maxWidth, font, dropCapFont, fontsReady]);
 }

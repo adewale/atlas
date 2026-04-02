@@ -117,7 +117,7 @@ export default function EtymologyMap() {
         <SectionedCardList
           sections={sections}
           accordion
-          defaultCollapsed={isMobile}
+          defaultCollapsed={false}
         />
       </div>
     </PageShell>

@@ -34,7 +34,7 @@ export default function CompareView({
   animate = true,
   vertical = false,
 }: CompareViewProps) {
-  const WIDTH = DEFAULT_WIDTH;
+  const WIDTH = vertical ? 400 : DEFAULT_WIDTH;
   const notes = generateComparisonNotes(elementA, elementB);
   const notesText = notes.join(' ');
 
@@ -132,6 +132,7 @@ export default function CompareView({
           fontSize={10}
           fill={PAPER}
           fontFamily="system-ui"
+          style={{ fontVariantNumeric: 'tabular-nums' }}
         >
           {elementA.atomicNumber}
         </text>
@@ -180,6 +181,7 @@ export default function CompareView({
           fontSize={10}
           fill={PAPER}
           fontFamily="system-ui"
+          style={{ fontVariantNumeric: 'tabular-nums' }}
         >
           {elementB.atomicNumber}
         </text>

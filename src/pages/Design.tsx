@@ -6,6 +6,7 @@ import InfoTip from '../components/InfoTip';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
+import { DiscovererChip, AnomalyChip, NeighbourChip } from '../components/EntityChip';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const PALETTE = [
@@ -14,6 +15,19 @@ const PALETTE = [
   { name: 'Deep Blue', hex: '#133e7c' },
   { name: 'Warm Red', hex: '#9e1c2c' },
   { name: 'Mustard', hex: '#856912' },
+  { name: 'Dim', hex: '#ece7db' },
+];
+
+const GREY_SCALE = [
+  { name: 'Grey Dark', hex: '#333', constant: 'GREY_DARK' },
+  { name: 'Grey Mid', hex: '#666', constant: 'GREY_MID' },
+  { name: 'Grey Light', hex: '#696969', constant: 'GREY_LIGHT' },
+  { name: 'Grey Rule', hex: '#ccc', constant: 'GREY_RULE' },
+];
+
+const AUXILIARY_COLOURS = [
+  { name: 'Mineral Brown', hex: '#5a3e1b', constant: 'MINERAL_BROWN', use: 'Etymology — mineral origins' },
+  { name: 'Astro Purple', hex: '#4a0e6b', constant: 'ASTRO_PURPLE', use: 'Etymology — astronomical origins' },
 ];
 
 const BLOCKS = ['s', 'p', 'd', 'f'] as const;
@@ -83,6 +97,60 @@ export default function Design() {
             </div>
           ))}
         </div>
+
+        {/* Grey scale */}
+        <div style={{ fontSize: '12px', color: GREY_MID, marginTop: '20px', marginBottom: '8px' }}>Grey scale</div>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {GREY_SCALE.map((c) => (
+            <div key={c.hex} style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  background: c.hex,
+                  border: `1px solid ${BLACK}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: contrastTextColor(c.hex),
+                  fontSize: '11px',
+                  fontFamily: MONO_FONT,
+                }}
+              >
+                {c.hex}
+              </div>
+              <div style={{ fontSize: '11px', marginTop: '4px' }}>{c.name}</div>
+              <div style={{ fontSize: '10px', color: GREY_MID }}>{c.constant}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Auxiliary colours */}
+        <div style={{ fontSize: '12px', color: GREY_MID, marginTop: '20px', marginBottom: '8px' }}>Auxiliary colours (etymology-specific)</div>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          {AUXILIARY_COLOURS.map((c) => (
+            <div key={c.hex} style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  background: c.hex,
+                  border: `1px solid ${BLACK}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: contrastTextColor(c.hex),
+                  fontSize: '11px',
+                  fontFamily: MONO_FONT,
+                }}
+              >
+                {c.hex}
+              </div>
+              <div style={{ fontSize: '11px', marginTop: '4px' }}>{c.name}</div>
+              <div style={{ fontSize: '10px', color: GREY_MID }}>{c.use}</div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Block Colours */}
@@ -148,6 +216,22 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID }}>Element name caption — 14px, uppercase, 0.3em tracking</div>
           <span style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.3em', color: GREY_MID }}>Hydrogen</span>
         </div>
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Section heading (SECTION_HEADING_STYLE) — 20px bold, 0.05em tracking</div>
+          <span style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '0.05em' }}>Section Heading</span>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Section label (SECTION_LABEL_STYLE) — 11px bold uppercase, 0.15em tracking, grey</div>
+          <span style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID }}>Section Label</span>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Nav pill (NAV_PILL_STYLE) — 11px bold uppercase, 0.08em tracking, inline-flex</div>
+          <span style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: '6px', color: DEEP_BLUE }}>Nav Pill Label</span>
+        </div>
+        <div style={{ marginBottom: '12px' }}>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Back link (BACK_LINK_STYLE) — 12px uppercase, 0.08em tracking, grey</div>
+          <span style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', color: GREY_MID }}>&#8592; Table</span>
+        </div>
         <div>
           <div style={{ fontSize: '12px', color: GREY_MID }}>Drop cap — 48px initial in block colour, Pretext-measured flow</div>
           <svg width={400} height={80} style={{ maxWidth: '100%' }}>
@@ -174,16 +258,19 @@ export default function Design() {
       {/* Data Plate */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Data Plate</h2>
-        <svg width={160} height={180}>
+        <svg width={160} height={224}>
           <rect x={0} y={0} width={160} height={56} fill={DEEP_BLUE} />
           <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
           <text x={12} y={46} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>8</text>
-          <rect x={0} y={60} width={160} height={56} fill={WARM_RED} />
-          <text x={12} y={80} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
-          <text x={12} y={106} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>4</text>
-          <rect x={0} y={120} width={160} height={56} fill={WARM_RED} />
-          <text x={12} y={140} fontSize={10} fill={PAPER} fontFamily="system-ui">BLOCK</text>
-          <text x={12} y={166} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>d</text>
+          <rect x={0} y={56} width={160} height={56} fill={WARM_RED} />
+          <text x={12} y={76} fontSize={10} fill={PAPER} fontFamily="system-ui">PERIOD</text>
+          <text x={12} y={102} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>4</text>
+          <rect x={0} y={112} width={160} height={56} fill={blockColor('d')} />
+          <text x={12} y={132} fontSize={10} fill={PAPER} fontFamily="system-ui">BLOCK</text>
+          <text x={12} y={158} fontSize={24} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>d</text>
+          <rect x={0} y={168} width={160} height={56} fill={DEEP_BLUE} />
+          <text x={12} y={188} fontSize={10} fill={PAPER} fontFamily="system-ui">CATEGORY</text>
+          <text x={12} y={212} fontSize={13} fontWeight="bold" fill={PAPER} fontFamily="system-ui, sans-serif">Transition Metal</text>
         </svg>
       </section>
 
@@ -557,18 +644,22 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Data plate rows (160 px wide) — coloured band with label + value; used in Folio sidebar
           </div>
-          <svg width={160} height={128}>
+          <svg width={160} height={172}>
             {[
               { label: 'GROUP', value: '8', color: DEEP_BLUE, y: 0 },
               { label: 'PERIOD', value: '4', color: WARM_RED, y: 44 },
               { label: 'BLOCK', value: 'd', color: blockColor('d'), y: 88 },
-            ].map((row) => (
-              <g key={row.label}>
-                <rect x={0} y={row.y} width={160} height={40} fill={row.color} />
-                <text x={12} y={row.y + 14} fontSize={10} fill={PAPER} fontFamily="system-ui">{row.label}</text>
-                <text x={12} y={row.y + 34} fontSize={20} fontWeight="bold" fill={PAPER} fontFamily={MONO_FONT}>{row.value}</text>
-              </g>
-            ))}
+              { label: 'CATEGORY', value: 'Transition Metal', color: DEEP_BLUE, y: 132 },
+            ].map((row) => {
+              const isLong = row.value.length > 3;
+              return (
+                <g key={row.label}>
+                  <rect x={0} y={row.y} width={160} height={40} fill={row.color} />
+                  <text x={12} y={row.y + 14} fontSize={10} fill={PAPER} fontFamily="system-ui">{row.label}</text>
+                  <text x={12} y={row.y + 34} fontSize={isLong ? 13 : 20} fontWeight="bold" fill={PAPER} fontFamily={isLong ? 'system-ui, sans-serif' : MONO_FONT}>{row.value}</text>
+                </g>
+              );
+            })}
           </svg>
         </div>
 
@@ -669,6 +760,18 @@ export default function Design() {
         {/* ── DISCOVERER ─────────────────────────────────────────── */}
         <h3 style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.15em', color: DEEP_BLUE }}>Discoverer</h3>
 
+        {/* DiscovererChip */}
+        <div style={{ marginBottom: '20px' }}>
+          <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
+            DiscovererChip — compact card with mustard left border, name + element count or year range
+          </div>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <DiscovererChip name="Seaborg" elementCount={10} />
+            <DiscovererChip name="Davy" yearRange="1807–1808" />
+            <DiscovererChip name="Curie" elementCount={2} />
+          </div>
+        </div>
+
         {/* Network row */}
         <div style={{ marginBottom: '20px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
@@ -738,8 +841,34 @@ export default function Design() {
           </svg>
         </div>
 
+        {/* ── NEIGHBOUR ──────────────────────────────────────────── */}
+        <h3 style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.15em', color: blockColor('d') }}>Neighbour</h3>
+
+        {/* NeighbourChip */}
+        <div style={{ marginBottom: '28px' }}>
+          <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
+            NeighbourChip — compact card with block-coloured left border, symbol + name, direction label
+          </div>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <NeighbourChip symbol="Mn" name="Manganese" color={blockColor('d')} direction="← left" />
+            <NeighbourChip symbol="Co" name="Cobalt" color={blockColor('d')} direction="→ right" />
+            <NeighbourChip symbol="Ru" name="Ruthenium" color={blockColor('d')} direction="↓ below" />
+          </div>
+        </div>
+
         {/* ── ANOMALY ────────────────────────────────────────────── */}
         <h3 style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.15em', color: WARM_RED }}>Anomaly</h3>
+
+        {/* AnomalyChip */}
+        <div style={{ marginBottom: '20px' }}>
+          <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
+            AnomalyChip — compact card with warm red left border, anomaly label + element count
+          </div>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <AnomalyChip slug="electron-config" label="Electron config" elementCount={19} />
+            <AnomalyChip slug="melting-point" label="Melting point" elementCount={5} />
+          </div>
+        </div>
 
         {/* Explorer chip selectors */}
         <div style={{ marginBottom: '20px' }}>
@@ -884,37 +1013,33 @@ export default function Design() {
       {/* Consolidation Opportunities                                   */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Consolidation Opportunities</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Consolidation Status</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
-          Patterns that could be unified to reduce duplication and improve consistency.
+          Patterns that were unified to reduce duplication and improve consistency.
         </p>
         <div style={{ fontSize: '13px', lineHeight: 1.8 }}>
           <div style={{ marginBottom: '16px', padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
             <strong style={{ color: DEEP_BLUE }}>1. Browse pages share a single template</strong>
             <br />
-            AtlasGroup, AtlasPeriod, AtlasBlock, AtlasCategory, and AtlasProperty pages
-            all follow the same layout: coloured caption strip, AtlasPlate card grid,
-            and optional sparkline. These could be collapsed into a single
-            parameterised <code style={{ fontSize: 12 }}>AtlasBrowsePage</code> component
-            that accepts entity type, colour, and data loader.
+            AtlasGroup, AtlasPeriod, AtlasBlock, AtlasCategory, AtlasAnomaly, and AtlasProperty
+            pages all use the shared <code style={{ fontSize: 12 }}>AtlasBrowsePage</code> component,
+            which provides a coloured caption strip, AtlasPlate card grid, Pretext description,
+            and optional sparkline. Each page passes entity type, colour, and data loader.
           </div>
           <div style={{ marginBottom: '16px', padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
             <strong style={{ color: WARM_RED }}>2. ElementSquare unifies small squares</strong>
             <br />
             Timeline stacked squares, Scatter plot points, and Network graph nodes
-            all render small block-coloured squares with a symbol label. The
-            <code style={{ fontSize: 12 }}> ElementSquare</code> component (24 px default)
-            already serves this role and is used in DiscovererNetwork, PropertyScatter,
-            and DiscoveryTimeline. Any remaining inline SVG squares should migrate to it.
+            all use the <code style={{ fontSize: 12 }}>ElementSquare</code> component (24 px default).
+            DiscovererNetwork, PropertyScatter, and DiscoveryTimeline have been migrated.
           </div>
           <div style={{ padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
-            <strong style={{ color: MUSTARD }}>3. Folio data plate rows could be reorganised</strong>
+            <strong style={{ color: MUSTARD }}>3. Folio data plate rows use DataPlateRow</strong>
             <br />
-            The three data plate rows (Group, Period, Block) in the Folio sidebar are
-            hard-coded as separate SVG rects with repeated styling. Extracting a
-            <code style={{ fontSize: 12 }}> DataPlateRow</code> component would reduce
-            the Folio file size and make it trivial to add or reorder rows (e.g. add
-            Category or Phase).
+            The four data plate rows (Group, Period, Block, Category) in the Folio use the
+            <code style={{ fontSize: 12 }}> DataPlateRow</code> component, which provides
+            consistent styling, navigation links to browse pages, and prev/next arrows
+            for moving between elements within a group, period, block, or category.
           </div>
         </div>
       </section>

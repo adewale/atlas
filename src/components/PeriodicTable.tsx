@@ -35,14 +35,15 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
   { value: 'radius', label: 'Radius' },
 ];
 
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT, STROKE_HAIRLINE, STROKE_MEDIUM } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE, STROKE_MEDIUM } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const INTRO_TEXT =
   'One hundred and eighteen elements make up all known matter. Forty are transition metals, 28 occupy the f-block as lanthanides and actinides, and just 7 are noble gases. Use the buttons below to colour the table by group, period, block, category, or numeric property.';
-const INTRO_MAX_W = VIEWBOX_W;
+const INTRO_MAX_W = 760;
 
 // Pre-compute cell positions once at module level (they never change)
 const CELL_POSITIONS = new Map(allElements.map(el => [el.symbol, getCellPosition(el)]));
@@ -177,6 +178,7 @@ const ElementCell = memo(
             fill={textColor}
             fontFamily="system-ui, sans-serif"
             style={{
+              fontVariantNumeric: 'tabular-nums',
               viewTransitionName: isActive ? VT.NUMBER : undefined,
             } as React.CSSProperties}
           >
@@ -230,15 +232,17 @@ type PeriodicTableProps = {
 };
 
 export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
+  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const [searchParams, setSearchParams] = useSearchParams();
   const highlightMode = (searchParams.get('highlight') as HighlightMode) || 'none';
   const property = (searchParams.get('property') as NumericProperty) || 'mass';
   const [hasLoaded, setHasLoaded] = useState(false);
   const svgRef = useRef<SVGSVGElement>(null);
 
+  const introMaxW = isMobile ? 360 : INTRO_MAX_W;
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
-    maxWidth: INTRO_MAX_W,
+    maxWidth: introMaxW,
     dropCapFont: `80px ${DROP_CAP_FONT}`,
   });
   const DROP_CAP_SIZE = 80;
@@ -323,9 +327,8 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
       {/* Intro paragraph with drop cap */}
       <svg
-        width="100%"
-        viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
-        style={{ display: 'block', marginBottom: '12px' }}
+        viewBox={`0 0 ${introMaxW} ${introHeight}`}
+        style={{ width: '100%', maxWidth: introMaxW, display: 'block', marginBottom: '12px' }}
       >
         <PretextSvg
           lines={introLines}
@@ -333,7 +336,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           x={0}
           y={0}
           fill={BLACK}
-          maxWidth={INTRO_MAX_W}
+          maxWidth={introMaxW}
           animationStagger={40}
           dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
         />

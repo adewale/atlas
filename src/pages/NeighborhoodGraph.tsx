@@ -102,9 +102,8 @@ export default function NeighborhoodGraph() {
           <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
 
           <svg
-            width="100%"
             viewBox={`0 0 ${introWidth} ${Math.max(lines.length * lineHeight + 16, 84)}`}
-            style={{ display: 'block', marginBottom: '12px' }}
+            style={{ width: '100%', maxWidth: introWidth, display: 'block', marginBottom: '12px' }}
           >
             <PretextSvg
               lines={lines}
