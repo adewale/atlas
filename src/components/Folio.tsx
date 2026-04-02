@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
@@ -31,10 +31,10 @@ const IDENTITY_WIDTH = 130;
 const IDENTITY_HEIGHT = 150;
 
 /** Reusable row for the data plate (Group / Period / Block / Category). */
-function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, mobile, prev, next }: {
+function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, rowWidth, prev, next }: {
   label: string; value: string | number; fill: string; textFill?: string;
   href: string; ariaLabel: string; title: string;
-  viewTransitionName?: string; mobile: boolean;
+  viewTransitionName?: string; rowWidth: number;
   prev?: { symbol: string; name: string };
   next?: { symbol: string; name: string };
 }) {
@@ -43,11 +43,11 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
   const valueY = strValue.length > 6 ? 42 : 46;
   return (
     <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
-      <svg width={mobile ? '100%' : PLATE_WIDTH} height={56} viewBox={`0 0 ${PLATE_WIDTH} 56`}>
+      <svg width={rowWidth} height={56} viewBox={`0 0 ${rowWidth} 56`}>
         {/* Main area — links to listing page */}
         <a href={href} aria-label={ariaLabel}>
           <title>{title}</title>
-          <rect x={0} y={0} width={PLATE_WIDTH} height={56} fill={fill} />
+          <rect x={0} y={0} width={rowWidth} height={56} fill={fill} />
           <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
           <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}>{strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue}</text>
         </a>
@@ -55,15 +55,15 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
         {prev && (
           <a href={`/elements/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
             <title>← {prev.name}</title>
-            <rect x={PLATE_WIDTH - 48} y={2} width={24} height={52} fill={fill} />
-            <text x={PLATE_WIDTH - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
+            <rect x={rowWidth - 48} y={2} width={24} height={52} fill={fill} />
+            <text x={rowWidth - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
           </a>
         )}
         {next && (
           <a href={`/elements/${next.symbol}`} aria-label={`Next: ${next.name}`}>
             <title>{next.name} →</title>
-            <rect x={PLATE_WIDTH - 24} y={2} width={24} height={52} fill={fill} />
-            <text x={PLATE_WIDTH - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
+            <rect x={rowWidth - 24} y={2} width={24} height={52} fill={fill} />
+            <text x={rowWidth - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
           </a>
         )}
       </svg>
@@ -90,12 +90,39 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const color = blockColor(element.block);
   const mobile = useIsMobile();
 
-  const svgWidth = mobile ? 320 : FULL_WIDTH;
+  // Measure actual container width so layout fills available space
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [measuredWidth, setMeasuredWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    // Use content box (excludes padding) so SVG fits exactly
+    const style = getComputedStyle(el);
+    const padL = parseFloat(style.paddingLeft) || 0;
+    const padR = parseFloat(style.paddingRight) || 0;
+    setMeasuredWidth(el.clientWidth - padL - padR);
+    const observer = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentBoxSize?.[0]?.inlineSize;
+      if (w != null && w > 0) {
+        setMeasuredWidth(w);
+      } else {
+        const rect = entries[0]?.contentRect;
+        if (rect && rect.width > 0) setMeasuredWidth(rect.width);
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Use measured width once available, fall back to hardcoded defaults
+  const effectiveWidth = measuredWidth > 0 ? measuredWidth : (mobile ? 320 : FULL_WIDTH);
+  const effectiveNarrow = effectiveWidth - PLATE_WIDTH - PLATE_GAP;
 
   const { lines, lineHeight } = useShapedText({
     text: element.summary,
-    fullWidth: FULL_WIDTH,
-    narrowWidth: NARROW_WIDTH,
+    fullWidth: effectiveWidth,
+    narrowWidth: effectiveNarrow,
     plateHeight: PLATE_HEIGHT,
     mobile,
     leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },
@@ -193,7 +220,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   return (
     <div className="folio-layout" style={{ display: 'flex', gap: '48px' }}>
       {/* Main content */}
-      <div className="folio-main" style={{ flex: '0 1 auto', paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
+      <div ref={mainRef} className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
         {/* Left colour bar — morph target for element-cell-bg */}
         <div
           aria-hidden="true"
@@ -272,7 +299,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             style={{
               position: 'absolute',
               top: 0,
-              left: FULL_WIDTH - PLATE_WIDTH,
+              right: 0,
               width: PLATE_WIDTH,
               ...(animate
                 ? {
@@ -284,30 +311,29 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}, ${element.category}`}>
               {/* Group row — deep blue */}
-              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/groups/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/groups/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
               {/* Period row — warm red */}
-              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/periods/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/periods/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
               {/* Block row — block colour */}
-              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/blocks/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/blocks/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
               {/* Category row */}
-              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} mobile={mobile} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
+              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
             </div>
 
           </div>
 
           {/* Shaped summary text — flows around identity block (left) and data plate (right) */}
           <svg
-            width={svgWidth}
+            width={effectiveWidth}
             height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
-            viewBox={`0 0 ${svgWidth} ${Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}`}
+            viewBox={`0 0 ${effectiveWidth} ${Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}`}
             aria-label="Element summary"
-            style={{ maxWidth: '100%', height: 'auto' }}
           >
             <PretextSvg
               lines={lines}
               lineHeight={lineHeight}
               y={0}
-              maxWidth={svgWidth}
+              maxWidth={effectiveWidth}
               animationStagger={animate ? 30 : undefined}
             />
           </svg>
@@ -319,7 +345,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             const rank = element.rankings[prop.key] ?? 0;
             const total = 118;
             const fraction = rank > 0 ? (total - rank + 1) / total : 0;
-            const rowW = mobile ? svgWidth : Math.floor((svgWidth - 6) / 2);
+            const rowW = mobile ? effectiveWidth : Math.floor((effectiveWidth - 6) / 2);
             return (
               <Link
                 key={prop.key}
@@ -357,7 +383,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               phases={groupPhaseData.phases}
               symbols={groupPhaseData.symbols}
               highlightIndex={groupPhaseData.highlightIndex}
-              width={svgWidth}
+              width={effectiveWidth}
               height={24}
             />
             <div style={{ display: 'flex', gap: '12px', marginTop: '4px', fontSize: '9px', color: GREY_MID }}>
