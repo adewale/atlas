@@ -51,7 +51,7 @@ export const ENTITIES: EntityMeta[] = [
     { name: 'Period 4', href: '/periods/4' },
     { name: 'Period 7 (actinides+)', href: '/periods/7' },
   ]},
-  { id: 'block', label: 'Block', route: '/blocks/:b', count: '4', colour: MUSTARD, description: 'Orbital family (s/p/d/f). The block determines the element\'s colour identity throughout Atlas.', examples: [
+  { id: 'block', label: 'Block', route: '/blocks/:block', count: '4', colour: MUSTARD, description: 'Orbital family (s/p/d/f). The block determines the element\'s colour identity throughout Atlas.', examples: [
     { name: 's-block', href: '/blocks/s' },
     { name: 'p-block', href: '/blocks/p' },
     { name: 'd-block', href: '/blocks/d' },

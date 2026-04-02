@@ -5,8 +5,8 @@ import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const PROPERTIES = [
-  { key: 'mass', label: 'Atomic Mass', description: 'Elements ranked by atomic mass (u)' },
-  { key: 'electronegativity', label: 'Electronegativity', description: 'Pauling scale electronegativity ranking' },
+  { key: 'mass', label: 'Atomic Mass', description: 'All 118 elements ordered by atomic mass (u)' },
+  { key: 'electronegativity', label: 'Electronegativity', description: 'Pauling scale electronegativity values' },
   { key: 'ionizationEnergy', label: 'Ionisation Energy', description: 'First ionisation energy (eV)' },
   { key: 'radius', label: 'Atomic Radius', description: 'Empirical atomic radius (pm)' },
   { key: 'density', label: 'Density', description: 'Density at STP (g/cm³)' },
@@ -14,7 +14,7 @@ const PROPERTIES = [
   { key: 'boilingPoint', label: 'Boiling Point', description: 'Boiling point (K)' },
 ];
 
-export default function RankIndex() {
+export default function PropertyIndex() {
   useDocumentTitle('All Properties');
 
   return (

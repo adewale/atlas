@@ -70,7 +70,7 @@ export default function About() {
           <li>60% Byrne visual drama, 40% Tufte data density</li>
           <li>Hard colour fields — solid rects, no gradients</li>
           <li>Giant numerals and symbols as hero elements</li>
-          <li>High data-ink ratio: property bars where length IS the value</li>
+          <li>High data-ink ratio: every bar length IS the value</li>
           <li>Block-colour identity: you recognise the block before reading a word</li>
           <li>90% perfectly still, 10% explosive animation</li>
           <li>Zero border-radius. Sharp corners. Printed, not digital.</li>

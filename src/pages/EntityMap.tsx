@@ -26,7 +26,7 @@ const EDGES: Edge[] = [
   { from: 'element', to: 'period', label: 'belongs to', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio data plate', reverseVia: 'AtlasPeriod plate' },
   { from: 'element', to: 'block', label: 'belongs to', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio data plate', reverseVia: 'AtlasBlock plate' },
   { from: 'element', to: 'category', label: 'classified as', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio marginalia', reverseVia: 'AtlasCategory plate' },
-  { from: 'element', to: 'property', label: 'measured by', cardinality: 'n:m', surfaced: 'both', forwardVia: 'Folio property rows', reverseVia: 'AtlasRank plate' },
+  { from: 'element', to: 'property', label: 'measured by', cardinality: 'n:m', surfaced: 'both', forwardVia: 'Folio property rows', reverseVia: 'AtlasProperty plate' },
   { from: 'element', to: 'discoverer', label: 'discovered by', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio discovery section', reverseVia: 'DiscovererDetail plate' },
   { from: 'element', to: 'era', label: 'discovered in', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio timeline link', reverseVia: 'TimelineEra plate' },
   { from: 'element', to: 'etymology', label: 'named for', cardinality: 'n:1', surfaced: 'both', forwardVia: 'Folio etymology section', reverseVia: 'EtymologyMap cards' },

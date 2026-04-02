@@ -18,7 +18,7 @@ const RANK_NOTES: Record<string, string> = {
   radius: 'Atomic radius shrinks across a period as increasing nuclear charge pulls electrons closer. It grows down a group as new electron shells are added.',
 };
 
-export default function AtlasRank() {
+export default function AtlasProperty() {
   const { property } = useParams();
   const { rankings } = useLoaderData() as { rankings: RankingsData };
 

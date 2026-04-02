@@ -125,7 +125,7 @@ export default function TimelineEra() {
   if (entries.length === 0) {
     return (
       <PageShell>
-        <Link to="/discovery-timeline" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Timeline</Link>
+        <Link to="/discovery-timeline" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Discovery Timeline</Link>
         <h1 style={{ margin: '12px 0 16px' }}>No elements found for this era</h1>
       </PageShell>
     );
@@ -133,7 +133,7 @@ export default function TimelineEra() {
 
   return (
     <PageShell>
-      <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Timeline</Link>
+      <Link to="/discovery-timeline" style={BACK_LINK_STYLE}>← Discovery Timeline</Link>
 
       {/* Giant era numeral + heading */}
       <HeroHeader

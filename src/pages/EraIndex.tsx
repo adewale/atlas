@@ -10,7 +10,7 @@ import type { Section } from '../components/SectionedCardList';
 import type { TimelineData } from '../lib/types';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-export default function TimelineIndex() {
+export default function EraIndex() {
   useDocumentTitle('All Eras');
   const data = useLoaderData() as TimelineData;
 

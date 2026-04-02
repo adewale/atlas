@@ -23,8 +23,8 @@ const AtlasBlock = lazy(() => import('./pages/AtlasBlock'));
 const AtlasBlockIndex = lazy(() => import('./pages/AtlasBlockIndex'));
 const AtlasCategory = lazy(() => import('./pages/AtlasCategory'));
 const AtlasCategoryIndex = lazy(() => import('./pages/AtlasCategoryIndex'));
-const AtlasRank = lazy(() => import('./pages/AtlasRank'));
-const RankIndex = lazy(() => import('./pages/RankIndex'));
+const AtlasProperty = lazy(() => import('./pages/AtlasProperty'));
+const PropertyIndex = lazy(() => import('./pages/PropertyIndex'));
 const AtlasAnomaly = lazy(() => import('./pages/AtlasAnomaly'));
 const AnomalyIndex = lazy(() => import('./pages/AnomalyIndex'));
 const Compare = lazy(() => import('./pages/Compare'));
@@ -41,7 +41,7 @@ const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
 const DiscovererDetail = lazy(() => import('./pages/DiscovererDetail'));
 const DiscovererIndex = lazy(() => import('./pages/DiscovererIndex'));
 const TimelineEra = lazy(() => import('./pages/TimelineEra'));
-const TimelineIndex = lazy(() => import('./pages/TimelineIndex'));
+const EraIndex = lazy(() => import('./pages/EraIndex'));
 const EntityMap = lazy(() => import('./pages/EntityMap'));
 const AnimationPalette = lazy(() => import('./pages/AnimationPalette'));
 
@@ -148,10 +148,10 @@ export const router = createBrowserRouter([
   },
 
   /* ── Rank ─────────────────────────────────── */
-  { path: '/properties', Component: RankIndex },
+  { path: '/properties', Component: PropertyIndex },
   {
     path: '/properties/:property',
-    Component: AtlasRank,
+    Component: AtlasProperty,
     loader: async () => {
       const [rankMod, elemMod] = await Promise.all([
         import('../data/generated/rankings.json'),
@@ -217,7 +217,7 @@ export const router = createBrowserRouter([
   /* ── Timeline ────────────────────────────── */
   {
     path: '/eras',
-    Component: TimelineIndex,
+    Component: EraIndex,
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
       return timelineCache;
