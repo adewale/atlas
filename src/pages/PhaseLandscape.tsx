@@ -49,10 +49,9 @@ const TEMP_MIN = 0;
 const TEMP_MAX = 6000;
 
 /** Landmark temperatures — the "story stops".
- *  Spaced so labels don't collide on a linear 0–6000 K axis. */
+ *  Minimum gap ~15% of axis to prevent label overlap at 375px. */
 const LANDMARKS = [
-  { k: 273, label: 'STP', color: BLACK },
-  { k: 600, label: 'Hg boils', color: DEEP_BLUE },
+  { k: 273, label: 'STP (0 °C)', color: BLACK },
   { k: 1811, label: 'Fe melts', color: BLACK },
   { k: 3695, label: 'W melts', color: BLACK },
   { k: 5778, label: '☉ surface', color: WARM_RED },
@@ -342,8 +341,12 @@ export default function PhaseLandscape() {
 
       {/* Landmark labels — rendered as HTML so they're always readable */}
       <div style={{ position: 'relative', height: 16, marginTop: 2 }}>
-        {LANDMARKS.map(lm => {
+        {LANDMARKS.map((lm, i) => {
           const pct = (lm.k / TEMP_MAX) * 100;
+          // First label: align left edge to marker; last: align right edge
+          const isFirst = i === 0;
+          const isLast = i === LANDMARKS.length - 1;
+          const anchor = isFirst ? 'translateX(0)' : isLast ? 'translateX(-100%)' : 'translateX(-50%)';
           return (
             <button
               key={lm.k}
@@ -351,7 +354,7 @@ export default function PhaseLandscape() {
               style={{
                 position: 'absolute',
                 left: `${pct}%`,
-                transform: 'translateX(-50%)',
+                transform: anchor,
                 fontSize: 10,
                 color: GREY_MID,
                 background: 'none',
