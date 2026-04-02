@@ -443,7 +443,7 @@ export default function PhaseLandscape() {
                     role="button"
                     aria-label={`${el.symbol} — ${el.name}, ${phase} at ${tempK} K`}
                     style={{ cursor: 'pointer' }}
-                    onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+                    onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/elements/${el.symbol}`); }}
                   >
                     <title>{el.name}</title>
                     <g

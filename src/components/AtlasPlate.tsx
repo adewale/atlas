@@ -197,7 +197,7 @@ export default function AtlasPlate({
               <g
                 style={{ cursor: 'pointer' }}
                 role="link"
-                onClick={(e) => { e.preventDefault(); setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+                onClick={(e) => { e.preventDefault(); setActiveSymbol(el.symbol); transitionNavigate(`/elements/${el.symbol}`); }}
                 onMouseEnter={() => handleCardEnter(el, x, y)}
                 onMouseLeave={handleCardLeave}
               >

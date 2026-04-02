@@ -206,7 +206,7 @@ export default function NeighborhoodGraph() {
                     setHoveredSymbol(hoveredSymbol === el.symbol ? null : el.symbol);
                   }
                 }}
-                onClick={() => navigate(`/element/${el.symbol}`)}
+                onClick={() => navigate(`/elements/${el.symbol}`)}
                 role="button"
                 aria-label={`${el.symbol} — ${el.name}, ${el.neighbors.length} neighbours`}
               >

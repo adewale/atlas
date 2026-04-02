@@ -97,7 +97,7 @@ export function DiscovererChip({ name, elementCount, yearRange }: DiscovererChip
 
   return (
     <BaseChip
-      to={`/discoverer/${encodeURIComponent(name)}`}
+      to={`/discoverers/${encodeURIComponent(name)}`}
       borderColor={MUSTARD}
       primary={name}
       secondary={secondary}
@@ -125,7 +125,7 @@ export function AnomalyChip({ slug, label, elementCount }: AnomalyChipProps) {
 
   return (
     <BaseChip
-      to={`/anomaly/${slug}`}
+      to={`/anomalies/${slug}`}
       borderColor={WARM_RED}
       primary={label}
       secondary={secondary}
@@ -151,7 +151,7 @@ export type NeighbourChipProps = {
 export function NeighbourChip({ symbol, name, color, direction }: NeighbourChipProps) {
   return (
     <BaseChip
-      to={`/element/${symbol}`}
+      to={`/elements/${symbol}`}
       borderColor={color}
       primary={`${symbol} — ${name}`}
       secondary={direction ?? 'neighbour'}

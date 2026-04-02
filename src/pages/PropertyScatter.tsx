@@ -473,7 +473,7 @@ export default function PropertyScatter() {
                     setHovered(hovered?.symbol === d.el.symbol ? null : d.el);
                   }
                 }}
-                onClick={() => navigate(`/element/${d.el.symbol}`)}
+                onClick={() => navigate(`/elements/${d.el.symbol}`)}
               />
               {/* Dim non-hovered when something is hovered */}
               {hovered && !isHovered && (

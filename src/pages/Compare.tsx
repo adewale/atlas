@@ -33,7 +33,7 @@ export default function Compare() {
 
   return (
     <PageShell>
-      <Link to={`/element/${symbol}`} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← {elementA.name}</Link>
+      <Link to={`/elements/${symbol}`} style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← {elementA.name}</Link>
       <div style={{ marginTop: '16px' }}>
         <CompareView elementA={elementA} elementB={elementB} vertical={vertical} />
       </div>

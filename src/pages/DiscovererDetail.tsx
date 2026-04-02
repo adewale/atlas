@@ -114,14 +114,14 @@ export default function DiscovererDetail() {
           aria-label="Previous and next discoverer navigation"
         >
           {prevDisc && (
-            <a href={`/discoverer/${encodeURIComponent(prevDisc.name)}`}>
+            <a href={`/discoverers/${encodeURIComponent(prevDisc.name)}`}>
               <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
                 ← {prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name}
               </text>
             </a>
           )}
           {nextDisc && (
-            <a href={`/discoverer/${encodeURIComponent(nextDisc.name)}`}>
+            <a href={`/discoverers/${encodeURIComponent(nextDisc.name)}`}>
               <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
                 {nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name} →
               </text>
@@ -158,7 +158,7 @@ export default function DiscovererDetail() {
       <div style={{ marginTop: '24px' }}>
         {years.length > 0 ? (
           <NavigationPill
-            to={`/timeline/${Math.floor(years[0] / 10) * 10}`}
+            to={`/timelines/${Math.floor(years[0] / 10) * 10}`}
             title={`View the ${Math.floor(years[0] / 10) * 10}s discovery era`}
             label={`View ${Math.floor(years[0] / 10) * 10}s on Timeline →`}
             color={WARM_RED}
@@ -166,7 +166,7 @@ export default function DiscovererDetail() {
           />
         ) : (
           <NavigationPill
-            to="/timeline/antiquity"
+            to="/timelines/antiquity"
             title="View the Antiquity discovery era"
             label="View Antiquity on Timeline →"
             color={WARM_RED}

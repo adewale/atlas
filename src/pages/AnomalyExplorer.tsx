@@ -262,7 +262,7 @@ export default function AnomalyExplorer() {
               key={el.symbol}
               transform={`translate(${pos.x}, ${pos.y})`}
               style={{ cursor: 'pointer' }}
-              onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/element/${el.symbol}`); }}
+              onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/elements/${el.symbol}`); }}
             >
               <title>{el.name}</title>
               <rect

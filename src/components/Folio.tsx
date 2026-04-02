@@ -53,14 +53,14 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
         </a>
         {/* Prev/next arrows on the right */}
         {prev && (
-          <a href={`/element/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
+          <a href={`/elements/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
             <title>← {prev.name}</title>
             <rect x={PLATE_WIDTH - 48} y={2} width={24} height={52} fill={fill} />
             <text x={PLATE_WIDTH - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
           </a>
         )}
         {next && (
-          <a href={`/element/${next.symbol}`} aria-label={`Next: ${next.name}`}>
+          <a href={`/elements/${next.symbol}`} aria-label={`Next: ${next.name}`}>
             <title>{next.name} →</title>
             <rect x={PLATE_WIDTH - 24} y={2} width={24} height={52} fill={fill} />
             <text x={PLATE_WIDTH - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
@@ -284,13 +284,13 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}, ${element.category}`}>
               {/* Group row — deep blue */}
-              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/group/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/groups/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} mobile={mobile} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
               {/* Period row — warm red */}
-              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/period/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/periods/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} mobile={mobile} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
               {/* Block row — block colour */}
-              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/block/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/blocks/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} mobile={mobile} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
               {/* Category row */}
-              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/category/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} mobile={mobile} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
+              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} mobile={mobile} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
             </div>
 
           </div>
@@ -322,7 +322,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             return (
               <Link
                 key={prop.key}
-                to={`/rank/${prop.key}`}
+                to={`/ranks/${prop.key}`}
                 title={`View all 118 elements ranked by ${prop.label.toLowerCase()}`}
                 style={{ textDecoration: 'none', display: 'block', flex: mobile ? '1 1 100%' : `0 0 ${rowW}px` }}
               >
@@ -424,7 +424,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   {sameEtymology.map((e, i) => (
                     <span key={e.symbol}>
                       {i > 0 && ', '}
-                      <Link to={`/element/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
+                      <Link to={`/elements/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
                     </span>
                   ))}
                 </div>
@@ -435,12 +435,12 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             <div>
               <span style={{ fontSize: '10px', color: GREY_MID, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Discovery</span>
               <div>
-                <Link to={`/discoverer/${encodeURIComponent(element.discoverer)}`} title={`View all elements discovered by ${element.discoverer}`} style={{ color, textDecoration: 'none' }}>
+                <Link to={`/discoverers/${encodeURIComponent(element.discoverer)}`} title={`View all elements discovered by ${element.discoverer}`} style={{ color, textDecoration: 'none' }}>
                   {element.discoverer}
                 </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
                 <Link
-                  to={element.discoveryYear ? `/timeline/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
+                  to={element.discoveryYear ? `/timelines/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
                   title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
@@ -453,7 +453,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   {sameDiscoverer.map((e, i) => (
                     <span key={e.symbol}>
                       {i > 0 && ', '}
-                      <Link to={`/element/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
+                      <Link to={`/elements/${e.symbol}`} title={e.name} style={{ color }}>{e.symbol}</Link>
                     </span>
                   ))}
                 </div>
@@ -514,7 +514,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
         {/* Compare link */}
         <div style={{ marginTop: '12px' }}>
-          <Link to={`/element/${element.symbol}/compare/${element.neighbors[0] ?? 'O'}`}>
+          <Link to={`/elements/${element.symbol}/compare/${element.neighbors[0] ?? 'O'}`}>
             Compare →
           </Link>
         </div>

@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
 
   /* ── Element ─────────────────────────────── */
   {
-    path: '/element',
+    path: '/elements',
     Component: ElementIndex,
     loader: async () => {
       const mod = await import('../data/generated/elements.json');
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/element/:symbol',
+    path: '/elements/:symbol',
     Component: Element,
     loader: async ({ params }: LoaderFunctionArgs) => {
       if (!params.symbol || !getElement(params.symbol)) return redirect('/');
@@ -77,7 +77,7 @@ export const router = createBrowserRouter([
 
   /* ── Group ───────────────────────────────── */
   {
-    path: '/group',
+    path: '/groups',
     Component: AtlasGroupIndex,
     loader: async () => {
       groupsCache ??= await import('../data/generated/groups.json').then(m => m.default);
@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/group/:n',
+    path: '/groups/:n',
     Component: AtlasGroup,
     loader: async () => {
       groupsCache ??= await import('../data/generated/groups.json').then(m => m.default);
@@ -95,7 +95,7 @@ export const router = createBrowserRouter([
 
   /* ── Period ──────────────────────────────── */
   {
-    path: '/period',
+    path: '/periods',
     Component: AtlasPeriodIndex,
     loader: async () => {
       periodsCache ??= await import('../data/generated/periods.json').then(m => m.default);
@@ -103,7 +103,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/period/:n',
+    path: '/periods/:n',
     Component: AtlasPeriod,
     loader: async () => {
       periodsCache ??= await import('../data/generated/periods.json').then(m => m.default);
@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
 
   /* ── Block ───────────────────────────────── */
   {
-    path: '/block',
+    path: '/blocks',
     Component: AtlasBlockIndex,
     loader: async () => {
       blocksCache ??= await import('../data/generated/blocks.json').then(m => m.default);
@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/block/:block',
+    path: '/blocks/:block',
     Component: AtlasBlock,
     loader: async () => {
       blocksCache ??= await import('../data/generated/blocks.json').then(m => m.default);
@@ -131,7 +131,7 @@ export const router = createBrowserRouter([
 
   /* ── Category ────────────────────────────── */
   {
-    path: '/category',
+    path: '/categories',
     Component: AtlasCategoryIndex,
     loader: async () => {
       categoriesCache ??= await import('../data/generated/categories.json').then(m => m.default);
@@ -139,7 +139,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/category/:slug',
+    path: '/categories/:slug',
     Component: AtlasCategory,
     loader: async () => {
       categoriesCache ??= await import('../data/generated/categories.json').then(m => m.default);
@@ -148,9 +148,9 @@ export const router = createBrowserRouter([
   },
 
   /* ── Rank ─────────────────────────────────── */
-  { path: '/rank', Component: RankIndex },
+  { path: '/ranks', Component: RankIndex },
   {
-    path: '/rank/:property',
+    path: '/ranks/:property',
     Component: AtlasRank,
     loader: async () => {
       const [rankMod, elemMod] = await Promise.all([
@@ -163,7 +163,7 @@ export const router = createBrowserRouter([
 
   /* ── Anomaly ──────────────────────────────── */
   {
-    path: '/anomaly',
+    path: '/anomalies',
     Component: AnomalyIndex,
     loader: async () => {
       anomaliesCache ??= await import('../data/generated/anomalies.json').then(m => m.default);
@@ -171,7 +171,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/anomaly/:slug',
+    path: '/anomalies/:slug',
     Component: AtlasAnomaly,
     loader: async () => {
       anomaliesCache ??= await import('../data/generated/anomalies.json').then(m => m.default);
@@ -180,7 +180,7 @@ export const router = createBrowserRouter([
   },
 
   /* ── Compare (sub-resource of element) ────── */
-  { path: '/element/:symbol/compare/:other', Component: Compare },
+  { path: '/elements/:symbol/compare/:other', Component: Compare },
 
   /* ── About & meta pages ──────────────────── */
   { path: '/about', Component: About },
@@ -198,7 +198,7 @@ export const router = createBrowserRouter([
 
   /* ── Discoverer ──────────────────────────── */
   {
-    path: '/discoverer',
+    path: '/discoverers',
     Component: DiscovererIndex,
     loader: async () => {
       discoverersCache ??= await import('../data/generated/discoverers.json').then(m => m.default);
@@ -206,7 +206,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/discoverer/:name',
+    path: '/discoverers/:name',
     Component: DiscovererDetail,
     loader: async () => {
       discoverersCache ??= await import('../data/generated/discoverers.json').then(m => m.default);
@@ -216,7 +216,7 @@ export const router = createBrowserRouter([
 
   /* ── Timeline ────────────────────────────── */
   {
-    path: '/timeline',
+    path: '/timelines',
     Component: TimelineIndex,
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
@@ -224,7 +224,7 @@ export const router = createBrowserRouter([
     },
   },
   {
-    path: '/timeline/:era',
+    path: '/timelines/:era',
     Component: TimelineEra,
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);

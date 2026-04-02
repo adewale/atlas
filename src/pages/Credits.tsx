@@ -13,7 +13,7 @@ export default function Credits() {
   const { credits } = useLoaderData() as { credits: CreditsData };
 
   const structuredText = `${credits.structured.provider} — ${credits.structured.license}. Atomic mass, electronegativity, ionisation energy, radius, and phase data.`;
-  const identifiersText = `${credits.identifiers.provider} — ${credits.identifiers.license}. QIDs (Wikidata identifiers), Wikipedia sitelinks, category classification, group/period/block.`;
+  const identifiersText = `${credits.identifiers.provider} — ${credits.identifiers.license}. QIDs (Wikidata identifiers), Wikipedia sitelinks, category classification, group/periods/block.`;
   const summariesNoteText = 'Excerpts may differ from current Wikipedia content. All used under CC BY-SA 4.0.';
   const aboutText = 'Atlas is an original editorial and design work. The derived data (rankings, groupings, anomaly descriptions) and comparison templates are original content.';
   const mediaText = 'No media in v1.';
@@ -91,7 +91,7 @@ export default function Credits() {
             {credits.summaries.map((s) => (
               <tr key={s.symbol} style={{ borderBottom: `1px solid ${DIM}` }}>
                 <td style={{ padding: '4px 8px' }}>
-                  <Link to={`/element/${s.symbol}`}>
+                  <Link to={`/elements/${s.symbol}`}>
                     {s.symbol} — {s.name}
                   </Link>
                 </td>
