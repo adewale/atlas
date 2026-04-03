@@ -12,6 +12,10 @@
  *  - contain-intrinsic-size hints give the browser a size estimate
  *  - Two-tier rendering: compact (no symbols) until IntersectionObserver fires
  *  - Stagger index is viewport-relative, not absolute list position
+ *
+ * Interaction:
+ *  - Hover-to-highlight: onHover callback enables Explore to dim unrelated cards
+ *  - dimmed prop fades the card to 15% opacity (Victor's "illuminate, don't filter")
  */
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { Entity } from '../lib/entities';
@@ -32,15 +36,21 @@ type EntityCardProps = {
   entity: Entity;
   /** Viewport-relative index for stagger animation (not absolute list index). */
   index: number;
+  /** When true, card fades to ghosted state (hover-to-highlight). */
+  dimmed?: boolean;
   onDrill?: (entity: Entity) => void;
   onNavigate?: (href: string) => void;
+  /** Called with entity id on mouseenter, null on mouseleave. */
+  onHover?: (id: string | null) => void;
 };
 
 export default function EntityCard({
   entity,
   index,
+  dimmed = false,
   onDrill,
   onNavigate,
+  onHover,
 }: EntityCardProps) {
   const showSymbols = entity.elements.length > 0 && entity.type !== 'element';
   const typeLabel = ENTITY_TYPE_LABELS[entity.type];
@@ -50,7 +60,6 @@ export default function EntityCard({
   // Two-tier rendering: expand when card enters viewport
   useEffect(() => {
     if (!showSymbols) {
-      // Cards without symbols don't need the expanded tier
       setExpanded(true);
       return;
     }
@@ -58,7 +67,6 @@ export default function EntityCard({
     const el = cardRef.current;
     if (!el) return;
 
-    // If IntersectionObserver isn't available, expand immediately
     if (typeof IntersectionObserver === 'undefined') {
       setExpanded(true);
       return;
@@ -90,10 +98,20 @@ export default function EntityCard({
     }
   }, [entity, showSymbols, onDrill, onNavigate]);
 
+  const handleMouseEnter = useCallback(() => {
+    onHover?.(entity.id);
+  }, [onHover, entity.id]);
+
+  const handleMouseLeave = useCallback(() => {
+    onHover?.(null);
+  }, [onHover]);
+
   return (
     <div
       ref={cardRef}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       style={{
         cursor: 'pointer',
         background: PAPER,
@@ -103,6 +121,14 @@ export default function EntityCard({
         // content-visibility: auto skips rendering for off-screen cards
         contentVisibility: 'auto',
         containIntrinsicSize: `auto ${ESTIMATED_CARD_HEIGHT}px`,
+        // Hover-to-highlight dimming (Victor 4a: illuminate, don't filter)
+        ...(dimmed ? {
+          opacity: 0.15,
+          animation: 'none',
+          transition: 'opacity 150ms var(--ease-snap)',
+        } : {
+          transition: 'opacity 150ms var(--ease-snap)',
+        }),
       }}
     >
       {/* Header band */}
@@ -141,7 +167,7 @@ export default function EntityCard({
 
       {/* Body */}
       <div style={{ padding: '8px 10px' }}>
-        {/* Description — CSS line clamp instead of manual Pretext measurement */}
+        {/* Description — CSS line clamp */}
         <div
           style={{
             fontSize: '12px',

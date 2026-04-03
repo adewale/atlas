@@ -77,16 +77,8 @@ export const router = createBrowserRouter([
     Component: Element,
     loader: async ({ params }: LoaderFunctionArgs) => {
       if (!params.symbol || !getElement(params.symbol)) return redirect('/');
-      const [elementMod, groupsMod, anomaliesMod] = await Promise.all([
-        import(`../data/generated/element-${params.symbol}.json`),
-        groupsCache
-          ? Promise.resolve(groupsCache)
-          : import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
-        anomaliesCache
-          ? Promise.resolve(anomaliesCache)
-          : import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
-      ]);
-      return { element: elementMod.default, groups: groupsMod, anomalies: anomaliesMod };
+      const folioBundleMod = await import(`../data/generated/folio-${params.symbol}.json`);
+      return { folioBundle: folioBundleMod.default };
     },
   },
 
@@ -252,18 +244,8 @@ export const router = createBrowserRouter([
     path: '/explore',
     Component: Explore,
     loader: async () => {
-      const [elements, categories, groups, periods, blocks, anomalies, discoverers, timeline, etymology] = await Promise.all([
-        import('../data/generated/elements.json').then(m => m.default),
-        categoriesCache ?? import('../data/generated/categories.json').then(m => { categoriesCache = m.default; return categoriesCache; }),
-        groupsCache ?? import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
-        periodsCache ?? import('../data/generated/periods.json').then(m => { periodsCache = m.default; return periodsCache; }),
-        blocksCache ?? import('../data/generated/blocks.json').then(m => { blocksCache = m.default; return blocksCache; }),
-        anomaliesCache ?? import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
-        discoverersCache ?? import('../data/generated/discoverers.json').then(m => { discoverersCache = m.default; return discoverersCache; }),
-        timelineCache ?? import('../data/generated/timeline.json').then(m => { timelineCache = m.default; return timelineCache; }),
-        etymologyCache ?? import('../data/generated/etymology.json').then(m => { etymologyCache = m.default; return etymologyCache; }),
-      ]);
-      return { elements, categories, groups, periods, blocks, anomalies, discoverers, timeline, etymology };
+      const mod = await import('../data/generated/entity-index.json');
+      return { entityIndex: mod.default };
     },
   },
 

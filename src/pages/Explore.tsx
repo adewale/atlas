@@ -6,20 +6,20 @@
  *  - Byrne chip filters by entity type
  *  - Breadcrumb drill-down into entity children
  *  - Byrne-style entity cards with content-visibility optimization
+ *  - Hover-to-highlight: hovering a card dims others, highlighting related entities
  *
  * Performance:
- *  - Viewport-relative stagger: animation delay index resets per filter change,
- *    so visible cards always animate quickly regardless of absolute list position
- *  - EntityCard uses content-visibility: auto for off-screen skip
- *  - EntityCard uses two-tier rendering (compact → expanded on intersection)
+ *  - Loads a single pre-built entity-index.json (~121 KB, gzipped ~25 KB)
+ *    instead of 9 separate JSON imports (227 KB total)
+ *  - No client-side buildEntities() — corpus is pre-computed at derivation time
+ *  - Viewport-relative stagger, content-visibility, two-tier card rendering
  */
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useLoaderData } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
-  buildEntities,
   searchEntities,
   ENTITY_TYPES,
   ENTITY_TYPE_LABELS,
@@ -29,6 +29,7 @@ import {
 } from '../lib/entities';
 import {
   BLACK,
+  DIM,
   GREY_MID,
   GREY_RULE,
   MUSTARD,
@@ -41,16 +42,6 @@ import PageShell from '../components/PageShell';
 import ByrneChips from '../components/ByrneChips';
 import type { ChipOption } from '../components/ByrneChips';
 import EntityCard from '../components/EntityCard';
-import type {
-  ElementRecord,
-  CategoryData,
-  GroupData,
-  PeriodData,
-  BlockData,
-  AnomalyData,
-  DiscovererData,
-  TimelineData,
-} from '../lib/types';
 
 /**
  * Maximum cards to stagger in one batch. Cards beyond this threshold
@@ -65,25 +56,16 @@ const MAX_STAGGER_BATCH = 24;
 export default function Explore() {
   useDocumentTitle('Explore');
 
-  const loaderData = useLoaderData() as {
-    elements: ElementRecord[];
-    categories: CategoryData[];
-    groups: GroupData[];
-    periods: PeriodData[];
-    blocks: BlockData[];
-    anomalies: AnomalyData[];
-    discoverers: DiscovererData[];
-    timeline: TimelineData;
-    etymology: { origin: string; elements: { symbol: string; description: string }[] }[];
-  };
+  const loaderData = useLoaderData() as { entityIndex: Entity[] };
+  const allEntities: Entity[] = loaderData.entityIndex;
+
   const transitionNavigate = useViewTransitionNavigate();
   const isMobile = useIsMobile();
-
-  const allEntities = useMemo(() => buildEntities(loaderData), [loaderData]);
 
   const [query, setQuery] = useState('');
   const [activeTypes, setActiveTypes] = useState<Set<EntityType>>(new Set());
   const [breadcrumbs, setBreadcrumbs] = useState<Entity[]>([]);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const currentDrill = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1] : null;
 
   // Stagger generation: increments on each filter/search change so
@@ -109,7 +91,7 @@ export default function Explore() {
     return pool;
   }, [allEntities, activeTypes, query, currentDrill, drillChildren]);
 
-  // Type counts for chips
+  // Type counts for chips (self-exclusion: computed from search-filtered but type-unfiltered pool)
   const typeCounts = useMemo(() => {
     const searchPool = query.trim() ? searchEntities(allEntities, query) : allEntities;
     const counts = new Map<EntityType, number>();
@@ -125,6 +107,14 @@ export default function Explore() {
       count: typeCounts.get(type) ?? 0,
     }))
     .filter((opt) => opt.count > 0);
+
+  // Hover-to-highlight: compute the set of element symbols belonging to the hovered entity
+  const highlightSymbols = useMemo(() => {
+    if (!hoveredId) return null;
+    const hovered = allEntities.find((e) => e.id === hoveredId);
+    if (!hovered || hovered.elements.length === 0) return null;
+    return new Set(hovered.elements);
+  }, [hoveredId, allEntities]);
 
   const handleToggleType = useCallback((type: EntityType) => {
     setActiveTypes((prev) => {
@@ -163,6 +153,10 @@ export default function Explore() {
     setBreadcrumbs([]);
     bumpStagger();
   }, [bumpStagger]);
+
+  const handleHover = useCallback((id: string | null) => {
+    setHoveredId(id);
+  }, []);
 
   const hasActiveFilters = activeTypes.size > 0 || query.trim().length > 0 || breadcrumbs.length > 0;
 
@@ -284,7 +278,7 @@ export default function Explore() {
           : `${filtered.length} entit${filtered.length === 1 ? 'y' : 'ies'}`}
       </div>
 
-      {/* Entity card grid — CSS grid, not SVG */}
+      {/* Entity card grid */}
       <div
         key={staggerGen}
         style={{
@@ -293,15 +287,24 @@ export default function Explore() {
           gap: '8px',
         }}
       >
-        {filtered.map((entity, i) => (
-          <EntityCard
-            key={entity.id}
-            entity={entity}
-            index={Math.min(i, MAX_STAGGER_BATCH)}
-            onDrill={handleDrill}
-            onNavigate={handleNavigate}
-          />
-        ))}
+        {filtered.map((entity, i) => {
+          // Hover-to-highlight: dim cards that don't share elements with hovered entity
+          const isDimmed = highlightSymbols != null
+            && entity.id !== hoveredId
+            && !entity.elements.some((sym) => highlightSymbols.has(sym));
+
+          return (
+            <EntityCard
+              key={entity.id}
+              entity={entity}
+              index={Math.min(i, MAX_STAGGER_BATCH)}
+              dimmed={isDimmed}
+              onDrill={handleDrill}
+              onNavigate={handleNavigate}
+              onHover={handleHover}
+            />
+          );
+        })}
       </div>
     </PageShell>
   );

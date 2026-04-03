@@ -94,4 +94,24 @@ describe('EntityCard', () => {
     render(<EntityCard entity={GROUP_ENTITY} index={0} />);
     expect(screen.getByText('▸')).toBeInTheDocument();
   });
+
+  it('dims card when dimmed prop is true', () => {
+    const { container } = render(<EntityCard entity={ELEMENT_ENTITY} index={0} dimmed />);
+    const card = container.firstChild as HTMLElement;
+    expect(card.style.opacity).toBe('0.15');
+  });
+
+  it('calls onHover with entity id on mouseenter', () => {
+    const onHover = vi.fn();
+    render(<EntityCard entity={ELEMENT_ENTITY} index={0} onHover={onHover} />);
+    fireEvent.mouseEnter(screen.getByText('Fe — Iron').closest('div')!.parentElement!);
+    expect(onHover).toHaveBeenCalledWith('element-Fe');
+  });
+
+  it('calls onHover with null on mouseleave', () => {
+    const onHover = vi.fn();
+    const { container } = render(<EntityCard entity={ELEMENT_ENTITY} index={0} onHover={onHover} />);
+    fireEvent.mouseLeave(container.firstChild as HTMLElement);
+    expect(onHover).toHaveBeenCalledWith(null);
+  });
 });

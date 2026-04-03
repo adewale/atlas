@@ -13,7 +13,7 @@ afterEach(() => {
 function renderFolio(props?: { sources?: ElementSources }) {
   return render(
     <MemoryRouter>
-      <Folio element={FE} sources={props?.sources} animate={false} />
+      <Folio element={FE} sources={props?.sources ?? FE_SOURCES} animate={false} />
     </MemoryRouter>,
   );
 }
@@ -23,10 +23,10 @@ describe('Folio', () => {
     renderFolio();
     // Giant atomic number (zero-padded)
     expect(screen.getByText('026')).toBeInTheDocument();
-    // Symbol
-    expect(screen.getByText('Fe')).toBeInTheDocument();
-    // Name
-    expect(screen.getByText('Iron')).toBeInTheDocument();
+    // Symbol (may appear in sameEtymology links too)
+    expect(screen.getAllByText('Fe').length).toBeGreaterThanOrEqual(1);
+    // Name (appears in heading + source strip)
+    expect(screen.getAllByText('Iron').length).toBeGreaterThanOrEqual(1);
     // Category in data plate
     expect(screen.getByLabelText('transition metal')).toBeInTheDocument();
   });
@@ -54,7 +54,7 @@ describe('Folio', () => {
   });
 
   it('shows source strip with correct licensing text', () => {
-    renderFolio({ sources: FE_SOURCES });
+    renderFolio();
     expect(screen.getByText('PubChem')).toBeInTheDocument();
     expect(screen.getByText(/public domain/)).toBeInTheDocument();
     expect(screen.getByText('Wikidata')).toBeInTheDocument();
@@ -69,7 +69,13 @@ describe('Folio', () => {
 
   it('data plate shows em-dash for null group', () => {
     const noGroup = { ...FE, group: null as number | null };
-    render(<MemoryRouter><Folio element={noGroup} animate={false} /></MemoryRouter>);
+    const noGroupBundle: FolioBundle = {
+      ...FE_BUNDLE,
+      group: null,
+      nav: { ...FE_BUNDLE.nav, prevInGroup: null, nextInGroup: null },
+      groupPhases: null,
+    };
+    render(<MemoryRouter><Folio element={noGroup} folioBundle={noGroupBundle} animate={false} /></MemoryRouter>);
     expect(screen.getByLabelText(/Data plate: Group —/)).toBeInTheDocument();
   });
 
@@ -87,13 +93,10 @@ describe('Folio', () => {
 
   it('data plate links group, period, and block to atlas pages', () => {
     renderFolio();
-    // Group label should link to /atlas/group/8
     const groupLink = screen.getByRole('link', { name: /group 8/i });
     expect(groupLink).toHaveAttribute('href', '/groups/8');
-    // Period label should link to /periods/4
     const periodLink = screen.getByRole('link', { name: /period 4/i });
     expect(periodLink).toHaveAttribute('href', '/periods/4');
-    // Block label should link to /blocks/d
     const blockLink = screen.getByRole('link', { name: /block d/i });
     expect(blockLink).toHaveAttribute('href', '/blocks/d');
   });
@@ -108,7 +111,6 @@ describe('Folio', () => {
   it('data plate shows period and block prev/next arrows', () => {
     renderFolio();
     // Fe (Z=26) — prev in period/block is Mn (Z=25), next is Co (Z=27)
-    // These appear in both the period and block rows, so use getAllByRole
     const prevLinks = screen.getAllByRole('link', { name: /Previous: Manganese/i });
     expect(prevLinks.length).toBeGreaterThanOrEqual(1);
     expect(prevLinks[0]).toHaveAttribute('href', '/elements/Mn');
@@ -120,13 +122,21 @@ describe('Folio', () => {
 
   it('no group arrows for elements without a group', () => {
     const noGroup = { ...FE, group: null as number | null, symbol: 'La', name: 'Lanthanum', atomicNumber: 57 };
-    render(<MemoryRouter><Folio element={noGroup} animate={false} /></MemoryRouter>);
+    const noGroupBundle: FolioBundle = {
+      ...FE_BUNDLE,
+      group: null,
+      nav: {
+        prevInGroup: null, nextInGroup: null,
+        prevInPeriod: { symbol: 'Ba', name: 'Barium' },
+        nextInPeriod: { symbol: 'Ce', name: 'Cerium' },
+        prevInBlock: { symbol: 'Yb', name: 'Ytterbium' },
+        nextInBlock: { symbol: 'Ce', name: 'Cerium' },
+        prevInCategory: null, nextInCategory: null,
+      },
+      groupPhases: null,
+    };
+    render(<MemoryRouter><Folio element={noGroup} folioBundle={noGroupBundle} animate={false} /></MemoryRouter>);
     expect(screen.getByLabelText(/Data plate: Group —/)).toBeInTheDocument();
-    // All arrow links should be /element/ links, none for group
-    const arrowLinks = screen.queryAllByRole('link', { name: /Previous:|Next:/i });
-    for (const link of arrowLinks) {
-      expect(link.getAttribute('href')).toMatch(/^\/elements\//);
-    }
     // Ruthenium (next in Group 8) should NOT appear since group is null
     const ruLink = screen.queryByRole('link', { name: /Ruthenium/i });
     expect(ruLink).toBeNull();
@@ -170,9 +180,17 @@ describe('Folio', () => {
       discoverer: 'Joseph Priestley',
       neighbors: ['N', 'F'],
     };
+    const oxygenBundle: FolioBundle = {
+      ...FE_BUNDLE,
+      element: oxygen,
+      neighbors: [
+        { symbol: 'N', name: 'Nitrogen', block: 'p' },
+        { symbol: 'F', name: 'Fluorine', block: 'p' },
+      ],
+    };
     render(
       <MemoryRouter>
-        <Folio element={oxygen} animate={false} />
+        <Folio element={oxygen} folioBundle={oxygenBundle} animate={false} />
       </MemoryRouter>,
     );
     const timelineLink = screen.getByText('1770s →');

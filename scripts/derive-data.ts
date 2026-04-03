@@ -467,9 +467,226 @@ function run() {
   };
   writeFileSync(join(outDir, 'credits.json'), JSON.stringify(credits, null, 2));
 
+  // --- grid-elements.json (minimal fields for the periodic table grid) ---
+  const gridElements = elements.map((e) => ({
+    atomicNumber: e.atomicNumber,
+    symbol: e.symbol,
+    name: e.name,
+    block: e.block,
+    group: e.group,
+    period: e.period,
+    category: e.category,
+    phase: e.phase,
+    mass: e.mass,
+    electronegativity: e.electronegativity,
+    ionizationEnergy: e.ionizationEnergy,
+    radius: e.radius,
+    density: e.density,
+    meltingPoint: e.meltingPoint,
+    boilingPoint: e.boilingPoint,
+    halfLife: e.halfLife,
+    neighbors: e.neighbors,
+  }));
+  writeFileSync(join(outDir, 'grid-elements.json'), JSON.stringify(gridElements));
+
+  // --- entity-index.json (pre-built entity corpus for the Explore page) ---
+  const ENTITY_TYPE_COLOURS: Record<string, string> = {
+    element: '#133e7c', category: '#133e7c', group: '#133e7c',
+    period: '#9e1c2c', block: '#856912', anomaly: '#9e1c2c',
+    discoverer: '#856912', era: '#9e1c2c', etymology: '#0f0f0f',
+  };
+  const entityIndex: Array<{
+    id: string; type: string; name: string; description: string;
+    colour: string; elements: string[]; href: string | null;
+  }> = [];
+
+  for (const el of elements) {
+    entityIndex.push({
+      id: `element-${el.symbol}`, type: 'element',
+      name: `${el.symbol} — ${el.name}`, description: el.summary,
+      colour: ENTITY_TYPE_COLOURS.element, elements: [el.symbol],
+      href: `/elements/${el.symbol}`,
+    });
+  }
+  for (const cat of categories) {
+    entityIndex.push({
+      id: `category-${cat.slug}`, type: 'category',
+      name: cat.label, description: cat.description,
+      colour: ENTITY_TYPE_COLOURS.category, elements: cat.elements,
+      href: `/categories/${cat.slug}`,
+    });
+  }
+  for (const g of groups) {
+    entityIndex.push({
+      id: `group-${g.n}`, type: 'group',
+      name: `Group ${g.n}`, description: g.description,
+      colour: ENTITY_TYPE_COLOURS.group, elements: g.elements,
+      href: `/groups/${g.n}`,
+    });
+  }
+  for (const p of periods) {
+    entityIndex.push({
+      id: `period-${p.n}`, type: 'period',
+      name: `Period ${p.n}`, description: p.description,
+      colour: ENTITY_TYPE_COLOURS.period, elements: p.elements,
+      href: `/periods/${p.n}`,
+    });
+  }
+  for (const b of blocks) {
+    entityIndex.push({
+      id: `block-${b.block}`, type: 'block',
+      name: b.label, description: b.description,
+      colour: ENTITY_TYPE_COLOURS.block, elements: b.elements,
+      href: `/blocks/${b.block}`,
+    });
+  }
+  for (const a of anomalies) {
+    entityIndex.push({
+      id: `anomaly-${a.slug}`, type: 'anomaly',
+      name: a.label, description: a.description,
+      colour: ENTITY_TYPE_COLOURS.anomaly, elements: a.elements,
+      href: `/anomalies/${a.slug}`,
+    });
+  }
+  for (const d of discoverers) {
+    entityIndex.push({
+      id: `discoverer-${d.name}`, type: 'discoverer',
+      name: d.name,
+      description: `Discovered ${d.elements.length} element${d.elements.length === 1 ? '' : 's'}: ${d.elements.join(', ')}`,
+      colour: ENTITY_TYPE_COLOURS.discoverer, elements: d.elements,
+      href: `/discoverers/${encodeURIComponent(d.name)}`,
+    });
+  }
+  // Eras from timeline
+  const eraBuckets = new Map<string, string[]>();
+  for (const entry of antiquity) {
+    if (!eraBuckets.has('Antiquity')) eraBuckets.set('Antiquity', []);
+    eraBuckets.get('Antiquity')!.push(entry.symbol);
+  }
+  for (const entry of timeline) {
+    if (entry.year == null) continue;
+    const decade = Math.floor(entry.year / 10) * 10;
+    const era = `${decade}s`;
+    if (!eraBuckets.has(era)) eraBuckets.set(era, []);
+    eraBuckets.get(era)!.push(entry.symbol);
+  }
+  for (const [era, symbols] of eraBuckets) {
+    const unique = [...new Set(symbols)];
+    const eraParam = era === 'Antiquity' ? 'antiquity' : era.replace('s', '');
+    entityIndex.push({
+      id: `era-${era}`, type: 'era',
+      name: era === 'Antiquity' ? 'Antiquity' : era,
+      description: `${unique.length} element${unique.length === 1 ? '' : 's'} discovered in ${era === 'Antiquity' ? 'antiquity' : `the ${era}`}.`,
+      colour: ENTITY_TYPE_COLOURS.era, elements: unique,
+      href: `/eras/${eraParam}`,
+    });
+  }
+  // Etymology origins
+  for (const ety of etymology) {
+    const symbols = ety.elements.map((e: { symbol: string }) => e.symbol);
+    const capitalised = ety.origin.charAt(0).toUpperCase() + ety.origin.slice(1);
+    entityIndex.push({
+      id: `etymology-${ety.origin}`, type: 'etymology',
+      name: `${capitalised} names`,
+      description: `${symbols.length} elements named for ${ety.origin === 'property' ? 'their properties' : ety.origin === 'place' ? 'places' : ety.origin === 'person' ? 'people' : ety.origin === 'mythology' ? 'mythological figures' : ety.origin === 'mineral' ? 'minerals' : ety.origin === 'astronomical' ? 'celestial bodies' : ety.origin}.`,
+      colour: ENTITY_TYPE_COLOURS.etymology, elements: symbols,
+      href: `/etymology-map#${ety.origin}`,
+    });
+  }
+  writeFileSync(join(outDir, 'entity-index.json'), JSON.stringify(entityIndex));
+
+  // --- folio bundles (pre-resolved per-element data for the Folio page) ---
+  // Each bundle includes everything Folio.tsx needs: no more allElements dependency.
+  for (const el of elements) {
+    const group = el.group != null ? groups.find((g) => g.n === el.group) : null;
+    const elAnomalies = anomalies.filter((a) => a.elements.includes(el.symbol));
+
+    // Prev/next within group (sorted by period)
+    const groupMembers = el.group != null
+      ? elements.filter((e) => e.group === el.group).sort((a, b) => a.period - b.period)
+      : [];
+    const groupIdx = groupMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInGroup = groupIdx > 0 ? groupMembers[groupIdx - 1] : null;
+    const nextInGroup = groupIdx < groupMembers.length - 1 ? groupMembers[groupIdx + 1] : null;
+
+    // Prev/next within period (sorted by atomic number)
+    const periodMembers = elements.filter((e) => e.period === el.period).sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const periodIdx = periodMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInPeriod = periodIdx > 0 ? periodMembers[periodIdx - 1] : null;
+    const nextInPeriod = periodIdx < periodMembers.length - 1 ? periodMembers[periodIdx + 1] : null;
+
+    // Prev/next within block (sorted by atomic number)
+    const blockMembers = elements.filter((e) => e.block === el.block).sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const blockIdx = blockMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInBlock = blockIdx > 0 ? blockMembers[blockIdx - 1] : null;
+    const nextInBlock = blockIdx < blockMembers.length - 1 ? blockMembers[blockIdx + 1] : null;
+
+    // Prev/next within category (sorted by atomic number)
+    const catMembers = elements.filter((e) => e.category === el.category).sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const catIdx = catMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInCategory = catIdx > 0 ? catMembers[catIdx - 1] : null;
+    const nextInCategory = catIdx < catMembers.length - 1 ? catMembers[catIdx + 1] : null;
+
+    // Group phase strip data
+    const groupPhases = group
+      ? group.elements.map((sym) => {
+          const member = elements.find((e) => e.symbol === sym);
+          return member?.phase ?? null;
+        })
+      : null;
+
+    // Resolved neighbors
+    const resolvedNeighbors = el.neighbors.map((sym) => {
+      const n = elements.find((e) => e.symbol === sym);
+      return n ? { symbol: n.symbol, name: n.name, block: n.block } : null;
+    }).filter(Boolean);
+
+    // Same discoverer
+    const sameDiscoverer = (!el.discoverer || el.discoverer.toLowerCase().includes('antiquity'))
+      ? []
+      : elements
+          .filter((e) => e.discoverer === el.discoverer && e.symbol !== el.symbol)
+          .slice(0, 6)
+          .map((e) => ({ symbol: e.symbol, name: e.name, block: e.block }));
+
+    // Same etymology
+    const sameEtymology = (!el.etymologyOrigin || el.etymologyOrigin === 'unknown')
+      ? []
+      : elements
+          .filter((e) => e.etymologyOrigin === el.etymologyOrigin && e.symbol !== el.symbol)
+          .slice(0, 6)
+          .map((e) => ({ symbol: e.symbol, name: e.name, block: e.block }));
+
+    const asRef = (e: SeedElement | null) => e ? { symbol: e.symbol, name: e.name } : null;
+
+    const folioBundle = {
+      element: el,
+      group: group ? { n: group.n, label: group.label, description: group.description, elements: group.elements } : null,
+      anomalies: elAnomalies.map((a) => ({ slug: a.slug, label: a.label, elementCount: a.elements.length })),
+      nav: {
+        prevInGroup: asRef(prevInGroup),
+        nextInGroup: asRef(nextInGroup),
+        prevInPeriod: asRef(prevInPeriod),
+        nextInPeriod: asRef(nextInPeriod),
+        prevInBlock: asRef(prevInBlock),
+        nextInBlock: asRef(nextInBlock),
+        prevInCategory: asRef(prevInCategory),
+        nextInCategory: asRef(nextInCategory),
+      },
+      groupPhases,
+      neighbors: resolvedNeighbors,
+      sameDiscoverer,
+      sameEtymology,
+    };
+    writeFileSync(join(outDir, `folio-${el.symbol}.json`), JSON.stringify(folioBundle));
+  }
+
   console.log('Generated files:');
   console.log(`  elements.json (${stripped.length} elements)`);
+  console.log(`  grid-elements.json (${gridElements.length} elements, grid-only)`);
   console.log(`  ${elements.length} per-element files`);
+  console.log(`  ${elements.length} folio bundle files`);
+  console.log(`  entity-index.json (${entityIndex.length} entities)`);
   console.log(`  groups.json (${groups.length} groups)`);
   console.log(`  periods.json (${periods.length} periods)`);
   console.log(`  blocks.json (${blocks.length} blocks)`);
