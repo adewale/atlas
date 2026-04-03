@@ -17,7 +17,8 @@
     "lint:colors": "tsx scripts/lint-color-tokens.ts",
     "lint:assertions": "tsx scripts/lint-non-null-assertions.ts",
     "lint:animations": "tsx scripts/lint-animation-tokens.ts",
-    "lint:all": "npm run lint && npm run lint:links && npm run lint:assertions && npm run lint:animations",
+    "lint:fonts": "tsx scripts/lint-font-tokens.ts",
+    "lint:all": "npm run lint && npm run lint:links && npm run lint:colors && npm run lint:assertions && npm run lint:animations && npm run lint:fonts",
     "deploy": "npm run build && wrangler pages deploy dist/"
   },
   "dependencies": {

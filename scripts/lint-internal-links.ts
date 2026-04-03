@@ -26,6 +26,12 @@ const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
 // Ignores: external URLs, anchors, mailto, tel
 const INTERNAL_LINK_RE = /<a\s+[^>]*href\s*=\s*["'](\/[^"']*?)["']/g;
 
+// Matches <a href={`/...`} or <a href={"/..."} template literal patterns
+const TEMPLATE_LINK_RE = /<a\s+[^>]*href\s*=\s*\{[`"'](\/[^`"'}]*)/g;
+
+// Also catch href={someVar} where the var is known to contain an internal route
+// This is harder to lint statically, so we just catch the template literal case
+
 // Files allowed to use plain <a> for internal links (e.g., test helpers)
 const ALLOWED_FILES = new Set<string>([]);
 
@@ -67,12 +73,22 @@ function lint(): Violation[] {
 
       while ((match = INTERNAL_LINK_RE.exec(line)) !== null) {
         const href = match[1];
-        // Skip external-looking patterns that start with / but aren't routes
-        // (there shouldn't be any, but be safe)
         violations.push({
           file: file.replace(SRC_DIR, 'src'),
           line: i + 1,
           href,
+          text: line.trim(),
+        });
+      }
+
+      // Also check template literal hrefs: <a href={`/path/${var}`}>
+      TEMPLATE_LINK_RE.lastIndex = 0;
+      while ((match = TEMPLATE_LINK_RE.exec(line)) !== null) {
+        const href = match[1];
+        violations.push({
+          file: file.replace(SRC_DIR, 'src'),
+          line: i + 1,
+          href: href + '...`}',
           text: line.trim(),
         });
       }
