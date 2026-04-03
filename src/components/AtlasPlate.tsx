@@ -101,7 +101,8 @@ export default function AtlasPlate({
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-  const cols = isMobile ? 2 : columns;
+  const maxCols = isMobile ? 2 : columns;
+  const cols = Math.min(maxCols, elements.length || 1);
   const rows = Math.ceil(elements.length / cols);
   const gridW = cols * (CARD_W + GAP) - GAP;
 
@@ -110,6 +111,7 @@ export default function AtlasPlate({
     const lines = measureLines(caption, CAPTION_FONT, gridW - CAPTION_PADDING * 2, 20);
     const textH = lines.length * 20;
     return { captionLines: lines, captionH: textH + CAPTION_PADDING * 2 };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fontsReady busts the cache so measureLines re-measures with real font metrics
   }, [caption, gridW, fontsReady]);
 
   const gridH = rows * (CARD_H + GAP) - GAP;
