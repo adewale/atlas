@@ -293,7 +293,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const marginaliaRef = useRef<HTMLElement>(null);
 
   return (
-    <div className="folio-layout" style={{ display: 'flex', gap: '48px' }}>
+    <div className="folio-layout" style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', gap: mobile ? '24px' : '48px' }}>
       {/* Main content */}
       <div ref={mainRef} className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
         {/* Left colour bar — morph target for element-cell-bg */}
@@ -571,7 +571,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         ref={marginaliaRef}
         className="folio-marginalia"
         style={{
-          width: '200px',
+          width: mobile ? 'auto' : '200px',
           flexShrink: 0,
           fontSize: '13px',
           lineHeight: 1.6,
@@ -610,9 +610,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
         {/* Source strip (mandatory CC BY-SA) */}
         {sources && (
-          <div style={{ borderLeft: `3px solid ${color}`, paddingLeft: '10px' }}>
-            <SourceStrip sources={sources} ruleColor={color} />
-          </div>
+          <SourceStrip sources={sources} ruleColor={color} />
         )}
 
         {/* Compare link */}

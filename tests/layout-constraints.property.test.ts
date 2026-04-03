@@ -346,7 +346,7 @@ describe('Layout constraints: SvgPrevNext', () => {
 
   it('all timeline eras: decade labels fit in SvgPrevNext', () => {
     // TimelineEra uses SvgPrevNext with era names like "1730s", "Antiquity"
-    const eraNames = timeline.timeline.map((e) => `${e.decade}s`);
+    const eraNames = timeline.timeline.map((e) => e.year != null ? `${Math.floor(e.year / 10) * 10}s` : 'Antiquity');
     eraNames.push('Antiquity'); // special case
     for (const name of eraNames) {
       const label = `\u2190 ${name}`;
