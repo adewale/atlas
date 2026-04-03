@@ -8,7 +8,6 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { render, screen, cleanup, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import '../mocks/usePretextLines.mock';
 import Folio from '../../src/components/Folio';
 import { FE } from '../fixtures/element-fe';
 

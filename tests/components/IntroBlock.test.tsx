@@ -1,7 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import '../mocks/usePretextLines.mock';
 import IntroBlock from '../../src/components/IntroBlock';
 
 afterEach(() => {

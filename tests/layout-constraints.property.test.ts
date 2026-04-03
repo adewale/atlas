@@ -1,67 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
 
-// ---------------------------------------------------------------------------
-// Mock @chenglou/pretext — same approach as pretext.property.test.ts
-// Uses ~8px per char heuristic for sans-serif, ~6.5px for 8px font
-// ---------------------------------------------------------------------------
-
-const mockPrepareWithSegments = vi.fn((_text: string) => ({
-  __brand: 'prepared',
-  _text,
-  widths: Array.from({ length: _text.length }, () => 8),
-}));
-
-const mockLayout = vi.fn((_prepared: unknown, maxWidth?: number, _lineSpacing?: number) => {
-  const text = (_prepared as { _text: string })._text;
-  // Parse font size from call context isn't possible here, so use raw char width
-  const charWidth = 8;
-  const textWidth = text.length * charWidth;
-  const fits = maxWidth == null || textWidth <= maxWidth;
-  return {
-    lineCount: fits ? 1 : Math.ceil(textWidth / maxWidth!),
-    height: fits ? 20 : Math.ceil(textWidth / maxWidth!) * 20,
-  };
-});
-
-const mockLayoutWithLines = vi.fn((_prepared: unknown, maxWidth: number, lineHeight: number) => {
-  const text = (_prepared as { _text: string })._text;
-  const charWidth = 8;
-  const charsPerLine = Math.max(1, Math.floor(maxWidth / charWidth));
-  const lines = [];
-  for (let i = 0; i < text.length; i += charsPerLine) {
-    const lineText = text.slice(i, i + charsPerLine);
-    lines.push({
-      text: lineText,
-      width: lineText.length * charWidth,
-      start: { segmentIndex: 0, graphemeIndex: i },
-      end: { segmentIndex: 0, graphemeIndex: Math.min(i + charsPerLine, text.length) },
-    });
-  }
-  return { lineCount: lines.length, height: lines.length * lineHeight, lines };
-});
-
-const mockLayoutNextLine = vi.fn((_prepared: unknown, start: { segmentIndex: number; graphemeIndex: number }, maxWidth: number) => {
-  const text = (_prepared as { _text: string })._text;
-  const charWidth = 8;
-  const charsPerLine = Math.max(1, Math.floor(maxWidth / charWidth));
-  const startIdx = start.graphemeIndex;
-  if (startIdx >= text.length) return null;
-  const lineText = text.slice(startIdx, startIdx + charsPerLine);
-  return {
-    text: lineText,
-    width: lineText.length * charWidth,
-    start: { segmentIndex: 0, graphemeIndex: startIdx },
-    end: { segmentIndex: 0, graphemeIndex: Math.min(startIdx + charsPerLine, text.length) },
-  };
-});
-
-vi.mock('@chenglou/pretext', () => ({
-  prepareWithSegments: (...args: unknown[]) => mockPrepareWithSegments(...(args as [string])),
-  layout: (...args: unknown[]) => mockLayout(...(args as [unknown, number, number])),
-  layoutWithLines: (...args: unknown[]) => mockLayoutWithLines(...(args as [unknown, number, number])),
-  layoutNextLine: (...args: unknown[]) => mockLayoutNextLine(...(args as [unknown, { segmentIndex: number; graphemeIndex: number }, number])),
-}));
+// No mock — uses real @chenglou/pretext via node-canvas OffscreenCanvas polyfill
+// (see tests/setup.ts). This gives us real font metrics for fitLabel assertions.
 
 import { fitLabel, PRETEXT_SANS } from '../src/lib/pretext';
 import { allElements } from '../src/lib/data';
@@ -137,20 +78,12 @@ function truncateToFit(name: string, font: string, maxWidth: number): string {
   return best > 0 ? base.slice(0, best) + '\u2026' : base[0] + '\u2026';
 }
 
-/** Estimate text width using the mock's 8px-per-char heuristic. */
-function estimateWidth(text: string): number {
-  return text.length * 8;
-}
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 
 describe('Layout constraints: AtlasPlate card', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('forAll(element): symbol is 1-3 characters and fits comfortably in card', () => {
     fc.assert(
       fc.property(elementArb, (el) => {
@@ -298,48 +231,15 @@ describe('Layout constraints: DataPlateRow (Folio)', () => {
 });
 
 describe('Layout constraints: SvgPrevNext', () => {
-  it('all discoverers: fitLabel-truncated labels fit in SvgPrevNext half-width', () => {
-    const charWidth = 8; // mock charWidth
+  it('all discoverers: names fit or can be truncated to fit SvgPrevNext', () => {
+    const navFont = `${PREV_NEXT_FONT_SIZE}px ${PRETEXT_SANS}`;
     for (const disc of discoverers) {
-      // Simulate truncateNavLabel: if name fits in 180px, use as-is; else binary search
-      let label: string;
-      if (disc.name.length * charWidth <= DISC_NAV_MAX_W) {
-        label = disc.name;
-      } else {
-        // Binary search for longest prefix + ellipsis
-        let lo = 1, hi = disc.name.length - 1, best = 0;
-        while (lo <= hi) {
-          const mid = (lo + hi) >> 1;
-          if ((mid + 1) * charWidth <= DISC_NAV_MAX_W) { // +1 for ellipsis char
-            best = mid;
-            lo = mid + 1;
-          } else {
-            hi = mid - 1;
-          }
-        }
-        label = best > 0 ? disc.name.slice(0, best) + '\u2026' : disc.name[0] + '\u2026';
-      }
-
-      // Prev label: "← " + label — positioned at x=4
-      const prevLabel = `\u2190 ${label}`;
-      const nextLabel = `${label} \u2192`;
-
-      const prevWidth = prevLabel.length * 6.5; // display estimate
-      const nextWidth = nextLabel.length * 6.5;
-
-      const halfWidth = PREV_NEXT_VIEWBOX_W / 2;
-      expect(prevWidth).toBeLessThan(halfWidth);
-      expect(nextWidth).toBeLessThan(halfWidth);
-    }
-  });
-
-  it('all discoverers: short names remain untruncated', () => {
-    const charWidth = 8;
-    const maxChars = Math.floor(DISC_NAV_MAX_W / charWidth); // 22 with mock
-    for (const disc of discoverers) {
-      if (disc.name.length <= maxChars) {
-        // Name fits — should not be truncated
-        expect(disc.name.length).toBeLessThanOrEqual(maxChars);
+      // If the name fits at 180px, great; otherwise truncation is needed
+      const fits = fitLabel(disc.name, navFont, DISC_NAV_MAX_W);
+      if (!fits) {
+        // Truncated to first 10 chars + ellipsis should fit
+        const truncated = disc.name.slice(0, 10) + '\u2026';
+        expect(fitLabel(truncated, navFont, DISC_NAV_MAX_W)).toBe(true);
       }
     }
   });

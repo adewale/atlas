@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import '../mocks/usePretextLines.mock';
+// No pretext mock — uses real text measurement via node-canvas
 import Home from '../../src/pages/Home';
 
 afterEach(() => {

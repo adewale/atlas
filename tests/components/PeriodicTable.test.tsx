@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import '../mocks/usePretextLines.mock';
 import PeriodicTable from '../../src/components/PeriodicTable';
 
 afterEach(() => {

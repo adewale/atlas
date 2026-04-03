@@ -1,7 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import '../mocks/usePretextLines.mock';
 import Folio from '../../src/components/Folio';
 import type { ElementRecord, ElementSources, AnomalyData, GroupData } from '../../src/lib/types';
 import { FE, FE_SOURCES, TEST_ACCESS_DATE } from '../fixtures/element-fe';
