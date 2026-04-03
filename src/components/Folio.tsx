@@ -66,10 +66,12 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
   const valueY = strValue.length > 6 ? 42 : 46;
   const hasArrows = !!(prev || next);
   const maxTextWidth = rowWidth - 12 - (hasArrows ? 52 : 8);
-  // Estimate natural text width at fontSize 13 (system-ui ~0.6em per char).
-  // Only compress when text would overflow — never stretch short text.
-  const estimatedWidth = strValue.length * valueFontSize * 0.6;
-  const needsCompression = strValue.length > 6 && estimatedWidth > maxTextWidth;
+  // Measure actual text width with Pretext instead of estimating
+  const valueFont = `bold ${valueFontSize}px ${valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}`;
+  const displayValue = strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue;
+  const measured = measureLines(displayValue, valueFont, 9999, valueFontSize);
+  const measuredWidth = measured[0]?.width ?? 0;
+  const needsCompression = measuredWidth > maxTextWidth;
   return (
     <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
       <svg width={rowWidth} height={56} viewBox={`0 0 ${rowWidth} 56`}>
@@ -78,7 +80,7 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
           <title>{title}</title>
           <rect x={0} y={0} width={rowWidth} height={56} fill={fill} />
           <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
-          <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'} {...(needsCompression ? { textLength: maxTextWidth, lengthAdjust: 'spacingAndGlyphs' } : {})}>{strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue}</text>
+          <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'} {...(needsCompression ? { textLength: maxTextWidth, lengthAdjust: 'spacingAndGlyphs' } : {})}>{displayValue}</text>
         </SvgLink>
         {/* Prev/next arrows on the right */}
         {prev && (

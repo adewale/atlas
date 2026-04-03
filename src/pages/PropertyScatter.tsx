@@ -5,7 +5,7 @@ import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { VT } from '../lib/transitions';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import IntroBlock from '../components/IntroBlock';
 
 import type { ElementRecord } from '../lib/types';
@@ -476,7 +476,17 @@ export default function PropertyScatter() {
             if (!hPt) return null;
             const cx = toSvgX(hPt.xVal);
             const cy = toSvgY(hPt.yVal);
-            const cardW = 180;
+            // Measure the widest line to size the card
+            const nameMeasured = measureLines(hPt.el.name, 'bold 14px system-ui, sans-serif', 9999, 16);
+            const xPropText = `${PROPERTY_LABELS[xKey]}: ${INTEGER_PROPERTIES.has(xKey) ? hPt.xVal : hPt.xVal.toFixed(2)}`;
+            const yPropText = `${PROPERTY_LABELS[yKey]}: ${INTEGER_PROPERTIES.has(yKey) ? hPt.yVal : hPt.yVal.toFixed(2)}`;
+            const xPropMeasured = measureLines(xPropText, '10px system-ui, sans-serif', 9999, 12);
+            const yPropMeasured = measureLines(yPropText, '10px system-ui, sans-serif', 9999, 12);
+            const cardW = Math.max(
+              (nameMeasured[0]?.width ?? 80),
+              (xPropMeasured[0]?.width ?? 80),
+              (yPropMeasured[0]?.width ?? 80),
+            ) + 24; // 10px left pad + 14px right pad
             const cardH = 72;
             // Flip card left if too close to right edge
             const flipX = cx + SQUARE_SIZE / 2 + 8 + cardW > SVG_W - MARGIN.right;

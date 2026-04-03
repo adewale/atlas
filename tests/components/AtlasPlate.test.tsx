@@ -90,17 +90,17 @@ describe('AtlasPlate', () => {
     expect(svg.style.maxWidth).toBe('100%');
   });
 
-  // Grid clamping: key regression test for eb5bb5f
-  it('clamps columns to element count — 1 element uses 1 column', () => {
+  // Grid clamping: minimum 4 columns on desktop for consistent caption width
+  it('clamps columns to minimum 4 — 1 element still gets 4-col grid width', () => {
     const { container } = renderPlate([makeElement()], 'Single Element', 4);
     const svg = container.querySelector('svg')!;
     const viewBox = svg.getAttribute('viewBox')!;
     const width = parseInt(viewBox.split(' ')[2], 10);
-    // 1 col: CARD_W = 100, no GAP → viewBox width = 100
-    expect(width).toBe(100);
+    // min 4 cols: 4 * (100 + 4) - 4 = 412
+    expect(width).toBe(412);
   });
 
-  it('clamps columns — 2 elements use 2 columns on desktop', () => {
+  it('clamps columns — 2 elements still get 4-col grid width on desktop', () => {
     const elements = [
       makeElement({ symbol: 'H' }),
       makeElement({ symbol: 'He', atomicNumber: 2, name: 'Helium' }),
@@ -109,8 +109,8 @@ describe('AtlasPlate', () => {
     const svg = container.querySelector('svg')!;
     const viewBox = svg.getAttribute('viewBox')!;
     const width = parseInt(viewBox.split(' ')[2], 10);
-    // 2 cols: 2 * (100 + 4) - 4 = 204
-    expect(width).toBe(204);
+    // min 4 cols: 4 * (100 + 4) - 4 = 412
+    expect(width).toBe(412);
   });
 
   it('uses full column count when elements >= columns', () => {

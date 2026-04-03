@@ -104,7 +104,9 @@ export default function AtlasPlate({
   const maxCols = isMobile ? 2 : columns;
   const cols = Math.min(maxCols, elements.length || 1);
   const rows = Math.ceil(elements.length / cols);
-  const gridW = cols * (CARD_W + GAP) - GAP;
+  // Minimum 4 columns wide so caption bar has consistent width across pages
+  const minCols = isMobile ? 2 : Math.min(4, maxCols);
+  const gridW = Math.max(cols, minCols) * (CARD_W + GAP) - GAP;
 
   // Measure caption text with Pretext (re-measure when fonts load)
   const { captionLines, captionH } = useMemo(() => {
