@@ -555,3 +555,159 @@ Focused on patterns discovered while building features:
    and assertions that check the wrong thing (set membership instead of
    ordering, DOM existence instead of visual position) are worse than
    no tests — they provide false confidence.
+
+---
+---
+
+# Part 3 — Lessons from PR Review and Integration
+
+The sections below capture lessons from reviewing, rebasing, and
+integrating work across multiple concurrent branches and PRs.
+
+---
+
+## 21. Hardcoded tooltip backgrounds overflow their text
+
+**Context:** Entity Map edge labels, Discovery Timeline tooltips,
+Discoverer Network tooltips
+
+**Bug:** SVG tooltip background `<rect>` elements used hardcoded widths
+(80px, 120px, 140px) that were too narrow for their dynamic text content.
+"classified as (n:1)" overflowed the 80px background. Long discoverer
+names overflowed the 120px background.
+
+**Fix:** Use Pretext's `measureLines()` to compute actual text width,
+then size the `<rect>` to match. Cost is zero — Pretext is pure JS math
+(no DOM, no canvas), synchronous, microsecond-scale.
+
+**What should have been in the spec:**
+- "Every SVG background rect behind dynamic text must be sized from
+  measured text width, not hardcoded pixel values."
+- "Pretext measurement is free — use it everywhere text width matters."
+
+---
+
+## 22. Drop cap font must match the design system
+
+**Context:** Switching drop caps from Helvetica Neue to Cinzel
+
+**Problem:** Drop caps used `PRETEXT_SANS` (Helvetica Neue) while the
+ATLAS wordmark used Cinzel. The visual disconnect was subtle but broke
+the typographic hierarchy — the most prominent character on each page
+didn't match the brand.
+
+**Fix:** Added `DROP_CAP_FONT` constant to `pretext.ts`, updated
+`PretextSvg` rendering and all 9 page-level `dropCapFont` measurement
+strings. Both the rendering font and the measurement font must agree.
+
+**What should have been in the spec:**
+- "The drop cap font must be the same as the wordmark font. This is a
+  design-system constraint, not a per-page decision."
+- "When changing a font for rendering, the measurement font string
+  must be updated in the same commit."
+
+---
+
+## 23. PRs that branch before changes land need rebasing
+
+**Context:** PRs #8, #9, #13, #14 — all branched before uncommitted
+work on main
+
+**Problem:** Multiple PRs branched from main before local improvements
+(Cinzel drop caps, Pretext-measured tooltips, HeroHeader alignment,
+timeline intro placement) were committed. Each PR independently
+regressed 5–10 UI improvements because its base didn't include them.
+
+**Fix:** Rebase each PR onto current main before merging. For PRs with
+conflicts, merge main into the PR branch and resolve.
+
+**What should have been in the process:**
+- "Commit and push local changes to main before branching new work."
+- "Before merging any PR, verify it includes all recent main commits
+  by checking `git log origin/main..HEAD` for missing work."
+
+---
+
+## 24. Cherry-pick from destructive PRs
+
+**Context:** PR #7 (codex/audit-test-quality)
+
+**Problem:** PR #7 had two genuinely useful changes (shared mock file,
+dynamic test dates) buried inside a PR that reverted two merged PRs
+worth of data and features. Merging it wholesale would have destroyed
+PR #8's physical properties data.
+
+**Fix:** Created a clean PR (#10) with only the useful changes,
+cherry-picked onto current main. Closed PR #7 with explanation.
+
+**What should have been in the process:**
+- "When a PR contains both useful improvements and destructive
+  reverts, extract the useful parts into a new branch. Never merge
+  a PR that reverts merged work without explicit approval."
+
+---
+
+## 25. Route renames break tests in three places
+
+**Context:** PR #16 renamed `/element/` → `/elements/`,
+`/atlas/group/` → `/groups/`, `/credits` → `/about/credits`, etc.
+
+**Problem:** After merging PR #16, CI failed with 15 test failures
+across 3 test files. Every `toHaveAttribute('href', '/element/...')`
+assertion broke. The `@testing-library/user-event` package was missing.
+The performance test's bundle size budget was stale.
+
+**Fix:** Updated all route assertions, installed missing dependency,
+adjusted bundle budget. Required touching 5 test files.
+
+**What should have been in the spec:**
+- "Route renames must include a test migration checklist: component
+  tests, E2E navigation tests, fixture hrefs, and performance budgets."
+- "CI must run before merge, not after. If PR #16 had CI checks as a
+  merge requirement, these failures would have been caught pre-merge."
+
+---
+
+## 26. jsdom doesn't have ResizeObserver
+
+**Context:** PR #16 added `ResizeObserver` to Folio for responsive
+width measurement
+
+**Problem:** CI failed because jsdom (the test environment) doesn't
+provide `ResizeObserver`. The error only appeared in CI — local tests
+passed because the developer's Node version may differ.
+
+**Fix:** Added a minimal stub in `tests/setup.ts`:
+```ts
+globalThis.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+```
+
+**What should have been in the spec:**
+- "When using browser APIs not available in jsdom (ResizeObserver,
+  IntersectionObserver, matchMedia), add stubs to `tests/setup.ts`
+  in the same commit."
+- "CI is the authoritative test environment, not local dev."
+
+---
+
+## Updated Summary Table
+
+| # | Lesson | Key Principle |
+|---|--------|---------------|
+| 21 | Tooltip rects must be text-measured | Pretext is free — measure everything |
+| 22 | Drop cap font = wordmark font | Design-system constraint, not per-page |
+| 23 | Rebase PRs before merging | Commit local work before branching |
+| 24 | Cherry-pick from destructive PRs | Extract good, reject reverts |
+| 25 | Route renames break tests in 3 places | Include test migration checklist |
+| 26 | jsdom lacks browser APIs | Stub in same commit as usage |
+
+### Cross-cutting theme
+
+5. **CI is the source of truth.** Local tests pass with browser APIs
+   that jsdom lacks, with packages that happen to be installed, with
+   build artifacts from previous runs. CI starts clean every time —
+   if it fails, the failure is real.
