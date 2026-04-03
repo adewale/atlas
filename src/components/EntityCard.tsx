@@ -29,8 +29,14 @@ const SYMBOL_SIZE = 24;
 const SYMBOL_GAP = 3;
 const MAX_SYMBOLS = 9;
 
-/** Estimated card height for content-visibility containment. */
-const ESTIMATED_CARD_HEIGHT = 160;
+/**
+ * Estimated card height for content-visibility containment.
+ * Header (44px) + description 3 lines (48px) + symbol row (24px) + footer (26px) + padding (16px) = ~158px
+ * Cards without symbols are shorter: header + description + footer + padding = ~134px.
+ * Using the taller estimate avoids scroll jumps for most cards.
+ */
+const ESTIMATED_CARD_HEIGHT_WITH_SYMBOLS = 158;
+const ESTIMATED_CARD_HEIGHT_WITHOUT_SYMBOLS = 134;
 
 type EntityCardProps = {
   entity: Entity;
@@ -116,19 +122,16 @@ export default function EntityCard({
         cursor: 'pointer',
         background: PAPER,
         border: `0.5px solid ${BLACK}`,
+        // Enter animation runs independently; dimming is applied via filter
+        // so the two don't conflict (animation controls opacity 0→1,
+        // filter controls brightness without touching opacity).
         opacity: 0,
         animation: `card-enter 250ms var(--ease-out) ${index * 15}ms forwards`,
+        filter: dimmed ? 'opacity(0.15)' : 'none',
+        transition: 'filter 150ms var(--ease-snap)',
         // content-visibility: auto skips rendering for off-screen cards
         contentVisibility: 'auto',
-        containIntrinsicSize: `auto ${ESTIMATED_CARD_HEIGHT}px`,
-        // Hover-to-highlight dimming (Victor 4a: illuminate, don't filter)
-        ...(dimmed ? {
-          opacity: 0.15,
-          animation: 'none',
-          transition: 'opacity 150ms var(--ease-snap)',
-        } : {
-          transition: 'opacity 150ms var(--ease-snap)',
-        }),
+        containIntrinsicSize: `auto ${showSymbols ? ESTIMATED_CARD_HEIGHT_WITH_SYMBOLS : ESTIMATED_CARD_HEIGHT_WITHOUT_SYMBOLS}px`,
       }}
     >
       {/* Header band */}
@@ -184,43 +187,44 @@ export default function EntityCard({
           {entity.description}
         </div>
 
-        {/* Child element symbols — only rendered in expanded tier */}
-        {showSymbols && expanded && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: `${SYMBOL_GAP}px`, flexWrap: 'wrap' }}>
-            {visibleSymbols.map((sym) => {
-              const el = getElement(sym);
-              const fill = el ? blockColor(el.block) : BLACK;
-              return (
-                <svg key={sym} width={SYMBOL_SIZE} height={SYMBOL_SIZE}>
-                  <rect width={SYMBOL_SIZE} height={SYMBOL_SIZE} fill={fill} />
-                  <text
-                    x={SYMBOL_SIZE / 2}
-                    y={SYMBOL_SIZE / 2 + 4}
-                    textAnchor="middle"
-                    fontSize={10}
-                    fontWeight={700}
-                    fill={contrastTextColor(fill)}
-                    fontFamily="system-ui"
-                  >
-                    {sym}
-                  </text>
-                </svg>
-              );
-            })}
-            {overflow > 0 && (
+        {/* Child element symbols — fixed-height container prevents layout shift.
+            Both tiers render into the same height so the card never changes size
+            when the IntersectionObserver fires. */}
+        {showSymbols && (
+          <div style={{ height: `${SYMBOL_SIZE}px`, display: 'flex', alignItems: 'center', gap: `${SYMBOL_GAP}px`, flexWrap: 'nowrap', overflow: 'hidden' }}>
+            {expanded ? (
+              <>
+                {visibleSymbols.map((sym) => {
+                  const el = getElement(sym);
+                  const fill = el ? blockColor(el.block) : BLACK;
+                  return (
+                    <svg key={sym} width={SYMBOL_SIZE} height={SYMBOL_SIZE} style={{ flexShrink: 0 }}>
+                      <rect width={SYMBOL_SIZE} height={SYMBOL_SIZE} fill={fill} />
+                      <text
+                        x={SYMBOL_SIZE / 2}
+                        y={SYMBOL_SIZE / 2 + 4}
+                        textAnchor="middle"
+                        fontSize={10}
+                        fontWeight={700}
+                        fill={contrastTextColor(fill)}
+                        fontFamily="system-ui"
+                      >
+                        {sym}
+                      </text>
+                    </svg>
+                  );
+                })}
+                {overflow > 0 && (
+                  <span style={{ fontSize: '10px', color: GREY_MID, fontFamily: MONO_FONT, flexShrink: 0 }}>
+                    +{overflow}
+                  </span>
+                )}
+              </>
+            ) : (
               <span style={{ fontSize: '10px', color: GREY_MID, fontFamily: MONO_FONT }}>
-                +{overflow}
+                {entity.elements.length} element{entity.elements.length === 1 ? '' : 's'}
               </span>
             )}
-          </div>
-        )}
-
-        {/* Compact tier placeholder — shows element count but no symbols */}
-        {showSymbols && !expanded && (
-          <div style={{ height: `${SYMBOL_SIZE}px`, display: 'flex', alignItems: 'center' }}>
-            <span style={{ fontSize: '10px', color: GREY_MID, fontFamily: MONO_FONT }}>
-              {entity.elements.length} element{entity.elements.length === 1 ? '' : 's'}
-            </span>
           </div>
         )}
 

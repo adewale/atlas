@@ -98,7 +98,8 @@ describe('EntityCard', () => {
   it('dims card when dimmed prop is true', () => {
     const { container } = render(<EntityCard entity={ELEMENT_ENTITY} index={0} dimmed />);
     const card = container.firstChild as HTMLElement;
-    expect(card.style.opacity).toBe('0.15');
+    // Dimming uses CSS filter (not opacity) to avoid conflicting with the card-enter animation
+    expect(card.style.filter).toBe('opacity(0.15)');
   });
 
   it('calls onHover with entity id on mouseenter', () => {
