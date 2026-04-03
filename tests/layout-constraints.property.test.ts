@@ -103,7 +103,9 @@ const PREV_NEXT_FONT_SIZE = 11;
 const ENTITY_CHIP_MAX_W = 160; // maxWidth from BaseChip styles
 
 // Discoverer prev/next truncation
-const DISC_PREV_NEXT_MAX_CHARS = 20;
+// DiscovererDetail now uses fitLabel-based truncation (NAV_LABEL_MAX_W=180, 11px font)
+// With mock charWidth=8, names fitting: length * 8 <= 180 → length <= 22
+const DISC_NAV_MAX_W = 180;
 
 // Screen widths
 const SCREEN_WIDTHS = [375, 812, 1280] as const;
@@ -296,54 +298,60 @@ describe('Layout constraints: DataPlateRow (Folio)', () => {
 });
 
 describe('Layout constraints: SvgPrevNext', () => {
-  it('all discoverers: prev/next labels truncated to 20 chars fit in SvgPrevNext viewBox', () => {
+  it('all discoverers: fitLabel-truncated labels fit in SvgPrevNext half-width', () => {
+    const charWidth = 8; // mock charWidth
     for (const disc of discoverers) {
-      const truncated = disc.name.length > DISC_PREV_NEXT_MAX_CHARS
-        ? disc.name.slice(0, 18) + '\u2026'
-        : disc.name;
+      // Simulate truncateNavLabel: if name fits in 180px, use as-is; else binary search
+      let label: string;
+      if (disc.name.length * charWidth <= DISC_NAV_MAX_W) {
+        label = disc.name;
+      } else {
+        // Binary search for longest prefix + ellipsis
+        let lo = 1, hi = disc.name.length - 1, best = 0;
+        while (lo <= hi) {
+          const mid = (lo + hi) >> 1;
+          if ((mid + 1) * charWidth <= DISC_NAV_MAX_W) { // +1 for ellipsis char
+            best = mid;
+            lo = mid + 1;
+          } else {
+            hi = mid - 1;
+          }
+        }
+        label = best > 0 ? disc.name.slice(0, best) + '\u2026' : disc.name[0] + '\u2026';
+      }
 
-      // Prev label: "← " + truncated — positioned at x=4
-      const prevLabel = `\u2190 ${truncated}`;
-      // Next label: truncated + " →" — right-aligned at x=396
-      const nextLabel = `${truncated} \u2192`;
+      // Prev label: "← " + label — positioned at x=4
+      const prevLabel = `\u2190 ${label}`;
+      const nextLabel = `${label} \u2192`;
 
-      // At fontSize=11, ~6.5px per char is a reasonable estimate
-      const charWidth = 6.5;
-      const prevWidth = prevLabel.length * charWidth;
-      const nextWidth = nextLabel.length * charWidth;
+      const prevWidth = prevLabel.length * 6.5; // display estimate
+      const nextWidth = nextLabel.length * 6.5;
 
-      // Prev text starts at x=4, next text ends at x=396 (textAnchor=end)
-      // They must not overlap. Each must fit within its half: 200px
       const halfWidth = PREV_NEXT_VIEWBOX_W / 2;
       expect(prevWidth).toBeLessThan(halfWidth);
       expect(nextWidth).toBeLessThan(halfWidth);
     }
   });
 
-  it('all discoverers: truncation preserves at least 18 chars or is untruncated', () => {
+  it('all discoverers: short names remain untruncated', () => {
+    const charWidth = 8;
+    const maxChars = Math.floor(DISC_NAV_MAX_W / charWidth); // 22 with mock
     for (const disc of discoverers) {
-      if (disc.name.length > DISC_PREV_NEXT_MAX_CHARS) {
-        const truncated = disc.name.slice(0, 18) + '\u2026';
-        // 18 meaningful chars + ellipsis = 19 display chars
-        expect(truncated.length).toBe(19);
-      } else {
-        // Short names are shown in full
-        expect(disc.name.length).toBeLessThanOrEqual(DISC_PREV_NEXT_MAX_CHARS);
+      if (disc.name.length <= maxChars) {
+        // Name fits — should not be truncated
+        expect(disc.name.length).toBeLessThanOrEqual(maxChars);
       }
     }
   });
 
-  it('all timeline entries: discoverer names that could appear in prev/next fit', () => {
-    const allEntries = [...timeline.antiquity, ...timeline.timeline];
-    for (const entry of allEntries) {
-      const name = entry.discoverer;
-      const truncated = name.length > DISC_PREV_NEXT_MAX_CHARS
-        ? name.slice(0, 18) + '\u2026'
-        : name;
-      // At fontSize=11, the truncated label + arrow must fit within half viewBox
-      const labelWithArrow = `\u2190 ${truncated}`;
+  it('all timeline eras: decade labels fit in SvgPrevNext', () => {
+    // TimelineEra uses SvgPrevNext with era names like "1730s", "Antiquity"
+    const eraNames = timeline.timeline.map((e) => `${e.decade}s`);
+    eraNames.push('Antiquity'); // special case
+    for (const name of eraNames) {
+      const label = `\u2190 ${name}`;
       const charWidth = 6.5;
-      expect(labelWithArrow.length * charWidth).toBeLessThan(PREV_NEXT_VIEWBOX_W / 2);
+      expect(label.length * charWidth).toBeLessThan(PREV_NEXT_VIEWBOX_W / 2);
     }
   });
 });

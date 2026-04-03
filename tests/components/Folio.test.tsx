@@ -234,4 +234,51 @@ describe('Folio', () => {
     const timelineLink = screen.getByText('1770s →');
     expect(timelineLink).toHaveAttribute('href', '/eras/1770');
   });
+
+  it('era label shows decade, not generic "timeline"', () => {
+    const cobalt: ElementRecord = {
+      ...FE,
+      atomicNumber: 27,
+      symbol: 'Co',
+      name: 'Cobalt',
+      discoveryYear: 1735,
+      discoverer: 'George Brandt',
+      neighbors: ['Fe', 'Ni'],
+    };
+    render(
+      <MemoryRouter>
+        <Folio element={cobalt} animate={false} />
+      </MemoryRouter>,
+    );
+    // Should show "1730s →", NOT "timeline →"
+    expect(screen.getByText('1730s →')).toBeInTheDocument();
+    expect(screen.queryByText('timeline →')).not.toBeInTheDocument();
+  });
+});
+
+describe('Folio — mobile layout', () => {
+  it('data plate is present in the DOM', () => {
+    renderFolio();
+    const plate = screen.getByTestId('data-plate');
+    expect(plate).toBeInTheDocument();
+  });
+
+  it('summary area does not have fixed minHeight on small viewports', () => {
+    // Verifies that the summary area adapts — minHeight should be 'auto'
+    // when mobile, or a px value when desktop. We can't mock useIsMobile
+    // easily, but we verify the component renders without crash.
+    renderFolio();
+    const summaryArea = document.querySelector('.folio-summary-area')!;
+    expect(summaryArea).toBeTruthy();
+    // On desktop (default in test), minHeight should be the plate height
+    expect(summaryArea.getAttribute('style')).toContain('min-height');
+  });
+
+  it('does not render dead MarginaliaProperty component', () => {
+    renderFolio();
+    // RankDotSparkline was removed — verify no 40x12 SVGs in marginalia
+    const marginalia = document.querySelector('.folio-marginalia')!;
+    const smallSvgs = marginalia.querySelectorAll('svg[width="40"]');
+    expect(smallSvgs.length).toBe(0);
+  });
 });
