@@ -17,10 +17,9 @@
  *
  * Exit code 0 = clean, 1 = violations found.
  */
-import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname, basename } from 'path';
-
-const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
+import { readFileSync } from 'fs';
+import { basename } from 'path';
+import { SRC_DIR, walk, relPath } from './lint-utils.js';
 
 // Matches <a href="/..." or <a href='/' patterns in JSX
 // Ignores: external URLs, anchors, mailto, tel
@@ -43,23 +42,9 @@ type Violation = {
   text: string;
 };
 
-function walk(dir: string): string[] {
-  const files: string[] = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    const stat = statSync(full);
-    if (stat.isDirectory()) {
-      files.push(...walk(full));
-    } else if (['.tsx', '.jsx'].includes(extname(full))) {
-      files.push(full);
-    }
-  }
-  return files;
-}
-
 function lint(): Violation[] {
   const violations: Violation[] = [];
-  const files = walk(SRC_DIR);
+  const files = walk(SRC_DIR, ['.tsx', '.jsx']);
 
   for (const file of files) {
     if (ALLOWED_FILES.has(basename(file))) continue;
@@ -75,7 +60,7 @@ function lint(): Violation[] {
       while ((match = INTERNAL_LINK_RE.exec(line)) !== null) {
         const href = match[1];
         violations.push({
-          file: file.replace(SRC_DIR, 'src'),
+          file: relPath(file),
           line: i + 1,
           href,
           text: line.trim(),
@@ -87,7 +72,7 @@ function lint(): Violation[] {
       while ((match = TEMPLATE_LINK_RE.exec(line)) !== null) {
         const href = match[1];
         violations.push({
-          file: file.replace(SRC_DIR, 'src'),
+          file: relPath(file),
           line: i + 1,
           href: href + '...`}',
           text: line.trim(),

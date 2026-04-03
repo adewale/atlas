@@ -15,10 +15,9 @@
  *
  * Exit code 0 = clean (or warnings only), 1 = violations (--strict mode).
  */
-import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname, basename } from 'path';
-
-const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
+import { readFileSync } from 'fs';
+import { basename } from 'path';
+import { SRC_DIR, COMMENT_RE, IMPORT_RE, walk, relPath, groupBy } from './lint-utils.js';
 
 // Files that define the font tokens or document them — allowed to contain raw font strings
 // Design.tsx is the design system showcase that labels fonts by name in descriptive text
@@ -48,10 +47,6 @@ const FONT_VIOLATIONS: Array<{ pattern: RegExp; token: string; source: string }>
   },
 ];
 
-// Contexts to skip
-const COMMENT_RE = /^\s*(\/\/|\/?\*|\*)/;
-const IMPORT_RE = /^\s*import\s/;
-
 type Violation = {
   file: string;
   line: number;
@@ -60,20 +55,6 @@ type Violation = {
   source: string;
   text: string;
 };
-
-function walk(dir: string): string[] {
-  const files: string[] = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    const stat = statSync(full);
-    if (stat.isDirectory()) {
-      files.push(...walk(full));
-    } else if (['.tsx', '.ts'].includes(extname(full))) {
-      files.push(full);
-    }
-  }
-  return files;
-}
 
 function lint(): Violation[] {
   const violations: Violation[] = [];
@@ -93,7 +74,7 @@ function lint(): Violation[] {
         const match = rule.pattern.exec(line);
         if (match) {
           violations.push({
-            file: file.replace(SRC_DIR, 'src'),
+            file: relPath(file),
             line: i + 1,
             matched: match[0],
             token: rule.token,
@@ -118,11 +99,7 @@ if (violations.length === 0) {
   console.warn(`⚠ Found ${violations.length} hardcoded font family string(s):`);
   console.warn('  Consider importing the centralized constant instead.\n');
 
-  const byFile = new Map<string, Violation[]>();
-  for (const v of violations) {
-    if (!byFile.has(v.file)) byFile.set(v.file, []);
-    byFile.get(v.file)!.push(v);
-  }
+  const byFile = groupBy(violations, v => v.file);
 
   for (const [file, vs] of byFile) {
     console.warn(`  ${file}:`);

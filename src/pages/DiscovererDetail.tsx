@@ -4,11 +4,10 @@ import { getElement } from '../lib/data';
 import type { ElementRecord } from '../lib/types';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
-import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
+import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
-import { PRETEXT_SANS } from '../lib/pretext';
-import SvgLink from '../components/SvgLink';
+import SvgPrevNext from '../components/SvgPrevNext';
 import { DiscovererChip } from '../components/EntityChip';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
@@ -105,31 +104,11 @@ export default function DiscovererDetail() {
       />
 
       {/* Prev / Next navigation — Pretext-styled, anchored beneath hero */}
-      {(prevDisc || nextDisc) && (
-        <svg
-          width="100%"
-          height={24}
-          viewBox="0 0 400 24"
-          preserveAspectRatio="xMidYMid meet"
-          style={{ display: 'block', maxWidth: 560 }}
-          aria-label="Previous and next discoverer navigation"
-        >
-          {prevDisc && (
-            <SvgLink to={`/discoverers/${encodeURIComponent(prevDisc.name)}`}>
-              <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
-                ← {prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name}
-              </text>
-            </SvgLink>
-          )}
-          {nextDisc && (
-            <SvgLink to={`/discoverers/${encodeURIComponent(nextDisc.name)}`}>
-              <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
-                {nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name} →
-              </text>
-            </SvgLink>
-          )}
-        </svg>
-      )}
+      <SvgPrevNext
+        prev={prevDisc ? { label: prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name, to: `/discoverers/${encodeURIComponent(prevDisc.name)}` } : undefined}
+        next={nextDisc ? { label: nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name, to: `/discoverers/${encodeURIComponent(nextDisc.name)}` } : undefined}
+        ariaLabel="Previous and next discoverer navigation"
+      />
 
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
 

@@ -12,8 +12,8 @@ import {
 } from '../lib/grid';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
-import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
-import { DROP_CAP_FONT } from '../lib/pretext';
+import { usePretextLines } from '../hooks/usePretextLines';
+import IntroBlock from '../components/IntroBlock';
 import PretextSvg from '../components/PretextSvg';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
@@ -93,14 +93,6 @@ export default function AnomalyExplorer() {
     [highlightedSet],
   );
 
-  const DROP_CAP_SIZE = 80;
-  const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: isMobile ? 360 : INTRO_MAX_W,
-    dropCapFont: `${DROP_CAP_SIZE}px ${DROP_CAP_FONT}`,
-  });
-  const introHeight = Math.max(introLines.length * introLH + 16, DROP_CAP_SIZE + 4);
-
   const { lines, lineHeight } = usePretextLines({
     text: selected?.description ?? '',
     maxWidth: DESC_MAX_WIDTH,
@@ -131,22 +123,7 @@ export default function AnomalyExplorer() {
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Anomaly Explorer</h1>
 
-          <svg
-            width="100%"
-            viewBox={`0 0 360 ${introHeight}`}
-            style={{ display: 'block', marginBottom: '12px' }}
-          >
-            <PretextSvg
-              lines={introLines}
-              lineHeight={introLH}
-              x={0}
-              y={0}
-              fill={BLACK}
-              maxWidth={360}
-              animationStagger={40}
-              dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
-            />
-          </svg>
+          <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
         </div>
 
         <SectionedCardList sections={anomalySections} accordion defaultCollapsed={false} />
@@ -171,21 +148,7 @@ export default function AnomalyExplorer() {
           </h1>
 
           {/* ---- Intro paragraph with drop cap ---- */}
-          <svg
-            viewBox={`0 0 ${INTRO_MAX_W} ${introHeight}`}
-            style={{ width: '100%', maxWidth: INTRO_MAX_W, display: 'block', marginBottom: '12px' }}
-          >
-            <PretextSvg
-              lines={introLines}
-              lineHeight={introLH}
-              x={0}
-              y={0}
-              fill={BLACK}
-              maxWidth={INTRO_MAX_W}
-              animationStagger={40}
-              dropCap={{ fontSize: DROP_CAP_SIZE, fill: BLACK, char: introDC.char }}
-            />
-          </svg>
+          <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
 
           {/* ---- Byrne colour key: one bold button per anomaly ---- */}
           <div

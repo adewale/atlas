@@ -9,12 +9,9 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
-import { useIsMobile } from '../hooks/useIsMobile';
+import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
 import { VT } from '../lib/transitions';
-import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
-import PretextSvg from '../components/PretextSvg';
+import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -62,18 +59,9 @@ for (const el of allElements) {
 // ---------------------------------------------------------------------------
 export default function NeighbourhoodGraph() {
   useDocumentTitle('Neighbourhood Graph', 'Force-directed graph showing which elements share the most properties, revealing unexpected neighbourhoods across the periodic table.');
-  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const navigate = useNavigate();
   const [hoveredSymbol, setHoveredSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
-
-  const introWidth = isMobile ? 360 : INTRO_MAX_W;
-  const introColor = BLACK;
-  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: introWidth,
-    dropCapFont: `80px ${DROP_CAP_FONT}`,
-  });
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setHasLoaded(true));
@@ -101,21 +89,7 @@ export default function NeighbourhoodGraph() {
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
 
-          <svg
-            viewBox={`0 0 ${introWidth} ${Math.max(lines.length * lineHeight + 16, 84)}`}
-            style={{ width: '100%', maxWidth: introWidth, display: 'block', marginBottom: '12px' }}
-          >
-            <PretextSvg
-              lines={lines}
-              lineHeight={lineHeight}
-              x={0}
-              y={0}
-              fill={BLACK}
-              maxWidth={introWidth}
-              animationStagger={40}
-              dropCap={{ fontSize: 80, fill: BLACK, char: introDC.char }}
-            />
-          </svg>
+          <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
         </div>
       </div>
 

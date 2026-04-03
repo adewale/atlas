@@ -15,10 +15,9 @@
  *
  * Exit code 0 = clean, 1 = violations found.
  */
-import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname, basename } from 'path';
-
-const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
+import { readFileSync } from 'fs';
+import { basename } from 'path';
+import { SRC_DIR, COMMENT_RE, IMPORT_RE, walk, relPath, groupBy } from './lint-utils.js';
 
 // Files that ARE the token source — allowed to define hex values
 const TOKEN_SOURCE_FILES = new Set(['theme.ts', 'globals.css']);
@@ -32,30 +31,12 @@ const ALLOWED_PATTERNS = new Set([
 // Matches hex colour literals: #xxx, #xxxx, #xxxxxx, #xxxxxxxx
 const HEX_COLOUR_RE = /#[0-9a-fA-F]{3,8}\b/g;
 
-// Contexts where hex is acceptable (comments, imports, URLs)
-const COMMENT_RE = /^\s*(\/\/|\/?\*|\*)/;
-const IMPORT_RE = /^\s*import\s/;
-
 type Violation = {
   file: string;
   line: number;
   hex: string;
   text: string;
 };
-
-function walk(dir: string): string[] {
-  const files: string[] = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    const stat = statSync(full);
-    if (stat.isDirectory()) {
-      files.push(...walk(full));
-    } else if (['.tsx', '.ts'].includes(extname(full))) {
-      files.push(full);
-    }
-  }
-  return files;
-}
 
 function lint(): Violation[] {
   const violations: Violation[] = [];
@@ -81,7 +62,7 @@ function lint(): Violation[] {
         if (ALLOWED_PATTERNS.has(hex)) continue;
 
         violations.push({
-          file: file.replace(SRC_DIR, 'src'),
+          file: relPath(file),
           line: i + 1,
           hex,
           text: line.trim(),
@@ -104,11 +85,7 @@ if (violations.length === 0) {
   console.warn('  Consider importing from theme.ts instead.\n');
 
   // Group by file for readability
-  const byFile = new Map<string, Violation[]>();
-  for (const v of violations) {
-    if (!byFile.has(v.file)) byFile.set(v.file, []);
-    byFile.get(v.file)!.push(v);
-  }
+  const byFile = groupBy(violations, v => v.file);
 
   for (const [file, vs] of byFile) {
     console.warn(`  ${file}:`);

@@ -15,10 +15,9 @@
  *
  * Exit code 0 = clean, 1 = violations found.
  */
-import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname, basename } from 'path';
-
-const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
+import { readFileSync } from 'fs';
+import { basename } from 'path';
+import { SRC_DIR, COMMENT_RE, walk, relPath } from './lint-utils.js';
 
 // Files that ARE the token source — allowed to define raw values
 const TOKEN_SOURCE_FILES = new Set([
@@ -26,8 +25,6 @@ const TOKEN_SOURCE_FILES = new Set([
   'globals.css',
   'theme.ts',
 ]);
-
-const COMMENT_RE = /^\s*(\/\/|\/?\*|\*)/;
 
 type Violation = {
   file: string;
@@ -42,20 +39,6 @@ const RAW_VT_NAME_RE = /viewTransitionName\s*:\s*['"][a-z-]+['"]/g;
 
 // Pattern: raw easing values that should use CSS vars
 const RAW_EASING_RE = /(?:transition|animation).*(?:ease-in-out|ease-out|ease-in|cubic-bezier)/g;
-
-function walk(dir: string): string[] {
-  const files: string[] = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    const stat = statSync(full);
-    if (stat.isDirectory()) {
-      files.push(...walk(full));
-    } else if (['.tsx', '.ts'].includes(extname(full))) {
-      files.push(full);
-    }
-  }
-  return files;
-}
 
 function lint(): Violation[] {
   const violations: Violation[] = [];
@@ -76,7 +59,7 @@ function lint(): Violation[] {
       RAW_VT_NAME_RE.lastIndex = 0;
       if (RAW_VT_NAME_RE.test(line)) {
         violations.push({
-          file: file.replace(SRC_DIR, 'src'),
+          file: relPath(file),
           line: i + 1,
           rule: 'raw viewTransitionName string',
           text: line.trim(),

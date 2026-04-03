@@ -1,15 +1,12 @@
 import { useMemo } from 'react';
 import { useLoaderData } from 'react-router';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT } from '../lib/transitions';
-import { useDropCapText } from '../hooks/usePretextLines';
-import { DROP_CAP_FONT } from '../lib/pretext';
-import PretextSvg from '../components/PretextSvg';
+import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
-import { useIsMobile } from '../hooks/useIsMobile';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -57,14 +54,7 @@ const MAX_WIDTH = 760;
 // ---------------------------------------------------------------------------
 export default function EtymologyMap() {
   useDocumentTitle('Etymology Map', 'Origins of element names — grouped by language, place, person, property, and mythology.');
-  const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const { etymology } = useLoaderData() as { etymology: EtymologyEntry[] };
-
-  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: isMobile ? 360 : MAX_WIDTH,
-    dropCapFont: `72px ${DROP_CAP_FONT}`,
-  });
 
   // Build sections from etymology data
   const sections: Section[] = useMemo(() => {
@@ -88,31 +78,12 @@ export default function EtymologyMap() {
       .filter((s): s is Section => s != null && s.items.length > 0);
   }, [etymology]);
 
-  const introSvgHeight = lines.length * lineHeight + 16;
-
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: MAX_WIDTH }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, margin: '0 0 16px', viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Etymology Map</h1>
 
-        <svg
-          viewBox={`0 0 ${isMobile ? 360 : MAX_WIDTH} ${Math.max(introSvgHeight, 76)}`}
-          overflow="visible"
-          style={{ width: '100%', maxWidth: MAX_WIDTH, marginBottom: 12 }}
-          role="img"
-          aria-label="Introduction to etymology map"
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={isMobile ? 360 : MAX_WIDTH}
-            animationStagger={40}
-            dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }}
-          />
-        </svg>
+        <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={72} />
 
         <SectionedCardList
           sections={sections}
