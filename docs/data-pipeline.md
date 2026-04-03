@@ -130,7 +130,7 @@ credits-*.js          18KB             Credits page
 │  │ DiscoveryTimeline ── timeline.json (on-demand, 8KB)          │   │
 │  │ EtymologyMap ────── etymology.json (on-demand, 9KB)          │   │
 │  │ DiscovererNetwork ─ discoverers.json (on-demand, 5KB)        │   │
-│  │ NeighborhoodGraph ─ allElements (already loaded)             │   │
+│  │ NeighbourhoodGraph ─ allElements (already loaded)             │   │
 │  │ Rankings ────────── elements.json + rankings.json (on-demand)│   │
 │  └──────────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘

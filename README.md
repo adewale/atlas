@@ -34,7 +34,7 @@ npm run dev          # http://localhost:5173
 | `/phase-landscape` | Elements arranged by melting and boiling points |
 | `/property-scatter` | Scatter plot of any two numeric properties |
 | `/anomaly-explorer` | Interactive exploration of periodic table rule-breakers |
-| `/neighborhood-graph` | Force-directed graph of element neighbourhood relationships |
+| `/neighbourhood-graph` | Force-directed graph of element neighbourhood relationships |
 | `/discovery-timeline` | When every element was discovered, from antiquity to 2010s |
 | `/etymology-map` | Elements grouped by the origin of their names |
 | `/discoverer-network` | Who discovered what, with lateral navigation between co-discoveries |

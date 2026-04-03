@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 const VIZ_PAGES = [
   '/',
   '/phase-landscape',
-  '/neighborhood-graph',
+  '/neighbourhood-graph',
   '/anomaly-explorer',
   '/property-scatter',
   '/discovery-timeline',
@@ -16,7 +16,7 @@ const VIZ_PAGES = [
 const TABLE_PAGES = [
   '/',
   '/phase-landscape',
-  '/neighborhood-graph',
+  '/neighbourhood-graph',
   '/anomaly-explorer',
 ];
 

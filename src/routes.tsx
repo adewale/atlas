@@ -45,7 +45,7 @@ const DiscoveryTimeline = lazy(() => import('./pages/DiscoveryTimeline'));
 const PhaseLandscape = lazy(() => import('./pages/PhaseLandscape'));
 const PropertyScatter = lazy(() => import('./pages/PropertyScatter'));
 const AnomalyExplorer = lazy(() => import('./pages/AnomalyExplorer'));
-const NeighborhoodGraph = lazy(() => import('./pages/NeighborhoodGraph'));
+const NeighbourhoodGraph = lazy(() => import('./pages/NeighbourhoodGraph'));
 const EtymologyMap = lazy(() => import('./pages/EtymologyMap'));
 const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
 const DiscovererDetail = lazy(() => import('./pages/DiscovererDetail'));
@@ -264,7 +264,7 @@ export const router = createBrowserRouter([
       return { anomalies: anomaliesCache };
     },
   },
-  { path: '/neighborhood-graph', Component: NeighborhoodGraph },
+  { path: '/neighbourhood-graph', Component: NeighbourhoodGraph },
   {
     path: '/etymology-map',
     Component: EtymologyMap,

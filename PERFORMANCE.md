@@ -59,7 +59,7 @@ Each element folio (`Element.tsx` at 16KB) renders:
 - Related links
 
 ### Neighbourhood graph: O(n²) edge rendering
-`NeighborhoodGraph.tsx` pre-computes edges between all 118 elements and their neighbours. Each edge is an SVG `<line>`. With hundreds of edges plus 118 node circles and 118 labels, this page creates **~500+ SVG elements** with individual CSS transitions on hover.
+`NeighbourhoodGraph.tsx` pre-computes edges between all 118 elements and their neighbours. Each edge is an SVG `<line>`. With hundreds of edges plus 118 node circles and 118 labels, this page creates **~500+ SVG elements** with individual CSS transitions on hover.
 
 ## 4. Animation Impact
 
