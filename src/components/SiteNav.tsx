@@ -30,6 +30,7 @@ export default function SiteNav() {
         <Link to="/about" aria-label="About Atlas" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>About</Link>
         <Link to="/about/credits" aria-label="Credits" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Credits</Link>
         <Link to="/about/design" aria-label="Design system" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Design</Link>
+        <Link to="/explore" aria-label="Explore entities" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Explore</Link>
         <Link to="/about/animation-palette" aria-label="Animation palette" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Animation</Link>
         <Link to="/about/entity-map" aria-label="Entity map" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Entity Map</Link>
       </div>

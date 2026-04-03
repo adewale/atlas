@@ -21,6 +21,7 @@ export const VIZ_PAGES: VizPage[] = [
   { path: '/discovery-timeline', label: 'Timeline', colour: WARM_RED, entities: 'Element, Era, Discoverer' },
   { path: '/etymology-map', label: 'Etymology', colour: DEEP_BLUE, entities: 'Element, Etymology Origin' },
   { path: '/discoverer-network', label: 'Discoverers', colour: MUSTARD, entities: 'Element, Discoverer' },
+  { path: '/explore', label: 'Explore', colour: BLACK, entities: 'All entity types' },
 ];
 
 export type EntityMeta = {

@@ -15,12 +15,13 @@ function RootLayout() {
 }
 
 let groupsCache: GroupData[] | null = null;
-let anomaliesCache: AnomalyData[] | null = null;
-let discoverersCache: DiscovererData[] | null = null;
-let timelineCache: TimelineData | null = null;
 let periodsCache: PeriodData[] | null = null;
 let blocksCache: BlockData[] | null = null;
 let categoriesCache: CategoryData[] | null = null;
+let anomaliesCache: AnomalyData[] | null = null;
+let discoverersCache: DiscovererData[] | null = null;
+let timelineCache: TimelineData | null = null;
+let etymologyCache: { origin: string; elements: { symbol: string; description: string }[] }[] | null = null;
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
@@ -54,6 +55,7 @@ const TimelineEra = lazy(() => import('./pages/TimelineEra'));
 const EraIndex = lazy(() => import('./pages/EraIndex'));
 const EntityMap = lazy(() => import('./pages/EntityMap'));
 const AnimationPalette = lazy(() => import('./pages/AnimationPalette'));
+const Explore = lazy(() => import('./pages/Explore'));
 
 export const router = createBrowserRouter([
   {
@@ -242,6 +244,26 @@ export const router = createBrowserRouter([
     loader: async () => {
       timelineCache ??= await import('../data/generated/timeline.json').then(m => m.default);
       return timelineCache;
+    },
+  },
+
+  /* ── Explore ─────────────────────────────── */
+  {
+    path: '/explore',
+    Component: Explore,
+    loader: async () => {
+      const [elements, categories, groups, periods, blocks, anomalies, discoverers, timeline, etymology] = await Promise.all([
+        import('../data/generated/elements.json').then(m => m.default),
+        categoriesCache ?? import('../data/generated/categories.json').then(m => { categoriesCache = m.default; return categoriesCache; }),
+        groupsCache ?? import('../data/generated/groups.json').then(m => { groupsCache = m.default; return groupsCache; }),
+        periodsCache ?? import('../data/generated/periods.json').then(m => { periodsCache = m.default; return periodsCache; }),
+        blocksCache ?? import('../data/generated/blocks.json').then(m => { blocksCache = m.default; return blocksCache; }),
+        anomaliesCache ?? import('../data/generated/anomalies.json').then(m => { anomaliesCache = m.default; return anomaliesCache; }),
+        discoverersCache ?? import('../data/generated/discoverers.json').then(m => { discoverersCache = m.default; return discoverersCache; }),
+        timelineCache ?? import('../data/generated/timeline.json').then(m => { timelineCache = m.default; return timelineCache; }),
+        etymologyCache ?? import('../data/generated/etymology.json').then(m => { etymologyCache = m.default; return etymologyCache; }),
+      ]);
+      return { elements, categories, groups, periods, blocks, anomalies, discoverers, timeline, etymology };
     },
   },
 
