@@ -22,7 +22,8 @@ import { AnomalyChip } from './EntityChip';
 const PLATE_WIDTH = 160;
 const PLATE_ROW_H = 56;
 const PLATE_ROWS = 4; // Group, Period, Block, Category
-const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS; // 224
+const PLATE_ROW_GAP = 6; // gap between DataPlateRow divs (from browser measurement)
+const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS + PLATE_ROW_GAP * (PLATE_ROWS - 1); // 242
 const RANK_ROW_H = 24;
 const FULL_WIDTH = 560;
 const PLATE_GAP = 24;
