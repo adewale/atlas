@@ -358,11 +358,11 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
               onClick={() => setHighlightMode(isActive && o.value !== 'none' ? 'none' : o.value)}
               aria-pressed={isActive}
               style={{
-                fontSize: '10px',
+                fontSize: isMobile ? '12px' : '10px',
                 fontWeight: 'bold',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                padding: '6px 10px',
+                padding: isMobile ? '8px 12px' : '6px 10px',
                 border: `1.5px solid ${isActive ? BLACK : GREY_RULE}`,
                 background: isActive ? BLACK : 'transparent',
                 color: isActive ? PAPER : GREY_MID,
@@ -384,7 +384,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
       <div
         style={{
           overflow: 'hidden',
-          maxHeight: highlightMode === 'property' ? '60px' : '0px',
+          maxHeight: highlightMode === 'property' ? '120px' : '0px',
           opacity: highlightMode === 'property' ? 1 : 0,
           transform: highlightMode === 'property' ? 'translateY(0)' : 'translateY(-8px)',
           transition: 'max-height 250ms var(--ease-in-out), opacity 200ms var(--ease-in-out), transform 250ms var(--ease-in-out), margin-top 250ms var(--ease-in-out)',

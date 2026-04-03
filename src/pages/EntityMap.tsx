@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Link } from 'react-router';
-import { BLACK, WARM_RED, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE } from '../lib/theme';
+import { BLACK, WARM_RED, DEEP_BLUE, MUSTARD, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { ENTITIES, VIZ_PAGES } from '../lib/routeMeta';
 import type { EntityMeta } from '../lib/routeMeta';
@@ -62,6 +62,16 @@ const NODE_POSITIONS: NodePos[] = [
 
 const nodeMap = new Map(NODE_POSITIONS.map((n) => [n.id, n]));
 const entityMap = new Map(ENTITIES.map((e) => [e.id, e]));
+
+/* Mobile catalogue: 5 collapsible sections grouping the 12 entity types */
+type CatalogueSection = { id: string; label: string; colour: string; entityIds: string[] };
+const CATALOGUE_SECTIONS: CatalogueSection[] = [
+  { id: 'elements', label: 'Elements', colour: WARM_RED, entityIds: ['element', 'comparison', 'neighbour'] },
+  { id: 'groups', label: 'Groups', colour: DEEP_BLUE, entityIds: ['group'] },
+  { id: 'periods', label: 'Periods', colour: WARM_RED, entityIds: ['period'] },
+  { id: 'blocks', label: 'Blocks', colour: MUSTARD, entityIds: ['block'] },
+  { id: 'categories', label: 'Categories', colour: DEEP_BLUE, entityIds: ['category', 'property', 'anomaly', 'discoverer', 'era', 'etymology'] },
+];
 
 function EntityCard({ entity, highlight, onHover }: { entity: EntityMeta; highlight: boolean; onHover: (id: string | null) => void }) {
   return (
@@ -350,6 +360,79 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
   );
 }
 
+function MobileCatalogue({ hovered, activeNodeIds, onHover }: { hovered: string | null; activeNodeIds: Set<string>; onHover: (id: string | null) => void }) {
+  const [expanded, setExpanded] = useState<Set<string>>(() => new Set(CATALOGUE_SECTIONS.map(s => s.id)));
+  const toggle = useCallback((id: string) => {
+    setExpanded(prev => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
+  }, []);
+
+  return (
+    <div>
+      {CATALOGUE_SECTIONS.map((section) => {
+        const isOpen = expanded.has(section.id);
+        const entities = section.entityIds.map(id => entityMap.get(id)).filter(Boolean) as EntityMeta[];
+        return (
+          <div key={section.id} style={{ marginBottom: '16px' }}>
+            <button
+              onClick={() => toggle(section.id)}
+              aria-expanded={isOpen}
+              style={{
+                width: '100%', display: 'flex', alignItems: 'center', padding: '0 12px',
+                height: '40px', background: section.colour, color: PAPER, fontWeight: 'bold',
+                fontSize: '14px', letterSpacing: '0.03em', border: 'none', cursor: 'pointer',
+                fontFamily: 'inherit',
+              }}
+            >
+              <span>{section.label}</span>
+              <span style={{ marginLeft: 'auto', fontWeight: 400, fontSize: 13, opacity: 0.85 }}>{entities.length}</span>
+              <svg viewBox="0 0 12 12" style={{ width: 12, height: 12, marginLeft: 8, transition: 'transform 200ms var(--ease-out)', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)' }} aria-hidden="true">
+                <path d="M4 2 L8 6 L4 10" fill="none" stroke={PAPER} strokeWidth={2} />
+              </svg>
+            </button>
+            {isOpen && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '8px 0' }}>
+                {entities.map((entity) => {
+                  const highlight = hovered === entity.id || (hovered != null && activeNodeIds.has(entity.id));
+                  return (
+                    <div
+                      key={entity.id}
+                      style={{
+                        borderLeft: `3px solid ${highlight ? entity.colour : DIM}`,
+                        padding: '8px 12px',
+                        background: highlight ? `${entity.colour}08` : 'transparent',
+                        transition: 'border-color 150ms var(--ease-out)',
+                      }}
+                      onPointerEnter={() => onHover(entity.id)}
+                      onPointerLeave={() => onHover(null)}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                        <span style={{ width: '8px', height: '8px', background: entity.colour, display: 'inline-block', flexShrink: 0 }} />
+                        <span style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                          {entity.label}
+                        </span>
+                        <span style={{ fontSize: '10px', color: GREY_MID, marginLeft: 'auto', fontFamily: MONO_FONT }}>{entity.count}</span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: GREY_MID, lineHeight: 1.5, marginBottom: '4px' }}>{entity.description}</div>
+                      <div style={{ fontSize: '10px', fontFamily: MONO_FONT, color: GREY_LIGHT, marginBottom: '4px' }}>{entity.route}</div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px' }}>
+                        {entity.examples.map((ex) => (
+                          <Link key={ex.name} to={ex.href} style={{ fontSize: '11px', color: entity.colour, textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
+                            {ex.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function EntityMapPage() {
   const [hovered, setHovered] = useState<string | null>(null);
   const mobile = useIsMobile();
@@ -386,16 +469,20 @@ export default function EntityMapPage() {
       {/* Entity Catalogue */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={SECTION_HEADING_STYLE}>Entity Catalogue</h2>
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          {ENTITIES.map((entity) => (
-            <EntityCard
-              key={entity.id}
-              entity={entity}
-              highlight={hovered === entity.id || (hovered != null && activeNodeIds.has(entity.id))}
-              onHover={setHovered}
-            />
-          ))}
-        </div>
+        {mobile ? (
+          <MobileCatalogue hovered={hovered} activeNodeIds={activeNodeIds} onHover={setHovered} />
+        ) : (
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            {ENTITIES.map((entity) => (
+              <EntityCard
+                key={entity.id}
+                entity={entity}
+                highlight={hovered === entity.id || (hovered != null && activeNodeIds.has(entity.id))}
+                onHover={setHovered}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* URL Patterns */}
@@ -404,36 +491,55 @@ export default function EntityMapPage() {
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '12px', lineHeight: 1.6 }}>
           Every entity has a unique, linkable URL. Share any page and the recipient sees exactly what you see.
         </p>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
-          <thead>
-            <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
-              <th style={{ padding: '6px 8px' }}>Entity</th>
-              <th style={{ padding: '6px 8px', fontFamily: MONO_FONT }}>URL Pattern</th>
-              <th style={{ padding: '6px 8px' }}>Example</th>
-              <th style={{ padding: '6px 8px' }}>Count</th>
-            </tr>
-          </thead>
-          <tbody>
+        {mobile ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {ENTITIES.filter((e) => e.route !== '—').map((entity) => (
-              <tr key={entity.id} style={{ borderBottom: `1px solid ${DIM}` }}>
-                <td style={{ padding: '6px 8px' }}>
+              <div key={entity.id} style={{ borderLeft: `3px solid ${entity.colour}`, padding: '6px 12px', fontSize: '13px', lineHeight: 1.6 }}>
+                <div>
                   <span style={{ color: entity.colour, fontWeight: 'bold' }}>{entity.label}</span>
-                </td>
-                <td style={{ padding: '6px 8px', fontFamily: MONO_FONT, fontSize: '11px', color: GREY_MID }}>
-                  {entity.route}
-                </td>
-                <td style={{ padding: '6px 8px' }}>
-                  {entity.examples[0] && (
-                    <Link to={entity.examples[0].href} style={{ fontSize: '11px', color: entity.colour, textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
-                      {entity.examples[0].name}
-                    </Link>
-                  )}
-                </td>
-                <td style={{ padding: '6px 8px', fontFamily: MONO_FONT }}>{entity.count}</td>
-              </tr>
+                  <span style={{ fontSize: '10px', color: GREY_MID, fontFamily: MONO_FONT, marginLeft: '8px' }}>{entity.count}</span>
+                </div>
+                <div style={{ fontFamily: MONO_FONT, fontSize: '11px', color: GREY_MID }}>{entity.route}</div>
+                {entity.examples[0] && (
+                  <Link to={entity.examples[0].href} style={{ fontSize: '11px', color: entity.colour, textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
+                    {entity.examples[0].name}
+                  </Link>
+                )}
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        ) : (
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
+            <thead>
+              <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
+                <th style={{ padding: '6px 8px' }}>Entity</th>
+                <th style={{ padding: '6px 8px', fontFamily: MONO_FONT }}>URL Pattern</th>
+                <th style={{ padding: '6px 8px' }}>Example</th>
+                <th style={{ padding: '6px 8px' }}>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ENTITIES.filter((e) => e.route !== '—').map((entity) => (
+                <tr key={entity.id} style={{ borderBottom: `1px solid ${DIM}` }}>
+                  <td style={{ padding: '6px 8px' }}>
+                    <span style={{ color: entity.colour, fontWeight: 'bold' }}>{entity.label}</span>
+                  </td>
+                  <td style={{ padding: '6px 8px', fontFamily: MONO_FONT, fontSize: '11px', color: GREY_MID }}>
+                    {entity.route}
+                  </td>
+                  <td style={{ padding: '6px 8px' }}>
+                    {entity.examples[0] && (
+                      <Link to={entity.examples[0].href} style={{ fontSize: '11px', color: entity.colour, textDecoration: 'none', minHeight: 'unset', minWidth: 'unset' }}>
+                        {entity.examples[0].name}
+                      </Link>
+                    )}
+                  </td>
+                  <td style={{ padding: '6px 8px', fontFamily: MONO_FONT }}>{entity.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </section>
 
       {/* Relationships Table */}
