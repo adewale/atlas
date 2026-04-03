@@ -32,3 +32,9 @@ jobs:
         run: |
           test -f dist/index.html
           ls dist/assets/*.js | head -5
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E tests (desktop)
+        run: npx playwright test --project=desktop

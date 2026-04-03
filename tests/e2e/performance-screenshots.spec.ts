@@ -80,7 +80,7 @@ test.describe('Performance visual regression', () => {
   });
 
   test('Element folio still renders after optimizations', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(2000);
 
     await page.screenshot({
@@ -145,7 +145,7 @@ test.describe('Performance metrics', () => {
   });
 
   test('Element folio loads and renders', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForSelector('.folio-symbol', { timeout: 10000 });
 
     await expect(page.locator('.folio-symbol')).toHaveText('Fe');

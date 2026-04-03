@@ -59,7 +59,7 @@ test.describe('Homepage screenshot audit', () => {
   });
 
   test('element folio renders correctly for Iron', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/folio-fe.png', fullPage: true });
 
@@ -100,7 +100,7 @@ test.describe('Homepage screenshot audit', () => {
 
 test.describe('Element folio journeys', () => {
   test('Hydrogen folio (edge case: period 1, group 1, s-block)', async ({ page }) => {
-    await page.goto('/element/H');
+    await page.goto('/elements/H');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/folio-h.png', fullPage: true });
 
@@ -118,7 +118,7 @@ test.describe('Element folio journeys', () => {
   });
 
   test('Oganesson folio (edge case: last element, period 7, group 18, p-block)', async ({ page }) => {
-    await page.goto('/element/Og');
+    await page.goto('/elements/Og');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/folio-og.png', fullPage: true });
 
@@ -130,7 +130,7 @@ test.describe('Element folio journeys', () => {
   });
 
   test('Lanthanum folio (edge case: lanthanide, null group in some datasets)', async ({ page }) => {
-    await page.goto('/element/La');
+    await page.goto('/elements/La');
     await page.waitForTimeout(1500);
 
     await expect(page.locator('.folio-symbol')).toHaveText('La');
@@ -140,7 +140,7 @@ test.describe('Element folio journeys', () => {
   });
 
   test('folio → periodic table navigation works (no full reload)', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(1500);
 
     // Click back to periodic table
@@ -156,7 +156,7 @@ test.describe('Element folio journeys', () => {
 
 test.describe('Atlas pages', () => {
   test('Group 8 page shows correct elements with cards', async ({ page }) => {
-    await page.goto('/atlas/group/8');
+    await page.goto('/groups/8');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-group-8.png', fullPage: true });
 
@@ -172,7 +172,7 @@ test.describe('Atlas pages', () => {
   });
 
   test('Period 4 page shows correct element count', async ({ page }) => {
-    await page.goto('/atlas/period/4');
+    await page.goto('/periods/4');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-period-4.png', fullPage: true });
 
@@ -183,7 +183,7 @@ test.describe('Atlas pages', () => {
   });
 
   test('Block d page shows transition metals', async ({ page }) => {
-    await page.goto('/atlas/block/d');
+    await page.goto('/blocks/d');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-block-d.png', fullPage: true });
 
@@ -194,7 +194,7 @@ test.describe('Atlas pages', () => {
   });
 
   test('Category: transition metal page', async ({ page }) => {
-    await page.goto('/atlas/category/transition-metal');
+    await page.goto('/categories/transition-metal');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-category-transition-metal.png', fullPage: true });
 
@@ -204,7 +204,7 @@ test.describe('Atlas pages', () => {
   });
 
   test('Rank by mass page shows all 118 elements ordered', async ({ page }) => {
-    await page.goto('/atlas/rank/mass');
+    await page.goto('/properties/mass');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-rank-mass.png', fullPage: true });
 
@@ -215,7 +215,7 @@ test.describe('Atlas pages', () => {
   });
 
   test('Anomaly: synthetic-heavy page', async ({ page }) => {
-    await page.goto('/atlas/anomaly/synthetic-heavy');
+    await page.goto('/anomalies/synthetic-heavy');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-anomaly-synthetic-heavy.png', fullPage: true });
 
@@ -231,11 +231,11 @@ test.describe('Atlas pages', () => {
   });
 
   test('Atlas group → element folio navigation works', async ({ page }) => {
-    await page.goto('/atlas/group/8');
+    await page.goto('/groups/8');
     await page.waitForTimeout(1500);
 
     // Click on Iron link to navigate to folio
-    const feLink = page.locator('a[href="/element/Fe"]').first();
+    const feLink = page.locator('a[href="/elements/Fe"]').first();
     await expect(feLink).toBeVisible();
     await feLink.click();
     await page.waitForTimeout(1500);
@@ -265,7 +265,7 @@ test.describe('Information pages', () => {
   });
 
   test('Credits page renders with table and all sections', async ({ page }) => {
-    await page.goto('/credits');
+    await page.goto('/about/credits');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/credits.png', fullPage: true });
 
@@ -277,7 +277,7 @@ test.describe('Information pages', () => {
     expect(rowCount).toBe(118);
 
     // Element links in table should use client-side routing
-    const feLink = page.locator('a[href="/element/Fe"]');
+    const feLink = page.locator('a[href="/elements/Fe"]');
     await expect(feLink).toBeVisible();
 
     // Back link
@@ -285,7 +285,7 @@ test.describe('Information pages', () => {
   });
 
   test('Design page renders palette, blocks, typography, and components', async ({ page }) => {
-    await page.goto('/design');
+    await page.goto('/about/design');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/design.png', fullPage: true });
 
@@ -372,7 +372,7 @@ test.describe('Cross-page user journeys', () => {
   });
 
   test('Folio compare link navigates correctly', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(1500);
 
     // Click "Compare →" link
@@ -387,11 +387,11 @@ test.describe('Cross-page user journeys', () => {
   });
 
   test('Credits table element link navigates to folio', async ({ page }) => {
-    await page.goto('/credits');
+    await page.goto('/about/credits');
     await page.waitForTimeout(1500);
 
     // Click on Fe link in the credits table
-    await page.locator('a[href="/element/Fe"]').click();
+    await page.locator('a[href="/elements/Fe"]').click();
     await page.waitForTimeout(1500);
 
     // Should be on Iron folio
