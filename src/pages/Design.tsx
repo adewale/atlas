@@ -368,7 +368,7 @@ export default function Design() {
         {/* AtlasPlate card */}
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>AtlasPlate card — symbol, number, category, mass (block-coloured)</div>
-          <div style={{ display: 'flex', gap: '4px' }}>
+          <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
             {[
               { num: 26, sym: 'Fe', cat: 'trans. metal', mass: '55.845 Da', block: 'd' },
               { num: 79, sym: 'Au', cat: 'trans. metal', mass: '196.97 Da', block: 'd' },
@@ -438,7 +438,7 @@ export default function Design() {
         {/* Scatter plot point */}
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>Scatter plot point — 10px square, block-coloured, with hover label</div>
-          <svg width={260} height={60}>
+          <svg width={340} height={60} style={{ maxWidth: '100%' }}>
             {[
               { x: 20, block: 's', sym: 'H' },
               { x: 60, block: 'p', sym: 'C' },
@@ -482,7 +482,7 @@ export default function Design() {
         {/* Neighborhood graph node */}
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>Neighbourhood graph node — circle (r=10) with symbol label, edges to neighbours</div>
-          <svg width={260} height={100}>
+          <svg width={260} height={100} style={{ maxWidth: '100%' }}>
             {/* Edges */}
             <line x1={130} y1={50} x2={50} y2={30} stroke={DEEP_BLUE} strokeWidth={1.5} />
             <line x1={130} y1={50} x2={50} y2={70} stroke={DEEP_BLUE} strokeWidth={1.5} />
@@ -554,7 +554,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             2. AtlasPlate card (100 x 80 px) — number, symbol, category, property value on block colour
           </div>
-          <svg width={312} height={80}>
+          <svg width={312} height={80} style={{ maxWidth: '100%' }}>
             {[
               { num: 26, sym: 'Fe', cat: 'trans. metal', val: '55.845 Da', block: 'd' },
               { num: 6, sym: 'C', cat: 'nonmetal', val: '12.011 Da', block: 'p' },
@@ -671,7 +671,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Browse page header — AtlasPlate caption strip pattern (coloured band + title); used on AtlasGroup, AtlasPeriod, AtlasBlock pages
           </div>
-          <svg width={320} height={36}>
+          <svg width={320} height={36} style={{ maxWidth: '100%' }}>
             <rect x={0} y={0} width={320} height={36} fill={DEEP_BLUE} />
             <text x={12} y={24} fontSize={16} fontWeight="bold" fill={PAPER} fontFamily="system-ui">Group 8 — Iron Column</text>
           </svg>
@@ -685,7 +685,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Folio marginalia label — uppercase small text in category colour, beside element data
           </div>
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
             {[
               { label: 'TRANSITION METAL', color: DEEP_BLUE },
               { label: 'NOBLE GAS', color: WARM_RED },
@@ -780,7 +780,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Network row — discoverer name (left) + ElementSquare grid (right); DiscovererNetwork page
           </div>
-          <svg width={320} height={32}>
+          <svg width={320} height={32} style={{ maxWidth: '100%' }}>
             <text x={0} y={20} fontSize={12} fontWeight="bold" fill={BLACK} fontFamily="system-ui">Seaborg</text>
             {['Pu', 'Am', 'Cm', 'Bk', 'Cf'].map((sym, i) => {
               const fill = blockColor('f');
@@ -825,7 +825,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Section header — full-width coloured band with origin name; groups etymology cards below
           </div>
-          <svg width={320} height={80}>
+          <svg width={320} height={80} style={{ maxWidth: '100%' }}>
             <rect x={0} y={0} width={320} height={28} fill={MINERAL_BROWN} />
             <text x={10} y={19} fontSize={13} fontWeight="bold" fill={PAPER} fontFamily="system-ui" letterSpacing="0.1em">LATIN ORIGINS</text>
             {/* Grouped cards below */}
@@ -935,7 +935,7 @@ export default function Design() {
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {LINE_THICKNESSES.map((t) => (
-            <div key={t.tier} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div key={t.tier} style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <svg width={120} height={Math.max(t.value * 2 + 8, 16)} style={{ flexShrink: 0 }}>
                 <line
                   x1={0}
@@ -1094,7 +1094,7 @@ function TooltipPatterns() {
         <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
           SVG native tooltip — {'<title>'} element, browser-rendered on hover (try hovering)
         </div>
-        <svg width={260} height={50}>
+        <svg width={260} height={50} style={{ maxWidth: '100%' }}>
           {[
             { cx: 30, sym: 'Na', block: 's' as const, name: 'Sodium (Na) — Alkali metal, period 3' },
             { cx: 80, sym: 'Fe', block: 'd' as const, name: 'Iron (Fe) — Transition metal, period 4' },
@@ -1127,7 +1127,7 @@ function TooltipPatterns() {
         <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
           Custom SVG tooltip — black rect with white text, follows hovered element (DiscoveryTimeline / PropertyScatter style)
         </div>
-        <svg width={340} height={100}>
+        <svg width={340} height={100} style={{ maxWidth: '100%' }}>
           {/* Fake axis */}
           <line x1={20} y1={80} x2={320} y2={80} stroke={BLACK} strokeWidth={1} />
           {[

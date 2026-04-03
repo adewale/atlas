@@ -161,6 +161,7 @@ svg [role="button"] {
 /* Touch: allow pan + pinch-zoom on scrollable SVG containers */
 .pt-scroll-container {
   touch-action: pan-x pan-y pinch-zoom;
+  overflow-x: auto;
 }
 
 /* ----------------------------------------

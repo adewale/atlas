@@ -71,6 +71,102 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
   );
 }
 
+/** Find the y-position of the first text line containing `keyword`. */
+function findLineYForKeyword(
+  lines: PositionedLine[],
+  keyword: string,
+  lineHeight: number,
+): number | null {
+  const kw = keyword.toLowerCase();
+  for (const line of lines) {
+    if (line.text.toLowerCase().includes(kw)) {
+      return line.y + lineHeight;
+    }
+  }
+  return null;
+}
+
+/** Resolve overlap: if two annotations are within MIN_ANNOTATION_GAP, push later ones down.
+ *  If maxY is provided, clamp annotations so they don't exceed that boundary;
+ *  overflow items are stacked upward from maxY with MIN_ANNOTATION_GAP spacing. */
+function resolveOverlaps(positions: (number | null)[], maxY?: number): (number | null)[] {
+  const result = [...positions];
+  // Sort indices by their non-null y values, preserving order for nulls
+  const nonNullIndices = result
+    .map((y, i) => ({ y, i }))
+    .filter((e): e is { y: number; i: number } => e.y != null)
+    .sort((a, b) => a.y - b.y);
+
+  for (let j = 1; j < nonNullIndices.length; j++) {
+    const prev = nonNullIndices[j - 1];
+    const curr = nonNullIndices[j];
+    const prevY = result[prev.i]!;
+    const currY = result[curr.i]!;
+    if (currY - prevY < MIN_ANNOTATION_GAP) {
+      result[curr.i] = prevY + MIN_ANNOTATION_GAP;
+    }
+  }
+
+  // Clamp to maxY: if any annotation exceeds the available height,
+  // stack them upward from maxY with MIN_ANNOTATION_GAP spacing.
+  if (maxY != null && nonNullIndices.length > 0) {
+    // Walk backwards through sorted annotations and pull any that exceed maxY
+    for (let j = nonNullIndices.length - 1; j >= 0; j--) {
+      const idx = nonNullIndices[j].i;
+      const y = result[idx]!;
+      const limit = maxY - (nonNullIndices.length - 1 - j) * MIN_ANNOTATION_GAP;
+      if (y > limit) {
+        result[idx] = limit;
+      }
+    }
+    // Re-enforce minimum gap from top to bottom after clamping
+    for (let j = 1; j < nonNullIndices.length; j++) {
+      const prev = nonNullIndices[j - 1];
+      const curr = nonNullIndices[j];
+      const prevY = result[prev.i]!;
+      const currY = result[curr.i]!;
+      if (currY - prevY < MIN_ANNOTATION_GAP) {
+        result[curr.i] = prevY + MIN_ANNOTATION_GAP;
+      }
+    }
+  }
+
+  return result;
+}
+
+type MarginaliaPropertyProps = {
+  text: string;
+  rank: number;
+  color: string;
+  maxWidth: number;
+  font: string;
+};
+
+function MarginaliaProperty({ text, rank, color, maxWidth, font }: MarginaliaPropertyProps) {
+  const { lines: propLines, lineHeight: propLH } = usePretextLines({
+    text,
+    maxWidth,
+    font,
+  });
+
+  return (
+    <div style={{ marginBottom: '8px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <svg
+          width={maxWidth}
+          height={propLines.length * propLH + propLH}
+          viewBox={`0 0 ${maxWidth} ${propLines.length * propLH + propLH}`}
+          style={{ maxWidth: '100%', height: 'auto', display: 'block', flexShrink: 1 }}
+        >
+          <PretextSvg lines={propLines} lineHeight={propLH} fontSize={14} />
+        </svg>
+        <RankDotSparkline rank={rank} color={color} />
+      </div>
+    </div>
+  );
+}
+
+
 type FolioProps = {
   element: ElementRecord;
   sources?: ElementSources;
@@ -121,7 +217,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
   const { lines, lineHeight } = useShapedText({
     text: element.summary,
-    fullWidth: effectiveWidth,
+    fullWidth: mobile ? effectiveWidth : FULL_WIDTH,
     narrowWidth: effectiveNarrow,
     plateHeight: PLATE_HEIGHT,
     mobile,
@@ -328,6 +424,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
             viewBox={`0 0 ${effectiveWidth} ${Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}`}
             aria-label="Element summary"
+            style={{ maxWidth: '100%', height: 'auto' }}
           >
             <PretextSvg
               lines={lines}

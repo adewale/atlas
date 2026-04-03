@@ -159,7 +159,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
   );
 
   return (
-    <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
+    <div style={{ touchAction: 'pinch-zoom', overflowX: 'auto' }}>
       <svg
         viewBox={`0 0 ${GRAPH_W} ${GRAPH_H}`}
         style={{ width: '100%', maxWidth: GRAPH_W }}
@@ -509,6 +509,7 @@ export default function EntityMapPage() {
             ))}
           </div>
         ) : (
+          <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
             <thead>
               <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
@@ -539,7 +540,8 @@ export default function EntityMapPage() {
               ))}
             </tbody>
           </table>
-        )}
+          </div>
+        )
       </section>
 
       {/* Relationships Table */}
