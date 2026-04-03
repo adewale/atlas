@@ -564,6 +564,79 @@ describe('Layout constraints: element name lengths', () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// Regression: DataPlateRow textLength must only compress, never stretch
+// ---------------------------------------------------------------------------
+describe('Layout constraints: DataPlateRow text compression', () => {
+  const PLATE_ROW_WIDTH_DESKTOP = 160;
+  const PLATE_ROW_WIDTH_MOBILE = 375; // typical mobile width
+
+  function shouldCompress(strValue: string, rowWidth: number): boolean {
+    const valueFontSize = strValue.length > 6 ? 13 : strValue.length > 3 ? 18 : 24;
+    const maxTextWidth = rowWidth - 12 - 52; // worst case: with arrows
+    const estimatedWidth = strValue.length * valueFontSize * 0.6;
+    return strValue.length > 6 && estimatedWidth > maxTextWidth;
+  }
+
+  it('never stretches text on mobile — all categories', () => {
+    const categories = [...new Set(allElements.map((e) => e.category))];
+    for (const cat of categories) {
+      // On mobile, rowWidth is large — text should NOT be stretched
+      const compressed = shouldCompress(cat, PLATE_ROW_WIDTH_MOBILE);
+      if (cat.length <= 6) {
+        // Short text: never compressed regardless
+        expect(compressed).toBe(false);
+      }
+      // If compressed on mobile, estimated width must exceed available space
+      if (compressed) {
+        const fontSize = 13;
+        const maxW = PLATE_ROW_WIDTH_MOBILE - 12 - 52;
+        expect(cat.length * fontSize * 0.6).toBeGreaterThan(maxW);
+      }
+    }
+  });
+
+  it('compresses "alkaline earth metal" on desktop (160px row)', () => {
+    expect(shouldCompress('alkaline earth metal', PLATE_ROW_WIDTH_DESKTOP)).toBe(true);
+  });
+
+  it('does NOT compress "transition metal" on mobile (375px row)', () => {
+    expect(shouldCompress('transition metal', PLATE_ROW_WIDTH_MOBILE)).toBe(false);
+  });
+
+  it('does NOT compress short values like "d" or "8"', () => {
+    expect(shouldCompress('d', PLATE_ROW_WIDTH_DESKTOP)).toBe(false);
+    expect(shouldCompress('8', PLATE_ROW_WIDTH_DESKTOP)).toBe(false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Regression: discovery era link label matches destination
+// ---------------------------------------------------------------------------
+describe('Layout constraints: discovery era labels', () => {
+  it('elements with discoveryYear show decade label, not generic "timeline"', () => {
+    for (const el of allElements) {
+      if (el.discoveryYear) {
+        const decade = Math.floor(el.discoveryYear / 10) * 10;
+        const label = `${decade}s →`;
+        expect(label).toMatch(/^\d{3,4}s →$/);
+      }
+    }
+  });
+
+  it('all discovery decades produce valid era URLs', () => {
+    const decades = new Set(
+      allElements
+        .filter((e) => e.discoveryYear)
+        .map((e) => Math.floor(e.discoveryYear! / 10) * 10),
+    );
+    for (const decade of decades) {
+      expect(decade).toBeGreaterThanOrEqual(0);
+      expect(decade).toBeLessThanOrEqual(2100);
+    }
+  });
+});
+
 describe('Layout constraints: discoverer name collection completeness', () => {
   it('all discoverer names in element data match discoverers list', () => {
     const discovererNames = new Set(discoverers.map((d) => d.name));

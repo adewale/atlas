@@ -2,13 +2,13 @@ import { useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
-import { useShapedText, usePretextLines } from '../hooks/usePretextLines';
+import { useShapedText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
 import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
-import { GroupPhaseStrip, RankDotSparkline } from './Sparkline';
+import { GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
@@ -42,11 +42,15 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
   next?: { symbol: string; name: string };
 }) {
   const strValue = String(value);
+  // Cap fontSize for long strings; use system-ui for wordy values, mono for short codes
   const valueFontSize = strValue.length > 6 ? 13 : strValue.length > 3 ? 18 : 24;
   const valueY = strValue.length > 6 ? 42 : 46;
   const hasArrows = !!(prev || next);
   const maxTextWidth = rowWidth - 12 - (hasArrows ? 52 : 8);
-  const needsCompression = strValue.length > 6;
+  // Estimate natural text width at fontSize 13 (system-ui ~0.6em per char).
+  // Only compress when text would overflow — never stretch short text.
+  const estimatedWidth = strValue.length * valueFontSize * 0.6;
+  const needsCompression = strValue.length > 6 && estimatedWidth > maxTextWidth;
   return (
     <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
       <svg width={rowWidth} height={56} viewBox={`0 0 ${rowWidth} 56`}>
@@ -138,38 +142,6 @@ function resolveOverlaps(positions: (number | null)[], maxY?: number): (number |
   }
 
   return result;
-}
-
-type MarginaliaPropertyProps = {
-  text: string;
-  rank: number;
-  color: string;
-  maxWidth: number;
-  font: string;
-};
-
-function MarginaliaProperty({ text, rank, color, maxWidth, font }: MarginaliaPropertyProps) {
-  const { lines: propLines, lineHeight: propLH } = usePretextLines({
-    text,
-    maxWidth,
-    font,
-  });
-
-  return (
-    <div style={{ marginBottom: '8px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <svg
-          width={maxWidth}
-          height={propLines.length * propLH + propLH}
-          viewBox={`0 0 ${maxWidth} ${propLines.length * propLH + propLH}`}
-          style={{ maxWidth: '100%', height: 'auto', display: 'block', flexShrink: 1 }}
-        >
-          <PretextSvg lines={propLines} lineHeight={propLH} fontSize={14} />
-        </svg>
-        <RankDotSparkline rank={rank} color={color} />
-      </div>
-    </div>
-  );
 }
 
 
@@ -338,7 +310,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           } as React.CSSProperties}
         />
         {/* Summary area: identity block (left), text (centre), data plate (right) */}
-        <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
+        <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: mobile ? 'auto' : PLATE_HEIGHT }}>
           {/* Identity block — number + symbol + name, acts as dramatic drop cap */}
           <div
             className="folio-identity"
@@ -395,15 +367,15 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             </h2>
           </div>
 
-          {/* Data plate positioned at top-right */}
+          {/* Data plate positioned at top-right on desktop, stacked on mobile */}
           <div
             data-testid="data-plate"
             className="folio-data-plate"
             style={{
-              position: 'absolute',
+              position: mobile ? 'static' : 'absolute',
               top: 0,
               right: 0,
-              width: PLATE_WIDTH,
+              width: mobile ? 'auto' : PLATE_WIDTH,
               ...(animate
                 ? {
                     clipPath: 'inset(0 100% 0 0)',
@@ -575,7 +547,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
-                  timeline →
+                  {element.discoveryYear ? `${Math.floor(element.discoveryYear / 10) * 10}s →` : 'timeline →'}
                 </Link>
               </div>
               {sameDiscoverer.length > 0 && (

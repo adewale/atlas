@@ -231,7 +231,7 @@ describe('Folio', () => {
         <Folio element={oxygen} animate={false} />
       </MemoryRouter>,
     );
-    const timelineLink = screen.getByText('timeline →');
+    const timelineLink = screen.getByText('1770s →');
     expect(timelineLink).toHaveAttribute('href', '/eras/1770');
   });
 });

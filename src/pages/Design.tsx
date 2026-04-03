@@ -1017,9 +1017,9 @@ export default function Design() {
       {/* Consolidation Opportunities                                   */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Consolidation Status</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Shared Architecture</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
-          Patterns that were unified to reduce duplication and improve consistency.
+          Core patterns unified across the codebase to reduce duplication and ensure consistency.
         </p>
         <div style={{ fontSize: '13px', lineHeight: 1.8 }}>
           <div style={{ marginBottom: '16px', padding: '12px', border: `1px solid ${GREY_RULE}`, borderRadius: 2 }}>
@@ -1212,7 +1212,7 @@ function TooltipPatterns() {
               }}
             >
               <span style={{ fontWeight: 700, fontSize: 18, lineHeight: 1.1 }}>{card.sym}</span>
-              <span style={{ fontSize: 9, color: GREY_MID }}>{card.label}</span>
+              <span style={{ fontSize: 9, color: GREY_MID, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 72, textAlign: 'center' }}>{card.label}</span>
             </div>
           ))}
         </div>

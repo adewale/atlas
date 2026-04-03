@@ -5,6 +5,7 @@ import type { ElementRecord } from '../lib/types';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE } from '../lib/theme';
+import { fitLabel, PRETEXT_SANS } from '../lib/pretext';
 import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
 import SvgPrevNext from '../components/SvgPrevNext';
@@ -12,6 +13,27 @@ import { DiscovererChip } from '../components/EntityChip';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
+// SvgPrevNext renders at 11px in a 400-unit-wide viewBox; each label gets ~190 units.
+const NAV_LABEL_FONT = `11px ${PRETEXT_SANS}`;
+const NAV_LABEL_MAX_W = 180; // conservative: 200 minus arrow + padding
+
+/** Truncate name to fit SvgPrevNext label using Pretext measurement. */
+function truncateNavLabel(name: string): string {
+  if (fitLabel(name, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) return name;
+  // Binary search for longest prefix + ellipsis that fits
+  let lo = 1, hi = name.length - 1, best = 0;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (fitLabel(name.slice(0, mid) + '\u2026', NAV_LABEL_FONT, NAV_LABEL_MAX_W)) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return best > 0 ? name.slice(0, best) + '\u2026' : name[0] + '\u2026';
+}
 
 type DiscovererEntry = { name: string; elements: string[] };
 
@@ -105,8 +127,8 @@ export default function DiscovererDetail() {
 
       {/* Prev / Next navigation — Pretext-styled, anchored beneath hero */}
       <SvgPrevNext
-        prev={prevDisc ? { label: prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name, to: `/discoverers/${encodeURIComponent(prevDisc.name)}` } : undefined}
-        next={nextDisc ? { label: nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name, to: `/discoverers/${encodeURIComponent(nextDisc.name)}` } : undefined}
+        prev={prevDisc ? { label: truncateNavLabel(prevDisc.name), to: `/discoverers/${encodeURIComponent(prevDisc.name)}` } : undefined}
+        next={nextDisc ? { label: truncateNavLabel(nextDisc.name), to: `/discoverers/${encodeURIComponent(nextDisc.name)}` } : undefined}
         ariaLabel="Previous and next discoverer navigation"
       />
 
