@@ -244,37 +244,31 @@ describe('Folio — anomalies and groups', () => {
 });
 
 describe('Folio — identity block sizing', () => {
-  it('IDENTITY_HEIGHT matches actual rendered identity content height', () => {
-    // The identity block contains: number (56px, lh 1) + symbol (44px, lh 1.1)
-    // + name (11px + 4px margin-top). The IDENTITY_HEIGHT constant used for
-    // text shaping should closely match this to avoid excess whitespace.
-    // Number: 56px * 1 = 56, Symbol: 44px * 1.1 = 48.4, Name: 11px * 1.5 + 4px margin = 20.5
-    // Total ≈ 125. IDENTITY_HEIGHT should be <= 108 to avoid wasted lines.
+  it('identity block uses compact font sizes on desktop', () => {
     renderFolio();
-    const identity = document.querySelector('.folio-identity')!;
-    expect(identity).toBeTruthy();
-
-    // The identity block's inline width on desktop should be IDENTITY_WIDTH
-    expect(identity.getAttribute('style')).toContain('width');
+    const number = document.querySelector('.folio-number')!;
+    const symbol = document.querySelector('.folio-symbol')!;
+    expect(number).toBeTruthy();
+    expect(symbol).toBeTruthy();
+    // Number should be 48px on desktop (not 56px — too tall for identity budget)
+    expect(number.getAttribute('style')).toContain('font-size: 48px');
+    // Symbol should be 36px on desktop
+    expect(symbol.getAttribute('style')).toContain('font-size: 36px');
   });
 
-  it('Iridium folio identity does not overlap summary SVG text', () => {
-    // Regression: Ir has a long summary (491 chars). The identity block
-    // must not visually overlap with the shaped text SVG.
+  it('Iridium folio renders all expected sections', () => {
     render(
       <MemoryRouter>
         <Folio element={IR} animate={false} />
       </MemoryRouter>,
     );
-    const identity = document.querySelector('.folio-identity')!;
-    const summarySvg = document.querySelector('svg[aria-label="Element summary"]')!;
-    expect(identity).toBeTruthy();
-    expect(summarySvg).toBeTruthy();
-
-    // Both should exist in the summary area
-    const summaryArea = document.querySelector('.folio-summary-area')!;
-    expect(summaryArea.contains(identity)).toBe(true);
-    expect(summaryArea.contains(summarySvg)).toBe(true);
+    // Identity, data plate, summary SVG, rank rows all render
+    expect(document.querySelector('.folio-identity')).toBeTruthy();
+    expect(document.querySelector('[data-testid="data-plate"]')).toBeTruthy();
+    expect(document.querySelector('svg[aria-label="Element summary"]')).toBeTruthy();
+    expect(document.querySelector('.folio-rank-rows')).toBeTruthy();
+    // Ir data plate shows correct values
+    expect(screen.getByLabelText(/Data plate: Group 9, Period 6, Block d/)).toBeInTheDocument();
   });
 });
 

@@ -29,11 +29,11 @@ const PLATE_GAP = 24;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
-// Height budget: number (56px lh1) + symbol (48px lh1.1) + name (~20px) ≈ 100px.
-// Keeping this tight avoids reserving too many narrow text lines beside the
-// identity, which caused overlap on long-summary elements like Iridium.
-const IDENTITY_WIDTH = 130;
-const IDENTITY_HEIGHT = 100;
+// Height budget must match real rendered height to prevent SVG text overlap.
+// Number (48px, lh1) + symbol (36px, lh1.1≈40) + name (10px+2px margin≈17) ≈ 105px
+// Reserve 106px → ceil(106/~20) = 6 lines indented beside the identity.
+const IDENTITY_WIDTH = 120;
+const IDENTITY_HEIGHT = 106;
 const MIN_ANNOTATION_GAP = 24;
 
 /** Reusable row for the data plate (Group / Period / Block / Category). */
@@ -335,7 +335,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               className="folio-number"
               aria-hidden="true"
               style={{
-                fontSize: mobile ? '64px' : '56px',
+                fontSize: mobile ? '56px' : '48px',
                 fontWeight: 'bold',
                 color,
                 fontFamily: MONO_FONT,
@@ -348,7 +348,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             <div
               className="folio-symbol"
               style={{
-                fontSize: mobile ? '40px' : '44px',
+                fontSize: mobile ? '36px' : '36px',
                 fontWeight: 'bold',
                 color,
                 lineHeight: 1.1,
@@ -358,9 +358,9 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               {element.symbol}
             </div>
             <h2 style={{
-              fontSize: '11px',
+              fontSize: '10px',
               fontWeight: 'normal',
-              margin: '4px 0 0',
+              margin: '2px 0 0',
               textTransform: 'uppercase',
               letterSpacing: '0.2em',
               color: GREY_MID,
