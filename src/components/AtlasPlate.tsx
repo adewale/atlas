@@ -149,7 +149,7 @@ export default function AtlasPlate({
         viewBox={`0 0 ${gridW} ${totalH}`}
         role="img"
         aria-label={caption}
-        style={{ maxWidth: '100%' }}
+        style={{ maxWidth: '100%', height: 'auto' }}
       >
         {/* Caption strip — solid colour band with Pretext-measured text */}
         <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} />

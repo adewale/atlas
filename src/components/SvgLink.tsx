@@ -14,11 +14,14 @@ import { useNavigate } from 'react-router';
 export default function SvgLink({
   to,
   children,
-  ...rest
+  style,
+  'aria-label': ariaLabel,
 }: {
   to: string;
   children: React.ReactNode;
-} & Omit<React.SVGProps<SVGAElement>, 'href'>) {
+  style?: React.CSSProperties;
+  'aria-label'?: string;
+}) {
   const navigate = useNavigate();
 
   const handleClick = useCallback(
@@ -32,7 +35,7 @@ export default function SvgLink({
   );
 
   return (
-    <a href={to} onClick={handleClick} {...rest}>
+    <a href={to} onClick={handleClick} style={style} aria-label={ariaLabel}>
       {children}
     </a>
   );

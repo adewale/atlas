@@ -2,12 +2,13 @@ import { useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
 import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
-import { useShapedText } from '../hooks/usePretextLines';
+import { useShapedText, usePretextLines } from '../hooks/usePretextLines';
 import { PRETEXT_SANS } from '../lib/pretext';
+import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
 import PretextSvg from './PretextSvg';
-import { GroupPhaseStrip } from './Sparkline';
+import { GroupPhaseStrip, RankDotSparkline } from './Sparkline';
 import SourceStrip from './SourceStrip';
 import type { GroupData } from '../lib/types';
 
@@ -29,7 +30,8 @@ const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
 const IDENTITY_WIDTH = 130;
-const IDENTITY_HEIGHT = 150;
+const IDENTITY_HEIGHT = 128;
+const MIN_ANNOTATION_GAP = 24;
 
 /** Reusable row for the data plate (Group / Period / Block / Category). */
 function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, rowWidth, prev, next }: {
@@ -42,6 +44,9 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
   const strValue = String(value);
   const valueFontSize = strValue.length > 6 ? 13 : strValue.length > 3 ? 18 : 24;
   const valueY = strValue.length > 6 ? 42 : 46;
+  const hasArrows = !!(prev || next);
+  const maxTextWidth = rowWidth - 12 - (hasArrows ? 52 : 8);
+  const needsCompression = strValue.length > 6;
   return (
     <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
       <svg width={rowWidth} height={56} viewBox={`0 0 ${rowWidth} 56`}>
@@ -50,7 +55,7 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
           <title>{title}</title>
           <rect x={0} y={0} width={rowWidth} height={56} fill={fill} />
           <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
-          <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}>{strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue}</text>
+          <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'} {...(needsCompression ? { textLength: maxTextWidth, lengthAdjust: 'spacingAndGlyphs' } : {})}>{strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue}</text>
         </SvgLink>
         {/* Prev/next arrows on the right */}
         {prev && (
