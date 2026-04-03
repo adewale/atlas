@@ -56,6 +56,7 @@ const DEFINED_ROUTES = [
   '/neighbourhood-graph',
   '/etymology-map',
   '/discoverer-network',
+  '/explore',
 ];
 
 /** Check if a concrete path matches a route pattern. */

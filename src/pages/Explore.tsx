@@ -5,9 +5,15 @@
  *  - Text search across ~300 entities
  *  - Byrne chip filters by entity type
  *  - Breadcrumb drill-down into entity children
- *  - Byrne-style entity cards
+ *  - Byrne-style entity cards with content-visibility optimization
+ *
+ * Performance:
+ *  - Viewport-relative stagger: animation delay index resets per filter change,
+ *    so visible cards always animate quickly regardless of absolute list position
+ *  - EntityCard uses content-visibility: auto for off-screen skip
+ *  - EntityCard uses two-tier rendering (compact → expanded on intersection)
  */
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import { useLoaderData } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -46,6 +52,12 @@ import type {
   TimelineData,
 } from '../lib/types';
 
+/**
+ * Maximum cards to stagger in one batch. Cards beyond this threshold
+ * get index capped so they don't wait unreasonably long to appear.
+ */
+const MAX_STAGGER_BATCH = 24;
+
 /* ------------------------------------------------------------------ */
 /* Component                                                          */
 /* ------------------------------------------------------------------ */
@@ -73,6 +85,11 @@ export default function Explore() {
   const [activeTypes, setActiveTypes] = useState<Set<EntityType>>(new Set());
   const [breadcrumbs, setBreadcrumbs] = useState<Entity[]>([]);
   const currentDrill = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1] : null;
+
+  // Stagger generation: increments on each filter/search change so
+  // the CSS animation replays with fresh delays
+  const [staggerGen, setStaggerGen] = useState(0);
+  const bumpStagger = useCallback(() => setStaggerGen((g) => g + 1), []);
 
   // When drilling, show child element entities
   const drillChildren: Entity[] = useMemo(() => {
@@ -116,20 +133,36 @@ export default function Explore() {
       return next;
     });
     setBreadcrumbs([]);
-  }, []);
+    bumpStagger();
+  }, [bumpStagger]);
 
   const handleDrill = useCallback((entity: Entity) => {
     setBreadcrumbs((prev) => [...prev, entity]);
-  }, []);
+    bumpStagger();
+  }, [bumpStagger]);
 
   const handleBreadcrumbClick = useCallback((index: number) => {
     setBreadcrumbs(index < 0 ? [] : (prev) => prev.slice(0, index + 1));
-  }, []);
+    bumpStagger();
+  }, [bumpStagger]);
 
   const handleNavigate = useCallback(
     (href: string) => transitionNavigate(href),
     [transitionNavigate],
   );
+
+  const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    setBreadcrumbs([]);
+    bumpStagger();
+  }, [bumpStagger]);
+
+  const handleClearAll = useCallback(() => {
+    setQuery('');
+    setActiveTypes(new Set());
+    setBreadcrumbs([]);
+    bumpStagger();
+  }, [bumpStagger]);
 
   const hasActiveFilters = activeTypes.size > 0 || query.trim().length > 0 || breadcrumbs.length > 0;
 
@@ -143,7 +176,7 @@ export default function Explore() {
           <input
             type="text"
             value={query}
-            onChange={(e) => { setQuery(e.target.value); setBreadcrumbs([]); }}
+            onChange={handleQueryChange}
             placeholder="Search entities\u2026"
             aria-label="Search entities"
             style={{
@@ -160,7 +193,7 @@ export default function Explore() {
           />
           {hasActiveFilters && (
             <button
-              onClick={() => { setQuery(''); setActiveTypes(new Set()); setBreadcrumbs([]); }}
+              onClick={handleClearAll}
               style={{
                 fontFamily: 'system-ui',
                 fontSize: '11px',
@@ -253,6 +286,7 @@ export default function Explore() {
 
       {/* Entity card grid — CSS grid, not SVG */}
       <div
+        key={staggerGen}
         style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
@@ -263,7 +297,7 @@ export default function Explore() {
           <EntityCard
             key={entity.id}
             entity={entity}
-            index={i}
+            index={Math.min(i, MAX_STAGGER_BATCH)}
             onDrill={handleDrill}
             onNavigate={handleNavigate}
           />
