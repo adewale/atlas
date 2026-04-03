@@ -9,6 +9,7 @@ import { DEEP_BLUE, BLACK, PAPER, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID
 import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
 import { PRETEXT_SANS } from '../lib/pretext';
+import SvgLink from '../components/SvgLink';
 import { DiscovererChip } from '../components/EntityChip';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
@@ -154,18 +155,18 @@ export default function TimelineEra() {
           aria-label="Previous and next era navigation"
         >
           {prevEra && (
-            <a href={`/eras/${prevEra}`}>
+            <SvgLink to={`/eras/${prevEra}`}>
               <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
                 ← {prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`}
               </text>
-            </a>
+            </SvgLink>
           )}
           {nextEra && (
-            <a href={`/eras/${nextEra}`}>
+            <SvgLink to={`/eras/${nextEra}`}>
               <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
                 {`${nextEra}s`} →
               </text>
-            </a>
+            </SvgLink>
           )}
         </svg>
       )}

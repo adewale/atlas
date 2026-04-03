@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN, MONO_FONT } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { useDropCapText } from '../hooks/usePretextLines';
 import { DROP_CAP_FONT } from '../lib/pretext';
@@ -242,7 +242,7 @@ export default function PhaseLandscape() {
         <span data-testid="temp-display" style={{
           fontSize: 13,
           fontWeight: 'bold',
-          fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
+          fontFamily: MONO_FONT,
           fontVariantNumeric: 'tabular-nums',
           color: BLACK,
           minWidth: '12ch',

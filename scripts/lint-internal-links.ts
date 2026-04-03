@@ -18,7 +18,7 @@
  * Exit code 0 = clean, 1 = violations found.
  */
 import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname } from 'path';
+import { join, extname, basename } from 'path';
 
 const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
 
@@ -32,8 +32,9 @@ const TEMPLATE_LINK_RE = /<a\s+[^>]*href\s*=\s*\{[`"'](\/[^`"'}]*)/g;
 // Also catch href={someVar} where the var is known to contain an internal route
 // This is harder to lint statically, so we just catch the template literal case
 
-// Files allowed to use plain <a> for internal links (e.g., test helpers)
-const ALLOWED_FILES = new Set<string>([]);
+// Files allowed to use plain <a> for internal links
+// SvgLink.tsx wraps <a> with navigate() for SPA routing inside SVG elements
+const ALLOWED_FILES = new Set<string>(['SvgLink.tsx']);
 
 type Violation = {
   file: string;
@@ -61,7 +62,7 @@ function lint(): Violation[] {
   const files = walk(SRC_DIR);
 
   for (const file of files) {
-    if (ALLOWED_FILES.has(file)) continue;
+    if (ALLOWED_FILES.has(basename(file))) continue;
 
     const content = readFileSync(file, 'utf-8');
     const lines = content.split('\n');

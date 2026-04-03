@@ -4,6 +4,7 @@ import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import InfoTip from '../components/InfoTip';
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
+import { measureLines } from '../lib/pretext';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { DiscovererChip, AnomalyChip, NeighbourChip } from '../components/EntityChip';
@@ -250,7 +251,7 @@ export default function Design() {
       {/* Element Cell */}
       <section style={{ marginBottom: '40px' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Element Cell</h2>
-        <svg width={56} height={64}>
+        <svg width={56} height={64} viewBox="0 0 56 64">
           <rect x={1} y={1} width={54} height={62} fill={PAPER} stroke={BLACK} strokeWidth={0.5} />
           <text x={4} y={13} fontSize={9} fill={BLACK} fontFamily="system-ui">26</text>
           <text x={28} y={36} textAnchor="middle" fontSize={16} fontWeight="bold" fill={BLACK} fontFamily="system-ui">Fe</text>
@@ -354,7 +355,7 @@ export default function Design() {
               { num: 92, sym: 'U', name: 'Uranium', block: 'f' },
             ].map((el) => {
               return (
-                <svg key={el.sym} width={56} height={64}>
+                <svg key={el.sym} width={56} height={64} viewBox="0 0 56 64">
                   <rect x={1} y={1} width={54} height={62} fill={PAPER} stroke={BLACK} strokeWidth={0.5} />
                   <text x={4} y={13} fontSize={9} fill={BLACK} fontFamily="system-ui">{el.num}</text>
                   <text x={28} y={36} textAnchor="middle" fontSize={16} fontWeight="bold" fill={BLACK} fontFamily="system-ui">{el.sym}</text>
@@ -378,7 +379,7 @@ export default function Design() {
               const fill = blockColor(el.block);
               const text = contrastTextColor(fill);
               return (
-                <svg key={el.sym} width={100} height={80}>
+                <svg key={el.sym} width={100} height={80} viewBox="0 0 100 80">
                   <rect x={0} y={0} width={100} height={80} fill={fill} />
                   <text x={6} y={14} fontSize={9} fill={text} fontFamily="system-ui">
                     {String(el.num).padStart(3, '0')}
@@ -438,7 +439,7 @@ export default function Design() {
         {/* Scatter plot point */}
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>Scatter plot point — 10px square, block-coloured, with hover label</div>
-          <svg width={340} height={60} style={{ maxWidth: '100%' }}>
+          <svg width={340} height={60} viewBox="0 0 340 60" style={{ maxWidth: '100%', height: 'auto' }}>
             {[
               { x: 20, block: 's', sym: 'H' },
               { x: 60, block: 'p', sym: 'C' },
@@ -457,7 +458,7 @@ export default function Design() {
         {/* Timeline square */}
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>Timeline square — 14px stacked squares, block-coloured, with SVG title tooltip</div>
-          <svg width={200} height={80}>
+          <svg width={200} height={80} viewBox="0 0 200 80" style={{ maxWidth: '100%', height: 'auto' }}>
             {/* Axis line */}
             <line x1={10} y1={65} x2={190} y2={65} stroke={BLACK} strokeWidth={1} />
             {[
@@ -527,7 +528,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             1. Periodic table cell (56 x 64 px) — number, symbol, name on block colour background
           </div>
-          <svg width={232} height={64}>
+          <svg width={232} height={64} viewBox="0 0 232 64" style={{ maxWidth: '100%', height: 'auto' }}>
             {[
               { num: 1, sym: 'H', name: 'Hydrogen', block: 's' },
               { num: 26, sym: 'Fe', name: 'Iron', block: 'd' },
@@ -581,7 +582,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             3. ElementSquare (24 px default) — symbol on block colour; unified small form for Timeline, Scatter, Network
           </div>
-          <svg width={180} height={28}>
+          <svg width={180} height={28} viewBox="0 0 180 28">
             {[
               { sym: 'H', block: 's' },
               { sym: 'C', block: 'p' },
@@ -647,7 +648,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Data plate rows (160 px wide) — coloured band with label + value; used in Folio sidebar
           </div>
-          <svg width={160} height={172}>
+          <svg width={160} height={172} viewBox="0 0 160 172">
             {[
               { label: 'GROUP', value: '8', color: DEEP_BLUE, y: 0 },
               { label: 'PERIOD', value: '4', color: WARM_RED, y: 44 },
@@ -706,7 +707,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Periodic table highlight mode — cells dimmed except matching category (DIM vs block colour)
           </div>
-          <svg width={200} height={32}>
+          <svg width={200} height={32} viewBox="0 0 200 32" style={{ maxWidth: '100%', height: 'auto' }}>
             {[
               { sym: 'Na', active: false },
               { sym: 'Fe', active: true },
@@ -750,7 +751,7 @@ export default function Design() {
               { rank: 110, label: '#110' },
             ].map((r) => (
               <div key={r.rank} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <svg width={40} height={12}>
+                <svg width={40} height={12} viewBox="0 0 40 12">
                   <line x1={0} y1={6} x2={40} y2={6} stroke={GREY_RULE} strokeWidth={0.5} />
                   <circle cx={((118 - r.rank) / 117) * 36 + 2} cy={6} r={3} fill={BLACK} />
                 </svg>
@@ -800,7 +801,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Detail page — giant count numeral + AtlasPlate grid of discovered elements
           </div>
-          <svg width={200} height={60}>
+          <svg width={200} height={60} viewBox="0 0 200 60" style={{ maxWidth: '100%', height: 'auto' }}>
             <text x={0} y={44} fontSize={48} fontWeight="bold" fontFamily={MONO_FONT} fill={DEEP_BLUE}>10</text>
             <text x={70} y={20} fontSize={10} fill={GREY_MID} fontFamily="system-ui">ELEMENTS DISCOVERED</text>
             {['Pu', 'Am', 'Cm'].map((sym, i) => {
@@ -903,7 +904,7 @@ export default function Design() {
           <div style={{ fontSize: '12px', color: GREY_MID, marginBottom: '6px' }}>
             Ripple highlight on periodic table — anomalous cells pulsed with WARM_RED stroke
           </div>
-          <svg width={200} height={32}>
+          <svg width={200} height={32} viewBox="0 0 200 32" style={{ maxWidth: '100%', height: 'auto' }}>
             {[
               { sym: 'Cr', anomaly: true },
               { sym: 'Mn', anomaly: false },
@@ -1151,9 +1152,11 @@ function TooltipPatterns() {
               />
             </g>
           ))}
-          {svgTooltip && (
+          {svgTooltip && (() => {
+            const labelWidth = measureLines(svgTooltip.label, '12px system-ui, sans-serif', 999, 16)[0]?.width ?? 80;
+            return (
             <g transform={`translate(${svgTooltip.x}, ${svgTooltip.y})`} style={{ pointerEvents: 'none' }}>
-              <rect x={-80} y={-30} width={160} height={24} fill={BLACK} rx={2} />
+              <rect x={-labelWidth / 2 - 8} y={-30} width={labelWidth + 16} height={24} fill={BLACK} rx={2} />
               <text
                 x={0}
                 y={-14}
@@ -1166,7 +1169,8 @@ function TooltipPatterns() {
                 {svgTooltip.label}
               </text>
             </g>
-          )}
+            );
+          })()}
         </svg>
       </div>
 

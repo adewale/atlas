@@ -8,6 +8,7 @@ import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib
 import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
 import { PRETEXT_SANS } from '../lib/pretext';
+import SvgLink from '../components/SvgLink';
 import { DiscovererChip } from '../components/EntityChip';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
@@ -114,18 +115,18 @@ export default function DiscovererDetail() {
           aria-label="Previous and next discoverer navigation"
         >
           {prevDisc && (
-            <a href={`/discoverers/${encodeURIComponent(prevDisc.name)}`}>
+            <SvgLink to={`/discoverers/${encodeURIComponent(prevDisc.name)}`}>
               <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
                 ← {prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name}
               </text>
-            </a>
+            </SvgLink>
           )}
           {nextDisc && (
-            <a href={`/discoverers/${encodeURIComponent(nextDisc.name)}`}>
+            <SvgLink to={`/discoverers/${encodeURIComponent(nextDisc.name)}`}>
               <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
                 {nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name} →
               </text>
-            </a>
+            </SvgLink>
           )}
         </svg>
       )}

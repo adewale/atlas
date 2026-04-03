@@ -20,8 +20,9 @@ import { join, extname, basename } from 'path';
 
 const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
 
-// Files that define the font tokens — allowed to contain raw font strings
-const TOKEN_SOURCE_FILES = new Set(['pretext.ts', 'theme.ts']);
+// Files that define the font tokens or document them — allowed to contain raw font strings
+// Design.tsx is the design system showcase that labels fonts by name in descriptive text
+const TOKEN_SOURCE_FILES = new Set(['pretext.ts', 'theme.ts', 'Design.tsx']);
 
 // Font strings that MUST use a token. Map from pattern → suggested constant.
 const FONT_VIOLATIONS: Array<{ pattern: RegExp; token: string; source: string }> = [

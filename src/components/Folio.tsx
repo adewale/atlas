@@ -14,6 +14,7 @@ import type { GroupData } from '../lib/types';
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug, categoryColor } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
+import SvgLink from './SvgLink';
 import { NeighbourChip } from './EntityChip';
 import { AnomalyChip } from './EntityChip';
 
@@ -45,26 +46,26 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
     <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
       <svg width={rowWidth} height={56} viewBox={`0 0 ${rowWidth} 56`}>
         {/* Main area — links to listing page */}
-        <a href={href} aria-label={ariaLabel}>
+        <SvgLink to={href} aria-label={ariaLabel}>
           <title>{title}</title>
           <rect x={0} y={0} width={rowWidth} height={56} fill={fill} />
           <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
           <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}>{strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue}</text>
-        </a>
+        </SvgLink>
         {/* Prev/next arrows on the right */}
         {prev && (
-          <a href={`/elements/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
+          <SvgLink to={`/elements/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
             <title>← {prev.name}</title>
             <rect x={rowWidth - 48} y={2} width={24} height={52} fill={fill} />
             <text x={rowWidth - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
-          </a>
+          </SvgLink>
         )}
         {next && (
-          <a href={`/elements/${next.symbol}`} aria-label={`Next: ${next.name}`}>
+          <SvgLink to={`/elements/${next.symbol}`} aria-label={`Next: ${next.name}`}>
             <title>{next.name} →</title>
             <rect x={rowWidth - 24} y={2} width={24} height={52} fill={fill} />
             <text x={rowWidth - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
-          </a>
+          </SvgLink>
         )}
       </svg>
     </div>
