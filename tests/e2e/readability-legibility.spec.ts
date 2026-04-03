@@ -331,11 +331,11 @@ test.describe('Readability: Anomaly Explorer', () => {
   });
 });
 
-test.describe('Readability: Neighborhood Graph', () => {
+test.describe('Readability: Neighbourhood Graph', () => {
   test('node labels are readable and distinct', async ({ page }) => {
-    await page.goto('/neighborhood-graph');
+    await page.goto('/neighbourhood-graph');
     await waitForAnimations(page);
-    await page.screenshot({ path: 'tests/e2e/screenshots/readability-neighborhood.png', fullPage: true });
+    await page.screenshot({ path: 'tests/e2e/screenshots/readability-neighbourhood.png', fullPage: true });
 
     // Circles should not all be at the same position
     const circles = page.locator('svg circle');
@@ -351,7 +351,7 @@ test.describe('Readability: Neighborhood Graph', () => {
   });
 
   test('intro text is readable', async ({ page }) => {
-    await page.goto('/neighborhood-graph');
+    await page.goto('/neighbourhood-graph');
     await waitForAnimations(page);
 
     // Pretext intro should have non-zero height
@@ -600,7 +600,7 @@ test.describe('Page transitions: content readable after navigation', () => {
       { path: '/phase-landscape', heading: 'Phase Landscape at STP' },
       { path: '/property-scatter', heading: 'Property Scatter' },
       { path: '/anomaly-explorer', heading: 'Anomaly Explorer' },
-      { path: '/neighborhood-graph', heading: 'Neighbourhood Graph' },
+      { path: '/neighbourhood-graph', heading: 'Neighbourhood Graph' },
       { path: '/discovery-timeline', heading: 'Discovery Timeline' },
       { path: '/etymology-map', heading: 'Etymology Map' },
       { path: '/discoverer-network', heading: 'Discoverer Network' },

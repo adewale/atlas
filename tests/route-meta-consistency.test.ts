@@ -53,7 +53,7 @@ const DEFINED_ROUTES = [
   '/phase-landscape',
   '/property-scatter',
   '/anomaly-explorer',
-  '/neighborhood-graph',
+  '/neighbourhood-graph',
   '/etymology-map',
   '/discoverer-network',
 ];

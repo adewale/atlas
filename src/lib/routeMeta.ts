@@ -15,7 +15,7 @@ export type VizPage = {
 export const VIZ_PAGES: VizPage[] = [
   { path: '/', label: 'Table', colour: BLACK, entities: 'Element, Group, Period, Block, Category' },
   { path: '/phase-landscape', label: 'Phase', colour: WARM_RED, entities: 'Element, Block (colour)' },
-  { path: '/neighborhood-graph', label: 'Neighbours', colour: BLACK, entities: 'Element, Neighbour (edges)' },
+  { path: '/neighbourhood-graph', label: 'Neighbours', colour: BLACK, entities: 'Element, Neighbour (edges)' },
   { path: '/anomaly-explorer', label: 'Anomalies', colour: MUSTARD, entities: 'Element, Anomaly' },
   { path: '/property-scatter', label: 'Scatter', colour: DEEP_BLUE, entities: 'Element, Block (colour), Property (axes)' },
   { path: '/discovery-timeline', label: 'Timeline', colour: WARM_RED, entities: 'Element, Era, Discoverer' },

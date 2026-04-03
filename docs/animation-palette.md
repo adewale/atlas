@@ -144,7 +144,7 @@ delays, creating a top-to-bottom or first-to-last cascade.
 | PropertyBar / CompareView | `bar-grow` | index-based | 300ms | `--ease-out` |
 | DiscovererNetwork rows | `bar-grow` | `rowIdx * 40ms` | 500ms | `--ease-out` |
 | DiscoveryTimeline squares | opacity | `sq.delay` | 300ms | `--ease-out` |
-| NeighborhoodGraph edges | `rule-draw` | `atomicNumber * 6ms` | 400ms | `--ease-out` |
+| NeighbourhoodGraph edges | `rule-draw` | `atomicNumber * 6ms` | 400ms | `--ease-out` |
 
 ---
 

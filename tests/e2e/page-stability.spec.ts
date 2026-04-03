@@ -9,7 +9,7 @@ const VIZ_ROUTES = [
   '/phase-landscape',
   '/property-scatter',
   '/anomaly-explorer',
-  '/neighborhood-graph',
+  '/neighbourhood-graph',
   '/discovery-timeline',
   '/etymology-map',
   '/discoverer-network',

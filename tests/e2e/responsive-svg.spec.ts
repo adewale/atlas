@@ -26,7 +26,7 @@ test.describe('Responsive SVG at mobile viewport (375px)', () => {
     { url: '/discovery-timeline', name: 'Discovery Timeline' },
     { url: '/etymology-map', name: 'Etymology Map' },
     { url: '/discoverer-network', name: 'Discoverer Network' },
-    { url: '/neighborhood-graph', name: 'Neighborhood Graph' },
+    { url: '/neighbourhood-graph', name: 'Neighbourhood Graph' },
   ];
 
   for (const { url, name } of vizPages) {

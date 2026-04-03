@@ -42,7 +42,7 @@ const routes: { path: string; label: string }[] = [
   { path: '/phase-landscape', label: 'phase-landscape' },
   { path: '/property-scatter', label: 'property-scatter' },
   { path: '/anomaly-explorer', label: 'anomaly-explorer' },
-  { path: '/neighborhood-graph', label: 'neighborhood-graph' },
+  { path: '/neighbourhood-graph', label: 'neighbourhood-graph' },
   { path: '/etymology-map', label: 'etymology-map' },
   { path: '/discoverer-network', label: 'discoverer-network' },
   { path: '/discoverer/Humphry%20Davy', label: 'discoverer-humphry-davy' },

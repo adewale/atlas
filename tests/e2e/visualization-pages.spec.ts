@@ -154,11 +154,11 @@ test.describe('Anomaly Explorer', () => {
   });
 });
 
-test.describe('Neighborhood Graph', () => {
+test.describe('Neighbourhood Graph', () => {
   test('renders nodes and edges', async ({ page }) => {
-    await page.goto('/neighborhood-graph');
+    await page.goto('/neighbourhood-graph');
     await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/neighborhood-graph.png', fullPage: true });
+    await page.screenshot({ path: 'tests/e2e/screenshots/neighbourhood-graph.png', fullPage: true });
 
     await expect(page.locator('h1')).toHaveText('Neighbourhood Graph');
 
@@ -174,7 +174,7 @@ test.describe('Neighborhood Graph', () => {
   });
 
   test('nodes are not stacked — corners separated', async ({ page }) => {
-    await page.goto('/neighborhood-graph');
+    await page.goto('/neighbourhood-graph');
     await page.waitForTimeout(2000);
 
     // Check a few node labels aren't at the same position
@@ -190,19 +190,19 @@ test.describe('Neighborhood Graph', () => {
     expect(dist).toBeGreaterThan(100);
   });
 
-  test('hover highlights neighborhood', async ({ page }) => {
-    await page.goto('/neighborhood-graph');
+  test('hover highlights neighbourhood', async ({ page }) => {
+    await page.goto('/neighbourhood-graph');
     await page.waitForTimeout(2000);
 
     // Hover over a node
     const feNode = page.locator('g[aria-label*="Iron"]');
     await feNode.hover();
     await page.waitForTimeout(300);
-    await page.screenshot({ path: 'tests/e2e/screenshots/neighborhood-hover.png', fullPage: true });
+    await page.screenshot({ path: 'tests/e2e/screenshots/neighbourhood-hover.png', fullPage: true });
   });
 
   test('clicking node navigates to element', async ({ page }) => {
-    await page.goto('/neighborhood-graph');
+    await page.goto('/neighbourhood-graph');
     await page.waitForTimeout(2000);
 
     await page.locator('g[aria-label*="Iron"]').click();

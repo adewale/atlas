@@ -60,7 +60,7 @@ for (const el of allElements) {
 // ---------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------
-export default function NeighborhoodGraph() {
+export default function NeighbourhoodGraph() {
   useDocumentTitle('Neighbourhood Graph', 'Force-directed graph showing which elements share the most properties, revealing unexpected neighbourhoods across the periodic table.');
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const navigate = useNavigate();
