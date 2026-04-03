@@ -237,7 +237,7 @@ export default function Design() {
         </div>
         <div>
           <div style={{ fontSize: '12px', color: GREY_MID }}>Drop cap — 48px initial in block colour, Pretext-measured flow</div>
-          <svg width={400} height={80} style={{ maxWidth: '100%' }}>
+          <svg width={400} height={92} viewBox="0 0 400 92" style={{ maxWidth: '100%', height: 'auto' }}>
             <text x={0} y={42} fontSize={48} fontWeight="bold" fill={DEEP_BLUE} fontFamily="system-ui, sans-serif">H</text>
             <text x={34} y={20} fontSize={16} fill={BLACK} fontFamily="system-ui, sans-serif">ydrogen is the lightest element,</text>
             <text x={34} y={39} fontSize={16} fill={BLACK} fontFamily="system-ui, sans-serif">with an atomic mass of 1.008.</text>

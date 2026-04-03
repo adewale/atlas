@@ -541,7 +541,7 @@ export default function EntityMapPage() {
             </tbody>
           </table>
           </div>
-        )
+        )}
       </section>
 
       {/* Relationships Table */}

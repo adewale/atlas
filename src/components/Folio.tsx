@@ -215,10 +215,11 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const effectiveWidth = measuredWidth > 0 ? measuredWidth : (mobile ? 320 : FULL_WIDTH);
   const effectiveNarrow = effectiveWidth - PLATE_WIDTH - PLATE_GAP;
 
+  const textFullWidth = mobile ? effectiveWidth : Math.min(FULL_WIDTH, effectiveWidth);
   const { lines, lineHeight } = useShapedText({
     text: element.summary,
-    fullWidth: mobile ? effectiveWidth : FULL_WIDTH,
-    narrowWidth: effectiveNarrow,
+    fullWidth: textFullWidth,
+    narrowWidth: Math.min(effectiveNarrow, textFullWidth),
     plateHeight: PLATE_HEIGHT,
     mobile,
     leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },

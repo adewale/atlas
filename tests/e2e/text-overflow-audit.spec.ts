@@ -3,33 +3,44 @@ import { test, expect } from '@playwright/test';
 /**
  * Text overflow audit: checks every page at desktop, mobile portrait,
  * and mobile landscape for text being clipped or overflowing its container.
+ *
+ * Architecture: one test per viewport that navigates to all pages sequentially.
+ * After the initial cold start (~50s for JS bundle parse), subsequent SPA
+ * navigations are fast. This avoids 93 × 50s cold starts.
  */
-
-// Only run in the desktop project — we manually set viewport per test
-test.use({ viewport: null as any });
 
 const ALL_PAGES = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
-  { name: 'Credits', path: '/credits' },
-  { name: 'Design', path: '/design' },
-  { name: 'Element (H)', path: '/element/H' },
-  { name: 'Element (W)', path: '/element/W' },
-  { name: 'Element (Og)', path: '/element/Og' },
-  { name: 'Compare', path: '/compare/H/He' },
-  { name: 'Entity Map', path: '/entity-map' },
+  { name: 'Credits', path: '/about/credits' },
+  { name: 'Design', path: '/about/design' },
+  { name: 'Animation Palette', path: '/about/animation-palette' },
+  { name: 'Entity Map', path: '/about/entity-map' },
+  { name: 'Element Index', path: '/elements' },
+  { name: 'Element (H)', path: '/elements/H' },
+  { name: 'Element (W)', path: '/elements/W' },
+  { name: 'Element (Og)', path: '/elements/Og' },
+  { name: 'Compare', path: '/elements/H/compare/He' },
+  { name: 'Group Index', path: '/groups' },
+  { name: 'Group 1', path: '/groups/1' },
+  { name: 'Period Index', path: '/periods' },
+  { name: 'Period 4', path: '/periods/4' },
+  { name: 'Block Index', path: '/blocks' },
+  { name: 'Block d', path: '/blocks/d' },
+  { name: 'Category Index', path: '/categories' },
+  { name: 'Category', path: '/categories/transition-metal' },
+  { name: 'Property Index', path: '/properties' },
+  { name: 'Property mass', path: '/properties/mass' },
+  { name: 'Anomaly Index', path: '/anomalies' },
+  { name: 'Discoverer Index', path: '/discoverers' },
+  { name: 'Era Index', path: '/eras' },
   { name: 'Phase Landscape', path: '/phase-landscape' },
   { name: 'Property Scatter', path: '/property-scatter' },
   { name: 'Anomaly Explorer', path: '/anomaly-explorer' },
-  { name: 'Neighborhood Graph', path: '/neighborhood-graph' },
+  { name: 'Neighbourhood Graph', path: '/neighbourhood-graph' },
   { name: 'Discovery Timeline', path: '/discovery-timeline' },
   { name: 'Etymology Map', path: '/etymology-map' },
   { name: 'Discoverer Network', path: '/discoverer-network' },
-  { name: 'Atlas Group 1', path: '/atlas/group/1' },
-  { name: 'Atlas Period 4', path: '/atlas/period/4' },
-  { name: 'Atlas Block d', path: '/atlas/block/d' },
-  { name: 'Atlas Category', path: '/atlas/category/transition-metal' },
-  { name: 'Atlas Rank mass', path: '/atlas/rank/mass' },
 ];
 
 const VIEWPORTS = [
@@ -38,102 +49,107 @@ const VIEWPORTS = [
   { name: 'mobile-landscape', width: 812, height: 375 },
 ];
 
-for (const vp of VIEWPORTS) {
-  for (const pg of ALL_PAGES) {
-    test(`${vp.name} | ${pg.name} (${pg.path})`, async ({ page }) => {
-      await page.setViewportSize({ width: vp.width, height: vp.height });
-      await page.goto(pg.path, { waitUntil: 'domcontentloaded' });
-      await page.waitForTimeout(2000);
+interface ClippedText {
+  textContent: string;
+  overshoot: number;
+  direction: string;
+}
 
-      // Check 1: No horizontal body overflow
-      const bodyOverflow = await page.evaluate(() => {
-        return document.body.scrollWidth - document.documentElement.clientWidth;
-      });
+interface PageResult {
+  page: string;
+  path: string;
+  bodyOverflowPx: number;
+  clippedCount: number;
+  clipped: ClippedText[];
+}
 
-      // Check 2: Find SVG <text> elements that extend beyond their parent <svg>
-      const clippedTexts = await page.evaluate(() => {
-        const results: {
-          textContent: string;
-          overshoot: number;
-          direction: string;
-        }[] = [];
-
-        const svgs = document.querySelectorAll('svg');
-        svgs.forEach((svg) => {
-          const svgRect = svg.getBoundingClientRect();
-          if (svgRect.width < 10 || svgRect.height < 10) return;
-          // Skip SVGs with overflow="visible"
-          const overflow = svg.getAttribute('overflow') || getComputedStyle(svg).overflow;
-          if (overflow === 'visible') return;
-
-          const texts = svg.querySelectorAll('text');
-          texts.forEach((textEl) => {
-            const textRect = textEl.getBoundingClientRect();
-            if (textRect.width === 0 || textRect.height === 0) return;
-
-            const overshootRight = textRect.right - svgRect.right;
-            const overshootLeft = svgRect.left - textRect.left;
-            const overshootBottom = textRect.bottom - svgRect.bottom;
-
-            if (overshootRight > 2) {
-              results.push({
-                textContent: (textEl.textContent || '').slice(0, 60),
-                overshoot: Math.round(overshootRight),
-                direction: 'right',
-              });
-            }
-            if (overshootLeft > 2) {
-              results.push({
-                textContent: (textEl.textContent || '').slice(0, 60),
-                overshoot: Math.round(overshootLeft),
-                direction: 'left',
-              });
-            }
-            if (overshootBottom > 2) {
-              results.push({
-                textContent: (textEl.textContent || '').slice(0, 60),
-                overshoot: Math.round(overshootBottom),
-                direction: 'bottom',
-              });
-            }
-          });
+/** Evaluate overflow checks on the current page. */
+function checkOverflow() {
+  return `
+    (() => {
+      const bodyOverflow = document.body.scrollWidth - document.documentElement.clientWidth;
+      const results = [];
+      document.querySelectorAll('svg').forEach((svg) => {
+        const svgRect = svg.getBoundingClientRect();
+        if (svgRect.width < 10 || svgRect.height < 10) return;
+        const overflow = svg.getAttribute('overflow') || getComputedStyle(svg).overflow;
+        if (overflow === 'visible') return;
+        svg.querySelectorAll('text').forEach((textEl) => {
+          const r = textEl.getBoundingClientRect();
+          if (r.width === 0 || r.height === 0) return;
+          const right = r.right - svgRect.right;
+          const left = svgRect.left - r.left;
+          const bottom = r.bottom - svgRect.bottom;
+          if (right > 2) results.push({ textContent: (textEl.textContent || '').slice(0, 60), overshoot: Math.round(right), direction: 'right' });
+          if (left > 2) results.push({ textContent: (textEl.textContent || '').slice(0, 60), overshoot: Math.round(left), direction: 'left' });
+          if (bottom > 2) results.push({ textContent: (textEl.textContent || '').slice(0, 60), overshoot: Math.round(bottom), direction: 'bottom' });
         });
-
-        return results;
       });
+      return { bodyOverflow, clipped: results };
+    })()
+  `;
+}
 
-      // Deduplicate clipped texts (keep worst per direction)
-      const uniqueClipped = clippedTexts.reduce((acc, ct) => {
+for (const vp of VIEWPORTS) {
+  test(`text-overflow audit @ ${vp.name} (${vp.width}×${vp.height})`, async ({ browser }) => {
+    const context = await browser.newContext({
+      viewport: { width: vp.width, height: vp.height },
+    });
+    const page = await context.newPage();
+
+    const failures: PageResult[] = [];
+    const passes: string[] = [];
+
+    for (const pg of ALL_PAGES) {
+      // Navigate — first page is slow (cold start), rest are fast SPA navigations
+      await page.goto(pg.path, { waitUntil: 'commit' });
+
+      // Wait for meaningful content: either an SVG text element or an h1/h2
+      await page.waitForSelector('svg text, h1, h2, table', { timeout: 15000 }).catch(() => {});
+
+      // Small settle time for animations / late layout
+      await page.waitForTimeout(300);
+
+      const { bodyOverflow, clipped } = await page.evaluate(checkOverflow());
+
+      // Deduplicate clipped texts
+      const seen = new Map<string, ClippedText>();
+      for (const ct of clipped as ClippedText[]) {
         const key = `${ct.direction}:${ct.textContent}`;
-        if (!acc.has(key) || acc.get(key)!.overshoot < ct.overshoot) {
-          acc.set(key, ct);
+        if (!seen.has(key) || seen.get(key)!.overshoot < ct.overshoot) {
+          seen.set(key, ct);
         }
-        return acc;
-      }, new Map<string, typeof clippedTexts[0]>());
+      }
+      const clippedList = [...seen.values()];
 
-      const clippedList = [...uniqueClipped.values()];
-
-      // Log for the results table
       if (bodyOverflow > 2 || clippedList.length > 0) {
-        console.log(JSON.stringify({
+        failures.push({
           page: pg.name,
           path: pg.path,
-          viewport: vp.name,
           bodyOverflowPx: bodyOverflow,
           clippedCount: clippedList.length,
           clipped: clippedList.slice(0, 5),
-        }));
+        });
+      } else {
+        passes.push(pg.name);
       }
+    }
 
-      expect(
-        bodyOverflow,
-        `Body overflows by ${bodyOverflow}px`
-      ).toBeLessThanOrEqual(2);
+    await context.close();
 
-      expect(
-        clippedList.length,
-        `${clippedList.length} text(s) clipped: ${clippedList.map(c => `"${c.textContent}" +${c.overshoot}px ${c.direction}`).join('; ')}`
-      ).toBe(0);
-    });
-  }
+    // Report all results
+    if (failures.length > 0) {
+      console.log(`\n❌ FAILURES at ${vp.name}:`);
+      for (const f of failures) {
+        console.log(JSON.stringify(f));
+      }
+    }
+    console.log(`\n✅ ${passes.length}/${ALL_PAGES.length} pages passed at ${vp.name}`);
+
+    // Assert no failures
+    expect(
+      failures,
+      `${failures.length} page(s) failed overflow check at ${vp.name}:\n${failures.map(f => `  ${f.page} (${f.path}): body +${f.bodyOverflowPx}px, ${f.clippedCount} clipped`).join('\n')}`
+    ).toHaveLength(0);
+  });
 }
