@@ -19,6 +19,7 @@
     "lint:animations": "tsx scripts/lint-animation-tokens.ts",
     "lint:fonts": "tsx scripts/lint-font-tokens.ts",
     "verify:grids": "tsx scripts/verify-grid-alignment.ts",
+    "debug:layout": "bash scripts/debug-layout.sh",
     "lint:all": "npm run lint && npm run lint:links && npm run lint:colors && npm run lint:assertions && npm run lint:animations && npm run lint:fonts",
     "deploy": "npm run build && wrangler pages deploy dist/"
   },
