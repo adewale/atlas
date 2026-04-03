@@ -160,14 +160,15 @@ describe('AtlasPlate', () => {
     expect(svg).not.toBeNull();
   });
 
-  it('truncates long category names', () => {
+  it('abbreviates long category names for display', () => {
     const { container } = renderPlate([
       makeElement({ category: 'alkaline earth metal' }),
     ]);
-    // The ABBREV map should shorten this — just verify it renders
     const texts = container.querySelectorAll('text');
     const allText = Array.from(texts).map((t) => t.textContent).join(' ');
-    // Should contain abbreviated form, not the full name (or the full name if it fits)
-    expect(allText.length).toBeGreaterThan(0);
+    // "alkaline earth metal" (20 chars × 8px = 160px) exceeds NAME_MAX_W (88px).
+    // truncateToFit tries ABBREV "alk. earth" then binary-search truncation.
+    // The abbreviated form should appear in the rendered SVG text.
+    expect(allText).toMatch(/alk\.\s*eart/);
   });
 });

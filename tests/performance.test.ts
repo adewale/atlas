@@ -39,30 +39,28 @@ function findAsset(assets: { name: string; sizeKB: number }[], pattern: RegExp) 
 // ---------------------------------------------------------------------------
 describe('Bundle size budgets', () => {
   const assets = getDistAssets();
+  const hasBuild = assets.length > 0;
 
-  it('index bundle is under 400 KB', () => {
+  it.skipIf(!hasBuild)('index bundle is under 400 KB', () => {
     const index = findAsset(assets, /^index-/);
-    if (!index) return; // skip if no build output
-    expect(index.sizeKB).toBeLessThan(400);
+    expect(index).toBeDefined();
+    expect(index!.sizeKB).toBeLessThan(400);
   });
 
-  it('pretext chunk is split out from index', () => {
+  it.skipIf(!hasBuild)('pretext chunk is split out from index', () => {
     const pretext = findAsset(assets, /pretext/i);
-    if (!assets.length) return; // skip if no build
     expect(pretext).toBeDefined();
   });
 
-  it('react-router chunk is split out from index', () => {
+  it.skipIf(!hasBuild)('react-router chunk is split out from index', () => {
     const router = findAsset(assets, /react-router|router/i);
-    if (!assets.length) return;
     expect(router).toBeDefined();
   });
 
-  it('elements data is included in index bundle (statically imported)', () => {
+  it.skipIf(!hasBuild)('elements data is included in index bundle (statically imported)', () => {
     const index = findAsset(assets, /^index-/);
-    if (!index) return;
-    // Elements data is statically imported by data.ts, so it's part of the index
-    expect(index.sizeKB).toBeGreaterThan(100);
+    expect(index).toBeDefined();
+    expect(index!.sizeKB).toBeGreaterThan(100);
   });
 });
 

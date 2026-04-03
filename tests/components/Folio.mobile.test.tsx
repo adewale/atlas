@@ -8,40 +8,11 @@ import { MemoryRouter } from 'react-router';
 import '../mocks/useIsMobile.mock';
 import '../mocks/usePretextLines.mock';
 import Folio from '../../src/components/Folio';
-import type { ElementRecord } from '../../src/lib/types';
+import { FE } from '../fixtures/element-fe';
 
 afterEach(() => {
   cleanup();
 });
-
-const FE: ElementRecord = {
-  atomicNumber: 26,
-  symbol: 'Fe',
-  name: 'Iron',
-  wikidataId: 'Q677',
-  wikipediaTitle: 'Iron',
-  wikipediaUrl: 'https://en.wikipedia.org/wiki/Iron',
-  period: 4,
-  group: 8,
-  block: 'd',
-  category: 'transition metal',
-  phase: 'solid',
-  mass: 55.84,
-  electronegativity: 1.83,
-  ionizationEnergy: 7.902,
-  radius: 194,
-  density: 7.874,
-  meltingPoint: 1811,
-  boilingPoint: 3134,
-  halfLife: null,
-  summary: 'Iron is a chemical element; it has symbol Fe and atomic number 26.',
-  discoveryYear: null,
-  discoverer: 'Known since antiquity',
-  etymologyOrigin: 'property',
-  etymologyDescription: 'Anglo-Saxon iron; symbol from Latin ferrum',
-  neighbors: ['Mn', 'Co'],
-  rankings: { mass: 93, electronegativity: 41, ionizationEnergy: 35, radius: 67 },
-};
 
 function renderMobileFolio() {
   return render(

@@ -42,28 +42,37 @@ describe('SvgLink', () => {
     expect(link.style.cursor).toBe('pointer');
   });
 
-  it('prevents default on click for SPA navigation', () => {
-    renderSvgLink();
+  it('intercepts regular click for SPA navigation (does not reload)', () => {
+    // SvgLink should call navigate() instead of following the <a> href.
+    // We verify the onClick handler is attached and doesn't throw.
+    renderSvgLink({ to: '/target' });
     const link = screen.getByRole('link');
-    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
-    const prevented = !link.dispatchEvent(event);
-    // In a real browser this would be prevented; jsdom may not fully support
-    // but we verify the handler doesn't throw
-    expect(link).toBeInTheDocument();
+    // Regular click fires without error — in a real browser this triggers navigate()
+    fireEvent.click(link);
+    // The link should still point to the correct href for accessibility
+    expect(link).toHaveAttribute('href', '/target');
   });
 
   it('allows ctrl-click through for new tab', () => {
     renderSvgLink();
     const link = screen.getByRole('link');
-    // ctrl-click should not prevent default (allow new tab)
+    // ctrl-click should pass through — the handler returns early without preventDefault
     fireEvent.click(link, { ctrlKey: true });
-    expect(link).toBeInTheDocument();
+    // Link stays in DOM and href is preserved for the browser to handle
+    expect(link).toHaveAttribute('href', '/test');
   });
 
   it('allows meta-click through for new tab', () => {
     renderSvgLink();
     const link = screen.getByRole('link');
     fireEvent.click(link, { metaKey: true });
-    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/test');
+  });
+
+  it('allows shift-click through', () => {
+    renderSvgLink();
+    const link = screen.getByRole('link');
+    fireEvent.click(link, { shiftKey: true });
+    expect(link).toHaveAttribute('href', '/test');
   });
 });

@@ -5,8 +5,8 @@ describe('getElement', () => {
   it('returns element by symbol', () => {
     const fe = getElement('Fe');
     expect(fe).toBeDefined();
-    expect(fe!.name).toBe('Iron');
-    expect(fe!.atomicNumber).toBe(26);
+    expect(fe?.name).toBe('Iron');
+    expect(fe?.atomicNumber).toBe(26);
   });
 
   it('returns undefined for invalid symbol', () => {
