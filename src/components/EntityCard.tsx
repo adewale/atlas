@@ -20,10 +20,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { Entity } from '../lib/entities';
 import { ENTITY_TYPE_LABELS } from '../lib/entities';
-import { blockColor, contrastTextColor } from '../lib/grid';
+import { blockColor, contrastTextColor } from '../lib/gridColors';
 import { PAPER, BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { PRETEXT_SANS } from '../lib/pretext';
-import { getElement } from '../lib/data';
+import symbolBlocks from '../../data/generated/symbol-blocks.json';
 
 const SYMBOL_SIZE = 24;
 const SYMBOL_GAP = 3;
@@ -195,8 +195,8 @@ export default function EntityCard({
             {expanded ? (
               <>
                 {visibleSymbols.map((sym) => {
-                  const el = getElement(sym);
-                  const fill = el ? blockColor(el.block) : BLACK;
+                  const block = (symbolBlocks as Record<string, string>)[sym];
+                  const fill = block ? blockColor(block) : BLACK;
                   return (
                     <svg key={sym} width={SYMBOL_SIZE} height={SYMBOL_SIZE} style={{ flexShrink: 0 }}>
                       <rect width={SYMBOL_SIZE} height={SYMBOL_SIZE} fill={fill} />

@@ -6,7 +6,7 @@
  * Matches the existing VizNav / AnomalyExplorer button pattern.
  */
 import { PAPER, BLACK } from '../lib/theme';
-import { contrastTextColor } from '../lib/grid';
+import { contrastTextColor } from '../lib/gridColors';
 
 export type ChipOption<T extends string = string> = {
   value: T;

@@ -339,6 +339,12 @@ function run() {
   const stripped = elements.map(({ sources: _s, ...rest }) => rest);
   writeFileSync(join(outDir, 'elements.json'), JSON.stringify(stripped, null, 2));
 
+  // symbol-blocks.json — minimal { symbol: block } map (~0.8 KB)
+  // Used by EntityCard to colour mini-symbols without loading full elements.json
+  const symbolBlocks: Record<string, string> = {};
+  for (const el of elements) symbolBlocks[el.symbol] = el.block;
+  writeFileSync(join(outDir, 'symbol-blocks.json'), JSON.stringify(symbolBlocks));
+
   // Per-element files (with sources)
   for (const el of elements) {
     writeFileSync(join(outDir, `element-${el.symbol}.json`), JSON.stringify(el, null, 2));

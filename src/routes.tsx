@@ -21,7 +21,6 @@ let categoriesCache: CategoryData[] | null = null;
 let anomaliesCache: AnomalyData[] | null = null;
 let discoverersCache: DiscovererData[] | null = null;
 let timelineCache: TimelineData | null = null;
-let etymologyCache: { origin: string; elements: { symbol: string; description: string }[] }[] | null = null;
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
