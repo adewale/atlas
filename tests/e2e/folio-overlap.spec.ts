@@ -97,6 +97,33 @@ test.describe('Folio — data plate must not overlap SVG text', () => {
   }
 });
 
+test.describe('Folio — data plate must not overlap rank rows', () => {
+  for (const sym of ELEMENTS) {
+    test(`/elements/${sym}`, async ({ page }) => {
+      await page.goto(`/elements/${sym}`, { waitUntil: 'commit' });
+      await page.waitForSelector('[data-testid="data-plate"]', { timeout: 15000 });
+      await page.waitForTimeout(800);
+
+      const result = await page.evaluate(() => {
+        const plate = document.querySelector('[data-testid="data-plate"]');
+        const rankRows = document.querySelector('.folio-rank-rows');
+        if (!plate || !rankRows) return { error: 'Missing elements' };
+
+        const plateBottom = plate.getBoundingClientRect().bottom;
+        const rankTop = rankRows.getBoundingClientRect().top;
+        return { plateBottom: Math.round(plateBottom), rankTop: Math.round(rankTop), gap: Math.round(rankTop - plateBottom) };
+      });
+
+      if ('error' in result) {
+        throw new Error(result.error);
+      }
+
+      console.log(`${sym}: plate bottom=${result.plateBottom}, rank top=${result.rankTop}, gap=${result.gap}`);
+      expect(result.gap, `Data plate overlaps rank rows on /elements/${sym} (gap=${result.gap}px)`).toBeGreaterThanOrEqual(0);
+    });
+  }
+});
+
 test.describe('Folio — identity block is compact', () => {
   test('Fe: identity height is under 120px', async ({ page }) => {
     await page.goto('/elements/Fe', { waitUntil: 'commit' });
