@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
 import { useShapedText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
@@ -30,12 +30,27 @@ const PLATE_GAP = 24;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
-// Height budget must match real rendered height to prevent SVG text overlap.
-// Number (48px, lh1) + symbol (36px, lh1.1≈40) + name (10px+2px margin≈17) ≈ 105px
-// Reserve 106px → ceil(106/~20) = 6 lines indented beside the identity.
-const IDENTITY_WIDTH = 120;
+// Height: number (48px lh1) + symbol (36px lh1.1≈40) + name (10px+2px≈17) ≈ 105px
 const IDENTITY_HEIGHT = 106;
 const MIN_ANNOTATION_GAP = 24;
+
+/** Measure the identity block's actual width from element data using Pretext. */
+function measureIdentityWidth(paddedNumber: string, symbol: string, name: string, mobile: boolean): number {
+  const numFontSize = mobile ? 56 : 48;
+  const numLines = measureLines(paddedNumber, `bold ${numFontSize}px ${MONO_FONT}`, 9999, numFontSize);
+  const symLines = measureLines(symbol, `bold 36px system-ui, sans-serif`, 9999, 40);
+  // Name is uppercase with 0.2em letter-spacing; approximate by scaling measured width by 1.2
+  const nameLines = measureLines(name.toUpperCase(), `10px system-ui, sans-serif`, 9999, 12);
+  const nameW = (nameLines[0]?.width ?? 40) * 1.2; // letter-spacing adds ~20%
+
+  const maxW = Math.max(
+    numLines[0]?.width ?? 60,
+    symLines[0]?.width ?? 30,
+    nameW,
+  );
+  // Add 8px breathing room so text doesn't touch the identity
+  return Math.ceil(maxW) + 8;
+}
 
 /** Reusable row for the data plate (Group / Period / Block / Category). */
 function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, rowWidth, prev, next }: {
@@ -197,6 +212,12 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const effectiveWidth = measuredWidth > 0 ? measuredWidth : (mobile ? 320 : FULL_WIDTH);
   const effectiveNarrow = effectiveWidth - PLATE_WIDTH - PLATE_GAP;
 
+  const paddedNumber = String(element.atomicNumber).padStart(3, '0');
+  const identityWidth = useMemo(
+    () => measureIdentityWidth(paddedNumber, element.symbol, element.name, mobile),
+    [paddedNumber, element.symbol, element.name, mobile],
+  );
+
   const textFullWidth = mobile ? effectiveWidth : Math.min(FULL_WIDTH, effectiveWidth);
   const { lines, lineHeight } = useShapedText({
     text: element.summary,
@@ -204,7 +225,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     narrowWidth: Math.min(effectiveNarrow, textFullWidth),
     plateHeight: PLATE_HEIGHT,
     mobile,
-    leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },
+    leftIndent: mobile ? undefined : { width: identityWidth, height: IDENTITY_HEIGHT },
   });
 
   // Group phase data for phase strip (replaces duplicate EN sparkline)
@@ -291,8 +312,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     return anomalies.filter((a) => a.elements.includes(element.symbol));
   }, [anomalies, element.symbol]);
 
-  const paddedNumber = String(element.atomicNumber).padStart(3, '0');
-
   const summaryRef = useRef<HTMLDivElement>(null);
   const marginaliaRef = useRef<HTMLElement>(null);
 
@@ -322,7 +341,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               position: mobile ? 'static' : 'absolute',
               top: 0,
               left: 0,
-              width: mobile ? 'auto' : IDENTITY_WIDTH,
+              width: mobile ? 'auto' : identityWidth,
               marginBottom: mobile ? 0 : 0,
               ...(animate
                 ? {
