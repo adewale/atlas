@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" rel="stylesheet" />
+    <!-- Cinzel web font: loaded async to avoid render-blocking when offline/sandboxed.
+         media="print" prevents blocking; onload flips to media="all" once fetched.
+         The app's useFontsReady hook handles the fallback-to-Cinzel transition. -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" /></noscript>
     <title>Atlas — Periodic Table</title>
     <meta name="description" content="Atlas is an interactive periodic table featuring element folios, discovery timelines, etymology maps, property comparisons, and neighbourhood graphs — all rendered in a Byrne-inspired geometric design." />
   </head>
