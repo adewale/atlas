@@ -1,0 +1,36 @@
+import type { ElementRecord } from '../../src/lib/types';
+
+export const IR: ElementRecord = {
+  atomicNumber: 77,
+  symbol: 'Ir',
+  name: 'Iridium',
+  wikidataId: 'Q877',
+  wikipediaTitle: 'Iridium',
+  wikipediaUrl: 'https://en.wikipedia.org/wiki/Iridium',
+  period: 6,
+  group: 9,
+  block: 'd',
+  category: 'transition metal',
+  phase: 'solid',
+  mass: 192.22,
+  electronegativity: 2.2,
+  ionizationEnergy: 9.1,
+  radius: 202,
+  density: 22.42,
+  meltingPoint: 2719,
+  boilingPoint: 4701,
+  halfLife: null,
+  summary:
+    'Iridium is a chemical element; it has the symbol Ir and atomic number 77. This very hard, brittle, silvery-white transition metal of the platinum group is considered the second-densest naturally occurring metal, with a density of 22.56 g/cm3 (0.815 lb/cu in) as defined by experimental X-ray crystallography. 191Ir and 193Ir are the only two naturally occurring isotopes of iridium, as well as the only stable isotopes; the latter is the more abundant. It is one of the most corrosion-resistant metals, even at temperatures as high as 2,000 °C (3,630 °F).',
+  discoveryYear: 1803,
+  discoverer: 'Smithson Tennant',
+  etymologyOrigin: 'mythology',
+  etymologyDescription: 'Greek Iris: goddess of the rainbow, from its colorful salts',
+  neighbors: ['Os', 'Pt'],
+  rankings: {
+    mass: 14,
+    electronegativity: 27,
+    ionizationEnergy: 56,
+    radius: 52,
+  },
+};

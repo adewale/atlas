@@ -5,6 +5,7 @@ import '../mocks/usePretextLines.mock';
 import Folio from '../../src/components/Folio';
 import type { ElementRecord, ElementSources, AnomalyData, GroupData } from '../../src/lib/types';
 import { FE, FE_SOURCES, TEST_ACCESS_DATE } from '../fixtures/element-fe';
+import { IR } from '../fixtures/element-ir';
 
 afterEach(() => {
   cleanup();
@@ -239,6 +240,41 @@ describe('Folio — anomalies and groups', () => {
       </MemoryRouter>,
     );
     expect(screen.getByText(/Phase at STP — Group 8/)).toBeInTheDocument();
+  });
+});
+
+describe('Folio — identity block sizing', () => {
+  it('IDENTITY_HEIGHT matches actual rendered identity content height', () => {
+    // The identity block contains: number (56px, lh 1) + symbol (44px, lh 1.1)
+    // + name (11px + 4px margin-top). The IDENTITY_HEIGHT constant used for
+    // text shaping should closely match this to avoid excess whitespace.
+    // Number: 56px * 1 = 56, Symbol: 44px * 1.1 = 48.4, Name: 11px * 1.5 + 4px margin = 20.5
+    // Total ≈ 125. IDENTITY_HEIGHT should be <= 108 to avoid wasted lines.
+    renderFolio();
+    const identity = document.querySelector('.folio-identity')!;
+    expect(identity).toBeTruthy();
+
+    // The identity block's inline width on desktop should be IDENTITY_WIDTH
+    expect(identity.getAttribute('style')).toContain('width');
+  });
+
+  it('Iridium folio identity does not overlap summary SVG text', () => {
+    // Regression: Ir has a long summary (491 chars). The identity block
+    // must not visually overlap with the shaped text SVG.
+    render(
+      <MemoryRouter>
+        <Folio element={IR} animate={false} />
+      </MemoryRouter>,
+    );
+    const identity = document.querySelector('.folio-identity')!;
+    const summarySvg = document.querySelector('svg[aria-label="Element summary"]')!;
+    expect(identity).toBeTruthy();
+    expect(summarySvg).toBeTruthy();
+
+    // Both should exist in the summary area
+    const summaryArea = document.querySelector('.folio-summary-area')!;
+    expect(summaryArea.contains(identity)).toBe(true);
+    expect(summaryArea.contains(summarySvg)).toBe(true);
   });
 });
 

@@ -29,8 +29,11 @@ const PLATE_GAP = 24;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
+// Height budget: number (56px lh1) + symbol (48px lh1.1) + name (~20px) ≈ 100px.
+// Keeping this tight avoids reserving too many narrow text lines beside the
+// identity, which caused overlap on long-summary elements like Iridium.
 const IDENTITY_WIDTH = 130;
-const IDENTITY_HEIGHT = 128;
+const IDENTITY_HEIGHT = 100;
 const MIN_ANNOTATION_GAP = 24;
 
 /** Reusable row for the data plate (Group / Period / Block / Category). */

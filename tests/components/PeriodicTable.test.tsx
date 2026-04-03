@@ -73,4 +73,12 @@ describe('PeriodicTable', () => {
     // At least one SVG should exist before the periodic table SVG for the intro
     expect(svgs.length).toBeGreaterThanOrEqual(2);
   });
+
+  it('element cells suppress default browser focus outline via CSS class', () => {
+    renderTable();
+    // The SVG element should have a class that allows CSS to suppress the
+    // default blue Chromium focus ring on click (`:focus` not `:focus-visible`)
+    const svg = document.querySelector('svg.periodic-table-svg');
+    expect(svg, 'SVG should have periodic-table-svg class for focus styling').not.toBeNull();
+  });
 });

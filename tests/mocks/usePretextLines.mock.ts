@@ -12,7 +12,7 @@ vi.mock('../../src/hooks/usePretextLines', () => ({
     ],
     lineHeight: 20,
     plateHeightInLines: 9,
-    identityHeightInLines: 7,
+    identityHeightInLines: 5,
   }),
   useDropCapText: ({ text }: { text: string }) => ({
     dropCap: { char: text[0], fontSize: 80 },

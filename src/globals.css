@@ -141,6 +141,17 @@ svg [role="button"] {
   min-width: unset;
 }
 
+/* Suppress default blue Chromium focus ring on SVG element cells.
+   These cells already indicate active state via a warm-red stroke;
+   the browser :focus (non-:focus-visible) outline is redundant and
+   clashes with the design. Keep :focus-visible for keyboard users. */
+.periodic-table-svg [role="button"]:focus:not(:focus-visible) {
+  outline: none;
+}
+.periodic-table-svg:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Etymology card hover/focus styling */
 .etymology-card:hover {
   border-width: 3px !important;
