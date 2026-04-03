@@ -8,7 +8,16 @@ import { test, expect } from '@playwright/test';
  * and compared against baselines on subsequent runs.
  *
  * First run generates baselines. Use --update-snapshots to refresh.
+ *
+ * Note: screenshot-audit.spec.ts covers broad route crawling; this file
+ * targets specific layout-critical components at multiple viewports.
  */
+
+/** Wait for page load + animation settle. */
+async function waitForAnimations(page: import('@playwright/test').Page, ms = 600) {
+  await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(ms);
+}
 
 const FOLIO_ELEMENTS = [
   { symbol: 'Fe', name: 'Iron — transition metal' },
@@ -21,8 +30,7 @@ test.describe('Visual regression: Folio pages', () => {
     test(`${el.name} folio layout`, async ({ page }, testInfo) => {
       await page.goto(`/elements/${el.symbol}`);
       await page.waitForSelector('[data-testid="data-plate"]', { timeout: 10000 });
-      // Wait for animations to complete
-      await page.waitForTimeout(600);
+      await waitForAnimations(page);
 
       // Screenshot the folio main area (excluding marginalia which may vary)
       const main = page.locator('.folio-main');
@@ -45,7 +53,7 @@ test.describe('Visual regression: AtlasPlate grids', () => {
     test(`${pg.name} grid layout`, async ({ page }, testInfo) => {
       await page.goto(pg.url);
       await page.waitForSelector('svg[role="img"]', { timeout: 10000 });
-      await page.waitForTimeout(400);
+      await waitForAnimations(page, 400);
 
       const plate = page.locator('svg[role="img"]').first();
       await expect(plate).toHaveScreenshot(`plate-${pg.name}-${testInfo.project.name}.png`, {

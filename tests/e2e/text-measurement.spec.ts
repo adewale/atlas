@@ -9,13 +9,22 @@ import { test, expect } from '@playwright/test';
  * - SVG text doesn't overflow its container
  * - Drop cap characters are positioned correctly
  * - Long category names are abbreviated, not clipped
+ *
+ * Complements font-measurement.spec.ts (stability after font load)
+ * by checking dimensional correctness of rendered text.
  */
+
+/** Wait for fonts to load + animation settle. */
+async function waitForFonts(page: import('@playwright/test').Page, ms = 500) {
+  await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(ms);
+}
 
 test.describe('AtlasPlate text measurement', () => {
   test('category labels fit within card bounds', async ({ page }) => {
     await page.goto('/categories/transition-metal');
     await page.waitForSelector('svg[role="img"]', { timeout: 10000 });
-    await page.waitForTimeout(500);
+    await waitForFonts(page);
 
     // Check all text elements in the AtlasPlate SVG fit within card bounds
     const overflows = await page.evaluate(() => {
@@ -42,7 +51,7 @@ test.describe('AtlasPlate text measurement', () => {
   test('element names in cards are truncated with ellipsis when needed', async ({ page }) => {
     await page.goto('/categories/transition-metal');
     await page.waitForSelector('svg[role="img"]', { timeout: 10000 });
-    await page.waitForTimeout(500);
+    await waitForFonts(page);
 
     // Verify that long names have been truncated — the full name should NOT
     // appear as a visible text element if it's too wide for the card
@@ -69,7 +78,7 @@ test.describe('Folio text measurement', () => {
   test('summary SVG text lines have non-zero width from real font metrics', async ({ page }) => {
     await page.goto('/elements/Fe');
     await page.waitForSelector('svg[aria-label="Element summary"]', { timeout: 10000 });
-    await page.waitForTimeout(800); // wait for fonts + animation
+    await waitForFonts(page, 800);
 
     const lineWidths = await page.evaluate(() => {
       const svg = document.querySelector('svg[aria-label="Element summary"]');
@@ -94,7 +103,7 @@ test.describe('Folio text measurement', () => {
       const page = await context.newPage();
       await page.goto('/elements/Ba'); // "alkaline earth metal" — longest category
       await page.waitForSelector('[data-testid="data-plate"]', { timeout: 10000 });
-      await page.waitForTimeout(600);
+      await waitForFonts(page, 600);
 
       const overflows = await page.evaluate(() => {
         const plate = document.querySelector('[data-testid="data-plate"]');

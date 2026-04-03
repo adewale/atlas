@@ -166,3 +166,36 @@ test.describe('Animation keyframes exist in stylesheets', () => {
     }
   });
 });
+
+test.describe('prefers-reduced-motion', () => {
+  test('animations are suppressed when user prefers reduced motion', async ({ browser }) => {
+    const context = await browser.newContext({
+      reducedMotion: 'reduce',
+    });
+    const page = await context.newPage();
+    await page.goto('/elements/Fe');
+    await page.waitForSelector('.folio-identity', { timeout: 10000 });
+
+    // With reduced motion, the identity block should be immediately visible
+    // (no 400ms animation delay before opacity reaches 1)
+    const opacity = await page.evaluate(() => {
+      const el = document.querySelector('.folio-identity');
+      return el ? parseFloat(getComputedStyle(el).opacity) : 0;
+    });
+
+    // Either the animation is skipped entirely (opacity=1) or the
+    // animation-duration is set to near-zero by the CSS media query
+    const animDuration = await page.evaluate(() => {
+      const el = document.querySelector('.folio-identity');
+      return el ? getComputedStyle(el).animationDuration : '0s';
+    });
+
+    // At least one of these should be true:
+    // 1. opacity is already 1 (animation skipped)
+    // 2. animation duration is effectively zero
+    const isReduced = opacity === 1 || animDuration === '0s' || animDuration === '0.001s';
+    expect(isReduced, 'Animation should be reduced or skipped').toBe(true);
+
+    await context.close();
+  });
+});
