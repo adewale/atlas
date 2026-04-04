@@ -1,10 +1,8 @@
 /**
  * Explore page — faceted search across all entity types.
  *
- * All querying goes through the search API (hybrid D1 FTS5 + Vectorize,
- * or local adapter when the Worker is not deployed). No client-side
- * searchEntities() — the API handles scoring, synonym expansion, and
- * Reciprocal Rank Fusion.
+ * Filters the static entity index client-side. 118 elements + ~200
+ * entities fit in memory; no backend needed.
  *
  * Facets compose with AND across dimensions, OR within a dimension.
  * State lives entirely in the URL: /explore?q=curie&type=element&block=d
@@ -26,7 +24,7 @@ import {
   type EntityType,
 } from '../lib/entities';
 import { parseSearchParams, buildSearchParams, type FacetState, type FacetKey } from '../lib/facets';
-import type { SearchResponse } from '../lib/search';
+import type { SearchResponse } from '../../shared/search-types';
 import {
   BLACK,
   PAPER,
@@ -211,7 +209,7 @@ export default function Explore() {
             type="text"
             value={facetState.q}
             onChange={handleQueryChange}
-            placeholder="Search entities\u2026"
+            placeholder="Search entities…"
             aria-label="Search entities"
             style={{
               fontFamily: PRETEXT_SANS,

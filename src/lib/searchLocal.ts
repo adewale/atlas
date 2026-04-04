@@ -1,15 +1,11 @@
 /**
- * Local search adapter — stand-in for the hybrid search Worker.
+ * Client-side search — filters the static entity index in memory.
  *
- * Operates on the static entity-index.json until the D1 + Vectorize
- * Worker is deployed. Implements the same SearchRequest → SearchResponse
- * contract as atlasSearch() so the Explore page doesn't care which
- * backend is active.
- *
- * This will be deleted when the Worker goes live — the only change
- * needed is swapping the import in routes.tsx.
+ * All 118 elements + ~200 entity records fit in a single JSON bundle.
+ * Faceted filtering, scoring, and count computation happen client-side
+ * with zero network requests.
  */
-import type { SearchRequest, SearchResponse, SearchResult, FacetCounts } from './search';
+import type { SearchRequest, SearchResponse, SearchResult, FacetCounts } from '../../shared/search-types';
 
 type EntityEntry = {
   id: string;

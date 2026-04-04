@@ -1,7 +1,16 @@
 /**
- * Shared search types — single source of truth for the search contract
- * between the client (src/lib/search.ts) and the worker (worker/src/handler.ts).
+ * Shared search types — single source of truth for the search contract.
  */
+
+/** Search request — query string + optional facet filters. */
+export type SearchRequest = {
+  q: string;
+  type?: string[];
+  block?: string[];
+  era?: string[];
+  phase?: string[];
+  etymologyOrigin?: string[];
+};
 
 /** A single result from the search API. */
 export type SearchResult = {
