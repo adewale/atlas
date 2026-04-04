@@ -57,39 +57,49 @@ export default function DiscovererDetail() {
   const discoverer = discoverers.find((d) => d.name === decodedName);
   useDocumentTitle(discoverer ? discoverer.name : 'Discoverer Not Found');
 
-  // Related discoverers: same era (±20 years) or shared block
+  // Related discoverers — evidence-based criteria from our 3 data sources:
+  // 1. Same exact discovery year (strongest: co-discoverers of the era)
+  // 2. Same periodic table group (structural: discovered elements in the same column)
+  // 3. Discovered a neighbouring element (adjacency in the table)
+  // 4. Shared person name in multi-person credit (collaboration link)
   // NOTE: useMemo must be called unconditionally (before any early return)
   const related = useMemo(() => {
     if (!discoverer) return [];
     const elems = discoverer.elements.map((s) => getElement(s)).filter(
       (e): e is ElementRecord => e != null,
     );
-    const yrs = elems
-      .map((e) => e.discoveryYear)
-      .filter((y): y is number => y != null)
-      .sort((a, b) => a - b);
-    const blocks = new Set(elems.map((e) => e.block));
-    const minYear = yrs.length > 0 ? yrs[0] : null;
-    const maxYear = yrs.length > 0 ? yrs[yrs.length - 1] : null;
+    const years = new Set(elems.map((e) => e.discoveryYear).filter((y): y is number => y != null));
+    const groups = new Set(elems.map((e) => e.group).filter((g): g is number => g != null));
+    const neighbourSymbols = new Set(elems.flatMap((e) => e.neighbors));
 
-    return discoverers
-      .filter((d) => {
-        if (d.name === decodedName) return false;
-        const dElements = d.elements.map((s) => getElement(s)).filter(
-          (e): e is ElementRecord => e != null,
-        );
-        // Same era?
-        if (minYear != null && maxYear != null) {
-          const dYears = dElements
-            .map((e) => e.discoveryYear)
-            .filter((y): y is number => y != null);
-          if (dYears.some((y) => y >= minYear - 20 && y <= maxYear + 20)) return true;
-        }
-        // Shared block?
-        if (dElements.some((e) => blocks.has(e.block))) return true;
-        return false;
-      })
-      ; // no limit — show all related discoverers
+    // Extract person name parts (>3 chars) for shared-name matching
+    const nameParts = decodedName.toLowerCase().split(/[,&]/)
+      .flatMap((s) => s.trim().split(' '))
+      .filter((p) => p.length > 3);
+
+    return discoverers.filter((d) => {
+      if (d.name === decodedName) return false;
+      const dElements = d.elements.map((s) => getElement(s)).filter(
+        (e): e is ElementRecord => e != null,
+      );
+      const dYears = dElements.map((e) => e.discoveryYear).filter((y): y is number => y != null);
+      const dGroups = dElements.map((e) => e.group).filter((g): g is number => g != null);
+      const dSymbols = new Set(d.elements);
+
+      // Same exact year?
+      if (dYears.some((y) => years.has(y))) return true;
+      // Same group?
+      if (dGroups.some((g) => groups.has(g))) return true;
+      // Discovered a neighbour?
+      if (d.elements.some((s) => neighbourSymbols.has(s))) return true;
+      // Shared person name?
+      const dParts = d.name.toLowerCase().split(/[,&]/)
+        .flatMap((s) => s.trim().split(' '))
+        .filter((p) => p.length > 3);
+      if (nameParts.some((p) => dParts.includes(p))) return true;
+
+      return false;
+    });
   }, [discoverers, decodedName, discoverer]);
 
   if (!discoverer) {
