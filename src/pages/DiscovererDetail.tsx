@@ -10,6 +10,7 @@ import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
 import SvgPrevNext from '../components/SvgPrevNext';
 import { DiscovererChip } from '../components/EntityChip';
+import { getDiscovererMetrics } from '../lib/metrics';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -139,22 +140,35 @@ export default function DiscovererDetail() {
       )}
 
       {/* Related discoverers — graph navigation */}
-      {related.length > 0 && (
-        <section style={{ marginTop: '32px' }}>
-          <h2 style={SECTION_LABEL_STYLE}>
-            Related Discoverers
-          </h2>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {related.map((d) => (
-              <DiscovererChip
-                key={d.name}
-                name={d.name}
-                elementCount={d.elements.length}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      {related.length > 0 && (() => {
+        // Compute fixed chip width from precomputed metrics so all chips align
+        const chipPadding = 25; // 12px left + 10px right + 3px border
+        const maxNameW = Math.max(
+          ...related.map((d) => {
+            const m = getDiscovererMetrics(d.name);
+            return m ? Math.ceil(m.navWidth * 1.1) : 120; // 1.1× for bold vs regular
+          }),
+        );
+        const chipWidth = Math.max(maxNameW + chipPadding, 120);
+
+        return (
+          <section style={{ marginTop: '32px' }}>
+            <h2 style={SECTION_LABEL_STYLE}>
+              Related Discoverers
+            </h2>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              {related.map((d) => (
+                <DiscovererChip
+                  key={d.name}
+                  name={d.name}
+                  elementCount={d.elements.length}
+                  fixedWidth={chipWidth}
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Link to timeline era for context */}
       <div style={{ marginTop: '24px' }}>
