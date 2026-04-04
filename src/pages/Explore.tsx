@@ -330,76 +330,102 @@ export default function Explore() {
           );
         })}
 
-        {/* Era slider — horizontal timeline with clickable decade ticks */}
+        {/* Era slider — range input with discovery histogram */}
         {(() => {
           const eraCounts = response.facets?.era ?? {};
           const activeEras = facetState.era ?? [];
-          // Use a stable max (13 — the 1800s peak) so bars don't rescale on filter
-          const maxCount = 13;
+          const activeIdx = activeEras.length > 0 ? ERA_VALUES.indexOf(activeEras[0]) : -1;
+          const maxCount = 13; // stable: 1800s peak from full dataset
+          const activeEra = activeIdx >= 0 ? ERA_VALUES[activeIdx] : null;
+          const activeCount = activeEra ? (eraCounts[activeEra] ?? 0) : 0;
+
+          // Build histogram sparkline path
+          const histH = 28;
+          const histY = 0;
 
           return (
             <div style={{ marginBottom: '16px' }}>
               <div style={{
                 fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase',
-                letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px',
+                letterSpacing: '0.15em', color: GREY_MID, marginBottom: '4px',
+                display: 'flex', alignItems: 'baseline', gap: '8px',
               }}>
                 Discovery Era
+                {activeEra && (
+                  <span style={{ fontSize: '12px', fontWeight: 700, color: WARM_RED, textTransform: 'none', letterSpacing: 0 }}>
+                    {activeEra} · {activeCount} result{activeCount !== 1 ? 's' : ''}
+                  </span>
+                )}
               </div>
-              <div style={{
-                display: 'flex', gap: 0, width: '100%',
-                borderBottom: `1.5px solid ${GREY_RULE}`,
-                height: '56px', alignItems: 'flex-end',
-              }}>
-                {ERA_VALUES.map((era) => {
-                  const count = eraCounts[era] ?? 0;
-                  const isActive = activeEras.includes(era);
-                  const barH = count > 0 ? Math.max(4, Math.round((count / maxCount) * 32)) : 0;
-                  const isLabelled = ERA_TICKS.includes(era);
 
+              {/* Histogram background */}
+              <svg
+                width="100%"
+                height={histH}
+                viewBox={`0 0 ${ERA_VALUES.length} ${histH}`}
+                preserveAspectRatio="none"
+                style={{ display: 'block' }}
+                aria-hidden="true"
+              >
+                {ERA_VALUES.map((era, i) => {
+                  const count = eraCounts[era] ?? 0;
+                  const barH = count > 0 ? Math.max(2, Math.round((count / maxCount) * histH)) : 0;
+                  const isActive = i === activeIdx;
                   return (
-                    <button
+                    <rect
                       key={era}
-                      onClick={() => toggleFacetValue('era', era)}
-                      title={`${era}: ${count} result${count !== 1 ? 's' : ''}`}
-                      aria-pressed={isActive}
-                      style={{
-                        flex: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'flex-end',
-                        background: 'none',
-                        border: 'none',
-                        borderBottom: isActive ? `3px solid ${WARM_RED}` : '3px solid transparent',
-                        padding: '0 0 2px',
-                        cursor: count > 0 || isActive ? 'pointer' : 'default',
-                        opacity: count === 0 && !isActive ? 0.3 : 1,
-                        minWidth: 0,
-                      }}
-                    >
-                      {/* Bar showing count — fixed height, no transition */}
-                      <div style={{
-                        width: '100%',
-                        maxWidth: '12px',
-                        height: barH,
-                        background: isActive ? WARM_RED : MUSTARD,
-                        marginBottom: '2px',
-                      }} />
-                      {/* Label for key decades */}
-                      {isLabelled && (
-                        <span style={{
-                          fontSize: '9px',
-                          color: isActive ? WARM_RED : GREY_MID,
-                          fontFamily: 'system-ui, sans-serif',
-                          whiteSpace: 'nowrap',
-                          fontVariantNumeric: 'tabular-nums',
-                        }}>
-                          {era === 'Antiquity' ? 'Anc.' : era.replace('s', '')}
-                        </span>
-                      )}
-                    </button>
+                      x={i}
+                      y={histH - barH}
+                      width={0.8}
+                      height={barH}
+                      fill={isActive ? WARM_RED : MUSTARD}
+                      opacity={isActive ? 1 : 0.4}
+                    />
                   );
                 })}
+              </svg>
+
+              {/* Range input — snaps to decade indices */}
+              <input
+                type="range"
+                min={-1}
+                max={ERA_VALUES.length - 1}
+                value={activeIdx}
+                onChange={(e) => {
+                  const idx = parseInt(e.target.value, 10);
+                  if (idx < 0) {
+                    // -1 = no selection
+                    const next = { ...facetState, era: undefined };
+                    setSearchParams(buildSearchParams(next), { replace: true });
+                  } else {
+                    const era = ERA_VALUES[idx];
+                    setFacet('era', [era]);
+                  }
+                }}
+                aria-label="Discovery era"
+                style={{
+                  width: '100%',
+                  margin: '0',
+                  display: 'block',
+                  accentColor: WARM_RED,
+                  cursor: 'pointer',
+                }}
+              />
+
+              {/* Tick labels */}
+              <div style={{
+                display: 'flex', justifyContent: 'space-between',
+                fontSize: '9px', color: GREY_MID, fontFamily: 'system-ui, sans-serif',
+                fontVariantNumeric: 'tabular-nums', marginTop: '2px',
+                userSelect: 'none',
+              }}>
+                <span>Ancient</span>
+                <span>1750</span>
+                <span>1800</span>
+                <span>1850</span>
+                <span>1900</span>
+                <span>1950</span>
+                <span>2010</span>
               </div>
             </div>
           );
