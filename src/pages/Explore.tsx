@@ -12,7 +12,7 @@
  *  - Self-exclusion counting: counts for facet F ignore F's selection
  *  - URL as source of truth: deep linking and reproducibility
  */
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useLoaderData, useSearchParams } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -117,8 +117,15 @@ export default function Explore() {
 
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  const [staggerGen, setStaggerGen] = useState(0);
-  const bumpStagger = useCallback(() => setStaggerGen((g) => g + 1), []);
+  // Track whether this is the first render — stagger only on initial load
+  const isInitialLoad = useRef(true);
+  useEffect(() => {
+    // After first search completes, mark as no longer initial
+    if (!loading && isInitialLoad.current) {
+      const id = setTimeout(() => { isInitialLoad.current = false; }, 500);
+      return () => clearTimeout(id);
+    }
+  }, [loading]);
 
   // Resolve cross-refs for expanded card
   const expandedRefs = useMemo<CrossRef[]>(() => {
@@ -153,8 +160,7 @@ export default function Explore() {
     if (values.length > 0) next[key] = values;
     else delete next[key];
     setSearchParams(buildSearchParams(next), { replace: true });
-    bumpStagger();
-  }, [facetState, setSearchParams, bumpStagger]);
+  }, [facetState, setSearchParams]);
 
   /** Toggle a single value within a facet dimension. */
   const toggleFacetValue = useCallback((key: FacetKey, value: string) => {
@@ -168,14 +174,12 @@ export default function Explore() {
   const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const next: FacetState = { ...facetState, q: e.target.value };
     setSearchParams(buildSearchParams(next), { replace: true });
-    bumpStagger();
-  }, [facetState, setSearchParams, bumpStagger]);
+  }, [facetState, setSearchParams]);
 
   const handleClearAll = useCallback(() => {
     setSearchParams(new URLSearchParams(), { replace: true });
     setExpandedId(null);
-    bumpStagger();
-  }, [setSearchParams, bumpStagger]);
+  }, [setSearchParams]);
 
   const handleNavigate = useCallback(
     (href: string) => transitionNavigate(href),
@@ -295,11 +299,10 @@ export default function Explore() {
                         borderRadius: 0,
                         padding: '5px 9px',
                         cursor: isDisabled ? 'default' : 'pointer',
-                        opacity: isDisabled ? 0.4 : 1,
+                        opacity: isDisabled ? 0.6 : 1,
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '5px',
-                        transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap)',
                       }}
                     >
                       <span
@@ -309,11 +312,16 @@ export default function Explore() {
                           background: isDisabled ? GREY_MID : isActive ? PAPER : colour,
                           display: 'inline-block',
                           flexShrink: 0,
-                          transition: 'background 150ms var(--ease-snap)',
                         }}
                       />
                       {displayLabel}
-                      <span style={{ opacity: 0.7, fontWeight: 400 }}>({count})</span>
+                      <span style={{
+                        opacity: 0.7,
+                        fontWeight: 400,
+                        fontVariantNumeric: 'tabular-nums',
+                        minWidth: '24px',
+                        textAlign: 'right',
+                      }}>({count})</span>
                     </button>
                   );
                 })}
@@ -407,13 +415,14 @@ export default function Explore() {
             : `${response.total} entit${response.total === 1 ? 'y' : 'ies'}`}
       </div>
 
-      {/* Entity card grid */}
+      {/* Entity card grid — fixed min-height prevents layout shift */}
       <div
-        key={staggerGen}
         style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(280px, 1fr))',
           gap: '8px',
+          minHeight: '400px',
+          alignContent: 'start',
         }}
       >
         {response.results.map((result, i) => {
@@ -434,7 +443,7 @@ export default function Explore() {
             <EntityCard
               key={result.id}
               entity={entity}
-              index={Math.min(i, MAX_STAGGER_BATCH)}
+              index={isInitialLoad.current ? Math.min(i, MAX_STAGGER_BATCH) : 0}
               expanded={isExpanded}
               crossRefs={isExpanded ? expandedRefs : undefined}
               onDrill={handleCardDrill}
