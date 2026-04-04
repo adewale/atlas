@@ -194,7 +194,7 @@ export default function TimelineEra() {
         const maxNameW = Math.max(
           ...discoverers.map((d) => {
             const m = getDiscovererMetrics(d);
-            return m ? Math.ceil(m.navWidth * 1.1) : 120; // 1.1x for bold vs regular
+            return m?.chipWidth ?? 120;
           }),
         );
         const chipWidth = Math.max(maxNameW + chipPadding, 120);

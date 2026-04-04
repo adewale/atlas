@@ -20,7 +20,7 @@ type ElementMetrics = {
 };
 
 type CategoryMetrics = { width13: number; width18: number };
-type DiscovererMetrics = { navWidth: number; captionWidth: number };
+type DiscovererMetrics = { navWidth: number; chipWidth: number; captionWidth: number };
 type PropertyMetrics = { width10: number; width11bold: number };
 
 const elMap = metrics.elements as Record<string, ElementMetrics>;

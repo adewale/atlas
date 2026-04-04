@@ -153,7 +153,7 @@ export default function DiscovererDetail() {
         const maxNameW = Math.max(
           ...related.map((d) => {
             const m = getDiscovererMetrics(d.name);
-            return m ? Math.ceil(m.navWidth * 1.1) : 120; // 1.1× for bold vs regular
+            return m?.chipWidth ?? 120;
           }),
         );
         const chipWidth = Math.max(maxNameW + chipPadding, 120);

@@ -1,6 +1,6 @@
 {
-  "_generated": "2026-04-04T01:13:43.200Z",
-  "_jobCount": 1031,
+  "_generated": "2026-04-04T01:25:11.460Z",
+  "_jobCount": 1106,
   "elements": {
     "H": {
       "identityWidth": 95,
@@ -992,302 +992,377 @@
   "discoverers": {
     "Known since antiquity": {
       "navWidth": 109,
+      "chipWidth": 124,
       "captionWidth": 169
     },
     "Albert Ghiorso et al.": {
       "navWidth": 98,
+      "chipWidth": 113,
       "captionWidth": 152
     },
     "Humphry Davy": {
       "navWidth": 73,
+      "chipWidth": 83,
       "captionWidth": 112
     },
     "Yuri Oganessian et al.": {
       "navWidth": 107,
+      "chipWidth": 122,
       "captionWidth": 166
     },
     "William Ramsay & Morris Travers": {
       "navWidth": 161,
+      "chipWidth": 183,
       "captionWidth": 251
     },
     "Jöns Jacob Berzelius": {
       "navWidth": 105,
+      "chipWidth": 119,
       "captionWidth": 163
     },
     "Paul Emile Lecoq de Boisbaudran": {
       "navWidth": 167,
+      "chipWidth": 184,
       "captionWidth": 257
     },
     "Carl Gustaf Mosander": {
       "navWidth": 109,
+      "chipWidth": 122,
       "captionWidth": 168
     },
     "Peter Armbruster & Gottfried Münzenberg": {
       "navWidth": 205,
+      "chipWidth": 236,
       "captionWidth": 320
     },
     "Sigurd Hofmann et al.": {
       "navWidth": 107,
+      "chipWidth": 122,
       "captionWidth": 166
     },
     "Louis Nicolas Vauquelin": {
       "navWidth": 117,
+      "chipWidth": 132,
       "captionWidth": 182
     },
     "Carl Wilhelm Scheele": {
       "navWidth": 105,
+      "chipWidth": 119,
       "captionWidth": 162
     },
     "Robert Bunsen & Gustav Kirchhoff": {
       "navWidth": 169,
+      "chipWidth": 191,
       "captionWidth": 262
     },
     "Martin Heinrich Klaproth": {
       "navWidth": 120,
+      "chipWidth": 138,
       "captionWidth": 188
     },
     "William Hyde Wollaston": {
       "navWidth": 116,
+      "chipWidth": 132,
       "captionWidth": 179
     },
     "Carl Auer von Welsbach": {
       "navWidth": 118,
+      "chipWidth": 133,
       "captionWidth": 182
     },
     "Jean Charles Galissard de Marignac": {
       "navWidth": 178,
+      "chipWidth": 200,
       "captionWidth": 276
     },
     "Smithson Tennant": {
       "navWidth": 89,
+      "chipWidth": 101,
       "captionWidth": 137
     },
     "Marie Curie & Pierre Curie": {
       "navWidth": 128,
+      "chipWidth": 145,
       "captionWidth": 200
     },
     "Henry Cavendish": {
       "navWidth": 85,
+      "chipWidth": 96,
       "captionWidth": 130
     },
     "Pierre Janssen & Joseph Lockyer": {
       "navWidth": 164,
+      "chipWidth": 185,
       "captionWidth": 255
     },
     "Johan August Arfwedson": {
       "navWidth": 124,
+      "chipWidth": 141,
       "captionWidth": 193
     },
     "Daniel Rutherford": {
       "navWidth": 86,
+      "chipWidth": 100,
       "captionWidth": 135
     },
     "Joseph Priestley & Carl Wilhelm Scheele": {
       "navWidth": 199,
+      "chipWidth": 226,
       "captionWidth": 308
     },
     "Henri Moissan": {
       "navWidth": 71,
+      "chipWidth": 80,
       "captionWidth": 110
     },
     "Joseph Black": {
       "navWidth": 67,
+      "chipWidth": 75,
       "captionWidth": 104
     },
     "Hans Christian Ørsted": {
       "navWidth": 109,
+      "chipWidth": 124,
       "captionWidth": 169
     },
     "Hennig Brand": {
       "navWidth": 68,
+      "chipWidth": 76,
       "captionWidth": 105
     },
     "Lord Rayleigh & William Ramsay": {
       "navWidth": 159,
+      "chipWidth": 179,
       "captionWidth": 247
     },
     "Lars Fredrik Nilson": {
       "navWidth": 93,
+      "chipWidth": 106,
       "captionWidth": 145
     },
     "William Gregor": {
       "navWidth": 73,
+      "chipWidth": 83,
       "captionWidth": 113
     },
     "Andrés Manuel del Río": {
       "navWidth": 112,
+      "chipWidth": 125,
       "captionWidth": 173
     },
     "Johan Gottlieb Gahn": {
       "navWidth": 102,
+      "chipWidth": 114,
       "captionWidth": 157
     },
     "Georg Brandt": {
       "navWidth": 67,
+      "chipWidth": 75,
       "captionWidth": 103
     },
     "Axel Fredrik Cronstedt": {
       "navWidth": 111,
+      "chipWidth": 127,
       "captionWidth": 172
     },
     "Andreas Sigismund Marggraf": {
       "navWidth": 143,
+      "chipWidth": 163,
       "captionWidth": 223
     },
     "Clemens Winkler": {
       "navWidth": 83,
+      "chipWidth": 95,
       "captionWidth": 129
     },
     "Albertus Magnus": {
       "navWidth": 84,
+      "chipWidth": 96,
       "captionWidth": 130
     },
     "Antoine Jérôme Balard": {
       "navWidth": 113,
+      "chipWidth": 128,
       "captionWidth": 175
     },
     "Adair Crawford": {
       "navWidth": 75,
+      "chipWidth": 85,
       "captionWidth": 116
     },
     "Johan Gadolin": {
       "navWidth": 72,
+      "chipWidth": 80,
       "captionWidth": 110
     },
     "Charles Hatchett": {
       "navWidth": 83,
+      "chipWidth": 96,
       "captionWidth": 129
     },
     "Carlo Perrier & Emilio Segrè": {
       "navWidth": 137,
+      "chipWidth": 155,
       "captionWidth": 214
     },
     "Karl Ernst Claus": {
       "navWidth": 80,
+      "chipWidth": 90,
       "captionWidth": 124
     },
     "Friedrich Stromeyer": {
       "navWidth": 97,
+      "chipWidth": 112,
       "captionWidth": 152
     },
     "Ferdinand Reich & Hieronymus Richter": {
       "navWidth": 191,
+      "chipWidth": 215,
       "captionWidth": 296
     },
     "Franz-Joseph Müller von Reichenstein": {
       "navWidth": 189,
+      "chipWidth": 214,
       "captionWidth": 293
     },
     "Bernard Courtois": {
       "navWidth": 85,
+      "chipWidth": 96,
       "captionWidth": 132
     },
     "Jöns Jacob Berzelius & Wilhelm Hisinger": {
       "navWidth": 201,
+      "chipWidth": 228,
       "captionWidth": 312
     },
     "Jacob Marinsky, Lawrence Glendenin & Charles Coryell": {
       "navWidth": 272,
+      "chipWidth": 307,
       "captionWidth": 422
     },
     "Eugène-Anatole Demarçay": {
       "navWidth": 132,
+      "chipWidth": 149,
       "captionWidth": 205
     },
     "Marc Delafontaine & Jacques-Louis Soret": {
       "navWidth": 205,
+      "chipWidth": 231,
       "captionWidth": 318
     },
     "Per Teodor Cleve": {
       "navWidth": 85,
+      "chipWidth": 95,
       "captionWidth": 131
     },
     "Georges Urbain": {
       "navWidth": 78,
+      "chipWidth": 87,
       "captionWidth": 120
     },
     "Dirk Coster & George de Hevesy": {
       "navWidth": 160,
+      "chipWidth": 179,
       "captionWidth": 247
     },
     "Anders Gustaf Ekeberg": {
       "navWidth": 114,
+      "chipWidth": 129,
       "captionWidth": 177
     },
     "Juan José Elhuyar & Fausto Elhuyar": {
       "navWidth": 177,
+      "chipWidth": 199,
       "captionWidth": 274
     },
     "Walter Noddack, Ida Tacke & Otto Berg": {
       "navWidth": 193,
+      "chipWidth": 217,
       "captionWidth": 298
     },
     "Antonio de Ulloa": {
       "navWidth": 82,
+      "chipWidth": 92,
       "captionWidth": 127
     },
     "William Crookes": {
       "navWidth": 80,
+      "chipWidth": 90,
       "captionWidth": 125
     },
     "Claude François Geoffroy": {
       "navWidth": 126,
+      "chipWidth": 142,
       "captionWidth": 194
     },
     "Dale Corson, Kenneth MacKenzie & Emilio Segrè": {
       "navWidth": 241,
+      "chipWidth": 268,
       "captionWidth": 373
     },
     "Friedrich Ernst Dorn": {
       "navWidth": 99,
+      "chipWidth": 113,
       "captionWidth": 155
     },
     "Marguerite Perey": {
       "navWidth": 84,
+      "chipWidth": 97,
       "captionWidth": 131
     },
     "André-Louis Debierne": {
       "navWidth": 108,
+      "chipWidth": 123,
       "captionWidth": 168
     },
     "Kasimir Fajans & Oswald Helmuth Göhring": {
       "navWidth": 209,
+      "chipWidth": 235,
       "captionWidth": 325
     },
     "Edwin McMillan & Philip Abelson": {
       "navWidth": 161,
+      "chipWidth": 181,
       "captionWidth": 250
     },
     "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl": {
       "navWidth": 317,
+      "chipWidth": 356,
       "captionWidth": 488
     },
     "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso": {
       "navWidth": 299,
+      "chipWidth": 335,
       "captionWidth": 461
     },
     "Glenn Seaborg, Ralph James & Albert Ghiorso": {
       "navWidth": 228,
+      "chipWidth": 256,
       "captionWidth": 351
     },
     "Glenn Seaborg, Stanley Thompson & Albert Ghiorso": {
       "navWidth": 256,
+      "chipWidth": 288,
       "captionWidth": 394
     },
     "Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street": {
       "navWidth": 336,
+      "chipWidth": 379,
       "captionWidth": 518
     },
     "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg": {
       "navWidth": 323,
+      "chipWidth": 365,
       "captionWidth": 499
     },
     "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer": {
       "navWidth": 323,
+      "chipWidth": 367,
       "captionWidth": 503
     },
     "Kosuke Morita et al.": {
       "navWidth": 99,
+      "chipWidth": 111,
       "captionWidth": 154
     }
   },

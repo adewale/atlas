@@ -82,6 +82,7 @@ for (const cat of categories) {
 // Discoverer-level
 for (const d of discoverers) {
   jobs.push({ text: d.name, font: '11px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `disc.${d.name}.nav11` });
+  jobs.push({ text: d.name, font: 'bold 11px system-ui, sans-serif', key: `disc.${d.name}.chip11bold` });
   jobs.push({ text: d.name, font: 'bold 16px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `disc.${d.name}.cap16` });
 }
 
@@ -179,10 +180,11 @@ async function main() {
     };
   }
 
-  const discovererMetrics: Record<string, { navWidth: number; captionWidth: number }> = {};
+  const discovererMetrics: Record<string, { navWidth: number; chipWidth: number; captionWidth: number }> = {};
   for (const d of discoverers) {
     discovererMetrics[d.name] = {
       navWidth: results[`disc.${d.name}.nav11`] ?? 80,
+      chipWidth: results[`disc.${d.name}.chip11bold`] ?? 80,
       captionWidth: results[`disc.${d.name}.cap16`] ?? 100,
     };
   }
