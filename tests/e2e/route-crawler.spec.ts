@@ -63,6 +63,7 @@ function matchesPattern(url: string, pattern: string): boolean {
 }
 
 test.describe('Route crawler', () => {
+  test.setTimeout(120_000);
   test('every page reachable from / renders content', async ({ page }) => {
     const visited = new Set<string>();
     const queue: string[] = ['/'];

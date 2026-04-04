@@ -177,9 +177,8 @@ test.describe('Etymology Map — property-based tests', () => {
     await page.goto(ETYMOLOGY_URL);
     await page.waitForTimeout(2000);
 
-    const introSvg = page.locator(
-      'svg[role="img"][aria-label="Introduction to etymology map"]',
-    );
+    // IntroBlock renders an SVG with role="img" — find the first one in main content
+    const introSvg = page.locator('.page-shell-content svg[role="img"]').first();
     await expect(introSvg, 'Intro SVG should be visible').toBeVisible();
 
     const svgTextElements = introSvg.locator('text');
@@ -329,8 +328,8 @@ test.describe('Etymology Map — property-based tests', () => {
         ).not.toBeNull();
         expect(
           href,
-          `Card ${c} in section "${sectionId}" href "${href}" should match /element/{symbol} pattern`,
-        ).toMatch(/^\/element\/[A-Z][a-z]?$/);
+          `Card ${c} in section "${sectionId}" href "${href}" should match /elements/{symbol} pattern`,
+        ).toMatch(/^\/elements\/[A-Z][a-z]?$/);
         totalCards++;
       }
     }

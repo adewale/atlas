@@ -69,11 +69,11 @@ test.describe('Homepage screenshot audit', () => {
     await expect(page.locator('h2')).toContainText('Iron');
 
     // Data plate links should be present
-    const groupLink = page.locator('a[href="/atlas/group/8"]');
+    const groupLink = page.locator('a[href="/groups/8"]');
     await expect(groupLink).toBeVisible();
-    const periodLink = page.locator('a[href="/atlas/period/4"]');
+    const periodLink = page.locator('a[href="/periods/4"]');
     await expect(periodLink).toBeVisible();
-    const blockLink = page.locator('a[href="/atlas/block/d"]');
+    const blockLink = page.locator('a[href="/blocks/d"]');
     await expect(blockLink).toBeVisible();
   });
 
@@ -83,12 +83,12 @@ test.describe('Homepage screenshot audit', () => {
 
     const aboutLink = page.locator('a[href="/about"]');
     await expect(aboutLink).toBeVisible();
-    const creditsLink = page.locator('a[href="/credits"]');
+    const creditsLink = page.locator('a[href="/about/credits"]');
     await expect(creditsLink).toBeVisible();
   });
 
   test('compare page renders correctly', async ({ page }) => {
-    await page.goto('/compare/Fe/Cu');
+    await page.goto('/elements/Fe/compare/Cu');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/compare-fe-cu.png', fullPage: true });
 
@@ -109,9 +109,9 @@ test.describe('Element folio journeys', () => {
     await expect(page.locator('.folio-number')).toBeVisible();
 
     // Data plate should show group 1, period 1, block s
-    await expect(page.locator('a[href="/atlas/group/1"]')).toBeVisible();
-    await expect(page.locator('a[href="/atlas/period/1"]')).toBeVisible();
-    await expect(page.locator('a[href="/atlas/block/s"]')).toBeVisible();
+    await expect(page.locator('a[href="/groups/1"]')).toBeVisible();
+    await expect(page.locator('a[href="/periods/1"]')).toBeVisible();
+    await expect(page.locator('a[href="/blocks/s"]')).toBeVisible();
 
     // Back link to periodic table
     await expect(page.locator('a[href="/"]').first()).toBeVisible();
@@ -124,9 +124,9 @@ test.describe('Element folio journeys', () => {
 
     await expect(page.locator('.folio-symbol')).toHaveText('Og');
     await expect(page.locator('h2')).toContainText('Oganesson');
-    await expect(page.locator('a[href="/atlas/group/18"]')).toBeVisible();
-    await expect(page.locator('a[href="/atlas/period/7"]')).toBeVisible();
-    await expect(page.locator('a[href="/atlas/block/p"]')).toBeVisible();
+    await expect(page.locator('a[href="/groups/18"]')).toBeVisible();
+    await expect(page.locator('a[href="/periods/7"]')).toBeVisible();
+    await expect(page.locator('a[href="/blocks/p"]')).toBeVisible();
   });
 
   test('Lanthanum folio (edge case: lanthanide, null group in some datasets)', async ({ page }) => {
@@ -161,7 +161,7 @@ test.describe('Atlas pages', () => {
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-group-8.png', fullPage: true });
 
     // Heading
-    await expect(page.locator('h1')).toContainText('Group 8');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Group 8');
 
     // AtlasPlate SVG should be visible
     const plate = page.locator('svg[role="img"]').first();
@@ -176,7 +176,7 @@ test.describe('Atlas pages', () => {
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-period-4.png', fullPage: true });
 
-    await expect(page.locator('h1')).toContainText('Period 4');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Period 4');
 
     const plate = page.locator('svg[role="img"]').first();
     await expect(plate).toBeVisible();
@@ -187,7 +187,7 @@ test.describe('Atlas pages', () => {
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-block-d.png', fullPage: true });
 
-    await expect(page.locator('h1')).toContainText('block');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('block');
 
     const plate = page.locator('svg[role="img"]').first();
     await expect(plate).toBeVisible();
@@ -208,7 +208,7 @@ test.describe('Atlas pages', () => {
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-rank-mass.png', fullPage: true });
 
-    await expect(page.locator('h1')).toContainText('Atomic Mass');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Atomic Mass');
 
     const plate = page.locator('svg[role="img"]').first();
     await expect(plate).toBeVisible();
@@ -220,7 +220,7 @@ test.describe('Atlas pages', () => {
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-anomaly-synthetic-heavy.png', fullPage: true });
 
     // Should have a heading
-    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toBeVisible();
 
     // Plate with element cards
     const plate = page.locator('svg[role="img"]').first();
@@ -251,7 +251,7 @@ test.describe('Information pages', () => {
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/about.png', fullPage: true });
 
-    await expect(page.locator('h1')).toContainText('About');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('About');
 
     // SVG intro section should be visible (not zero-height)
     const introSvg = page.locator('svg[aria-label="Introduction"]');
@@ -269,7 +269,7 @@ test.describe('Information pages', () => {
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/credits.png', fullPage: true });
 
-    await expect(page.locator('h1')).toContainText('Credits');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Credits');
 
     // Summaries table should have 118 rows (one per element)
     const tableRows = page.locator('tbody tr');
@@ -289,10 +289,10 @@ test.describe('Information pages', () => {
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/design.png', fullPage: true });
 
-    await expect(page.locator('h1')).toContainText('Design');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Design');
 
     // Entity Map link
-    await expect(page.locator('a[href="/entity-map"]').first()).toBeVisible();
+    await expect(page.locator('a[href="/about/entity-map"]').first()).toBeVisible();
 
     // Back link
     await expect(page.locator('a[href="/"]').first()).toBeVisible();
@@ -325,11 +325,11 @@ test.describe('Cross-page user journeys', () => {
     await expect(page.locator('.folio-symbol')).toHaveText('Fe');
 
     // Click group 8 link in data plate
-    await page.locator('a[href="/atlas/group/8"]').click();
+    await page.locator('a[href="/groups/8"]').click();
     await page.waitForTimeout(1500);
 
     // Should be on group 8 atlas page
-    await expect(page.locator('h1')).toContainText('Group 8');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Group 8');
 
     // Click back to periodic table
     await page.locator('a[href="/"]').first().click();
@@ -347,21 +347,21 @@ test.describe('Cross-page user journeys', () => {
     await page.locator('a[href="/about"]').click();
     await page.waitForTimeout(1000);
 
-    await expect(page.locator('h1')).toContainText('About');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('About');
   });
 
   test('Home → Credits via nav link', async ({ page }) => {
     await page.goto('/');
     await page.waitForTimeout(1000);
 
-    await page.locator('a[href="/credits"]').click();
+    await page.locator('a[href="/about/credits"]').click();
     await page.waitForTimeout(1000);
 
-    await expect(page.locator('h1')).toContainText('Credits');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Credits');
   });
 
   test('Compare page has back link and both elements', async ({ page }) => {
-    await page.goto('/compare/H/He');
+    await page.goto('/elements/H/compare/He');
     await page.waitForTimeout(1500);
     await page.screenshot({ path: 'tests/e2e/screenshots/compare-h-he.png', fullPage: true });
 

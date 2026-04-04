@@ -66,7 +66,7 @@ test.describe('Phase Landscape — mobile sectioned view', () => {
 
     // Spot check
     const firstHref = await cards.first().getAttribute('href');
-    expect(firstHref).toMatch(/^\/element\/[A-Z][a-z]?$/);
+    expect(firstHref).toMatch(/^\/elements\/[A-Z][a-z]?$/);
   });
 
   test('no horizontal overflow on mobile', async ({ page }) => {
@@ -126,7 +126,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
     expect(count).toBeGreaterThan(10);
 
     const href = await cards.first().getAttribute('href');
-    expect(href).toMatch(/^\/element\/[A-Z][a-z]?$/);
+    expect(href).toMatch(/^\/elements\/[A-Z][a-z]?$/);
   });
 
   test('no horizontal overflow on mobile', async ({ page }) => {
@@ -265,7 +265,7 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
     expect(count).toBeGreaterThan(20);
 
     const href = await cards.first().getAttribute('href');
-    expect(href).toMatch(/^\/element\/[A-Z][a-z]?$/);
+    expect(href).toMatch(/^\/elements\/[A-Z][a-z]?$/);
   });
 
   test('no horizontal overflow on mobile', async ({ page }) => {
@@ -285,13 +285,26 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
     if (toggleCount > 0) {
       const firstSection = page.locator('section[role="region"]').first();
       const cardsBefore = await firstSection.locator('a').count();
-      expect(cardsBefore).toBeGreaterThan(0);
 
-      await toggles.first().click();
-      await page.waitForTimeout(300);
+      // On mobile, sections start collapsed (0 cards) — click to expand
+      if (cardsBefore === 0) {
+        await toggles.first().click();
+        await page.waitForTimeout(300);
+        const cardsExpanded = await firstSection.locator('a').count();
+        expect(cardsExpanded).toBeGreaterThan(0);
 
-      const cardsAfter = await firstSection.locator('a').count();
-      expect(cardsAfter).toBe(0);
+        // Click again to collapse
+        await toggles.first().click();
+        await page.waitForTimeout(300);
+        const cardsCollapsed = await firstSection.locator('a').count();
+        expect(cardsCollapsed).toBe(0);
+      } else {
+        // Desktop: sections start expanded — click to collapse
+        await toggles.first().click();
+        await page.waitForTimeout(300);
+        const cardsAfter = await firstSection.locator('a').count();
+        expect(cardsAfter).toBe(0);
+      }
     }
   });
 

@@ -25,7 +25,7 @@ const ALL_PAGES = [
   '/about/credits',
   '/about/design',
   '/elements/Fe',
-  '/entity-map',
+  '/about/entity-map',
 ] as const;
 
 const DROP_CAP_PAGES = [

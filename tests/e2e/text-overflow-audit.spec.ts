@@ -77,6 +77,8 @@ function checkOverflow() {
         if (svgRect.width < 10 || svgRect.height < 10) return;
         const overflow = svg.getAttribute('overflow') || getComputedStyle(svg).overflow;
         if (overflow === 'visible') return;
+        // Skip wordmark SVG (decorative letters that intentionally clip)
+        if (svg.closest('.page-shell-wordmark')) return;
         svg.querySelectorAll('text').forEach((textEl) => {
           const r = textEl.getBoundingClientRect();
           if (r.width === 0 || r.height === 0) return;

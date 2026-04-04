@@ -59,15 +59,23 @@ test.describe('AtlasPlate text measurement', () => {
       const svg = document.querySelector('svg[role="img"]') as SVGSVGElement;
       if (!svg) return [];
       const CARD_W = 100;
-      const texts = svg.querySelectorAll('text');
-      return Array.from(texts).map((t) => ({
-        content: t.textContent ?? '',
-        width: t.getBBox().width,
-        fits: t.getBBox().width <= CARD_W - 8,
-      }));
+      // Only check text inside element cards (g[role="link"]), not description text
+      const cards = svg.querySelectorAll('g[role="link"]');
+      const results: { content: string; width: number; fits: boolean }[] = [];
+      cards.forEach((card) => {
+        const texts = card.querySelectorAll('text');
+        texts.forEach((t) => {
+          results.push({
+            content: t.textContent ?? '',
+            width: t.getBBox().width,
+            fits: t.getBBox().width <= CARD_W - 8,
+          });
+        });
+      });
+      return results;
     });
 
-    // Every rendered text element should fit within card bounds (with padding)
+    // Every rendered text element in cards should fit within card bounds
     for (const t of textInfo) {
       expect(t.fits, `"${t.content}" (${Math.round(t.width)}px) overflows card`).toBe(true);
     }

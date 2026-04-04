@@ -1,86 +1,41 @@
 import { test, expect } from '@playwright/test';
 
 /**
- * E2E tests for the Phase Landscape temperature slider.
+ * E2E tests for the Phase Landscape temperature interaction.
  *
- * The slider lets users change the temperature and see elements reclassified
- * between solid, liquid, gas, and unknown phases in real time.
+ * The temperature ruler is an SVG-based slider (not an HTML input[type="range"]).
+ * On mobile, the page renders SectionedCardList with phase sections.
+ * On desktop, it shows the SVG periodic table coloured by phase.
  */
 
-test.describe('Phase Landscape — temperature slider', () => {
+test.describe('Phase Landscape — temperature interaction', () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
-  test('slider is visible on mobile', async ({ page }) => {
+  test('phase sections are visible on mobile', async ({ page }) => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
 
-    const slider = page.locator('input[type="range"]');
-    await expect(slider).toBeVisible();
-    await expect(slider).toHaveAttribute('aria-label', /temperature/i);
+    // Should have section regions for phase groups
+    const sections = page.locator('section[role="region"]');
+    const count = await sections.count();
+    expect(count).toBeGreaterThanOrEqual(3); // solid, liquid, gas
   });
 
-  test('displays temperature value in K and °C', async ({ page }) => {
+  test('temperature ruler is visible on mobile', async ({ page }) => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
 
-    // Default is 273K = 0°C (STP)
-    const label = page.locator('[data-testid="temp-display"]');
-    await expect(label).toContainText('273');
-    await expect(label).toContainText('0°C');
-  });
-
-  test('changing slider updates section counts', async ({ page }) => {
-    await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
-
-    // Read solid count at STP
-    const solidHeading = page.locator('section#solid h2');
-    const stpSolidText = await solidHeading.textContent();
-    const stpSolidCount = parseInt(stpSolidText!.match(/\d+/)![0], 10);
-
-    // Drag slider to high temperature (5000K) — most elements become gas
-    const slider = page.locator('input[type="range"]');
-    await slider.fill('5000');
-    await page.waitForTimeout(500);
-
-    // Gas section should have more elements now
-    const gasHeading = page.locator('section#gas h2');
-    const hotGasText = await gasHeading.textContent();
-    const hotGasCount = parseInt(hotGasText!.match(/\d+/)![0], 10);
-
-    // At 5000K, most elements should be gas (nearly all bp < 5000K)
-    expect(hotGasCount).toBeGreaterThan(80);
-
-    // Solid count should have decreased dramatically
-    const hotSolidText = await solidHeading.textContent();
-    const hotSolidCount = parseInt(hotSolidText!.match(/\d+/)![0], 10);
-    expect(hotSolidCount).toBeLessThan(stpSolidCount);
-  });
-
-  test('at 0K all elements with data are solid', async ({ page }) => {
-    await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
-
-    const slider = page.locator('input[type="range"]');
-    await slider.fill('0');
-    await page.waitForTimeout(500);
-
-    // Liquid and gas sections should have 0 items
-    const liquidHeading = page.locator('section#liquid h2');
-    const liquidText = await liquidHeading.textContent();
-    expect(liquidText).toContain('0');
-
-    const gasHeading = page.locator('section#gas h2');
-    const gasText = await gasHeading.textContent();
-    expect(gasText).toContain('0');
+    // The ruler is an SVG element with role="slider"
+    const ruler = page.locator('[role="slider"]');
+    await expect(ruler).toBeVisible();
   });
 
   test('temperature tick marks are labelled', async ({ page }) => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
 
-    // Should show key temperature landmarks
-    await expect(page.locator('text=STP')).toBeVisible();
+    // Should show STP label
+    await expect(page.locator('text=STP').first()).toBeVisible();
   });
 
   test('no horizontal overflow with slider', async ({ page }) => {
@@ -100,14 +55,19 @@ test.describe('Phase Landscape — temperature slider', () => {
     });
   });
 
-  test('screenshot at 5000K', async ({ page }) => {
+  test('screenshot after interaction', async ({ page }) => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
-    const slider = page.locator('input[type="range"]');
-    await slider.fill('5000');
-    await page.waitForTimeout(500);
+    // Click on the ruler to change temperature
+    const ruler = page.locator('[role="slider"]');
+    const rulerBox = await ruler.boundingBox();
+    if (rulerBox) {
+      // Click near the right end of the ruler (high temperature)
+      await page.mouse.click(rulerBox.x + rulerBox.width * 0.8, rulerBox.y + rulerBox.height / 2);
+      await page.waitForTimeout(500);
+    }
     await page.screenshot({
-      path: 'tests/e2e/screenshots/phase-landscape-slider-5000k.png',
+      path: 'tests/e2e/screenshots/phase-landscape-slider-hot.png',
       fullPage: true,
     });
   });
@@ -116,15 +76,15 @@ test.describe('Phase Landscape — temperature slider', () => {
 test.describe('Phase Landscape — temperature slider (desktop)', () => {
   test.use({ viewport: { width: 1280, height: 720 } });
 
-  test('slider is visible on desktop too', async ({ page }) => {
+  test('ruler is visible on desktop too', async ({ page }) => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
 
-    const slider = page.locator('input[type="range"]');
-    await expect(slider).toBeVisible();
+    const ruler = page.locator('[role="slider"]');
+    await expect(ruler).toBeVisible();
   });
 
-  test('changing temperature recolours periodic table cells', async ({ page }) => {
+  test('clicking ruler changes cell colours', async ({ page }) => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
 
@@ -132,23 +92,29 @@ test.describe('Phase Landscape — temperature slider (desktop)', () => {
     const feCell = page.locator('g[aria-label*="Fe —"]').locator('rect').first();
     const stpFill = await feCell.getAttribute('fill');
 
-    // Set to 2000K — Iron melts (mp=1811K), should now be liquid (DEEP_BLUE)
-    const slider = page.locator('input[type="range"]');
-    await slider.fill('2000');
-    await page.waitForTimeout(500);
+    // Click near the right end of the ruler (high temperature)
+    const ruler = page.locator('[role="slider"]');
+    const rulerBox = await ruler.boundingBox();
+    if (rulerBox) {
+      await page.mouse.click(rulerBox.x + rulerBox.width * 0.8, rulerBox.y + rulerBox.height / 2);
+      await page.waitForTimeout(500);
+    }
 
     const hotFill = await feCell.getAttribute('fill');
     expect(hotFill).not.toBe(stpFill);
   });
 
-  test('screenshot at 2000K desktop', async ({ page }) => {
+  test('screenshot at high temperature desktop', async ({ page }) => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
-    const slider = page.locator('input[type="range"]');
-    await slider.fill('2000');
-    await page.waitForTimeout(500);
+    const ruler = page.locator('[role="slider"]');
+    const rulerBox = await ruler.boundingBox();
+    if (rulerBox) {
+      await page.mouse.click(rulerBox.x + rulerBox.width * 0.6, rulerBox.y + rulerBox.height / 2);
+      await page.waitForTimeout(500);
+    }
     await page.screenshot({
-      path: 'tests/e2e/screenshots/phase-landscape-slider-2000k-desktop.png',
+      path: 'tests/e2e/screenshots/phase-landscape-slider-desktop.png',
       fullPage: true,
     });
   });

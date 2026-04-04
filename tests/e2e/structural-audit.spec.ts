@@ -54,6 +54,7 @@ test.describe('Structural audit — PBT constraints', () => {
       await page.goto(path);
       await page.waitForTimeout(1500);
 
+      // PageShell renders an h1 wordmark on desktop; check for at least one h1
       const h1 = page.locator('h1');
       const h1Count = await h1.count();
       expect(
@@ -110,7 +111,7 @@ test.describe('Structural audit — PBT constraints', () => {
 
   // 5. Entity Graph nodes use roundel design (always filled, white text)
   test('Entity Graph nodes have white text on colored backgrounds', async ({ page }) => {
-    await page.goto('/entity-map');
+    await page.goto('/about/entity-map');
     await page.waitForTimeout(2000);
 
     // Find SVG node text elements

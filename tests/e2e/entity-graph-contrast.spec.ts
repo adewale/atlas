@@ -26,7 +26,7 @@ test.describe('Entity graph contrast — desktop', () => {
   test.setTimeout(60_000);
 
   test('roundel bars are wider than label text', async ({ page }) => {
-    await page.goto('/entity-map');
+    await page.goto('/about/entity-map');
     await settle(page);
 
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
@@ -69,7 +69,7 @@ test.describe('Entity graph contrast — desktop', () => {
   });
 
   test('all roundel bars have uniform width', async ({ page }) => {
-    await page.goto('/entity-map');
+    await page.goto('/about/entity-map');
     await settle(page);
 
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
@@ -95,7 +95,7 @@ test.describe('Entity graph contrast — desktop', () => {
   });
 
   test('hover tooltip fully contains description text', async ({ page }) => {
-    await page.goto('/entity-map');
+    await page.goto('/about/entity-map');
     await settle(page);
 
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
@@ -155,7 +155,7 @@ test.describe('Entity graph contrast — desktop', () => {
   });
 
   test('edge label backgrounds are fully opaque', async ({ page }) => {
-    await page.goto('/entity-map');
+    await page.goto('/about/entity-map');
     await settle(page);
 
     // Verify via the source markup that edge rect opacity is 1.
@@ -206,7 +206,7 @@ test.describe('Entity graph contrast — mobile', () => {
     });
     const page = await context.newPage();
 
-    await page.goto('/entity-map');
+    await page.goto('/about/entity-map');
     await settle(page);
 
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
@@ -258,7 +258,7 @@ test.describe('Entity graph contrast — mobile', () => {
     });
     const page = await context.newPage();
 
-    await page.goto('/entity-map');
+    await page.goto('/about/entity-map');
     await settle(page);
 
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');

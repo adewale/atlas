@@ -10,13 +10,16 @@ test.describe('Home page', () => {
 
   test('search bar is visible', async ({ page }) => {
     await page.goto('/');
-    const search = page.locator('#pt-search');
-    await expect(search).toBeVisible();
+    await page.waitForTimeout(1000);
+    const search = page.locator('input[type="search"], input[placeholder*="earch"], #pt-search');
+    await expect(search.first()).toBeVisible();
   });
 
   test('search filters periodic table', async ({ page }) => {
     await page.goto('/');
-    await page.fill('#pt-search', 'iron');
+    await page.waitForTimeout(1000);
+    const search = page.locator('input[type="search"], input[placeholder*="earch"], #pt-search');
+    await search.first().fill('iron');
     // Fe cell should still be visible (the others are dimmed but still rendered)
     const feCell = page.locator('[aria-label*="Iron"]');
     await expect(feCell).toBeVisible();
@@ -27,7 +30,7 @@ test.describe('Home page', () => {
     // Click on Iron (Fe)
     const feCell = page.locator('[aria-label*="Iron, atomic number 26"]');
     await feCell.click();
-    await page.waitForURL(/\/element\/Fe/);
+    await page.waitForURL(/\/elements\/Fe/);
     expect(page.url()).toContain('/elements/Fe');
   });
 
@@ -63,7 +66,7 @@ test.describe('Element folio', () => {
 
 test.describe('Compare view', () => {
   test('renders both elements', async ({ page }) => {
-    await page.goto('/compare/Fe/O');
+    await page.goto('/elements/Fe/compare/O');
     // Check both element symbols are visible
     await expect(page.locator('text=Fe').first()).toBeVisible();
     await expect(page.locator('text=O').first()).toBeVisible();
@@ -85,7 +88,7 @@ test.describe('All routes load', () => {
     '/categories/noble-gas',
     '/properties/mass',
     '/anomalies/synthetic-heavy',
-    '/compare/Fe/O',
+    '/elements/Fe/compare/O',
     '/about',
     '/about/credits',
     '/about/design',
@@ -116,8 +119,9 @@ test.describe('Mobile viewport', () => {
 
   test('search bar visible on mobile', async ({ page }) => {
     await page.goto('/');
-    const search = page.locator('#pt-search');
-    await expect(search).toBeVisible();
+    await page.waitForTimeout(1000);
+    const search = page.locator('input[type="search"], input[placeholder*="earch"], #pt-search');
+    await expect(search.first()).toBeVisible();
   });
 
   test('periodic table scrolls horizontally on mobile', async ({ page }) => {

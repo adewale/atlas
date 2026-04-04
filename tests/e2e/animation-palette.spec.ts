@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Animation Palette page', () => {
   test('page loads and renders all sections', async ({ page }) => {
-    await page.goto('/animation-palette');
+    await page.goto('/about/animation-palette');
     await page.waitForTimeout(1000);
 
     // Back link
     await expect(page.locator('a').filter({ hasText: '← Table' })).toBeVisible();
 
-    // Page title
-    await expect(page.locator('h1')).toContainText('Animation Palette');
+    // Page title — use last() to skip PageShell wordmark h1
+    await expect(page.locator('h1').last()).toContainText('Animation Palette');
 
     // Sections
     await expect(page.locator('h2').filter({ hasText: 'Easing Curves' })).toBeVisible();
@@ -29,7 +29,7 @@ test.describe('Animation Palette page', () => {
   });
 
   test('easing curve demos are interactive', async ({ page }) => {
-    await page.goto('/animation-palette');
+    await page.goto('/about/animation-palette');
     await page.waitForTimeout(500);
 
     // Find and click the first Play button
@@ -44,7 +44,7 @@ test.describe('Animation Palette page', () => {
   });
 
   test('entry keyframe demos are replayable', async ({ page }) => {
-    await page.goto('/animation-palette');
+    await page.goto('/about/animation-palette');
     await page.waitForTimeout(500);
 
     // Replay buttons for keyframes
@@ -68,7 +68,7 @@ test.describe('Animation Palette page', () => {
   });
 
   test('morph demo is toggleable', async ({ page }) => {
-    await page.goto('/animation-palette');
+    await page.goto('/about/animation-palette');
     await page.waitForTimeout(500);
 
     // Expand button
@@ -91,7 +91,7 @@ test.describe('Animation Palette page', () => {
   });
 
   test('colour morph demo cycles blocks', async ({ page }) => {
-    await page.goto('/animation-palette');
+    await page.goto('/about/animation-palette');
     await page.waitForTimeout(500);
 
     const nextBlockBtn = page.locator('button').filter({ hasText: 'Next block' });
@@ -105,7 +105,7 @@ test.describe('Animation Palette page', () => {
   });
 
   test('view transition name table lists all 11 names', async ({ page }) => {
-    await page.goto('/animation-palette');
+    await page.goto('/about/animation-palette');
     await page.waitForTimeout(500);
 
     // Count table rows (excluding header)
@@ -129,7 +129,7 @@ test.describe('Animation Palette page', () => {
   });
 
   test('duration tier cards display correctly', async ({ page }) => {
-    await page.goto('/animation-palette');
+    await page.goto('/about/animation-palette');
     await page.waitForTimeout(500);
 
     await expect(page.locator('text=150ms').first()).toBeVisible();

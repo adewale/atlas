@@ -94,14 +94,14 @@ test.describe('Performance visual regression', () => {
 
   test('Discovery timeline page renders after optimizations', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForSelector('h1', { timeout: 10000 });
+    await page.waitForSelector('h1:not([aria-label="Atlas"])', { timeout: 10000 });
 
     await page.screenshot({
       path: 'tests/e2e/screenshots/perf-discovery-timeline.png',
       fullPage: true,
     });
 
-    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toBeVisible();
   });
 });
 
