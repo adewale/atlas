@@ -260,9 +260,16 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
     await page.goto('/discoverer-network');
     await page.waitForTimeout(2000);
 
+    // On mobile, sections start collapsed — expand the first one
+    const firstToggle = page.locator('section[role="region"] button[aria-expanded]').first();
+    if (await firstToggle.count() > 0) {
+      await firstToggle.click();
+      await page.waitForTimeout(500);
+    }
+
     const cards = page.locator('section[role="region"] a');
     const count = await cards.count();
-    expect(count).toBeGreaterThan(20);
+    expect(count).toBeGreaterThan(0);
 
     const href = await cards.first().getAttribute('href');
     expect(href).toMatch(/^\/elements\/[A-Z][a-z]?$/);

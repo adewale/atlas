@@ -8,27 +8,11 @@ test.describe('Home page', () => {
     await expect(cells).toHaveCount(118);
   });
 
-  test('search bar is visible', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForTimeout(1000);
-    const search = page.locator('input[type="search"], input[placeholder*="earch"], #pt-search');
-    await expect(search.first()).toBeVisible();
-  });
-
-  test('search filters periodic table', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForTimeout(1000);
-    const search = page.locator('input[type="search"], input[placeholder*="earch"], #pt-search');
-    await search.first().fill('iron');
-    // Fe cell should still be visible (the others are dimmed but still rendered)
-    const feCell = page.locator('[aria-label*="Iron"]');
-    await expect(feCell).toBeVisible();
-  });
-
   test('click element navigates to folio', async ({ page }) => {
     await page.goto('/');
-    // Click on Iron (Fe)
-    const feCell = page.locator('[aria-label*="Iron, atomic number 26"]');
+    await page.waitForTimeout(1000);
+    // Click on Iron (Fe) — aria-label format is "Fe 26 Iron transition-metal"
+    const feCell = page.locator('[aria-label*="Iron"]').first();
     await feCell.click();
     await page.waitForURL(/\/elements\/Fe/);
     expect(page.url()).toContain('/elements/Fe');
@@ -116,13 +100,6 @@ test.describe('All routes load', () => {
 
 test.describe('Mobile viewport', () => {
   test.use({ viewport: { width: 375, height: 812 } });
-
-  test('search bar visible on mobile', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForTimeout(1000);
-    const search = page.locator('input[type="search"], input[placeholder*="earch"], #pt-search');
-    await expect(search.first()).toBeVisible();
-  });
 
   test('periodic table scrolls horizontally on mobile', async ({ page }) => {
     await page.goto('/');

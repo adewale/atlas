@@ -234,10 +234,10 @@ test.describe('Atlas pages', () => {
     await page.goto('/groups/8');
     await page.waitForTimeout(1500);
 
-    // Click on Iron link to navigate to folio
-    const feLink = page.locator('a[href="/elements/Fe"]').first();
-    await expect(feLink).toBeVisible();
-    await feLink.click();
+    // Click on Iron card in the AtlasPlate SVG (uses g[role="link"] with onClick navigation)
+    const feCard = page.locator('g[aria-label*="Iron"]').first();
+    await expect(feCard).toBeVisible();
+    await feCard.click();
     await page.waitForTimeout(1500);
 
     // Should be on the Iron folio page

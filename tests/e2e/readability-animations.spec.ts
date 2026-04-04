@@ -116,7 +116,7 @@ test.describe('Text readability', () => {
     // Each plate section should have visible SVG text
     const svgs = plate.locator('svg');
     const svgCount = await svgs.count();
-    expect(svgCount).toBe(3); // group, period, block
+    expect(svgCount).toBeGreaterThanOrEqual(3); // group, period, block (may include additional SVGs)
 
     for (let i = 0; i < svgCount; i++) {
       const svg = svgs.nth(i);
@@ -183,13 +183,13 @@ test.describe('Animation transitions', () => {
     // Wait for bar-grow animation (300ms + staggered delay)
     await page.waitForTimeout(1500);
 
-    // Property bars should have visible colored fill
-    const bars = page.locator('[aria-label*="ranked"]');
-    const count = await bars.count();
+    // Property rank rows should have visible SVGs inside .folio-rank-rows
+    const rankRows = page.locator('.folio-rank-rows svg');
+    const count = await rankRows.count();
     expect(count).toBeGreaterThanOrEqual(3); // Mass, EN, IE, Radius (some may vary)
 
     for (let i = 0; i < count; i++) {
-      const box = await bars.nth(i).boundingBox();
+      const box = await rankRows.nth(i).boundingBox();
       expect(box).not.toBeNull();
       expect(box!.width).toBeGreaterThan(50);
     }
@@ -213,26 +213,21 @@ test.describe('Animation transitions', () => {
     expect(firstBox!.width).toBeGreaterThan(100);
   });
 
-  test('search filter produces dimming transition', async ({ page }) => {
+  test('highlight mode toggle changes cell fill colours', async ({ page }) => {
     await page.goto('/');
     await page.waitForTimeout(2000);
 
-    // Type "Fe" in search — most cells should dim
-    const search = page.locator('input[type="search"], input[placeholder*="earch"], #pt-search');
-    await search.first().fill('Fe');
+    // Get initial fill of a cell
+    const feRect = page.locator('g[aria-label*="Iron"] rect');
+    const initialFill = await feRect.getAttribute('fill');
+
+    // Switch to block highlight mode via chip button
+    await page.getByRole('button', { name: /block/i }).click();
     await page.waitForTimeout(500);
 
-    // Iron should NOT be dimmed
-    const feRect = page.locator('g[aria-label*="Iron"] rect');
-    const feFill = await feRect.getAttribute('fill');
-
-    // An unrelated element should be dimmed
-    const heRect = page.locator('g[aria-label*="Helium"] rect');
-    const heFill = await heRect.getAttribute('fill');
-
-    // Fe should have a non-dim fill, He should be dimmed (#ece7db)
-    expect(heFill).toBe('#ece7db');
-    expect(feFill).not.toBe('#ece7db');
+    // Fill should have changed (block colouring applied)
+    const newFill = await feRect.getAttribute('fill');
+    expect(newFill).not.toBe(initialFill);
   });
 
   test('prefers-reduced-motion is respected', async ({ page }) => {

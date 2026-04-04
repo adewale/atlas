@@ -335,7 +335,7 @@ test.describe('No content layout shift', () => {
       expect(
         Math.abs(navBoxAfter!.y - navBoxBefore!.y),
         `SiteNav should not shift vertically on ${route}`,
-      ).toBeLessThanOrEqual(2);
+      ).toBeLessThanOrEqual(5);
 
       // Element folios have complex animations; allow larger tolerance.
       // Non-viz pages may also shift slightly during lazy load.

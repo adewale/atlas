@@ -177,8 +177,8 @@ test.describe('Etymology Map — property-based tests', () => {
     await page.goto(ETYMOLOGY_URL);
     await page.waitForTimeout(2000);
 
-    // IntroBlock renders an SVG with role="img" — find the first one in main content
-    const introSvg = page.locator('.page-shell-content svg[role="img"]').first();
+    // IntroBlock renders an SVG (no role="img") — find the first one in main content
+    const introSvg = page.locator('.page-shell-content svg').first();
     await expect(introSvg, 'Intro SVG should be visible').toBeVisible();
 
     const svgTextElements = introSvg.locator('text');
