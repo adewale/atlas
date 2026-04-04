@@ -297,16 +297,14 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const sameDiscoverer = useMemo(() => {
     if (!element.discoverer || element.discoverer.toLowerCase().includes('antiquity')) return [];
     return allElements
-      .filter((e) => e.discoverer === element.discoverer && e.symbol !== element.symbol)
-      .slice(0, 6);
+      .filter((e) => e.discoverer === element.discoverer && e.symbol !== element.symbol);
   }, [element]);
 
   // Find elements sharing the same etymology origin (lateral link)
   const sameEtymology = useMemo(() => {
     if (!element.etymologyOrigin || element.etymologyOrigin === 'unknown') return [];
     return allElements
-      .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol)
-      .slice(0, 6);
+      .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol);
   }, [element]);
 
   // Anomalies this element belongs to

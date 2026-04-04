@@ -87,7 +87,7 @@ export default function DiscovererDetail() {
         if (dElements.some((e) => blocks.has(e.block))) return true;
         return false;
       })
-      .slice(0, 8);
+      ; // no limit — show all related discoverers
   }, [discoverers, decodedName, discoverer]);
 
   if (!discoverer) {
