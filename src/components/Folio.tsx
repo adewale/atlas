@@ -7,6 +7,7 @@ import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
+import { getElementMetrics } from '../lib/metrics';
 import PretextSvg from './PretextSvg';
 import { GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
@@ -66,9 +67,9 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
   const valueY = strValue.length > 6 ? 42 : 46;
   const hasArrows = !!(prev || next);
   const maxTextWidth = rowWidth - 12 - (hasArrows ? 52 : 8);
-  // Measure actual text width with Pretext instead of estimating
-  const valueFont = `bold ${valueFontSize}px ${valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}`;
   const displayValue = strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue;
+  // Use Pretext measurement for compression detection (fallback for non-precomputed values)
+  const valueFont = `bold ${valueFontSize}px ${valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}`;
   const measured = measureLines(displayValue, valueFont, 9999, valueFontSize);
   const measuredWidth = measured[0]?.width ?? 0;
   const needsCompression = measuredWidth > maxTextWidth;
@@ -215,10 +216,10 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const effectiveNarrow = effectiveWidth - PLATE_WIDTH - PLATE_GAP;
 
   const paddedNumber = String(element.atomicNumber).padStart(3, '0');
-  const identityWidth = useMemo(
-    () => measureIdentityWidth(paddedNumber, element.symbol, element.name, mobile),
-    [paddedNumber, element.symbol, element.name, mobile],
-  );
+  const precomputed = getElementMetrics(element.symbol);
+  const identityWidth = precomputed
+    ? (mobile ? precomputed.identityWidthMobile : precomputed.identityWidth)
+    : measureIdentityWidth(paddedNumber, element.symbol, element.name, mobile);
 
   const textFullWidth = mobile ? effectiveWidth : Math.min(FULL_WIDTH, effectiveWidth);
   const { lines, lineHeight } = useShapedText({

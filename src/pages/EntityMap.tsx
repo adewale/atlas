@@ -9,6 +9,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { usePretextLines } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, measureLines } from '../lib/pretext';
+import { getEdgeWidth } from '../lib/metrics';
 import PretextSvg from '../components/PretextSvg';
 
 type Edge = {
@@ -226,8 +227,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
               />
               {isActive && (() => {
                 const labelText = `${edge.label} (${edge.cardinality})`;
-                const measured = measureLines(labelText, 'bold 11px system-ui, sans-serif', 9999, 16);
-                const labelW = (measured[0]?.width ?? 60) + 12;
+                const labelW = getEdgeWidth(labelText) + 12;
                 return (
                   <>
                     {/* Background for readability */}

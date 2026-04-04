@@ -6,6 +6,7 @@ import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, INSCRIPTION_S
 import { useIsMobile } from '../hooks/useIsMobile';
 import { VT } from '../lib/transitions';
 import { PRETEXT_SANS, measureLines } from '../lib/pretext';
+import { getElementMetrics, getPropertyMetrics } from '../lib/metrics';
 import IntroBlock from '../components/IntroBlock';
 
 import type { ElementRecord } from '../lib/types';
@@ -476,17 +477,12 @@ export default function PropertyScatter() {
             if (!hPt) return null;
             const cx = toSvgX(hPt.xVal);
             const cy = toSvgY(hPt.yVal);
-            // Measure the widest line to size the card
-            const nameMeasured = measureLines(hPt.el.name, 'bold 14px system-ui, sans-serif', 9999, 16);
-            const xPropText = `${PROPERTY_LABELS[xKey]}: ${INTEGER_PROPERTIES.has(xKey) ? hPt.xVal : hPt.xVal.toFixed(2)}`;
-            const yPropText = `${PROPERTY_LABELS[yKey]}: ${INTEGER_PROPERTIES.has(yKey) ? hPt.yVal : hPt.yVal.toFixed(2)}`;
-            const xPropMeasured = measureLines(xPropText, '10px system-ui, sans-serif', 9999, 12);
-            const yPropMeasured = measureLines(yPropText, '10px system-ui, sans-serif', 9999, 12);
-            const cardW = Math.max(
-              (nameMeasured[0]?.width ?? 80),
-              (xPropMeasured[0]?.width ?? 80),
-              (yPropMeasured[0]?.width ?? 80),
-            ) + 24; // 10px left pad + 14px right pad
+            // Use precomputed name width + property label width for card sizing
+            const elMetrics = getElementMetrics(hPt.el.symbol);
+            const nameW = elMetrics?.nameWidth14 ?? 80;
+            const xPropW = (getPropertyMetrics(xKey)?.width10 ?? 80) + 40; // label + ": " + value
+            const yPropW = (getPropertyMetrics(yKey)?.width10 ?? 80) + 40;
+            const cardW = Math.max(nameW, xPropW, yPropW) + 24;
             const cardH = 72;
             // Flip card left if too close to right edge
             const flipX = cx + SQUARE_SIZE / 2 + 8 + cardW > SVG_W - MARGIN.right;
