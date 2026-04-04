@@ -190,7 +190,7 @@ test.describe('Readability: Element Folio', () => {
     const bars = page.locator('.folio-rank-rows svg');
     const barCount = await bars.count();
     expect(barCount).toBeGreaterThanOrEqual(3);
-    await assertAllVisible(bars, 'Property rank rows', 30);
+    await assertAllVisible(bars, 'Property rank rows', 20);
   });
 
   test('summary text lines are not overlapping', async ({ page }) => {
