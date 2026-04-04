@@ -1,54 +1,68 @@
 /**
- * Explore page — unified search + faceted navigation across all entity types.
+ * Explore page — faceted search across all entity types.
  *
- * Combines:
- *  - Text search across ~300 entities
- *  - Byrne chip filters by entity type
- *  - Breadcrumb drill-down into entity children
- *  - Byrne-style entity cards with content-visibility optimization
- *  - Hover-to-highlight: hovering a card dims others, highlighting related entities
+ * All querying goes through the search API (hybrid D1 FTS5 + Vectorize,
+ * or local adapter when the Worker is not deployed). No client-side
+ * searchEntities() — the API handles scoring, synonym expansion, and
+ * Reciprocal Rank Fusion.
  *
- * Performance:
- *  - Loads a single pre-built entity-index.json (~121 KB, gzipped ~25 KB)
- *    instead of 9 separate JSON imports (227 KB total)
- *  - No client-side buildEntities() — corpus is pre-computed at derivation time
- *  - Viewport-relative stagger, content-visibility, two-tier card rendering
+ * Facets compose with AND across dimensions, OR within a dimension.
+ * State lives entirely in the URL: /explore?q=curie&type=element&block=d
+ *
+ * Follows Olsen's faceted navigation state machine:
+ *  - No dead ends: zero-count chips are disabled, not hidden
+ *  - Self-exclusion counting: counts for facet F ignore F's selection
+ *  - URL as source of truth: deep linking and reproducibility
  */
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useLoaderData, useSearchParams } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
-  searchEntities,
   ENTITY_TYPES,
   ENTITY_TYPE_LABELS,
   ENTITY_TYPE_COLOURS,
-  type Entity,
   type EntityType,
 } from '../lib/entities';
+import { parseSearchParams, buildSearchParams, type FacetState, type FacetKey } from '../lib/facets';
+import type { SearchResponse } from '../lib/search';
 import {
   BLACK,
-  DIM,
   GREY_MID,
   GREY_RULE,
   MUSTARD,
   INSCRIPTION_STYLE,
-  SECTION_LABEL_STYLE,
   CONTROL_SECTION_MIN_HEIGHT,
 } from '../lib/theme';
 import { PRETEXT_SANS } from '../lib/pretext';
 import PageShell from '../components/PageShell';
-import ByrneChips from '../components/ByrneChips';
-import type { ChipOption } from '../components/ByrneChips';
 import EntityCard from '../components/EntityCard';
 import type { CrossRef } from '../components/EntityCard';
 
-/**
- * Maximum cards to stagger in one batch. Cards beyond this threshold
- * get index capped so they don't wait unreasonably long to appear.
- */
 const MAX_STAGGER_BATCH = 24;
+
+/** Facet dimensions rendered as chip rows. */
+const FACET_DIMENSIONS: { key: FacetKey; label: string }[] = [
+  { key: 'type', label: 'Entity type' },
+  { key: 'block', label: 'Block' },
+  { key: 'phase', label: 'Phase' },
+  { key: 'era', label: 'Era' },
+  { key: 'etymologyOrigin', label: 'Etymology' },
+];
+
+/** Display labels for facet values. */
+const FACET_VALUE_LABELS: Record<string, Record<string, string>> = {
+  type: Object.fromEntries(ENTITY_TYPES.map((t) => [t, ENTITY_TYPE_LABELS[t]])),
+  block: { s: 's-block', p: 'p-block', d: 'd-block', f: 'f-block' },
+  phase: { solid: 'Solid', liquid: 'Liquid', gas: 'Gas' },
+};
+
+/** Colour for a facet chip. */
+function facetChipColour(key: string, value: string): string {
+  if (key === 'type') return ENTITY_TYPE_COLOURS[value as EntityType] ?? BLACK;
+  return BLACK;
+}
 
 /* ------------------------------------------------------------------ */
 /* Component                                                          */
@@ -60,156 +74,111 @@ export default function Explore() {
   type RefEntry = { id: string; rel: string };
   type RefLookup = Record<string, { out: RefEntry[]; in: RefEntry[] }>;
 
-  const loaderData = useLoaderData() as { entityIndex: Entity[]; refLookup: RefLookup };
-  const allEntities: Entity[] = loaderData.entityIndex;
+  const loaderData = useLoaderData() as {
+    search: (req: import('../lib/search').SearchRequest) => Promise<SearchResponse>;
+    refLookup: RefLookup;
+  };
+  const searchFn = loaderData.search;
   const refLookup: RefLookup = loaderData.refLookup;
 
   const transitionNavigate = useViewTransitionNavigate();
   const isMobile = useIsMobile();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // URL-driven state: ?q=...&type=element,group&drill=category-nonmetal
-  const query = searchParams.get('q') ?? '';
-  const activeTypes = useMemo<Set<EntityType>>(() => {
-    const raw = searchParams.get('type');
-    if (!raw) return new Set();
-    return new Set(raw.split(',').filter((t): t is EntityType => ENTITY_TYPES.includes(t as EntityType)));
-  }, [searchParams]);
+  // Parse URL into facet state
+  const facetState = useMemo(() => parseSearchParams(searchParams), [searchParams]);
 
-  // Drill chain: resolve entity ids from the URL param
-  const breadcrumbs = useMemo<Entity[]>(() => {
-    const raw = searchParams.get('drill');
-    if (!raw) return [];
-    const ids = raw.split(',');
-    return ids.map((id) => allEntities.find((e) => e.id === id)).filter(Boolean) as Entity[];
-  }, [searchParams, allEntities]);
+  // Search results from the API
+  const [response, setResponse] = useState<SearchResponse>({ results: [], total: 0 });
+  const [loading, setLoading] = useState(true);
+
+  // Fetch results whenever facet state changes
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    searchFn(facetState).then((res) => {
+      if (!cancelled) {
+        setResponse(res);
+        setLoading(false);
+      }
+    });
+    return () => { cancelled = true; };
+  }, [facetState, searchFn]);
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const currentDrill = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1] : null;
 
-  // Resolve cross-refs for the expanded card (non-element refs only, capped for display)
+  const [staggerGen, setStaggerGen] = useState(0);
+  const bumpStagger = useCallback(() => setStaggerGen((g) => g + 1), []);
+
+  // Resolve cross-refs for expanded card
   const expandedRefs = useMemo<CrossRef[]>(() => {
     if (!expandedId) return [];
     const entry = refLookup[expandedId];
     if (!entry) return [];
     const refs: CrossRef[] = [];
     const seen = new Set<string>();
+    // Use full entity list from response for lookups
+    const entityMap = new Map(response.results.map((r) => [r.id, r]));
     for (const { id, rel } of [...entry.out, ...entry.in]) {
       if (seen.has(id)) continue;
       seen.add(id);
-      const target = allEntities.find((e) => e.id === id);
-      if (!target) continue;
-      // Skip element refs (they're already shown as mini-symbols)
-      if (target.type === 'element') continue;
-      refs.push({ id: target.id, name: target.name, type: target.type, colour: target.colour, href: target.href, rel });
+      const target = entityMap.get(id);
+      if (!target || target.type === 'element') continue;
+      refs.push({
+        id: target.id,
+        name: target.name,
+        type: target.type as EntityType,
+        colour: ENTITY_TYPE_COLOURS[target.type as EntityType] ?? BLACK,
+        href: target.path || null,
+        rel,
+      });
     }
     return refs.slice(0, 12);
-  }, [expandedId, refLookup, allEntities]);
+  }, [expandedId, refLookup, response.results]);
 
-  // Stagger generation: increments on each filter/search change so
-  // the CSS animation replays with fresh delays
-  const [staggerGen, setStaggerGen] = useState(0);
-  const bumpStagger = useCallback(() => setStaggerGen((g) => g + 1), []);
-
-  // When drilling, show child element entities
-  const drillChildren: Entity[] = useMemo(() => {
-    if (!currentDrill) return [];
-    const symbolSet = new Set(currentDrill.elements);
-    return allEntities.filter(
-      (e) => e.type === 'element' && symbolSet.has(e.elements[0]),
-    );
-  }, [currentDrill, allEntities]);
-
-  // Filter and search
-  const filtered = useMemo(() => {
-    if (currentDrill) return drillChildren;
-    let pool = allEntities;
-    if (activeTypes.size > 0) pool = pool.filter((e) => activeTypes.has(e.type));
-    if (query.trim()) pool = searchEntities(pool, query);
-    return pool;
-  }, [allEntities, activeTypes, query, currentDrill, drillChildren]);
-
-  // Type counts for chips (self-exclusion: computed from search-filtered but type-unfiltered pool)
-  const typeCounts = useMemo(() => {
-    const searchPool = query.trim() ? searchEntities(allEntities, query) : allEntities;
-    const counts = new Map<EntityType, number>();
-    for (const e of searchPool) counts.set(e.type, (counts.get(e.type) ?? 0) + 1);
-    return counts;
-  }, [allEntities, query]);
-
-  const chipOptions: ChipOption<EntityType>[] = ENTITY_TYPES
-    .map((type) => ({
-      value: type,
-      label: ENTITY_TYPE_LABELS[type],
-      colour: ENTITY_TYPE_COLOURS[type],
-      count: typeCounts.get(type) ?? 0,
-    }))
-    .filter((opt) => opt.count > 0);
-
-  // Hover-to-highlight: compute the set of element symbols belonging to the hovered entity
+  // Hover-to-highlight
   const highlightSymbols = useMemo(() => {
     if (!hoveredId) return null;
-    const hovered = allEntities.find((e) => e.id === hoveredId);
+    const hovered = response.results.find((r) => r.id === hoveredId);
     if (!hovered || hovered.elements.length === 0) return null;
     return new Set(hovered.elements);
-  }, [hoveredId, allEntities]);
+  }, [hoveredId, response.results]);
 
-  /** Helper: update search params (always replaces history). */
-  const updateParams = useCallback((updater: (p: URLSearchParams) => void) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-      updater(next);
-      return next;
-    }, { replace: true });
+  /** Update a single facet dimension in the URL. */
+  const setFacet = useCallback((key: FacetKey, values: string[]) => {
+    const next: FacetState = { ...facetState };
+    if (values.length > 0) next[key] = values;
+    else delete next[key];
+    setSearchParams(buildSearchParams(next), { replace: true });
+    bumpStagger();
+  }, [facetState, setSearchParams, bumpStagger]);
+
+  /** Toggle a single value within a facet dimension. */
+  const toggleFacetValue = useCallback((key: FacetKey, value: string) => {
+    const current = facetState[key] ?? [];
+    const next = current.includes(value)
+      ? current.filter((v) => v !== value)
+      : [...current, value];
+    setFacet(key, next);
+  }, [facetState, setFacet]);
+
+  const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const next: FacetState = { ...facetState, q: e.target.value };
+    setSearchParams(buildSearchParams(next), { replace: true });
+    bumpStagger();
+  }, [facetState, setSearchParams, bumpStagger]);
+
+  const handleClearAll = useCallback(() => {
+    setSearchParams(new URLSearchParams(), { replace: true });
+    setExpandedId(null);
     bumpStagger();
   }, [setSearchParams, bumpStagger]);
-
-  const handleToggleType = useCallback((type: EntityType) => {
-    updateParams((p) => {
-      const next = new Set(activeTypes);
-      if (next.has(type)) next.delete(type); else next.add(type);
-      if (next.size === 0) p.delete('type');
-      else p.set('type', [...next].join(','));
-      p.delete('drill');
-    });
-  }, [activeTypes, updateParams]);
-
-  const handleDrill = useCallback((entity: Entity) => {
-    updateParams((p) => {
-      const ids = breadcrumbs.map((b) => b.id);
-      ids.push(entity.id);
-      p.set('drill', ids.join(','));
-    });
-  }, [breadcrumbs, updateParams]);
-
-  const handleBreadcrumbClick = useCallback((index: number) => {
-    updateParams((p) => {
-      if (index < 0) p.delete('drill');
-      else p.set('drill', breadcrumbs.slice(0, index + 1).map((b) => b.id).join(','));
-    });
-  }, [breadcrumbs, updateParams]);
 
   const handleNavigate = useCallback(
     (href: string) => transitionNavigate(href),
     [transitionNavigate],
   );
-
-  const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    updateParams((p) => {
-      if (e.target.value) p.set('q', e.target.value);
-      else p.delete('q');
-      p.delete('drill');
-    });
-  }, [updateParams]);
-
-  const handleClearAll = useCallback(() => {
-    updateParams((p) => {
-      p.delete('q');
-      p.delete('type');
-      p.delete('drill');
-    });
-  }, [updateParams]);
 
   const handleHover = useCallback((id: string | null) => {
     setHoveredId(id);
@@ -219,7 +188,16 @@ export default function Explore() {
     setExpandedId((prev) => prev === id ? null : id);
   }, []);
 
-  const hasActiveFilters = activeTypes.size > 0 || query.trim().length > 0 || breadcrumbs.length > 0;
+  /** Clicking a non-element card sets its type as a facet. */
+  const handleCardDrill = useCallback((entity: { id: string; type: string; name: string }) => {
+    // Instead of drill: set the entity type as a facet filter
+    // For specific entities (discoverer, era, etc.), we could add
+    // entity-specific facets in the future. For now, set the type facet.
+    toggleFacetValue('type', entity.type);
+  }, [toggleFacetValue]);
+
+  const hasActiveFilters = facetState.q.length > 0
+    || Object.keys(facetState).some((k) => k !== 'q' && (facetState as Record<string, unknown>)[k]);
 
   return (
     <PageShell vizNav>
@@ -230,7 +208,7 @@ export default function Explore() {
         <div style={{ marginBottom: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <input
             type="text"
-            value={query}
+            value={facetState.q}
             onChange={handleQueryChange}
             placeholder="Search entities\u2026"
             aria-label="Search entities"
@@ -268,75 +246,90 @@ export default function Explore() {
           )}
         </div>
 
-        {/* Byrne chip facets */}
-        {!currentDrill && (
-          <div style={{ marginBottom: '16px' }}>
-            <ByrneChips
-              label="Entity type"
-              options={chipOptions}
-              selected={activeTypes}
-              onToggle={handleToggleType}
-            />
-          </div>
-        )}
-      </div>
+        {/* Facet chip rows */}
+        {FACET_DIMENSIONS.map(({ key, label }) => {
+          const counts = response.facets?.[key] ?? {};
+          const activeValues = facetState[key] ?? [];
 
-      {/* Breadcrumbs */}
-      {breadcrumbs.length > 0 && (
-        <nav
-          aria-label="Drill-down breadcrumbs"
-          style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '16px', flexWrap: 'wrap' }}
-        >
-          <button
-            onClick={() => handleBreadcrumbClick(-1)}
-            style={{
-              ...SECTION_LABEL_STYLE,
-              background: 'transparent',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0,
-              textDecoration: 'underline',
-              textUnderlineOffset: '2px',
-            }}
-          >
-            Results
-          </button>
-          {breadcrumbs.map((bc, i) => (
-            <span key={bc.id} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span style={{ color: GREY_MID, fontSize: '11px' }}>▸</span>
-              {i < breadcrumbs.length - 1 ? (
-                <button
-                  onClick={() => handleBreadcrumbClick(i)}
-                  style={{
-                    ...SECTION_LABEL_STYLE,
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    padding: 0,
-                    textDecoration: 'underline',
-                    textUnderlineOffset: '2px',
-                  }}
-                >
-                  {bc.name}
-                </button>
-              ) : (
-                <span style={{ ...SECTION_LABEL_STYLE, color: BLACK }}>
-                  {bc.name}
-                  <span style={{ color: GREY_MID, fontWeight: 400, marginLeft: '4px' }}>
-                    ({bc.elements.length})
-                  </span>
-                </span>
-              )}
-            </span>
-          ))}
-        </nav>
-      )}
+          // Get all values that have counts, plus any currently active values
+          const allValues = [...new Set([...Object.keys(counts), ...activeValues])].sort();
+          if (allValues.length === 0) return null;
+
+          return (
+            <div key={key} style={{ marginBottom: '8px' }}>
+              <div
+                style={{
+                  fontSize: '10px',
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.15em',
+                  color: '#666',
+                  marginBottom: '4px',
+                }}
+              >
+                {label}
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                {allValues.map((value) => {
+                  const count = counts[value] ?? 0;
+                  const isActive = activeValues.includes(value);
+                  const isDisabled = count === 0 && !isActive;
+                  const colour = facetChipColour(key, value);
+                  const displayLabel = FACET_VALUE_LABELS[key]?.[value] ?? value;
+
+                  return (
+                    <button
+                      key={value}
+                      onClick={() => !isDisabled && toggleFacetValue(key, value)}
+                      disabled={isDisabled}
+                      aria-pressed={isActive}
+                      style={{
+                        fontFamily: 'system-ui, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase',
+                        color: isDisabled ? GREY_MID : isActive ? '#fff' : colour,
+                        background: isActive ? colour : 'transparent',
+                        border: `1.5px solid ${isDisabled ? GREY_RULE : colour}`,
+                        borderRadius: 0,
+                        padding: '5px 9px',
+                        cursor: isDisabled ? 'default' : 'pointer',
+                        opacity: isDisabled ? 0.4 : 1,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap)',
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: '5px',
+                          height: '5px',
+                          background: isDisabled ? GREY_MID : isActive ? '#fff' : colour,
+                          display: 'inline-block',
+                          flexShrink: 0,
+                          transition: 'background 150ms var(--ease-snap)',
+                        }}
+                      />
+                      {displayLabel}
+                      <span style={{ opacity: 0.7, fontWeight: 400 }}>({count})</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {/* Result count */}
       <div style={{ fontSize: '11px', color: GREY_MID, letterSpacing: '0.04em', marginBottom: '12px' }}>
-        {filtered.length === 0
-          ? 'No entities match'
-          : `${filtered.length} entit${filtered.length === 1 ? 'y' : 'ies'}`}
+        {loading
+          ? 'Searching\u2026'
+          : response.total === 0
+            ? 'No entities match'
+            : `${response.total} entit${response.total === 1 ? 'y' : 'ies'}`}
       </div>
 
       {/* Entity card grid */}
@@ -348,23 +341,33 @@ export default function Explore() {
           gap: '8px',
         }}
       >
-        {filtered.map((entity, i) => {
-          // Hover-to-highlight: dim cards that don't share elements with hovered entity
+        {response.results.map((result, i) => {
           const isDimmed = highlightSymbols != null
-            && entity.id !== hoveredId
-            && !entity.elements.some((sym) => highlightSymbols.has(sym));
+            && result.id !== hoveredId
+            && !result.elements.some((sym) => highlightSymbols.has(sym));
 
-          const isExpanded = entity.id === expandedId;
+          const isExpanded = result.id === expandedId;
+
+          // Map SearchResult to Entity shape for EntityCard
+          const entity = {
+            id: result.id,
+            type: result.type as EntityType,
+            name: result.name,
+            description: result.snippet,
+            colour: ENTITY_TYPE_COLOURS[result.type as EntityType] ?? BLACK,
+            elements: result.elements,
+            href: result.path || null,
+          };
 
           return (
             <EntityCard
-              key={entity.id}
+              key={result.id}
               entity={entity}
               index={Math.min(i, MAX_STAGGER_BATCH)}
               dimmed={isDimmed}
               expanded={isExpanded}
               crossRefs={isExpanded ? expandedRefs : undefined}
-              onDrill={handleDrill}
+              onDrill={handleCardDrill}
               onNavigate={handleNavigate}
               onHover={handleHover}
               onExpand={handleExpand}

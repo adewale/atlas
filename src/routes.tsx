@@ -243,11 +243,14 @@ export const router = createBrowserRouter([
     path: '/explore',
     Component: Explore,
     loader: async () => {
-      const [entityMod, refMod] = await Promise.all([
+      const [entityMod, refMod, elementsMod] = await Promise.all([
         import('../data/generated/entity-index.json'),
         import('../data/generated/entity-ref-lookup.json'),
+        import('../data/generated/elements.json'),
       ]);
-      return { entityIndex: entityMod.default, refLookup: refMod.default };
+      const { createLocalSearch } = await import('./lib/searchLocal');
+      const search = createLocalSearch(entityMod.default, elementsMod.default);
+      return { search, refLookup: refMod.default };
     },
   },
 
