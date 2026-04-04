@@ -337,36 +337,21 @@ export default function Explore() {
         {(() => {
           const eraCounts = response.facets?.era ?? {};
           const activeEras = facetState.era ?? [];
-          const maxCount = Math.max(1, ...Object.values(eraCounts));
+          // Use a stable max (13 — the 1800s peak) so bars don't rescale on filter
+          const maxCount = 13;
 
           return (
             <div style={{ marginBottom: '16px' }}>
               <div style={{
                 fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase',
                 letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px',
-                display: 'flex', alignItems: 'center', gap: '8px',
               }}>
                 Discovery Era
-                {activeEras.length > 0 && (
-                  <button
-                    onClick={() => {
-                      const next = { ...facetState, era: undefined };
-                      setSearchParams(buildSearchParams(next), { replace: true });
-                    }}
-                    style={{
-                      background: 'none', border: 'none',
-                      fontSize: '10px', color: WARM_RED, cursor: 'pointer',
-                      textDecoration: 'underline', padding: 0,
-                    }}
-                  >
-                    clear
-                  </button>
-                )}
               </div>
               <div style={{
                 display: 'flex', gap: 0, width: '100%',
                 borderBottom: `1.5px solid ${GREY_RULE}`,
-                minHeight: '48px', alignItems: 'flex-end',
+                height: '56px', alignItems: 'flex-end',
               }}>
                 {ERA_VALUES.map((era) => {
                   const count = eraCounts[era] ?? 0;
@@ -393,17 +378,15 @@ export default function Explore() {
                         cursor: count > 0 || isActive ? 'pointer' : 'default',
                         opacity: count === 0 && !isActive ? 0.3 : 1,
                         minWidth: 0,
-                        transition: 'border-color 120ms ease-out',
                       }}
                     >
-                      {/* Bar showing count */}
+                      {/* Bar showing count — fixed height, no transition */}
                       <div style={{
                         width: '100%',
                         maxWidth: '12px',
                         height: barH,
                         background: isActive ? WARM_RED : MUSTARD,
                         marginBottom: '2px',
-                        transition: 'height 200ms ease-out, background 120ms ease-out',
                       }} />
                       {/* Label for key decades */}
                       {isLabelled && (
