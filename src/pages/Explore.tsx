@@ -31,6 +31,7 @@ import {
   GREY_MID,
   GREY_RULE,
   MUSTARD,
+  WARM_RED,
   INSCRIPTION_STYLE,
   CONTROL_SECTION_MIN_HEIGHT,
 } from '../lib/theme';
@@ -41,13 +42,24 @@ import type { CrossRef } from '../components/EntityCard';
 
 const MAX_STAGGER_BATCH = 24;
 
-/** Facet dimensions rendered as chip rows. */
+/** Facet dimensions rendered as chip rows (era is a slider, not chips). */
 const FACET_DIMENSIONS: { key: FacetKey; label: string }[] = [
   { key: 'block', label: 'Block' },
   { key: 'phase', label: 'Phase' },
-  { key: 'era', label: 'Era' },
   { key: 'etymologyOrigin', label: 'Etymology' },
 ];
+
+/** All era values sorted chronologically for the slider. */
+const ERA_VALUES = [
+  'Antiquity', '1250s', '1660s', '1730s', '1740s', '1750s', '1760s',
+  '1770s', '1780s', '1790s', '1800s', '1810s', '1820s', '1830s',
+  '1840s', '1860s', '1870s', '1880s', '1890s', '1900s', '1910s',
+  '1920s', '1930s', '1940s', '1950s', '1960s', '1970s', '1980s',
+  '1990s', '2000s', '2010s',
+];
+
+/** Key tick marks to label on the slider. */
+const ERA_TICKS = ['Antiquity', '1750s', '1800s', '1850s', '1900s', '1950s', '2000s'];
 
 /** Display labels for facet values. */
 const FACET_VALUE_LABELS: Record<string, Record<string, string>> = {
@@ -218,7 +230,8 @@ export default function Explore() {
               borderRadius: 0,
               background: 'transparent',
               color: BLACK,
-              width: isMobile ? '100%' : '360px',
+              flex: 1,
+              minWidth: isMobile ? '100%' : '300px',
               outline: 'none',
             }}
           />
@@ -319,6 +332,114 @@ export default function Explore() {
             </div>
           );
         })}
+
+        {/* Era slider — replaces chip row for the era dimension */}
+        {(() => {
+          const eraCounts = response.facets?.era ?? {};
+          const activeEras = facetState.era ?? [];
+          const sliderW = isMobile ? 340 : 600;
+          const sliderH = 50;
+          const padL = 10;
+          const padR = 10;
+          const trackW = sliderW - padL - padR;
+
+          return (
+            <div style={{ marginBottom: '12px' }}>
+              <div style={{
+                fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase',
+                letterSpacing: '0.15em', color: GREY_MID, marginBottom: '6px',
+              }}>
+                Era
+                {activeEras.length > 0 && (
+                  <button
+                    onClick={() => {
+                      const next = { ...facetState, era: undefined };
+                      setSearchParams(buildSearchParams(next), { replace: true });
+                    }}
+                    style={{
+                      marginLeft: '8px', background: 'none', border: 'none',
+                      fontSize: '10px', color: GREY_MID, cursor: 'pointer',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    clear
+                  </button>
+                )}
+              </div>
+              <svg
+                width={sliderW}
+                height={sliderH}
+                viewBox={`0 0 ${sliderW} ${sliderH}`}
+                style={{ maxWidth: '100%', display: 'block', cursor: 'pointer', touchAction: 'none' }}
+                onPointerDown={(e) => {
+                  (e.target as Element).setPointerCapture?.(e.pointerId);
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left - padL;
+                  const idx = Math.round((x / trackW) * (ERA_VALUES.length - 1));
+                  const era = ERA_VALUES[Math.max(0, Math.min(idx, ERA_VALUES.length - 1))];
+                  toggleFacetValue('era', era);
+                }}
+              >
+                {/* Track line */}
+                <line x1={padL} y1={20} x2={padL + trackW} y2={20} stroke={GREY_RULE} strokeWidth={1.5} />
+
+                {/* Tick marks + discovery count bars */}
+                {ERA_VALUES.map((era, i) => {
+                  const x = padL + (i / (ERA_VALUES.length - 1)) * trackW;
+                  const count = eraCounts[era] ?? 0;
+                  const isActive = activeEras.includes(era);
+                  const barH = Math.min(count * 1.5, 16);
+
+                  return (
+                    <g key={era}>
+                      {/* Count bar above track */}
+                      {count > 0 && (
+                        <rect
+                          x={x - 2}
+                          y={20 - barH}
+                          width={4}
+                          height={barH}
+                          fill={isActive ? WARM_RED : MUSTARD}
+                          opacity={isActive ? 1 : 0.5}
+                        />
+                      )}
+                      {/* Tick */}
+                      <line
+                        x1={x} y1={20} x2={x} y2={24}
+                        stroke={isActive ? WARM_RED : GREY_MID}
+                        strokeWidth={isActive ? 2 : 1}
+                      />
+                      {/* Active dot */}
+                      {isActive && (
+                        <circle cx={x} cy={20} r={4} fill={WARM_RED} />
+                      )}
+                    </g>
+                  );
+                })}
+
+                {/* Labels for key ticks */}
+                {ERA_TICKS.map((era) => {
+                  const idx = ERA_VALUES.indexOf(era);
+                  if (idx < 0) return null;
+                  const x = padL + (idx / (ERA_VALUES.length - 1)) * trackW;
+                  return (
+                    <text
+                      key={era}
+                      x={x}
+                      y={38}
+                      textAnchor="middle"
+                      fontSize={8}
+                      fill={GREY_MID}
+                      fontFamily="system-ui, sans-serif"
+                    >
+                      {era === 'Antiquity' ? 'Ancient' : era}
+                    </text>
+                  );
+                })}
+              </svg>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Result count */}
