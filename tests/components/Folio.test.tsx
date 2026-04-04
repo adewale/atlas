@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import Folio from '../../src/components/Folio';
-import type { ElementRecord, ElementSources, AnomalyData, GroupData } from '../../src/lib/types';
+import type { ElementRecord, ElementSources, FolioBundle } from '../../src/lib/types';
 import { FE, FE_SOURCES, TEST_ACCESS_DATE } from '../fixtures/element-fe';
 import { IR } from '../fixtures/element-ir';
 
@@ -10,10 +10,36 @@ afterEach(() => {
   cleanup();
 });
 
-function renderFolio(props?: { sources?: ElementSources }) {
+const FE_BUNDLE: FolioBundle = {
+  element: { ...FE, sources: FE_SOURCES },
+  group: { n: 8, label: 'Group 8', description: 'Iron, ruthenium, osmium, and hassium.', elements: ['Fe', 'Ru', 'Os', 'Hs'] },
+  anomalies: [],
+  nav: {
+    prevInGroup: null,
+    nextInGroup: { symbol: 'Ru', name: 'Ruthenium' },
+    prevInPeriod: { symbol: 'Mn', name: 'Manganese' },
+    nextInPeriod: { symbol: 'Co', name: 'Cobalt' },
+    prevInBlock: { symbol: 'Mn', name: 'Manganese' },
+    nextInBlock: { symbol: 'Co', name: 'Cobalt' },
+    prevInCategory: { symbol: 'Mn', name: 'Manganese' },
+    nextInCategory: { symbol: 'Co', name: 'Cobalt' },
+  },
+  groupPhases: ['solid', 'solid', 'solid', 'solid'],
+  neighbors: [
+    { symbol: 'Mn', name: 'Manganese', block: 'd' },
+    { symbol: 'Co', name: 'Cobalt', block: 'd' },
+  ],
+  sameDiscoverer: [],
+  sameEtymology: [
+    { symbol: 'H', name: 'Hydrogen', block: 's' },
+    { symbol: 'Li', name: 'Lithium', block: 's' },
+  ],
+};
+
+function renderFolio(bundle?: FolioBundle) {
   return render(
     <MemoryRouter>
-      <Folio element={FE} sources={props?.sources ?? FE_SOURCES} animate={false} />
+      <Folio element={FE} folioBundle={bundle ?? FE_BUNDLE} animate={false} />
     </MemoryRouter>,
   );
 }
@@ -219,19 +245,17 @@ describe('Folio', () => {
 });
 
 describe('Folio — anomalies and groups', () => {
-  const ANOMALIES: AnomalyData[] = [
-    { slug: 'diagonal-relationship', label: 'Diagonal Relationship', description: '', elements: ['Fe', 'Co', 'Ni'] },
-    { slug: 'color-anomaly', label: 'Colour Anomaly', description: '', elements: ['Fe', 'Cu'] },
-  ];
-
-  const GROUPS: GroupData[] = [
-    { n: 8, label: 'Group 8', description: '', elements: ['Fe', 'Ru', 'Os', 'Hs'] },
-  ];
-
   it('renders anomaly chips when element has anomalies', () => {
+    const bundleWithAnomalies: FolioBundle = {
+      ...FE_BUNDLE,
+      anomalies: [
+        { slug: 'diagonal-relationship', label: 'Diagonal Relationship', elementCount: 3 },
+        { slug: 'color-anomaly', label: 'Colour Anomaly', elementCount: 2 },
+      ],
+    };
     render(
       <MemoryRouter>
-        <Folio element={FE} anomalies={ANOMALIES} animate={false} />
+        <Folio element={FE} folioBundle={bundleWithAnomalies} animate={false} />
       </MemoryRouter>,
     );
     expect(screen.getByRole('link', { name: /Anomaly: Diagonal Relationship/i })).toBeInTheDocument();
@@ -239,23 +263,20 @@ describe('Folio — anomalies and groups', () => {
   });
 
   it('does not render anomaly chips when element has no matching anomalies', () => {
-    const unrelated: AnomalyData[] = [
-      { slug: 'test', label: 'Test', description: '', elements: ['Og'] },
-    ];
+    const bundleNoAnomalies: FolioBundle = {
+      ...FE_BUNDLE,
+      anomalies: [],
+    };
     render(
       <MemoryRouter>
-        <Folio element={FE} anomalies={unrelated} animate={false} />
+        <Folio element={FE} folioBundle={bundleNoAnomalies} animate={false} />
       </MemoryRouter>,
     );
     expect(screen.queryByRole('link', { name: /Anomaly:/i })).not.toBeInTheDocument();
   });
 
-  it('renders group phase strip when groups data is provided', () => {
-    render(
-      <MemoryRouter>
-        <Folio element={FE} groups={GROUPS} animate={false} />
-      </MemoryRouter>,
-    );
+  it('renders group phase strip when group data is provided', () => {
+    renderFolio();
     expect(screen.getByText(/Phase at STP — Group 8/)).toBeInTheDocument();
   });
 });
@@ -297,19 +318,14 @@ describe('Folio — mobile layout', () => {
   });
 
   it('summary area does not have fixed minHeight on small viewports', () => {
-    // Verifies that the summary area adapts — minHeight should be 'auto'
-    // when mobile, or a px value when desktop. We can't mock useIsMobile
-    // easily, but we verify the component renders without crash.
     renderFolio();
     const summaryArea = document.querySelector('.folio-summary-area')!;
     expect(summaryArea).toBeTruthy();
-    // On desktop (default in test), minHeight should be the plate height
     expect(summaryArea.getAttribute('style')).toContain('min-height');
   });
 
   it('does not render dead MarginaliaProperty component', () => {
     renderFolio();
-    // RankDotSparkline was removed — verify no 40x12 SVGs in marginalia
     const marginalia = document.querySelector('.folio-marginalia')!;
     const smallSvgs = marginalia.querySelectorAll('svg[width="40"]');
     expect(smallSvgs.length).toBe(0);

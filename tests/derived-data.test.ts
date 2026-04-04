@@ -110,7 +110,7 @@ describe('folio bundles', () => {
 
   it('bundle anomalies include elementCount', () => {
     // H may or may not have anomalies, but the shape should be correct
-    for (const a of folioH.anomalies) {
+    for (const a of folioH.anomalies as Array<{ slug: string; label: string; elementCount: number }>) {
       expect(a).toHaveProperty('slug');
       expect(a).toHaveProperty('label');
       expect(a).toHaveProperty('elementCount');

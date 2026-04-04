@@ -6,7 +6,6 @@ import { useShapedText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { getElement, allElements } from '../lib/data';
 import { getElementMetrics } from '../lib/metrics';
 import PretextSvg from './PretextSvg';
 import { GroupPhaseStrip } from './Sparkline';
@@ -242,85 +241,16 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
 
   // Group phase strip data — pre-resolved from folio bundle
   const groupPhaseData = useMemo(() => {
-    if (!groups || element.group === null) return null;
-    const group = groups.find((g) => g.n === element.group);
-    if (!group) return null;
-    const phases = group.elements.map((sym) => {
-      const el = getElement(sym);
-      return el?.phase ?? null;
-    });
-    const highlightIndex = group.elements.indexOf(element.symbol);
-    return { phases, symbols: group.elements, highlightIndex };
-  }, [groups, element]);
+    if (!groupData || !folioBundle?.groupPhases) return null;
+    const highlightIndex = groupData.elements.indexOf(element.symbol);
+    return { phases: folioBundle.groupPhases, symbols: groupData.elements, highlightIndex };
+  }, [groupData, folioBundle?.groupPhases, element.symbol]);
 
-  // Prev/next within group (vertical traversal)
-  const { prevInGroup, nextInGroup } = useMemo(() => {
-    if (element.group == null) return { prevInGroup: null, nextInGroup: null };
-    const groupMembers = allElements
-      .filter((e) => e.group === element.group)
-      .sort((a, b) => a.period - b.period);
-    const idx = groupMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInGroup: idx > 0 ? groupMembers[idx - 1] : null,
-      nextInGroup: idx < groupMembers.length - 1 ? groupMembers[idx + 1] : null,
-    };
-  }, [element.group, element.symbol]);
-
-  // Prev/next within period (horizontal traversal)
-  const { prevInPeriod, nextInPeriod } = useMemo(() => {
-    const periodMembers = allElements
-      .filter((e) => e.period === element.period)
-      .sort((a, b) => a.atomicNumber - b.atomicNumber);
-    const idx = periodMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInPeriod: idx > 0 ? periodMembers[idx - 1] : null,
-      nextInPeriod: idx < periodMembers.length - 1 ? periodMembers[idx + 1] : null,
-    };
-  }, [element.period, element.symbol]);
-
-  // Prev/next within block
-  const { prevInBlock, nextInBlock } = useMemo(() => {
-    const blockMembers = allElements
-      .filter((e) => e.block === element.block)
-      .sort((a, b) => a.atomicNumber - b.atomicNumber);
-    const idx = blockMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInBlock: idx > 0 ? blockMembers[idx - 1] : null,
-      nextInBlock: idx < blockMembers.length - 1 ? blockMembers[idx + 1] : null,
-    };
-  }, [element.block, element.symbol]);
-
-  // Prev/next within category
-  const { prevInCategory, nextInCategory } = useMemo(() => {
-    const catMembers = allElements
-      .filter((e) => e.category === element.category)
-      .sort((a, b) => a.atomicNumber - b.atomicNumber);
-    const idx = catMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInCategory: idx > 0 ? catMembers[idx - 1] : null,
-      nextInCategory: idx < catMembers.length - 1 ? catMembers[idx + 1] : null,
-    };
-  }, [element.category, element.symbol]);
-
-  // Find elements sharing the same discoverer (lateral link)
-  const sameDiscoverer = useMemo(() => {
-    if (!element.discoverer || element.discoverer.toLowerCase().includes('antiquity')) return [];
-    return allElements
-      .filter((e) => e.discoverer === element.discoverer && e.symbol !== element.symbol);
-  }, [element]);
-
-  // Find elements sharing the same etymology origin (lateral link)
-  const sameEtymology = useMemo(() => {
-    if (!element.etymologyOrigin || element.etymologyOrigin === 'unknown') return [];
-    return allElements
-      .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol);
-  }, [element]);
-
-  // Anomalies this element belongs to
-  const elementAnomalies = useMemo(() => {
-    if (!anomalies) return [];
-    return anomalies.filter((a) => a.elements.includes(element.symbol));
-  }, [anomalies, element.symbol]);
+  // Navigation — pre-resolved from folio bundle
+  const { prevInGroup, nextInGroup } = nav ?? { prevInGroup: null, nextInGroup: null };
+  const { prevInPeriod, nextInPeriod } = nav ?? { prevInPeriod: null, nextInPeriod: null };
+  const { prevInBlock, nextInBlock } = nav ?? { prevInBlock: null, nextInBlock: null };
+  const { prevInCategory, nextInCategory } = nav ?? { prevInCategory: null, nextInCategory: null };
 
   // Fixed width for neighbour chips — align vertical borders across rows
   const neighbourChipWidth = useMemo(() => {
@@ -545,8 +475,7 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
                 key={a.slug}
                 slug={a.slug}
                 label={a.label}
-                elementCount={a.elements.length}
-                fixedWidth={anomalyChipWidth}
+                elementCount={a.elementCount}
               />
             ))}
           </div>
