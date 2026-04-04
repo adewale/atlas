@@ -21,7 +21,7 @@ test.describe('Text readability', () => {
   });
 
   test('folio summary text is readable (proper line height, non-overlapping)', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(1500);
 
     // The summary SVG should have visible text
@@ -73,7 +73,7 @@ test.describe('Text readability', () => {
   });
 
   test('AtlasPlate cards have readable text (category labels not clipped)', async ({ page }) => {
-    await page.goto('/atlas/group/8');
+    await page.goto('/groups/8');
     await page.waitForTimeout(1500);
 
     // Each card should have visible text
@@ -106,7 +106,7 @@ test.describe('Text readability', () => {
   });
 
   test('folio data plate text is readable (white on colored background)', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(1500);
 
     // Data plate should have visible GROUP, PERIOD, BLOCK text
@@ -164,7 +164,7 @@ test.describe('Animation transitions', () => {
   });
 
   test('folio data plate wipe animation completes', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     // Wait for plate-wipe animation (350ms + 150ms delay)
     await page.waitForTimeout(1500);
 
@@ -179,7 +179,7 @@ test.describe('Animation transitions', () => {
   });
 
   test('property bar grow animation completes', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     // Wait for bar-grow animation (300ms + staggered delay)
     await page.waitForTimeout(1500);
 
@@ -237,7 +237,7 @@ test.describe('Animation transitions', () => {
   test('prefers-reduced-motion is respected', async ({ page }) => {
     // Emulate reduced motion preference
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(500);
 
     // Data plate should be immediately visible (no animation delay)

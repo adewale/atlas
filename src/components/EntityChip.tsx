@@ -20,9 +20,11 @@ type BaseChipProps = {
   secondary: string;
   title?: string;
   'aria-label'?: string;
+  /** Fixed width in px — when set, all chips in a group share this width for grid alignment. */
+  fixedWidth?: number;
 };
 
-function BaseChip({ to, borderColor, primary, secondary, title, 'aria-label': ariaLabel }: BaseChipProps) {
+function BaseChip({ to, borderColor, primary, secondary, title, 'aria-label': ariaLabel, fixedWidth }: BaseChipProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -34,8 +36,9 @@ function BaseChip({ to, borderColor, primary, secondary, title, 'aria-label': ar
         display: 'inline-flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        minWidth: '120px',
-        maxWidth: '160px',
+        ...(fixedWidth
+          ? { width: fixedWidth, flex: '0 0 auto' }
+          : { minWidth: '120px', flex: '1 1 160px', maxWidth: '280px' }),
         height: '44px',
         padding: '4px 10px 4px 12px',
         borderLeft: `3px solid ${borderColor}`,
@@ -86,9 +89,11 @@ export type DiscovererChipProps = {
   elementCount?: number;
   /** Optional year range string, e.g. "1807–1808" */
   yearRange?: string;
+  /** Fixed width for grid alignment — all chips in a group share this width. */
+  fixedWidth?: number;
 };
 
-export function DiscovererChip({ name, elementCount, yearRange }: DiscovererChipProps) {
+export function DiscovererChip({ name, elementCount, yearRange, fixedWidth }: DiscovererChipProps) {
   const secondary = yearRange
     ? yearRange
     : elementCount != null
@@ -103,6 +108,7 @@ export function DiscovererChip({ name, elementCount, yearRange }: DiscovererChip
       secondary={secondary}
       title={`View elements discovered by ${name}`}
       aria-label={`Discoverer: ${name}`}
+      fixedWidth={fixedWidth}
     />
   );
 }
@@ -116,9 +122,11 @@ export type AnomalyChipProps = {
   label: string;
   /** Number of elements in this anomaly group */
   elementCount?: number;
+  /** Fixed width for grid alignment — all chips in a group share this width. */
+  fixedWidth?: number;
 };
 
-export function AnomalyChip({ slug, label, elementCount }: AnomalyChipProps) {
+export function AnomalyChip({ slug, label, elementCount, fixedWidth }: AnomalyChipProps) {
   const secondary = elementCount != null
     ? `${elementCount} element${elementCount !== 1 ? 's' : ''}`
     : '';
@@ -131,6 +139,7 @@ export function AnomalyChip({ slug, label, elementCount }: AnomalyChipProps) {
       secondary={secondary}
       title={`${label} — view anomaly details`}
       aria-label={`Anomaly: ${label}`}
+      fixedWidth={fixedWidth}
     />
   );
 }
@@ -146,9 +155,11 @@ export type NeighbourChipProps = {
   color: string;
   /** Relationship direction label, e.g. "← left" or "↑ above" */
   direction?: string;
+  /** Fixed width for grid alignment — all chips in a group share this width. */
+  fixedWidth?: number;
 };
 
-export function NeighbourChip({ symbol, name, color, direction }: NeighbourChipProps) {
+export function NeighbourChip({ symbol, name, color, direction, fixedWidth }: NeighbourChipProps) {
   return (
     <BaseChip
       to={`/elements/${symbol}`}
@@ -157,6 +168,7 @@ export function NeighbourChip({ symbol, name, color, direction }: NeighbourChipP
       secondary={direction ?? 'neighbour'}
       title={`${name} (${symbol})`}
       aria-label={`Neighbour: ${name} (${symbol})`}
+      fixedWidth={fixedWidth}
     />
   );
 }

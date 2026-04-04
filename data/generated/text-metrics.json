@@ -1,0 +1,1539 @@
+{
+  "_generated": "2026-04-04T02:53:48.037Z",
+  "_jobCount": 1208,
+  "elements": {
+    "H": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 68,
+      "nameWidth10": 72,
+      "chipWidth11": 80,
+      "catWidth13": 63
+    },
+    "He": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 49,
+      "nameWidth10": 49,
+      "chipWidth11": 71,
+      "catWidth13": 66
+    },
+    "Li": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 52,
+      "nameWidth10": 54,
+      "chipWidth11": 68,
+      "catWidth13": 76
+    },
+    "Be": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 66,
+      "nameWidth10": 73,
+      "chipWidth11": 84,
+      "catWidth13": 129
+    },
+    "B": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 42,
+      "nameWidth10": 45,
+      "chipWidth11": 57,
+      "catWidth13": 60
+    },
+    "C": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 51,
+      "nameWidth10": 53,
+      "chipWidth11": 65,
+      "catWidth13": 63
+    },
+    "N": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 61,
+      "nameWidth10": 67,
+      "chipWidth11": 74,
+      "catWidth13": 63
+    },
+    "O": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 53,
+      "nameWidth10": 53,
+      "chipWidth11": 67,
+      "catWidth13": 63
+    },
+    "F": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 57,
+      "nameWidth10": 64,
+      "chipWidth11": 68,
+      "catWidth13": 54
+    },
+    "Ne": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 37,
+      "nameWidth10": 35,
+      "chipWidth11": 61,
+      "catWidth13": 66
+    },
+    "Na": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 53,
+      "nameWidth10": 51,
+      "chipWidth11": 74,
+      "catWidth13": 76
+    },
+    "Mg": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 80,
+      "nameWidth10": 79,
+      "chipWidth11": 98,
+      "catWidth13": 129
+    },
+    "Al": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 74,
+      "nameWidth10": 75,
+      "chipWidth11": 87,
+      "catWidth13": 139
+    },
+    "Si": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 47,
+      "nameWidth10": 53,
+      "chipWidth11": 65,
+      "catWidth13": 60
+    },
+    "P": {
+      "identityWidth": 97,
+      "identityWidthMobile": 110,
+      "nameWidth14": 83,
+      "nameWidth10": 89,
+      "chipWidth11": 91,
+      "catWidth13": 63
+    },
+    "S": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 43,
+      "nameWidth10": 50,
+      "chipWidth11": 58,
+      "catWidth13": 63
+    },
+    "Cl": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 59,
+      "nameWidth10": 66,
+      "chipWidth11": 75,
+      "catWidth13": 54
+    },
+    "Ar": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 42,
+      "nameWidth10": 45,
+      "chipWidth11": 63,
+      "catWidth13": 66
+    },
+    "K": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 73,
+      "nameWidth10": 75,
+      "chipWidth11": 83,
+      "catWidth13": 76
+    },
+    "Ca": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 56,
+      "nameWidth10": 58,
+      "chipWidth11": 76,
+      "catWidth13": 129
+    },
+    "Sc": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 69,
+      "nameWidth10": 69,
+      "chipWidth11": 86,
+      "catWidth13": 105
+    },
+    "Ti": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 61,
+      "nameWidth10": 63,
+      "chipWidth11": 76,
+      "catWidth13": 105
+    },
+    "V": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 69,
+      "nameWidth10": 68,
+      "chipWidth11": 79,
+      "catWidth13": 105
+    },
+    "Cr": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 72,
+      "nameWidth10": 72,
+      "chipWidth11": 87,
+      "catWidth13": 105
+    },
+    "Mn": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 80,
+      "nameWidth10": 80,
+      "chipWidth11": 97,
+      "catWidth13": 105
+    },
+    "Fe": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 28,
+      "nameWidth10": 31,
+      "chipWidth11": 52,
+      "catWidth13": 105
+    },
+    "Co": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 46,
+      "nameWidth10": 50,
+      "chipWidth11": 68,
+      "catWidth13": 105
+    },
+    "Ni": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 43,
+      "nameWidth10": 47,
+      "chipWidth11": 63,
+      "catWidth13": 105
+    },
+    "Cu": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 51,
+      "nameWidth10": 51,
+      "chipWidth11": 73,
+      "catWidth13": 105
+    },
+    "Zn": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 30,
+      "nameWidth10": 31,
+      "chipWidth11": 55,
+      "catWidth13": 105
+    },
+    "Ga": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 52,
+      "nameWidth10": 58,
+      "chipWidth11": 73,
+      "catWidth13": 139
+    },
+    "Ge": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 80,
+      "nameWidth10": 79,
+      "chipWidth11": 96,
+      "catWidth13": 60
+    },
+    "As": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 53,
+      "nameWidth10": 56,
+      "chipWidth11": 73,
+      "catWidth13": 60
+    },
+    "Se": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 64,
+      "nameWidth10": 66,
+      "chipWidth11": 82,
+      "catWidth13": 63
+    },
+    "Br": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 58,
+      "nameWidth10": 59,
+      "chipWidth11": 75,
+      "catWidth13": 54
+    },
+    "Kr": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 56,
+      "nameWidth10": 60,
+      "chipWidth11": 74,
+      "catWidth13": 66
+    },
+    "Rb": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 66,
+      "nameWidth10": 65,
+      "chipWidth11": 84,
+      "catWidth13": 76
+    },
+    "Sr": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 69,
+      "nameWidth10": 77,
+      "chipWidth11": 84,
+      "catWidth13": 129
+    },
+    "Y": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 53,
+      "nameWidth10": 58,
+      "chipWidth11": 66,
+      "catWidth13": 105
+    },
+    "Zr": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 70,
+      "nameWidth10": 74,
+      "chipWidth11": 85,
+      "catWidth13": 105
+    },
+    "Nb": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 58,
+      "nameWidth10": 56,
+      "chipWidth11": 78,
+      "catWidth13": 105
+    },
+    "Mo": {
+      "identityWidth": 99,
+      "identityWidthMobile": 110,
+      "nameWidth14": 90,
+      "nameWidth10": 91,
+      "chipWidth11": 106,
+      "catWidth13": 105
+    },
+    "Tc": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 81,
+      "nameWidth10": 85,
+      "chipWidth11": 94,
+      "catWidth13": 105
+    },
+    "Ru": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 75,
+      "nameWidth10": 77,
+      "chipWidth11": 91,
+      "catWidth13": 105
+    },
+    "Rh": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 62,
+      "nameWidth10": 61,
+      "chipWidth11": 80,
+      "catWidth13": 105
+    },
+    "Pd": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 68,
+      "nameWidth10": 74,
+      "chipWidth11": 86,
+      "catWidth13": 105
+    },
+    "Ag": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 40,
+      "nameWidth10": 44,
+      "chipWidth11": 63,
+      "catWidth13": 105
+    },
+    "Cd": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 66,
+      "nameWidth10": 62,
+      "chipWidth11": 85,
+      "catWidth13": 105
+    },
+    "In": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 48,
+      "nameWidth10": 47,
+      "chipWidth11": 65,
+      "catWidth13": 139
+    },
+    "Sn": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 22,
+      "nameWidth10": 21,
+      "chipWidth11": 48,
+      "catWidth13": 139
+    },
+    "Sb": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 67,
+      "nameWidth10": 69,
+      "chipWidth11": 85,
+      "catWidth13": 60
+    },
+    "Te": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 64,
+      "nameWidth10": 74,
+      "chipWidth11": 81,
+      "catWidth13": 60
+    },
+    "I": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 43,
+      "nameWidth10": 45,
+      "chipWidth11": 54,
+      "catWidth13": 54
+    },
+    "Xe": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 44,
+      "nameWidth10": 44,
+      "chipWidth11": 66,
+      "catWidth13": 66
+    },
+    "Cs": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 60,
+      "nameWidth10": 58,
+      "chipWidth11": 79,
+      "catWidth13": 76
+    },
+    "Ba": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 50,
+      "nameWidth10": 50,
+      "chipWidth11": 70,
+      "catWidth13": 129
+    },
+    "La": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 78,
+      "nameWidth10": 81,
+      "chipWidth11": 92,
+      "catWidth13": 73
+    },
+    "Ce": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 50,
+      "nameWidth10": 50,
+      "chipWidth11": 71,
+      "catWidth13": 73
+    },
+    "Pr": {
+      "identityWidth": 113,
+      "identityWidthMobile": 113,
+      "nameWidth14": 104,
+      "nameWidth10": 105,
+      "chipWidth11": 112,
+      "catWidth13": 73
+    },
+    "Nd": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 83,
+      "nameWidth10": 80,
+      "chipWidth11": 99,
+      "catWidth13": 73
+    },
+    "Pm": {
+      "identityWidth": 96,
+      "identityWidthMobile": 110,
+      "nameWidth14": 85,
+      "nameWidth10": 88,
+      "chipWidth11": 102,
+      "catWidth13": 73
+    },
+    "Sm": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 70,
+      "nameWidth10": 69,
+      "chipWidth11": 90,
+      "catWidth13": 73
+    },
+    "Eu": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 66,
+      "nameWidth10": 68,
+      "chipWidth11": 83,
+      "catWidth13": 73
+    },
+    "Gd": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 78,
+      "nameWidth10": 83,
+      "chipWidth11": 95,
+      "catWidth13": 73
+    },
+    "Tb": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 57,
+      "nameWidth10": 58,
+      "chipWidth11": 76,
+      "catWidth13": 73
+    },
+    "Dy": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 83,
+      "nameWidth10": 85,
+      "chipWidth11": 98,
+      "catWidth13": 73
+    },
+    "Ho": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 62,
+      "nameWidth10": 62,
+      "chipWidth11": 82,
+      "catWidth13": 73
+    },
+    "Er": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 49,
+      "nameWidth10": 49,
+      "chipWidth11": 68,
+      "catWidth13": 73
+    },
+    "Tm": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 56,
+      "nameWidth10": 59,
+      "chipWidth11": 78,
+      "catWidth13": 73
+    },
+    "Yb": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 70,
+      "nameWidth10": 75,
+      "chipWidth11": 87,
+      "catWidth13": 73
+    },
+    "Lu": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 62,
+      "nameWidth10": 66,
+      "chipWidth11": 80,
+      "catWidth13": 105
+    },
+    "Hf": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 59,
+      "nameWidth10": 59,
+      "chipWidth11": 77,
+      "catWidth13": 105
+    },
+    "Ta": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 64,
+      "nameWidth10": 69,
+      "chipWidth11": 81,
+      "catWidth13": 105
+    },
+    "W": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 65,
+      "nameWidth10": 70,
+      "chipWidth11": 80,
+      "catWidth13": 105
+    },
+    "Re": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 61,
+      "nameWidth10": 59,
+      "chipWidth11": 79,
+      "catWidth13": 105
+    },
+    "Os": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 57,
+      "nameWidth10": 53,
+      "chipWidth11": 77,
+      "catWidth13": 105
+    },
+    "Ir": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 49,
+      "nameWidth10": 51,
+      "chipWidth11": 64,
+      "catWidth13": 105
+    },
+    "Pt": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 62,
+      "nameWidth10": 66,
+      "chipWidth11": 78,
+      "catWidth13": 105
+    },
+    "Au": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 32,
+      "nameWidth10": 35,
+      "chipWidth11": 57,
+      "catWidth13": 105
+    },
+    "Hg": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 58,
+      "nameWidth10": 62,
+      "chipWidth11": 79,
+      "catWidth13": 105
+    },
+    "Tl": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 60,
+      "nameWidth10": 66,
+      "chipWidth11": 75,
+      "catWidth13": 139
+    },
+    "Pb": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 34,
+      "nameWidth10": 33,
+      "chipWidth11": 58,
+      "catWidth13": 139
+    },
+    "Bi": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 58,
+      "nameWidth10": 59,
+      "chipWidth11": 73,
+      "catWidth13": 139
+    },
+    "Po": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 65,
+      "nameWidth10": 69,
+      "chipWidth11": 82,
+      "catWidth13": 60
+    },
+    "At": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 58,
+      "nameWidth10": 62,
+      "chipWidth11": 76,
+      "catWidth13": 54
+    },
+    "Rn": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 44,
+      "nameWidth10": 45,
+      "chipWidth11": 66,
+      "catWidth13": 66
+    },
+    "Fr": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 65,
+      "nameWidth10": 68,
+      "chipWidth11": 80,
+      "catWidth13": 76
+    },
+    "Ra": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 53,
+      "nameWidth10": 51,
+      "chipWidth11": 73,
+      "catWidth13": 129
+    },
+    "Ac": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 62,
+      "nameWidth10": 64,
+      "chipWidth11": 80,
+      "catWidth13": 54
+    },
+    "Th": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 58,
+      "nameWidth10": 60,
+      "chipWidth11": 77,
+      "catWidth13": 54
+    },
+    "Pa": {
+      "identityWidth": 106,
+      "identityWidthMobile": 110,
+      "nameWidth14": 89,
+      "nameWidth10": 98,
+      "chipWidth11": 102,
+      "catWidth13": 54
+    },
+    "U": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 59,
+      "nameWidth10": 60,
+      "chipWidth11": 72,
+      "catWidth13": 54
+    },
+    "Np": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 77,
+      "nameWidth10": 77,
+      "chipWidth11": 93,
+      "catWidth13": 54
+    },
+    "Pu": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 71,
+      "nameWidth10": 77,
+      "chipWidth11": 87,
+      "catWidth13": 54
+    },
+    "Am": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 75,
+      "nameWidth10": 74,
+      "chipWidth11": 95,
+      "catWidth13": 54
+    },
+    "Cm": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 51,
+      "nameWidth10": 51,
+      "chipWidth11": 75,
+      "catWidth13": 54
+    },
+    "Bk": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 70,
+      "nameWidth10": 74,
+      "chipWidth11": 87,
+      "catWidth13": 54
+    },
+    "Cf": {
+      "identityWidth": 98,
+      "identityWidthMobile": 110,
+      "nameWidth14": 81,
+      "nameWidth10": 90,
+      "chipWidth11": 94,
+      "catWidth13": 54
+    },
+    "Es": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 81,
+      "nameWidth10": 85,
+      "chipWidth11": 95,
+      "catWidth13": 54
+    },
+    "Fm": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 61,
+      "nameWidth10": 59,
+      "chipWidth11": 82,
+      "catWidth13": 54
+    },
+    "Md": {
+      "identityWidth": 102,
+      "identityWidthMobile": 110,
+      "nameWidth14": 93,
+      "nameWidth10": 94,
+      "chipWidth11": 108,
+      "catWidth13": 54
+    },
+    "No": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 66,
+      "nameWidth10": 68,
+      "chipWidth11": 85,
+      "catWidth13": 54
+    },
+    "Lr": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 84,
+      "nameWidth10": 87,
+      "chipWidth11": 96,
+      "catWidth13": 105
+    },
+    "Rf": {
+      "identityWidth": 120,
+      "identityWidthMobile": 120,
+      "nameWidth14": 102,
+      "nameWidth10": 112,
+      "chipWidth11": 110,
+      "catWidth13": 105
+    },
+    "Db": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 62,
+      "nameWidth10": 61,
+      "chipWidth11": 82,
+      "catWidth13": 105
+    },
+    "Sg": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 84,
+      "nameWidth10": 86,
+      "chipWidth11": 98,
+      "catWidth13": 105
+    },
+    "Bh": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 59,
+      "nameWidth10": 60,
+      "chipWidth11": 78,
+      "catWidth13": 105
+    },
+    "Hs": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 60,
+      "nameWidth10": 59,
+      "chipWidth11": 80,
+      "catWidth13": 105
+    },
+    "Mt": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 79,
+      "nameWidth10": 82,
+      "chipWidth11": 95,
+      "catWidth13": 105
+    },
+    "Ds": {
+      "identityWidth": 112,
+      "identityWidthMobile": 112,
+      "nameWidth14": 99,
+      "nameWidth10": 104,
+      "chipWidth11": 111,
+      "catWidth13": 105
+    },
+    "Rg": {
+      "identityWidth": 103,
+      "identityWidthMobile": 110,
+      "nameWidth14": 92,
+      "nameWidth10": 95,
+      "chipWidth11": 105,
+      "catWidth13": 105
+    },
+    "Cn": {
+      "identityWidth": 100,
+      "identityWidthMobile": 110,
+      "nameWidth14": 88,
+      "nameWidth10": 92,
+      "chipWidth11": 103,
+      "catWidth13": 105
+    },
+    "Nh": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 66,
+      "nameWidth10": 67,
+      "chipWidth11": 85,
+      "catWidth13": 139
+    },
+    "Fl": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 68,
+      "nameWidth10": 74,
+      "chipWidth11": 81,
+      "catWidth13": 139
+    },
+    "Mc": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 79,
+      "nameWidth10": 81,
+      "chipWidth11": 96,
+      "catWidth13": 139
+    },
+    "Lv": {
+      "identityWidth": 99,
+      "identityWidthMobile": 110,
+      "nameWidth14": 87,
+      "nameWidth10": 91,
+      "chipWidth11": 99,
+      "catWidth13": 139
+    },
+    "Ts": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 78,
+      "nameWidth10": 82,
+      "chipWidth11": 92,
+      "catWidth13": 54
+    },
+    "Og": {
+      "identityWidth": 95,
+      "identityWidthMobile": 110,
+      "nameWidth14": 78,
+      "nameWidth10": 81,
+      "chipWidth11": 95,
+      "catWidth13": 66
+    }
+  },
+  "categories": {
+    "actinide": {
+      "width13": 54,
+      "width18": 72,
+      "card8": 29,
+      "card8abbrev": 29
+    },
+    "alkali metal": {
+      "width13": 76,
+      "width18": 100,
+      "card8": 41,
+      "card8abbrev": 19
+    },
+    "alkaline earth metal": {
+      "width13": 129,
+      "width18": 171,
+      "card8": 70,
+      "card8abbrev": 33
+    },
+    "halogen": {
+      "width13": 54,
+      "width18": 72,
+      "card8": 29,
+      "card8abbrev": 29
+    },
+    "lanthanide": {
+      "width13": 73,
+      "width18": 97,
+      "card8": 38,
+      "card8abbrev": 38
+    },
+    "metalloid": {
+      "width13": 60,
+      "width18": 80,
+      "card8": 33,
+      "card8abbrev": 33
+    },
+    "noble gas": {
+      "width13": 66,
+      "width18": 88,
+      "card8": 35,
+      "card8abbrev": 35
+    },
+    "nonmetal": {
+      "width13": 63,
+      "width18": 84,
+      "card8": 34,
+      "card8abbrev": 34
+    },
+    "post-transition metal": {
+      "width13": 139,
+      "width18": 185,
+      "card8": 74,
+      "card8abbrev": 40
+    },
+    "transition metal": {
+      "width13": 105,
+      "width18": 139,
+      "card8": 55,
+      "card8abbrev": 43
+    }
+  },
+  "discoverers": {
+    "Known since antiquity": {
+      "navPrev": 123,
+      "navNext": 123,
+      "chipWidth": 124,
+      "captionWidth": 169
+    },
+    "Albert Ghiorso et al.": {
+      "navPrev": 112,
+      "navNext": 112,
+      "chipWidth": 113,
+      "captionWidth": 152
+    },
+    "Humphry Davy": {
+      "navPrev": 88,
+      "navNext": 88,
+      "chipWidth": 83,
+      "captionWidth": 112
+    },
+    "Yuri Oganessian et al.": {
+      "navPrev": 121,
+      "navNext": 121,
+      "chipWidth": 122,
+      "captionWidth": 166
+    },
+    "William Ramsay & Morris Travers": {
+      "navPrev": 175,
+      "navNext": 175,
+      "chipWidth": 183,
+      "captionWidth": 251
+    },
+    "Jöns Jacob Berzelius": {
+      "navPrev": 119,
+      "navNext": 119,
+      "chipWidth": 119,
+      "captionWidth": 163
+    },
+    "Paul Emile Lecoq de Boisbaudran": {
+      "navPrev": 181,
+      "navNext": 181,
+      "chipWidth": 184,
+      "captionWidth": 257
+    },
+    "Carl Gustaf Mosander": {
+      "navPrev": 123,
+      "navNext": 123,
+      "chipWidth": 122,
+      "captionWidth": 168
+    },
+    "Peter Armbruster & Gottfried Münzenberg": {
+      "navPrev": 219,
+      "navNext": 219,
+      "chipWidth": 236,
+      "captionWidth": 320
+    },
+    "Sigurd Hofmann et al.": {
+      "navPrev": 122,
+      "navNext": 122,
+      "chipWidth": 122,
+      "captionWidth": 166
+    },
+    "Louis Nicolas Vauquelin": {
+      "navPrev": 131,
+      "navNext": 131,
+      "chipWidth": 132,
+      "captionWidth": 182
+    },
+    "Carl Wilhelm Scheele": {
+      "navPrev": 119,
+      "navNext": 119,
+      "chipWidth": 119,
+      "captionWidth": 162
+    },
+    "Robert Bunsen & Gustav Kirchhoff": {
+      "navPrev": 183,
+      "navNext": 183,
+      "chipWidth": 191,
+      "captionWidth": 262
+    },
+    "Martin Heinrich Klaproth": {
+      "navPrev": 134,
+      "navNext": 134,
+      "chipWidth": 138,
+      "captionWidth": 188
+    },
+    "William Hyde Wollaston": {
+      "navPrev": 130,
+      "navNext": 130,
+      "chipWidth": 132,
+      "captionWidth": 179
+    },
+    "Carl Auer von Welsbach": {
+      "navPrev": 132,
+      "navNext": 132,
+      "chipWidth": 133,
+      "captionWidth": 182
+    },
+    "Jean Charles Galissard de Marignac": {
+      "navPrev": 192,
+      "navNext": 192,
+      "chipWidth": 200,
+      "captionWidth": 276
+    },
+    "Smithson Tennant": {
+      "navPrev": 103,
+      "navNext": 103,
+      "chipWidth": 101,
+      "captionWidth": 137
+    },
+    "Marie Curie & Pierre Curie": {
+      "navPrev": 142,
+      "navNext": 142,
+      "chipWidth": 145,
+      "captionWidth": 200
+    },
+    "Henry Cavendish": {
+      "navPrev": 99,
+      "navNext": 99,
+      "chipWidth": 96,
+      "captionWidth": 130
+    },
+    "Pierre Janssen & Joseph Lockyer": {
+      "navPrev": 178,
+      "navNext": 178,
+      "chipWidth": 185,
+      "captionWidth": 255
+    },
+    "Johan August Arfwedson": {
+      "navPrev": 138,
+      "navNext": 138,
+      "chipWidth": 141,
+      "captionWidth": 193
+    },
+    "Daniel Rutherford": {
+      "navPrev": 101,
+      "navNext": 101,
+      "chipWidth": 100,
+      "captionWidth": 135
+    },
+    "Joseph Priestley & Carl Wilhelm Scheele": {
+      "navPrev": 213,
+      "navNext": 213,
+      "chipWidth": 226,
+      "captionWidth": 308
+    },
+    "Henri Moissan": {
+      "navPrev": 85,
+      "navNext": 85,
+      "chipWidth": 80,
+      "captionWidth": 110
+    },
+    "Joseph Black": {
+      "navPrev": 81,
+      "navNext": 81,
+      "chipWidth": 75,
+      "captionWidth": 104
+    },
+    "Hans Christian Ørsted": {
+      "navPrev": 123,
+      "navNext": 123,
+      "chipWidth": 124,
+      "captionWidth": 169
+    },
+    "Hennig Brand": {
+      "navPrev": 82,
+      "navNext": 82,
+      "chipWidth": 76,
+      "captionWidth": 105
+    },
+    "Lord Rayleigh & William Ramsay": {
+      "navPrev": 173,
+      "navNext": 173,
+      "chipWidth": 179,
+      "captionWidth": 247
+    },
+    "Lars Fredrik Nilson": {
+      "navPrev": 107,
+      "navNext": 107,
+      "chipWidth": 106,
+      "captionWidth": 145
+    },
+    "William Gregor": {
+      "navPrev": 87,
+      "navNext": 87,
+      "chipWidth": 83,
+      "captionWidth": 113
+    },
+    "Andrés Manuel del Río": {
+      "navPrev": 126,
+      "navNext": 126,
+      "chipWidth": 125,
+      "captionWidth": 173
+    },
+    "Johan Gottlieb Gahn": {
+      "navPrev": 116,
+      "navNext": 116,
+      "chipWidth": 114,
+      "captionWidth": 157
+    },
+    "Georg Brandt": {
+      "navPrev": 81,
+      "navNext": 81,
+      "chipWidth": 75,
+      "captionWidth": 103
+    },
+    "Axel Fredrik Cronstedt": {
+      "navPrev": 125,
+      "navNext": 125,
+      "chipWidth": 127,
+      "captionWidth": 172
+    },
+    "Andreas Sigismund Marggraf": {
+      "navPrev": 157,
+      "navNext": 157,
+      "chipWidth": 163,
+      "captionWidth": 223
+    },
+    "Clemens Winkler": {
+      "navPrev": 97,
+      "navNext": 97,
+      "chipWidth": 95,
+      "captionWidth": 129
+    },
+    "Albertus Magnus": {
+      "navPrev": 98,
+      "navNext": 98,
+      "chipWidth": 96,
+      "captionWidth": 130
+    },
+    "Antoine Jérôme Balard": {
+      "navPrev": 127,
+      "navNext": 127,
+      "chipWidth": 128,
+      "captionWidth": 175
+    },
+    "Adair Crawford": {
+      "navPrev": 89,
+      "navNext": 89,
+      "chipWidth": 85,
+      "captionWidth": 116
+    },
+    "Johan Gadolin": {
+      "navPrev": 86,
+      "navNext": 86,
+      "chipWidth": 80,
+      "captionWidth": 110
+    },
+    "Charles Hatchett": {
+      "navPrev": 97,
+      "navNext": 97,
+      "chipWidth": 96,
+      "captionWidth": 129
+    },
+    "Carlo Perrier & Emilio Segrè": {
+      "navPrev": 151,
+      "navNext": 151,
+      "chipWidth": 155,
+      "captionWidth": 214
+    },
+    "Karl Ernst Claus": {
+      "navPrev": 94,
+      "navNext": 94,
+      "chipWidth": 90,
+      "captionWidth": 124
+    },
+    "Friedrich Stromeyer": {
+      "navPrev": 111,
+      "navNext": 111,
+      "chipWidth": 112,
+      "captionWidth": 152
+    },
+    "Ferdinand Reich & Hieronymus Richter": {
+      "navPrev": 205,
+      "navNext": 205,
+      "chipWidth": 215,
+      "captionWidth": 296
+    },
+    "Franz-Joseph Müller von Reichenstein": {
+      "navPrev": 203,
+      "navNext": 203,
+      "chipWidth": 214,
+      "captionWidth": 293
+    },
+    "Bernard Courtois": {
+      "navPrev": 99,
+      "navNext": 99,
+      "chipWidth": 96,
+      "captionWidth": 132
+    },
+    "Jöns Jacob Berzelius & Wilhelm Hisinger": {
+      "navPrev": 215,
+      "navNext": 215,
+      "chipWidth": 228,
+      "captionWidth": 312
+    },
+    "Jacob Marinsky, Lawrence Glendenin & Charles Coryell": {
+      "navPrev": 286,
+      "navNext": 286,
+      "chipWidth": 307,
+      "captionWidth": 422
+    },
+    "Eugène-Anatole Demarçay": {
+      "navPrev": 146,
+      "navNext": 146,
+      "chipWidth": 149,
+      "captionWidth": 205
+    },
+    "Marc Delafontaine & Jacques-Louis Soret": {
+      "navPrev": 219,
+      "navNext": 219,
+      "chipWidth": 231,
+      "captionWidth": 318
+    },
+    "Per Teodor Cleve": {
+      "navPrev": 99,
+      "navNext": 99,
+      "chipWidth": 95,
+      "captionWidth": 131
+    },
+    "Georges Urbain": {
+      "navPrev": 92,
+      "navNext": 92,
+      "chipWidth": 87,
+      "captionWidth": 120
+    },
+    "Dirk Coster & George de Hevesy": {
+      "navPrev": 174,
+      "navNext": 174,
+      "chipWidth": 179,
+      "captionWidth": 247
+    },
+    "Anders Gustaf Ekeberg": {
+      "navPrev": 129,
+      "navNext": 129,
+      "chipWidth": 129,
+      "captionWidth": 177
+    },
+    "Juan José Elhuyar & Fausto Elhuyar": {
+      "navPrev": 191,
+      "navNext": 191,
+      "chipWidth": 199,
+      "captionWidth": 274
+    },
+    "Walter Noddack, Ida Tacke & Otto Berg": {
+      "navPrev": 207,
+      "navNext": 207,
+      "chipWidth": 217,
+      "captionWidth": 298
+    },
+    "Antonio de Ulloa": {
+      "navPrev": 96,
+      "navNext": 96,
+      "chipWidth": 92,
+      "captionWidth": 127
+    },
+    "William Crookes": {
+      "navPrev": 94,
+      "navNext": 94,
+      "chipWidth": 90,
+      "captionWidth": 125
+    },
+    "Claude François Geoffroy": {
+      "navPrev": 140,
+      "navNext": 140,
+      "chipWidth": 142,
+      "captionWidth": 194
+    },
+    "Dale Corson, Kenneth MacKenzie & Emilio Segrè": {
+      "navPrev": 255,
+      "navNext": 255,
+      "chipWidth": 268,
+      "captionWidth": 373
+    },
+    "Friedrich Ernst Dorn": {
+      "navPrev": 113,
+      "navNext": 113,
+      "chipWidth": 113,
+      "captionWidth": 155
+    },
+    "Marguerite Perey": {
+      "navPrev": 98,
+      "navNext": 98,
+      "chipWidth": 97,
+      "captionWidth": 131
+    },
+    "André-Louis Debierne": {
+      "navPrev": 122,
+      "navNext": 122,
+      "chipWidth": 123,
+      "captionWidth": 168
+    },
+    "Kasimir Fajans & Oswald Helmuth Göhring": {
+      "navPrev": 223,
+      "navNext": 223,
+      "chipWidth": 235,
+      "captionWidth": 325
+    },
+    "Edwin McMillan & Philip Abelson": {
+      "navPrev": 175,
+      "navNext": 175,
+      "chipWidth": 181,
+      "captionWidth": 250
+    },
+    "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl": {
+      "navPrev": 331,
+      "navNext": 331,
+      "chipWidth": 356,
+      "captionWidth": 488
+    },
+    "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso": {
+      "navPrev": 313,
+      "navNext": 313,
+      "chipWidth": 335,
+      "captionWidth": 461
+    },
+    "Glenn Seaborg, Ralph James & Albert Ghiorso": {
+      "navPrev": 242,
+      "navNext": 242,
+      "chipWidth": 256,
+      "captionWidth": 351
+    },
+    "Glenn Seaborg, Stanley Thompson & Albert Ghiorso": {
+      "navPrev": 270,
+      "navNext": 270,
+      "chipWidth": 288,
+      "captionWidth": 394
+    },
+    "Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street": {
+      "navPrev": 350,
+      "navNext": 350,
+      "chipWidth": 379,
+      "captionWidth": 518
+    },
+    "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg": {
+      "navPrev": 337,
+      "navNext": 337,
+      "chipWidth": 365,
+      "captionWidth": 499
+    },
+    "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer": {
+      "navPrev": 337,
+      "navNext": 337,
+      "chipWidth": 367,
+      "captionWidth": 503
+    },
+    "Kosuke Morita et al.": {
+      "navPrev": 113,
+      "navNext": 113,
+      "chipWidth": 111,
+      "captionWidth": 154
+    }
+  },
+  "properties": {
+    "mass": {
+      "width10": 79,
+      "width11bold": 102,
+      "widestLine10": 114
+    },
+    "electronegativity": {
+      "width10": 82,
+      "width11bold": 121,
+      "widestLine10": 109
+    },
+    "ionizationEnergy": {
+      "width10": 106,
+      "width11bold": 144,
+      "widestLine10": 139
+    },
+    "radius": {
+      "width10": 92,
+      "width11bold": 122,
+      "widestLine10": 131
+    },
+    "density": {
+      "width10": 75,
+      "width11bold": 98,
+      "widestLine10": 107
+    },
+    "meltingPoint": {
+      "width10": 81,
+      "width11bold": 110,
+      "widestLine10": 126
+    },
+    "boilingPoint": {
+      "width10": 78,
+      "width11bold": 106,
+      "widestLine10": 122
+    },
+    "halfLife": {
+      "width10": 95,
+      "width11bold": 136,
+      "widestLine10": 219
+    },
+    "atomicNumber": {
+      "width10": 74,
+      "width11bold": 98,
+      "widestLine10": 97
+    },
+    "period": {
+      "width10": 31,
+      "width11bold": 43,
+      "widestLine10": 44
+    },
+    "group": {
+      "width10": 30,
+      "width11bold": 41,
+      "widestLine10": 47
+    },
+    "discoveryYear": {
+      "width10": 72,
+      "width11bold": 100,
+      "widestLine10": 101
+    }
+  },
+  "edges": {
+    "belongs to (n:1)": 88,
+    "classified as (n:1)": 99,
+    "ranked in (n:m)": 86,
+    "discovered by (n:1)": 107,
+    "discovered in (n:1)": 104,
+    "named for (n:1)": 86,
+    "adjacent to (n:m)": 97,
+    "compared in (n:m)": 103,
+    "contains (1:n)": 78,
+    "active in (n:m)": 81,
+    "related to (n:m)": 88
+  }
+}

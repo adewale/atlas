@@ -118,7 +118,7 @@ test.describe('Readability: Home / Periodic Table', () => {
 
 test.describe('Readability: Element Folio', () => {
   test('folio content is laid out without overlap', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-folio-fe.png', fullPage: true });
 
@@ -135,12 +135,12 @@ test.describe('Readability: Element Folio', () => {
   });
 
   test('prev/next navigation links are present and separated', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
 
     // Prev link (Mn) and next link (Co) should exist
-    const prevLink = page.locator('nav a[href="/element/Mn"]');
-    const nextLink = page.locator('nav a[href="/element/Co"]');
+    const prevLink = page.locator('nav a[href="/elements/Mn"]');
+    const nextLink = page.locator('nav a[href="/elements/Co"]');
     await expect(prevLink).toBeVisible();
     await expect(nextLink).toBeVisible();
 
@@ -151,23 +151,23 @@ test.describe('Readability: Element Folio', () => {
   });
 
   test('H has no prev link, Og has no next link', async ({ page }) => {
-    await page.goto('/element/H');
+    await page.goto('/elements/H');
     await waitForAnimations(page);
     // Should have next (He) but no prev
-    await expect(page.locator('nav a[href="/element/He"]')).toBeVisible();
+    await expect(page.locator('nav a[href="/elements/He"]')).toBeVisible();
     const prevLinks = page.locator('nav a:has-text("←")');
     await expect(prevLinks).toHaveCount(0);
 
-    await page.goto('/element/Og');
+    await page.goto('/elements/Og');
     await waitForAnimations(page);
     // Should have prev (Ts) but no next
-    await expect(page.locator('nav a[href="/element/Ts"]')).toBeVisible();
+    await expect(page.locator('nav a[href="/elements/Ts"]')).toBeVisible();
     const nextLinks = page.locator('nav a:has-text("→")');
     await expect(nextLinks).toHaveCount(0);
   });
 
   test('etymology and discovery sections readable with links', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
 
     // Etymology section should be visible
@@ -188,7 +188,7 @@ test.describe('Readability: Element Folio', () => {
   });
 
   test('property bars are readable after animation', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
 
     const bars = page.locator('[aria-label*="ranked"]');
@@ -197,7 +197,7 @@ test.describe('Readability: Element Folio', () => {
   });
 
   test('summary text lines are not overlapping', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
 
     const summarySvg = page.locator('svg[aria-label="Element summary"]');
@@ -218,7 +218,7 @@ test.describe('Readability: Element Folio', () => {
 
   test('mobile folio layout is readable', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-folio-mobile.png', fullPage: true });
 
@@ -463,7 +463,7 @@ test.describe('Readability: Discoverer Network', () => {
 
 test.describe('Readability: Atlas Index Pages', () => {
   test('group page cards are readable and non-overlapping', async ({ page }) => {
-    await page.goto('/atlas/group/8');
+    await page.goto('/groups/8');
     await waitForAnimations(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-atlas-group.png', fullPage: true });
 
@@ -473,7 +473,7 @@ test.describe('Readability: Atlas Index Pages', () => {
   });
 
   test('rank page shows all 118 elements without stacking', async ({ page }) => {
-    await page.goto('/atlas/rank/mass');
+    await page.goto('/properties/mass');
     await waitForAnimations(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-atlas-rank.png', fullPage: true });
 
@@ -521,7 +521,7 @@ test.describe('Page transitions: content readable after navigation', () => {
   });
 
   test('folio → prev/next → folio: each page readable', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
     await expect(page.locator('h2')).toHaveText('Iron');
 
@@ -538,7 +538,7 @@ test.describe('Page transitions: content readable after navigation', () => {
   });
 
   test('folio → discoverer detail → network: readable at each step', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
 
     // Click discoverer link (now points to /discoverer/:name)
@@ -557,7 +557,7 @@ test.describe('Page transitions: content readable after navigation', () => {
   });
 
   test('folio → etymology map: readable after transition', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
 
     const etymLink = page.locator('a[href="/etymology-map"]');
@@ -571,11 +571,11 @@ test.describe('Page transitions: content readable after navigation', () => {
 
   test('folio → timeline era: readable after transition', async ({ page }) => {
     // Use Oxygen (discoveryYear = 1774) to test era links, since Fe is antiquity (no year)
-    await page.goto('/element/O');
+    await page.goto('/elements/O');
     await waitForAnimations(page);
 
     // O discovery link goes to /timeline/1770
-    const timeLink = page.locator('a[href*="/timeline/"]').first();
+    const timeLink = page.locator('a[href*="/eras/"]').first();
     await expect(timeLink).toBeVisible();
     await timeLink.click();
     await waitForAnimations(page);
@@ -585,7 +585,7 @@ test.describe('Page transitions: content readable after navigation', () => {
   });
 
   test('folio → compare → back: no broken state', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await waitForAnimations(page);
 
     await page.locator('a:has-text("Compare →")').click();

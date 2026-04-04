@@ -3,6 +3,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 import VizNav from './VizNav';
 import SiteNav from './SiteNav';
 import { BLACK, DEEP_BLUE, WARM_RED, MUSTARD, GREY_RULE, STROKE_THIN } from '../lib/theme';
+import { DROP_CAP_FONT } from '../lib/pretext';
 
 const ATLAS_LETTERS = [
   { letter: 'A', color: WARM_RED },
@@ -85,7 +86,7 @@ export default function PageShell({ children, vizNav = false }: PageShellProps) 
                 y={14 + i * CELL + FONT_SIZE}
                 textAnchor="middle"
                 fontSize={FONT_SIZE}
-                fontFamily="Cinzel, Georgia, serif"
+                fontFamily={DROP_CAP_FONT}
                 fontWeight="900"
                 fill={item.color}
                 letterSpacing="0.15em"

@@ -148,7 +148,7 @@ function HelpPanel({ onClose }: { onClose: () => void }) {
           lineHeight={introLH}
           fontSize={14}
           maxWidth={PANEL_WIDTH - 32}
-          showRules
+         
           animationStagger={20}
         />
         {SHORTCUTS.map((s, i) => {

@@ -15,10 +15,8 @@
  *
  * Exit code 0 = clean, 1 = violations found.
  */
-import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname } from 'path';
-
-const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
+import { readFileSync } from 'fs';
+import { SRC_DIR, COMMENT_RE, walk, relPath } from './lint-utils.js';
 
 // Patterns that indicate a non-null assertion on a nullable lookup
 // Matches: getElement(...)!, .find(...)!, .get(...)!, bySymbol.get(...)!
@@ -33,28 +31,12 @@ const DANGEROUS_PATTERNS = [
 // Matches: expr!. or expr!) but not !== or !=
 const GENERIC_NONNULL_RE = /[a-zA-Z0-9_)\]]\s*!\s*\./g;
 
-const COMMENT_RE = /^\s*(\/\/|\/?\*|\*)/;
-
 type Violation = {
   file: string;
   line: number;
   pattern: string;
   text: string;
 };
-
-function walk(dir: string): string[] {
-  const files: string[] = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    const stat = statSync(full);
-    if (stat.isDirectory()) {
-      files.push(...walk(full));
-    } else if (['.tsx', '.ts'].includes(extname(full))) {
-      files.push(full);
-    }
-  }
-  return files;
-}
 
 function lint(): Violation[] {
   const violations: Violation[] = [];
@@ -73,7 +55,7 @@ function lint(): Violation[] {
         pattern.lastIndex = 0;
         if (pattern.test(line)) {
           violations.push({
-            file: file.replace(SRC_DIR, 'src'),
+            file: relPath(file),
             line: i + 1,
             pattern: 'nullable lookup with !',
             text: line.trim(),

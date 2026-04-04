@@ -49,31 +49,37 @@ describe('getCellPosition', () => {
   });
 
   it('places H at row 1, col 1', () => {
-    const h = getElement('H')!;
-    const pos = getCellPosition(h);
+    const h = getElement('H');
+    expect(h).toBeDefined();
+    const pos = getCellPosition(h!);
     expect(pos.row).toBe(1);
     expect(pos.col).toBe(1);
   });
 
   it('places He at row 1, col 18', () => {
-    const he = getElement('He')!;
-    const pos = getCellPosition(he);
+    const he = getElement('He');
+    expect(he).toBeDefined();
+    const pos = getCellPosition(he!);
     expect(pos.row).toBe(1);
     expect(pos.col).toBe(18);
   });
 
   it('places lanthanides (Ce-Yb, Lu) in row 9', () => {
-    const ce = getElement('Ce')!;
-    const lu = getElement('Lu')!;
-    expect(getCellPosition(ce).row).toBe(9);
-    expect(getCellPosition(lu).row).toBe(9);
+    const ce = getElement('Ce');
+    const lu = getElement('Lu');
+    expect(ce).toBeDefined();
+    expect(lu).toBeDefined();
+    expect(getCellPosition(ce!).row).toBe(9);
+    expect(getCellPosition(lu!).row).toBe(9);
   });
 
   it('places actinides (Th-No, Lr) in row 10', () => {
-    const th = getElement('Th')!;
-    const lr = getElement('Lr')!;
-    expect(getCellPosition(th).row).toBe(10);
-    expect(getCellPosition(lr).row).toBe(10);
+    const th = getElement('Th');
+    const lr = getElement('Lr');
+    expect(th).toBeDefined();
+    expect(lr).toBeDefined();
+    expect(getCellPosition(th!).row).toBe(10);
+    expect(getCellPosition(lr!).row).toBe(10);
   });
 
   it('all positions within viewBox bounds', () => {

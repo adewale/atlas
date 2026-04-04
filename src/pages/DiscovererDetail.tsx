@@ -4,14 +4,46 @@ import { getElement } from '../lib/data';
 import type { ElementRecord } from '../lib/types';
 import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
-import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE, GREY_MID } from '../lib/theme';
+import { WARM_RED, BACK_LINK_STYLE, SECTION_LABEL_STYLE } from '../lib/theme';
+import { fitLabel, PRETEXT_SANS } from '../lib/pretext';
 import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
-import { PRETEXT_SANS } from '../lib/pretext';
+import SvgPrevNext from '../components/SvgPrevNext';
 import { DiscovererChip } from '../components/EntityChip';
+import { getDiscovererMetrics } from '../lib/metrics';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+
+// SvgPrevNext renders at 11px in a 400-unit-wide viewBox; each label gets ~196 units.
+// The precomputed navPrev/navNext include the "← " / " →" prefix/suffix.
+const NAV_LABEL_FONT = `11px ${PRETEXT_SANS}`;
+const NAV_LABEL_MAX_W = 196;
+
+/** Truncate name to fit SvgPrevNext label. Uses precomputed navPrev/navNext
+ *  which measure the exact rendered string ("← name" / "name →"). */
+function truncateNavLabel(name: string, direction: 'prev' | 'next' = 'prev'): string {
+  const precomputed = getDiscovererMetrics(name);
+  const fullWidth = direction === 'prev' ? precomputed?.navPrev : precomputed?.navNext;
+  if (fullWidth != null && fullWidth <= NAV_LABEL_MAX_W) return name;
+
+  // Fallback: binary search with runtime measurement
+  const prefix = direction === 'prev' ? '← ' : '';
+  const suffix = direction === 'next' ? ' →' : '';
+  if (fitLabel(prefix + name + suffix, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) return name;
+
+  let lo = 1, hi = name.length - 1, best = 0;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (fitLabel(prefix + name.slice(0, mid) + '\u2026' + suffix, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return best > 0 ? name.slice(0, best) + '\u2026' : name[0] + '\u2026';
+}
 
 type DiscovererEntry = { name: string; elements: string[] };
 
@@ -25,39 +57,49 @@ export default function DiscovererDetail() {
   const discoverer = discoverers.find((d) => d.name === decodedName);
   useDocumentTitle(discoverer ? discoverer.name : 'Discoverer Not Found');
 
-  // Related discoverers: same era (±20 years) or shared block
+  // Related discoverers — evidence-based criteria from our 3 data sources:
+  // 1. Same exact discovery year (strongest: co-discoverers of the era)
+  // 2. Same periodic table group (structural: discovered elements in the same column)
+  // 3. Discovered a neighbouring element (adjacency in the table)
+  // 4. Shared person name in multi-person credit (collaboration link)
   // NOTE: useMemo must be called unconditionally (before any early return)
   const related = useMemo(() => {
     if (!discoverer) return [];
     const elems = discoverer.elements.map((s) => getElement(s)).filter(
       (e): e is ElementRecord => e != null,
     );
-    const yrs = elems
-      .map((e) => e.discoveryYear)
-      .filter((y): y is number => y != null)
-      .sort((a, b) => a - b);
-    const blocks = new Set(elems.map((e) => e.block));
-    const minYear = yrs.length > 0 ? yrs[0] : null;
-    const maxYear = yrs.length > 0 ? yrs[yrs.length - 1] : null;
+    const years = new Set(elems.map((e) => e.discoveryYear).filter((y): y is number => y != null));
+    const groups = new Set(elems.map((e) => e.group).filter((g): g is number => g != null));
+    const neighbourSymbols = new Set(elems.flatMap((e) => e.neighbors));
 
-    return discoverers
-      .filter((d) => {
-        if (d.name === decodedName) return false;
-        const dElements = d.elements.map((s) => getElement(s)).filter(
-          (e): e is ElementRecord => e != null,
-        );
-        // Same era?
-        if (minYear != null && maxYear != null) {
-          const dYears = dElements
-            .map((e) => e.discoveryYear)
-            .filter((y): y is number => y != null);
-          if (dYears.some((y) => y >= minYear - 20 && y <= maxYear + 20)) return true;
-        }
-        // Shared block?
-        if (dElements.some((e) => blocks.has(e.block))) return true;
-        return false;
-      })
-      .slice(0, 8);
+    // Extract person name parts (>3 chars) for shared-name matching
+    const nameParts = decodedName.toLowerCase().split(/[,&]/)
+      .flatMap((s) => s.trim().split(' '))
+      .filter((p) => p.length > 3);
+
+    return discoverers.filter((d) => {
+      if (d.name === decodedName) return false;
+      const dElements = d.elements.map((s) => getElement(s)).filter(
+        (e): e is ElementRecord => e != null,
+      );
+      const dYears = dElements.map((e) => e.discoveryYear).filter((y): y is number => y != null);
+      const dGroups = dElements.map((e) => e.group).filter((g): g is number => g != null);
+      const dSymbols = new Set(d.elements);
+
+      // Same exact year?
+      if (dYears.some((y) => years.has(y))) return true;
+      // Same group?
+      if (dGroups.some((g) => groups.has(g))) return true;
+      // Discovered a neighbour?
+      if (d.elements.some((s) => neighbourSymbols.has(s))) return true;
+      // Shared person name?
+      const dParts = d.name.toLowerCase().split(/[,&]/)
+        .flatMap((s) => s.trim().split(' '))
+        .filter((p) => p.length > 3);
+      if (nameParts.some((p) => dParts.includes(p))) return true;
+
+      return false;
+    });
   }, [discoverers, decodedName, discoverer]);
 
   if (!discoverer) {
@@ -104,31 +146,11 @@ export default function DiscovererDetail() {
       />
 
       {/* Prev / Next navigation — Pretext-styled, anchored beneath hero */}
-      {(prevDisc || nextDisc) && (
-        <svg
-          width="100%"
-          height={24}
-          viewBox="0 0 400 24"
-          preserveAspectRatio="xMidYMid meet"
-          style={{ display: 'block', maxWidth: 560 }}
-          aria-label="Previous and next discoverer navigation"
-        >
-          {prevDisc && (
-            <a href={`/discoverers/${encodeURIComponent(prevDisc.name)}`}>
-              <text x={4} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS}>
-                ← {prevDisc.name.length > 20 ? prevDisc.name.slice(0, 18) + '…' : prevDisc.name}
-              </text>
-            </a>
-          )}
-          {nextDisc && (
-            <a href={`/discoverers/${encodeURIComponent(nextDisc.name)}`}>
-              <text x={396} y={16} fontSize={11} fill={GREY_MID} fontFamily={PRETEXT_SANS} textAnchor="end">
-                {nextDisc.name.length > 20 ? nextDisc.name.slice(0, 18) + '…' : nextDisc.name} →
-              </text>
-            </a>
-          )}
-        </svg>
-      )}
+      <SvgPrevNext
+        prev={prevDisc ? { label: truncateNavLabel(prevDisc.name, 'prev'), to: `/discoverers/${encodeURIComponent(prevDisc.name)}` } : undefined}
+        next={nextDisc ? { label: truncateNavLabel(nextDisc.name, 'next'), to: `/discoverers/${encodeURIComponent(nextDisc.name)}` } : undefined}
+        ariaLabel="Previous and next discoverer navigation"
+      />
 
       <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
 
@@ -137,22 +159,35 @@ export default function DiscovererDetail() {
       )}
 
       {/* Related discoverers — graph navigation */}
-      {related.length > 0 && (
-        <section style={{ marginTop: '32px' }}>
-          <h2 style={SECTION_LABEL_STYLE}>
-            Related Discoverers
-          </h2>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {related.map((d) => (
-              <DiscovererChip
-                key={d.name}
-                name={d.name}
-                elementCount={d.elements.length}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      {related.length > 0 && (() => {
+        // Compute fixed chip width from precomputed metrics so all chips align
+        const chipPadding = 25; // 12px left + 10px right + 3px border
+        const maxNameW = Math.max(
+          ...related.map((d) => {
+            const m = getDiscovererMetrics(d.name);
+            return m?.chipWidth ?? 120;
+          }),
+        );
+        const chipWidth = Math.max(maxNameW + chipPadding, 120);
+
+        return (
+          <section style={{ marginTop: '32px' }}>
+            <h2 style={SECTION_LABEL_STYLE}>
+              Related Discoverers
+            </h2>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              {related.map((d) => (
+                <DiscovererChip
+                  key={d.name}
+                  name={d.name}
+                  elementCount={d.elements.length}
+                  fixedWidth={chipWidth}
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Link to timeline era for context */}
       <div style={{ marginTop: '24px' }}>

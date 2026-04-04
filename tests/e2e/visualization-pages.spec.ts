@@ -52,7 +52,7 @@ test.describe('Phase Landscape', () => {
     // Click on Iron
     await page.locator('g[aria-label*="Iron"]').locator('..').click();
     await page.waitForURL(/\/element\/Fe/);
-    expect(page.url()).toContain('/element/Fe');
+    expect(page.url()).toContain('/elements/Fe');
   });
 });
 
@@ -207,7 +207,7 @@ test.describe('Neighbourhood Graph', () => {
 
     await page.locator('g[aria-label*="Iron"]').click();
     await page.waitForURL(/\/element\/Fe/);
-    expect(page.url()).toContain('/element/Fe');
+    expect(page.url()).toContain('/elements/Fe');
   });
 });
 
@@ -312,13 +312,13 @@ test.describe('Etymology Map', () => {
     await firstCard.click();
     await page.waitForTimeout(1000);
 
-    expect(page.url()).toContain('/element/');
+    expect(page.url()).toContain('/elements/');
   });
 });
 
 test.describe('Drop cap text flow', () => {
   test('drop cap initial does not overlap body text', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-fe.png', fullPage: true });
 
@@ -363,7 +363,7 @@ test.describe('Drop cap text flow', () => {
   });
 
   test('drop cap flows text on Hydrogen (short summary)', async ({ page }) => {
-    await page.goto('/element/H');
+    await page.goto('/elements/H');
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-h.png', fullPage: true });
 
@@ -376,7 +376,7 @@ test.describe('Drop cap text flow', () => {
   });
 
   test('drop cap flows text on Oganesson (long summary)', async ({ page }) => {
-    await page.goto('/element/Og');
+    await page.goto('/elements/Og');
     await page.waitForTimeout(2000);
 
     const summarySvg = page.locator('svg[aria-label="Element summary"]');
@@ -402,7 +402,7 @@ test.describe('Drop cap text flow', () => {
 
 test.describe('Discoverer Detail', () => {
   test('renders discoverer page with elements', async ({ page }) => {
-    await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
+    await page.goto('/discoverers/' + encodeURIComponent('Humphry Davy'));
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-davy.png', fullPage: true });
 
@@ -419,7 +419,7 @@ test.describe('Discoverer Detail', () => {
   });
 
   test('prev/next navigation works', async ({ page }) => {
-    await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
+    await page.goto('/discoverers/' + encodeURIComponent('Humphry Davy'));
     await page.waitForTimeout(1500);
 
     // Should have prev or next links
@@ -436,7 +436,7 @@ test.describe('Discoverer Detail', () => {
   });
 
   test('related discoverer links navigate correctly', async ({ page }) => {
-    await page.goto('/discoverer/' + encodeURIComponent('Humphry Davy'));
+    await page.goto('/discoverers/' + encodeURIComponent('Humphry Davy'));
     await page.waitForTimeout(1500);
 
     const relatedLinks = page.locator('section:has(h2:has-text("Related")) a');
@@ -452,7 +452,7 @@ test.describe('Discoverer Detail', () => {
 
 test.describe('Timeline Era', () => {
   test('renders era page with elements', async ({ page }) => {
-    await page.goto('/timeline/1770');
+    await page.goto('/eras/1770');
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/timeline-1770s.png', fullPage: true });
 
@@ -469,7 +469,7 @@ test.describe('Timeline Era', () => {
   });
 
   test('antiquity era page works', async ({ page }) => {
-    await page.goto('/timeline/antiquity');
+    await page.goto('/eras/antiquity');
     await page.waitForTimeout(2000);
 
     await expect(page.locator('h1')).toHaveText('Antiquity');
@@ -477,7 +477,7 @@ test.describe('Timeline Era', () => {
   });
 
   test('prev/next era navigation works', async ({ page }) => {
-    await page.goto('/timeline/1770');
+    await page.goto('/eras/1770');
     await page.waitForTimeout(1500);
 
     const navLinks = page.locator('nav a');
@@ -490,7 +490,7 @@ test.describe('Timeline Era', () => {
   });
 
   test('discoverer links from era page work', async ({ page }) => {
-    await page.goto('/timeline/1770');
+    await page.goto('/eras/1770');
     await page.waitForTimeout(1500);
 
     const discovererLinks = page.locator('section:has(h2:has-text("Discoverers")) a');

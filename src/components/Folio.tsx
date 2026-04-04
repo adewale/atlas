@@ -3,9 +3,11 @@ import { Link } from 'react-router';
 import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
 import { useShapedText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS } from '../lib/pretext';
+import { PRETEXT_SANS, measureLines } from '../lib/pretext';
+import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElement, allElements } from '../lib/data';
+import { getElementMetrics } from '../lib/metrics';
 import PretextSvg from './PretextSvg';
 import { GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
@@ -14,21 +16,45 @@ import type { GroupData } from '../lib/types';
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug, categoryColor } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
+import SvgLink from './SvgLink';
 import { NeighbourChip } from './EntityChip';
 import { AnomalyChip } from './EntityChip';
 
 const PLATE_WIDTH = 160;
 const PLATE_ROW_H = 56;
 const PLATE_ROWS = 4; // Group, Period, Block, Category
-const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS; // 224
+const PLATE_ROW_GAP = 6; // gap between DataPlateRow divs (from browser measurement)
+const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS + PLATE_ROW_GAP * (PLATE_ROWS - 1); // 242
 const RANK_ROW_H = 24;
 const FULL_WIDTH = 560;
 const PLATE_GAP = 24;
 const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
-const IDENTITY_WIDTH = 130;
-const IDENTITY_HEIGHT = 150;
+// Height: number (48px lh1) + symbol (36px lh1.1≈40) + name (10px+2px≈17) ≈ 105px
+const IDENTITY_HEIGHT = 106;
+const MIN_ANNOTATION_GAP = 24;
+
+/** Measure the identity block's actual width from element data using Pretext. */
+function measureIdentityWidth(paddedNumber: string, symbol: string, name: string, mobile: boolean): number {
+  const numFontSize = mobile ? 56 : 48;
+  const numLines = measureLines(paddedNumber, `bold ${numFontSize}px ${MONO_FONT}`, 9999, numFontSize);
+  const symLines = measureLines(symbol, `bold 36px system-ui, sans-serif`, 9999, 40);
+  // Name is uppercase with letter-spacing: 0.2em at 10px = 2px per gap
+  const nameUpper = name.toUpperCase();
+  const nameLines = measureLines(nameUpper, `10px system-ui, sans-serif`, 9999, 12);
+  const baseNameW = nameLines[0]?.width ?? 40;
+  const letterSpacingPx = (nameUpper.length - 1) * 2; // 0.2em * 10px
+  const nameW = baseNameW + letterSpacingPx;
+
+  const maxW = Math.max(
+    numLines[0]?.width ?? 60,
+    symLines[0]?.width ?? 30,
+    nameW,
+  );
+  // Add 8px breathing room so text doesn't touch the identity
+  return Math.ceil(maxW) + 8;
+}
 
 /** Reusable row for the data plate (Group / Period / Block / Category). */
 function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, title, viewTransitionName, rowWidth, prev, next }: {
@@ -39,37 +65,110 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
   next?: { symbol: string; name: string };
 }) {
   const strValue = String(value);
+  // Cap fontSize for long strings; use system-ui for wordy values, mono for short codes
   const valueFontSize = strValue.length > 6 ? 13 : strValue.length > 3 ? 18 : 24;
   const valueY = strValue.length > 6 ? 42 : 46;
+  const hasArrows = !!(prev || next);
+  const maxTextWidth = rowWidth - 12 - (hasArrows ? 52 : 8);
+  const displayValue = strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue;
+  // Use Pretext measurement for compression detection (fallback for non-precomputed values)
+  const valueFont = `bold ${valueFontSize}px ${valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}`;
+  const measured = measureLines(displayValue, valueFont, 9999, valueFontSize);
+  const measuredWidth = measured[0]?.width ?? 0;
+  const needsCompression = measuredWidth > maxTextWidth;
   return (
     <div style={{ viewTransitionName, textDecoration: 'none' } as React.CSSProperties}>
       <svg width={rowWidth} height={56} viewBox={`0 0 ${rowWidth} 56`}>
         {/* Main area — links to listing page */}
-        <a href={href} aria-label={ariaLabel}>
+        <SvgLink to={href} aria-label={ariaLabel}>
           <title>{title}</title>
           <rect x={0} y={0} width={rowWidth} height={56} fill={fill} />
           <text x={12} y={20} fontSize={10} fill={textFill} fontFamily="system-ui">{label}</text>
-          <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'}>{strValue.length > 3 ? strValue.replace(/\b\w/g, c => c.toUpperCase()) : strValue}</text>
-        </a>
+          <text x={12} y={valueY} fontSize={valueFontSize} fontWeight="bold" fill={textFill} fontFamily={valueFontSize >= 18 ? MONO_FONT : 'system-ui, sans-serif'} {...(needsCompression ? { textLength: maxTextWidth, lengthAdjust: 'spacingAndGlyphs' } : {})}>{displayValue}</text>
+        </SvgLink>
         {/* Prev/next arrows on the right */}
         {prev && (
-          <a href={`/elements/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
+          <SvgLink to={`/elements/${prev.symbol}`} aria-label={`Previous: ${prev.name}`}>
             <title>← {prev.name}</title>
             <rect x={rowWidth - 48} y={2} width={24} height={52} fill={fill} />
             <text x={rowWidth - 36} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>←</text>
-          </a>
+          </SvgLink>
         )}
         {next && (
-          <a href={`/elements/${next.symbol}`} aria-label={`Next: ${next.name}`}>
+          <SvgLink to={`/elements/${next.symbol}`} aria-label={`Next: ${next.name}`}>
             <title>{next.name} →</title>
             <rect x={rowWidth - 24} y={2} width={24} height={52} fill={fill} />
             <text x={rowWidth - 12} y={34} fontSize={16} fill={textFill} fontFamily={PRETEXT_SANS} textAnchor="middle" opacity={0.7} style={{ cursor: 'pointer' }}>→</text>
-          </a>
+          </SvgLink>
         )}
       </svg>
     </div>
   );
 }
+
+/** Find the y-position of the first text line containing `keyword`. */
+function findLineYForKeyword(
+  lines: PositionedLine[],
+  keyword: string,
+  lineHeight: number,
+): number | null {
+  const kw = keyword.toLowerCase();
+  for (const line of lines) {
+    if (line.text.toLowerCase().includes(kw)) {
+      return line.y + lineHeight;
+    }
+  }
+  return null;
+}
+
+/** Resolve overlap: if two annotations are within MIN_ANNOTATION_GAP, push later ones down.
+ *  If maxY is provided, clamp annotations so they don't exceed that boundary;
+ *  overflow items are stacked upward from maxY with MIN_ANNOTATION_GAP spacing. */
+function resolveOverlaps(positions: (number | null)[], maxY?: number): (number | null)[] {
+  const result = [...positions];
+  // Sort indices by their non-null y values, preserving order for nulls
+  const nonNullIndices = result
+    .map((y, i) => ({ y, i }))
+    .filter((e): e is { y: number; i: number } => e.y != null)
+    .sort((a, b) => a.y - b.y);
+
+  for (let j = 1; j < nonNullIndices.length; j++) {
+    const prev = nonNullIndices[j - 1];
+    const curr = nonNullIndices[j];
+    const prevY = result[prev.i]!;
+    const currY = result[curr.i]!;
+    if (currY - prevY < MIN_ANNOTATION_GAP) {
+      result[curr.i] = prevY + MIN_ANNOTATION_GAP;
+    }
+  }
+
+  // Clamp to maxY: if any annotation exceeds the available height,
+  // stack them upward from maxY with MIN_ANNOTATION_GAP spacing.
+  if (maxY != null && nonNullIndices.length > 0) {
+    // Walk backwards through sorted annotations and pull any that exceed maxY
+    for (let j = nonNullIndices.length - 1; j >= 0; j--) {
+      const idx = nonNullIndices[j].i;
+      const y = result[idx]!;
+      const limit = maxY - (nonNullIndices.length - 1 - j) * MIN_ANNOTATION_GAP;
+      if (y > limit) {
+        result[idx] = limit;
+      }
+    }
+    // Re-enforce minimum gap from top to bottom after clamping
+    for (let j = 1; j < nonNullIndices.length; j++) {
+      const prev = nonNullIndices[j - 1];
+      const curr = nonNullIndices[j];
+      const prevY = result[prev.i]!;
+      const currY = result[curr.i]!;
+      if (currY - prevY < MIN_ANNOTATION_GAP) {
+        result[curr.i] = prevY + MIN_ANNOTATION_GAP;
+      }
+    }
+  }
+
+  return result;
+}
+
 
 type FolioProps = {
   element: ElementRecord;
@@ -119,13 +218,20 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const effectiveWidth = measuredWidth > 0 ? measuredWidth : (mobile ? 320 : FULL_WIDTH);
   const effectiveNarrow = effectiveWidth - PLATE_WIDTH - PLATE_GAP;
 
+  const paddedNumber = String(element.atomicNumber).padStart(3, '0');
+  const precomputed = getElementMetrics(element.symbol);
+  const identityWidth = precomputed
+    ? (mobile ? precomputed.identityWidthMobile : precomputed.identityWidth)
+    : measureIdentityWidth(paddedNumber, element.symbol, element.name, mobile);
+
+  const textFullWidth = mobile ? effectiveWidth : Math.min(FULL_WIDTH, effectiveWidth);
   const { lines, lineHeight } = useShapedText({
     text: element.summary,
-    fullWidth: effectiveWidth,
-    narrowWidth: effectiveNarrow,
+    fullWidth: textFullWidth,
+    narrowWidth: Math.min(effectiveNarrow, textFullWidth),
     plateHeight: PLATE_HEIGHT,
     mobile,
-    leftIndent: mobile ? undefined : { width: IDENTITY_WIDTH, height: IDENTITY_HEIGHT },
+    leftIndent: mobile ? undefined : { width: identityWidth, height: IDENTITY_HEIGHT },
   });
 
   // Group phase data for phase strip (replaces duplicate EN sparkline)
@@ -194,16 +300,14 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const sameDiscoverer = useMemo(() => {
     if (!element.discoverer || element.discoverer.toLowerCase().includes('antiquity')) return [];
     return allElements
-      .filter((e) => e.discoverer === element.discoverer && e.symbol !== element.symbol)
-      .slice(0, 6);
+      .filter((e) => e.discoverer === element.discoverer && e.symbol !== element.symbol);
   }, [element]);
 
   // Find elements sharing the same etymology origin (lateral link)
   const sameEtymology = useMemo(() => {
     if (!element.etymologyOrigin || element.etymologyOrigin === 'unknown') return [];
     return allElements
-      .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol)
-      .slice(0, 6);
+      .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol);
   }, [element]);
 
   // Anomalies this element belongs to
@@ -212,13 +316,36 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     return anomalies.filter((a) => a.elements.includes(element.symbol));
   }, [anomalies, element.symbol]);
 
-  const paddedNumber = String(element.atomicNumber).padStart(3, '0');
+  // Fixed width for neighbour chips — align vertical borders across rows
+  const neighbourChipWidth = useMemo(() => {
+    if (element.neighbors.length === 0) return undefined;
+    const chipPadding = 25; // 12px left + 10px right + 3px border
+    const maxChipTextW = Math.max(
+      ...element.neighbors.map((sym) => {
+        const m = getElementMetrics(sym);
+        return m?.chipWidth11 ?? 80;
+      }),
+    );
+    return Math.max(maxChipTextW + chipPadding, 120);
+  }, [element.neighbors]);
+
+  // Fixed width for anomaly chips — align vertical borders across rows
+  const anomalyChipWidth = useMemo(() => {
+    if (elementAnomalies.length <= 1) return undefined;
+    // Anomaly labels aren't in text-metrics.json; use a reasonable fixed width
+    // based on the longest label character count (11px bold ≈ 6.5px per char average)
+    const maxLabelW = Math.max(
+      ...elementAnomalies.map((a) => Math.ceil(a.label.length * 6.5)),
+    );
+    const chipPadding = 25; // 12px left + 10px right + 3px border
+    return Math.max(maxLabelW + chipPadding, 120);
+  }, [elementAnomalies]);
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const marginaliaRef = useRef<HTMLElement>(null);
 
   return (
-    <div className="folio-layout" style={{ display: 'flex', gap: '48px' }}>
+    <div className="folio-layout" style={{ display: 'flex', flexDirection: mobile ? 'column' : 'row', gap: mobile ? '24px' : '48px' }}>
       {/* Main content */}
       <div ref={mainRef} className="folio-main" style={{ flex: 1, paddingLeft: '24px', minWidth: 0, position: 'relative' }}>
         {/* Left colour bar — morph target for element-cell-bg */}
@@ -235,7 +362,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           } as React.CSSProperties}
         />
         {/* Summary area: identity block (left), text (centre), data plate (right) */}
-        <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: PLATE_HEIGHT }}>
+        <div ref={summaryRef} className="folio-summary-area" style={{ position: 'relative', minHeight: mobile ? 'auto' : PLATE_HEIGHT }}>
           {/* Identity block — number + symbol + name, acts as dramatic drop cap */}
           <div
             className="folio-identity"
@@ -243,7 +370,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               position: mobile ? 'static' : 'absolute',
               top: 0,
               left: 0,
-              width: mobile ? 'auto' : IDENTITY_WIDTH,
+              width: mobile ? 'auto' : identityWidth,
               marginBottom: mobile ? 0 : 0,
               ...(animate
                 ? {
@@ -257,7 +384,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               className="folio-number"
               aria-hidden="true"
               style={{
-                fontSize: mobile ? '64px' : '56px',
+                fontSize: mobile ? '56px' : '48px',
                 fontWeight: 'bold',
                 color,
                 fontFamily: MONO_FONT,
@@ -270,7 +397,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             <div
               className="folio-symbol"
               style={{
-                fontSize: mobile ? '40px' : '44px',
+                fontSize: mobile ? '36px' : '36px',
                 fontWeight: 'bold',
                 color,
                 lineHeight: 1.1,
@@ -280,9 +407,9 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
               {element.symbol}
             </div>
             <h2 style={{
-              fontSize: '11px',
+              fontSize: '10px',
               fontWeight: 'normal',
-              margin: '4px 0 0',
+              margin: '2px 0 0',
               textTransform: 'uppercase',
               letterSpacing: '0.2em',
               color: GREY_MID,
@@ -292,15 +419,15 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             </h2>
           </div>
 
-          {/* Data plate positioned at top-right */}
+          {/* Data plate positioned at top-right on desktop, stacked on mobile */}
           <div
             data-testid="data-plate"
             className="folio-data-plate"
             style={{
-              position: 'absolute',
+              position: mobile ? 'static' : 'absolute',
               top: 0,
               right: 0,
-              width: PLATE_WIDTH,
+              width: mobile ? 'auto' : PLATE_WIDTH,
               ...(animate
                 ? {
                     clipPath: 'inset(0 100% 0 0)',
@@ -328,6 +455,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             height={Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}
             viewBox={`0 0 ${effectiveWidth} ${Math.max(PLATE_HEIGHT, lines.length * lineHeight + 16)}`}
             aria-label="Element summary"
+            style={{ maxWidth: '100%', height: 'auto' }}
           >
             <PretextSvg
               lines={lines}
@@ -412,6 +540,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 slug={a.slug}
                 label={a.label}
                 elementCount={a.elements.length}
+                fixedWidth={anomalyChipWidth}
               />
             ))}
           </div>
@@ -471,7 +600,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
-                  timeline →
+                  {element.discoveryYear ? `${Math.floor(element.discoveryYear / 10) * 10}s →` : 'timeline →'}
                 </Link>
               </div>
               {sameDiscoverer.length > 0 && (
@@ -495,7 +624,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
         ref={marginaliaRef}
         className="folio-marginalia"
         style={{
-          width: '200px',
+          width: mobile ? 'auto' : '200px',
           flexShrink: 0,
           fontSize: '13px',
           lineHeight: 1.6,
@@ -526,6 +655,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   name={neighbour.name}
                   color={blockColor(neighbour.block)}
                   direction={direction}
+                  fixedWidth={neighbourChipWidth}
                 />
               );
             })}
@@ -534,9 +664,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
 
         {/* Source strip (mandatory CC BY-SA) */}
         {sources && (
-          <div style={{ borderLeft: `3px solid ${color}`, paddingLeft: '10px' }}>
-            <SourceStrip sources={sources} ruleColor={color} />
-          </div>
+          <SourceStrip sources={sources} ruleColor={color} />
         )}
 
         {/* Compare link */}

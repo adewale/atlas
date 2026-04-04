@@ -5,9 +5,9 @@ import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { VT } from '../lib/transitions';
-import { useDropCapText } from '../hooks/usePretextLines';
-import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
-import PretextSvg from '../components/PretextSvg';
+import { PRETEXT_SANS, measureLines } from '../lib/pretext';
+import { getElementMetrics, getPropertyMetrics } from '../lib/metrics';
+import IntroBlock from '../components/IntroBlock';
 
 import type { ElementRecord } from '../lib/types';
 import PageShell from '../components/PageShell';
@@ -142,13 +142,6 @@ export default function PropertyScatter() {
   const yKey = (searchParams.get('y') as PropertyKey) || 'ionizationEnergy';
   const [hovered, setHovered] = useState<ElementRecord | null>(null);
 
-  const introWidth = isMobile ? 360 : 760;
-  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: introWidth,
-    dropCapFont: `80px ${DROP_CAP_FONT}`,
-  });
-
   // Coupled dropdowns: prevent same property on both axes
   const handleXChange = useCallback(
     (newX: PropertyKey) => {
@@ -212,9 +205,6 @@ export default function PropertyScatter() {
   const xTicks = useMemo(() => niceTickValues(xMin, xMax, TICK_COUNT), [xMin, xMax]);
   const yTicks = useMemo(() => niceTickValues(yMin, yMax, TICK_COUNT), [yMin, yMax]);
 
-  const DROP_CAP_SIZE = 80;
-  const introHeight = Math.max(lines.length * lineHeight + 16, DROP_CAP_SIZE + 4);
-
   useDocumentTitle('Property Scatter', 'Scatter plot of element properties — electronegativity, ionisation energy, mass, and atomic radius — with block colouring and anomaly highlights.');
 
   return (
@@ -234,21 +224,7 @@ export default function PropertyScatter() {
         <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Property Scatter</h1>
 
         {/* Pretext intro */}
-        <svg
-          viewBox={`0 0 ${introWidth} ${introHeight}`}
-          style={{ width: '100%', maxWidth: introWidth, display: 'block', marginTop: '16px' }}
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fill={BLACK}
-            maxWidth={introWidth}
-            animationStagger={40}
-            dropCap={{ fontSize: 80, fill: DEEP_BLUE, char: introDC.char }}
-          />
-        </svg>
+        <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={80} />
 
         {/* Axis selectors — coupled so you can't pick the same property for both */}
         <div style={{ display: 'flex', gap: '24px', marginTop: '16px', flexWrap: 'wrap', position: 'relative' }}>
@@ -501,7 +477,12 @@ export default function PropertyScatter() {
             if (!hPt) return null;
             const cx = toSvgX(hPt.xVal);
             const cy = toSvgY(hPt.yVal);
-            const cardW = 180;
+            // Use precomputed name width + property label width for card sizing
+            const elMetrics = getElementMetrics(hPt.el.symbol);
+            const nameW = elMetrics?.nameWidth14 ?? 80;
+            const xPropW = getPropertyMetrics(xKey)?.widestLine10 ?? 120;
+            const yPropW = getPropertyMetrics(yKey)?.widestLine10 ?? 120;
+            const cardW = Math.max(nameW, xPropW, yPropW) + 24;
             const cardH = 72;
             // Flip card left if too close to right edge
             const flipX = cx + SQUARE_SIZE / 2 + 8 + cardW > SVG_W - MARGIN.right;

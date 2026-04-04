@@ -9,6 +9,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { usePretextLines } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, measureLines } from '../lib/pretext';
+import { getEdgeWidth } from '../lib/metrics';
 import PretextSvg from '../components/PretextSvg';
 
 type Edge = {
@@ -159,7 +160,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
   );
 
   return (
-    <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
+    <div style={{ touchAction: 'pinch-zoom', overflowX: 'auto' }}>
       <svg
         viewBox={`0 0 ${GRAPH_W} ${GRAPH_H}`}
         style={{ width: '100%', maxWidth: GRAPH_W }}
@@ -226,8 +227,7 @@ function EntityGraph({ hovered, setHovered }: { hovered: string | null; setHover
               />
               {isActive && (() => {
                 const labelText = `${edge.label} (${edge.cardinality})`;
-                const measured = measureLines(labelText, 'bold 11px system-ui, sans-serif', 9999, 16);
-                const labelW = (measured[0]?.width ?? 60) + 12;
+                const labelW = getEdgeWidth(labelText) + 12;
                 return (
                   <>
                     {/* Background for readability */}
@@ -509,6 +509,7 @@ export default function EntityMapPage() {
             ))}
           </div>
         ) : (
+          <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', lineHeight: 1.5 }}>
             <thead>
               <tr style={{ borderBottom: `2px solid ${BLACK}`, textAlign: 'left' }}>
@@ -539,6 +540,7 @@ export default function EntityMapPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </section>
 

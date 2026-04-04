@@ -22,9 +22,9 @@ const VIZ_ROUTES = [
 const ALL_PAGES = [
   ...VIZ_ROUTES,
   '/about',
-  '/credits',
-  '/design',
-  '/element/Fe',
+  '/about/credits',
+  '/about/design',
+  '/elements/Fe',
   '/entity-map',
 ] as const;
 

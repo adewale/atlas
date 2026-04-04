@@ -3,9 +3,7 @@ import { useLoaderData } from 'react-router';
 import { getElement } from '../lib/data';
 import { WARM_RED, MUSTARD, BLACK, DEEP_BLUE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import { VT } from '../lib/transitions';
-import { useDropCapText } from '../hooks/usePretextLines';
-import { DROP_CAP_FONT } from '../lib/pretext';
-import PretextSvg from '../components/PretextSvg';
+import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
@@ -31,19 +29,13 @@ export default function DiscovererNetwork() {
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
   const { discoverers } = useLoaderData() as { discoverers: { name: string; elements: string[] }[] };
 
-  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: isMobile ? 360 : INTRO_MAX_W,
-    dropCapFont: `72px ${DROP_CAP_FONT}`,
-  });
-
   // Separate antiquity group and prolific discoverers (2+ elements)
   const { antiquity, prolific } = useMemo(() => {
     const antiq = discoverers.find(
       (d) => d.name.toLowerCase().includes('antiquity'),
     );
     const rest = discoverers.filter(
-      (d) => !d.name.toLowerCase().includes('antiquity') && d.elements.length >= 2,
+      (d) => !d.name.toLowerCase().includes('antiquity'),
     );
     return { antiquity: antiq, prolific: rest };
   }, [discoverers]);
@@ -65,31 +57,12 @@ export default function DiscovererNetwork() {
     }));
   }, [antiquity, prolific]);
 
-  const introTextHeight = lines.length * lineHeight + 16;
-  const introH = Math.max(introTextHeight, 76);
-  const introWidth = isMobile ? 360 : INTRO_MAX_W;
-
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: INTRO_MAX_W }}>
         <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
 
-        <svg
-          viewBox={`0 0 ${introWidth} ${introH}`}
-          style={{ width: '100%', maxWidth: introWidth, display: 'block', marginBottom: '12px' }}
-        >
-          <PretextSvg
-            lines={lines}
-            lineHeight={lineHeight}
-            x={0}
-            y={0}
-            fontSize={16}
-            fill={BLACK}
-            maxWidth={introWidth}
-            animationStagger={40}
-            dropCap={{ fontSize: 72, fill: MUSTARD, char: introDC.char }}
-          />
-        </svg>
+        <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={72} />
 
         <SectionedCardList sections={discovererSections} accordion defaultCollapsed={isMobile} />
       </div>

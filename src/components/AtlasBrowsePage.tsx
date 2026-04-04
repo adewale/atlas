@@ -80,7 +80,8 @@ export default function AtlasBrowsePage({
           <svg
             width={DESC_MAX_W}
             height={lines.length * lineHeight + lineHeight}
-            style={{ maxWidth: '100%', marginBottom: '24px' }}
+            viewBox={`0 0 ${DESC_MAX_W} ${lines.length * lineHeight + lineHeight}`}
+            style={{ maxWidth: '100%', height: 'auto', marginBottom: '24px' }}
             role="img"
             aria-label={description}
           >
@@ -90,7 +91,7 @@ export default function AtlasBrowsePage({
               x={0}
               y={0}
               maxWidth={DESC_MAX_W}
-              showRules
+             
               animationStagger={25}
             />
           </svg>

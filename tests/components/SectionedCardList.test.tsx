@@ -2,7 +2,6 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
-import '../mocks/usePretextLines.mock';
 import SectionedCardList from '../../src/components/SectionedCardList';
 import type { Section } from '../../src/components/SectionedCardList';
 

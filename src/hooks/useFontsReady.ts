@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { clearCache } from '@chenglou/pretext';
+import { DROP_CAP_FONT } from '../lib/pretext';
 
 /**
  * Returns true once the Cinzel web font (used for drop caps and the
@@ -23,7 +24,7 @@ import { clearCache } from '@chenglou/pretext';
  * This is intentionally in its own file so that usePretextLines.ts
  * stays free of useState/useEffect (the perf test asserts that).
  */
-const FONT_PROBE = '700 48px Cinzel';
+const FONT_PROBE = `700 48px ${DROP_CAP_FONT}`;
 
 let globalFontsReady = false;
 const listeners = new Set<() => void>();

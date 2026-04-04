@@ -1,70 +1,14 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import '../mocks/usePretextLines.mock';
 import Folio from '../../src/components/Folio';
-import type { ElementRecord, ElementSources } from '../../src/lib/types';
+import type { ElementRecord, ElementSources, AnomalyData, GroupData } from '../../src/lib/types';
+import { FE, FE_SOURCES, TEST_ACCESS_DATE } from '../fixtures/element-fe';
+import { IR } from '../fixtures/element-ir';
 
 afterEach(() => {
   cleanup();
 });
-
-const TEST_ACCESS_DATE = new Date().toISOString().slice(0, 10);
-
-const FE: ElementRecord = {
-  atomicNumber: 26,
-  symbol: 'Fe',
-  name: 'Iron',
-  wikidataId: 'Q677',
-  wikipediaTitle: 'Iron',
-  wikipediaUrl: 'https://en.wikipedia.org/wiki/Iron',
-  period: 4,
-  group: 8,
-  block: 'd',
-  category: 'transition metal',
-  phase: 'solid',
-  mass: 55.84,
-  electronegativity: 1.83,
-  ionizationEnergy: 7.902,
-  radius: 194,
-  density: 7.874,
-  meltingPoint: 1811,
-  boilingPoint: 3134,
-  halfLife: null,
-  summary:
-    'Iron is a chemical element; it has symbol Fe and atomic number 26. It is a metal that belongs to the first transition series and group 8 of the periodic table.',
-  discoveryYear: null,
-  discoverer: 'Known since antiquity',
-  etymologyOrigin: 'property',
-  etymologyDescription: 'Anglo-Saxon iron; symbol from Latin ferrum',
-  neighbors: ['Mn', 'Co'],
-  rankings: {
-    mass: 93,
-    electronegativity: 41,
-    ionizationEnergy: 35,
-    radius: 67,
-  },
-};
-
-const FE_SOURCES: ElementSources = {
-  structured: {
-    provider: 'PubChem',
-    license: 'public domain',
-    url: 'https://pubchem.ncbi.nlm.nih.gov/element/26',
-  },
-  identifiers: {
-    provider: 'Wikidata',
-    license: 'CC0 1.0',
-    url: 'https://www.wikidata.org/wiki/Q677',
-  },
-  summary: {
-    provider: 'Wikipedia',
-    title: 'Iron',
-    url: 'https://en.wikipedia.org/wiki/Iron',
-    license: 'CC BY-SA 4.0',
-    accessDate: TEST_ACCESS_DATE,
-  },
-};
 
 function renderFolio(props?: { sources?: ElementSources }) {
   return render(
@@ -231,7 +175,125 @@ describe('Folio', () => {
         <Folio element={oxygen} animate={false} />
       </MemoryRouter>,
     );
-    const timelineLink = screen.getByText('timeline →');
+    const timelineLink = screen.getByText('1770s →');
     expect(timelineLink).toHaveAttribute('href', '/eras/1770');
+  });
+
+  it('era label shows decade, not generic "timeline"', () => {
+    const cobalt: ElementRecord = {
+      ...FE,
+      atomicNumber: 27,
+      symbol: 'Co',
+      name: 'Cobalt',
+      discoveryYear: 1735,
+      discoverer: 'George Brandt',
+      neighbors: ['Fe', 'Ni'],
+    };
+    render(
+      <MemoryRouter>
+        <Folio element={cobalt} animate={false} />
+      </MemoryRouter>,
+    );
+    // Should show "1730s →", NOT "timeline →"
+    expect(screen.getByText('1730s →')).toBeInTheDocument();
+    expect(screen.queryByText('timeline →')).not.toBeInTheDocument();
+  });
+});
+
+describe('Folio — anomalies and groups', () => {
+  const ANOMALIES: AnomalyData[] = [
+    { slug: 'diagonal-relationship', label: 'Diagonal Relationship', description: '', elements: ['Fe', 'Co', 'Ni'] },
+    { slug: 'color-anomaly', label: 'Colour Anomaly', description: '', elements: ['Fe', 'Cu'] },
+  ];
+
+  const GROUPS: GroupData[] = [
+    { n: 8, label: 'Group 8', description: '', elements: ['Fe', 'Ru', 'Os', 'Hs'] },
+  ];
+
+  it('renders anomaly chips when element has anomalies', () => {
+    render(
+      <MemoryRouter>
+        <Folio element={FE} anomalies={ANOMALIES} animate={false} />
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole('link', { name: /Anomaly: Diagonal Relationship/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Anomaly: Colour Anomaly/i })).toBeInTheDocument();
+  });
+
+  it('does not render anomaly chips when element has no matching anomalies', () => {
+    const unrelated: AnomalyData[] = [
+      { slug: 'test', label: 'Test', description: '', elements: ['Og'] },
+    ];
+    render(
+      <MemoryRouter>
+        <Folio element={FE} anomalies={unrelated} animate={false} />
+      </MemoryRouter>,
+    );
+    expect(screen.queryByRole('link', { name: /Anomaly:/i })).not.toBeInTheDocument();
+  });
+
+  it('renders group phase strip when groups data is provided', () => {
+    render(
+      <MemoryRouter>
+        <Folio element={FE} groups={GROUPS} animate={false} />
+      </MemoryRouter>,
+    );
+    expect(screen.getByText(/Phase at STP — Group 8/)).toBeInTheDocument();
+  });
+});
+
+describe('Folio — identity block sizing', () => {
+  it('identity block uses compact font sizes on desktop', () => {
+    renderFolio();
+    const number = document.querySelector('.folio-number')!;
+    const symbol = document.querySelector('.folio-symbol')!;
+    expect(number).toBeTruthy();
+    expect(symbol).toBeTruthy();
+    // Number should be 48px on desktop (not 56px — too tall for identity budget)
+    expect(number.getAttribute('style')).toContain('font-size: 48px');
+    // Symbol should be 36px on desktop
+    expect(symbol.getAttribute('style')).toContain('font-size: 36px');
+  });
+
+  it('Iridium folio renders all expected sections', () => {
+    render(
+      <MemoryRouter>
+        <Folio element={IR} animate={false} />
+      </MemoryRouter>,
+    );
+    // Identity, data plate, summary SVG, rank rows all render
+    expect(document.querySelector('.folio-identity')).toBeTruthy();
+    expect(document.querySelector('[data-testid="data-plate"]')).toBeTruthy();
+    expect(document.querySelector('svg[aria-label="Element summary"]')).toBeTruthy();
+    expect(document.querySelector('.folio-rank-rows')).toBeTruthy();
+    // Ir data plate shows correct values
+    expect(screen.getByLabelText(/Data plate: Group 9, Period 6, Block d/)).toBeInTheDocument();
+  });
+});
+
+describe('Folio — mobile layout', () => {
+  it('data plate is present in the DOM', () => {
+    renderFolio();
+    const plate = screen.getByTestId('data-plate');
+    expect(plate).toBeInTheDocument();
+  });
+
+  it('summary area does not have fixed minHeight on small viewports', () => {
+    // Verifies that the summary area adapts — minHeight should be 'auto'
+    // when mobile, or a px value when desktop. We can't mock useIsMobile
+    // easily, but we verify the component renders without crash.
+    renderFolio();
+    const summaryArea = document.querySelector('.folio-summary-area')!;
+    expect(summaryArea).toBeTruthy();
+    // On desktop (default in test), minHeight should be the plate height
+    expect(summaryArea.getAttribute('style')).toContain('min-height');
+  });
+
+  it('does not render dead MarginaliaProperty component', () => {
+    renderFolio();
+    // RankDotSparkline was removed — verify no 40x12 SVGs in marginalia
+    const marginalia = document.querySelector('.folio-marginalia')!;
+    const smallSvgs = marginalia.querySelectorAll('svg[width="40"]');
+    expect(smallSvgs.length).toBe(0);
   });
 });

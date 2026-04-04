@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_LIGHT, GREY_RULE, STROKE_HAIRLINE, STROKE_REGULAR } from '../lib/theme';
+import SvgLink from './SvgLink';
 
 type GroupTrendProps = {
   values: (number | null)[];
@@ -129,7 +130,7 @@ export function GroupPhaseStrip({
         const isHighlight = i === highlightIndex;
         const color = phase ? PHASE_COLORS[phase] ?? GREY_LIGHT : GREY_LIGHT;
         return (
-          <a key={i} href={`/elements/${symbols[i]}`} style={{ cursor: 'pointer' }}>
+          <SvgLink key={i} to={`/elements/${symbols[i]}`} style={{ cursor: 'pointer' }}>
             <rect
               x={x + 1}
               y={2}
@@ -158,7 +159,7 @@ export function GroupPhaseStrip({
             >
               {symbols[i]}
             </text>
-          </a>
+          </SvgLink>
         );
       })}
     </svg>

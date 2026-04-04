@@ -141,6 +141,17 @@ svg [role="button"] {
   min-width: unset;
 }
 
+/* Suppress default blue Chromium focus ring on SVG element cells.
+   These cells already indicate active state via a warm-red stroke;
+   the browser :focus (non-:focus-visible) outline is redundant and
+   clashes with the design. Keep :focus-visible for keyboard users. */
+.periodic-table-svg [role="button"]:focus:not(:focus-visible) {
+  outline: none;
+}
+.periodic-table-svg:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Etymology card hover/focus styling */
 .etymology-card:hover {
   border-width: 3px !important;
@@ -161,6 +172,7 @@ svg [role="button"] {
 /* Touch: allow pan + pinch-zoom on scrollable SVG containers */
 .pt-scroll-container {
   touch-action: pan-x pan-y pinch-zoom;
+  overflow-x: auto;
 }
 
 /* ----------------------------------------
@@ -404,10 +416,10 @@ svg [role="button"] {
 
   /* Giant numbers smaller on mobile — still dramatic */
   .folio-number {
-    font-size: 64px !important;
+    font-size: 56px !important;
   }
   .folio-symbol {
-    font-size: 40px !important;
+    font-size: 36px !important;
   }
 
   /* Design page: cap all inline SVGs to viewport width */

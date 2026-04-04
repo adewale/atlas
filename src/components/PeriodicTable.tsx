@@ -440,6 +440,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
       <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom', contain: 'layout style paint' }}>
       <svg
         ref={svgRef}
+        className="periodic-table-svg"
         viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
         role="img"
         aria-label="Periodic table of elements"

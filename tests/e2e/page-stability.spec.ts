@@ -85,9 +85,9 @@ test.describe('VizNav stability', () => {
 const ALL_PAGES = [
   ...VIZ_ROUTES,
   '/about',
-  '/credits',
-  '/design',
-  '/element/Fe',
+  '/about/credits',
+  '/about/design',
+  '/elements/Fe',
   '/entity-map',
 ];
 
@@ -145,7 +145,7 @@ test.describe('Navigation round-trip stability', () => {
     expect(vizNavBefore).not.toBeNull();
 
     // Navigate to Fe
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     await page.waitForTimeout(3000);
     await page.screenshot({
       path: 'tests/e2e/screenshots/stability-roundtrip-fe.png',
@@ -310,7 +310,7 @@ test.describe('No content layout shift', () => {
     });
   }
 
-  for (const route of ['/about', '/credits', '/design', '/element/Fe']) {
+  for (const route of ['/about', '/about/credits', '/about/design', '/elements/Fe']) {
     test(`no layout shift on ${route}`, async ({ page }) => {
       await page.goto(route);
       // Wait for animations to settle (element folios have long staggered animations)
@@ -338,7 +338,7 @@ test.describe('No content layout shift', () => {
       ).toBeLessThanOrEqual(2);
 
       // Element folios have complex animations; allow larger tolerance
-      const threshold = route.startsWith('/element/') ? 0.25 : 0.05;
+      const threshold = route.startsWith('/elements/') ? 0.25 : 0.05;
       const sizeDiff = Math.abs(shot1.length - shot2.length);
       const sizeRatio = sizeDiff / shot1.length;
       expect(
@@ -422,12 +422,12 @@ test.describe('Cross-page structural consistency', () => {
 
   test('back links exist on detail pages', async ({ page }) => {
     const detailPages = [
-      '/element/Fe',
-      '/element/H',
-      '/element/Og',
+      '/elements/Fe',
+      '/elements/H',
+      '/elements/Og',
       '/about',
-      '/credits',
-      '/design',
+      '/about/credits',
+      '/about/design',
     ];
 
     for (const route of detailPages) {

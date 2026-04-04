@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build:data": "tsx scripts/derive-data.ts",
+    "build:metrics": "tsx scripts/precompute-metrics.ts",
     "build:seed": "tsx scripts/generate-seed.ts",
     "build": "npm run build:data && vite build",
     "preview": "vite preview",
@@ -17,7 +18,10 @@
     "lint:colors": "tsx scripts/lint-color-tokens.ts",
     "lint:assertions": "tsx scripts/lint-non-null-assertions.ts",
     "lint:animations": "tsx scripts/lint-animation-tokens.ts",
-    "lint:all": "npm run lint && npm run lint:links && npm run lint:assertions && npm run lint:animations",
+    "lint:fonts": "tsx scripts/lint-font-tokens.ts",
+    "verify:grids": "tsx scripts/verify-grid-alignment.ts",
+    "debug:layout": "bash scripts/debug-layout.sh",
+    "lint:all": "npm run lint && npm run lint:links && npm run lint:colors && npm run lint:assertions && npm run lint:animations && npm run lint:fonts",
     "deploy": "npm run build && wrangler pages deploy dist/"
   },
   "dependencies": {
@@ -37,6 +41,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "canvas": "^3.2.3",
     "eslint": "^9.0.0",
     "eslint-plugin-react-hooks": "^7.0.1",
     "fast-check": "^3.23.0",

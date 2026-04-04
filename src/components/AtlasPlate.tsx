@@ -3,6 +3,7 @@ import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { fitLabel, measureLines, PRETEXT_SANS } from '../lib/pretext';
+import { getCategoryMetrics } from '../lib/metrics';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useFontsReady } from '../hooks/useFontsReady';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
@@ -40,14 +41,20 @@ const ABBREV: Record<string, string> = {
 };
 
 function truncateToFit(name: string, font: string, maxWidth: number): string {
-  if (fitLabel(name, font, maxWidth)) return name;
-
-  // Try abbreviation first
-  const abbrev = ABBREV[name];
-  if (abbrev && fitLabel(abbrev, font, maxWidth)) return abbrev;
+  // Fast path: use precomputed metrics if available
+  const catMetrics = getCategoryMetrics(name);
+  if (catMetrics) {
+    if (catMetrics.card8 <= maxWidth) return name;
+    const abbrev = ABBREV[name];
+    if (abbrev && catMetrics.card8abbrev <= maxWidth) return abbrev;
+  } else {
+    if (fitLabel(name, font, maxWidth)) return name;
+    const abbrev = ABBREV[name];
+    if (abbrev && fitLabel(abbrev, font, maxWidth)) return abbrev;
+  }
 
   // Binary search for the longest prefix + ellipsis that fits
-  const base = abbrev ?? name;
+  const base = ABBREV[name] ?? name;
   let lo = 1;
   let hi = base.length - 1;
   let best = 0;
@@ -101,15 +108,19 @@ export default function AtlasPlate({
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
-  const cols = isMobile ? 2 : columns;
+  const maxCols = isMobile ? 2 : columns;
+  const cols = Math.min(maxCols, elements.length || 1);
   const rows = Math.ceil(elements.length / cols);
-  const gridW = cols * (CARD_W + GAP) - GAP;
+  // Minimum 4 columns wide so caption bar has consistent width across pages
+  const minCols = isMobile ? 2 : Math.min(4, maxCols);
+  const gridW = Math.max(cols, minCols) * (CARD_W + GAP) - GAP;
 
   // Measure caption text with Pretext (re-measure when fonts load)
   const { captionLines, captionH } = useMemo(() => {
     const lines = measureLines(caption, CAPTION_FONT, gridW - CAPTION_PADDING * 2, 20);
     const textH = lines.length * 20;
     return { captionLines: lines, captionH: textH + CAPTION_PADDING * 2 };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fontsReady busts the cache so measureLines re-measures with real font metrics
   }, [caption, gridW, fontsReady]);
 
   const gridH = rows * (CARD_H + GAP) - GAP;
@@ -149,7 +160,7 @@ export default function AtlasPlate({
         viewBox={`0 0 ${gridW} ${totalH}`}
         role="img"
         aria-label={caption}
-        style={{ maxWidth: '100%' }}
+        style={{ maxWidth: '100%', height: 'auto' }}
       >
         {/* Caption strip — solid colour band with Pretext-measured text */}
         <rect x={0} y={0} width={gridW} height={captionH} fill={captionColor} />

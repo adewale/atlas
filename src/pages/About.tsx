@@ -129,9 +129,9 @@ export default function About() {
           viewBox={`0 0 ${textWidth} ${introLines.length * introLH + introLH}`}
           aria-label="Introduction"
           role="img"
-          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
         </svg>
       </section>
 
@@ -141,9 +141,9 @@ export default function About() {
           viewBox={`0 0 ${textWidth} ${bulletData.totalHeight + bulletData.lineHeight}`}
           aria-label="Design principles"
           role="img"
-          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={bulletData.lines} lineHeight={bulletData.lineHeight} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={bulletData.lines} lineHeight={bulletData.lineHeight} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -153,9 +153,9 @@ export default function About() {
           viewBox={`0 0 ${textWidth} ${dataLines.length * dataLH + dataLH}`}
           aria-label="Data sources description"
           role="img"
-          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -165,9 +165,9 @@ export default function About() {
           viewBox={`0 0 ${textWidth} ${techLines.length * techLH + techLH}`}
           aria-label="Technology description"
           role="img"
-          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -177,9 +177,9 @@ export default function About() {
           viewBox={`0 0 ${textWidth} ${shoulderLines.length * shoulderLH + shoulderLH}`}
           aria-label="Standing on shoulders — acknowledgement of data sources"
           role="img"
-          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -189,7 +189,7 @@ export default function About() {
           viewBox={`0 0 ${textWidth} ${designLines.length * designLH + designLH}`}
           aria-label="Design language description"
           role="img"
-          style={{ width: '100%', maxWidth: textWidth, display: 'block' }}
+          style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
           {designLines.map((line, i) => {
             const lineY = line.y + designLH;

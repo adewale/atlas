@@ -28,7 +28,7 @@ test.describe('Home page', () => {
     const feCell = page.locator('[aria-label*="Iron, atomic number 26"]');
     await feCell.click();
     await page.waitForURL(/\/element\/Fe/);
-    expect(page.url()).toContain('/element/Fe');
+    expect(page.url()).toContain('/elements/Fe');
   });
 
   test('keyboard navigation: arrow keys move focus', async ({ page }) => {
@@ -45,7 +45,7 @@ test.describe('Home page', () => {
 
 test.describe('Element folio', () => {
   test('shows element data with source strip', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     // Check element name
     await expect(page.locator('h2')).toContainText('Iron');
     // Check source strip shows licensing
@@ -55,7 +55,7 @@ test.describe('Element folio', () => {
   });
 
   test('folio shows data plate', async ({ page }) => {
-    await page.goto('/element/Fe');
+    await page.goto('/elements/Fe');
     const plate = page.locator('[data-testid="data-plate"]');
     await expect(plate).toBeVisible();
   });
@@ -76,19 +76,19 @@ test.describe('Compare view', () => {
 test.describe('All routes load', () => {
   const routes = [
     '/',
-    '/element/H',
-    '/element/Fe',
-    '/element/Og',
-    '/atlas/group/1',
-    '/atlas/period/4',
-    '/atlas/block/d',
-    '/atlas/category/noble-gas',
-    '/atlas/rank/mass',
-    '/atlas/anomaly/synthetic-heavy',
+    '/elements/H',
+    '/elements/Fe',
+    '/elements/Og',
+    '/groups/1',
+    '/periods/4',
+    '/blocks/d',
+    '/categories/noble-gas',
+    '/properties/mass',
+    '/anomalies/synthetic-heavy',
     '/compare/Fe/O',
     '/about',
-    '/credits',
-    '/design',
+    '/about/credits',
+    '/about/design',
     '/phase-landscape',
     '/property-scatter',
     '/anomaly-explorer',

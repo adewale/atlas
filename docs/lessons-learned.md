@@ -711,3 +711,142 @@ globalThis.ResizeObserver = class ResizeObserver {
    that jsdom lacks, with packages that happen to be installed, with
    build artifacts from previous runs. CI starts clean every time —
    if it fails, the failure is real.
+
+---
+---
+
+# Part 4 — Lessons from Text Overflow Audit
+
+The sections below capture lessons discovered during a comprehensive
+text overflow audit across all 34 pages at three viewport sizes.
+
+---
+
+## 27. Text measurement width must never exceed SVG container width
+
+**Context:** Text overflow audit — Folio summary at 812×375 landscape
+
+**Bug:** At landscape mobile (812×375), the Folio summary text overflowed
+the SVG container by 77–103px to the right. Text was readable but clipped
+by the SVG boundary.
+
+**Root cause:** `useShapedText` received `fullWidth: FULL_WIDTH` (560px
+hardcoded constant) on desktop layout, but the actual SVG container was
+only ~540px wide (812 viewport − 200 marginalia − 48 gap − 24 padding).
+Text measured at 560px rendered in a 540px coordinate space.
+
+**Why tests missed it:** Previous tests only checked desktop (1280px)
+and mobile portrait (375px). Landscape mobile (812px) falls into a gap:
+wide enough for desktop layout (`useIsMobile(768)` returns false) but
+narrow enough for the marginalia column to compress the main content
+below the hardcoded text width.
+
+**Fix:** Cap `fullWidth` to `Math.min(FULL_WIDTH, effectiveWidth)` so
+text measurement never exceeds the actual SVG container width.
+
+**What should have been in the spec:**
+- "Text measurement width must always be ≤ SVG container width. Use
+  `Math.min(constant, measuredWidth)` when a hardcoded constant feeds
+  into text measurement."
+- "Test at landscape mobile (812×375) — it triggers desktop layout in
+  a mobile-sized viewport, a combination that catches width mismatches."
+
+---
+
+## 28. SVG height must account for font descenders
+
+**Context:** Text overflow audit — Design page drop cap demo
+
+**Bug:** The Design page's drop cap demonstration SVG had `height={80}`
+with the last text line at `y={77}` and `fontSize={16}`. The text
+"the universe." was clipped 9px at the bottom on mobile-portrait.
+
+**Root cause:** SVG `y` attribute positions the text baseline, not the
+top of the text. With a 16px font, descenders extend approximately
+4–5px below the baseline, and the line needs ~16px of total height.
+So `y=77` + descenders ≈ 81–82px, exceeding the 80px SVG boundary.
+
+**Fix:** Increased SVG height from 80 to 92px and added a proper
+`viewBox` attribute for proportional scaling.
+
+**What should have been in the spec:**
+- "SVG text height calculation: last baseline `y` + `fontSize` (not
+  `y` + descender). Safe formula: `lastY + fontSize * 1.2` for the
+  SVG height."
+- "Every fixed-size SVG containing text must have a `viewBox` attribute
+  for proportional scaling on smaller viewports."
+
+---
+
+## 29. E2E test architecture must account for cold-start cost
+
+**Context:** Text overflow audit — test redesign from 93 tests to 3
+
+**Bug (meta):** The original overflow test suite created 93 separate
+Playwright tests (31 pages × 3 viewports). Each test launched a new
+browser context, triggering a ~53-second cold start to parse the JS
+bundle. Total runtime: ~82 minutes. Tests timed out at 30s.
+
+**Root cause:** Playwright's test isolation model creates a fresh page
+per test. For SPAs with large bundles, the initial JavaScript parse
+dominates test time. Subsequent navigations within the same context
+are fast (client-side routing), but this advantage is lost when each
+test starts cold.
+
+**Fix:** Restructured to 3 tests (one per viewport), each navigating
+all 31 pages sequentially within a single browser context. Runtime
+dropped to ~21 minutes (4× faster). Also replaced `waitForTimeout`
+(anti-pattern) with `waitForSelector` for actual content readiness.
+
+**What should have been in the spec:**
+- "For SPA test suites, batch related page visits into a single test
+  per configuration to amortize the cold-start cost."
+- "Use `waitForSelector` for specific content, not `waitForTimeout`.
+  Fixed delays are both too slow (waste time) and too fast (flaky)."
+- "Use `waitUntil: 'commit'` for SPA navigations — the server responds
+  instantly, and content appears after JavaScript renders."
+
+---
+
+## 30. Linters must match the patterns they're designed to catch
+
+**Context:** Internal links linter — template literal false negatives
+
+**Bug (meta):** The internal links linter (lesson #7) used a regex
+that only matched literal string hrefs: `<a href="/path">`. It missed
+template literal hrefs: `<a href={`/path/${var}`}>`. Seven violations
+in four files went undetected despite the linter passing cleanly.
+
+**Root cause:** The linter was written when all internal links used
+string literals. As the codebase evolved to use template literals for
+dynamic routes, the linter's regex didn't evolve with it.
+
+**Fix:** Added a second regex to catch template literal patterns:
+`<a href={`/...` }` and `<a href={"/..."}`. The linter now reports
+all 7 violations.
+
+**What should have been in the spec:**
+- "When writing a linter, test it against known violations before
+  trusting it. Plant a deliberate violation and verify the linter
+  catches it."
+- "Linter regexes must be reviewed when the codebase introduces new
+  syntax patterns (template literals, tagged templates, etc.)."
+
+---
+
+## Updated Summary Table
+
+| # | Lesson | Key Principle |
+|---|--------|---------------|
+| 27 | Measurement width ≤ container width | Cap hardcoded constants with measured values |
+| 28 | SVG height must include descenders | baseline y + fontSize × 1.2 for safe height |
+| 29 | Amortize cold-start in SPA tests | Batch page visits per viewport, not per page |
+| 30 | Linters must match evolving patterns | Test linters against known violations |
+
+### Cross-cutting theme
+
+6. **Tools must evolve with the codebase.** A linter written for
+   string literals doesn't catch template literals. A test written
+   for two viewports misses the third. A width constant that worked
+   at 1280px fails at 812px. Every assumption encoded in a tool is a
+   future false negative if the codebase outgrows it.

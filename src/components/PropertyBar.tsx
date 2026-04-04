@@ -38,7 +38,7 @@ export default function PropertyBar({
   const valueLabel = value != null ? `${value}${unit ? ' ' + unit : ''}` : '';
 
   return (
-    <svg width={width + 100} height={height + 16} role="img" aria-label={`${label}: ${valueLabel || '—'}, ranked ${rank} of ${total}`}>
+    <svg width={width + 100} height={height + 16} viewBox={`0 0 ${width + 100} ${height + 16}`} style={{ maxWidth: '100%', height: 'auto' }} role="img" aria-label={`${label}: ${valueLabel || '—'}, ranked ${rank} of ${total}`}>
       <text
         x={0}
         y={10}

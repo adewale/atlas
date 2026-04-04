@@ -9,11 +9,9 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN, MONO_FONT } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
-import { useDropCapText } from '../hooks/usePretextLines';
-import { DROP_CAP_FONT } from '../lib/pretext';
-import PretextSvg from '../components/PretextSvg';
+import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
@@ -120,11 +118,6 @@ export default function PhaseLandscape() {
   const rulerRef = useRef<SVGSVGElement>(null);
   const isDragging = useRef(false);
 
-  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: isMobile ? 360 : INTRO_MAX_W,
-    dropCapFont: `80px ${DROP_CAP_FONT}`,
-  });
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setHasLoaded(true));
@@ -170,8 +163,6 @@ export default function PhaseLandscape() {
   }, [elementPhases]);
 
   const tempC = tempK - 273;
-  const DROP_CAP_SIZE = 80;
-  const introHeight = Math.max(lines.length * lineHeight + 16, DROP_CAP_SIZE + 4);
   const isAtSTP = tempK === DEFAULT_TEMP;
 
   // ---- Ruler interaction: convert pointer position to temperature ----
@@ -242,7 +233,7 @@ export default function PhaseLandscape() {
         <span data-testid="temp-display" style={{
           fontSize: 13,
           fontWeight: 'bold',
-          fontFamily: "'SF Mono', 'Cascadia Code', 'Fira Code', monospace",
+          fontFamily: MONO_FONT,
           fontVariantNumeric: 'tabular-nums',
           color: BLACK,
           minWidth: '12ch',
@@ -396,21 +387,7 @@ export default function PhaseLandscape() {
             Phase Landscape{isAtSTP ? ' at STP' : ''}
           </h1>
 
-          <svg
-            viewBox={`0 0 ${isMobile ? 360 : INTRO_MAX_W} ${introHeight}`}
-            style={{ width: '100%', maxWidth: isMobile ? 360 : INTRO_MAX_W, display: 'block', marginBottom: '12px' }}
-          >
-            <PretextSvg
-              lines={lines}
-              lineHeight={lineHeight}
-              x={0}
-              y={0}
-              fill={BLACK}
-              maxWidth={isMobile ? 360 : INTRO_MAX_W}
-              animationStagger={40}
-              dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
-            />
-          </svg>
+          <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
 
           {temperatureRuler}
         </div>

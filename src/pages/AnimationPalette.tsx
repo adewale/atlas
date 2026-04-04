@@ -170,7 +170,7 @@ function KeyframeDemo({ name, desc, duration, easing }: {
       <div style={LABEL_STYLE}>@keyframes {name} <span style={{ color: BLACK }}>{desc}</span></div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         {name === 'sparkline-draw' ? (
-          <svg key={key} width={200} height={24}>
+          <svg key={key} width={200} height={24} viewBox="0 0 200 24" style={{ maxWidth: '100%', height: 'auto' }}>
             <line
               x1={0} y1={12} x2={200} y2={12}
               stroke={DEEP_BLUE}

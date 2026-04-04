@@ -4,10 +4,9 @@ import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
 import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
-import { useDropCapText } from '../hooks/usePretextLines';
+import IntroBlock from '../components/IntroBlock';
 import { VT } from '../lib/transitions';
-import { DROP_CAP_FONT, measureLines } from '../lib/pretext';
-import PretextSvg from '../components/PretextSvg';
+import { measureLines } from '../lib/pretext';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
 import SectionedCardList from '../components/SectionedCardList';
@@ -89,12 +88,7 @@ export default function DiscoveryTimeline() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [tooltip, setTooltip] = useState<Tooltip>(null);
 
-  const introWidth = isMobile ? 360 : 760;
-  const { dropCap: introDC, lines, lineHeight } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: introWidth,
-    dropCapFont: `80px ${DROP_CAP_FONT}`,
-  });
+
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setHasLoaded(true));
@@ -220,7 +214,6 @@ export default function DiscoveryTimeline() {
 
   const centuryMarks = [1700, 1800, 1900, 2000];
 
-  const introHeight = lines.length * lineHeight + 16;
   const eraLabelY = SVG_HEIGHT + 16;
   const totalHeight = eraLabelY + 30;
 
@@ -233,23 +226,7 @@ export default function DiscoveryTimeline() {
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
 
-          <svg
-            width="100%"
-            viewBox={`0 0 360 ${introHeight}`}
-            style={{ display: 'block', marginBottom: '12px' }}
-          >
-            <PretextSvg
-              lines={lines}
-              lineHeight={lineHeight}
-              x={0}
-              y={0}
-              fontSize={16}
-              fill={BLACK}
-              maxWidth={360}
-              animationStagger={40}
-              dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
-            />
-          </svg>
+          <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
 
         </div>
 
@@ -268,23 +245,7 @@ export default function DiscoveryTimeline() {
           <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
 
           {/* Intro paragraph */}
-          <svg
-            viewBox={`0 0 ${introWidth} ${introHeight}`}
-            style={{ width: '100%', maxWidth: introWidth, marginBottom: '16px' }}
-            overflow="visible"
-          >
-            <PretextSvg
-              lines={lines}
-              lineHeight={lineHeight}
-              x={0}
-              y={0}
-              fontSize={16}
-              fill={BLACK}
-              maxWidth={introWidth}
-              animationStagger={40}
-              dropCap={{ fontSize: 80, fill: WARM_RED, char: introDC.char }}
-            />
-          </svg>
+          <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
 
           {/* Era browse links */}
           <section style={{ marginBottom: '16px' }}>
