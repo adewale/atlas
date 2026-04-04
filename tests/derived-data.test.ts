@@ -11,8 +11,8 @@ import entityRefs from '../data/generated/entity-refs.json';
 import entityRefLookup from '../data/generated/entity-ref-lookup.json';
 
 describe('entity-index.json', () => {
-  it('contains at least 250 entities', () => {
-    expect(entityIndex.length).toBeGreaterThanOrEqual(250);
+  it('contains at least 200 entities', () => {
+    expect(entityIndex.length).toBeGreaterThanOrEqual(200);
   });
 
   it('every entity has required fields', () => {
@@ -26,17 +26,18 @@ describe('entity-index.json', () => {
     }
   });
 
-  it('contains all 9 entity types', () => {
+  it('contains all 5 result-worthy entity types', () => {
     const types = new Set(entityIndex.map((e: { type: string }) => e.type));
     expect(types).toContain('element');
-    expect(types).toContain('category');
-    expect(types).toContain('group');
-    expect(types).toContain('period');
-    expect(types).toContain('block');
     expect(types).toContain('anomaly');
     expect(types).toContain('discoverer');
     expect(types).toContain('era');
     expect(types).toContain('etymology');
+    // Structural types (category, group, period, block) are facets, not results
+    expect(types).not.toContain('category');
+    expect(types).not.toContain('group');
+    expect(types).not.toContain('period');
+    expect(types).not.toContain('block');
   });
 
   it('contains exactly 118 element entities', () => {

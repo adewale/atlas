@@ -496,9 +496,10 @@ function run() {
   writeFileSync(join(outDir, 'grid-elements.json'), JSON.stringify(gridElements));
 
   // --- entity-index.json (pre-built entity corpus for the Explore page) ---
+  // Only result-worthy entity types: elements, discoverers, anomalies, eras, etymologies.
+  // Groups, periods, blocks, categories are structural labels — facets, not results.
   const ENTITY_TYPE_COLOURS: Record<string, string> = {
-    element: '#133e7c', category: '#133e7c', group: '#133e7c',
-    period: '#9e1c2c', block: '#856912', anomaly: '#9e1c2c',
+    element: '#133e7c', anomaly: '#9e1c2c',
     discoverer: '#856912', era: '#9e1c2c', etymology: '#0f0f0f',
   };
   const entityIndex: Array<{
@@ -512,38 +513,6 @@ function run() {
       name: `${el.symbol} — ${el.name}`, description: el.summary,
       colour: ENTITY_TYPE_COLOURS.element, elements: [el.symbol],
       href: `/elements/${el.symbol}`,
-    });
-  }
-  for (const cat of categories) {
-    entityIndex.push({
-      id: `category-${cat.slug}`, type: 'category',
-      name: cat.label, description: cat.description,
-      colour: ENTITY_TYPE_COLOURS.category, elements: cat.elements,
-      href: `/categories/${cat.slug}`,
-    });
-  }
-  for (const g of groups) {
-    entityIndex.push({
-      id: `group-${g.n}`, type: 'group',
-      name: `Group ${g.n}`, description: g.description,
-      colour: ENTITY_TYPE_COLOURS.group, elements: g.elements,
-      href: `/groups/${g.n}`,
-    });
-  }
-  for (const p of periods) {
-    entityIndex.push({
-      id: `period-${p.n}`, type: 'period',
-      name: `Period ${p.n}`, description: p.description,
-      colour: ENTITY_TYPE_COLOURS.period, elements: p.elements,
-      href: `/periods/${p.n}`,
-    });
-  }
-  for (const b of blocks) {
-    entityIndex.push({
-      id: `block-${b.block}`, type: 'block',
-      name: b.label, description: b.description,
-      colour: ENTITY_TYPE_COLOURS.block, elements: b.elements,
-      href: `/blocks/${b.block}`,
     });
   }
   for (const a of anomalies) {

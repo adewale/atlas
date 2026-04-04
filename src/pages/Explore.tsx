@@ -43,7 +43,6 @@ const MAX_STAGGER_BATCH = 24;
 
 /** Facet dimensions rendered as chip rows. */
 const FACET_DIMENSIONS: { key: FacetKey; label: string }[] = [
-  { key: 'type', label: 'Entity type' },
   { key: 'block', label: 'Block' },
   { key: 'phase', label: 'Phase' },
   { key: 'era', label: 'Era' },
