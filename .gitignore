@@ -6,3 +6,4 @@ dist/
 test-results/
 tests/e2e/screenshots/
 debug-screenshots/
+worker/seed/
