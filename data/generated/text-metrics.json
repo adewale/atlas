@@ -1,12 +1,12 @@
 {
-  "_generated": "2026-04-04T01:25:11.460Z",
-  "_jobCount": 1106,
+  "_generated": "2026-04-04T01:31:36.276Z",
+  "_jobCount": 1181,
   "elements": {
     "H": {
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 68,
-      "nameWidth10": 70,
+      "nameWidth10": 72,
       "chipWidth11": 80,
       "catWidth13": 63
     },
@@ -14,7 +14,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 49,
-      "nameWidth10": 47,
+      "nameWidth10": 49,
       "chipWidth11": 71,
       "catWidth13": 66
     },
@@ -22,7 +22,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 52,
-      "nameWidth10": 51,
+      "nameWidth10": 54,
       "chipWidth11": 68,
       "catWidth13": 76
     },
@@ -30,7 +30,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 66,
-      "nameWidth10": 69,
+      "nameWidth10": 73,
       "chipWidth11": 84,
       "catWidth13": 129
     },
@@ -46,7 +46,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 51,
-      "nameWidth10": 52,
+      "nameWidth10": 53,
       "chipWidth11": 65,
       "catWidth13": 63
     },
@@ -54,7 +54,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 61,
-      "nameWidth10": 64,
+      "nameWidth10": 67,
       "chipWidth11": 74,
       "catWidth13": 63
     },
@@ -62,7 +62,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 53,
-      "nameWidth10": 52,
+      "nameWidth10": 53,
       "chipWidth11": 67,
       "catWidth13": 63
     },
@@ -70,7 +70,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 57,
-      "nameWidth10": 60,
+      "nameWidth10": 64,
       "chipWidth11": 68,
       "catWidth13": 54
     },
@@ -86,7 +86,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 53,
-      "nameWidth10": 50,
+      "nameWidth10": 51,
       "chipWidth11": 74,
       "catWidth13": 76
     },
@@ -94,7 +94,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 80,
-      "nameWidth10": 76,
+      "nameWidth10": 79,
       "chipWidth11": 98,
       "catWidth13": 129
     },
@@ -102,7 +102,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 74,
-      "nameWidth10": 71,
+      "nameWidth10": 75,
       "chipWidth11": 87,
       "catWidth13": 139
     },
@@ -110,15 +110,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 47,
-      "nameWidth10": 50,
+      "nameWidth10": 53,
       "chipWidth11": 65,
       "catWidth13": 60
     },
     "P": {
-      "identityWidth": 95,
+      "identityWidth": 97,
       "identityWidthMobile": 110,
       "nameWidth14": 83,
-      "nameWidth10": 86,
+      "nameWidth10": 89,
       "chipWidth11": 91,
       "catWidth13": 63
     },
@@ -126,7 +126,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 43,
-      "nameWidth10": 48,
+      "nameWidth10": 50,
       "chipWidth11": 58,
       "catWidth13": 63
     },
@@ -134,7 +134,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 59,
-      "nameWidth10": 63,
+      "nameWidth10": 66,
       "chipWidth11": 75,
       "catWidth13": 54
     },
@@ -150,7 +150,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 73,
-      "nameWidth10": 71,
+      "nameWidth10": 75,
       "chipWidth11": 83,
       "catWidth13": 76
     },
@@ -158,7 +158,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 56,
-      "nameWidth10": 56,
+      "nameWidth10": 58,
       "chipWidth11": 76,
       "catWidth13": 129
     },
@@ -166,7 +166,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 69,
-      "nameWidth10": 66,
+      "nameWidth10": 69,
       "chipWidth11": 86,
       "catWidth13": 105
     },
@@ -174,7 +174,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 61,
-      "nameWidth10": 59,
+      "nameWidth10": 63,
       "chipWidth11": 76,
       "catWidth13": 105
     },
@@ -182,7 +182,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 69,
-      "nameWidth10": 65,
+      "nameWidth10": 68,
       "chipWidth11": 79,
       "catWidth13": 105
     },
@@ -190,7 +190,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 72,
-      "nameWidth10": 70,
+      "nameWidth10": 72,
       "chipWidth11": 87,
       "catWidth13": 105
     },
@@ -198,7 +198,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 80,
-      "nameWidth10": 77,
+      "nameWidth10": 80,
       "chipWidth11": 97,
       "catWidth13": 105
     },
@@ -206,7 +206,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 28,
-      "nameWidth10": 30,
+      "nameWidth10": 31,
       "chipWidth11": 52,
       "catWidth13": 105
     },
@@ -214,7 +214,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 46,
-      "nameWidth10": 48,
+      "nameWidth10": 50,
       "chipWidth11": 68,
       "catWidth13": 105
     },
@@ -222,7 +222,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 43,
-      "nameWidth10": 45,
+      "nameWidth10": 47,
       "chipWidth11": 63,
       "catWidth13": 105
     },
@@ -230,7 +230,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 51,
-      "nameWidth10": 50,
+      "nameWidth10": 51,
       "chipWidth11": 73,
       "catWidth13": 105
     },
@@ -238,7 +238,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 30,
-      "nameWidth10": 30,
+      "nameWidth10": 31,
       "chipWidth11": 55,
       "catWidth13": 105
     },
@@ -246,7 +246,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 52,
-      "nameWidth10": 56,
+      "nameWidth10": 58,
       "chipWidth11": 73,
       "catWidth13": 139
     },
@@ -254,7 +254,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 80,
-      "nameWidth10": 76,
+      "nameWidth10": 79,
       "chipWidth11": 96,
       "catWidth13": 60
     },
@@ -262,7 +262,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 53,
-      "nameWidth10": 53,
+      "nameWidth10": 56,
       "chipWidth11": 73,
       "catWidth13": 60
     },
@@ -270,7 +270,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 64,
-      "nameWidth10": 63,
+      "nameWidth10": 66,
       "chipWidth11": 82,
       "catWidth13": 63
     },
@@ -278,7 +278,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 58,
-      "nameWidth10": 57,
+      "nameWidth10": 59,
       "chipWidth11": 75,
       "catWidth13": 54
     },
@@ -286,7 +286,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 56,
-      "nameWidth10": 58,
+      "nameWidth10": 60,
       "chipWidth11": 74,
       "catWidth13": 66
     },
@@ -294,7 +294,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 66,
-      "nameWidth10": 62,
+      "nameWidth10": 65,
       "chipWidth11": 84,
       "catWidth13": 76
     },
@@ -302,7 +302,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 69,
-      "nameWidth10": 74,
+      "nameWidth10": 77,
       "chipWidth11": 84,
       "catWidth13": 129
     },
@@ -310,7 +310,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 53,
-      "nameWidth10": 56,
+      "nameWidth10": 58,
       "chipWidth11": 66,
       "catWidth13": 105
     },
@@ -318,7 +318,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 70,
-      "nameWidth10": 70,
+      "nameWidth10": 74,
       "chipWidth11": 85,
       "catWidth13": 105
     },
@@ -326,15 +326,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 58,
-      "nameWidth10": 53,
+      "nameWidth10": 56,
       "chipWidth11": 78,
       "catWidth13": 105
     },
     "Mo": {
-      "identityWidth": 96,
+      "identityWidth": 99,
       "identityWidthMobile": 110,
       "nameWidth14": 90,
-      "nameWidth10": 88,
+      "nameWidth10": 91,
       "chipWidth11": 106,
       "catWidth13": 105
     },
@@ -342,7 +342,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 81,
-      "nameWidth10": 81,
+      "nameWidth10": 85,
       "chipWidth11": 94,
       "catWidth13": 105
     },
@@ -350,7 +350,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 75,
-      "nameWidth10": 74,
+      "nameWidth10": 77,
       "chipWidth11": 91,
       "catWidth13": 105
     },
@@ -358,7 +358,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 62,
-      "nameWidth10": 59,
+      "nameWidth10": 61,
       "chipWidth11": 80,
       "catWidth13": 105
     },
@@ -366,7 +366,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 68,
-      "nameWidth10": 70,
+      "nameWidth10": 74,
       "chipWidth11": 86,
       "catWidth13": 105
     },
@@ -374,7 +374,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 40,
-      "nameWidth10": 41,
+      "nameWidth10": 44,
       "chipWidth11": 63,
       "catWidth13": 105
     },
@@ -382,7 +382,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 66,
-      "nameWidth10": 60,
+      "nameWidth10": 62,
       "chipWidth11": 85,
       "catWidth13": 105
     },
@@ -390,7 +390,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 48,
-      "nameWidth10": 45,
+      "nameWidth10": 47,
       "chipWidth11": 65,
       "catWidth13": 139
     },
@@ -406,7 +406,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 67,
-      "nameWidth10": 66,
+      "nameWidth10": 69,
       "chipWidth11": 85,
       "catWidth13": 60
     },
@@ -414,7 +414,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 64,
-      "nameWidth10": 70,
+      "nameWidth10": 74,
       "chipWidth11": 81,
       "catWidth13": 60
     },
@@ -422,7 +422,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 43,
-      "nameWidth10": 42,
+      "nameWidth10": 45,
       "chipWidth11": 54,
       "catWidth13": 54
     },
@@ -438,7 +438,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 60,
-      "nameWidth10": 56,
+      "nameWidth10": 58,
       "chipWidth11": 79,
       "catWidth13": 76
     },
@@ -446,7 +446,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 50,
-      "nameWidth10": 48,
+      "nameWidth10": 50,
       "chipWidth11": 70,
       "catWidth13": 129
     },
@@ -454,7 +454,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 78,
-      "nameWidth10": 78,
+      "nameWidth10": 81,
       "chipWidth11": 92,
       "catWidth13": 73
     },
@@ -462,15 +462,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 50,
-      "nameWidth10": 48,
+      "nameWidth10": 50,
       "chipWidth11": 71,
       "catWidth13": 73
     },
     "Pr": {
-      "identityWidth": 108,
-      "identityWidthMobile": 110,
+      "identityWidth": 113,
+      "identityWidthMobile": 113,
       "nameWidth14": 104,
-      "nameWidth10": 100,
+      "nameWidth10": 105,
       "chipWidth11": 112,
       "catWidth13": 73
     },
@@ -478,15 +478,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 83,
-      "nameWidth10": 77,
+      "nameWidth10": 80,
       "chipWidth11": 99,
       "catWidth13": 73
     },
     "Pm": {
-      "identityWidth": 95,
+      "identityWidth": 96,
       "identityWidthMobile": 110,
       "nameWidth14": 85,
-      "nameWidth10": 84,
+      "nameWidth10": 88,
       "chipWidth11": 102,
       "catWidth13": 73
     },
@@ -494,7 +494,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 70,
-      "nameWidth10": 66,
+      "nameWidth10": 69,
       "chipWidth11": 90,
       "catWidth13": 73
     },
@@ -502,7 +502,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 66,
-      "nameWidth10": 65,
+      "nameWidth10": 68,
       "chipWidth11": 83,
       "catWidth13": 73
     },
@@ -510,7 +510,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 78,
-      "nameWidth10": 78,
+      "nameWidth10": 83,
       "chipWidth11": 95,
       "catWidth13": 73
     },
@@ -518,7 +518,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 57,
-      "nameWidth10": 56,
+      "nameWidth10": 58,
       "chipWidth11": 76,
       "catWidth13": 73
     },
@@ -526,7 +526,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 83,
-      "nameWidth10": 81,
+      "nameWidth10": 85,
       "chipWidth11": 98,
       "catWidth13": 73
     },
@@ -534,7 +534,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 62,
-      "nameWidth10": 60,
+      "nameWidth10": 62,
       "chipWidth11": 82,
       "catWidth13": 73
     },
@@ -542,7 +542,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 49,
-      "nameWidth10": 47,
+      "nameWidth10": 49,
       "chipWidth11": 68,
       "catWidth13": 73
     },
@@ -550,7 +550,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 56,
-      "nameWidth10": 57,
+      "nameWidth10": 59,
       "chipWidth11": 78,
       "catWidth13": 73
     },
@@ -558,7 +558,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 70,
-      "nameWidth10": 71,
+      "nameWidth10": 75,
       "chipWidth11": 87,
       "catWidth13": 73
     },
@@ -566,7 +566,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 62,
-      "nameWidth10": 63,
+      "nameWidth10": 66,
       "chipWidth11": 80,
       "catWidth13": 105
     },
@@ -574,7 +574,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 59,
-      "nameWidth10": 57,
+      "nameWidth10": 59,
       "chipWidth11": 77,
       "catWidth13": 105
     },
@@ -582,7 +582,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 64,
-      "nameWidth10": 66,
+      "nameWidth10": 69,
       "chipWidth11": 81,
       "catWidth13": 105
     },
@@ -590,7 +590,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 65,
-      "nameWidth10": 68,
+      "nameWidth10": 70,
       "chipWidth11": 80,
       "catWidth13": 105
     },
@@ -598,7 +598,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 61,
-      "nameWidth10": 57,
+      "nameWidth10": 59,
       "chipWidth11": 79,
       "catWidth13": 105
     },
@@ -606,7 +606,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 57,
-      "nameWidth10": 52,
+      "nameWidth10": 53,
       "chipWidth11": 77,
       "catWidth13": 105
     },
@@ -614,7 +614,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 49,
-      "nameWidth10": 47,
+      "nameWidth10": 51,
       "chipWidth11": 64,
       "catWidth13": 105
     },
@@ -622,7 +622,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 62,
-      "nameWidth10": 63,
+      "nameWidth10": 66,
       "chipWidth11": 78,
       "catWidth13": 105
     },
@@ -638,7 +638,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 58,
-      "nameWidth10": 60,
+      "nameWidth10": 62,
       "chipWidth11": 79,
       "catWidth13": 105
     },
@@ -646,7 +646,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 60,
-      "nameWidth10": 63,
+      "nameWidth10": 66,
       "chipWidth11": 75,
       "catWidth13": 139
     },
@@ -662,7 +662,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 58,
-      "nameWidth10": 57,
+      "nameWidth10": 59,
       "chipWidth11": 73,
       "catWidth13": 139
     },
@@ -670,7 +670,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 65,
-      "nameWidth10": 66,
+      "nameWidth10": 69,
       "chipWidth11": 82,
       "catWidth13": 60
     },
@@ -678,7 +678,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 58,
-      "nameWidth10": 58,
+      "nameWidth10": 62,
       "chipWidth11": 76,
       "catWidth13": 54
     },
@@ -694,7 +694,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 65,
-      "nameWidth10": 65,
+      "nameWidth10": 68,
       "chipWidth11": 80,
       "catWidth13": 76
     },
@@ -702,7 +702,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 53,
-      "nameWidth10": 50,
+      "nameWidth10": 51,
       "chipWidth11": 73,
       "catWidth13": 129
     },
@@ -710,7 +710,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 62,
-      "nameWidth10": 60,
+      "nameWidth10": 64,
       "chipWidth11": 80,
       "catWidth13": 54
     },
@@ -718,15 +718,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 58,
-      "nameWidth10": 58,
+      "nameWidth10": 60,
       "chipWidth11": 77,
       "catWidth13": 54
     },
     "Pa": {
-      "identityWidth": 100,
+      "identityWidth": 106,
       "identityWidthMobile": 110,
       "nameWidth14": 89,
-      "nameWidth10": 92,
+      "nameWidth10": 98,
       "chipWidth11": 102,
       "catWidth13": 54
     },
@@ -734,7 +734,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 59,
-      "nameWidth10": 58,
+      "nameWidth10": 60,
       "chipWidth11": 72,
       "catWidth13": 54
     },
@@ -742,7 +742,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 77,
-      "nameWidth10": 74,
+      "nameWidth10": 77,
       "chipWidth11": 93,
       "catWidth13": 54
     },
@@ -750,7 +750,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 71,
-      "nameWidth10": 74,
+      "nameWidth10": 77,
       "chipWidth11": 87,
       "catWidth13": 54
     },
@@ -758,7 +758,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 75,
-      "nameWidth10": 70,
+      "nameWidth10": 74,
       "chipWidth11": 95,
       "catWidth13": 54
     },
@@ -766,7 +766,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 51,
-      "nameWidth10": 50,
+      "nameWidth10": 51,
       "chipWidth11": 75,
       "catWidth13": 54
     },
@@ -774,15 +774,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 70,
-      "nameWidth10": 70,
+      "nameWidth10": 74,
       "chipWidth11": 87,
       "catWidth13": 54
     },
     "Cf": {
-      "identityWidth": 95,
+      "identityWidth": 98,
       "identityWidthMobile": 110,
       "nameWidth14": 81,
-      "nameWidth10": 84,
+      "nameWidth10": 90,
       "chipWidth11": 94,
       "catWidth13": 54
     },
@@ -790,7 +790,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 81,
-      "nameWidth10": 78,
+      "nameWidth10": 85,
       "chipWidth11": 95,
       "catWidth13": 54
     },
@@ -798,15 +798,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 61,
-      "nameWidth10": 57,
+      "nameWidth10": 59,
       "chipWidth11": 82,
       "catWidth13": 54
     },
     "Md": {
-      "identityWidth": 97,
+      "identityWidth": 102,
       "identityWidthMobile": 110,
       "nameWidth14": 93,
-      "nameWidth10": 89,
+      "nameWidth10": 94,
       "chipWidth11": 108,
       "catWidth13": 54
     },
@@ -814,7 +814,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 66,
-      "nameWidth10": 65,
+      "nameWidth10": 68,
       "chipWidth11": 85,
       "catWidth13": 54
     },
@@ -822,15 +822,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 84,
-      "nameWidth10": 83,
+      "nameWidth10": 87,
       "chipWidth11": 96,
       "catWidth13": 105
     },
     "Rf": {
-      "identityWidth": 114,
-      "identityWidthMobile": 114,
+      "identityWidth": 120,
+      "identityWidthMobile": 120,
       "nameWidth14": 102,
-      "nameWidth10": 106,
+      "nameWidth10": 112,
       "chipWidth11": 110,
       "catWidth13": 105
     },
@@ -838,7 +838,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 62,
-      "nameWidth10": 59,
+      "nameWidth10": 61,
       "chipWidth11": 82,
       "catWidth13": 105
     },
@@ -846,7 +846,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 84,
-      "nameWidth10": 82,
+      "nameWidth10": 86,
       "chipWidth11": 98,
       "catWidth13": 105
     },
@@ -854,7 +854,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 59,
-      "nameWidth10": 58,
+      "nameWidth10": 60,
       "chipWidth11": 78,
       "catWidth13": 105
     },
@@ -862,7 +862,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 60,
-      "nameWidth10": 57,
+      "nameWidth10": 59,
       "chipWidth11": 80,
       "catWidth13": 105
     },
@@ -870,31 +870,31 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 79,
-      "nameWidth10": 77,
+      "nameWidth10": 82,
       "chipWidth11": 95,
       "catWidth13": 105
     },
     "Ds": {
-      "identityWidth": 107,
-      "identityWidthMobile": 110,
+      "identityWidth": 112,
+      "identityWidthMobile": 112,
       "nameWidth14": 99,
-      "nameWidth10": 99,
+      "nameWidth10": 104,
       "chipWidth11": 111,
       "catWidth13": 105
     },
     "Rg": {
-      "identityWidth": 98,
+      "identityWidth": 103,
       "identityWidthMobile": 110,
       "nameWidth14": 92,
-      "nameWidth10": 90,
+      "nameWidth10": 95,
       "chipWidth11": 105,
       "catWidth13": 105
     },
     "Cn": {
-      "identityWidth": 95,
+      "identityWidth": 100,
       "identityWidthMobile": 110,
       "nameWidth14": 88,
-      "nameWidth10": 87,
+      "nameWidth10": 92,
       "chipWidth11": 103,
       "catWidth13": 105
     },
@@ -902,7 +902,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 66,
-      "nameWidth10": 64,
+      "nameWidth10": 67,
       "chipWidth11": 85,
       "catWidth13": 139
     },
@@ -910,7 +910,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 68,
-      "nameWidth10": 70,
+      "nameWidth10": 74,
       "chipWidth11": 81,
       "catWidth13": 139
     },
@@ -918,15 +918,15 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 79,
-      "nameWidth10": 78,
+      "nameWidth10": 81,
       "chipWidth11": 96,
       "catWidth13": 139
     },
     "Lv": {
-      "identityWidth": 95,
+      "identityWidth": 99,
       "identityWidthMobile": 110,
       "nameWidth14": 87,
-      "nameWidth10": 86,
+      "nameWidth10": 91,
       "chipWidth11": 99,
       "catWidth13": 139
     },
@@ -934,7 +934,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 78,
-      "nameWidth10": 77,
+      "nameWidth10": 82,
       "chipWidth11": 92,
       "catWidth13": 54
     },
@@ -942,7 +942,7 @@
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 78,
-      "nameWidth10": 78,
+      "nameWidth10": 81,
       "chipWidth11": 95,
       "catWidth13": 66
     }
@@ -991,377 +991,452 @@
   },
   "discoverers": {
     "Known since antiquity": {
-      "navWidth": 109,
+      "navPrev": 123,
+      "navNext": 123,
       "chipWidth": 124,
       "captionWidth": 169
     },
     "Albert Ghiorso et al.": {
-      "navWidth": 98,
+      "navPrev": 112,
+      "navNext": 112,
       "chipWidth": 113,
       "captionWidth": 152
     },
     "Humphry Davy": {
-      "navWidth": 73,
+      "navPrev": 88,
+      "navNext": 88,
       "chipWidth": 83,
       "captionWidth": 112
     },
     "Yuri Oganessian et al.": {
-      "navWidth": 107,
+      "navPrev": 121,
+      "navNext": 121,
       "chipWidth": 122,
       "captionWidth": 166
     },
     "William Ramsay & Morris Travers": {
-      "navWidth": 161,
+      "navPrev": 175,
+      "navNext": 175,
       "chipWidth": 183,
       "captionWidth": 251
     },
     "Jöns Jacob Berzelius": {
-      "navWidth": 105,
+      "navPrev": 119,
+      "navNext": 119,
       "chipWidth": 119,
       "captionWidth": 163
     },
     "Paul Emile Lecoq de Boisbaudran": {
-      "navWidth": 167,
+      "navPrev": 181,
+      "navNext": 181,
       "chipWidth": 184,
       "captionWidth": 257
     },
     "Carl Gustaf Mosander": {
-      "navWidth": 109,
+      "navPrev": 123,
+      "navNext": 123,
       "chipWidth": 122,
       "captionWidth": 168
     },
     "Peter Armbruster & Gottfried Münzenberg": {
-      "navWidth": 205,
+      "navPrev": 219,
+      "navNext": 219,
       "chipWidth": 236,
       "captionWidth": 320
     },
     "Sigurd Hofmann et al.": {
-      "navWidth": 107,
+      "navPrev": 122,
+      "navNext": 122,
       "chipWidth": 122,
       "captionWidth": 166
     },
     "Louis Nicolas Vauquelin": {
-      "navWidth": 117,
+      "navPrev": 131,
+      "navNext": 131,
       "chipWidth": 132,
       "captionWidth": 182
     },
     "Carl Wilhelm Scheele": {
-      "navWidth": 105,
+      "navPrev": 119,
+      "navNext": 119,
       "chipWidth": 119,
       "captionWidth": 162
     },
     "Robert Bunsen & Gustav Kirchhoff": {
-      "navWidth": 169,
+      "navPrev": 183,
+      "navNext": 183,
       "chipWidth": 191,
       "captionWidth": 262
     },
     "Martin Heinrich Klaproth": {
-      "navWidth": 120,
+      "navPrev": 134,
+      "navNext": 134,
       "chipWidth": 138,
       "captionWidth": 188
     },
     "William Hyde Wollaston": {
-      "navWidth": 116,
+      "navPrev": 130,
+      "navNext": 130,
       "chipWidth": 132,
       "captionWidth": 179
     },
     "Carl Auer von Welsbach": {
-      "navWidth": 118,
+      "navPrev": 132,
+      "navNext": 132,
       "chipWidth": 133,
       "captionWidth": 182
     },
     "Jean Charles Galissard de Marignac": {
-      "navWidth": 178,
+      "navPrev": 192,
+      "navNext": 192,
       "chipWidth": 200,
       "captionWidth": 276
     },
     "Smithson Tennant": {
-      "navWidth": 89,
+      "navPrev": 103,
+      "navNext": 103,
       "chipWidth": 101,
       "captionWidth": 137
     },
     "Marie Curie & Pierre Curie": {
-      "navWidth": 128,
+      "navPrev": 142,
+      "navNext": 142,
       "chipWidth": 145,
       "captionWidth": 200
     },
     "Henry Cavendish": {
-      "navWidth": 85,
+      "navPrev": 99,
+      "navNext": 99,
       "chipWidth": 96,
       "captionWidth": 130
     },
     "Pierre Janssen & Joseph Lockyer": {
-      "navWidth": 164,
+      "navPrev": 178,
+      "navNext": 178,
       "chipWidth": 185,
       "captionWidth": 255
     },
     "Johan August Arfwedson": {
-      "navWidth": 124,
+      "navPrev": 138,
+      "navNext": 138,
       "chipWidth": 141,
       "captionWidth": 193
     },
     "Daniel Rutherford": {
-      "navWidth": 86,
+      "navPrev": 101,
+      "navNext": 101,
       "chipWidth": 100,
       "captionWidth": 135
     },
     "Joseph Priestley & Carl Wilhelm Scheele": {
-      "navWidth": 199,
+      "navPrev": 213,
+      "navNext": 213,
       "chipWidth": 226,
       "captionWidth": 308
     },
     "Henri Moissan": {
-      "navWidth": 71,
+      "navPrev": 85,
+      "navNext": 85,
       "chipWidth": 80,
       "captionWidth": 110
     },
     "Joseph Black": {
-      "navWidth": 67,
+      "navPrev": 81,
+      "navNext": 81,
       "chipWidth": 75,
       "captionWidth": 104
     },
     "Hans Christian Ørsted": {
-      "navWidth": 109,
+      "navPrev": 123,
+      "navNext": 123,
       "chipWidth": 124,
       "captionWidth": 169
     },
     "Hennig Brand": {
-      "navWidth": 68,
+      "navPrev": 82,
+      "navNext": 82,
       "chipWidth": 76,
       "captionWidth": 105
     },
     "Lord Rayleigh & William Ramsay": {
-      "navWidth": 159,
+      "navPrev": 173,
+      "navNext": 173,
       "chipWidth": 179,
       "captionWidth": 247
     },
     "Lars Fredrik Nilson": {
-      "navWidth": 93,
+      "navPrev": 107,
+      "navNext": 107,
       "chipWidth": 106,
       "captionWidth": 145
     },
     "William Gregor": {
-      "navWidth": 73,
+      "navPrev": 87,
+      "navNext": 87,
       "chipWidth": 83,
       "captionWidth": 113
     },
     "Andrés Manuel del Río": {
-      "navWidth": 112,
+      "navPrev": 126,
+      "navNext": 126,
       "chipWidth": 125,
       "captionWidth": 173
     },
     "Johan Gottlieb Gahn": {
-      "navWidth": 102,
+      "navPrev": 116,
+      "navNext": 116,
       "chipWidth": 114,
       "captionWidth": 157
     },
     "Georg Brandt": {
-      "navWidth": 67,
+      "navPrev": 81,
+      "navNext": 81,
       "chipWidth": 75,
       "captionWidth": 103
     },
     "Axel Fredrik Cronstedt": {
-      "navWidth": 111,
+      "navPrev": 125,
+      "navNext": 125,
       "chipWidth": 127,
       "captionWidth": 172
     },
     "Andreas Sigismund Marggraf": {
-      "navWidth": 143,
+      "navPrev": 157,
+      "navNext": 157,
       "chipWidth": 163,
       "captionWidth": 223
     },
     "Clemens Winkler": {
-      "navWidth": 83,
+      "navPrev": 97,
+      "navNext": 97,
       "chipWidth": 95,
       "captionWidth": 129
     },
     "Albertus Magnus": {
-      "navWidth": 84,
+      "navPrev": 98,
+      "navNext": 98,
       "chipWidth": 96,
       "captionWidth": 130
     },
     "Antoine Jérôme Balard": {
-      "navWidth": 113,
+      "navPrev": 127,
+      "navNext": 127,
       "chipWidth": 128,
       "captionWidth": 175
     },
     "Adair Crawford": {
-      "navWidth": 75,
+      "navPrev": 89,
+      "navNext": 89,
       "chipWidth": 85,
       "captionWidth": 116
     },
     "Johan Gadolin": {
-      "navWidth": 72,
+      "navPrev": 86,
+      "navNext": 86,
       "chipWidth": 80,
       "captionWidth": 110
     },
     "Charles Hatchett": {
-      "navWidth": 83,
+      "navPrev": 97,
+      "navNext": 97,
       "chipWidth": 96,
       "captionWidth": 129
     },
     "Carlo Perrier & Emilio Segrè": {
-      "navWidth": 137,
+      "navPrev": 151,
+      "navNext": 151,
       "chipWidth": 155,
       "captionWidth": 214
     },
     "Karl Ernst Claus": {
-      "navWidth": 80,
+      "navPrev": 94,
+      "navNext": 94,
       "chipWidth": 90,
       "captionWidth": 124
     },
     "Friedrich Stromeyer": {
-      "navWidth": 97,
+      "navPrev": 111,
+      "navNext": 111,
       "chipWidth": 112,
       "captionWidth": 152
     },
     "Ferdinand Reich & Hieronymus Richter": {
-      "navWidth": 191,
+      "navPrev": 205,
+      "navNext": 205,
       "chipWidth": 215,
       "captionWidth": 296
     },
     "Franz-Joseph Müller von Reichenstein": {
-      "navWidth": 189,
+      "navPrev": 203,
+      "navNext": 203,
       "chipWidth": 214,
       "captionWidth": 293
     },
     "Bernard Courtois": {
-      "navWidth": 85,
+      "navPrev": 99,
+      "navNext": 99,
       "chipWidth": 96,
       "captionWidth": 132
     },
     "Jöns Jacob Berzelius & Wilhelm Hisinger": {
-      "navWidth": 201,
+      "navPrev": 215,
+      "navNext": 215,
       "chipWidth": 228,
       "captionWidth": 312
     },
     "Jacob Marinsky, Lawrence Glendenin & Charles Coryell": {
-      "navWidth": 272,
+      "navPrev": 286,
+      "navNext": 286,
       "chipWidth": 307,
       "captionWidth": 422
     },
     "Eugène-Anatole Demarçay": {
-      "navWidth": 132,
+      "navPrev": 146,
+      "navNext": 146,
       "chipWidth": 149,
       "captionWidth": 205
     },
     "Marc Delafontaine & Jacques-Louis Soret": {
-      "navWidth": 205,
+      "navPrev": 219,
+      "navNext": 219,
       "chipWidth": 231,
       "captionWidth": 318
     },
     "Per Teodor Cleve": {
-      "navWidth": 85,
+      "navPrev": 99,
+      "navNext": 99,
       "chipWidth": 95,
       "captionWidth": 131
     },
     "Georges Urbain": {
-      "navWidth": 78,
+      "navPrev": 92,
+      "navNext": 92,
       "chipWidth": 87,
       "captionWidth": 120
     },
     "Dirk Coster & George de Hevesy": {
-      "navWidth": 160,
+      "navPrev": 174,
+      "navNext": 174,
       "chipWidth": 179,
       "captionWidth": 247
     },
     "Anders Gustaf Ekeberg": {
-      "navWidth": 114,
+      "navPrev": 129,
+      "navNext": 129,
       "chipWidth": 129,
       "captionWidth": 177
     },
     "Juan José Elhuyar & Fausto Elhuyar": {
-      "navWidth": 177,
+      "navPrev": 191,
+      "navNext": 191,
       "chipWidth": 199,
       "captionWidth": 274
     },
     "Walter Noddack, Ida Tacke & Otto Berg": {
-      "navWidth": 193,
+      "navPrev": 207,
+      "navNext": 207,
       "chipWidth": 217,
       "captionWidth": 298
     },
     "Antonio de Ulloa": {
-      "navWidth": 82,
+      "navPrev": 96,
+      "navNext": 96,
       "chipWidth": 92,
       "captionWidth": 127
     },
     "William Crookes": {
-      "navWidth": 80,
+      "navPrev": 94,
+      "navNext": 94,
       "chipWidth": 90,
       "captionWidth": 125
     },
     "Claude François Geoffroy": {
-      "navWidth": 126,
+      "navPrev": 140,
+      "navNext": 140,
       "chipWidth": 142,
       "captionWidth": 194
     },
     "Dale Corson, Kenneth MacKenzie & Emilio Segrè": {
-      "navWidth": 241,
+      "navPrev": 255,
+      "navNext": 255,
       "chipWidth": 268,
       "captionWidth": 373
     },
     "Friedrich Ernst Dorn": {
-      "navWidth": 99,
+      "navPrev": 113,
+      "navNext": 113,
       "chipWidth": 113,
       "captionWidth": 155
     },
     "Marguerite Perey": {
-      "navWidth": 84,
+      "navPrev": 98,
+      "navNext": 98,
       "chipWidth": 97,
       "captionWidth": 131
     },
     "André-Louis Debierne": {
-      "navWidth": 108,
+      "navPrev": 122,
+      "navNext": 122,
       "chipWidth": 123,
       "captionWidth": 168
     },
     "Kasimir Fajans & Oswald Helmuth Göhring": {
-      "navWidth": 209,
+      "navPrev": 223,
+      "navNext": 223,
       "chipWidth": 235,
       "captionWidth": 325
     },
     "Edwin McMillan & Philip Abelson": {
-      "navWidth": 161,
+      "navPrev": 175,
+      "navNext": 175,
       "chipWidth": 181,
       "captionWidth": 250
     },
     "Glenn Seaborg, Edwin McMillan, Joseph Kennedy & Arthur Wahl": {
-      "navWidth": 317,
+      "navPrev": 331,
+      "navNext": 331,
       "chipWidth": 356,
       "captionWidth": 488
     },
     "Glenn Seaborg, Ralph James, Leon Morgan & Albert Ghiorso": {
-      "navWidth": 299,
+      "navPrev": 313,
+      "navNext": 313,
       "chipWidth": 335,
       "captionWidth": 461
     },
     "Glenn Seaborg, Ralph James & Albert Ghiorso": {
-      "navWidth": 228,
+      "navPrev": 242,
+      "navNext": 242,
       "chipWidth": 256,
       "captionWidth": 351
     },
     "Glenn Seaborg, Stanley Thompson & Albert Ghiorso": {
-      "navWidth": 256,
+      "navPrev": 270,
+      "navNext": 270,
       "chipWidth": 288,
       "captionWidth": 394
     },
     "Glenn Seaborg, Stanley Thompson, Albert Ghiorso & Kenneth Street": {
-      "navWidth": 336,
+      "navPrev": 350,
+      "navNext": 350,
       "chipWidth": 379,
       "captionWidth": 518
     },
     "Albert Ghiorso, Torbjørn Sikkeland, John Walton & Glenn Seaborg": {
-      "navWidth": 323,
+      "navPrev": 337,
+      "navNext": 337,
       "chipWidth": 365,
       "captionWidth": 499
     },
     "Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh & Robert Latimer": {
-      "navWidth": 323,
+      "navPrev": 337,
+      "navNext": 337,
       "chipWidth": 367,
       "captionWidth": 503
     },
     "Kosuke Morita et al.": {
-      "navWidth": 99,
+      "navPrev": 113,
+      "navNext": 113,
       "chipWidth": 111,
       "captionWidth": 154
     }

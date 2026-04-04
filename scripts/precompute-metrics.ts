@@ -54,13 +54,15 @@ for (const el of elements) {
   const nameUpper = el.name.toUpperCase();
   const s = el.symbol;
 
-  // Identity block measurements
+  // Identity block measurements (must match Folio.tsx rendering exactly)
   jobs.push({ text: padded, font: 'bold 48px "SFMono-Regular", Menlo, Monaco, Consolas, monospace', key: `el.${s}.num48` });
   jobs.push({ text: padded, font: 'bold 56px "SFMono-Regular", Menlo, Monaco, Consolas, monospace', key: `el.${s}.num56` });
   jobs.push({ text: el.symbol, font: 'bold 36px system-ui, sans-serif', key: `el.${s}.sym36` });
+  // Name rendered at 10px with letter-spacing: 0.2em — canvas can't do letter-spacing,
+  // so we measure and add (charCount - 1) * 0.2 * fontSize manually
   jobs.push({ text: nameUpper, font: '10px system-ui, sans-serif', key: `el.${s}.nameUpper10` });
 
-  // Scatter hover card
+  // Scatter hover card (must match PropertyScatter.tsx fontSize={14} fontWeight="bold")
   jobs.push({ text: el.name, font: 'bold 14px system-ui, sans-serif', key: `el.${s}.name14` });
 
   // Neighbour chip text: "Mn — Manganese" at 11px bold
@@ -81,8 +83,12 @@ for (const cat of categories) {
 
 // Discoverer-level
 for (const d of discoverers) {
-  jobs.push({ text: d.name, font: '11px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `disc.${d.name}.nav11` });
+  // SvgPrevNext renders "← name" and "name →" at 11px PRETEXT_SANS
+  jobs.push({ text: `← ${d.name}`, font: '11px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `disc.${d.name}.navPrev` });
+  jobs.push({ text: `${d.name} →`, font: '11px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `disc.${d.name}.navNext` });
+  // DiscovererChip renders name at bold 11px system-ui
   jobs.push({ text: d.name, font: 'bold 11px system-ui, sans-serif', key: `disc.${d.name}.chip11bold` });
+  // AtlasPlate caption at bold 16px PRETEXT_SANS
   jobs.push({ text: d.name, font: 'bold 16px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `disc.${d.name}.cap16` });
 }
 
@@ -160,7 +166,11 @@ async function main() {
     const numW = results[`el.${s}.num48`] ?? 60;
     const numWMobile = results[`el.${s}.num56`] ?? 70;
     const symW = results[`el.${s}.sym36`] ?? 30;
-    const nameW10 = Math.ceil((results[`el.${s}.nameUpper10`] ?? 40) * 1.2); // letter-spacing
+    // letter-spacing: 0.2em at 10px = 2px per gap, (N-1) gaps for N characters
+    const nameUpper = el.name.toUpperCase();
+    const baseNameW = results[`el.${s}.nameUpper10`] ?? 40;
+    const letterSpacingPx = (nameUpper.length - 1) * 2; // 0.2em * 10px
+    const nameW10 = Math.ceil(baseNameW + letterSpacingPx);
 
     elementMetrics[s] = {
       identityWidth: Math.ceil(Math.max(numW, symW, nameW10)) + 8,
@@ -180,10 +190,11 @@ async function main() {
     };
   }
 
-  const discovererMetrics: Record<string, { navWidth: number; chipWidth: number; captionWidth: number }> = {};
+  const discovererMetrics: Record<string, { navPrev: number; navNext: number; chipWidth: number; captionWidth: number }> = {};
   for (const d of discoverers) {
     discovererMetrics[d.name] = {
-      navWidth: results[`disc.${d.name}.nav11`] ?? 80,
+      navPrev: results[`disc.${d.name}.navPrev`] ?? 100,
+      navNext: results[`disc.${d.name}.navNext`] ?? 100,
       chipWidth: results[`disc.${d.name}.chip11bold`] ?? 80,
       captionWidth: results[`disc.${d.name}.cap16`] ?? 100,
     };

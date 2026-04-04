@@ -15,25 +15,27 @@ import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-// SvgPrevNext renders at 11px in a 400-unit-wide viewBox; each label gets ~190 units.
+// SvgPrevNext renders at 11px in a 400-unit-wide viewBox; each label gets ~196 units.
+// The precomputed navPrev/navNext include the "← " / " →" prefix/suffix.
 const NAV_LABEL_FONT = `11px ${PRETEXT_SANS}`;
-const NAV_LABEL_MAX_W = 180; // conservative: 200 minus arrow + padding
+const NAV_LABEL_MAX_W = 196;
 
-/** Truncate name to fit SvgPrevNext label using precomputed navWidth when available,
- *  falling back to Pretext runtime measurement. */
-function truncateNavLabel(name: string): string {
-  // Fast path: use precomputed metric if available
+/** Truncate name to fit SvgPrevNext label. Uses precomputed navPrev/navNext
+ *  which measure the exact rendered string ("← name" / "name →"). */
+function truncateNavLabel(name: string, direction: 'prev' | 'next' = 'prev'): string {
   const precomputed = getDiscovererMetrics(name);
-  if (precomputed && precomputed.navWidth <= NAV_LABEL_MAX_W) return name;
+  const fullWidth = direction === 'prev' ? precomputed?.navPrev : precomputed?.navNext;
+  if (fullWidth != null && fullWidth <= NAV_LABEL_MAX_W) return name;
 
-  // If no precomputed metric, check with Pretext
-  if (!precomputed && fitLabel(name, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) return name;
+  // Fallback: binary search with runtime measurement
+  const prefix = direction === 'prev' ? '← ' : '';
+  const suffix = direction === 'next' ? ' →' : '';
+  if (fitLabel(prefix + name + suffix, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) return name;
 
-  // Binary search for longest prefix + ellipsis that fits
   let lo = 1, hi = name.length - 1, best = 0;
   while (lo <= hi) {
     const mid = (lo + hi) >> 1;
-    if (fitLabel(name.slice(0, mid) + '\u2026', NAV_LABEL_FONT, NAV_LABEL_MAX_W)) {
+    if (fitLabel(prefix + name.slice(0, mid) + '\u2026' + suffix, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) {
       best = mid;
       lo = mid + 1;
     } else {
@@ -135,8 +137,8 @@ export default function DiscovererDetail() {
 
       {/* Prev / Next navigation — Pretext-styled, anchored beneath hero */}
       <SvgPrevNext
-        prev={prevDisc ? { label: truncateNavLabel(prevDisc.name), to: `/discoverers/${encodeURIComponent(prevDisc.name)}` } : undefined}
-        next={nextDisc ? { label: truncateNavLabel(nextDisc.name), to: `/discoverers/${encodeURIComponent(nextDisc.name)}` } : undefined}
+        prev={prevDisc ? { label: truncateNavLabel(prevDisc.name, 'prev'), to: `/discoverers/${encodeURIComponent(prevDisc.name)}` } : undefined}
+        next={nextDisc ? { label: truncateNavLabel(nextDisc.name, 'next'), to: `/discoverers/${encodeURIComponent(nextDisc.name)}` } : undefined}
         ariaLabel="Previous and next discoverer navigation"
       />
 
