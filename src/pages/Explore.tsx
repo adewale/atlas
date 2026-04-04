@@ -115,7 +115,6 @@ export default function Explore() {
     return () => { cancelled = true; };
   }, [facetState, searchFn]);
 
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const [staggerGen, setStaggerGen] = useState(0);
@@ -147,13 +146,6 @@ export default function Explore() {
     return refs.slice(0, 12);
   }, [expandedId, refLookup, response.results]);
 
-  // Hover-to-highlight
-  const highlightSymbols = useMemo(() => {
-    if (!hoveredId) return null;
-    const hovered = response.results.find((r) => r.id === hoveredId);
-    if (!hovered || hovered.elements.length === 0) return null;
-    return new Set(hovered.elements);
-  }, [hoveredId, response.results]);
 
   /** Update a single facet dimension in the URL. */
   const setFacet = useCallback((key: FacetKey, values: string[]) => {
@@ -190,9 +182,6 @@ export default function Explore() {
     [transitionNavigate],
   );
 
-  const handleHover = useCallback((id: string | null) => {
-    setHoveredId(id);
-  }, []);
 
   const handleExpand = useCallback((id: string | null) => {
     setExpandedId((prev) => prev === id ? null : id);
@@ -267,7 +256,7 @@ export default function Explore() {
           if (allValues.length === 0) return null;
 
           return (
-            <div key={key} style={{ marginBottom: '8px' }}>
+            <div key={key} style={{ marginBottom: '16px' }}>
               <div
                 style={{
                   fontSize: '10px',
@@ -428,10 +417,6 @@ export default function Explore() {
         }}
       >
         {response.results.map((result, i) => {
-          const isDimmed = highlightSymbols != null
-            && result.id !== hoveredId
-            && !result.elements.some((sym) => highlightSymbols.has(sym));
-
           const isExpanded = result.id === expandedId;
 
           // Map SearchResult to Entity shape for EntityCard
@@ -450,12 +435,10 @@ export default function Explore() {
               key={result.id}
               entity={entity}
               index={Math.min(i, MAX_STAGGER_BATCH)}
-              dimmed={isDimmed}
               expanded={isExpanded}
               crossRefs={isExpanded ? expandedRefs : undefined}
               onDrill={handleCardDrill}
               onNavigate={handleNavigate}
-              onHover={handleHover}
               onExpand={handleExpand}
               compact
             />
