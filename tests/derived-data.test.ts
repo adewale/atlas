@@ -7,6 +7,8 @@ import entityIndex from '../data/generated/entity-index.json';
 import gridElements from '../data/generated/grid-elements.json';
 import folioFe from '../data/generated/folio-Fe.json';
 import folioH from '../data/generated/folio-H.json';
+import entityRefs from '../data/generated/entity-refs.json';
+import entityRefLookup from '../data/generated/entity-ref-lookup.json';
 
 describe('entity-index.json', () => {
   it('contains at least 250 entities', () => {
@@ -114,5 +116,60 @@ describe('folio bundles', () => {
       expect(a).toHaveProperty('elementCount');
       expect(a.elementCount).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('entity-refs.json', () => {
+  it('contains cross-references', () => {
+    expect(entityRefs.length).toBeGreaterThan(500);
+  });
+
+  it('every ref has sourceId, targetId, relType', () => {
+    for (const ref of entityRefs) {
+      expect(ref.sourceId).toBeTruthy();
+      expect(ref.targetId).toBeTruthy();
+      expect(ref.relType).toBeTruthy();
+    }
+  });
+
+  it('contains expected relationship types', () => {
+    const types = new Set(entityRefs.map((r: { relType: string }) => r.relType));
+    expect(types).toContain('discovered');
+    expect(types).toContain('member_of');
+    expect(types).toContain('belongs_to');
+    expect(types).toContain('named_for');
+    expect(types).toContain('exhibits');
+    expect(types).toContain('active_during');
+  });
+
+  it('Fe has outgoing refs to group, period, block, category', () => {
+    const feRefs = entityRefs.filter((r: { sourceId: string }) => r.sourceId === 'element-Fe');
+    const targets = feRefs.map((r: { targetId: string }) => r.targetId);
+    expect(targets).toContain('category-transition metal');
+    expect(targets).toContain('group-8');
+    expect(targets).toContain('period-4');
+    expect(targets).toContain('block-d');
+  });
+});
+
+describe('entity-ref-lookup.json', () => {
+  const lookup = entityRefLookup as Record<string, { out: { id: string; rel: string }[]; in: { id: string; rel: string }[] }>;
+
+  it('has entries for element-Fe', () => {
+    expect(lookup['element-Fe']).toBeDefined();
+    expect(lookup['element-Fe'].out.length).toBeGreaterThan(0);
+    expect(lookup['element-Fe'].in.length).toBeGreaterThan(0);
+  });
+
+  it('Fe outgoing includes group-8', () => {
+    const out = lookup['element-Fe'].out;
+    expect(out.some((r) => r.id === 'group-8')).toBe(true);
+  });
+
+  it('group-1 has incoming refs from elements', () => {
+    const entry = lookup['group-1'];
+    expect(entry).toBeDefined();
+    expect(entry.in.length).toBeGreaterThan(0);
+    expect(entry.in.some((r) => r.id === 'element-H')).toBe(true);
   });
 });

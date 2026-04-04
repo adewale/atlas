@@ -687,6 +687,96 @@ function run() {
     writeFileSync(join(outDir, `folio-${el.symbol}.json`), JSON.stringify(folioBundle));
   }
 
+  // --- entity-refs.json (structural cross-references between entities) ---
+  // Phase 2 of enrichment spec: extract bidirectional refs from existing data.
+  const entityRefs: Array<{ sourceId: string; targetId: string; relType: string }> = [];
+
+  // discoverer -> elements (discovered)
+  for (const d of discoverers) {
+    const srcId = `discoverer-${d.name}`;
+    for (const sym of d.elements) {
+      entityRefs.push({ sourceId: srcId, targetId: `element-${sym}`, relType: 'discovered' });
+    }
+  }
+
+  // anomaly -> elements (exhibits)
+  for (const a of anomalies) {
+    const srcId = `anomaly-${a.slug}`;
+    for (const sym of a.elements) {
+      entityRefs.push({ sourceId: srcId, targetId: `element-${sym}`, relType: 'exhibits' });
+    }
+  }
+
+  // element -> category (member_of)
+  for (const el of elements) {
+    entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `category-${el.category}`, relType: 'member_of' });
+  }
+
+  // element -> group (belongs_to)
+  for (const el of elements) {
+    if (el.group != null) {
+      entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `group-${el.group}`, relType: 'belongs_to' });
+    }
+  }
+
+  // element -> period (belongs_to)
+  for (const el of elements) {
+    entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `period-${el.period}`, relType: 'belongs_to' });
+  }
+
+  // element -> block (belongs_to)
+  for (const el of elements) {
+    entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `block-${el.block}`, relType: 'belongs_to' });
+  }
+
+  // element -> etymology (named_for)
+  for (const el of elements) {
+    if (el.etymologyOrigin && el.etymologyOrigin !== 'unknown') {
+      entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `etymology-${el.etymologyOrigin}`, relType: 'named_for' });
+    }
+  }
+
+  // era -> discoverers (active_during): link eras to discoverers who discovered in that decade
+  for (const entry of timeline) {
+    if (entry.year == null) continue;
+    const decade = Math.floor(entry.year / 10) * 10;
+    const eraId = `era-${decade}s`;
+    const discId = `discoverer-${entry.discoverer}`;
+    // Only add if both entities exist in the index
+    if (entityIndex.some((e) => e.id === eraId) && entityIndex.some((e) => e.id === discId)) {
+      entityRefs.push({ sourceId: eraId, targetId: discId, relType: 'active_during' });
+    }
+  }
+  for (const entry of antiquity) {
+    const eraId = 'era-Antiquity';
+    const discId = `discoverer-${entry.discoverer}`;
+    if (entityIndex.some((e) => e.id === discId)) {
+      entityRefs.push({ sourceId: eraId, targetId: discId, relType: 'active_during' });
+    }
+  }
+
+  // Deduplicate refs
+  const refSet = new Set<string>();
+  const dedupedRefs = entityRefs.filter((r) => {
+    const key = `${r.sourceId}|${r.targetId}|${r.relType}`;
+    if (refSet.has(key)) return false;
+    refSet.add(key);
+    return true;
+  });
+
+  writeFileSync(join(outDir, 'entity-refs.json'), JSON.stringify(dedupedRefs));
+
+  // --- Build per-entity ref lookup (outgoing + incoming grouped by entity id) ---
+  // This creates a compact lookup: { [entityId]: { out: [{id, rel}...], in: [{id, rel}...] } }
+  const refLookup: Record<string, { out: Array<{ id: string; rel: string }>; in: Array<{ id: string; rel: string }> }> = {};
+  for (const ref of dedupedRefs) {
+    if (!refLookup[ref.sourceId]) refLookup[ref.sourceId] = { out: [], in: [] };
+    if (!refLookup[ref.targetId]) refLookup[ref.targetId] = { out: [], in: [] };
+    refLookup[ref.sourceId].out.push({ id: ref.targetId, rel: ref.relType });
+    refLookup[ref.targetId].in.push({ id: ref.sourceId, rel: ref.relType });
+  }
+  writeFileSync(join(outDir, 'entity-ref-lookup.json'), JSON.stringify(refLookup));
+
   console.log('Generated files:');
   console.log(`  elements.json (${stripped.length} elements)`);
   console.log(`  grid-elements.json (${gridElements.length} elements, grid-only)`);
@@ -700,6 +790,9 @@ function run() {
   console.log(`  rankings.json (${Object.keys(rankings).length} properties)`);
   console.log(`  anomalies.json (${anomalies.length} anomalies)`);
   console.log(`  credits.json`);
+  console.log(`  symbol-blocks.json`);
+  console.log(`  entity-refs.json (${dedupedRefs.length} cross-references)`);
+  console.log(`  entity-ref-lookup.json (${Object.keys(refLookup).length} entities with refs)`);
 }
 
 run();

@@ -7,6 +7,11 @@
  *  - Child element symbols as mini block-coloured squares (expanded tier only)
  *  - Drill affordance (▸)
  *
+ * Progressive disclosure (enrichment spec §4):
+ *  - Level 1 (card): name, description, element chips — static bundle only
+ *  - Level 2 (expanded): cross-ref Byrne chips + "Read more" link — in-place
+ *  - Level 3 (folio): full sections — navigates to entity detail page
+ *
  * Performance:
  *  - content-visibility: auto skips layout/paint for off-screen cards
  *  - contain-intrinsic-size hints give the browser a size estimate
@@ -16,12 +21,13 @@
  * Interaction:
  *  - Hover-to-highlight: onHover callback enables Explore to dim unrelated cards
  *  - dimmed prop fades the card to 15% opacity (Victor's "illuminate, don't filter")
+ *  - Click expands in-place; second click collapses or drills
  */
 import { useState, useEffect, useRef, useCallback } from 'react';
-import type { Entity } from '../lib/entities';
+import type { Entity, EntityType } from '../lib/entities';
 import { ENTITY_TYPE_LABELS } from '../lib/entities';
 import { blockColor, contrastTextColor } from '../lib/gridColors';
-import { PAPER, BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
+import { PAPER, BLACK, GREY_MID, GREY_RULE, MONO_FONT } from '../lib/theme';
 import { PRETEXT_SANS } from '../lib/pretext';
 import symbolBlocks from '../../data/generated/symbol-blocks.json';
 
@@ -29,14 +35,18 @@ const SYMBOL_SIZE = 24;
 const SYMBOL_GAP = 3;
 const MAX_SYMBOLS = 9;
 
-/**
- * Estimated card height for content-visibility containment.
- * Header (44px) + description 3 lines (48px) + symbol row (24px) + footer (26px) + padding (16px) = ~158px
- * Cards without symbols are shorter: header + description + footer + padding = ~134px.
- * Using the taller estimate avoids scroll jumps for most cards.
- */
 const ESTIMATED_CARD_HEIGHT_WITH_SYMBOLS = 158;
 const ESTIMATED_CARD_HEIGHT_WITHOUT_SYMBOLS = 134;
+
+/** Cross-reference resolved for display. */
+export type CrossRef = {
+  id: string;
+  name: string;
+  type: EntityType;
+  colour: string;
+  href: string | null;
+  rel: string;
+};
 
 type EntityCardProps = {
   entity: Entity;
@@ -44,29 +54,38 @@ type EntityCardProps = {
   index: number;
   /** When true, card fades to ghosted state (hover-to-highlight). */
   dimmed?: boolean;
+  /** When true, card is in expanded (progressive disclosure level 2) state. */
+  expanded?: boolean;
+  /** Cross-references to show when expanded (non-element related entities). */
+  crossRefs?: CrossRef[];
   onDrill?: (entity: Entity) => void;
   onNavigate?: (href: string) => void;
   /** Called with entity id on mouseenter, null on mouseleave. */
   onHover?: (id: string | null) => void;
+  /** Called to toggle expansion. */
+  onExpand?: (id: string | null) => void;
 };
 
 export default function EntityCard({
   entity,
   index,
   dimmed = false,
+  expanded: isExpanded = false,
+  crossRefs,
   onDrill,
   onNavigate,
   onHover,
+  onExpand,
 }: EntityCardProps) {
   const showSymbols = entity.elements.length > 0 && entity.type !== 'element';
   const typeLabel = ENTITY_TYPE_LABELS[entity.type];
   const cardRef = useRef<HTMLDivElement>(null);
-  const [expanded, setExpanded] = useState(false);
+  const [symbolsVisible, setSymbolsVisible] = useState(false);
 
-  // Two-tier rendering: expand when card enters viewport
+  // Two-tier rendering: show symbols when card enters viewport
   useEffect(() => {
     if (!showSymbols) {
-      setExpanded(true);
+      setSymbolsVisible(true);
       return;
     }
 
@@ -74,14 +93,14 @@ export default function EntityCard({
     if (!el) return;
 
     if (typeof IntersectionObserver === 'undefined') {
-      setExpanded(true);
+      setSymbolsVisible(true);
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setExpanded(true);
+          setSymbolsVisible(true);
           observer.disconnect();
         }
       },
@@ -91,18 +110,22 @@ export default function EntityCard({
     return () => observer.disconnect();
   }, [showSymbols]);
 
-  const visibleSymbols = expanded ? entity.elements.slice(0, MAX_SYMBOLS) : [];
+  const visibleSymbols = symbolsVisible ? entity.elements.slice(0, MAX_SYMBOLS) : [];
   const overflow = entity.elements.length - MAX_SYMBOLS;
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    // If clicking a link inside the expanded area, let it propagate
+    if ((e.target as HTMLElement).closest('a, button[data-ref]')) return;
+
     if (entity.type === 'element' && entity.href && onNavigate) {
       onNavigate(entity.href);
-    } else if (showSymbols && onDrill) {
-      onDrill(entity);
+    } else if (onExpand && entity.type !== 'element') {
+      // Toggle expansion for non-element cards
+      onExpand(isExpanded ? null : entity.id);
     } else if (entity.href && onNavigate) {
       onNavigate(entity.href);
     }
-  }, [entity, showSymbols, onDrill, onNavigate]);
+  }, [entity, isExpanded, onExpand, onNavigate]);
 
   const handleMouseEnter = useCallback(() => {
     onHover?.(entity.id);
@@ -122,16 +145,16 @@ export default function EntityCard({
         cursor: 'pointer',
         background: PAPER,
         border: `0.5px solid ${BLACK}`,
-        // Enter animation runs independently; dimming is applied via filter
-        // so the two don't conflict (animation controls opacity 0→1,
-        // filter controls brightness without touching opacity).
+        borderWidth: isExpanded ? '1.5px' : '0.5px',
+        borderColor: isExpanded ? entity.colour : BLACK,
         opacity: 0,
         animation: `card-enter 250ms var(--ease-out) ${index * 15}ms forwards`,
         filter: dimmed ? 'opacity(0.15)' : 'none',
-        transition: 'filter 150ms var(--ease-snap)',
-        // content-visibility: auto skips rendering for off-screen cards
+        transition: 'filter 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
         contentVisibility: 'auto',
         containIntrinsicSize: `auto ${showSymbols ? ESTIMATED_CARD_HEIGHT_WITH_SYMBOLS : ESTIMATED_CARD_HEIGHT_WITHOUT_SYMBOLS}px`,
+        // Expanded card spans full row in the grid
+        ...(isExpanded ? { gridColumn: '1 / -1' } : {}),
       }}
     >
       {/* Header band */}
@@ -170,29 +193,31 @@ export default function EntityCard({
 
       {/* Body */}
       <div style={{ padding: '8px 10px' }}>
-        {/* Description — CSS line clamp */}
+        {/* Description — full text when expanded, clamped otherwise */}
         <div
           style={{
             fontSize: '12px',
             lineHeight: '16px',
             color: BLACK,
             fontFamily: PRETEXT_SANS,
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-            marginBottom: showSymbols ? '8px' : '4px',
+            ...(isExpanded
+              ? {}
+              : {
+                  display: '-webkit-box',
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: 'vertical' as const,
+                  overflow: 'hidden',
+                }),
+            marginBottom: showSymbols || isExpanded ? '8px' : '4px',
           }}
         >
           {entity.description}
         </div>
 
-        {/* Child element symbols — fixed-height container prevents layout shift.
-            Both tiers render into the same height so the card never changes size
-            when the IntersectionObserver fires. */}
+        {/* Child element symbols — fixed-height container prevents layout shift */}
         {showSymbols && (
           <div style={{ height: `${SYMBOL_SIZE}px`, display: 'flex', alignItems: 'center', gap: `${SYMBOL_GAP}px`, flexWrap: 'nowrap', overflow: 'hidden' }}>
-            {expanded ? (
+            {symbolsVisible ? (
               <>
                 {visibleSymbols.map((sym) => {
                   const block = (symbolBlocks as Record<string, string>)[sym];
@@ -228,24 +253,138 @@ export default function EntityCard({
           </div>
         )}
 
-        {/* Footer */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: '6px',
-          }}
-        >
-          <span style={{ fontSize: '10px', color: GREY_MID, fontFamily: MONO_FONT }}>
-            {entity.elements.length > 0
-              ? `${entity.elements.length} element${entity.elements.length === 1 ? '' : 's'}`
-              : ''}
-          </span>
-          {(showSymbols || entity.href) && (
-            <span style={{ fontSize: '12px', color: entity.colour }}>▸</span>
-          )}
-        </div>
+        {/* Expanded: cross-reference Byrne chips */}
+        {isExpanded && crossRefs && crossRefs.length > 0 && (
+          <div style={{ marginTop: '10px', borderTop: `1px solid ${GREY_RULE}`, paddingTop: '8px' }}>
+            <div
+              style={{
+                fontSize: '8px',
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: GREY_MID,
+                marginBottom: '6px',
+              }}
+            >
+              Related
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+              {crossRefs.map((ref) => (
+                <button
+                  key={ref.id}
+                  data-ref={ref.id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (ref.href && onNavigate) onNavigate(ref.href);
+                  }}
+                  style={{
+                    fontFamily: 'system-ui, sans-serif',
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    letterSpacing: '0.04em',
+                    color: ref.colour,
+                    background: 'transparent',
+                    border: `1px solid ${ref.colour}`,
+                    borderRadius: 0,
+                    padding: '3px 7px',
+                    cursor: ref.href ? 'pointer' : 'default',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <span
+                    style={{
+                      width: '4px',
+                      height: '4px',
+                      background: ref.colour,
+                      display: 'inline-block',
+                      flexShrink: 0,
+                    }}
+                  />
+                  {ref.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Expanded: drill + navigate actions */}
+        {isExpanded && (
+          <div style={{ marginTop: '8px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+            {showSymbols && onDrill && (
+              <button
+                data-ref="drill"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDrill(entity);
+                }}
+                style={{
+                  fontFamily: 'system-ui, sans-serif',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  color: entity.colour,
+                  background: 'transparent',
+                  border: `1px solid ${entity.colour}`,
+                  borderRadius: 0,
+                  padding: '4px 10px',
+                  cursor: 'pointer',
+                }}
+              >
+                Show elements ▸
+              </button>
+            )}
+            {entity.href && onNavigate && (
+              <button
+                data-ref="navigate"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigate(entity.href!);
+                }}
+                style={{
+                  fontFamily: 'system-ui, sans-serif',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em',
+                  color: entity.colour,
+                  background: 'transparent',
+                  border: 'none',
+                  borderRadius: 0,
+                  padding: '4px 0',
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  textUnderlineOffset: '2px',
+                }}
+              >
+                Read more →
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Footer (collapsed state only) */}
+        {!isExpanded && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: '6px',
+            }}
+          >
+            <span style={{ fontSize: '10px', color: GREY_MID, fontFamily: MONO_FONT }}>
+              {entity.elements.length > 0
+                ? `${entity.elements.length} element${entity.elements.length === 1 ? '' : 's'}`
+                : ''}
+            </span>
+            {(showSymbols || entity.href) && (
+              <span style={{ fontSize: '12px', color: entity.colour }}>▸</span>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

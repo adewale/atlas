@@ -15,7 +15,7 @@
  *  - Viewport-relative stagger, content-visibility, two-tier card rendering
  */
 import { useState, useMemo, useCallback } from 'react';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useSearchParams } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -42,6 +42,7 @@ import PageShell from '../components/PageShell';
 import ByrneChips from '../components/ByrneChips';
 import type { ChipOption } from '../components/ByrneChips';
 import EntityCard from '../components/EntityCard';
+import type { CrossRef } from '../components/EntityCard';
 
 /**
  * Maximum cards to stagger in one batch. Cards beyond this threshold
@@ -56,17 +57,55 @@ const MAX_STAGGER_BATCH = 24;
 export default function Explore() {
   useDocumentTitle('Explore');
 
-  const loaderData = useLoaderData() as { entityIndex: Entity[] };
+  type RefEntry = { id: string; rel: string };
+  type RefLookup = Record<string, { out: RefEntry[]; in: RefEntry[] }>;
+
+  const loaderData = useLoaderData() as { entityIndex: Entity[]; refLookup: RefLookup };
   const allEntities: Entity[] = loaderData.entityIndex;
+  const refLookup: RefLookup = loaderData.refLookup;
 
   const transitionNavigate = useViewTransitionNavigate();
   const isMobile = useIsMobile();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [query, setQuery] = useState('');
-  const [activeTypes, setActiveTypes] = useState<Set<EntityType>>(new Set());
-  const [breadcrumbs, setBreadcrumbs] = useState<Entity[]>([]);
+  // URL-driven state: ?q=...&type=element,group&drill=category-nonmetal
+  const query = searchParams.get('q') ?? '';
+  const activeTypes = useMemo<Set<EntityType>>(() => {
+    const raw = searchParams.get('type');
+    if (!raw) return new Set();
+    return new Set(raw.split(',').filter((t): t is EntityType => ENTITY_TYPES.includes(t as EntityType)));
+  }, [searchParams]);
+
+  // Drill chain: resolve entity ids from the URL param
+  const breadcrumbs = useMemo<Entity[]>(() => {
+    const raw = searchParams.get('drill');
+    if (!raw) return [];
+    const ids = raw.split(',');
+    return ids.map((id) => allEntities.find((e) => e.id === id)).filter(Boolean) as Entity[];
+  }, [searchParams, allEntities]);
+
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const currentDrill = breadcrumbs.length > 0 ? breadcrumbs[breadcrumbs.length - 1] : null;
+
+  // Resolve cross-refs for the expanded card (non-element refs only, capped for display)
+  const expandedRefs = useMemo<CrossRef[]>(() => {
+    if (!expandedId) return [];
+    const entry = refLookup[expandedId];
+    if (!entry) return [];
+    const refs: CrossRef[] = [];
+    const seen = new Set<string>();
+    for (const { id, rel } of [...entry.out, ...entry.in]) {
+      if (seen.has(id)) continue;
+      seen.add(id);
+      const target = allEntities.find((e) => e.id === id);
+      if (!target) continue;
+      // Skip element refs (they're already shown as mini-symbols)
+      if (target.type === 'element') continue;
+      refs.push({ id: target.id, name: target.name, type: target.type, colour: target.colour, href: target.href, rel });
+    }
+    return refs.slice(0, 12);
+  }, [expandedId, refLookup, allEntities]);
 
   // Stagger generation: increments on each filter/search change so
   // the CSS animation replays with fresh delays
@@ -116,25 +155,40 @@ export default function Explore() {
     return new Set(hovered.elements);
   }, [hoveredId, allEntities]);
 
-  const handleToggleType = useCallback((type: EntityType) => {
-    setActiveTypes((prev) => {
-      const next = new Set(prev);
-      if (next.has(type)) next.delete(type); else next.add(type);
+  /** Helper: update search params (always replaces history). */
+  const updateParams = useCallback((updater: (p: URLSearchParams) => void) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      updater(next);
       return next;
-    });
-    setBreadcrumbs([]);
+    }, { replace: true });
     bumpStagger();
-  }, [bumpStagger]);
+  }, [setSearchParams, bumpStagger]);
+
+  const handleToggleType = useCallback((type: EntityType) => {
+    updateParams((p) => {
+      const next = new Set(activeTypes);
+      if (next.has(type)) next.delete(type); else next.add(type);
+      if (next.size === 0) p.delete('type');
+      else p.set('type', [...next].join(','));
+      p.delete('drill');
+    });
+  }, [activeTypes, updateParams]);
 
   const handleDrill = useCallback((entity: Entity) => {
-    setBreadcrumbs((prev) => [...prev, entity]);
-    bumpStagger();
-  }, [bumpStagger]);
+    updateParams((p) => {
+      const ids = breadcrumbs.map((b) => b.id);
+      ids.push(entity.id);
+      p.set('drill', ids.join(','));
+    });
+  }, [breadcrumbs, updateParams]);
 
   const handleBreadcrumbClick = useCallback((index: number) => {
-    setBreadcrumbs(index < 0 ? [] : (prev) => prev.slice(0, index + 1));
-    bumpStagger();
-  }, [bumpStagger]);
+    updateParams((p) => {
+      if (index < 0) p.delete('drill');
+      else p.set('drill', breadcrumbs.slice(0, index + 1).map((b) => b.id).join(','));
+    });
+  }, [breadcrumbs, updateParams]);
 
   const handleNavigate = useCallback(
     (href: string) => transitionNavigate(href),
@@ -142,20 +196,27 @@ export default function Explore() {
   );
 
   const handleQueryChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-    setBreadcrumbs([]);
-    bumpStagger();
-  }, [bumpStagger]);
+    updateParams((p) => {
+      if (e.target.value) p.set('q', e.target.value);
+      else p.delete('q');
+      p.delete('drill');
+    });
+  }, [updateParams]);
 
   const handleClearAll = useCallback(() => {
-    setQuery('');
-    setActiveTypes(new Set());
-    setBreadcrumbs([]);
-    bumpStagger();
-  }, [bumpStagger]);
+    updateParams((p) => {
+      p.delete('q');
+      p.delete('type');
+      p.delete('drill');
+    });
+  }, [updateParams]);
 
   const handleHover = useCallback((id: string | null) => {
     setHoveredId(id);
+  }, []);
+
+  const handleExpand = useCallback((id: string | null) => {
+    setExpandedId((prev) => prev === id ? null : id);
   }, []);
 
   const hasActiveFilters = activeTypes.size > 0 || query.trim().length > 0 || breadcrumbs.length > 0;
@@ -293,15 +354,20 @@ export default function Explore() {
             && entity.id !== hoveredId
             && !entity.elements.some((sym) => highlightSymbols.has(sym));
 
+          const isExpanded = entity.id === expandedId;
+
           return (
             <EntityCard
               key={entity.id}
               entity={entity}
               index={Math.min(i, MAX_STAGGER_BATCH)}
               dimmed={isDimmed}
+              expanded={isExpanded}
+              crossRefs={isExpanded ? expandedRefs : undefined}
               onDrill={handleDrill}
               onNavigate={handleNavigate}
               onHover={handleHover}
+              onExpand={handleExpand}
             />
           );
         })}

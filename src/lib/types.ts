@@ -107,6 +107,27 @@ export type FolioBundle = {
   sameEtymology: { symbol: string; name: string; block: string }[];
 };
 
+/* ------------------------------------------------------------------ */
+/* Enrichment types (entity-enrichment-spec.md)                       */
+/* ------------------------------------------------------------------ */
+
+/** A single enrichment section returned from the API. */
+export type EnrichedSection = {
+  entityId: string;
+  sectionSlug: string;
+  sectionTitle: string;
+  bodyText: string;
+  sourceUrl: string | null;
+  license: string | null;
+};
+
+/** A directional cross-reference between two entities. */
+export type EntityRef = {
+  sourceId: string;
+  targetId: string;
+  relType: string;
+};
+
 export type CreditsData = {
   structured: { provider: string; license: string; url: string };
   identifiers: { provider: string; license: string; url: string };

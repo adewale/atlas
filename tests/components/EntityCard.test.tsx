@@ -1,6 +1,7 @@
-import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import EntityCard from '../../src/components/EntityCard';
+import type { CrossRef } from '../../src/components/EntityCard';
 import type { Entity } from '../../src/lib/entities';
 
 afterEach(cleanup);
@@ -35,6 +36,11 @@ const EMPTY_ENTITY: Entity = {
   href: '/eras/1900',
 };
 
+const SAMPLE_REFS: CrossRef[] = [
+  { id: 'category-transition metal', name: 'Transition metals', type: 'category', colour: '#133e7c', href: '/categories/transition metal', rel: 'member_of' },
+  { id: 'block-d', name: 'd-block', type: 'block', colour: '#856912', href: '/blocks/d', rel: 'belongs_to' },
+];
+
 describe('EntityCard', () => {
   it('renders entity name and type label', () => {
     render(<EntityCard entity={ELEMENT_ENTITY} index={0} />);
@@ -47,7 +53,7 @@ describe('EntityCard', () => {
     expect(screen.getByText(/lustrous, ductile/)).toBeInTheDocument();
   });
 
-  it('shows element count in footer', () => {
+  it('shows element count in footer when collapsed', () => {
     render(<EntityCard entity={GROUP_ENTITY} index={0} />);
     expect(screen.getByText('7 elements')).toBeInTheDocument();
   });
@@ -64,14 +70,23 @@ describe('EntityCard', () => {
     expect(onNavigate).toHaveBeenCalledWith('/elements/Fe');
   });
 
-  it('calls onDrill for group entities with children', () => {
-    const onDrill = vi.fn();
-    render(<EntityCard entity={GROUP_ENTITY} index={0} onDrill={onDrill} />);
+  it('calls onExpand for non-element entities on click', () => {
+    const onExpand = vi.fn();
+    render(<EntityCard entity={GROUP_ENTITY} index={0} onExpand={onExpand} />);
     fireEvent.click(screen.getByText('Group 1'));
-    expect(onDrill).toHaveBeenCalledWith(GROUP_ENTITY);
+    expect(onExpand).toHaveBeenCalledWith('group-1');
   });
 
-  it('calls onNavigate for entities without children', () => {
+  it('calls onExpand(null) when clicking an already expanded card', () => {
+    const onExpand = vi.fn();
+    render(<EntityCard entity={GROUP_ENTITY} index={0} expanded onExpand={onExpand} />);
+    // Click the card body (not a button inside it)
+    const card = screen.getByText('Group 1').closest('div')!.parentElement!;
+    fireEvent.click(card);
+    expect(onExpand).toHaveBeenCalledWith(null);
+  });
+
+  it('calls onNavigate for entities without children when no onExpand', () => {
     const onNavigate = vi.fn();
     render(<EntityCard entity={EMPTY_ENTITY} index={0} onNavigate={onNavigate} />);
     fireEvent.click(screen.getByText('1900s'));
@@ -90,7 +105,7 @@ describe('EntityCard', () => {
     expect(card.style.contentVisibility).toBe('auto');
   });
 
-  it('shows drill affordance for drillable entities', () => {
+  it('shows drill affordance when collapsed', () => {
     render(<EntityCard entity={GROUP_ENTITY} index={0} />);
     expect(screen.getByText('▸')).toBeInTheDocument();
   });
@@ -98,7 +113,6 @@ describe('EntityCard', () => {
   it('dims card when dimmed prop is true', () => {
     const { container } = render(<EntityCard entity={ELEMENT_ENTITY} index={0} dimmed />);
     const card = container.firstChild as HTMLElement;
-    // Dimming uses CSS filter (not opacity) to avoid conflicting with the card-enter animation
     expect(card.style.filter).toBe('opacity(0.15)');
   });
 
@@ -114,5 +128,85 @@ describe('EntityCard', () => {
     const { container } = render(<EntityCard entity={ELEMENT_ENTITY} index={0} onHover={onHover} />);
     fireEvent.mouseLeave(container.firstChild as HTMLElement);
     expect(onHover).toHaveBeenCalledWith(null);
+  });
+
+  // --- Progressive disclosure / expansion tests ---
+
+  it('shows cross-ref chips when expanded with crossRefs', () => {
+    render(
+      <EntityCard entity={GROUP_ENTITY} index={0} expanded crossRefs={SAMPLE_REFS} />,
+    );
+    expect(screen.getByText('Related')).toBeInTheDocument();
+    expect(screen.getByText('Transition metals')).toBeInTheDocument();
+    expect(screen.getByText('d-block')).toBeInTheDocument();
+  });
+
+  it('shows "Read more" and "Show elements" actions when expanded', () => {
+    const onDrill = vi.fn();
+    const onNavigate = vi.fn();
+    render(
+      <EntityCard
+        entity={GROUP_ENTITY}
+        index={0}
+        expanded
+        crossRefs={SAMPLE_REFS}
+        onDrill={onDrill}
+        onNavigate={onNavigate}
+      />,
+    );
+    expect(screen.getByText(/Show elements/)).toBeInTheDocument();
+    expect(screen.getByText(/Read more/)).toBeInTheDocument();
+  });
+
+  it('Show elements button calls onDrill', () => {
+    const onDrill = vi.fn();
+    render(
+      <EntityCard entity={GROUP_ENTITY} index={0} expanded onDrill={onDrill} />,
+    );
+    fireEvent.click(screen.getByText(/Show elements/));
+    expect(onDrill).toHaveBeenCalledWith(GROUP_ENTITY);
+  });
+
+  it('Read more button calls onNavigate', () => {
+    const onNavigate = vi.fn();
+    render(
+      <EntityCard entity={GROUP_ENTITY} index={0} expanded onNavigate={onNavigate} />,
+    );
+    fireEvent.click(screen.getByText(/Read more/));
+    expect(onNavigate).toHaveBeenCalledWith('/groups/1');
+  });
+
+  it('cross-ref chip navigates to target href', () => {
+    const onNavigate = vi.fn();
+    render(
+      <EntityCard entity={GROUP_ENTITY} index={0} expanded crossRefs={SAMPLE_REFS} onNavigate={onNavigate} />,
+    );
+    fireEvent.click(screen.getByText('Transition metals'));
+    expect(onNavigate).toHaveBeenCalledWith('/categories/transition metal');
+  });
+
+  it('expanded card has entity colour border', () => {
+    const { container } = render(
+      <EntityCard entity={GROUP_ENTITY} index={0} expanded />,
+    );
+    const card = container.firstChild as HTMLElement;
+    // jsdom converts hex to rgb
+    expect(card.style.borderColor).toBe('rgb(19, 62, 124)');
+  });
+
+  it('expanded card spans full grid width', () => {
+    const { container } = render(
+      <EntityCard entity={GROUP_ENTITY} index={0} expanded />,
+    );
+    const card = container.firstChild as HTMLElement;
+    expect(card.style.gridColumn).toBe('1 / -1');
+  });
+
+  it('hides footer when expanded', () => {
+    render(<EntityCard entity={GROUP_ENTITY} index={0} expanded />);
+    // The ▸ affordance from the footer should not appear
+    // (only the "Show elements ▸" button which has different text)
+    const arrows = screen.queryAllByText('▸');
+    expect(arrows).toHaveLength(0);
   });
 });
