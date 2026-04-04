@@ -64,7 +64,8 @@ export type SearchResponse = {
 /* ------------------------------------------------------------------ */
 
 const RRF_K = 60;
-const MAX_RESULTS = 10;
+const DEFAULT_LIMIT = 10;
+const MAX_LIMIT = 100;
 
 type ScoredId = { id: string; score: number };
 
@@ -162,6 +163,19 @@ function computeFacetCounts(
 }
 
 /* ------------------------------------------------------------------ */
+/* FTS5 sanitization                                                  */
+/* ------------------------------------------------------------------ */
+
+/** Strip FTS5 special operators and syntax from a search term. */
+function sanitizeFts5Term(term: string): string {
+  // Remove FTS5 operators: AND, OR, NOT, NEAR, quotes, parens, asterisks, carets
+  return term
+    .replace(/[*"()^{}[\]]/g, '')
+    .replace(/\b(AND|OR|NOT|NEAR)\b/gi, '')
+    .trim();
+}
+
+/* ------------------------------------------------------------------ */
 /* Main handler                                                       */
 /* ------------------------------------------------------------------ */
 
@@ -178,23 +192,47 @@ export async function handleSearch(
     if (raw) facetFilters[key] = raw.split(',').filter(Boolean);
   }
 
+  // Parse pagination
+  const limit = Math.min(Math.max(1, parseInt(params.get('limit') ?? '', 10) || DEFAULT_LIMIT), MAX_LIMIT);
+  const offset = Math.max(0, parseInt(params.get('offset') ?? '', 10) || 0);
+
   // If no query and no facets, return all entities
   const hasQuery = query.length > 0;
 
-  // Step 1: Synonym expansion
-  let expandedQuery = query;
+  // Step 1: Per-term synonym expansion + FTS5 sanitization
+  let expandedQuery = '';
   if (hasQuery) {
-    try {
-      const synResult = await env.DB.prepare(
-        'SELECT synonym FROM synonyms WHERE term = ?',
-      ).bind(query.toLowerCase()).all();
-      const synonyms = synResult.results.map((r: any) => r.synonym);
-      if (synonyms.length > 0) {
-        expandedQuery = [query, ...synonyms].map((t) => `"${t}"`).join(' OR ');
+    const terms = query.split(/\s+/).filter(Boolean);
+    const expandedTerms: string[][] = [];
+
+    for (const term of terms) {
+      const sanitized = sanitizeFts5Term(term);
+      if (!sanitized) continue;
+
+      const termExpansions = [sanitized];
+      try {
+        const synResult = await env.DB.prepare(
+          'SELECT synonym FROM synonyms WHERE term = ?',
+        ).bind(sanitized.toLowerCase()).all();
+        for (const row of synResult.results) {
+          const syn = sanitizeFts5Term((row as any).synonym);
+          if (syn) termExpansions.push(syn);
+        }
+      } catch {
+        // Synonym lookup failure is non-fatal
       }
-    } catch {
-      // Synonym lookup failure is non-fatal
+
+      expandedTerms.push(termExpansions);
     }
+
+    // Build FTS5 query: each term group OR'd internally, AND'd across terms
+    // e.g. "wolfram alloy" → ("wolfram" OR "tungsten") AND "alloy"
+    expandedQuery = expandedTerms
+      .map((group) => {
+        if (group.length === 1) return `"${group[0]}"`;
+        return '(' + group.map((t) => `"${t}"`).join(' OR ') + ')';
+      })
+      .join(' AND ');
   }
 
   // Step 2: Fan out BM25 + Vectorize in parallel
@@ -294,8 +332,8 @@ export async function handleSearch(
   // Step 5: Compute self-exclusion facet counts (over the pre-filter set)
   const facets = computeFacetCounts(allRankedEntities, facetFilters);
 
-  // Step 6: Build response — top 10
-  const top = filteredEntities.slice(0, MAX_RESULTS);
+  // Step 6: Build response — paginated
+  const top = filteredEntities.slice(offset, offset + limit);
   const results: SearchResult[] = top.map((e) => ({
     id: e.id,
     type: e.entity_type,

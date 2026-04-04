@@ -53,20 +53,33 @@ CREATE TABLE synonyms (
   PRIMARY KEY (term, synonym)
 );
 
+-- Bidirectional: every Latin/German name maps to English AND vice versa.
 INSERT INTO synonyms (term, synonym) VALUES
   ('wolfram', 'tungsten'),
+  ('tungsten', 'wolfram'),
   ('ferrum', 'iron'),
+  ('iron', 'ferrum'),
   ('quicksilver', 'mercury'),
+  ('mercury', 'quicksilver'),
   ('natrium', 'sodium'),
+  ('sodium', 'natrium'),
   ('kalium', 'potassium'),
+  ('potassium', 'kalium'),
   ('plumbum', 'lead'),
+  ('lead', 'plumbum'),
   ('stannum', 'tin'),
+  ('tin', 'stannum'),
   ('aurum', 'gold'),
+  ('gold', 'aurum'),
   ('argentum', 'silver'),
+  ('silver', 'argentum'),
   ('cuprum', 'copper'),
+  ('copper', 'cuprum'),
   ('hydrargyrum', 'mercury'),
   ('noble gas', 'inert gas'),
-  ('inert gas', 'noble gas');
+  ('inert gas', 'noble gas'),
+  ('stibium', 'antimony'),
+  ('antimony', 'stibium');
 
 -- Cross-references between entities (enrichment spec Phase 2).
 CREATE TABLE entity_refs (

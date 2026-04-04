@@ -13,6 +13,7 @@
  */
 import { describe, it, expect, beforeAll } from 'vitest';
 import { handleSearch, type SearchEnv } from '../worker/src/handler';
+import worker from '../worker/src/index';
 
 /* ------------------------------------------------------------------ */
 /* Stubbed bindings — mimic Cloudflare D1 + Vectorize + Workers AI    */
@@ -163,10 +164,15 @@ const ROWS = [
 
 const SYNONYMS = [
   { term: 'wolfram', synonym: 'tungsten' },
+  { term: 'tungsten', synonym: 'wolfram' },
   { term: 'ferrum', synonym: 'iron' },
+  { term: 'iron', synonym: 'ferrum' },
   { term: 'quicksilver', synonym: 'mercury' },
+  { term: 'mercury', synonym: 'quicksilver' },
   { term: 'natrium', synonym: 'sodium' },
+  { term: 'sodium', synonym: 'natrium' },
   { term: 'plumbum', synonym: 'lead' },
+  { term: 'lead', synonym: 'plumbum' },
 ];
 
 const VECTORS = [
@@ -322,6 +328,121 @@ describe('Search Worker — faceted filtering', () => {
   it('empty query with no facets returns all entities', async () => {
     const res = await handleSearch(new URLSearchParams('q='), createEnv());
     expect(res.total).toBe(ROWS.length);
+  });
+});
+
+describe('Search Worker — bidirectional synonyms', () => {
+  it('tungsten finds results mentioning wolfram via reverse synonym', async () => {
+    // tungsten→wolfram reverse mapping should expand the BM25 query
+    const res = await handleSearch(new URLSearchParams('q=tungsten'), createEnv());
+    expect(res.results.some((r) => r.id === 'element-W')).toBe(true);
+  });
+
+  it('iron finds results via reverse synonym ferrum', async () => {
+    const res = await handleSearch(new URLSearchParams('q=iron'), createEnv());
+    expect(res.results.some((r) => r.id === 'element-Fe')).toBe(true);
+  });
+});
+
+describe('Search Worker — per-term synonym expansion', () => {
+  it('"wolfram alloy" expands wolfram to tungsten while keeping alloy', async () => {
+    // Should split "wolfram alloy" into terms, expand "wolfram" to "tungsten"
+    const res = await handleSearch(new URLSearchParams('q=wolfram+alloy'), createEnv());
+    expect(res.results.some((r) => r.id === 'element-W')).toBe(true);
+  });
+
+  it('"iron gas" expands each term independently', async () => {
+    // "iron" → also "ferrum"; "gas" stays. Both legs contribute.
+    const res = await handleSearch(new URLSearchParams('q=iron+gas'), createEnv());
+    const ids = res.results.map((r) => r.id);
+    // iron → Fe, gas → H
+    expect(ids).toContain('element-Fe');
+    expect(ids).toContain('element-H');
+  });
+});
+
+describe('Search Worker — FTS5 query sanitization', () => {
+  it('FTS5 operators in query do not cause errors', async () => {
+    // These contain FTS5 special syntax that should be stripped/escaped
+    const dangerous = ['iron AND NOT metal', 'iron OR tungsten', '"unclosed quote', 'NEAR(iron, 5)', 'iron*', 'iron('];
+    for (const q of dangerous) {
+      // Must not throw
+      const res = await handleSearch(new URLSearchParams(`q=${encodeURIComponent(q)}`), createEnv());
+      expect(Array.isArray(res.results)).toBe(true);
+    }
+  });
+
+  it('query with only special characters returns empty gracefully', async () => {
+    const res = await handleSearch(new URLSearchParams('q=***'), createEnv());
+    expect(Array.isArray(res.results)).toBe(true);
+  });
+});
+
+describe('Search Worker — multi-word query consistency', () => {
+  it('"transition metal" matches without synonym expansion', async () => {
+    const res = await handleSearch(new URLSearchParams('q=transition+metal'), createEnv());
+    expect(res.results.some((r) => r.id === 'category-transition metal')).toBe(true);
+  });
+
+  it('multi-word query without synonyms uses all terms for BM25', async () => {
+    // "alkaline earth" should match Radium's search_text
+    const res = await handleSearch(new URLSearchParams('q=alkaline+earth'), createEnv());
+    expect(res.results.some((r) => r.id === 'element-Ra')).toBe(true);
+  });
+});
+
+describe('Search Worker — pagination', () => {
+  it('respects offset parameter', async () => {
+    const page1 = await handleSearch(new URLSearchParams('q='), createEnv());
+    const page2 = await handleSearch(new URLSearchParams('q=&offset=5'), createEnv());
+    // Page 2 should not contain the first 5 results from page 1
+    const page1First5 = new Set(page1.results.slice(0, 5).map((r) => r.id));
+    expect(page2.results.every((r) => !page1First5.has(r.id))).toBe(true);
+  });
+
+  it('respects limit parameter', async () => {
+    const res = await handleSearch(new URLSearchParams('q=&limit=3'), createEnv());
+    expect(res.results.length).toBeLessThanOrEqual(3);
+  });
+
+  it('total reflects full result count, not page size', async () => {
+    const res = await handleSearch(new URLSearchParams('q=&limit=3'), createEnv());
+    expect(res.total).toBe(ROWS.length);
+  });
+});
+
+describe('Search Worker — HTTP layer (index.ts)', () => {
+  it('GET /api/search returns JSON with correct headers', async () => {
+    const env = createEnv();
+    const req = new Request('http://localhost/api/search?q=iron');
+    const res = await worker.fetch(req, env);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('Content-Type')).toBe('application/json');
+    expect(res.headers.get('Access-Control-Allow-Origin')).toBe('*');
+    const body = await res.json();
+    expect(body.results).toBeDefined();
+  });
+
+  it('OPTIONS returns CORS preflight headers', async () => {
+    const env = createEnv();
+    const req = new Request('http://localhost/api/search', { method: 'OPTIONS' });
+    const res = await worker.fetch(req, env);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('Access-Control-Allow-Methods')).toContain('GET');
+  });
+
+  it('POST /api/search returns 404', async () => {
+    const env = createEnv();
+    const req = new Request('http://localhost/api/search?q=iron', { method: 'POST' });
+    const res = await worker.fetch(req, env);
+    expect(res.status).toBe(404);
+  });
+
+  it('GET /unknown returns 404', async () => {
+    const env = createEnv();
+    const req = new Request('http://localhost/unknown');
+    const res = await worker.fetch(req, env);
+    expect(res.status).toBe(404);
   });
 });
 
