@@ -35,3 +35,50 @@ export function groupBy<T>(items: T[], key: (item: T) => string): Map<string, T[
   }
   return map;
 }
+
+type ReportOptions = {
+  /** Displayed on clean run. E.g. "No hardcoded hex colours found." */
+  cleanMessage: string;
+  /** Prefix for violation summary. E.g. "hex colour literal(s)" */
+  violationNoun: string;
+  /** Guidance line shown below the count. */
+  hint: string;
+  /** Format a single violation into lines for display. */
+  formatViolation: (v: any) => string[];
+  /** If true, always exit 1 on violations. Otherwise only with --strict. */
+  alwaysFail?: boolean;
+};
+
+/**
+ * Shared report-and-exit logic for all lint scripts.
+ * Handles the clean/warn/strict pattern so each linter only provides the scan.
+ */
+export function reportAndExit<T extends { file: string }>(violations: T[], opts: ReportOptions): never {
+  if (violations.length === 0) {
+    console.log(`\u2713 ${opts.cleanMessage}`);
+    process.exit(0);
+  }
+
+  const log = opts.alwaysFail ? console.error : console.warn;
+  const icon = opts.alwaysFail ? '\u2717' : '\u26A0';
+  log(`${icon} Found ${violations.length} ${opts.violationNoun}:`);
+  log(`  ${opts.hint}\n`);
+
+  const byFile = groupBy(violations, (v) => v.file);
+  for (const [file, vs] of byFile) {
+    log(`  ${file}:`);
+    for (const v of vs) {
+      for (const line of opts.formatViolation(v)) {
+        log(`    ${line}`);
+      }
+    }
+    log('');
+  }
+
+  if (opts.alwaysFail || process.argv.includes('--strict')) {
+    process.exit(1);
+  } else {
+    log('  Run with --strict to make this a hard failure.\n');
+    process.exit(0);
+  }
+}

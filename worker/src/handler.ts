@@ -42,22 +42,8 @@ type Ai = {
   run(model: string, input: { text: string[] }): Promise<{ data: number[][] }>;
 };
 
-export type SearchResult = {
-  id: string;
-  type: string;
-  name: string;
-  path: string;
-  snippet: string;
-  elements: string[];
-};
-
-export type FacetCounts = Record<string, Record<string, number>>;
-
-export type SearchResponse = {
-  results: SearchResult[];
-  total: number;
-  facets?: FacetCounts;
-};
+import type { SearchResult, FacetCounts, SearchResponse } from '../../shared/search-types';
+export type { SearchResult, FacetCounts, SearchResponse };
 
 /* ------------------------------------------------------------------ */
 /* RRF fusion                                                         */
@@ -92,8 +78,7 @@ function rrfFusion(lists: ScoredId[][]): ScoredId[] {
 /* Facet filtering + counting                                         */
 /* ------------------------------------------------------------------ */
 
-const FACET_KEYS = ['type', 'block', 'phase', 'era', 'etymologyOrigin'] as const;
-type FacetKey = (typeof FACET_KEYS)[number];
+import { FACET_KEYS, type FacetKey } from '../../shared/search-types';
 
 type EntityMeta = {
   id: string;

@@ -1,10 +1,9 @@
 import { useLoaderData } from 'react-router';
-import { Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, BACK_LINK_STYLE, INSCRIPTION_STYLE, DEEP_BLUE } from '../lib/theme';
-import { VT } from '../lib/transitions';
+import { BLACK, DEEP_BLUE } from '../lib/theme';
 import PageShell from '../components/PageShell';
+import PageHeader from '../components/PageHeader';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import type { GroupData } from '../lib/types';
@@ -30,9 +29,7 @@ export default function AtlasGroupIndex() {
 
   return (
     <PageShell>
-      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: DEEP_BLUE }}>All Groups</h1>
-      <div style={{ borderTop: `4px solid ${DEEP_BLUE}`, marginBottom: '16px' }} />
+      <PageHeader title="All Groups" color={DEEP_BLUE} />
       <SectionedCardList sections={sections} accordion defaultCollapsed />
     </PageShell>
   );

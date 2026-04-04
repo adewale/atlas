@@ -1,9 +1,8 @@
 import { useLoaderData } from 'react-router';
-import { Link } from 'react-router';
 import { blockColor } from '../lib/grid';
-import { BACK_LINK_STYLE, INSCRIPTION_STYLE, WARM_RED } from '../lib/theme';
-import { VT } from '../lib/transitions';
+import { WARM_RED } from '../lib/theme';
 import PageShell from '../components/PageShell';
+import PageHeader from '../components/PageHeader';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import type { ElementRecord } from '../lib/types';
@@ -35,9 +34,7 @@ export default function ElementIndex() {
 
   return (
     <PageShell>
-      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: WARM_RED }}>All Elements</h1>
-      <div style={{ borderTop: `4px solid ${WARM_RED}`, marginBottom: '16px' }} />
+      <PageHeader title="All Elements" color={WARM_RED} />
       <SectionedCardList sections={sections} accordion defaultCollapsed />
     </PageShell>
   );

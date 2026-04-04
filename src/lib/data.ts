@@ -18,6 +18,7 @@ export function getElement(symbol: string): ElementRecord | undefined {
   return bySymbol.get(symbol);
 }
 
+/** @test-only — used by tests only; runtime search uses searchLocal.ts */
 export function searchElements(query: string): ElementRecord[] {
   if (!query.trim()) return allElements;
   const q = query.toLowerCase().trim();

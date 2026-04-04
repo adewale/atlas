@@ -5,7 +5,7 @@
  * Inactive = outlined rectangle with colour text.
  * Matches the existing VizNav / AnomalyExplorer button pattern.
  */
-import { PAPER, BLACK } from '../lib/theme';
+import { PAPER, BLACK, GREY_MID } from '../lib/theme';
 import { contrastTextColor } from '../lib/gridColors';
 
 export type ChipOption<T extends string = string> = {
@@ -38,7 +38,7 @@ export default function ByrneChips<T extends string>({
             fontWeight: 'bold',
             textTransform: 'uppercase',
             letterSpacing: '0.15em',
-            color: '#666',
+            color: GREY_MID,
             marginBottom: '6px',
           }}
         >

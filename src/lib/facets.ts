@@ -18,9 +18,8 @@ export type FacetState = {
   etymologyOrigin?: string[];
 };
 
-/** Facet dimension keys (excludes q). */
-const FACET_KEYS = ['type', 'block', 'era', 'phase', 'etymologyOrigin'] as const;
-export type FacetKey = (typeof FACET_KEYS)[number];
+import { FACET_KEYS } from '../../shared/search-types';
+export type { FacetKey } from '../../shared/search-types';
 
 /**
  * Serialize facet state to URLSearchParams.

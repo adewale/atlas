@@ -11,7 +11,8 @@ import PretextSvg from './PretextSvg';
 import { GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
 
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug, categoryColor } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, categoryColor } from '../lib/theme';
+import { toUrlSlug } from '../lib/slugs';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
 import SvgLink from './SvgLink';
@@ -380,7 +381,7 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
               {/* Block row — block colour */}
               <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/blocks/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={nav?.prevInBlock ?? undefined} next={nav?.nextInBlock ?? undefined} />
               {/* Category row */}
-              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={nav?.prevInCategory ?? undefined} next={nav?.nextInCategory ?? undefined} />
+              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toUrlSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={nav?.prevInCategory ?? undefined} next={nav?.nextInCategory ?? undefined} />
             </div>
 
           </div>

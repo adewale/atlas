@@ -29,6 +29,7 @@ import { parseSearchParams, buildSearchParams, type FacetState, type FacetKey } 
 import type { SearchResponse } from '../lib/search';
 import {
   BLACK,
+  PAPER,
   GREY_MID,
   GREY_RULE,
   MUSTARD,
@@ -263,7 +264,7 @@ export default function Explore() {
                   fontWeight: 'bold',
                   textTransform: 'uppercase',
                   letterSpacing: '0.15em',
-                  color: '#666',
+                  color: GREY_MID,
                   marginBottom: '4px',
                 }}
               >
@@ -289,7 +290,7 @@ export default function Explore() {
                         fontWeight: 700,
                         letterSpacing: '0.04em',
                         textTransform: 'uppercase',
-                        color: isDisabled ? GREY_MID : isActive ? '#fff' : colour,
+                        color: isDisabled ? GREY_MID : isActive ? PAPER : colour,
                         background: isActive ? colour : 'transparent',
                         border: `1.5px solid ${isDisabled ? GREY_RULE : colour}`,
                         borderRadius: 0,
@@ -306,7 +307,7 @@ export default function Explore() {
                         style={{
                           width: '5px',
                           height: '5px',
-                          background: isDisabled ? GREY_MID : isActive ? '#fff' : colour,
+                          background: isDisabled ? GREY_MID : isActive ? PAPER : colour,
                           display: 'inline-block',
                           flexShrink: 0,
                           transition: 'background 150ms var(--ease-snap)',

@@ -139,12 +139,3 @@ export function categoryColor(category: string): string {
   return DEEP_BLUE;
 }
 
-/** Convert category name to URL slug. */
-export function toSlug(name: string): string {
-  return name.toLowerCase().replace(/\s+/g, '-');
-}
-
-/** Convert URL slug back to category label. */
-export function fromSlug(slug: string): string {
-  return slug.replace(/-/g, ' ');
-}

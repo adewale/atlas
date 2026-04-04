@@ -5,28 +5,7 @@
  * No client-side scoring — the Worker handles synonym expansion, BM25,
  * semantic similarity, and Reciprocal Rank Fusion.
  */
-
-/** A single result from the search API. */
-export type SearchResult = {
-  id: string;
-  type: string;
-  name: string;
-  path: string;
-  snippet: string;
-  elements: string[];
-  /** Section that matched (enrichment search). */
-  matchedSection?: string;
-};
-
-/** Facet counts returned alongside results (self-exclusion). */
-export type FacetCounts = Record<string, Record<string, number>>;
-
-/** Shape of the search API response. */
-export type SearchResponse = {
-  results: SearchResult[];
-  total: number;
-  facets?: FacetCounts;
-};
+export type { SearchResult, FacetCounts, SearchResponse } from '../../shared/search-types';
 
 /** Search request parameters — query + facet filters. */
 export type SearchRequest = {
@@ -46,15 +25,16 @@ type SearchOptions = {
 };
 
 /**
- * Call the Atlas hybrid search API.
+ * @future — Will replace localSearch when the Worker goes live.
  *
+ * Call the Atlas hybrid search API.
  * Encodes the query and all active facet filters as URL params,
  * sends a GET request, and returns parsed results with facet counts.
  */
 export async function atlasSearch(
   req: SearchRequest,
   opts: SearchOptions = {},
-): Promise<SearchResponse> {
+): Promise<import('../../shared/search-types').SearchResponse> {
   const fetchFn = opts.fetch ?? globalThis.fetch;
   const baseUrl = opts.baseUrl ?? '/api/search';
 
