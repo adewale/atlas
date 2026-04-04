@@ -15,6 +15,7 @@ type ElementMetrics = {
   identityWidthMobile: number;
   nameWidth14: number;
   nameWidth10: number;
+  chipWidth11: number;
   catWidth13: number;
 };
 

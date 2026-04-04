@@ -1,12 +1,13 @@
 {
-  "_generated": "2026-04-04T00:36:00.456Z",
-  "_jobCount": 913,
+  "_generated": "2026-04-04T01:13:43.200Z",
+  "_jobCount": 1031,
   "elements": {
     "H": {
       "identityWidth": 95,
       "identityWidthMobile": 110,
       "nameWidth14": 68,
       "nameWidth10": 70,
+      "chipWidth11": 80,
       "catWidth13": 63
     },
     "He": {
@@ -14,6 +15,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 49,
       "nameWidth10": 47,
+      "chipWidth11": 71,
       "catWidth13": 66
     },
     "Li": {
@@ -21,6 +23,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 52,
       "nameWidth10": 51,
+      "chipWidth11": 68,
       "catWidth13": 76
     },
     "Be": {
@@ -28,6 +31,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 66,
       "nameWidth10": 69,
+      "chipWidth11": 84,
       "catWidth13": 129
     },
     "B": {
@@ -35,6 +39,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 42,
       "nameWidth10": 45,
+      "chipWidth11": 57,
       "catWidth13": 60
     },
     "C": {
@@ -42,6 +47,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 51,
       "nameWidth10": 52,
+      "chipWidth11": 65,
       "catWidth13": 63
     },
     "N": {
@@ -49,6 +55,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 61,
       "nameWidth10": 64,
+      "chipWidth11": 74,
       "catWidth13": 63
     },
     "O": {
@@ -56,6 +63,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 53,
       "nameWidth10": 52,
+      "chipWidth11": 67,
       "catWidth13": 63
     },
     "F": {
@@ -63,6 +71,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 57,
       "nameWidth10": 60,
+      "chipWidth11": 68,
       "catWidth13": 54
     },
     "Ne": {
@@ -70,6 +79,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 37,
       "nameWidth10": 35,
+      "chipWidth11": 61,
       "catWidth13": 66
     },
     "Na": {
@@ -77,6 +87,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 53,
       "nameWidth10": 50,
+      "chipWidth11": 74,
       "catWidth13": 76
     },
     "Mg": {
@@ -84,6 +95,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 80,
       "nameWidth10": 76,
+      "chipWidth11": 98,
       "catWidth13": 129
     },
     "Al": {
@@ -91,6 +103,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 74,
       "nameWidth10": 71,
+      "chipWidth11": 87,
       "catWidth13": 139
     },
     "Si": {
@@ -98,6 +111,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 47,
       "nameWidth10": 50,
+      "chipWidth11": 65,
       "catWidth13": 60
     },
     "P": {
@@ -105,6 +119,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 83,
       "nameWidth10": 86,
+      "chipWidth11": 91,
       "catWidth13": 63
     },
     "S": {
@@ -112,6 +127,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 43,
       "nameWidth10": 48,
+      "chipWidth11": 58,
       "catWidth13": 63
     },
     "Cl": {
@@ -119,6 +135,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 59,
       "nameWidth10": 63,
+      "chipWidth11": 75,
       "catWidth13": 54
     },
     "Ar": {
@@ -126,6 +143,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 42,
       "nameWidth10": 45,
+      "chipWidth11": 63,
       "catWidth13": 66
     },
     "K": {
@@ -133,6 +151,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 73,
       "nameWidth10": 71,
+      "chipWidth11": 83,
       "catWidth13": 76
     },
     "Ca": {
@@ -140,6 +159,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 56,
       "nameWidth10": 56,
+      "chipWidth11": 76,
       "catWidth13": 129
     },
     "Sc": {
@@ -147,6 +167,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 69,
       "nameWidth10": 66,
+      "chipWidth11": 86,
       "catWidth13": 105
     },
     "Ti": {
@@ -154,6 +175,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 61,
       "nameWidth10": 59,
+      "chipWidth11": 76,
       "catWidth13": 105
     },
     "V": {
@@ -161,6 +183,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 69,
       "nameWidth10": 65,
+      "chipWidth11": 79,
       "catWidth13": 105
     },
     "Cr": {
@@ -168,6 +191,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 72,
       "nameWidth10": 70,
+      "chipWidth11": 87,
       "catWidth13": 105
     },
     "Mn": {
@@ -175,6 +199,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 80,
       "nameWidth10": 77,
+      "chipWidth11": 97,
       "catWidth13": 105
     },
     "Fe": {
@@ -182,6 +207,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 28,
       "nameWidth10": 30,
+      "chipWidth11": 52,
       "catWidth13": 105
     },
     "Co": {
@@ -189,6 +215,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 46,
       "nameWidth10": 48,
+      "chipWidth11": 68,
       "catWidth13": 105
     },
     "Ni": {
@@ -196,6 +223,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 43,
       "nameWidth10": 45,
+      "chipWidth11": 63,
       "catWidth13": 105
     },
     "Cu": {
@@ -203,6 +231,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 51,
       "nameWidth10": 50,
+      "chipWidth11": 73,
       "catWidth13": 105
     },
     "Zn": {
@@ -210,6 +239,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 30,
       "nameWidth10": 30,
+      "chipWidth11": 55,
       "catWidth13": 105
     },
     "Ga": {
@@ -217,6 +247,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 52,
       "nameWidth10": 56,
+      "chipWidth11": 73,
       "catWidth13": 139
     },
     "Ge": {
@@ -224,6 +255,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 80,
       "nameWidth10": 76,
+      "chipWidth11": 96,
       "catWidth13": 60
     },
     "As": {
@@ -231,6 +263,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 53,
       "nameWidth10": 53,
+      "chipWidth11": 73,
       "catWidth13": 60
     },
     "Se": {
@@ -238,6 +271,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 64,
       "nameWidth10": 63,
+      "chipWidth11": 82,
       "catWidth13": 63
     },
     "Br": {
@@ -245,6 +279,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 58,
       "nameWidth10": 57,
+      "chipWidth11": 75,
       "catWidth13": 54
     },
     "Kr": {
@@ -252,6 +287,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 56,
       "nameWidth10": 58,
+      "chipWidth11": 74,
       "catWidth13": 66
     },
     "Rb": {
@@ -259,6 +295,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 66,
       "nameWidth10": 62,
+      "chipWidth11": 84,
       "catWidth13": 76
     },
     "Sr": {
@@ -266,6 +303,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 69,
       "nameWidth10": 74,
+      "chipWidth11": 84,
       "catWidth13": 129
     },
     "Y": {
@@ -273,6 +311,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 53,
       "nameWidth10": 56,
+      "chipWidth11": 66,
       "catWidth13": 105
     },
     "Zr": {
@@ -280,6 +319,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 70,
       "nameWidth10": 70,
+      "chipWidth11": 85,
       "catWidth13": 105
     },
     "Nb": {
@@ -287,6 +327,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 58,
       "nameWidth10": 53,
+      "chipWidth11": 78,
       "catWidth13": 105
     },
     "Mo": {
@@ -294,6 +335,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 90,
       "nameWidth10": 88,
+      "chipWidth11": 106,
       "catWidth13": 105
     },
     "Tc": {
@@ -301,6 +343,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 81,
       "nameWidth10": 81,
+      "chipWidth11": 94,
       "catWidth13": 105
     },
     "Ru": {
@@ -308,6 +351,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 75,
       "nameWidth10": 74,
+      "chipWidth11": 91,
       "catWidth13": 105
     },
     "Rh": {
@@ -315,6 +359,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 62,
       "nameWidth10": 59,
+      "chipWidth11": 80,
       "catWidth13": 105
     },
     "Pd": {
@@ -322,6 +367,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 68,
       "nameWidth10": 70,
+      "chipWidth11": 86,
       "catWidth13": 105
     },
     "Ag": {
@@ -329,6 +375,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 40,
       "nameWidth10": 41,
+      "chipWidth11": 63,
       "catWidth13": 105
     },
     "Cd": {
@@ -336,6 +383,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 66,
       "nameWidth10": 60,
+      "chipWidth11": 85,
       "catWidth13": 105
     },
     "In": {
@@ -343,6 +391,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 48,
       "nameWidth10": 45,
+      "chipWidth11": 65,
       "catWidth13": 139
     },
     "Sn": {
@@ -350,6 +399,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 22,
       "nameWidth10": 21,
+      "chipWidth11": 48,
       "catWidth13": 139
     },
     "Sb": {
@@ -357,6 +407,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 67,
       "nameWidth10": 66,
+      "chipWidth11": 85,
       "catWidth13": 60
     },
     "Te": {
@@ -364,6 +415,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 64,
       "nameWidth10": 70,
+      "chipWidth11": 81,
       "catWidth13": 60
     },
     "I": {
@@ -371,6 +423,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 43,
       "nameWidth10": 42,
+      "chipWidth11": 54,
       "catWidth13": 54
     },
     "Xe": {
@@ -378,6 +431,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 44,
       "nameWidth10": 44,
+      "chipWidth11": 66,
       "catWidth13": 66
     },
     "Cs": {
@@ -385,6 +439,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 60,
       "nameWidth10": 56,
+      "chipWidth11": 79,
       "catWidth13": 76
     },
     "Ba": {
@@ -392,6 +447,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 50,
       "nameWidth10": 48,
+      "chipWidth11": 70,
       "catWidth13": 129
     },
     "La": {
@@ -399,6 +455,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 78,
       "nameWidth10": 78,
+      "chipWidth11": 92,
       "catWidth13": 73
     },
     "Ce": {
@@ -406,6 +463,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 50,
       "nameWidth10": 48,
+      "chipWidth11": 71,
       "catWidth13": 73
     },
     "Pr": {
@@ -413,6 +471,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 104,
       "nameWidth10": 100,
+      "chipWidth11": 112,
       "catWidth13": 73
     },
     "Nd": {
@@ -420,6 +479,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 83,
       "nameWidth10": 77,
+      "chipWidth11": 99,
       "catWidth13": 73
     },
     "Pm": {
@@ -427,6 +487,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 85,
       "nameWidth10": 84,
+      "chipWidth11": 102,
       "catWidth13": 73
     },
     "Sm": {
@@ -434,6 +495,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 70,
       "nameWidth10": 66,
+      "chipWidth11": 90,
       "catWidth13": 73
     },
     "Eu": {
@@ -441,6 +503,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 66,
       "nameWidth10": 65,
+      "chipWidth11": 83,
       "catWidth13": 73
     },
     "Gd": {
@@ -448,6 +511,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 78,
       "nameWidth10": 78,
+      "chipWidth11": 95,
       "catWidth13": 73
     },
     "Tb": {
@@ -455,6 +519,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 57,
       "nameWidth10": 56,
+      "chipWidth11": 76,
       "catWidth13": 73
     },
     "Dy": {
@@ -462,6 +527,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 83,
       "nameWidth10": 81,
+      "chipWidth11": 98,
       "catWidth13": 73
     },
     "Ho": {
@@ -469,6 +535,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 62,
       "nameWidth10": 60,
+      "chipWidth11": 82,
       "catWidth13": 73
     },
     "Er": {
@@ -476,6 +543,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 49,
       "nameWidth10": 47,
+      "chipWidth11": 68,
       "catWidth13": 73
     },
     "Tm": {
@@ -483,6 +551,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 56,
       "nameWidth10": 57,
+      "chipWidth11": 78,
       "catWidth13": 73
     },
     "Yb": {
@@ -490,6 +559,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 70,
       "nameWidth10": 71,
+      "chipWidth11": 87,
       "catWidth13": 73
     },
     "Lu": {
@@ -497,6 +567,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 62,
       "nameWidth10": 63,
+      "chipWidth11": 80,
       "catWidth13": 105
     },
     "Hf": {
@@ -504,6 +575,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 59,
       "nameWidth10": 57,
+      "chipWidth11": 77,
       "catWidth13": 105
     },
     "Ta": {
@@ -511,6 +583,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 64,
       "nameWidth10": 66,
+      "chipWidth11": 81,
       "catWidth13": 105
     },
     "W": {
@@ -518,6 +591,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 65,
       "nameWidth10": 68,
+      "chipWidth11": 80,
       "catWidth13": 105
     },
     "Re": {
@@ -525,6 +599,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 61,
       "nameWidth10": 57,
+      "chipWidth11": 79,
       "catWidth13": 105
     },
     "Os": {
@@ -532,6 +607,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 57,
       "nameWidth10": 52,
+      "chipWidth11": 77,
       "catWidth13": 105
     },
     "Ir": {
@@ -539,6 +615,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 49,
       "nameWidth10": 47,
+      "chipWidth11": 64,
       "catWidth13": 105
     },
     "Pt": {
@@ -546,6 +623,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 62,
       "nameWidth10": 63,
+      "chipWidth11": 78,
       "catWidth13": 105
     },
     "Au": {
@@ -553,6 +631,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 32,
       "nameWidth10": 35,
+      "chipWidth11": 57,
       "catWidth13": 105
     },
     "Hg": {
@@ -560,6 +639,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 58,
       "nameWidth10": 60,
+      "chipWidth11": 79,
       "catWidth13": 105
     },
     "Tl": {
@@ -567,6 +647,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 60,
       "nameWidth10": 63,
+      "chipWidth11": 75,
       "catWidth13": 139
     },
     "Pb": {
@@ -574,6 +655,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 34,
       "nameWidth10": 33,
+      "chipWidth11": 58,
       "catWidth13": 139
     },
     "Bi": {
@@ -581,6 +663,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 58,
       "nameWidth10": 57,
+      "chipWidth11": 73,
       "catWidth13": 139
     },
     "Po": {
@@ -588,6 +671,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 65,
       "nameWidth10": 66,
+      "chipWidth11": 82,
       "catWidth13": 60
     },
     "At": {
@@ -595,6 +679,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 58,
       "nameWidth10": 58,
+      "chipWidth11": 76,
       "catWidth13": 54
     },
     "Rn": {
@@ -602,6 +687,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 44,
       "nameWidth10": 45,
+      "chipWidth11": 66,
       "catWidth13": 66
     },
     "Fr": {
@@ -609,6 +695,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 65,
       "nameWidth10": 65,
+      "chipWidth11": 80,
       "catWidth13": 76
     },
     "Ra": {
@@ -616,6 +703,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 53,
       "nameWidth10": 50,
+      "chipWidth11": 73,
       "catWidth13": 129
     },
     "Ac": {
@@ -623,6 +711,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 62,
       "nameWidth10": 60,
+      "chipWidth11": 80,
       "catWidth13": 54
     },
     "Th": {
@@ -630,6 +719,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 58,
       "nameWidth10": 58,
+      "chipWidth11": 77,
       "catWidth13": 54
     },
     "Pa": {
@@ -637,6 +727,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 89,
       "nameWidth10": 92,
+      "chipWidth11": 102,
       "catWidth13": 54
     },
     "U": {
@@ -644,6 +735,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 59,
       "nameWidth10": 58,
+      "chipWidth11": 72,
       "catWidth13": 54
     },
     "Np": {
@@ -651,6 +743,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 77,
       "nameWidth10": 74,
+      "chipWidth11": 93,
       "catWidth13": 54
     },
     "Pu": {
@@ -658,6 +751,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 71,
       "nameWidth10": 74,
+      "chipWidth11": 87,
       "catWidth13": 54
     },
     "Am": {
@@ -665,6 +759,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 75,
       "nameWidth10": 70,
+      "chipWidth11": 95,
       "catWidth13": 54
     },
     "Cm": {
@@ -672,6 +767,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 51,
       "nameWidth10": 50,
+      "chipWidth11": 75,
       "catWidth13": 54
     },
     "Bk": {
@@ -679,6 +775,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 70,
       "nameWidth10": 70,
+      "chipWidth11": 87,
       "catWidth13": 54
     },
     "Cf": {
@@ -686,6 +783,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 81,
       "nameWidth10": 84,
+      "chipWidth11": 94,
       "catWidth13": 54
     },
     "Es": {
@@ -693,6 +791,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 81,
       "nameWidth10": 78,
+      "chipWidth11": 95,
       "catWidth13": 54
     },
     "Fm": {
@@ -700,6 +799,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 61,
       "nameWidth10": 57,
+      "chipWidth11": 82,
       "catWidth13": 54
     },
     "Md": {
@@ -707,6 +807,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 93,
       "nameWidth10": 89,
+      "chipWidth11": 108,
       "catWidth13": 54
     },
     "No": {
@@ -714,6 +815,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 66,
       "nameWidth10": 65,
+      "chipWidth11": 85,
       "catWidth13": 54
     },
     "Lr": {
@@ -721,6 +823,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 84,
       "nameWidth10": 83,
+      "chipWidth11": 96,
       "catWidth13": 105
     },
     "Rf": {
@@ -728,6 +831,7 @@
       "identityWidthMobile": 114,
       "nameWidth14": 102,
       "nameWidth10": 106,
+      "chipWidth11": 110,
       "catWidth13": 105
     },
     "Db": {
@@ -735,6 +839,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 62,
       "nameWidth10": 59,
+      "chipWidth11": 82,
       "catWidth13": 105
     },
     "Sg": {
@@ -742,6 +847,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 84,
       "nameWidth10": 82,
+      "chipWidth11": 98,
       "catWidth13": 105
     },
     "Bh": {
@@ -749,6 +855,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 59,
       "nameWidth10": 58,
+      "chipWidth11": 78,
       "catWidth13": 105
     },
     "Hs": {
@@ -756,6 +863,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 60,
       "nameWidth10": 57,
+      "chipWidth11": 80,
       "catWidth13": 105
     },
     "Mt": {
@@ -763,6 +871,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 79,
       "nameWidth10": 77,
+      "chipWidth11": 95,
       "catWidth13": 105
     },
     "Ds": {
@@ -770,6 +879,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 99,
       "nameWidth10": 99,
+      "chipWidth11": 111,
       "catWidth13": 105
     },
     "Rg": {
@@ -777,6 +887,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 92,
       "nameWidth10": 90,
+      "chipWidth11": 105,
       "catWidth13": 105
     },
     "Cn": {
@@ -784,6 +895,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 88,
       "nameWidth10": 87,
+      "chipWidth11": 103,
       "catWidth13": 105
     },
     "Nh": {
@@ -791,6 +903,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 66,
       "nameWidth10": 64,
+      "chipWidth11": 85,
       "catWidth13": 139
     },
     "Fl": {
@@ -798,6 +911,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 68,
       "nameWidth10": 70,
+      "chipWidth11": 81,
       "catWidth13": 139
     },
     "Mc": {
@@ -805,6 +919,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 79,
       "nameWidth10": 78,
+      "chipWidth11": 96,
       "catWidth13": 139
     },
     "Lv": {
@@ -812,6 +927,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 87,
       "nameWidth10": 86,
+      "chipWidth11": 99,
       "catWidth13": 139
     },
     "Ts": {
@@ -819,6 +935,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 78,
       "nameWidth10": 77,
+      "chipWidth11": 92,
       "catWidth13": 54
     },
     "Og": {
@@ -826,6 +943,7 @@
       "identityWidthMobile": 110,
       "nameWidth14": 78,
       "nameWidth10": 78,
+      "chipWidth11": 95,
       "catWidth13": 66
     }
   },

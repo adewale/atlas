@@ -319,14 +319,13 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   const neighbourChipWidth = useMemo(() => {
     if (element.neighbors.length === 0) return undefined;
     const chipPadding = 25; // 12px left + 10px right + 3px border
-    const maxNameW = Math.max(
+    const maxChipTextW = Math.max(
       ...element.neighbors.map((sym) => {
         const m = getElementMetrics(sym);
-        // nameWidth14 is at 14px bold; chip uses 11px bold, so this overestimates — safe
-        return m ? Math.ceil(m.nameWidth14 * 1.1) : 120;
+        return m?.chipWidth11 ?? 80;
       }),
     );
-    return Math.max(maxNameW + chipPadding, 120);
+    return Math.max(maxChipTextW + chipPadding, 120);
   }, [element.neighbors]);
 
   // Fixed width for anomaly chips — align vertical borders across rows

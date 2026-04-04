@@ -63,6 +63,10 @@ for (const el of elements) {
   // Scatter hover card
   jobs.push({ text: el.name, font: 'bold 14px system-ui, sans-serif', key: `el.${s}.name14` });
 
+  // Neighbour chip text: "Mn — Manganese" at 11px bold
+  const chipText = `${el.symbol} — ${el.name}`;
+  jobs.push({ text: chipText, font: 'bold 11px system-ui, sans-serif', key: `el.${s}.chip11` });
+
   // DataPlateRow category value
   const catDisplay = el.category.replace(/\b\w/g, (c: string) => c.toUpperCase());
   jobs.push({ text: catDisplay, font: 'bold 13px system-ui, sans-serif', key: `el.${s}.cat13` });
@@ -146,6 +150,7 @@ async function main() {
     identityWidthMobile: number;
     nameWidth14: number;
     nameWidth10: number;
+    chipWidth11: number;
     catWidth13: number;
   }> = {};
 
@@ -161,6 +166,7 @@ async function main() {
       identityWidthMobile: Math.ceil(Math.max(numWMobile, symW, nameW10)) + 8,
       nameWidth14: results[`el.${s}.name14`] ?? 60,
       nameWidth10: nameW10,
+      chipWidth11: results[`el.${s}.chip11`] ?? 80,
       catWidth13: results[`el.${s}.cat13`] ?? 80,
     };
   }

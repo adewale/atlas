@@ -35,7 +35,7 @@ export default function DiscovererNetwork() {
       (d) => d.name.toLowerCase().includes('antiquity'),
     );
     const rest = discoverers.filter(
-      (d) => !d.name.toLowerCase().includes('antiquity') && d.elements.length >= 2,
+      (d) => !d.name.toLowerCase().includes('antiquity'),
     );
     return { antiquity: antiq, prolific: rest };
   }, [discoverers]);
