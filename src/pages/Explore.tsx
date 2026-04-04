@@ -333,23 +333,20 @@ export default function Explore() {
           );
         })}
 
-        {/* Era slider — replaces chip row for the era dimension */}
+        {/* Era slider — horizontal timeline with clickable decade ticks */}
         {(() => {
           const eraCounts = response.facets?.era ?? {};
           const activeEras = facetState.era ?? [];
-          const sliderW = isMobile ? 340 : 600;
-          const sliderH = 50;
-          const padL = 10;
-          const padR = 10;
-          const trackW = sliderW - padL - padR;
+          const maxCount = Math.max(1, ...Object.values(eraCounts));
 
           return (
-            <div style={{ marginBottom: '12px' }}>
+            <div style={{ marginBottom: '16px' }}>
               <div style={{
                 fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase',
-                letterSpacing: '0.15em', color: GREY_MID, marginBottom: '6px',
+                letterSpacing: '0.15em', color: GREY_MID, marginBottom: '8px',
+                display: 'flex', alignItems: 'center', gap: '8px',
               }}>
-                Era
+                Discovery Era
                 {activeEras.length > 0 && (
                   <button
                     onClick={() => {
@@ -357,86 +354,73 @@ export default function Explore() {
                       setSearchParams(buildSearchParams(next), { replace: true });
                     }}
                     style={{
-                      marginLeft: '8px', background: 'none', border: 'none',
-                      fontSize: '10px', color: GREY_MID, cursor: 'pointer',
-                      textDecoration: 'underline',
+                      background: 'none', border: 'none',
+                      fontSize: '10px', color: WARM_RED, cursor: 'pointer',
+                      textDecoration: 'underline', padding: 0,
                     }}
                   >
                     clear
                   </button>
                 )}
               </div>
-              <svg
-                width={sliderW}
-                height={sliderH}
-                viewBox={`0 0 ${sliderW} ${sliderH}`}
-                style={{ maxWidth: '100%', display: 'block', cursor: 'pointer', touchAction: 'none' }}
-                onPointerDown={(e) => {
-                  (e.target as Element).setPointerCapture?.(e.pointerId);
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const x = e.clientX - rect.left - padL;
-                  const idx = Math.round((x / trackW) * (ERA_VALUES.length - 1));
-                  const era = ERA_VALUES[Math.max(0, Math.min(idx, ERA_VALUES.length - 1))];
-                  toggleFacetValue('era', era);
-                }}
-              >
-                {/* Track line */}
-                <line x1={padL} y1={20} x2={padL + trackW} y2={20} stroke={GREY_RULE} strokeWidth={1.5} />
-
-                {/* Tick marks + discovery count bars */}
-                {ERA_VALUES.map((era, i) => {
-                  const x = padL + (i / (ERA_VALUES.length - 1)) * trackW;
+              <div style={{
+                display: 'flex', gap: 0, width: '100%',
+                borderBottom: `1.5px solid ${GREY_RULE}`,
+                minHeight: '48px', alignItems: 'flex-end',
+              }}>
+                {ERA_VALUES.map((era) => {
                   const count = eraCounts[era] ?? 0;
                   const isActive = activeEras.includes(era);
-                  const barH = Math.min(count * 1.5, 16);
+                  const barH = count > 0 ? Math.max(4, Math.round((count / maxCount) * 32)) : 0;
+                  const isLabelled = ERA_TICKS.includes(era);
 
                   return (
-                    <g key={era}>
-                      {/* Count bar above track */}
-                      {count > 0 && (
-                        <rect
-                          x={x - 2}
-                          y={20 - barH}
-                          width={4}
-                          height={barH}
-                          fill={isActive ? WARM_RED : MUSTARD}
-                          opacity={isActive ? 1 : 0.5}
-                        />
-                      )}
-                      {/* Tick */}
-                      <line
-                        x1={x} y1={20} x2={x} y2={24}
-                        stroke={isActive ? WARM_RED : GREY_MID}
-                        strokeWidth={isActive ? 2 : 1}
-                      />
-                      {/* Active dot */}
-                      {isActive && (
-                        <circle cx={x} cy={20} r={4} fill={WARM_RED} />
-                      )}
-                    </g>
-                  );
-                })}
-
-                {/* Labels for key ticks */}
-                {ERA_TICKS.map((era) => {
-                  const idx = ERA_VALUES.indexOf(era);
-                  if (idx < 0) return null;
-                  const x = padL + (idx / (ERA_VALUES.length - 1)) * trackW;
-                  return (
-                    <text
+                    <button
                       key={era}
-                      x={x}
-                      y={38}
-                      textAnchor="middle"
-                      fontSize={8}
-                      fill={GREY_MID}
-                      fontFamily="system-ui, sans-serif"
+                      onClick={() => toggleFacetValue('era', era)}
+                      title={`${era}: ${count} result${count !== 1 ? 's' : ''}`}
+                      aria-pressed={isActive}
+                      style={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        background: 'none',
+                        border: 'none',
+                        borderBottom: isActive ? `3px solid ${WARM_RED}` : '3px solid transparent',
+                        padding: '0 0 2px',
+                        cursor: count > 0 || isActive ? 'pointer' : 'default',
+                        opacity: count === 0 && !isActive ? 0.3 : 1,
+                        minWidth: 0,
+                        transition: 'border-color 120ms ease-out',
+                      }}
                     >
-                      {era === 'Antiquity' ? 'Ancient' : era}
-                    </text>
+                      {/* Bar showing count */}
+                      <div style={{
+                        width: '100%',
+                        maxWidth: '12px',
+                        height: barH,
+                        background: isActive ? WARM_RED : MUSTARD,
+                        marginBottom: '2px',
+                        transition: 'height 200ms ease-out, background 120ms ease-out',
+                      }} />
+                      {/* Label for key decades */}
+                      {isLabelled && (
+                        <span style={{
+                          fontSize: '9px',
+                          color: isActive ? WARM_RED : GREY_MID,
+                          fontFamily: 'system-ui, sans-serif',
+                          whiteSpace: 'nowrap',
+                          fontVariantNumeric: 'tabular-nums',
+                        }}>
+                          {era === 'Antiquity' ? 'Anc.' : era.replace('s', '')}
+                        </span>
+                      )}
+                    </button>
                   );
                 })}
-              </svg>
+              </div>
             </div>
           );
         })()}
@@ -490,6 +474,7 @@ export default function Explore() {
               onNavigate={handleNavigate}
               onHover={handleHover}
               onExpand={handleExpand}
+              compact
             />
           );
         })}

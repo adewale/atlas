@@ -64,6 +64,8 @@ type EntityCardProps = {
   onHover?: (id: string | null) => void;
   /** Called to toggle expansion. */
   onExpand?: (id: string | null) => void;
+  /** Compact mode: show only the coloured heading, hide footer and drill affordance. */
+  compact?: boolean;
 };
 
 export default function EntityCard({
@@ -76,6 +78,7 @@ export default function EntityCard({
   onNavigate,
   onHover,
   onExpand,
+  compact = false,
 }: EntityCardProps) {
   const showSymbols = entity.elements.length > 0 && entity.type !== 'element';
   const typeLabel = ENTITY_TYPE_LABELS[entity.type];
@@ -365,8 +368,8 @@ export default function EntityCard({
           </div>
         )}
 
-        {/* Footer (collapsed state only) */}
-        {!isExpanded && (
+        {/* Footer (collapsed state only, hidden in compact mode) */}
+        {!isExpanded && !compact && (
           <div
             style={{
               display: 'flex',
