@@ -19,9 +19,16 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 const NAV_LABEL_FONT = `11px ${PRETEXT_SANS}`;
 const NAV_LABEL_MAX_W = 180; // conservative: 200 minus arrow + padding
 
-/** Truncate name to fit SvgPrevNext label using Pretext measurement. */
+/** Truncate name to fit SvgPrevNext label using precomputed navWidth when available,
+ *  falling back to Pretext runtime measurement. */
 function truncateNavLabel(name: string): string {
-  if (fitLabel(name, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) return name;
+  // Fast path: use precomputed metric if available
+  const precomputed = getDiscovererMetrics(name);
+  if (precomputed && precomputed.navWidth <= NAV_LABEL_MAX_W) return name;
+
+  // If no precomputed metric, check with Pretext
+  if (!precomputed && fitLabel(name, NAV_LABEL_FONT, NAV_LABEL_MAX_W)) return name;
+
   // Binary search for longest prefix + ellipsis that fits
   let lo = 1, hi = name.length - 1, best = 0;
   while (lo <= hi) {

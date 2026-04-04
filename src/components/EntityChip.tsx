@@ -122,9 +122,11 @@ export type AnomalyChipProps = {
   label: string;
   /** Number of elements in this anomaly group */
   elementCount?: number;
+  /** Fixed width for grid alignment — all chips in a group share this width. */
+  fixedWidth?: number;
 };
 
-export function AnomalyChip({ slug, label, elementCount }: AnomalyChipProps) {
+export function AnomalyChip({ slug, label, elementCount, fixedWidth }: AnomalyChipProps) {
   const secondary = elementCount != null
     ? `${elementCount} element${elementCount !== 1 ? 's' : ''}`
     : '';
@@ -137,6 +139,7 @@ export function AnomalyChip({ slug, label, elementCount }: AnomalyChipProps) {
       secondary={secondary}
       title={`${label} — view anomaly details`}
       aria-label={`Anomaly: ${label}`}
+      fixedWidth={fixedWidth}
     />
   );
 }
@@ -152,9 +155,11 @@ export type NeighbourChipProps = {
   color: string;
   /** Relationship direction label, e.g. "← left" or "↑ above" */
   direction?: string;
+  /** Fixed width for grid alignment — all chips in a group share this width. */
+  fixedWidth?: number;
 };
 
-export function NeighbourChip({ symbol, name, color, direction }: NeighbourChipProps) {
+export function NeighbourChip({ symbol, name, color, direction, fixedWidth }: NeighbourChipProps) {
   return (
     <BaseChip
       to={`/elements/${symbol}`}
@@ -163,6 +168,7 @@ export function NeighbourChip({ symbol, name, color, direction }: NeighbourChipP
       secondary={direction ?? 'neighbour'}
       title={`${name} (${symbol})`}
       aria-label={`Neighbour: ${name} (${symbol})`}
+      fixedWidth={fixedWidth}
     />
   );
 }

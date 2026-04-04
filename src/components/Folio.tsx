@@ -315,6 +315,32 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     return anomalies.filter((a) => a.elements.includes(element.symbol));
   }, [anomalies, element.symbol]);
 
+  // Fixed width for neighbour chips — align vertical borders across rows
+  const neighbourChipWidth = useMemo(() => {
+    if (element.neighbors.length === 0) return undefined;
+    const chipPadding = 25; // 12px left + 10px right + 3px border
+    const maxNameW = Math.max(
+      ...element.neighbors.map((sym) => {
+        const m = getElementMetrics(sym);
+        // nameWidth14 is at 14px bold; chip uses 11px bold, so this overestimates — safe
+        return m ? Math.ceil(m.nameWidth14 * 1.1) : 120;
+      }),
+    );
+    return Math.max(maxNameW + chipPadding, 120);
+  }, [element.neighbors]);
+
+  // Fixed width for anomaly chips — align vertical borders across rows
+  const anomalyChipWidth = useMemo(() => {
+    if (elementAnomalies.length <= 1) return undefined;
+    // Anomaly labels aren't in text-metrics.json; use a reasonable fixed width
+    // based on the longest label character count (11px bold ≈ 6.5px per char average)
+    const maxLabelW = Math.max(
+      ...elementAnomalies.map((a) => Math.ceil(a.label.length * 6.5)),
+    );
+    const chipPadding = 25; // 12px left + 10px right + 3px border
+    return Math.max(maxLabelW + chipPadding, 120);
+  }, [elementAnomalies]);
+
   const summaryRef = useRef<HTMLDivElement>(null);
   const marginaliaRef = useRef<HTMLElement>(null);
 
@@ -514,6 +540,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 slug={a.slug}
                 label={a.label}
                 elementCount={a.elements.length}
+                fixedWidth={anomalyChipWidth}
               />
             ))}
           </div>
@@ -628,6 +655,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                   name={neighbour.name}
                   color={blockColor(neighbour.block)}
                   direction={direction}
+                  fixedWidth={neighbourChipWidth}
                 />
               );
             })}

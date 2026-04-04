@@ -6,6 +6,7 @@ import { blockColor } from '../lib/grid';
 import AtlasPlate from '../components/AtlasPlate';
 import type { PlateHoverInfo } from '../components/AtlasPlate';
 import { DEEP_BLUE, BLACK, PAPER, BACK_LINK_STYLE, SECTION_LABEL_STYLE } from '../lib/theme';
+import { getDiscovererMetrics } from '../lib/metrics';
 import { VT } from '../lib/transitions';
 import HeroHeader from '../components/HeroHeader';
 import SvgPrevNext from '../components/SvgPrevNext';
@@ -187,25 +188,38 @@ export default function TimelineEra() {
       )}
 
       {/* Discoverers in this era */}
-      {discoverers.length > 0 && (
-        <section style={{ marginTop: '24px' }}>
-          <h2 style={SECTION_LABEL_STYLE}>
-            Discoverers
-          </h2>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {discoverers.map((name) => {
-              const count = entries.filter((e) => e.discoverer === name).length;
-              return (
-                <DiscovererChip
-                  key={name}
-                  name={name}
-                  elementCount={count}
-                />
-              );
-            })}
-          </div>
-        </section>
-      )}
+      {discoverers.length > 0 && (() => {
+        // Compute fixed chip width from precomputed metrics so all chips align
+        const chipPadding = 25; // 12px left + 10px right + 3px border
+        const maxNameW = Math.max(
+          ...discoverers.map((d) => {
+            const m = getDiscovererMetrics(d);
+            return m ? Math.ceil(m.navWidth * 1.1) : 120; // 1.1x for bold vs regular
+          }),
+        );
+        const chipWidth = Math.max(maxNameW + chipPadding, 120);
+
+        return (
+          <section style={{ marginTop: '24px' }}>
+            <h2 style={SECTION_LABEL_STYLE}>
+              Discoverers
+            </h2>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              {discoverers.map((name) => {
+                const count = entries.filter((e) => e.discoverer === name).length;
+                return (
+                  <DiscovererChip
+                    key={name}
+                    name={name}
+                    elementCount={count}
+                    fixedWidth={chipWidth}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* Nearby eras — graph navigation */}
       {nearbyEras.length > 0 && (
