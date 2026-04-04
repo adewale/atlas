@@ -131,7 +131,7 @@ export default function About() {
           role="img"
           style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
+          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
         </svg>
       </section>
 
@@ -143,7 +143,7 @@ export default function About() {
           role="img"
           style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={bulletData.lines} lineHeight={bulletData.lineHeight} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={bulletData.lines} lineHeight={bulletData.lineHeight} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -155,7 +155,7 @@ export default function About() {
           role="img"
           style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={dataLines} lineHeight={dataLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -167,7 +167,7 @@ export default function About() {
           role="img"
           style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={techLines} lineHeight={techLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 
@@ -179,7 +179,7 @@ export default function About() {
           role="img"
           style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
         >
-          <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={textWidth} showRules animationStagger={25} />
+          <PretextSvg lines={shoulderLines} lineHeight={shoulderLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} />
         </svg>
       </section>
 

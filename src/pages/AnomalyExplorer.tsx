@@ -282,7 +282,7 @@ export default function AnomalyExplorer() {
             y={VIEWBOX_H + DESC_Y_OFFSET}
             fontSize={16}
             fill={BLACK}
-            showRules
+           
             ruleColor={BLACK}
             maxWidth={DESC_MAX_WIDTH}
             animationStagger={60}

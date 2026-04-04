@@ -91,7 +91,7 @@ export default function AtlasBrowsePage({
               x={0}
               y={0}
               maxWidth={DESC_MAX_W}
-              showRules
+             
               animationStagger={25}
             />
           </svg>
