@@ -19,9 +19,9 @@ type ElementMetrics = {
   catWidth13: number;
 };
 
-type CategoryMetrics = { width13: number; width18: number };
+type CategoryMetrics = { width13: number; width18: number; card8: number; card8abbrev: number };
 type DiscovererMetrics = { navPrev: number; navNext: number; chipWidth: number; captionWidth: number };
-type PropertyMetrics = { width10: number; width11bold: number };
+type PropertyMetrics = { width10: number; width11bold: number; widestLine10: number };
 
 const elMap = metrics.elements as Record<string, ElementMetrics>;
 const catMap = metrics.categories as Record<string, CategoryMetrics>;

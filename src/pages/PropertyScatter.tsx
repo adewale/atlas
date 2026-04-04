@@ -480,8 +480,8 @@ export default function PropertyScatter() {
             // Use precomputed name width + property label width for card sizing
             const elMetrics = getElementMetrics(hPt.el.symbol);
             const nameW = elMetrics?.nameWidth14 ?? 80;
-            const xPropW = (getPropertyMetrics(xKey)?.width10 ?? 80) + 40; // label + ": " + value
-            const yPropW = (getPropertyMetrics(yKey)?.width10 ?? 80) + 40;
+            const xPropW = getPropertyMetrics(xKey)?.widestLine10 ?? 120;
+            const yPropW = getPropertyMetrics(yKey)?.widestLine10 ?? 120;
             const cardW = Math.max(nameW, xPropW, yPropW) + 24;
             const cardH = 72;
             // Flip card left if too close to right edge

@@ -69,20 +69,23 @@ describe('text-metrics.json contract', () => {
     expect(m.navNext).toBeGreaterThan(40);
   });
 
-  it('every category has width13 and width18', () => {
+  it('every category has width13, width18, card8, card8abbrev', () => {
     for (const [cat, m] of Object.entries(metrics.categories) as [string, Record<string, number>][]) {
       expect(m.width13, `category "${cat}" missing width13`).toBeGreaterThan(0);
       expect(m.width18, `category "${cat}" missing width18`).toBeGreaterThan(0);
+      expect(m.card8, `category "${cat}" missing card8`).toBeGreaterThan(0);
+      expect(m.card8abbrev, `category "${cat}" missing card8abbrev`).toBeGreaterThan(0);
     }
   });
 
-  it('every property has width10 and width11bold', () => {
+  it('every property has width10, width11bold, and widestLine10', () => {
     const expectedKeys = ['mass', 'electronegativity', 'ionizationEnergy', 'radius', 'density', 'meltingPoint', 'boilingPoint', 'halfLife', 'atomicNumber', 'period', 'group', 'discoveryYear'];
     for (const key of expectedKeys) {
       const m = metrics.properties[key];
       expect(m, `property "${key}" missing`).toBeDefined();
       expect(m.width10).toBeGreaterThan(0);
       expect(m.width11bold).toBeGreaterThan(0);
+      expect(m.widestLine10, `property "${key}" missing widestLine10`).toBeGreaterThan(m.width10);
     }
   });
 

@@ -1,6 +1,6 @@
 {
-  "_generated": "2026-04-04T01:31:36.276Z",
-  "_jobCount": 1181,
+  "_generated": "2026-04-04T02:53:48.037Z",
+  "_jobCount": 1208,
   "elements": {
     "H": {
       "identityWidth": 95,
@@ -950,43 +950,63 @@
   "categories": {
     "actinide": {
       "width13": 54,
-      "width18": 72
+      "width18": 72,
+      "card8": 29,
+      "card8abbrev": 29
     },
     "alkali metal": {
       "width13": 76,
-      "width18": 100
+      "width18": 100,
+      "card8": 41,
+      "card8abbrev": 19
     },
     "alkaline earth metal": {
       "width13": 129,
-      "width18": 171
+      "width18": 171,
+      "card8": 70,
+      "card8abbrev": 33
     },
     "halogen": {
       "width13": 54,
-      "width18": 72
+      "width18": 72,
+      "card8": 29,
+      "card8abbrev": 29
     },
     "lanthanide": {
       "width13": 73,
-      "width18": 97
+      "width18": 97,
+      "card8": 38,
+      "card8abbrev": 38
     },
     "metalloid": {
       "width13": 60,
-      "width18": 80
+      "width18": 80,
+      "card8": 33,
+      "card8abbrev": 33
     },
     "noble gas": {
       "width13": 66,
-      "width18": 88
+      "width18": 88,
+      "card8": 35,
+      "card8abbrev": 35
     },
     "nonmetal": {
       "width13": 63,
-      "width18": 84
+      "width18": 84,
+      "card8": 34,
+      "card8abbrev": 34
     },
     "post-transition metal": {
       "width13": 139,
-      "width18": 185
+      "width18": 185,
+      "card8": 74,
+      "card8abbrev": 40
     },
     "transition metal": {
       "width13": 105,
-      "width18": 139
+      "width18": 139,
+      "card8": 55,
+      "card8abbrev": 43
     }
   },
   "discoverers": {
@@ -1444,51 +1464,63 @@
   "properties": {
     "mass": {
       "width10": 79,
-      "width11bold": 102
+      "width11bold": 102,
+      "widestLine10": 114
     },
     "electronegativity": {
       "width10": 82,
-      "width11bold": 121
+      "width11bold": 121,
+      "widestLine10": 109
     },
     "ionizationEnergy": {
       "width10": 106,
-      "width11bold": 144
+      "width11bold": 144,
+      "widestLine10": 139
     },
     "radius": {
       "width10": 92,
-      "width11bold": 122
+      "width11bold": 122,
+      "widestLine10": 131
     },
     "density": {
       "width10": 75,
-      "width11bold": 98
+      "width11bold": 98,
+      "widestLine10": 107
     },
     "meltingPoint": {
       "width10": 81,
-      "width11bold": 110
+      "width11bold": 110,
+      "widestLine10": 126
     },
     "boilingPoint": {
       "width10": 78,
-      "width11bold": 106
+      "width11bold": 106,
+      "widestLine10": 122
     },
     "halfLife": {
       "width10": 95,
-      "width11bold": 136
+      "width11bold": 136,
+      "widestLine10": 219
     },
     "atomicNumber": {
       "width10": 74,
-      "width11bold": 98
+      "width11bold": 98,
+      "widestLine10": 97
     },
     "period": {
       "width10": 31,
-      "width11bold": 43
+      "width11bold": 43,
+      "widestLine10": 44
     },
     "group": {
       "width10": 30,
-      "width11bold": 41
+      "width11bold": 41,
+      "widestLine10": 47
     },
     "discoveryYear": {
       "width10": 72,
-      "width11bold": 100
+      "width11bold": 100,
+      "widestLine10": 101
     }
   },
   "edges": {

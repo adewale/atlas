@@ -75,10 +75,24 @@ for (const el of elements) {
 }
 
 // Category-level
+const ABBREV: Record<string, string> = {
+  'transition metal': 'trans. metal',
+  'alkali metal': 'alkali',
+  'alkaline earth metal': 'alk. earth',
+  'noble gas': 'noble gas',
+  'post-transition metal': 'post-trans.',
+  'reactive nonmetal': 'nonmetal',
+};
 for (const cat of categories) {
   const display = cat.replace(/\b\w/g, (c: string) => c.toUpperCase());
   jobs.push({ text: display, font: 'bold 13px system-ui, sans-serif', key: `cat.${cat}.13` });
   jobs.push({ text: display, font: 'bold 18px system-ui, sans-serif', key: `cat.${cat}.18` });
+  // AtlasPlate card label at 8px PRETEXT_SANS (full name and abbreviation)
+  jobs.push({ text: cat, font: '8px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `cat.${cat}.card8` });
+  const abbrev = ABBREV[cat];
+  if (abbrev) {
+    jobs.push({ text: abbrev, font: '8px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `cat.${cat}.card8abbrev` });
+  }
 }
 
 // Discoverer-level
@@ -92,10 +106,21 @@ for (const d of discoverers) {
   jobs.push({ text: d.name, font: 'bold 16px "Helvetica Neue", Helvetica, Arial, sans-serif', key: `disc.${d.name}.cap16` });
 }
 
-// Property labels
+// Property labels + widest "label: value" for scatter hover card
+const INTEGER_PROPS = new Set(['atomicNumber', 'discoveryYear', 'period', 'group']);
 for (const [key, label] of Object.entries(PROPERTY_LABELS)) {
   jobs.push({ text: label, font: '10px system-ui, sans-serif', key: `prop.${key}.10` });
   jobs.push({ text: label.toUpperCase(), font: 'bold 11px system-ui, sans-serif', key: `prop.${key}.11bold` });
+  // Find widest "label: value" string across all elements for scatter hover card
+  let widestLine = label + ': 0';
+  for (const el of elements) {
+    const v = (el as Record<string, unknown>)[key];
+    if (v == null || typeof v !== 'number') continue;
+    const formatted = INTEGER_PROPS.has(key) ? String(v) : v.toFixed(2);
+    const line = `${label}: ${formatted}`;
+    if (line.length > widestLine.length) widestLine = line;
+  }
+  jobs.push({ text: widestLine, font: '10px system-ui, sans-serif', key: `prop.${key}.widest10` });
 }
 
 // Edge labels for EntityMap
@@ -182,11 +207,13 @@ async function main() {
     };
   }
 
-  const categoryMetrics: Record<string, { width13: number; width18: number }> = {};
+  const categoryMetrics: Record<string, { width13: number; width18: number; card8: number; card8abbrev: number }> = {};
   for (const cat of categories) {
     categoryMetrics[cat] = {
       width13: results[`cat.${cat}.13`] ?? 60,
       width18: results[`cat.${cat}.18`] ?? 80,
+      card8: results[`cat.${cat}.card8`] ?? 50,
+      card8abbrev: results[`cat.${cat}.card8abbrev`] ?? results[`cat.${cat}.card8`] ?? 50,
     };
   }
 
@@ -200,11 +227,12 @@ async function main() {
     };
   }
 
-  const propertyMetrics: Record<string, { width10: number; width11bold: number }> = {};
+  const propertyMetrics: Record<string, { width10: number; width11bold: number; widestLine10: number }> = {};
   for (const key of Object.keys(PROPERTY_LABELS)) {
     propertyMetrics[key] = {
       width10: results[`prop.${key}.10`] ?? 80,
       width11bold: results[`prop.${key}.11bold`] ?? 100,
+      widestLine10: results[`prop.${key}.widest10`] ?? 120,
     };
   }
 

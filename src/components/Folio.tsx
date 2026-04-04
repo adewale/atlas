@@ -40,9 +40,12 @@ function measureIdentityWidth(paddedNumber: string, symbol: string, name: string
   const numFontSize = mobile ? 56 : 48;
   const numLines = measureLines(paddedNumber, `bold ${numFontSize}px ${MONO_FONT}`, 9999, numFontSize);
   const symLines = measureLines(symbol, `bold 36px system-ui, sans-serif`, 9999, 40);
-  // Name is uppercase with 0.2em letter-spacing; approximate by scaling measured width by 1.2
-  const nameLines = measureLines(name.toUpperCase(), `10px system-ui, sans-serif`, 9999, 12);
-  const nameW = (nameLines[0]?.width ?? 40) * 1.2; // letter-spacing adds ~20%
+  // Name is uppercase with letter-spacing: 0.2em at 10px = 2px per gap
+  const nameUpper = name.toUpperCase();
+  const nameLines = measureLines(nameUpper, `10px system-ui, sans-serif`, 9999, 12);
+  const baseNameW = nameLines[0]?.width ?? 40;
+  const letterSpacingPx = (nameUpper.length - 1) * 2; // 0.2em * 10px
+  const nameW = baseNameW + letterSpacingPx;
 
   const maxW = Math.max(
     numLines[0]?.width ?? 60,

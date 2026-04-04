@@ -3,6 +3,7 @@ import type { ElementRecord } from '../lib/types';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { fitLabel, measureLines, PRETEXT_SANS } from '../lib/pretext';
+import { getCategoryMetrics } from '../lib/metrics';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useFontsReady } from '../hooks/useFontsReady';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
@@ -40,14 +41,20 @@ const ABBREV: Record<string, string> = {
 };
 
 function truncateToFit(name: string, font: string, maxWidth: number): string {
-  if (fitLabel(name, font, maxWidth)) return name;
-
-  // Try abbreviation first
-  const abbrev = ABBREV[name];
-  if (abbrev && fitLabel(abbrev, font, maxWidth)) return abbrev;
+  // Fast path: use precomputed metrics if available
+  const catMetrics = getCategoryMetrics(name);
+  if (catMetrics) {
+    if (catMetrics.card8 <= maxWidth) return name;
+    const abbrev = ABBREV[name];
+    if (abbrev && catMetrics.card8abbrev <= maxWidth) return abbrev;
+  } else {
+    if (fitLabel(name, font, maxWidth)) return name;
+    const abbrev = ABBREV[name];
+    if (abbrev && fitLabel(abbrev, font, maxWidth)) return abbrev;
+  }
 
   // Binary search for the longest prefix + ellipsis that fits
-  const base = abbrev ?? name;
+  const base = ABBREV[name] ?? name;
   let lo = 1;
   let hi = base.length - 1;
   let best = 0;
