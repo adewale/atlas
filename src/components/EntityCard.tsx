@@ -194,8 +194,8 @@ export default function EntityCard({
         </div>
       </div>
 
-      {/* Body */}
-      <div style={{ padding: '8px 10px' }}>
+      {/* Body — hidden in compact mode */}
+      {!compact && <div style={{ padding: '8px 10px' }}>
         {/* Description — full text when expanded, clamped otherwise */}
         <div
           style={{
@@ -388,7 +388,7 @@ export default function EntityCard({
             )}
           </div>
         )}
-      </div>
+      </div>}
     </div>
   );
 }
