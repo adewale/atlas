@@ -14,12 +14,12 @@ export type VizPage = {
 
 export const VIZ_PAGES: VizPage[] = [
   { path: '/', label: 'Table', colour: BLACK, entities: 'Element, Group, Period, Block, Category' },
-  { path: '/phase-landscape', label: 'Phase', colour: WARM_RED, entities: 'Element, Block (colour)' },
-  { path: '/anomaly-explorer', label: 'Anomalies', colour: MUSTARD, entities: 'Element, Anomaly' },
-  { path: '/property-scatter', label: 'Scatter', colour: DEEP_BLUE, entities: 'Element, Block (colour), Property (axes)' },
-  { path: '/discovery-timeline', label: 'Timeline', colour: WARM_RED, entities: 'Element, Era, Discoverer' },
-  { path: '/etymology-map', label: 'Etymology', colour: DEEP_BLUE, entities: 'Element, Etymology Origin' },
-  { path: '/discoverer-network', label: 'Discoverers', colour: MUSTARD, entities: 'Element, Discoverer' },
+  { path: '/phase-landscape', label: 'Phase', colour: BLACK, entities: 'Element, Block (colour)' },
+  { path: '/anomaly-explorer', label: 'Anomalies', colour: BLACK, entities: 'Element, Anomaly' },
+  { path: '/property-scatter', label: 'Scatter', colour: BLACK, entities: 'Element, Block (colour), Property (axes)' },
+  { path: '/discovery-timeline', label: 'Timeline', colour: BLACK, entities: 'Element, Era, Discoverer' },
+  { path: '/etymology-map', label: 'Etymology', colour: BLACK, entities: 'Element, Etymology Origin' },
+  { path: '/discoverer-network', label: 'Discoverers', colour: BLACK, entities: 'Element, Discoverer' },
   { path: '/explore', label: 'Explore', colour: BLACK, entities: 'All entity types' },
 ];
 
