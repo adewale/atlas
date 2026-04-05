@@ -27,7 +27,6 @@ import { parseSearchParams, buildSearchParams, type FacetState, type FacetKey } 
 import type { SearchResponse } from '../../shared/search-types';
 import {
   BLACK,
-  PAPER,
   GREY_MID,
   GREY_RULE,
   WARM_RED,
@@ -38,6 +37,7 @@ import { ERA_BINS } from '../../shared/era-bins';
 import PageShell from '../components/PageShell';
 import EntityCard from '../components/EntityCard';
 import type { CrossRef } from '../components/EntityCard';
+import ByrnePill from '../components/ByrnePill';
 
 const MAX_STAGGER_BATCH = 24;
 
@@ -240,7 +240,7 @@ export default function Explore() {
           if (allValues.length === 0) return null;
 
           return (
-            <div key={key} style={{ marginBottom: '16px' }}>
+            <div key={key} style={{ marginBottom: '10px' }}>
               <div
                 style={{
                   fontSize: '10px',
@@ -248,12 +248,12 @@ export default function Explore() {
                   textTransform: 'uppercase',
                   letterSpacing: '0.15em',
                   color: GREY_MID,
-                  marginBottom: '4px',
+                  marginBottom: '3px',
                 }}
               >
                 {label}
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
                 {allValues.map((value) => {
                   const count = counts[value] ?? 0;
                   const isActive = activeValues.includes(value);
@@ -262,47 +262,15 @@ export default function Explore() {
                   const displayLabel = FACET_VALUE_LABELS[key]?.[value] ?? value;
 
                   return (
-                    <button
+                    <ByrnePill
                       key={value}
-                      onClick={() => !isDisabled && toggleFacetValue(key, value)}
+                      label={displayLabel}
+                      colour={colour}
+                      active={isActive}
                       disabled={isDisabled}
-                      aria-pressed={isActive}
-                      style={{
-                        fontFamily: 'system-ui, sans-serif',
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        letterSpacing: '0.04em',
-                        textTransform: 'uppercase',
-                        color: isDisabled ? GREY_MID : isActive ? PAPER : colour,
-                        background: isActive ? colour : 'transparent',
-                        border: `1.5px solid ${isDisabled ? GREY_RULE : colour}`,
-                        borderRadius: 0,
-                        padding: '5px 9px',
-                        cursor: isDisabled ? 'default' : 'pointer',
-                        opacity: isDisabled ? 0.6 : 1,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                      }}
-                    >
-                      <span
-                        style={{
-                          width: '5px',
-                          height: '5px',
-                          background: isDisabled ? GREY_MID : isActive ? PAPER : colour,
-                          display: 'inline-block',
-                          flexShrink: 0,
-                        }}
-                      />
-                      {displayLabel}
-                      <span style={{
-                        opacity: 0.7,
-                        fontWeight: 400,
-                        fontVariantNumeric: 'tabular-nums',
-                        minWidth: '24px',
-                        textAlign: 'right',
-                      }}>({count})</span>
-                    </button>
+                      count={count}
+                      onClick={() => toggleFacetValue(key, value)}
+                    />
                   );
                 })}
               </div>

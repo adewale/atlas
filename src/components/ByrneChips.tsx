@@ -1,12 +1,11 @@
 /**
  * Byrne-style chip toggles for faceted filtering.
  *
- * Active = solid filled rectangle with contrast text.
- * Inactive = outlined rectangle with colour text.
- * Matches the existing VizNav / AnomalyExplorer button pattern.
+ * Renders a row of compact ByrnePill toggles with an optional
+ * section label. Active = filled, inactive = outlined.
  */
-import { PAPER, BLACK, GREY_MID } from '../lib/theme';
-import { contrastTextColor } from '../lib/gridColors';
+import { GREY_MID } from '../lib/theme';
+import ByrnePill from './ByrnePill';
 
 export type ChipOption<T extends string = string> = {
   value: T;
@@ -39,55 +38,23 @@ export default function ByrneChips<T extends string>({
             textTransform: 'uppercase',
             letterSpacing: '0.15em',
             color: GREY_MID,
-            marginBottom: '6px',
+            marginBottom: '4px',
           }}
         >
           {label}
         </div>
       )}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-        {options.map((opt) => {
-          const isActive = selected.has(opt.value);
-          return (
-            <button
-              key={opt.value}
-              onClick={() => onToggle(opt.value)}
-              style={{
-                fontFamily: 'system-ui, sans-serif',
-                fontSize: '11px',
-                fontWeight: 700,
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                color: isActive ? contrastTextColor(opt.colour) : opt.colour,
-                background: isActive ? opt.colour : 'transparent',
-                border: `1.5px solid ${opt.colour}`,
-                borderRadius: 0,
-                padding: '6px 10px',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                transition:
-                  'background 150ms var(--ease-snap), color 150ms var(--ease-snap)',
-              }}
-            >
-              <span
-                style={{
-                  width: '5px',
-                  height: '5px',
-                  background: isActive ? contrastTextColor(opt.colour) : opt.colour,
-                  display: 'inline-block',
-                  flexShrink: 0,
-                  transition: 'background 150ms var(--ease-snap)',
-                }}
-              />
-              {opt.label}
-              {opt.count != null && (
-                <span style={{ opacity: 0.7, fontWeight: 400 }}>({opt.count})</span>
-              )}
-            </button>
-          );
-        })}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
+        {options.map((opt) => (
+          <ByrnePill
+            key={opt.value}
+            label={opt.label}
+            colour={opt.colour}
+            active={selected.has(opt.value)}
+            count={opt.count}
+            onClick={() => onToggle(opt.value)}
+          />
+        ))}
       </div>
     </div>
   );
