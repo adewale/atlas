@@ -492,6 +492,9 @@ function run() {
     meltingPoint: e.meltingPoint,
     boilingPoint: e.boilingPoint,
     halfLife: e.halfLife,
+    discoveryYear: e.discoveryYear,
+    discoverer: e.discoverer,
+    etymologyOrigin: e.etymologyOrigin,
     neighbors: e.neighbors,
   }));
   writeFileSync(join(outDir, 'grid-elements.json'), JSON.stringify(gridElements));

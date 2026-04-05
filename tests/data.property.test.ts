@@ -1,7 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
 import { allElements, getElement, searchElements } from '../src/lib/data';
-import type { GroupData, PeriodData, CategoryData, RankingsData } from '../src/lib/types';
+import rawFullElements from '../data/generated/elements.json';
+import type { ElementRecord, GroupData, PeriodData, CategoryData, RankingsData } from '../src/lib/types';
+
+const fullElements = rawFullElements as ElementRecord[];
 import groupsJson from '../data/generated/groups.json';
 import periodsJson from '../data/generated/periods.json';
 import categoriesJson from '../data/generated/categories.json';
@@ -140,9 +143,11 @@ describe('Search property-based tests', () => {
 });
 
 describe('Element summary quality', () => {
+  const fullElementArb = fc.integer({ min: 0, max: fullElements.length - 1 }).map((i) => fullElements[i]);
+
   it('forAll(element): summary is a non-trivial paragraph', () => {
     fc.assert(
-      fc.property(elementArb, (el) => {
+      fc.property(fullElementArb, (el) => {
         expect(el.summary).toBeDefined();
         expect(el.summary.length).toBeGreaterThan(50);
         // Summary should mention the element's name or symbol
@@ -156,7 +161,7 @@ describe('Element summary quality', () => {
 
   it('forAll(element): summary ends with punctuation', () => {
     fc.assert(
-      fc.property(elementArb, (el) => {
+      fc.property(fullElementArb, (el) => {
         const lastChar = el.summary.trim().slice(-1);
         expect('.!?'.includes(lastChar)).toBe(true);
       }),

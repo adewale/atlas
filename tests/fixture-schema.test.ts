@@ -12,8 +12,11 @@
  *   4. Data types match expectations (numbers are numbers, etc.)
  */
 import { describe, test, expect } from 'vitest';
-import { allElements, getElement } from '../src/lib/data';
+import rawElements from '../data/generated/elements.json';
 import type { ElementRecord } from '../src/lib/types';
+
+const allElements = rawElements as ElementRecord[];
+function getElement(symbol: string) { return allElements.find((e) => e.symbol === symbol); }
 
 /** The canonical set of keys every ElementRecord must have. */
 const REQUIRED_KEYS: (keyof ElementRecord)[] = [

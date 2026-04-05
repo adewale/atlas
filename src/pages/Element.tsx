@@ -10,19 +10,21 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Element() {
   const { symbol } = useParams();
-  const element = symbol ? getElement(symbol) : undefined;
+  const gridEl = symbol ? getElement(symbol) : undefined;
   const loaderData = useLoaderData() as { folioBundle: FolioBundle } | undefined;
   const folioBundle = loaderData?.folioBundle;
+  // The full ElementRecord comes from the folio bundle (loaded by route loader).
+  const element = folioBundle?.element;
 
   const transitionNavigate = useViewTransitionNavigate();
   useDocumentTitle(
-    element ? element.name : 'Element Not Found',
-    element
-      ? `${element.name} (${element.symbol}) — atomic number ${element.atomicNumber}, ${element.category}. Discovery, properties, and relationships.`
+    gridEl ? gridEl.name : 'Element Not Found',
+    gridEl
+      ? `${gridEl.name} (${gridEl.symbol}) — atomic number ${gridEl.atomicNumber}, ${gridEl.category}. Discovery, properties, and relationships.`
       : undefined,
   );
 
-  if (!element) {
+  if (!gridEl || !element) {
     return (
       <PageShell>
         <h1>Element not found</h1>

@@ -8,7 +8,7 @@ import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import { getElementMetrics, getPropertyMetrics } from '../lib/metrics';
 import IntroBlock from '../components/IntroBlock';
 
-import type { ElementRecord } from '../lib/types';
+import type { GridElement } from '../lib/types';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
 import MarginNote from '../components/MarginNote';
@@ -49,7 +49,7 @@ const PROPERTY_KEYS: PropertyKey[] = [
   'discoveryYear',
 ];
 
-function getPropValue(el: ElementRecord, key: PropertyKey): number | null {
+function getPropValue(el: GridElement, key: PropertyKey): number | null {
   return el[key] ?? null;
 }
 
@@ -139,7 +139,7 @@ export default function PropertyScatter() {
   const [searchParams, setSearchParams] = useSearchParams();
   const xKey = (searchParams.get('x') as PropertyKey) || 'electronegativity';
   const yKey = (searchParams.get('y') as PropertyKey) || 'ionizationEnergy';
-  const [hovered, setHovered] = useState<ElementRecord | null>(null);
+  const [hovered, setHovered] = useState<GridElement | null>(null);
 
   // Coupled dropdowns: prevent same property on both axes
   const handleXChange = useCallback(
@@ -168,7 +168,7 @@ export default function PropertyScatter() {
 
   // Filter & normalize
   const { points, xMin, xMax, yMin, yMax } = useMemo(() => {
-    const valid: { el: ElementRecord; xVal: number; yVal: number }[] = [];
+    const valid: { el: GridElement; xVal: number; yVal: number }[] = [];
     for (const el of allElements) {
       const xVal = getPropValue(el, xKey);
       const yVal = getPropValue(el, yKey);

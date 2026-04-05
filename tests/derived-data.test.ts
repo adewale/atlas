@@ -69,13 +69,23 @@ describe('grid-elements.json', () => {
     }
   });
 
-  it('does NOT include summary or sources (stripped for size)', () => {
+  it('does NOT include heavy text fields (stripped for size)', () => {
     for (const e of gridElements as any[]) {
       expect(e.summary).toBeUndefined();
       expect(e.sources).toBeUndefined();
       expect(e.rankings).toBeUndefined();
-      expect(e.discoverer).toBeUndefined();
+      expect(e.etymologyDescription).toBeUndefined();
+      expect(e.wikidataId).toBeUndefined();
+      expect(e.wikipediaTitle).toBeUndefined();
+      expect(e.wikipediaUrl).toBeUndefined();
     }
+  });
+
+  it('includes lightweight discoverer/etymology fields needed by pages', () => {
+    const h = (gridElements as any[]).find((e: any) => e.symbol === 'H');
+    expect(h.discoverer).toBe('Henry Cavendish');
+    expect(h.discoveryYear).toBe(1766);
+    expect(h.etymologyOrigin).toBe('property');
   });
 });
 

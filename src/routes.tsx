@@ -133,7 +133,14 @@ export const router = createBrowserRouter([
   { path: '/anomalies/:slug', Component: AtlasAnomaly, loader: loadAnomalies },
 
   /* ── Compare (sub-resource of element) ────── */
-  { path: '/elements/:symbol/compare/:other', Component: Compare },
+  {
+    path: '/elements/:symbol/compare/:other',
+    Component: Compare,
+    loader: async () => {
+      const mod = await import('../data/generated/elements.json');
+      return { elements: mod.default };
+    },
+  },
 
   /* ── About & meta pages ──────────────────── */
   { path: '/about', Component: About },

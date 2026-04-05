@@ -5,9 +5,11 @@ import * as fc from 'fast-check';
 // (see tests/setup.ts). This gives us real font metrics for fitLabel assertions.
 
 import { fitLabel, PRETEXT_SANS } from '../src/lib/pretext';
-import { allElements } from '../src/lib/data';
+import rawFullElements from '../data/generated/elements.json';
 import { MONO_FONT } from '../src/lib/theme';
-import type { DiscovererData, TimelineData } from '../src/lib/types';
+import type { ElementRecord, DiscovererData, TimelineData } from '../src/lib/types';
+
+const allElements = rawFullElements as ElementRecord[];
 import discoverersJson from '../data/generated/discoverers.json';
 import timelineJson from '../data/generated/timeline.json';
 import { ERA_BINS, yearToEra } from '../shared/era-bins';

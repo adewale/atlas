@@ -15,11 +15,14 @@
  */
 import { describe, test, expect } from 'vitest';
 import { generateComparisonNotes } from '../src/lib/compare';
-import { allElements, getElement } from '../src/lib/data';
+import rawElements from '../data/generated/elements.json';
 import type { ElementRecord } from '../src/lib/types';
 
+const allFullElements = rawElements as ElementRecord[];
+const fullBySymbol = new Map(allFullElements.map((e) => [e.symbol, e]));
+
 function el(symbol: string): ElementRecord {
-  const e = getElement(symbol);
+  const e = fullBySymbol.get(symbol);
   if (!e) throw new Error(`Element ${symbol} not found`);
   return e;
 }
@@ -115,7 +118,7 @@ describe('exhaustive same-group pairs', () => {
   test('no "Groups N and N" pattern in any same-group comparison', () => {
     // Group elements by group number and test pairs within each group
     const byGroup = new Map<number, ElementRecord[]>();
-    for (const e of allElements) {
+    for (const e of allFullElements) {
       if (e.group === null) continue;
       if (!byGroup.has(e.group)) byGroup.set(e.group, []);
       byGroup.get(e.group)!.push(e);
@@ -142,7 +145,7 @@ describe('exhaustive same-group pairs', () => {
 describe('similar mass ranking edge cases', () => {
   test('elements with very close mass rankings mention similarity', () => {
     // Find two elements with adjacent mass rankings
-    const withMassRank = allElements.filter((e) => (e.rankings.mass ?? 0) > 0);
+    const withMassRank = allFullElements.filter((e) => (e.rankings.mass ?? 0) > 0);
     const sorted = [...withMassRank].sort((a, b) => (a.rankings.mass ?? 0) - (b.rankings.mass ?? 0));
 
     if (sorted.length >= 2) {

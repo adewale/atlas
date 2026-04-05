@@ -1,10 +1,10 @@
-import { allElements } from './data';
-import type { ElementRecord } from './types';
+import rawGridElements from '../../data/generated/grid-elements.json';
+import type { GridElement } from './types';
 
-// Re-export colour utilities so existing `import { blockColor } from './grid'`
-// callers keep working. New code should import from './gridColors' directly
-// to avoid pulling in allElements.
 export { blockColor, contrastTextColor } from './gridColors';
+
+/** Slim element records used only for grid layout — NOT the full ElementRecord. */
+export const gridElements: GridElement[] = rawGridElements as GridElement[];
 
 // ---------------------------------------------------------------------------
 // Cell position calculator — IUPAC 18-column layout
@@ -19,7 +19,7 @@ const CELL_H = 64;
  * Lanthanide row (Ce-Lu): row 8, cols 4-17 (one row gap after period 7).
  * Actinide row (Th-Lr): row 9, cols 4-17.
  */
-function computePosition(el: ElementRecord): CellPosition {
+function computePosition(el: GridElement): CellPosition {
   // f-block elements without a group go to the separated rows
   if (el.group === null) {
     // Lanthanides: Ce(58)–Yb(70) → 13 elements
@@ -52,13 +52,13 @@ function computePosition(el: ElementRecord): CellPosition {
 const positionsBySymbol = new Map<string, CellPosition>();
 const positionsByKey = new Map<string, string>(); // "row,col" -> symbol
 
-for (const el of allElements) {
+for (const el of gridElements) {
   const pos = computePosition(el);
   positionsBySymbol.set(el.symbol, pos);
   positionsByKey.set(`${pos.row},${pos.col}`, el.symbol);
 }
 
-export function getCellPosition(element: ElementRecord): CellPosition {
+export function getCellPosition(element: GridElement): CellPosition {
   return positionsBySymbol.get(element.symbol)!;
 }
 
@@ -102,7 +102,7 @@ function findInDirection(
   return null;
 }
 
-function computeAdjacency(el: ElementRecord): AdjacencyEntry {
+function computeAdjacency(el: GridElement): AdjacencyEntry {
   const pos = getCellPosition(el);
   const { row, col } = pos;
 
@@ -152,6 +152,6 @@ function computeAdjacency(el: ElementRecord): AdjacencyEntry {
 }
 
 export const adjacencyMap = new Map<string, AdjacencyEntry>();
-for (const el of allElements) {
+for (const el of gridElements) {
   adjacencyMap.set(el.symbol, computeAdjacency(el));
 }

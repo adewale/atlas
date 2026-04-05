@@ -14,8 +14,9 @@ import fullElements from '../data/generated/elements.json';
  *   PeriodicTable.tsx (cell render):  symbol, atomicNumber, name, category, block
  *   PeriodicTable.tsx (heatmap):      mass, electronegativity, ionizationEnergy, radius
  *   PeriodicTable.tsx (highlight):    group, period
+ *   PropertyScatter/TimelineEra etc:  discoveryYear, discoverer, etymologyOrigin
  *
- * Total unique fields needed: 10
+ * Total unique fields needed: 13 (from the 20-field GridElement type)
  */
 
 const GRID_REQUIRED_FIELDS = [
@@ -30,6 +31,9 @@ const GRID_REQUIRED_FIELDS = [
   'electronegativity',
   'ionizationEnergy',
   'radius',
+  'discoveryYear',
+  'discoverer',
+  'etymologyOrigin',
 ] as const;
 
 describe('grid-elements.json suitability for PeriodicTable', () => {
@@ -112,8 +116,6 @@ describe('grid-elements.json suitability for PeriodicTable', () => {
       'wikidataId',
       'wikipediaTitle',
       'wikipediaUrl',
-      'discoverer',
-      'etymologyOrigin',
       'etymologyDescription',
       'summary',
       'rankings',
