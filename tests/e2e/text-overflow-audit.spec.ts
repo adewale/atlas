@@ -40,7 +40,6 @@ const ALL_PAGES = [
   { name: 'Phase Landscape', path: '/phase-landscape' },
   { name: 'Property Scatter', path: '/property-scatter' },
   { name: 'Anomaly Explorer', path: '/anomaly-explorer' },
-  { name: 'Neighbourhood Graph', path: '/neighbourhood-graph' },
   { name: 'Discovery Timeline', path: '/discovery-timeline' },
   { name: 'Etymology Map', path: '/etymology-map' },
   { name: 'Discoverer Network', path: '/discoverer-network' },

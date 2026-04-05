@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const BASE_TITLE = 'Atlas — Periodic Table';
-const BASE_DESCRIPTION = 'Atlas is an interactive periodic table featuring element folios, discovery timelines, etymology maps, property comparisons, and neighbourhood graphs — all rendered in a Byrne-inspired geometric design.';
+const BASE_DESCRIPTION = 'Atlas is an interactive periodic table featuring element folios, discovery timelines, etymology maps, and property comparisons — all rendered in a Byrne-inspired geometric design.';
 
 let metaDescription: HTMLMetaElement | null = null;
 

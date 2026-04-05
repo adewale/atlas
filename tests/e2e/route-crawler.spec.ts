@@ -49,7 +49,6 @@ const DEFINED_ROUTE_PATTERNS = [
   '/phase-landscape',
   '/property-scatter',
   '/anomaly-explorer',
-  '/neighbourhood-graph',
   '/etymology-map',
   '/discoverer-network',
 ];
