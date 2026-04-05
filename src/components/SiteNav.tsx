@@ -1,10 +1,14 @@
 import { Link } from 'react-router';
 import { DIM, GREY_MID, GREY_LIGHT, MONO_FONT } from '../lib/theme';
 
-/**
- * Consistent site-wide footer navigation. Renders on every page including Home.
- * Provides keyboard shortcut hint and links to meta pages.
- */
+const NAV_LINKS: { to: string; label: string }[] = [
+  { to: '/about', label: 'About' },
+  { to: '/about/credits', label: 'Credits' },
+  { to: '/about/design', label: 'Design' },
+  { to: '/about/animation-palette', label: 'Animation' },
+  { to: '/about/entity-map', label: 'Entity Map' },
+];
+
 export default function SiteNav() {
   return (
     <nav
@@ -27,11 +31,11 @@ export default function SiteNav() {
       </span>
       <div style={{ display: 'flex', gap: '16px' }}>
         <Link to="/" aria-label="Atlas home" style={{ color: GREY_MID, textDecoration: 'none' }}>Atlas</Link>
-        <Link to="/about" aria-label="About Atlas" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>About</Link>
-        <Link to="/about/credits" aria-label="Credits" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Credits</Link>
-        <Link to="/about/design" aria-label="Design system" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Design</Link>
-        <Link to="/about/animation-palette" aria-label="Animation palette" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Animation</Link>
-        <Link to="/about/entity-map" aria-label="Entity map" style={{ color: GREY_LIGHT, textDecoration: 'none' }}>Entity Map</Link>
+        {NAV_LINKS.map(({ to, label }) => (
+          <Link key={to} to={to} style={{ color: GREY_LIGHT, textDecoration: 'none' }}>
+            {label}
+          </Link>
+        ))}
       </div>
     </nav>
   );
