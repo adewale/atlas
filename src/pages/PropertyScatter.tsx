@@ -209,16 +209,6 @@ export default function PropertyScatter() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: '760px', position: 'relative' }}>
-      <MarginNote label="Axes" color={DEEP_BLUE} top={80}>
-        <p style={{ margin: '0 0 6px' }}>
-          <strong style={{ fontSize: '11px' }}>X: {PROPERTY_LABELS[xKey]}</strong><br />
-          {PROPERTY_DESCRIPTIONS[xKey]}
-        </p>
-        <p style={{ margin: 0 }}>
-          <strong style={{ fontSize: '11px' }}>Y: {PROPERTY_LABELS[yKey]}</strong><br />
-          {PROPERTY_DESCRIPTIONS[yKey]}
-        </p>
-      </MarginNote>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
         {/* Pretext intro */}
         <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={80} />
@@ -268,6 +258,17 @@ export default function PropertyScatter() {
           </label>
         </div>
       </div>
+
+      <MarginNote label="Axes" color={DEEP_BLUE} top={80}>
+        <p style={{ margin: '0 0 6px' }}>
+          <strong style={{ fontSize: '11px' }}>X: {PROPERTY_LABELS[xKey]}</strong><br />
+          {PROPERTY_DESCRIPTIONS[xKey]}
+        </p>
+        <p style={{ margin: 0 }}>
+          <strong style={{ fontSize: '11px' }}>Y: {PROPERTY_LABELS[yKey]}</strong><br />
+          {PROPERTY_DESCRIPTIONS[yKey]}
+        </p>
+      </MarginNote>
 
       {/* Scatter plot */}
       <svg

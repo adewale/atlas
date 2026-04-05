@@ -75,6 +75,7 @@ const Explore = lazy(() => import('./pages/Explore'));
 export const router = createBrowserRouter([
   {
     Component: RootLayout,
+    HydrateFallback: () => null,
     children: [
   { path: '/', Component: Home },
 
