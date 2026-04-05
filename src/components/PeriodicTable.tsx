@@ -144,7 +144,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   });
 
   const fillFn = useCallback(
-    (el: ElementRecord) => getCellFill(el, highlightMode, property),
+    (el: GridElement) => getCellFill(el, highlightMode, property),
     [highlightMode, property],
   );
 

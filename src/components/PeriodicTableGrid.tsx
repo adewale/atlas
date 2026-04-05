@@ -8,7 +8,7 @@
  */
 import { memo } from 'react';
 import type { ReactNode } from 'react';
-import type { ElementRecord } from '../lib/types';
+import type { GridElement } from '../lib/types';
 import { allElements } from '../lib/data';
 import {
   getCellPosition,
@@ -23,7 +23,7 @@ import { BLACK, WARM_RED, STROKE_HAIRLINE, STROKE_MEDIUM } from '../lib/theme';
 
 type PeriodicTableGridProps = {
   /** Determines the fill colour for each element cell. */
-  fillFn: (el: ElementRecord) => string;
+  fillFn: (el: GridElement) => string;
   /** Called when an element cell is clicked. */
   onClick: (symbol: string) => void;
   /** Called when an element cell is hovered. */
@@ -41,7 +41,7 @@ type PeriodicTableGridProps = {
   /** Distance-based stagger origin for fill transitions. */
   staggerOrigin?: { col: number; row: number } | null;
   /** Custom stroke for non-active cells. */
-  strokeFn?: (el: ElementRecord) => { color: string; width: number };
+  strokeFn?: (el: GridElement) => { color: string; width: number };
 };
 
 // Pre-compute cell positions once
@@ -52,7 +52,7 @@ const CELL_POSITIONS = new Map(
 const POINTER_STYLE = { cursor: 'pointer' } as const;
 
 type CellProps = {
-  el: ElementRecord;
+  el: GridElement;
   x: number;
   y: number;
   fill: string;
