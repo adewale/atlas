@@ -346,11 +346,6 @@ function run() {
   for (const el of elements) symbolBlocks[el.symbol] = el.block;
   writeFileSync(join(outDir, 'symbol-blocks.json'), JSON.stringify(symbolBlocks));
 
-  // Per-element files (with sources)
-  for (const el of elements) {
-    writeFileSync(join(outDir, `element-${el.symbol}.json`), JSON.stringify(el, null, 2));
-  }
-
   // Groups
   const groups = Array.from({ length: 18 }, (_, i) => i + 1).map((n) => ({
     n,
@@ -492,6 +487,9 @@ function run() {
     meltingPoint: e.meltingPoint,
     boilingPoint: e.boilingPoint,
     halfLife: e.halfLife,
+    discoveryYear: e.discoveryYear,
+    discoverer: e.discoverer,
+    etymologyOrigin: e.etymologyOrigin,
     neighbors: e.neighbors,
   }));
   writeFileSync(join(outDir, 'grid-elements.json'), JSON.stringify(gridElements));
@@ -692,7 +690,6 @@ function run() {
   console.log('Generated files:');
   console.log(`  elements.json (${stripped.length} elements)`);
   console.log(`  grid-elements.json (${gridElements.length} elements, grid-only)`);
-  console.log(`  ${elements.length} per-element files`);
   console.log(`  ${elements.length} folio bundle files`);
   console.log(`  entity-index.json (${entityIndex.length} entities)`);
   console.log(`  groups.json (${groups.length} groups)`);

@@ -1,25 +1,27 @@
-import rawElements from '../../data/generated/elements.json';
-import type { ElementRecord } from './types';
+import rawGridElements from '../../data/generated/grid-elements.json';
+import type { GridElement } from './types';
 
 /**
- * All 118 elements — loaded eagerly for modules that need sync access at
- * module scope (grid.ts adjacency maps, PeriodicTable cell positions).
+ * Slim element records (grid-elements.json, ~35 KB) — loaded eagerly for
+ * modules that need sync access at module scope (grid.ts adjacency maps,
+ * PeriodicTable cell positions, symbol validation in route loaders).
  *
- * Vite code-splits the JSON into its own chunk (`elements-*.js`) via the
- * static import, so this does NOT bloat the index bundle.
+ * Pages that need full ElementRecord fields (summary, rankings, discoverer,
+ * etymology, etc.) obtain them from their route loaders (folio bundles,
+ * timeline.json, etc.) — NOT from this module.
  */
-export const allElements: ElementRecord[] = rawElements as ElementRecord[];
+export const allElements: GridElement[] = rawGridElements as GridElement[];
 
-const bySymbol = new Map<string, ElementRecord>(
+const bySymbol = new Map<string, GridElement>(
   allElements.map((el) => [el.symbol, el]),
 );
 
-export function getElement(symbol: string): ElementRecord | undefined {
+export function getElement(symbol: string): GridElement | undefined {
   return bySymbol.get(symbol);
 }
 
 /** @test-only — used by tests only; runtime search uses searchLocal.ts */
-export function searchElements(query: string): ElementRecord[] {
+export function searchElements(query: string): GridElement[] {
   if (!query.trim()) return allElements;
   const q = query.toLowerCase().trim();
   const matches = allElements.filter(

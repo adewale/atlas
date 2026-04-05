@@ -1040,6 +1040,152 @@ happen if the user toggled each chip. Zero-count chips are disabled
 
 ---
 
+## 39. View Transitions API callback must resolve synchronously
+
+**Bug:** Navigating from the Table to an Element page caused a 4-second
+hang. The page eventually loaded, but felt broken. Console showed:
+`TimeoutError: Transition was aborted because of timeout in DOM update`.
+
+**Root cause:** `document.startViewTransition()` holds a screenshot of
+the old page until the callback's promise resolves. Our callback used a
+double-`requestAnimationFrame` trick to wait for React to flush, but
+lazy-loaded routes with data loaders take longer than 2 frames. The
+browser's 4-second timeout fired, aborting the transition.
+
+**Fix:** Replace the rAF promise with `flushSync` from `react-dom`.
+React commits the new route synchronously inside the callback, so the
+transition resolves immediately.
+
+**Why tests missed it:** Unit tests (jsdom) don't have `startViewTransition`
+— the hook's early-return fallback ran instead. E2E tests asserted DOM
+state after navigation but didn't check console errors or measure time.
+The navigation always *succeeded*; it was just 4 seconds slower.
+
+**What should have been in the spec:**
+- "E2E: Table → Element navigation must complete in < 2 seconds."
+- "E2E: No console errors containing 'Transition was aborted' after any
+  navigation."
+- "Never return a timing-based promise from startViewTransition. Use
+  flushSync or a framework-provided signal that the DOM is ready."
+
+---
+
+## 40. Row-number changes ripple through adjacency, tests, and rendering
+
+**Bug:** Tightening the f-block gap (removing the extra empty row between
+the main grid and lanthanides) changed row numbers from 9/10 to 8/9.
+This broke three things silently: (1) `findInDirection` still skipped
+row 8 (the "gap row" that now held lanthanides), (2) adjacency map
+lookups referenced the old row numbers, (3) grid tests asserted the old
+row positions.
+
+**Root cause:** The row numbers were hardcoded in four places: position
+computation, adjacency skip logic, adjacency cross-references, and tests.
+Changing one without updating the others left the grid navigable but with
+broken keyboard nav.
+
+**Why tests missed it:** The grid tests caught the row number change
+immediately (they failed), but the `findInDirection` skip bug was only
+exercised by keyboard navigation, which no unit test covered — the
+adjacency map tests passed because the lookups used the *output* of
+`computePosition` (which was correct), not the skip logic.
+
+**What should have been in the spec:**
+- "f-block row numbers must be defined as named constants, not magic
+  numbers scattered across functions."
+- "Any change to grid geometry must be accompanied by a keyboard
+  navigation smoke test: arrow-key from La to Ce, from Ac to Th."
+
+---
+
+## 41. Inline style duplicates drift silently
+
+**Bug:** 28 inline style objects across About, Credits, and Design pages
+duplicated `SECTION_HEADING_STYLE` and `INSCRIPTION_STYLE` properties.
+When the theme constants evolved, the inline copies didn't — creating
+subtle inconsistencies (e.g. `marginBottom: '12px'` vs the constant's
+`'16px'`).
+
+**Root cause:** Copy-paste during initial page development. The theme
+constants existed but weren't imported.
+
+**Fix:** Replace all inline duplicates with spread of the theme constant
+plus any overrides. Make the Design page a *living style guide* where
+specimen text renders via the actual constants.
+
+**What should have been in the spec:**
+- "No inline style object may duplicate more than 2 properties from a
+  named style constant. Lint for this."
+- "The Design page must render specimens using the actual theme constants,
+  not copies. If a constant changes, the specimens must change too."
+
+---
+
+## 42. Dead code accumulates when routes are removed
+
+**Bug:** `NeighbourhoodGraph.tsx` (224 lines) was a fully implemented
+page component that was never reachable — removed from routes and VizNav
+but the file remained, pulling in grid utilities and transitions.
+
+**Root cause:** When the page was removed from the nav, the file deletion
+was forgotten. It compiled fine, so no error surfaced.
+
+**Fix:** Delete the file. Verify no imports reference it.
+
+**What should have been in the spec:**
+- "Every route removal must include file deletion of the page component."
+- "CI should fail on orphan page components — files in `src/pages/` that
+  are not imported by `routes.tsx`."
+
+---
+
+## 43. Duplicated grid rendering across pages invites divergence
+
+**Bug:** Three pages (Home, Phase Landscape, Anomaly Explorer) each
+implemented their own SVG periodic table grid — same cell positions,
+same load animation, same stroke/fill logic, but with small differences
+(some showed element names, some didn't; some had hover, some didn't).
+When the f-block gap was tightened, all three had to be updated.
+
+**Root cause:** The grid was built incrementally — Home first, then
+Phase Landscape copied it with phase-specific fills, then Anomaly
+Explorer copied it again. No one extracted the common pattern.
+
+**Fix:** Extract `PeriodicTableGrid` component with `fillFn`, `strokeFn`,
+`onClick`, `onHover`, `children` props. Each page provides a callback
+for colouring. One component, one set of period rules, one load
+animation, one cell layout.
+
+**What should have been in the spec:**
+- "Any SVG periodic table must use the shared `PeriodicTableGrid`
+  component. Page-specific behaviour goes in callbacks, not forks."
+- "When you find yourself copying 50+ lines of rendering code between
+  pages, stop and extract."
+
+---
+
+## 44. Async search causes flash-of-loading between facet clicks
+
+**Bug:** Clicking a facet chip on the Explore page showed a brief loading
+state (empty results, then results appearing) even though all 193 entities
+were already in memory. Each click felt laggy.
+
+**Root cause:** The search function was async (designed for a future
+server backend). Each facet change triggered an async call, React
+suspended, and the loading fallback flashed before results arrived.
+
+**Fix:** Make `localSearch` synchronous and compute results in `useMemo`.
+The dataset is 118 elements + 75 discoverers — no async needed. Results
+now appear in the same render frame as the facet change.
+
+**What should have been in the spec:**
+- "Client-side search over < 1000 entities must be synchronous. Reserve
+  async for network-dependent backends."
+- "Facet state changes must never show a loading state if the data is
+  already in memory."
+
+---
+
 ## Updated Summary Table
 
 | # | Lesson | Key Principle |
@@ -1056,6 +1202,12 @@ happen if the user toggled each chip. Zero-count chips are disabled
 | 36 | Stubs must cover every SQL path | Stubs that return empty are silent killers |
 | 37 | Transitive imports cause bundle bloat | Types and runtime must live in separate files |
 | 38 | Self-exclusion facet counts are essential | Show what toggling each chip would do |
+| 39 | View Transition callbacks must resolve sync | Use flushSync, not timing guesses |
+| 40 | Row-number changes ripple everywhere | Named constants, not magic numbers |
+| 41 | Inline style duplicates drift silently | Spread theme constants, lint for copies |
+| 42 | Dead code accumulates on route removal | Delete files when removing routes |
+| 43 | Duplicated grid rendering invites divergence | Extract shared component early |
+| 44 | Async search causes flash-of-loading | Sync search for in-memory datasets |
 
 ### Cross-cutting themes
 
@@ -1080,3 +1232,18 @@ happen if the user toggled each chip. Zero-count chips are disabled
    but fail on domain-specific terminology. When your domain has its
    own vocabulary (Latin chemistry names, German mineral names), maintain
    an explicit mapping as a recall safety net.
+
+10. **Test what the user experiences, not what the code does.** The view
+    transition bug passed every unit test and every E2E DOM assertion.
+    But no test measured *time to navigate* or checked *console errors*.
+    The user experienced a 4-second hang on every first navigation — a
+    showstopper that was invisible to our test suite. When a behaviour
+    is only observable in a real browser (timing, visual transitions,
+    console warnings), write a browser test that asserts on that signal.
+
+11. **Extract before the third copy.** Three pages each had their own
+    50-line periodic table grid. Each diverged slightly. When the grid
+    geometry changed, all three needed updating. The shared component
+    took 30 minutes to extract but would have prevented hours of
+    cascading fixes. The rule: two copies is a coincidence; three is
+    a pattern that needs a component.

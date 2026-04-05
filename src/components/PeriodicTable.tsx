@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
-import type { ElementRecord } from '../lib/types';
+import type { GridElement } from '../lib/types';
 import { allElements } from '../lib/data';
 import {
   getCellPosition,
@@ -54,7 +54,7 @@ const PROPERTY_RANGES: Record<NumericProperty, { min: number; max: number }> = (
   return ranges;
 })();
 
-function getCellFill(el: ElementRecord, mode: HighlightMode, property: NumericProperty): string {
+function getCellFill(el: GridElement, mode: HighlightMode, property: NumericProperty): string {
   switch (mode) {
     case 'none':
       return PAPER;
@@ -144,7 +144,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   });
 
   const fillFn = useCallback(
-    (el: ElementRecord) => getCellFill(el, highlightMode, property),
+    (el: GridElement) => getCellFill(el, highlightMode, property),
     [highlightMode, property],
   );
 

@@ -80,6 +80,9 @@ export type GridElement = {
   meltingPoint: number | null;
   boilingPoint: number | null;
   halfLife: number | null;
+  discoveryYear: number | null;
+  discoverer: string;
+  etymologyOrigin: string;
   neighbors: string[];
 };
 

@@ -1,5 +1,6 @@
-import { useParams, Link } from 'react-router';
+import { useParams, useLoaderData, Link } from 'react-router';
 import { getElement } from '../lib/data';
+import type { ElementRecord } from '../lib/types';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { BACK_LINK_STYLE } from '../lib/theme';
 import { VT } from '../lib/transitions';
@@ -9,13 +10,17 @@ import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export default function Compare() {
   const { symbol, other } = useParams();
-  const elementA = symbol ? getElement(symbol) : undefined;
-  const elementB = other ? getElement(other) : undefined;
+  const gridElA = symbol ? getElement(symbol) : undefined;
+  const gridElB = other ? getElement(other) : undefined;
+  const loaderData = useLoaderData() as { elements: ElementRecord[] } | undefined;
+  const bySymbol = new Map(loaderData?.elements.map((e) => [e.symbol, e]));
+  const elementA = symbol ? bySymbol.get(symbol) : undefined;
+  const elementB = other ? bySymbol.get(other) : undefined;
   const vertical = useIsMobile(600);
   useDocumentTitle(
-    elementA && elementB ? `${elementA.name} vs ${elementB.name}` : 'Compare Not Found',
-    elementA && elementB
-      ? `Side-by-side comparison of ${elementA.name} and ${elementB.name} — mass, electronegativity, ionisation energy, and atomic radius.`
+    gridElA && gridElB ? `${gridElA.name} vs ${gridElB.name}` : 'Compare Not Found',
+    gridElA && gridElB
+      ? `Side-by-side comparison of ${gridElA.name} and ${gridElB.name} — mass, electronegativity, ionisation energy, and atomic radius.`
       : undefined,
   );
 
