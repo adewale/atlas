@@ -2,7 +2,7 @@
  * Faceted navigation state — URL ↔ state serialization.
  *
  * All Explore page state lives in the URL query string:
- *   /explore?q=curie&type=element,discoverer&block=d&era=1890s
+ *   /explore?q=curie&type=element,discoverer&block=d&era=1850-1899
  *
  * Facets compose with AND across dimensions, OR within a dimension.
  * No drill param — clicking a non-element card sets a facet value.

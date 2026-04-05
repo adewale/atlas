@@ -320,71 +320,59 @@ export default function Explore() {
           );
         })}
 
-        {/* Era bar chart — Byrne-style 8-column selector */}
+        {/* Era chips — same interaction as other facets (multi-select, toggle, disabled at 0) */}
         {(() => {
           const eraCounts = response.facets?.era ?? {};
           const activeEras = facetState.era ?? [];
-          const activeSlug = activeEras.length > 0 ? activeEras[0] : null;
-          const activeBin = ERA_BINS.find(b => b.slug === activeSlug);
-          const activeCount = activeSlug ? (eraCounts[activeSlug] ?? 0) : 0;
 
           return (
             <div style={{ marginBottom: '16px' }}>
               <div style={{
                 fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase',
                 letterSpacing: '0.15em', color: GREY_MID, marginBottom: '4px',
-                display: 'flex', alignItems: 'baseline', gap: '8px',
               }}>
-                Discovery Era
-                {activeBin && (
-                  <span style={{ fontSize: '12px', fontWeight: 700, color: WARM_RED, textTransform: 'none', letterSpacing: 0 }}>
-                    {activeBin.label} · {activeCount} result{activeCount !== 1 ? 's' : ''}
-                  </span>
-                )}
+                Era
               </div>
-
-              {/* Bar chart */}
-              <div style={{ display: 'flex', gap: '2px', height: '64px', alignItems: 'flex-end' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                 {ERA_BINS.map((bin) => {
                   const count = eraCounts[bin.slug] ?? 0;
-                  const isActive = bin.slug === activeSlug;
-                  const barH = Math.max(4, Math.round((count / 25) * 48));
+                  const isActive = activeEras.includes(bin.slug);
+                  const isDisabled = count === 0 && !isActive;
                   return (
                     <button
                       key={bin.slug}
-                      onClick={() => isActive ? setFacet('era', []) : setFacet('era', [bin.slug])}
+                      onClick={() => !isDisabled && toggleFacetValue('era', bin.slug)}
+                      disabled={isDisabled}
                       aria-pressed={isActive}
-                      aria-label={`${bin.label}: ${count} results`}
                       style={{
-                        flex: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
+                        fontFamily: 'system-ui, sans-serif',
+                        fontSize: '11px',
+                        fontWeight: 700,
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase',
+                        color: isDisabled ? GREY_MID : isActive ? PAPER : BLACK,
+                        background: isActive ? BLACK : 'transparent',
+                        border: `1.5px solid ${isDisabled ? GREY_RULE : BLACK}`,
+                        borderRadius: 0,
+                        padding: '5px 9px',
+                        cursor: isDisabled ? 'default' : 'pointer',
+                        opacity: isDisabled ? 0.6 : 1,
+                        display: 'inline-flex',
                         alignItems: 'center',
-                        justifyContent: 'flex-end',
-                        height: '64px',
-                        background: 'transparent',
-                        border: 'none',
-                        padding: 0,
-                        cursor: 'pointer',
+                        gap: '5px',
                       }}
                     >
-                      <div style={{
-                        width: '80%',
-                        height: `${barH}px`,
-                        background: isActive ? WARM_RED : MUSTARD,
-                        opacity: isActive ? 1 : 0.4,
-                      }} />
                       <span style={{
-                        fontSize: '8px',
-                        color: GREY_MID,
-                        fontFamily: 'system-ui, sans-serif',
-                        marginTop: '2px',
-                        lineHeight: '14px',
-                        userSelect: 'none',
-                        whiteSpace: 'nowrap',
-                      }}>
-                        {bin.label}
-                      </span>
+                        width: '5px', height: '5px',
+                        background: isDisabled ? GREY_MID : isActive ? PAPER : BLACK,
+                        display: 'inline-block', flexShrink: 0,
+                      }} />
+                      {bin.label}
+                      <span style={{
+                        opacity: 0.7, fontWeight: 400,
+                        fontVariantNumeric: 'tabular-nums',
+                        minWidth: '24px', textAlign: 'right',
+                      }}>({count})</span>
                     </button>
                   );
                 })}

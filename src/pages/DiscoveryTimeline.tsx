@@ -13,7 +13,7 @@ import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { ERA_BINS } from '../../shared/era-bins';
+import { ERA_BINS, yearInEra } from '../../shared/era-bins';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -50,16 +50,7 @@ const ERA_LABELS: { x: number; label: string }[] = [
   { x: yearToX(1950), label: '1900s+: Nuclear synthesis' },
 ];
 
-// ---------------------------------------------------------------------------
-// Era definitions for mobile sections
-// ---------------------------------------------------------------------------
-const ERA_SECTIONS = [
-  { id: 'antiquity', label: 'Antiquity', yearRange: null as [number, number] | null },
-  { id: '1700s', label: '1700s — Gases & Alkalis', yearRange: [1700, 1800] as [number, number] },
-  { id: '1800s', label: '1800s — Spectroscopy Era', yearRange: [1800, 1900] as [number, number] },
-  { id: '1900s', label: '1900s — Atomic Age', yearRange: [1900, 2000] as [number, number] },
-  { id: '2000s', label: '2000s — Synthesis Frontier', yearRange: [2000, 2100] as [number, number] },
-];
+// Mobile sections use the shared ERA_BINS (8 historical eras).
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -157,20 +148,15 @@ export default function DiscoveryTimeline() {
     return { squares: sqs, antiquitySquares: antSqs };
   }, [antiquity, timeline, axisY]);
 
-  // Build sections for mobile view
+  // Build sections for mobile view using the 8 shared eras
   const eraSections: Section[] = useMemo(() => {
-    return ERA_SECTIONS.map(era => {
-      let entries: TimelineEntry[];
-      if (era.yearRange === null) {
-        entries = antiquity;
-      } else {
-        const [lo, hi] = era.yearRange;
-        entries = timeline.filter(e => e.year != null && e.year >= lo && e.year < hi);
-      }
+    const allEntries = [...antiquity, ...timeline];
+    return ERA_BINS.map(bin => {
+      const entries = allEntries.filter(e => yearInEra(e.year, bin));
 
       return {
-        id: era.id,
-        label: era.label,
+        id: bin.slug,
+        label: bin.label,
         color: DEEP_BLUE,
         items: entries.map(e => {
           const el = getElement(e.symbol);
