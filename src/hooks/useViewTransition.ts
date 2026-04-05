@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
+import { flushSync } from 'react-dom';
 
 /**
  * Hook that wraps React Router navigation with the View Transitions API.
  * Falls back to normal navigation when the API isn't available.
  *
- * Inspired by the "shared element transitions" pattern (Prateek Bhatnagar):
- * instead of a manual GhostLayer, the browser natively snapshots the old
- * and new DOM states, then crossfades/morphs elements with matching
- * view-transition-name values.
+ * Uses flushSync so React commits the new route synchronously inside the
+ * view transition callback, avoiding the browser's 4-second timeout on
+ * routes with lazy components or data loaders.
  */
 export function useViewTransitionNavigate() {
   const navigate = useNavigate();
@@ -21,11 +21,8 @@ export function useViewTransitionNavigate() {
       }
 
       document.startViewTransition(() => {
-        navigate(to);
-        // Return a promise that resolves after React commits the new route
-        return new Promise<void>((resolve) => {
-          // requestAnimationFrame ensures React has flushed the update
-          requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+        flushSync(() => {
+          navigate(to);
         });
       });
     },
