@@ -10,7 +10,7 @@ import {
   CELL_HEIGHT,
   contrastTextColor,
 } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import { usePretextLines } from '../hooks/usePretextLines';
 import IntroBlock from '../components/IntroBlock';
@@ -121,8 +121,6 @@ export default function AnomalyExplorer() {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Anomaly Explorer</h1>
-
           <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
         </div>
 
@@ -137,16 +135,6 @@ export default function AnomalyExplorer() {
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1
-            style={{
-              ...INSCRIPTION_STYLE,
-              color: MUSTARD,
-              viewTransitionName: VT.VIZ_TITLE,
-            } as React.CSSProperties}
-          >
-            Anomaly Explorer
-          </h1>
-
           {/* ---- Intro paragraph with drop cap ---- */}
           <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
 

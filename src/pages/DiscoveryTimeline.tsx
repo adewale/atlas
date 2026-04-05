@@ -2,10 +2,9 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLoaderData, useNavigate } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, WARM_RED, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, SECTION_LABEL_STYLE, STROKE_THIN } from '../lib/theme';
 import NavigationPill from '../components/NavigationPill';
 import IntroBlock from '../components/IntroBlock';
-import { VT } from '../lib/transitions';
 import { measureLines } from '../lib/pretext';
 import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
@@ -205,8 +204,6 @@ export default function DiscoveryTimeline() {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
-
           <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
 
         </div>
@@ -223,8 +220,6 @@ export default function DiscoveryTimeline() {
     <PageShell vizNav>
       <div style={{ maxWidth: 760 }}>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discovery Timeline</h1>
-
           {/* Intro paragraph */}
           <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import InfoTip from '../components/InfoTip';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
 import { measureLines } from '../lib/pretext';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
@@ -69,7 +69,7 @@ export default function Design() {
     <PageShell>
       <div className="design-page" style={{ maxWidth: '800px' }}>
       <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ margin: '12px 0 16px', letterSpacing: '0.2em', fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase' }}>Design Language</h1>
+      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px' }}>Design Language</h1>
       <p style={{ lineHeight: 1.7, marginBottom: '32px' }}>
         Living reference for the Atlas visual system. 60% Kronecker-Wallis/Byrne visual drama,
         40% Tufte data density.

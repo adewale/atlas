@@ -9,7 +9,7 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN, MONO_FONT } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN, MONO_FONT } from '../lib/theme';
 import { VT, vt } from '../lib/transitions';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
@@ -383,10 +383,6 @@ export default function PhaseLandscape() {
           </MarginNote>
         )}
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
-            Phase Landscape{isAtSTP ? ' at STP' : ''}
-          </h1>
-
           <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
 
           {temperatureRuler}

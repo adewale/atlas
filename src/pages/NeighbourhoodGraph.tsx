@@ -9,8 +9,8 @@ import {
   CELL_WIDTH,
   CELL_HEIGHT,
 } from '../lib/grid';
-import { BLACK, GREY_RULE, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
-import { VT } from '../lib/transitions';
+import { BLACK, GREY_RULE, CONTROL_SECTION_MIN_HEIGHT } from '../lib/theme';
+
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -87,8 +87,6 @@ export default function NeighbourhoodGraph() {
     <PageShell vizNav>
       <div style={{ maxWidth: INTRO_MAX_W }}>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: BLACK, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Neighbourhood Graph</h1>
-
           <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
         </div>
       </div>
