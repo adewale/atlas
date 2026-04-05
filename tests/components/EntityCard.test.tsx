@@ -16,29 +16,29 @@ const ELEMENT_ENTITY: Entity = {
   href: '/elements/Fe',
 };
 
-const GROUP_ENTITY: Entity = {
-  id: 'group-1',
-  type: 'group',
-  name: 'Group 1',
-  description: 'Alkali metals and hydrogen.',
-  colour: '#133e7c',
-  elements: ['H', 'Li', 'Na', 'K', 'Rb', 'Cs', 'Fr'],
-  href: '/groups/1',
+const DISCOVERER_ENTITY: Entity = {
+  id: 'discoverer-Humphry Davy',
+  type: 'discoverer',
+  name: 'Humphry Davy',
+  description: 'Discovered 6 elements: Na, K, Ca, Ba, Sr, Mg',
+  colour: '#856912',
+  elements: ['Na', 'K', 'Ca', 'Ba', 'Sr', 'Mg'],
+  href: '/discoverers/Humphry%20Davy',
 };
 
 const EMPTY_ENTITY: Entity = {
-  id: 'era-1900-1939',
-  type: 'era',
-  name: '1900\u20131939',
-  description: '5 elements discovered in 1900\u20131939.',
-  colour: '#9e1c2c',
+  id: 'discoverer-Unknown',
+  type: 'discoverer',
+  name: 'Unknown',
+  description: 'No elements attributed.',
+  colour: '#856912',
   elements: [],
-  href: '/eras/1900-1939',
+  href: null,
 };
 
 const SAMPLE_REFS: CrossRef[] = [
-  { id: 'category-transition metal', name: 'Transition metals', type: 'category', colour: '#133e7c', href: '/categories/transition metal', rel: 'member_of' },
-  { id: 'block-d', name: 'd-block', type: 'block', colour: '#856912', href: '/blocks/d', rel: 'belongs_to' },
+  { id: 'discoverer-Marie Curie', name: 'Marie Curie', type: 'discoverer', colour: '#856912', href: '/discoverers/Marie%20Curie', rel: 'discovered' },
+  { id: 'element-Na', name: 'Na — Sodium', type: 'element', colour: '#133e7c', href: '/elements/Na', rel: 'discovered' },
 ];
 
 describe('EntityCard', () => {
@@ -54,8 +54,8 @@ describe('EntityCard', () => {
   });
 
   it('shows element count in footer when collapsed', () => {
-    render(<EntityCard entity={GROUP_ENTITY} index={0} />);
-    expect(screen.getByText('7 elements')).toBeInTheDocument();
+    render(<EntityCard entity={DISCOVERER_ENTITY} index={0} />);
+    expect(screen.getByText('6 elements')).toBeInTheDocument();
   });
 
   it('shows singular "element" for 1-element entities', () => {
@@ -72,25 +72,25 @@ describe('EntityCard', () => {
 
   it('calls onExpand for non-element entities on click', () => {
     const onExpand = vi.fn();
-    render(<EntityCard entity={GROUP_ENTITY} index={0} onExpand={onExpand} />);
-    fireEvent.click(screen.getByText('Group 1'));
-    expect(onExpand).toHaveBeenCalledWith('group-1');
+    render(<EntityCard entity={DISCOVERER_ENTITY} index={0} onExpand={onExpand} />);
+    fireEvent.click(screen.getByText('Humphry Davy'));
+    expect(onExpand).toHaveBeenCalledWith('discoverer-Humphry Davy');
   });
 
   it('calls onExpand(null) when clicking an already expanded card', () => {
     const onExpand = vi.fn();
-    render(<EntityCard entity={GROUP_ENTITY} index={0} expanded onExpand={onExpand} />);
+    render(<EntityCard entity={DISCOVERER_ENTITY} index={0} expanded onExpand={onExpand} />);
     // Click the card body (not a button inside it)
-    const card = screen.getByText('Group 1').closest('div')!.parentElement!;
+    const card = screen.getByText('Humphry Davy').closest('div')!.parentElement!;
     fireEvent.click(card);
     expect(onExpand).toHaveBeenCalledWith(null);
   });
 
-  it('calls onNavigate for entities without children when no onExpand', () => {
-    const onNavigate = vi.fn();
-    render(<EntityCard entity={EMPTY_ENTITY} index={0} onNavigate={onNavigate} />);
-    fireEvent.click(screen.getByText('1900\u20131939'));
-    expect(onNavigate).toHaveBeenCalledWith('/eras/1900-1939');
+  it('calls onExpand for entities without children and href when clicked', () => {
+    const onExpand = vi.fn();
+    render(<EntityCard entity={EMPTY_ENTITY} index={0} onExpand={onExpand} />);
+    fireEvent.click(screen.getByText('Unknown'));
+    expect(onExpand).toHaveBeenCalledWith('discoverer-Unknown');
   });
 
   it('applies stagger animation delay based on index', () => {
@@ -106,7 +106,7 @@ describe('EntityCard', () => {
   });
 
   it('shows drill affordance when collapsed', () => {
-    render(<EntityCard entity={GROUP_ENTITY} index={0} />);
+    render(<EntityCard entity={DISCOVERER_ENTITY} index={0} />);
     expect(screen.getByText('▸')).toBeInTheDocument();
   });
 
@@ -134,11 +134,11 @@ describe('EntityCard', () => {
 
   it('shows cross-ref chips when expanded with crossRefs', () => {
     render(
-      <EntityCard entity={GROUP_ENTITY} index={0} expanded crossRefs={SAMPLE_REFS} />,
+      <EntityCard entity={DISCOVERER_ENTITY} index={0} expanded crossRefs={SAMPLE_REFS} />,
     );
     expect(screen.getByText('Related')).toBeInTheDocument();
-    expect(screen.getByText('Transition metals')).toBeInTheDocument();
-    expect(screen.getByText('d-block')).toBeInTheDocument();
+    expect(screen.getByText('Marie Curie')).toBeInTheDocument();
+    expect(screen.getByText('Na — Sodium')).toBeInTheDocument();
   });
 
   it('shows "Read more" and "Show elements" actions when expanded', () => {
@@ -146,7 +146,7 @@ describe('EntityCard', () => {
     const onNavigate = vi.fn();
     render(
       <EntityCard
-        entity={GROUP_ENTITY}
+        entity={DISCOVERER_ENTITY}
         index={0}
         expanded
         crossRefs={SAMPLE_REFS}
@@ -161,49 +161,50 @@ describe('EntityCard', () => {
   it('Show elements button calls onDrill', () => {
     const onDrill = vi.fn();
     render(
-      <EntityCard entity={GROUP_ENTITY} index={0} expanded onDrill={onDrill} />,
+      <EntityCard entity={DISCOVERER_ENTITY} index={0} expanded onDrill={onDrill} />,
     );
     fireEvent.click(screen.getByText(/Show elements/));
-    expect(onDrill).toHaveBeenCalledWith(GROUP_ENTITY);
+    expect(onDrill).toHaveBeenCalledWith(DISCOVERER_ENTITY);
   });
 
   it('Read more button calls onNavigate', () => {
     const onNavigate = vi.fn();
     render(
-      <EntityCard entity={GROUP_ENTITY} index={0} expanded onNavigate={onNavigate} />,
+      <EntityCard entity={DISCOVERER_ENTITY} index={0} expanded onNavigate={onNavigate} />,
     );
     fireEvent.click(screen.getByText(/Read more/));
-    expect(onNavigate).toHaveBeenCalledWith('/groups/1');
+    expect(onNavigate).toHaveBeenCalledWith('/discoverers/Humphry%20Davy');
   });
 
   it('cross-ref chip navigates to target href', () => {
     const onNavigate = vi.fn();
     render(
-      <EntityCard entity={GROUP_ENTITY} index={0} expanded crossRefs={SAMPLE_REFS} onNavigate={onNavigate} />,
+      <EntityCard entity={DISCOVERER_ENTITY} index={0} expanded crossRefs={SAMPLE_REFS} onNavigate={onNavigate} />,
     );
-    fireEvent.click(screen.getByText('Transition metals'));
-    expect(onNavigate).toHaveBeenCalledWith('/categories/transition metal');
+    fireEvent.click(screen.getByText('Na — Sodium'));
+    expect(onNavigate).toHaveBeenCalledWith('/elements/Na');
   });
 
   it('expanded card has entity colour border', () => {
     const { container } = render(
-      <EntityCard entity={GROUP_ENTITY} index={0} expanded />,
+      <EntityCard entity={DISCOVERER_ENTITY} index={0} expanded />,
     );
     const card = container.firstChild as HTMLElement;
     // jsdom converts hex to rgb
-    expect(card.style.borderColor).toBe('rgb(19, 62, 124)');
+    // #856912 → rgb(133, 105, 18)
+    expect(card.style.borderColor).toBe('rgb(133, 105, 18)');
   });
 
   it('expanded card spans full grid width', () => {
     const { container } = render(
-      <EntityCard entity={GROUP_ENTITY} index={0} expanded />,
+      <EntityCard entity={DISCOVERER_ENTITY} index={0} expanded />,
     );
     const card = container.firstChild as HTMLElement;
     expect(card.style.gridColumn).toBe('1 / -1');
   });
 
   it('hides footer when expanded', () => {
-    render(<EntityCard entity={GROUP_ENTITY} index={0} expanded />);
+    render(<EntityCard entity={DISCOVERER_ENTITY} index={0} expanded />);
     // The ▸ affordance from the footer should not appear
     // (only the "Show elements ▸" button which has different text)
     const arrows = screen.queryAllByText('▸');

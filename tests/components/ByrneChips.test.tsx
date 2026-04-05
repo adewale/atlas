@@ -14,7 +14,7 @@ const OPTIONS: ChipOption[] = [
 describe('ByrneChips', () => {
   it('renders all chip options', () => {
     render(
-      <ByrneChips options={OPTIONS} selected={new Set()} onToggle={() => {}} />,
+      <ByrneChips options={OPTIONS} selected={new Set<string>()} onToggle={() => {}} />,
     );
     expect(screen.getByText('Element')).toBeInTheDocument();
     expect(screen.getByText('Group')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('ByrneChips', () => {
       <ByrneChips
         label="Entity type"
         options={OPTIONS}
-        selected={new Set()}
+        selected={new Set<string>()}
         onToggle={() => {}}
       />,
     );
@@ -35,7 +35,7 @@ describe('ByrneChips', () => {
 
   it('shows counts when provided', () => {
     render(
-      <ByrneChips options={OPTIONS} selected={new Set()} onToggle={() => {}} />,
+      <ByrneChips options={OPTIONS} selected={new Set<string>()} onToggle={() => {}} />,
     );
     expect(screen.getByText('(118)')).toBeInTheDocument();
     expect(screen.getByText('(18)')).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('ByrneChips', () => {
   it('calls onToggle with the correct value when clicked', () => {
     const onToggle = vi.fn();
     render(
-      <ByrneChips options={OPTIONS} selected={new Set()} onToggle={onToggle} />,
+      <ByrneChips options={OPTIONS} selected={new Set<string>()} onToggle={onToggle} />,
     );
     fireEvent.click(screen.getByText('Anomaly'));
     expect(onToggle).toHaveBeenCalledWith('anomaly');
@@ -68,7 +68,7 @@ describe('ByrneChips', () => {
     render(
       <ByrneChips
         options={OPTIONS}
-        selected={new Set()}
+        selected={new Set<string>()}
         onToggle={() => {}}
       />,
     );
@@ -83,7 +83,7 @@ describe('ByrneChips', () => {
       { value: 'b', label: 'Beta', colour: '#000' },
     ];
     render(
-      <ByrneChips options={noCountOptions} selected={new Set()} onToggle={() => {}} />,
+      <ByrneChips options={noCountOptions} selected={new Set<string>()} onToggle={() => {}} />,
     );
     expect(screen.getByText('Alpha')).toBeInTheDocument();
     expect(screen.getByText('Beta')).toBeInTheDocument();
