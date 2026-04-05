@@ -5,7 +5,7 @@ import { useFontsReady } from '../hooks/useFontsReady';
 import { DROP_CAP_FONT, PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -136,7 +136,7 @@ export default function About() {
       </section>
 
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Principles</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Design Principles</h2>
         <svg
           viewBox={`0 0 ${textWidth} ${bulletData.totalHeight + bulletData.lineHeight}`}
           aria-label="Design principles"
@@ -148,7 +148,7 @@ export default function About() {
       </section>
 
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Data Sources</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Data Sources</h2>
         <svg
           viewBox={`0 0 ${textWidth} ${dataLines.length * dataLH + dataLH}`}
           aria-label="Data sources description"
@@ -160,7 +160,7 @@ export default function About() {
       </section>
 
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Technology</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Technology</h2>
         <svg
           viewBox={`0 0 ${textWidth} ${techLines.length * techLH + techLH}`}
           aria-label="Technology description"
@@ -172,7 +172,7 @@ export default function About() {
       </section>
 
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Standing on Shoulders</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Standing on Shoulders</h2>
         <svg
           viewBox={`0 0 ${textWidth} ${shoulderLines.length * shoulderLH + shoulderLH}`}
           aria-label="Standing on shoulders — acknowledgement of data sources"
@@ -184,7 +184,7 @@ export default function About() {
       </section>
 
       <section>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Design Language</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Design Language</h2>
         <svg
           viewBox={`0 0 ${textWidth} ${designLines.length * designLH + designLH}`}
           aria-label="Design language description"

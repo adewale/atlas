@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
 import PropertyBar from '../components/PropertyBar';
 import InfoTip from '../components/InfoTip';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, DIM, MINERAL_BROWN, ASTRO_PURPLE, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, SECTION_LABEL_STYLE, NAV_PILL_STYLE, STROKE_HAIRLINE, STROKE_THIN, STROKE_REGULAR, STROKE_MEDIUM, STROKE_ACCENT, STROKE_HEAVY } from '../lib/theme';
 import { measureLines } from '../lib/pretext';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
@@ -77,7 +77,7 @@ export default function Design() {
 
       {/* Palette */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Palette</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Palette</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {PALETTE.map((c) => (
             <div key={c.hex} style={{ textAlign: 'center' }}>
@@ -159,7 +159,7 @@ export default function Design() {
 
       {/* Block Colours */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Block Colours</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Block Colours</h2>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {BLOCKS.map((b) => {
             const color = blockColor(b);
@@ -187,7 +187,7 @@ export default function Design() {
 
       {/* Typography */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Typography</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Typography</h2>
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID }}>Body — system-ui, 16px</div>
           <p>The quick brown fox jumps over the lazy dog.</p>
@@ -211,30 +211,30 @@ export default function Design() {
           </span>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: GREY_MID }}>Inscription titles — 13px, uppercase, 0.2em tracking, block-coloured</div>
-          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: WARM_RED, margin: '4px 0' }}>Discovery Timeline</h3>
-          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: DEEP_BLUE, margin: '4px 0' }}>Etymology Map</h3>
-          <h3 style={{ fontSize: '13px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.2em', color: MUSTARD, margin: '4px 0' }}>Anomaly Explorer</h3>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Inscription titles (INSCRIPTION_STYLE) — block-coloured</div>
+          <h3 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, margin: '4px 0' }}>Discovery Timeline</h3>
+          <h3 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, margin: '4px 0' }}>Etymology Map</h3>
+          <h3 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, margin: '4px 0' }}>Anomaly Explorer</h3>
         </div>
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '12px', color: GREY_MID }}>Element name caption — 14px, uppercase, 0.3em tracking</div>
           <span style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.3em', color: GREY_MID }}>Hydrogen</span>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: GREY_MID }}>Section heading (SECTION_HEADING_STYLE) — 20px bold, 0.05em tracking</div>
-          <span style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '0.05em' }}>Section Heading</span>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Section heading (SECTION_HEADING_STYLE)</div>
+          <span style={{ ...SECTION_HEADING_STYLE, marginBottom: 0 }}>Section Heading</span>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: GREY_MID }}>Section label (SECTION_LABEL_STYLE) — 11px bold uppercase, 0.15em tracking, grey</div>
-          <span style={{ fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.15em', color: GREY_MID }}>Section Label</span>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Section label (SECTION_LABEL_STYLE)</div>
+          <span style={SECTION_LABEL_STYLE}>Section Label</span>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: GREY_MID }}>Nav pill (NAV_PILL_STYLE) — 11px bold uppercase, 0.08em tracking, inline-flex</div>
-          <span style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '0.08em', textTransform: 'uppercase', display: 'inline-flex', alignItems: 'center', gap: '6px', color: DEEP_BLUE }}>Nav Pill Label</span>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Nav pill (NAV_PILL_STYLE)</div>
+          <span style={{ ...NAV_PILL_STYLE, color: DEEP_BLUE }}>Nav Pill Label</span>
         </div>
         <div style={{ marginBottom: '12px' }}>
-          <div style={{ fontSize: '12px', color: GREY_MID }}>Back link (BACK_LINK_STYLE) — 12px uppercase, 0.08em tracking, grey</div>
-          <span style={{ fontSize: '12px', letterSpacing: '0.08em', textTransform: 'uppercase', color: GREY_MID }}>&#8592; Table</span>
+          <div style={{ fontSize: '12px', color: GREY_MID }}>Back link (BACK_LINK_STYLE)</div>
+          <span style={BACK_LINK_STYLE}>&#8592; Table</span>
         </div>
         <div>
           <div style={{ fontSize: '12px', color: GREY_MID }}>Drop cap — 48px initial in block colour, Pretext-measured flow</div>
@@ -250,7 +250,7 @@ export default function Design() {
 
       {/* Element Cell */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Element Cell</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Element Cell</h2>
         <svg width={56} height={64} viewBox="0 0 56 64">
           <rect x={1} y={1} width={54} height={62} fill={PAPER} stroke={BLACK} strokeWidth={0.5} />
           <text x={4} y={13} fontSize={9} fill={BLACK} fontFamily="system-ui">26</text>
@@ -261,7 +261,7 @@ export default function Design() {
 
       {/* Data Plate */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Data Plate</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Data Plate</h2>
         <svg width={160} height={224} style={{ maxWidth: '100%', height: 'auto' }}>
           <rect x={0} y={0} width={160} height={56} fill={DEEP_BLUE} />
           <text x={12} y={20} fontSize={10} fill={PAPER} fontFamily="system-ui">GROUP</text>
@@ -280,7 +280,7 @@ export default function Design() {
 
       {/* Property Bars */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Property Bars</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Property Bars</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '12px', lineHeight: 1.6 }}>
           Tufte principle: the bar is the data, and the label shows the actual value with units.
           No legend required — rank context (#N of 118) sits at top-right.
@@ -295,7 +295,7 @@ export default function Design() {
 
       {/* Spacing */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Spacing Scale</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Spacing Scale</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {SPACING.map((s) => (
             <div key={s.name} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -315,7 +315,7 @@ export default function Design() {
 
       {/* Animation Moments */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Animation Moments</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Animation Moments</h2>
         <div style={{ fontSize: '13px', lineHeight: 1.7 }}>
           {EASINGS.map((e) => (
             <div key={e.name} style={{ marginBottom: '8px' }}>
@@ -338,7 +338,7 @@ export default function Design() {
       </section>
       {/* Element Representations */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Element Representations</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Element Representations</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
           Every context uses a different visual density — from a 56px periodic table cell to a full
           AtlasPlate card with property data.
@@ -513,7 +513,7 @@ export default function Design() {
       {/* Entity Representations                                       */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Entity Representations</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '8px' }}>Entity Representations</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '24px', lineHeight: 1.6 }}>
           Comprehensive catalogue of every visual form used for each entity type
           across Atlas. The same data appears at different densities depending on
@@ -930,7 +930,7 @@ export default function Design() {
       {/* Line Thickness                                                */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Line Thickness</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Line Thickness</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '24px', lineHeight: 1.6 }}>
           Six standardised tiers govern all borders, strokes, and rules across Atlas.
         </p>
@@ -966,7 +966,7 @@ export default function Design() {
       {/* Inter-line Rules                                              */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>Inter-line Rules</h2>
+        <h2 style={SECTION_HEADING_STYLE}>Inter-line Rules</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
           PretextSvg's <code style={{ fontSize: 12 }}>showRules</code> prop draws faint horizontal lines between text lines —
           a classic typographic device that helps the eye track across wider columns of prose.
@@ -1017,7 +1017,7 @@ export default function Design() {
       {/* Consolidation Opportunities                                   */}
       {/* ============================================================ */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.05em' }}>Shared Architecture</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '8px' }}>Shared Architecture</h2>
         <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
           Core patterns unified across the codebase to reduce duplication and ensure consistency.
         </p>
@@ -1064,7 +1064,7 @@ function TooltipPatterns() {
 
   return (
     <section style={{ marginBottom: '40px' }}>
-      <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', letterSpacing: '0.05em' }}>
+      <h2 style={SECTION_HEADING_STYLE}>
         Tooltip &amp; Hover Patterns
       </h2>
       <p style={{ fontSize: '13px', color: GREY_MID, marginBottom: '16px', lineHeight: 1.6 }}>
