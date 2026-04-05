@@ -17,8 +17,8 @@ function RootLayout() {
 function cachedLoader<T>(importFn: () => Promise<{ default: T }>, key: string) {
   let cache: T | null = null;
   return async () => {
-    cache ??= await importFn().then((m) => m.default);
-    return { [key]: cache };
+    if (cache === null) cache = await importFn().then((m) => m.default);
+    return { [key]: cache } as Record<string, T>;
   };
 }
 
@@ -26,8 +26,8 @@ function cachedLoader<T>(importFn: () => Promise<{ default: T }>, key: string) {
 function cachedLoaderRaw<T>(importFn: () => Promise<{ default: T }>) {
   let cache: T | null = null;
   return async () => {
-    cache ??= await importFn().then((m) => m.default);
-    return cache;
+    if (cache === null) cache = await importFn().then((m) => m.default);
+    return cache as T;
   };
 }
 
@@ -38,6 +38,7 @@ const loadCategories = cachedLoader(() => import('../data/generated/categories.j
 const loadAnomalies = cachedLoader(() => import('../data/generated/anomalies.json'), 'anomalies');
 const loadDiscoverers = cachedLoader(() => import('../data/generated/discoverers.json'), 'discoverers');
 const loadTimeline = cachedLoaderRaw(() => import('../data/generated/timeline.json'));
+const loadElements = cachedLoader(() => import('../data/generated/elements.json'), 'elements');
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
@@ -80,14 +81,7 @@ export const router = createBrowserRouter([
   { path: '/', Component: Home },
 
   /* ── Element ─────────────────────────────── */
-  {
-    path: '/elements',
-    Component: ElementIndex,
-    loader: async () => {
-      const mod = await import('../data/generated/elements.json');
-      return { elements: mod.default };
-    },
-  },
+  { path: '/elements', Component: ElementIndex, loader: loadElements },
   {
     path: '/elements/:symbol',
     Component: Element,
@@ -120,11 +114,11 @@ export const router = createBrowserRouter([
     path: '/properties/:property',
     Component: AtlasProperty,
     loader: async () => {
-      const [rankMod, elemMod] = await Promise.all([
-        import('../data/generated/rankings.json'),
-        import('../data/generated/elements.json'),
+      const [rankData, elemData] = await Promise.all([
+        import('../data/generated/rankings.json').then((m) => m.default),
+        loadElements(),
       ]);
-      return { rankings: rankMod.default, elements: elemMod.default };
+      return { rankings: rankData, ...elemData };
     },
   },
 
@@ -133,14 +127,7 @@ export const router = createBrowserRouter([
   { path: '/anomalies/:slug', Component: AtlasAnomaly, loader: loadAnomalies },
 
   /* ── Compare (sub-resource of element) ────── */
-  {
-    path: '/elements/:symbol/compare/:other',
-    Component: Compare,
-    loader: async () => {
-      const mod = await import('../data/generated/elements.json');
-      return { elements: mod.default };
-    },
-  },
+  { path: '/elements/:symbol/compare/:other', Component: Compare, loader: loadElements },
 
   /* ── About & meta pages ──────────────────── */
   { path: '/about', Component: About },
@@ -169,13 +156,13 @@ export const router = createBrowserRouter([
     path: '/explore',
     Component: Explore,
     loader: async () => {
-      const [entityMod, refMod, elementsMod] = await Promise.all([
+      const [entityMod, refMod, elemData] = await Promise.all([
         import('../data/generated/entity-index.json'),
         import('../data/generated/entity-ref-lookup.json'),
-        import('../data/generated/elements.json'),
+        loadElements(),
       ]);
       const { createLocalSearch } = await import('./lib/searchLocal');
-      const search = createLocalSearch(entityMod.default, elementsMod.default);
+      const search = createLocalSearch(entityMod.default, elemData.elements);
       return { search, refLookup: refMod.default };
     },
   },
