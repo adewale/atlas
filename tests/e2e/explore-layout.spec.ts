@@ -35,31 +35,7 @@ test.describe('Explore page layout', () => {
     }
   });
 
-  test('era chips do not overlap etymology chips', async ({ page }) => {
-    await page.goto('/explore?era=ancient');
-    await page.waitForTimeout(1500);
-
-    const layout = await page.evaluate(() => {
-      const allDivs = [...document.querySelectorAll('div')];
-
-      // Find Etymology and Era chip row labels
-      const etyLabel = allDivs.find(d => d.textContent?.trim() === 'Etymology' && d.getAttribute('style')?.includes('uppercase'));
-      const eraLabel = allDivs.find(d => d.textContent?.trim() === 'Era' && d.getAttribute('style')?.includes('uppercase'));
-
-      const etyChips = etyLabel?.nextElementSibling;
-      const eraContainer = eraLabel?.parentElement;
-
-      if (!etyChips || !eraContainer) return null;
-
-      const etyBottom = Math.round(etyChips.getBoundingClientRect().bottom);
-      const eraTop = Math.round(eraContainer.getBoundingClientRect().top);
-
-      return { etyBottom, eraTop, gap: eraTop - etyBottom };
-    });
-
-    expect(layout).not.toBeNull();
-    expect(layout!.gap, `Etymology chips overlap era chips by ${-layout!.gap}px`).toBeGreaterThanOrEqual(0);
-  });
+  // Era/etymology overlap is covered by the general facet section overlap test above.
 
   test('result cards do not overflow container on era filter', async ({ page }) => {
     await page.goto('/explore?era=ancient');
