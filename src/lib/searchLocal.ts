@@ -120,7 +120,7 @@ export function createLocalSearch(
       .sort((a, b) => b._score - a._score);
   }
 
-  return async function localSearch(req: SearchRequest): Promise<SearchResponse> {
+  return function localSearch(req: SearchRequest): SearchResponse {
     // Text search then facet filtering
     let pool = textFilter(enriched, req.q);
     pool = applyFacets(pool, req);

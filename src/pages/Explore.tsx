@@ -43,10 +43,11 @@ import type { CrossRef } from '../components/EntityCard';
 
 const MAX_STAGGER_BATCH = 24;
 
-/** Facet dimensions rendered as chip rows (era is a slider, not chips). */
+/** Facet dimensions rendered as chip rows. */
 const FACET_DIMENSIONS: { key: FacetKey; label: string }[] = [
   { key: 'block', label: 'Block' },
   { key: 'phase', label: 'Phase' },
+  { key: 'era', label: 'Era' },
   { key: 'etymologyOrigin', label: 'Etymology' },
 ];
 
@@ -75,7 +76,7 @@ export default function Explore() {
   type RefLookup = Record<string, { out: RefEntry[]; in: RefEntry[] }>;
 
   const loaderData = useLoaderData() as {
-    search: (req: import('../lib/search').SearchRequest) => Promise<SearchResponse>;
+    search: (req: import('../../shared/search-types').SearchRequest) => SearchResponse;
     refLookup: RefLookup;
   };
   const searchFn = loaderData.search;
@@ -88,34 +89,23 @@ export default function Explore() {
   // Parse URL into facet state
   const facetState = useMemo(() => parseSearchParams(searchParams), [searchParams]);
 
-  // Search results from the API
-  const [response, setResponse] = useState<SearchResponse>({ results: [], total: 0 });
-  const [loading, setLoading] = useState(true);
-
-  // Fetch results whenever facet state changes
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    searchFn(facetState).then((res) => {
-      if (!cancelled) {
-        setResponse(res);
-        setLoading(false);
-      }
-    });
-    return () => { cancelled = true; };
-  }, [facetState, searchFn]);
+  // Search results — synchronous, computed in the same render frame.
+  // The dataset is 118 elements in memory; no async needed.
+  const response = useMemo<SearchResponse>(
+    () => searchFn(facetState),
+    [facetState, searchFn],
+  );
 
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   // Track whether this is the first render — stagger only on initial load
   const isInitialLoad = useRef(true);
   useEffect(() => {
-    // After first search completes, mark as no longer initial
-    if (!loading && isInitialLoad.current) {
+    if (response.total > 0 && isInitialLoad.current) {
       const id = setTimeout(() => { isInitialLoad.current = false; }, 500);
       return () => clearTimeout(id);
     }
-  }, [loading]);
+  }, [response.total]);
 
   // Resolve cross-refs for expanded card
   const expandedRefs = useMemo<CrossRef[]>(() => {
@@ -245,8 +235,12 @@ export default function Explore() {
           const counts = response.facets?.[key] ?? {};
           const activeValues = facetState[key] ?? [];
 
-          // Get all values that have counts, plus any currently active values
-          const allValues = [...new Set([...Object.keys(counts), ...activeValues])].sort();
+          // Get all values that have counts, plus any currently active values.
+          // Era values use ERA_BINS order (chronological); others sort alphabetically.
+          const rawValues = [...new Set([...Object.keys(counts), ...activeValues])];
+          const allValues = key === 'era'
+            ? ERA_BINS.map(b => b.slug).filter(s => rawValues.includes(s))
+            : rawValues.sort();
           if (allValues.length === 0) return null;
 
           return (
@@ -320,75 +314,13 @@ export default function Explore() {
           );
         })}
 
-        {/* Era chips — same interaction as other facets (multi-select, toggle, disabled at 0) */}
-        {(() => {
-          const eraCounts = response.facets?.era ?? {};
-          const activeEras = facetState.era ?? [];
-
-          return (
-            <div style={{ marginBottom: '16px' }}>
-              <div style={{
-                fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase',
-                letterSpacing: '0.15em', color: GREY_MID, marginBottom: '4px',
-              }}>
-                Era
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-                {ERA_BINS.map((bin) => {
-                  const count = eraCounts[bin.slug] ?? 0;
-                  const isActive = activeEras.includes(bin.slug);
-                  const isDisabled = count === 0 && !isActive;
-                  return (
-                    <button
-                      key={bin.slug}
-                      onClick={() => !isDisabled && toggleFacetValue('era', bin.slug)}
-                      disabled={isDisabled}
-                      aria-pressed={isActive}
-                      style={{
-                        fontFamily: 'system-ui, sans-serif',
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        letterSpacing: '0.04em',
-                        textTransform: 'uppercase',
-                        color: isDisabled ? GREY_MID : isActive ? PAPER : BLACK,
-                        background: isActive ? BLACK : 'transparent',
-                        border: `1.5px solid ${isDisabled ? GREY_RULE : BLACK}`,
-                        borderRadius: 0,
-                        padding: '5px 9px',
-                        cursor: isDisabled ? 'default' : 'pointer',
-                        opacity: isDisabled ? 0.6 : 1,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                      }}
-                    >
-                      <span style={{
-                        width: '5px', height: '5px',
-                        background: isDisabled ? GREY_MID : isActive ? PAPER : BLACK,
-                        display: 'inline-block', flexShrink: 0,
-                      }} />
-                      {bin.label}
-                      <span style={{
-                        opacity: 0.7, fontWeight: 400,
-                        fontVariantNumeric: 'tabular-nums',
-                        minWidth: '24px', textAlign: 'right',
-                      }}>({count})</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })()}
       </div>
 
       {/* Result count */}
       <div style={{ fontSize: '11px', color: GREY_MID, letterSpacing: '0.04em', marginBottom: '12px' }}>
-        {loading
-          ? 'Searching\u2026'
-          : response.total === 0
-            ? 'No entities match'
-            : `${response.total} entit${response.total === 1 ? 'y' : 'ies'}`}
+        {response.total === 0
+          ? 'No entities match'
+          : `${response.total} entit${response.total === 1 ? 'y' : 'ies'}`}
       </div>
 
       {/* Entity card grid — fixed min-height prevents layout shift */}
