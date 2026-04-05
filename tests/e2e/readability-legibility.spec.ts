@@ -111,7 +111,7 @@ test.describe('Readability: Home / Periodic Table', () => {
 
     const navLinks = page.locator('nav[aria-label="Visualisation pages"] a');
     const count = await navLinks.count();
-    expect(count).toBe(9);
+    expect(count).toBe(8);
     await assertNoOverlap(navLinks, 'Explore nav links');
   });
 });
@@ -327,37 +327,6 @@ test.describe('Readability: Anomaly Explorer', () => {
     await page.locator('button').first().click();
     await page.waitForTimeout(600);
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-anomaly-selected.png', fullPage: true });
-  });
-});
-
-test.describe('Readability: Neighbourhood Graph', () => {
-  test('node labels are readable and distinct', async ({ page }) => {
-    await page.goto('/neighbourhood-graph');
-    await waitForAnimations(page);
-    await page.screenshot({ path: 'tests/e2e/screenshots/readability-neighbourhood.png', fullPage: true });
-
-    // Circles should not all be at the same position
-    const circles = page.locator('svg circle');
-    expect(await circles.count()).toBe(118);
-
-    // Get positions of first and last circles
-    const firstBox = await circles.first().boundingBox();
-    const lastBox = await circles.last().boundingBox();
-    expect(firstBox).not.toBeNull();
-    expect(lastBox).not.toBeNull();
-    const dist = Math.abs(lastBox!.x - firstBox!.x) + Math.abs(lastBox!.y - firstBox!.y);
-    expect(dist).toBeGreaterThan(100);
-  });
-
-  test('intro text is readable', async ({ page }) => {
-    await page.goto('/neighbourhood-graph');
-    await waitForAnimations(page);
-
-    // Pretext intro should have non-zero dimensions
-    const introText = page.locator('svg text').first();
-    const box = await introText.boundingBox();
-    expect(box).not.toBeNull();
-    expect(box!.width).toBeGreaterThan(10); // CI fonts render narrower than local
   });
 });
 
@@ -603,7 +572,6 @@ test.describe('Page transitions: content readable after navigation', () => {
       { path: '/phase-landscape', heading: 'Phase Landscape at STP' },
       { path: '/property-scatter', heading: 'Property Scatter' },
       { path: '/anomaly-explorer', heading: 'Anomaly Explorer' },
-      { path: '/neighbourhood-graph', heading: 'Neighbourhood Graph' },
       { path: '/discovery-timeline', heading: 'Discovery Timeline' },
       { path: '/etymology-map', heading: 'Etymology Map' },
       { path: '/discoverer-network', heading: 'Discoverer Network' },

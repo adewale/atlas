@@ -30,9 +30,7 @@ import {
   PAPER,
   GREY_MID,
   GREY_RULE,
-  MUSTARD,
   WARM_RED,
-  INSCRIPTION_STYLE,
   CONTROL_SECTION_MIN_HEIGHT,
 } from '../lib/theme';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -185,8 +183,6 @@ export default function Explore() {
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD }}>Explore</h1>
-
         {/* Search input */}
         <div style={{ marginBottom: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <input

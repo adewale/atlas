@@ -15,9 +15,9 @@ export default function VizNav() {
     <nav
       style={{
         display: 'flex',
-        gap: '4px',
+        gap: '3px',
         flexWrap: 'wrap',
-        marginBottom: '16px',
+        marginBottom: '10px',
         viewTransitionName: VT.VIZ_NAV,
       }}
       aria-label="Visualisation pages"
@@ -29,25 +29,25 @@ export default function VizNav() {
             key={path}
             to={path}
             style={{
-              fontSize: '10px',
+              fontSize: '9px',
               fontWeight: 'bold',
-              letterSpacing: '0.08em',
+              letterSpacing: '0.06em',
               textTransform: 'uppercase',
-              padding: '12px 10px',
-              border: `1.5px solid ${colour}`,
+              padding: '6px 8px',
+              border: `1px solid ${colour}`,
               background: isActive ? colour : 'transparent',
               color: isActive ? PAPER : colour,
               textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '4px',
+              gap: '3px',
               transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap)',
             }}
           >
             <span
               style={{
-                width: '6px',
-                height: '6px',
+                width: '4px',
+                height: '4px',
                 background: isActive ? PAPER : colour,
                 display: 'inline-block',
                 flexShrink: 0,

@@ -4,7 +4,6 @@ import { test, expect } from '@playwright/test';
 const VIZ_PAGES = [
   '/',
   '/phase-landscape',
-  '/neighbourhood-graph',
   '/anomaly-explorer',
   '/property-scatter',
   '/discovery-timeline',
@@ -16,7 +15,6 @@ const VIZ_PAGES = [
 const TABLE_PAGES = [
   '/',
   '/phase-landscape',
-  '/neighbourhood-graph',
   '/anomaly-explorer',
 ];
 
@@ -30,7 +28,7 @@ test.describe('Structural audit — PBT constraints', () => {
 
     const navLinks = page.locator('nav[aria-label="Visualisation pages"] a');
     const count = await navLinks.count();
-    expect(count).toBe(9);
+    expect(count).toBe(8);
 
     const hrefs: string[] = [];
     for (let i = 0; i < count; i++) {

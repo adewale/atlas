@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import { useLoaderData } from 'react-router';
 import { getElement } from '../lib/data';
-import { WARM_RED, MUSTARD, BLACK, DEEP_BLUE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
-import { VT } from '../lib/transitions';
+import { WARM_RED, MUSTARD, BLACK, DEEP_BLUE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
@@ -60,9 +59,7 @@ export default function DiscovererNetwork() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: INTRO_MAX_W }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Discoverer Network</h1>
-
-        <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={72} />
+        <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
 
         <SectionedCardList sections={discovererSections} accordion defaultCollapsed={isMobile} />
       </div>

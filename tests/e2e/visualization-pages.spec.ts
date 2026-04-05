@@ -156,63 +156,6 @@ test.describe('Anomaly Explorer', () => {
   });
 });
 
-test.describe('Neighbourhood Graph', () => {
-  test('renders nodes and edges', async ({ page }) => {
-    await page.goto('/neighbourhood-graph');
-    await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/neighbourhood-graph.png', fullPage: true });
-
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Neighbourhood Graph');
-
-    // Should have node circles (118 elements)
-    const circles = page.locator('svg circle');
-    const circleCount = await circles.count();
-    expect(circleCount).toBe(118);
-
-    // Should have edge lines (stroke #ccc for non-highlighted edges)
-    const edges = page.locator('svg line[stroke="#ccc"]');
-    const edgeCount = await edges.count();
-    expect(edgeCount).toBeGreaterThan(50);
-  });
-
-  test('nodes are not stacked — corners separated', async ({ page }) => {
-    await page.goto('/neighbourhood-graph');
-    await page.waitForTimeout(2000);
-
-    // Check a few node labels aren't at the same position
-    const nodeButtons = page.locator('g[role="button"]');
-    const firstBox = await nodeButtons.first().boundingBox();
-    const lastBox = await nodeButtons.last().boundingBox();
-    expect(firstBox).not.toBeNull();
-    expect(lastBox).not.toBeNull();
-    // First and last nodes should be significantly separated
-    const dist = Math.sqrt(
-      Math.pow(lastBox!.x - firstBox!.x, 2) + Math.pow(lastBox!.y - firstBox!.y, 2),
-    );
-    expect(dist).toBeGreaterThan(100);
-  });
-
-  test('hover highlights neighbourhood', async ({ page }) => {
-    await page.goto('/neighbourhood-graph');
-    await page.waitForTimeout(2000);
-
-    // Hover over a node
-    const feNode = page.locator('g[aria-label*="Iron"]');
-    await feNode.hover();
-    await page.waitForTimeout(300);
-    await page.screenshot({ path: 'tests/e2e/screenshots/neighbourhood-hover.png', fullPage: true });
-  });
-
-  test('clicking node navigates to element', async ({ page }) => {
-    await page.goto('/neighbourhood-graph');
-    await page.waitForTimeout(2000);
-
-    await page.locator('g[aria-label*="Iron"]').click();
-    await page.waitForURL(/\/elements\/Fe/);
-    expect(page.url()).toContain('/elements/Fe');
-  });
-});
-
 test.describe('Discovery Timeline', () => {
   test('renders timeline with antiquity and historical elements', async ({ page }) => {
     await page.goto('/discovery-timeline');

@@ -2,9 +2,8 @@ import { useState, useMemo, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { VT } from '../lib/transitions';
 import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import { getElementMetrics, getPropertyMetrics } from '../lib/metrics';
 import IntroBlock from '../components/IntroBlock';
@@ -210,19 +209,7 @@ export default function PropertyScatter() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: '760px', position: 'relative' }}>
-      <MarginNote label="Axes" color={DEEP_BLUE} top={80}>
-        <p style={{ margin: '0 0 6px' }}>
-          <strong style={{ fontSize: '11px' }}>X: {PROPERTY_LABELS[xKey]}</strong><br />
-          {PROPERTY_DESCRIPTIONS[xKey]}
-        </p>
-        <p style={{ margin: 0 }}>
-          <strong style={{ fontSize: '11px' }}>Y: {PROPERTY_LABELS[yKey]}</strong><br />
-          {PROPERTY_DESCRIPTIONS[yKey]}
-        </p>
-      </MarginNote>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Property Scatter</h1>
-
         {/* Pretext intro */}
         <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={80} />
 
@@ -271,6 +258,17 @@ export default function PropertyScatter() {
           </label>
         </div>
       </div>
+
+      <MarginNote label="Axes" color={DEEP_BLUE} top={80}>
+        <p style={{ margin: '0 0 6px' }}>
+          <strong style={{ fontSize: '11px' }}>X: {PROPERTY_LABELS[xKey]}</strong><br />
+          {PROPERTY_DESCRIPTIONS[xKey]}
+        </p>
+        <p style={{ margin: 0 }}>
+          <strong style={{ fontSize: '11px' }}>Y: {PROPERTY_LABELS[yKey]}</strong><br />
+          {PROPERTY_DESCRIPTIONS[yKey]}
+        </p>
+      </MarginNote>
 
       {/* Scatter plot */}
       <svg

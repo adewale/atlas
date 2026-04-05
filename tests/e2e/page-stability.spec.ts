@@ -9,7 +9,6 @@ const VIZ_ROUTES = [
   '/phase-landscape',
   '/property-scatter',
   '/anomaly-explorer',
-  '/neighbourhood-graph',
   '/discovery-timeline',
   '/etymology-map',
   '/discoverer-network',
@@ -66,7 +65,7 @@ test.describe('VizNav stability', () => {
       await expect(vizNav).toBeVisible();
 
       const links = vizNav.locator('a');
-      await expect(links).toHaveCount(9);
+      await expect(links).toHaveCount(8);
 
       for (const label of expectedLabels) {
         await expect(

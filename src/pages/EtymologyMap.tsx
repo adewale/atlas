@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { useLoaderData } from 'react-router';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, INSCRIPTION_STYLE } from '../lib/theme';
-import { VT } from '../lib/transitions';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT } from '../lib/theme';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
@@ -81,9 +80,7 @@ export default function EtymologyMap() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: MAX_WIDTH }}>
-        <h1 style={{ ...INSCRIPTION_STYLE, color: DEEP_BLUE, margin: '0 0 16px', viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Etymology Map</h1>
-
-        <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={72} />
+        <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={80} />
 
         <SectionedCardList
           sections={sections}

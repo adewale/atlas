@@ -1,16 +1,9 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { allElements } from '../lib/data';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
-import {
-  getCellPosition,
-  contrastTextColor,
-  VIEWBOX_W,
-  VIEWBOX_H,
-  CELL_WIDTH,
-  CELL_HEIGHT,
-} from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, INSCRIPTION_STYLE, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_HAIRLINE, STROKE_THIN, MONO_FONT } from '../lib/theme';
-import { VT, vt } from '../lib/transitions';
+import { VIEWBOX_W, CELL_WIDTH, CELL_HEIGHT } from '../lib/grid';
+import { BLACK, DEEP_BLUE, WARM_RED, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_THIN, MONO_FONT } from '../lib/theme';
+import PeriodicTableGrid from '../components/PeriodicTableGrid';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
@@ -383,10 +376,6 @@ export default function PhaseLandscape() {
           </MarginNote>
         )}
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: WARM_RED, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>
-            Phase Landscape{isAtSTP ? ' at STP' : ''}
-          </h1>
-
           <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
 
           {temperatureRuler}
@@ -398,69 +387,12 @@ export default function PhaseLandscape() {
       ) : (
         <>
           <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
-            <svg
-              viewBox={`0 0 ${SVG_WIDTH} ${VIEWBOX_H}`}
-              role="img"
-              aria-label="Periodic table coloured by element phase"
-              style={{
-                width: '100%',
-                minWidth: SVG_WIDTH,
-                maxWidth: SVG_WIDTH,
-                touchAction: 'pan-x pan-y pinch-zoom',
-              }}
-            >
-              {allElements.map((el) => {
-                const pos = getCellPosition(el);
-                const phase = elementPhases.get(el.symbol) ?? 'unknown';
-                const fill = PHASE_COLORS[phase];
-                const textColor = contrastTextColor(fill);
-
-                return (
-                  <g
-                    key={el.symbol}
-                    transform={`translate(${pos.x}, ${pos.y})`}
-                    role="button"
-                    aria-label={`${el.symbol} — ${el.name}, ${phase} at ${tempK} K`}
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/elements/${el.symbol}`); }}
-                  >
-                    <title>{el.name}</title>
-                    <g
-                      style={{
-                        opacity: hasLoaded ? 1 : 0,
-                        transform: hasLoaded ? 'none' : 'translateY(4px)',
-                        transition: hasLoaded
-                          ? `opacity 200ms var(--ease-spring) ${el.atomicNumber * 4}ms, transform 200ms var(--ease-spring) ${el.atomicNumber * 4}ms`
-                          : 'none',
-                      }}
-                    >
-                      <rect
-                        x={1}
-                        y={1}
-                        width={CELL_WIDTH - 2}
-                        height={CELL_HEIGHT - 2}
-                        fill={fill}
-                        stroke={BLACK}
-                        strokeWidth={STROKE_HAIRLINE}
-                        style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG) } as React.CSSProperties}
-                      />
-                      <text
-                        x={CELL_WIDTH / 2}
-                        y={36}
-                        textAnchor="middle"
-                        fontSize={16}
-                        fontWeight="bold"
-                        fill={textColor}
-                        fontFamily="system-ui, sans-serif"
-                        style={{ transition: 'fill 250ms var(--ease-out)', viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL) } as React.CSSProperties}
-                      >
-                        {el.symbol}
-                      </text>
-                    </g>
-                  </g>
-                );
-              })}
-            </svg>
+            <PeriodicTableGrid
+              fillFn={(el) => PHASE_COLORS[elementPhases.get(el.symbol) ?? 'unknown']}
+              onClick={(symbol) => { setActiveSymbol(symbol); transitionNavigate(`/elements/${symbol}`); }}
+              activeSymbol={activeSymbol}
+              hasLoaded={hasLoaded}
+            />
           </div>
 
           <p style={{ fontSize: '13px', color: GREY_MID, marginTop: '12px', fontVariantNumeric: 'tabular-nums' }}>

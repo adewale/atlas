@@ -64,22 +64,22 @@ describe('getCellPosition', () => {
     expect(pos.col).toBe(18);
   });
 
-  it('places lanthanides (Ce-Yb, Lu) in row 9', () => {
+  it('places lanthanides (Ce-Yb, Lu) in row 8', () => {
     const ce = getElement('Ce');
     const lu = getElement('Lu');
     expect(ce).toBeDefined();
     expect(lu).toBeDefined();
-    expect(getCellPosition(ce!).row).toBe(9);
-    expect(getCellPosition(lu!).row).toBe(9);
+    expect(getCellPosition(ce!).row).toBe(8);
+    expect(getCellPosition(lu!).row).toBe(8);
   });
 
-  it('places actinides (Th-No, Lr) in row 10', () => {
+  it('places actinides (Th-No, Lr) in row 9', () => {
     const th = getElement('Th');
     const lr = getElement('Lr');
     expect(th).toBeDefined();
     expect(lr).toBeDefined();
-    expect(getCellPosition(th!).row).toBe(10);
-    expect(getCellPosition(lr!).row).toBe(10);
+    expect(getCellPosition(th!).row).toBe(9);
+    expect(getCellPosition(lr!).row).toBe(9);
   });
 
   it('all positions within viewBox bounds', () => {

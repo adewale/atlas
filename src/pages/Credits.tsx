@@ -6,7 +6,7 @@ import { useFontsReady } from '../hooks/useFontsReady';
 import { PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import { BLACK, DEEP_BLUE, DIM, GREY_MID, BACK_LINK_STYLE, INSCRIPTION_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, DIM, GREY_MID, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -97,7 +97,7 @@ export default function Credits() {
 
       {/* Structured Data */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Structured Data</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Structured Data</h2>
         <svg viewBox={`0 0 ${textWidth} ${structuredLines.length * structuredLH + structuredLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}>
           <PretextSvg lines={structuredLines} lineHeight={structuredLH} maxWidth={textWidth} animationStagger={25} />
         </svg>
@@ -105,7 +105,7 @@ export default function Credits() {
 
       {/* Identifiers */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Identifiers</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Identifiers</h2>
         <svg viewBox={`0 0 ${textWidth} ${identifiersLines.length * identifiersLH + identifiersLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}>
           <PretextSvg lines={identifiersLines} lineHeight={identifiersLH} maxWidth={textWidth} animationStagger={25} />
         </svg>
@@ -113,7 +113,7 @@ export default function Credits() {
 
       {/* Text Summaries */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Text Summaries</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Text Summaries</h2>
         <svg viewBox={`0 0 ${textWidth} ${summariesNoteLines.length * summariesNoteLH + summariesNoteLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto', marginBottom: '12px' }}>
           <PretextSvg lines={summariesNoteLines} lineHeight={summariesNoteLH} maxWidth={textWidth} animationStagger={25} />
         </svg>
@@ -192,7 +192,7 @@ export default function Credits() {
 
       {/* Media */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Media</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Media</h2>
         <svg viewBox={`0 0 ${textWidth} ${mediaLines.length * mediaLH + mediaLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}>
           <PretextSvg lines={mediaLines} lineHeight={mediaLH} maxWidth={textWidth} animationStagger={25} />
         </svg>
@@ -200,7 +200,7 @@ export default function Credits() {
 
       {/* Software */}
       <section style={{ marginBottom: '40px' }}>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>Software</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>Software</h2>
         <svg
           viewBox={`0 0 ${textWidth} ${softwareData.totalHeight + softwareData.lineHeight}`}
           aria-label="Software dependencies and licenses"
@@ -290,7 +290,7 @@ export default function Credits() {
 
       {/* About Atlas */}
       <section>
-        <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '12px', letterSpacing: '0.05em' }}>About Atlas</h2>
+        <h2 style={{ ...SECTION_HEADING_STYLE, marginBottom: '12px' }}>About Atlas</h2>
         <svg viewBox={`0 0 ${textWidth} ${aboutLines.length * aboutLH + aboutLH}`} style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}>
           <PretextSvg lines={aboutLines} lineHeight={aboutLH} maxWidth={textWidth} animationStagger={25} />
         </svg>

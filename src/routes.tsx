@@ -62,7 +62,6 @@ const DiscoveryTimeline = lazy(() => import('./pages/DiscoveryTimeline'));
 const PhaseLandscape = lazy(() => import('./pages/PhaseLandscape'));
 const PropertyScatter = lazy(() => import('./pages/PropertyScatter'));
 const AnomalyExplorer = lazy(() => import('./pages/AnomalyExplorer'));
-const NeighbourhoodGraph = lazy(() => import('./pages/NeighbourhoodGraph'));
 const EtymologyMap = lazy(() => import('./pages/EtymologyMap'));
 const DiscovererNetwork = lazy(() => import('./pages/DiscovererNetwork'));
 const DiscovererDetail = lazy(() => import('./pages/DiscovererDetail'));
@@ -76,6 +75,7 @@ const Explore = lazy(() => import('./pages/Explore'));
 export const router = createBrowserRouter([
   {
     Component: RootLayout,
+    HydrateFallback: () => null,
     children: [
   { path: '/', Component: Home },
 
@@ -178,7 +178,6 @@ export const router = createBrowserRouter([
   { path: '/phase-landscape', Component: PhaseLandscape },
   { path: '/property-scatter', Component: PropertyScatter },
   { path: '/anomaly-explorer', Component: AnomalyExplorer, loader: loadAnomalies },
-  { path: '/neighbourhood-graph', Component: NeighbourhoodGraph },
   {
     path: '/etymology-map',
     Component: EtymologyMap,

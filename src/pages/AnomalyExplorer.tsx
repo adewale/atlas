@@ -2,16 +2,9 @@ import { useState, useMemo } from 'react';
 import { useLoaderData, useSearchParams } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { allElements } from '../lib/data';
-import {
-  getCellPosition,
-  VIEWBOX_W,
-  VIEWBOX_H,
-  CELL_WIDTH,
-  CELL_HEIGHT,
-  contrastTextColor,
-} from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, INSCRIPTION_STYLE } from '../lib/theme';
-import { VT, vt } from '../lib/transitions';
+import { getCellPosition, contrastTextColor, VIEWBOX_H } from '../lib/grid';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
+import PeriodicTableGrid from '../components/PeriodicTableGrid';
 import { usePretextLines } from '../hooks/usePretextLines';
 import IntroBlock from '../components/IntroBlock';
 import PretextSvg from '../components/PretextSvg';
@@ -121,9 +114,7 @@ export default function AnomalyExplorer() {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1 style={{ ...INSCRIPTION_STYLE, color: MUSTARD, viewTransitionName: VT.VIZ_TITLE } as React.CSSProperties}>Anomaly Explorer</h1>
-
-          <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
+          <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
         </div>
 
         <SectionedCardList sections={anomalySections} accordion defaultCollapsed={false} />
@@ -137,18 +128,8 @@ export default function AnomalyExplorer() {
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <h1
-            style={{
-              ...INSCRIPTION_STYLE,
-              color: MUSTARD,
-              viewTransitionName: VT.VIZ_TITLE,
-            } as React.CSSProperties}
-          >
-            Anomaly Explorer
-          </h1>
-
           {/* ---- Intro paragraph with drop cap ---- */}
-          <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
+          <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
 
           {/* ---- Byrne colour key: one bold button per anomaly ---- */}
           <div
@@ -189,91 +170,21 @@ export default function AnomalyExplorer() {
 
       {/* ---- Periodic table grid ---- */}
       <div className="pt-scroll-container" style={{ touchAction: 'pan-x pan-y pinch-zoom' }}>
-      <svg
-        viewBox={`0 0 ${VIEWBOX_W} ${totalHeight}`}
-        style={{
-          width: '100%',
-          minWidth: VIEWBOX_W,
-          maxWidth: VIEWBOX_W,
-          display: 'block',
-          overflow: 'visible',
-          touchAction: 'pan-x pan-y pinch-zoom',
+      <PeriodicTableGrid
+        fillFn={(el) => {
+          if (!selected) return PAPER;
+          return highlightedSet.has(el.symbol) ? WARM_RED : DIM;
         }}
+        strokeFn={(el) => {
+          if (selected && !highlightedSet.has(el.symbol)) return { color: DIM, width: 0.5 };
+          return { color: BLACK, width: 1 };
+        }}
+        onClick={(symbol) => { setActiveSymbol(symbol); transitionNavigate(`/elements/${symbol}`); }}
+        activeSymbol={activeSymbol}
+        staggerOrigin={stainOrigin}
+        extraHeight={selected ? DESC_Y_OFFSET + descSvgHeight : 0}
       >
-        {allElements.map((el) => {
-          const pos = getCellPosition(el);
-          const isHighlighted = highlightedSet.has(el.symbol);
-          const hasSelection = selected !== null;
-
-          let fill: string;
-          if (!hasSelection) {
-            fill = PAPER;
-          } else if (isHighlighted) {
-            fill = WARM_RED;
-          } else {
-            fill = DIM;
-          }
-
-          const textColor = contrastTextColor(fill);
-          const dist = stainOrigin
-            ? Math.abs(pos.col - stainOrigin.col) + Math.abs(pos.row - stainOrigin.row)
-            : 0;
-
-          return (
-            <g
-              key={el.symbol}
-              transform={`translate(${pos.x}, ${pos.y})`}
-              style={{ cursor: 'pointer' }}
-              onClick={() => { setActiveSymbol(el.symbol); transitionNavigate(`/elements/${el.symbol}`); }}
-            >
-              <title>{el.name}</title>
-              <rect
-                width={CELL_WIDTH}
-                height={CELL_HEIGHT}
-                fill={fill}
-                stroke={hasSelection && !isHighlighted ? DIM : BLACK}
-                strokeWidth={hasSelection && !isHighlighted ? 0.5 : 1}
-                rx={0}
-                style={{
-                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms, stroke 250ms var(--ease-out)`,
-                  viewTransitionName: vt(activeSymbol, el.symbol, VT.CELL_BG),
-                } as React.CSSProperties}
-              />
-              <text
-                x={CELL_WIDTH / 2}
-                y={26}
-                textAnchor="middle"
-                fontSize={16}
-                fontWeight="bold"
-                fontFamily="system-ui, sans-serif"
-                fill={textColor}
-                style={{
-                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-                  viewTransitionName: vt(activeSymbol, el.symbol, VT.SYMBOL),
-                } as React.CSSProperties}
-              >
-                {el.symbol}
-              </text>
-              <text
-                x={CELL_WIDTH / 2}
-                y={42}
-                textAnchor="middle"
-                fontSize={8}
-                fontFamily="system-ui, sans-serif"
-                fill={textColor}
-                opacity={0.7}
-                style={{
-                  transition: `fill 250ms var(--ease-out) ${dist * 8}ms`,
-                  viewTransitionName: vt(activeSymbol, el.symbol, VT.NUMBER),
-                } as React.CSSProperties}
-              >
-                {el.atomicNumber}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* ---- Description text below the grid ---- */}
+        {/* Description text below the grid */}
         {selected && lines.length > 0 && (
           <PretextSvg
             lines={lines}
@@ -282,13 +193,12 @@ export default function AnomalyExplorer() {
             y={VIEWBOX_H + DESC_Y_OFFSET}
             fontSize={16}
             fill={BLACK}
-           
             ruleColor={BLACK}
             maxWidth={DESC_MAX_WIDTH}
             animationStagger={60}
           />
         )}
-      </svg>
+      </PeriodicTableGrid>
       </div>
     </PageShell>
   );
