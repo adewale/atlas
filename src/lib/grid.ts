@@ -88,12 +88,7 @@ function findInDirection(
 ): string | null {
   let r = startRow + dRow;
   let c = startCol + dCol;
-  while (r >= 1 && r <= 10 && c >= 1 && c <= 18) {
-    // Skip row 8 (gap)
-    if (r === 8) {
-      r += dRow;
-      continue;
-    }
+  while (r >= 1 && r <= 9 && c >= 1 && c <= 18) {
     const sym = getSymbolAt(r, c);
     if (sym) return sym;
     // For horizontal movement, keep scanning

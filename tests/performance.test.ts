@@ -92,9 +92,9 @@ describe('Data module', () => {
 // C) Highlight transition batching
 // ---------------------------------------------------------------------------
 describe('Highlight transition optimization', () => {
-  it('ElementCell uses staggered ripple delay with custom easing', async () => {
+  it('GridCell uses staggered ripple delay with custom easing', async () => {
     const src = readFileSync(
-      join(__dirname, '..', 'src', 'components', 'PeriodicTable.tsx'),
+      join(__dirname, '..', 'src', 'components', 'PeriodicTableGrid.tsx'),
       'utf-8',
     );
     // Original design: staggered ripple propagation using dist * 8 delay
