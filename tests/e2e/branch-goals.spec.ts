@@ -143,8 +143,8 @@ test.describe('Goal 12: Neighbour chips show full text', () => {
 
 // Goal 13: Albertus Magnus not truncated on era page
 test.describe('Goal 13: Albertus Magnus visible', () => {
-  test('Albertus Magnus chip text is not truncated on /eras/1250', async ({ page }) => {
-    await page.goto('/eras/1250');
+  test('Albertus Magnus chip text is not truncated on /eras/ancient', async ({ page }) => {
+    await page.goto('/eras/ancient');
     await page.waitForTimeout(2000);
     const chip = await page.evaluate(() => {
       const link = document.querySelector('a[href*="Albertus"]');

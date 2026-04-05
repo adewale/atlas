@@ -24,7 +24,12 @@ import { DROP_CAP_FONT } from '../lib/pretext';
  * This is intentionally in its own file so that usePretextLines.ts
  * stays free of useState/useEffect (the perf test asserts that).
  */
-const FONT_PROBE = `700 48px ${DROP_CAP_FONT}`;
+// Probe for Cinzel specifically — not the full fallback stack.
+// document.fonts.check() returns true if ANY font in a comma-separated
+// list matches, so "Cinzel, Georgia, serif" would match Georgia (system)
+// before Cinzel loads. Probing "Cinzel" alone ensures we wait for the
+// actual web font.
+const FONT_PROBE = '700 48px Cinzel';
 
 let globalFontsReady = false;
 const listeners = new Set<() => void>();

@@ -1,10 +1,9 @@
 import { useLoaderData } from 'react-router';
-import { Link } from 'react-router';
 import { getElement } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { WARM_RED, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
-import { VT } from '../lib/transitions';
+import { WARM_RED } from '../lib/theme';
 import PageShell from '../components/PageShell';
+import PageHeader from '../components/PageHeader';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import type { AnomalyData } from '../lib/types';
@@ -30,9 +29,7 @@ export default function AnomalyIndex() {
 
   return (
     <PageShell>
-      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: WARM_RED }}>All Anomalies</h1>
-      <div style={{ borderTop: `4px solid ${WARM_RED}`, marginBottom: '16px' }} />
+      <PageHeader title="All Anomalies" color={WARM_RED} />
       <SectionedCardList sections={sections} accordion defaultCollapsed />
     </PageShell>
   );

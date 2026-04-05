@@ -17,7 +17,7 @@
  */
 import { readFileSync } from 'fs';
 import { basename } from 'path';
-import { SRC_DIR, COMMENT_RE, IMPORT_RE, walk, relPath, groupBy } from './lint-utils.js';
+import { SRC_DIR, COMMENT_RE, IMPORT_RE, walk, relPath, reportAndExit } from './lint-utils.js';
 
 // Files that define the font tokens or document them — allowed to contain raw font strings
 // Design.tsx is the design system showcase that labels fonts by name in descriptive text
@@ -90,30 +90,12 @@ function lint(): Violation[] {
 }
 
 // --- Main ---
-const violations = lint();
-
-if (violations.length === 0) {
-  console.log('✓ No hardcoded font family strings found outside token sources.');
-  process.exit(0);
-} else {
-  console.warn(`⚠ Found ${violations.length} hardcoded font family string(s):`);
-  console.warn('  Consider importing the centralized constant instead.\n');
-
-  const byFile = groupBy(violations, v => v.file);
-
-  for (const [file, vs] of byFile) {
-    console.warn(`  ${file}:`);
-    for (const v of vs) {
-      console.warn(`    L${v.line}: "${v.matched}" → use ${v.token} from ${v.source}`);
-      console.warn(`           ${v.text.slice(0, 80)}`);
-    }
-    console.warn('');
-  }
-
-  if (process.argv.includes('--strict')) {
-    process.exit(1);
-  } else {
-    console.warn('  Run with --strict to make this a hard failure.\n');
-    process.exit(0);
-  }
-}
+reportAndExit(lint(), {
+  cleanMessage: 'No hardcoded font family strings found outside token sources.',
+  violationNoun: 'hardcoded font family string(s)',
+  hint: 'Consider importing the centralized constant instead.',
+  formatViolation: (v) => [
+    `L${v.line}: "${v.matched}" \u2192 use ${v.token} from ${v.source}`,
+    `       ${v.text.slice(0, 80)}`,
+  ],
+});

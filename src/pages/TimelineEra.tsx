@@ -14,27 +14,23 @@ import { DiscovererChip } from '../components/EntityChip';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { ERA_BINS, eraBySlug, yearInEra } from '../../shared/era-bins';
 
 type TimelineEntry = { symbol: string; year: number | null; discoverer: string };
 type TimelineData = { antiquity: TimelineEntry[]; timeline: TimelineEntry[] };
-
-function decadeOf(year: number): number {
-  return Math.floor(year / 10) * 10;
-}
 
 export default function TimelineEra() {
   const { era } = useParams();
   const { antiquity, timeline } = useLoaderData() as TimelineData;
 
-  const isAntiquity = era === 'antiquity';
-  const decade = isAntiquity ? null : Number(era);
+  const bin = era ? eraBySlug(era) : undefined;
 
   // Get entries for this era
   const entries = useMemo(() => {
-    if (isAntiquity) return antiquity;
-    if (decade == null || isNaN(decade)) return [];
-    return timeline.filter((e) => e.year != null && decadeOf(e.year) === decade);
-  }, [isAntiquity, decade, antiquity, timeline]);
+    if (!bin) return [];
+    const all = [...antiquity, ...timeline];
+    return all.filter((e) => yearInEra(e.year, bin));
+  }, [bin, antiquity, timeline]);
 
   const elements = entries.map((e) => getElement(e.symbol)).filter(
     (e): e is ElementRecord => e != null,
@@ -74,34 +70,12 @@ export default function TimelineEra() {
     [entryBySymbol],
   );
 
-  // All decades that have elements
-  const allDecades = useMemo(() => {
-    const decades = new Set<number>();
-    for (const e of timeline) {
-      if (e.year != null) decades.add(decadeOf(e.year));
-    }
-    return [...decades].sort((a, b) => a - b);
-  }, [timeline]);
-
-  // Prev/next era
-  const eraLabel = isAntiquity ? 'Antiquity' : `${decade}s`;
+  // Prev/next era from ERA_BINS array index
+  const eraLabel = bin?.label ?? 'Unknown Era';
   useDocumentTitle(eraLabel);
-  let prevEra: string | null = null;
-  let nextEra: string | null = null;
-
-  if (isAntiquity) {
-    nextEra = allDecades.length > 0 ? String(allDecades[0]) : null;
-  } else if (decade != null) {
-    const idx = allDecades.indexOf(decade);
-    if (idx === 0) {
-      prevEra = 'antiquity';
-    } else if (idx > 0) {
-      prevEra = String(allDecades[idx - 1]);
-    }
-    if (idx < allDecades.length - 1) {
-      nextEra = String(allDecades[idx + 1]);
-    }
-  }
+  const binIdx = bin ? ERA_BINS.indexOf(bin) : -1;
+  const prevBin = binIdx > 0 ? ERA_BINS[binIdx - 1] : null;
+  const nextBin = binIdx >= 0 && binIdx < ERA_BINS.length - 1 ? ERA_BINS[binIdx + 1] : null;
 
   // Discoverers in this era (unique)
   const discoverers = useMemo(() => {
@@ -116,12 +90,11 @@ export default function TimelineEra() {
 
   // Adjacent eras with elements (for graph browse)
   const nearbyEras = useMemo(() => {
-    if (decade == null) return allDecades.slice(0, 6);
-    const idx = allDecades.indexOf(decade);
-    const start = Math.max(0, idx - 3);
-    const end = Math.min(allDecades.length, idx + 4);
-    return allDecades.slice(start, end).filter((d) => d !== decade);
-  }, [decade, allDecades]);
+    if (binIdx < 0) return [];
+    const start = Math.max(0, binIdx - 3);
+    const end = Math.min(ERA_BINS.length, binIdx + 4);
+    return ERA_BINS.slice(start, end).filter((b) => b.slug !== bin?.slug);
+  }, [binIdx, bin]);
 
   if (entries.length === 0) {
     return (
@@ -138,7 +111,7 @@ export default function TimelineEra() {
 
       {/* Giant era numeral + heading */}
       <HeroHeader
-        numeral={isAntiquity ? '∞' : String(decade)}
+        numeral={bin?.slug === 'ancient' ? '∞' : (bin?.slug ?? '')}
         numeralColor={color}
         title={eraLabel}
         subtitle={`${elements.length} element${elements.length !== 1 ? 's' : ''} discovered`}
@@ -146,8 +119,8 @@ export default function TimelineEra() {
 
       {/* Prev / Next navigation — Pretext-styled, anchored beneath hero */}
       <SvgPrevNext
-        prev={prevEra ? { label: prevEra === 'antiquity' ? 'Antiquity' : `${prevEra}s`, to: `/eras/${prevEra}` } : undefined}
-        next={nextEra ? { label: `${nextEra}s`, to: `/eras/${nextEra}` } : undefined}
+        prev={prevBin ? { label: prevBin.label, to: `/eras/${prevBin.slug}` } : undefined}
+        next={nextBin ? { label: nextBin.label, to: `/eras/${nextBin.slug}` } : undefined}
         ariaLabel="Previous and next era navigation"
       />
 
@@ -228,14 +201,15 @@ export default function TimelineEra() {
             Nearby Eras
           </h2>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {nearbyEras.map((d) => {
-              const count = timeline.filter((e) => e.year != null && decadeOf(e.year) === d).length;
+            {nearbyEras.map((b) => {
+              const all = [...antiquity, ...timeline];
+              const count = all.filter((e) => yearInEra(e.year, b)).length;
               return (
                 <NavigationPill
-                  key={d}
-                  to={`/eras/${d}`}
-                  title={`View the ${d}s discovery era`}
-                  label={`${d}s (${count})`}
+                  key={b.slug}
+                  to={`/eras/${b.slug}`}
+                  title={`View the ${b.label} discovery era`}
+                  label={`${b.label} (${count})`}
                   color={DEEP_BLUE}
                 />
               );

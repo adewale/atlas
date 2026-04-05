@@ -178,23 +178,23 @@ test.describe('Discovery Timeline — mobile sectioned view', () => {
 
     const sections = page.locator('section[role="region"]');
     const count = await sections.count();
-    expect(count).toBeGreaterThanOrEqual(3); // Antiquity + several centuries
+    expect(count).toBeGreaterThanOrEqual(3); // Ancient + several eras
   });
 
-  test('has an Antiquity section', async ({ page }) => {
+  test('has an Ancient section', async ({ page }) => {
     await page.goto('/discovery-timeline');
     await page.waitForTimeout(2000);
 
-    const antiquity = page.locator('section#antiquity');
-    await expect(antiquity).toBeVisible();
+    const ancient = page.locator('section#ancient');
+    await expect(ancient).toBeVisible();
   });
 
   test('element cards show discovery year in description', async ({ page }) => {
     await page.goto('/discovery-timeline');
     await page.waitForTimeout(2000);
 
-    // Cards outside Antiquity should mention a year in description
-    const sections = page.locator('section[role="region"]:not(#antiquity)');
+    // Cards outside Ancient era should mention a year in description
+    const sections = page.locator('section[role="region"]:not(#ancient)');
     const sectionCount = await sections.count();
     if (sectionCount > 0) {
       const firstCard = sections.first().locator('a').first();

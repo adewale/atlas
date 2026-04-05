@@ -17,7 +17,7 @@
  */
 import { readFileSync } from 'fs';
 import { basename } from 'path';
-import { SRC_DIR, COMMENT_RE, walk, relPath } from './lint-utils.js';
+import { SRC_DIR, COMMENT_RE, walk, relPath, reportAndExit } from './lint-utils.js';
 
 // Files that ARE the token source — allowed to define raw values
 const TOKEN_SOURCE_FILES = new Set([
@@ -36,9 +36,6 @@ type Violation = {
 // Pattern: viewTransitionName: 'some-string' or viewTransitionName: "some-string"
 // These should use VT.CONSTANT instead
 const RAW_VT_NAME_RE = /viewTransitionName\s*:\s*['"][a-z-]+['"]/g;
-
-// Pattern: raw easing values that should use CSS vars
-const RAW_EASING_RE = /(?:transition|animation).*(?:ease-in-out|ease-out|ease-in|cubic-bezier)/g;
 
 function lint(): Violation[] {
   const violations: Violation[] = [];
@@ -72,17 +69,10 @@ function lint(): Violation[] {
 }
 
 // --- Main ---
-const violations = lint();
-
-if (violations.length === 0) {
-  console.log('✓ No raw animation token strings found. All using VT.* constants.');
-  process.exit(0);
-} else {
-  console.error(`✗ Found ${violations.length} raw animation token(s):`);
-  console.error('  Import from transitions.ts (VT.*) instead of using string literals.\n');
-  for (const v of violations) {
-    console.error(`  ${v.file}:${v.line} [${v.rule}]`);
-    console.error(`    ${v.text}\n`);
-  }
-  process.exit(1);
-}
+reportAndExit(lint(), {
+  cleanMessage: 'No raw animation token strings found. All using VT.* constants.',
+  violationNoun: 'raw animation token(s)',
+  hint: 'Import from transitions.ts (VT.*) instead of using string literals.',
+  formatViolation: (v) => [`L${v.line} [${v.rule}]: ${v.text}`],
+  alwaysFail: true,
+});

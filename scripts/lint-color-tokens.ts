@@ -17,7 +17,7 @@
  */
 import { readFileSync } from 'fs';
 import { basename } from 'path';
-import { SRC_DIR, COMMENT_RE, IMPORT_RE, walk, relPath, groupBy } from './lint-utils.js';
+import { SRC_DIR, COMMENT_RE, IMPORT_RE, walk, relPath, reportAndExit } from './lint-utils.js';
 
 // Files that ARE the token source — allowed to define hex values
 const TOKEN_SOURCE_FILES = new Set(['theme.ts', 'globals.css']);
@@ -75,32 +75,9 @@ function lint(): Violation[] {
 }
 
 // --- Main ---
-const violations = lint();
-
-if (violations.length === 0) {
-  console.log('✓ No hardcoded hex colour values found outside theme.ts.');
-  process.exit(0);
-} else {
-  console.warn(`⚠ Found ${violations.length} hex colour literal(s) outside theme.ts:`);
-  console.warn('  Consider importing from theme.ts instead.\n');
-
-  // Group by file for readability
-  const byFile = groupBy(violations, v => v.file);
-
-  for (const [file, vs] of byFile) {
-    console.warn(`  ${file}:`);
-    for (const v of vs) {
-      console.warn(`    L${v.line}: ${v.hex}  — ${v.text.slice(0, 80)}`);
-    }
-    console.warn('');
-  }
-
-  // Exit with warning (0) rather than failure — some hex values are legitimate
-  // (e.g. SVG gradient stops derived from data). Use --strict flag for CI.
-  if (process.argv.includes('--strict')) {
-    process.exit(1);
-  } else {
-    console.warn('  Run with --strict to make this a hard failure.\n');
-    process.exit(0);
-  }
-}
+reportAndExit(lint(), {
+  cleanMessage: 'No hardcoded hex colour values found outside theme.ts.',
+  violationNoun: 'hex colour literal(s) outside theme.ts',
+  hint: 'Consider importing from theme.ts instead.',
+  formatViolation: (v) => [`L${v.line}: ${v.hex}  — ${v.text.slice(0, 80)}`],
+});

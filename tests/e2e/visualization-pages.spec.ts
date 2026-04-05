@@ -428,11 +428,11 @@ test.describe('Discoverer Detail', () => {
 
 test.describe('Timeline Era', () => {
   test('renders era page with elements', async ({ page }) => {
-    await page.goto('/eras/1770');
+    await page.goto('/eras/1700s');
     await page.waitForTimeout(2000);
-    await page.screenshot({ path: 'tests/e2e/screenshots/timeline-1770s.png', fullPage: true });
+    await page.screenshot({ path: 'tests/e2e/screenshots/timeline-1700s.png', fullPage: true });
 
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('1770s');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('1700s');
 
     // Should show element count
     await expect(page.getByText(/\d+ elements?/).first()).toBeVisible();
@@ -445,15 +445,15 @@ test.describe('Timeline Era', () => {
   });
 
   test('antiquity era page works', async ({ page }) => {
-    await page.goto('/eras/antiquity');
+    await page.goto('/eras/ancient');
     await page.waitForTimeout(2000);
 
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Antiquity');
+    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Ancient');
     await expect(page.getByText(/\d+ elements?/).first()).toBeVisible();
   });
 
   test('prev/next era navigation works', async ({ page }) => {
-    await page.goto('/eras/1770');
+    await page.goto('/eras/1700s');
     await page.waitForTimeout(1500);
 
     const navLinks = page.locator('nav a');
@@ -466,7 +466,7 @@ test.describe('Timeline Era', () => {
   });
 
   test('discoverer links from era page work', async ({ page }) => {
-    await page.goto('/eras/1770');
+    await page.goto('/eras/1700s');
     await page.waitForTimeout(1500);
 
     const discovererLinks = page.locator('section:has(h2:has-text("Discoverers")) a');

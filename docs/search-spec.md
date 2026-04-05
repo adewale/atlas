@@ -343,18 +343,113 @@ When no results match, show a gentle message:
 
 ---
 
-## Faceted Navigation (future enhancement)
+## Faceted Navigation
 
-Once search exists, facets can layer on top as refinement chips
-below the results header:
+### Theoretical foundation
+
+Faceted classification (Ranganathan, 1933) describes items along multiple
+independent dimensions rather than forcing them into a single hierarchy.
+See `docs/faceted-navigation.md` for the full research background.
+
+Atlas maps Ranganathan's PMEST framework to the periodic table domain:
+
+| Facet | Dimension | Values | Applies to |
+|-------|-----------|--------|------------|
+| Entity type | Personality | element, discoverer, era, category, group, block, anomaly, etymology | All entities |
+| Block | Matter | s, p, d, f | Elements, groups |
+| Phase | Energy | solid, liquid, gas | Elements |
+| Etymology origin | Space | place, person, mythology, property, mineral, astronomical | Elements |
+| Discovery era | Time | Antiquity, 1770s, 1800s, … | Elements, discoverers |
+
+### How search and facets compose
+
+Search and facets are two layers of the same system:
+
+1. **Search produces a candidate set.** "Curie" → 6 entities
+   (via client-side scoring now; D1 FTS5 + Vectorize later).
+   This is the recall phase.
+
+2. **Facets narrow that candidate set.** Entity type, block, era,
+   etc. each constrain the results. This is the precision phase.
+   Entirely client-side regardless of search backend.
 
 ```
-  RESULTS FOR "CURIE"                                      6 hits
-  Show: ALL  ELEMENTS(3)  DISCOVERERS(2)  ERAS(1)
+  User types "curie"
+         |
+         v
+  Search engine (client or D1+Vectorize)
+         |
+         v
+  Candidate set: 6 entities
+         |
+    +----+----+----+
+    |    |    |    |
+    v    v    v    v
+  Entity Block Era  Etymology   ← facet filters (AND across, OR within)
+    |    |    |    |
+    +----+----+----+
+         |
+         v
+  Filtered results → entity cards
+         |
+         v
+  Recompute counts for all facet values
+  (self-exclusion: counts for facet F ignore F's selection)
 ```
 
-These are simple entity-type filters applied client-side to the
-fused result set. No additional backend work required.
+### State machine model (from Olsen)
+
+Faceted navigation is a deterministic state machine. Three rules:
+
+1. **No dead ends.** Users cannot transition from a state with results
+   to one with zero results. Values with count = 0 are visible but
+   **disabled** (greyed out, not clickable). Never hidden.
+
+2. **Self-exclusion counting.** When computing counts for facet F,
+   apply all active filters except F itself. This means selecting
+   "s-block" doesn't change the counts shown for other blocks — the
+   user always sees "what if I switched?" without deselecting first.
+
+3. **URL as source of truth.** All filter state lives in the query
+   string: `/explore?q=curie&type=element&block=s&era=1800`.
+   AND logic across facets. Enables deep linking and reproducibility.
+
+### Drill-down as facet pre-fill
+
+Clicking a discoverer card (e.g. "Humphry Davy") does **not** enter a
+separate drill-down mode. It sets `Discoverer = Humphry Davy` as a
+facet value. The result set narrows to his elements, but all other
+facets remain active and their counts update. The user can further
+filter by block, era, etc. — or remove the discoverer filter to return
+to the broader set without losing other active facets.
+
+This is strictly more powerful than breadcrumb drill-down: removing one
+filter does not reset the others.
+
+### Facet bar layout
+
+Facets are inline Byrne chip rows, not a sidebar. Primary facets are
+always visible; secondary facets appear when relevant (e.g. Block and
+Era rows appear after a discoverer is selected):
+
+```
+  🔍 curie                                                      ×
+
+  Entity   ██ Element(3)  ░░ Discoverer(2)  ░░ Era(1)
+           ░░ Category(2)  ░░ Group(2)  ░░ Block(1)
+           ░░ Anomaly(0)  ░░ Etymology(1)
+
+  Block    ░░ s(1)  ░░ p(1)  ░░ d(1)  ░░ f(0)
+
+  Era      ░░ 1800s(0)  ░░ 1890s(2)  ░░ 1940s(1)
+
+  6 entities                                          × Clear all
+```
+
+Each row is a facet dimension. Each chip follows the Byrne pattern:
+filled (██) when active, outlined (░░) when inactive, greyed when
+disabled (count = 0). Counts update live as the user types or
+toggles facets.
 
 ---
 
@@ -385,9 +480,9 @@ This means:
    theorem. Results should breathe — separated by hairline rules and
    whitespace, not bordered containers. The content boundary is implicit.
 
-4. **Facets as colour chips, not checkboxes.** The "Show: ALL ELEMENTS(3)
-   DISCOVERERS(2) ERAS(1)" bar should be the same Byrne-style chip pattern
-   we already use for colour modes. Active = filled, inactive = outlined.
+4. **Facets as colour chips, not checkboxes.** The facet bar uses the
+   same Byrne-style chip pattern as the VizNav and AnomalyExplorer
+   buttons. Active = filled, inactive = outlined, disabled = greyed.
    Consistency across the entire app.
 
 ### How does Pretext change search?
@@ -454,20 +549,33 @@ checkbox lists, accordion sections. For Atlas, facets should be
 **inline with the data**, not beside it.
 
 Proposed pattern: **facet chips live in the filter bar itself.**
-When the user activates search, additional chip rows appear below
-the colour-mode chips:
+The Explore page always shows the search box and primary facet row.
+Secondary facet rows appear contextually. Entity cards fill the
+space below. See the Faceted Navigation section above for the state
+machine model and composition rules.
 
 ```
-  [ Curie________________x ]  NONE GROUP PERIOD BLOCK CATEGORY PROPERTY
+  🔍 curie                                                      ×
 
-  Show:  ALL(6)  ELEMENT(3)  DISCOVERER(2)  ERA(1)
-  Block: ALL     s    p    [d]    f
-  Era:   ALL    [1890s]   1900s
+  Entity   ██ Element(3)  ░░ Discoverer(2)  ░░ Era(1)
+           ░░ Category(2)  ░░ Group(2)  ░░ Block(1)
+           ░░ Anomaly(0)  ░░ Etymology(1)
+
+  Block    ░░ s(1)  ░░ p(1)  ░░ d(1)  ░░ f(0)
+  Era      ░░ 1800s(0)  ░░ 1890s(2)  ░░ 1940s(1)
+
+  6 entities                                          × Clear all
 ```
 
-Each row is a facet. Each chip is a Byrne-style button (outlined when
-inactive, filled when active). Counts update live. The entire facet
-system occupies 3 lines of chips — no sidebar, no modal, no accordion.
+Each row is a facet dimension. Each chip is a Byrne-style button
+(filled when active, outlined when inactive, greyed when disabled).
+Counts update live using self-exclusion: counts for facet F are
+computed with all active filters except F. The entire facet system
+occupies 2–4 lines of chips — no sidebar, no modal, no accordion.
+
+Clicking a non-element card (e.g. a discoverer) pre-fills that
+entity as a facet value rather than entering a drill-down mode.
+This keeps all other facets active and their counts meaningful.
 
 For property-range facets (atomic mass, electronegativity), a tiny
 SVG histogram replaces the chip row:

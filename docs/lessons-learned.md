@@ -833,6 +833,212 @@ all 7 violations.
   syntax patterns (template literals, tagged templates, etc.)."
 
 ---
+---
+
+# Part 5 — Lessons from Search, Navigation, and Exploration
+
+The sections below capture lessons from building the Explore page
+(faceted navigation, entity cross-references, progressive disclosure)
+and the hybrid search Worker (D1 FTS5 + Vectorize + Workers AI).
+
+---
+
+## 31. Drill parameters are a design smell — use facets
+
+**Context:** The initial Explore page used a `drill` URL param to
+"drill into" a non-element entity (e.g., `?drill=discoverer-Marie+Curie`),
+which triggered client-side filtering. This interacted poorly with search
+and other filters.
+
+**Problem:** Drill is a modal state that doesn't compose. Selecting a
+discoverer via drill while also filtering by block created ambiguity:
+is the drill AND'd with the block filter? Does clearing the block filter
+also clear the drill? Projects like Datasette and Olsen don't have this
+problem because they use faceted navigation — a well-understood state
+machine where dimensions compose with AND across and OR within.
+
+**Fix:** Removed drill entirely. Clicking a non-element card sets its
+entity type as a facet filter in the URL. All state lives in URL params,
+composing naturally: `?q=curie&type=element&block=d`.
+
+**What should have been in the spec:**
+- "Navigation state must compose. If two controls can be active
+  simultaneously, they must follow faceted AND/OR semantics."
+- "If you're inventing a new URL parameter that acts like a filter but
+  doesn't follow the existing filter model, that's a design smell."
+
+---
+
+## 32. Client-side search doesn't scale — design for the server from day one
+
+**Context:** The original `searchEntities()` function lived in
+`entities.ts`, did client-side string matching, and was imported
+directly by components.
+
+**Problem:** Client-side search can't do synonym expansion, semantic
+matching, or stemming. When we needed "Polish scientists" to find Marie
+Curie, client-side string matching was fundamentally incapable. The
+search contract had to be redesigned to go through an API, requiring
+changes to the Explore page, routes, loader, and tests.
+
+**Fix:** Defined a `SearchRequest → SearchResponse` API contract
+(`search.ts`), with a local adapter (`searchLocal.ts`) as a stand-in
+until the Worker goes live. All components call the same async function
+regardless of backend.
+
+**What should have been in the spec:**
+- "Search must be defined as an async API contract from day one, even
+  if the initial implementation is local. The contract shape
+  (request, response, facet counts) must be specified before any UI."
+- "Never import a synchronous search function directly into components.
+  The indirection of an async API contract costs nothing and enables
+  migration to a real backend without UI changes."
+
+---
+
+## 33. Synonym tables must be bidirectional and per-term
+
+**Context:** The D1 `synonyms` table mapped Latin element names to
+English (wolfram→tungsten, ferrum→iron) for FTS5 query expansion.
+
+**Problem 1 — One-directional:** Searching "tungsten" didn't expand to
+"wolfram," so results mentioning only "wolfram" were missed.
+
+**Problem 2 — Whole-query matching:** `WHERE term = ?` bound the entire
+query string. "wolfram alloy" didn't match because "wolfram alloy" isn't
+a row in the table — only "wolfram" is. Multi-word queries with one
+expandable term silently skipped expansion.
+
+**Fix:** Made all synonym entries bidirectional (both directions as
+separate rows). Split queries into terms and expand each independently:
+`"wolfram alloy"` → `("wolfram" OR "tungsten") AND "alloy"`.
+
+**What should have been in the spec:**
+- "Synonym tables must contain both directions of every mapping. Use
+  `(term, synonym)` pairs with a composite primary key."
+- "Synonym expansion must operate per-term, not on the full query
+  string. Split → expand → reassemble."
+
+---
+
+## 34. Sanitize user input before FTS5 MATCH
+
+**Context:** The search handler passed user queries directly into
+SQLite FTS5 MATCH expressions.
+
+**Problem:** FTS5 has its own query syntax: `AND`, `OR`, `NOT`, `NEAR`,
+`*`, `"`, `(`, `)`. A query like `iron AND NOT metal` would be
+interpreted as FTS5 operators, not as literal text. An unclosed quote
+(`"iron`) would cause a parse error. This is the FTS5 equivalent of
+SQL injection.
+
+**Fix:** `sanitizeFts5Term()` strips all FTS5 operator characters and
+keywords before building MATCH expressions. Each term is double-quoted
+in the final query to ensure literal matching.
+
+**What should have been in the spec:**
+- "Any user input that becomes part of a FTS5 MATCH expression must be
+  sanitized: strip `*\"()^{}[]` and FTS5 keywords (AND, OR, NOT, NEAR)."
+- "Treat FTS5 query building with the same discipline as SQL query
+  building — parameterize or sanitize, never concatenate raw input."
+
+---
+
+## 35. English-only embedding models have Latin blind spots
+
+**Context:** We use `@cf/baai/bge-base-en-v1.5` (768-dim, English-only)
+for semantic search via Cloudflare Vectorize.
+
+**Problem:** "Wolfram" embeds near "tungsten" because both appear
+frequently in English Wikipedia. But "ferrum," "natrium," "kalium,"
+"stannum," and "hydrargyrum" are rare Latin terms that barely appear in
+English text. BGE-base-en-v1.5 treats them as near-OOV tokens with poor
+semantic grounding — it will NOT reliably place "ferrum" near "iron."
+
+**Fix:** Belt-and-suspenders: the D1 synonym table provides guaranteed
+recall for Latin names the embedding model can't handle. Vectorize
+provides semantic coverage for everything else (contextual queries,
+common-knowledge synonyms, indirect references). The synonym table adds
+~1–5ms — negligible.
+
+**What should have been in the spec:**
+- "When using an English-only embedding model for a domain with
+  non-English terminology (Latin chemistry names, German mineral names),
+  maintain an explicit synonym table as a recall safety net."
+- "Don't assume embedding similarity covers specialized vocabulary.
+  Test with actual domain terms, not just common English words."
+
+---
+
+## 36. Test stubs must match every SQL path
+
+**Context:** The D1 stub in `worker-search.test.ts` routed queries based
+on SQL string content (`sql.includes('search_fts')`, etc.).
+
+**Bug:** The handler's empty-query path runs
+`SELECT ... FROM search_entities` (no WHERE clause), but the stub's
+routing only recognized `search_entities WHERE ...` (with WHERE). Three
+tests failed — block facet, AND composition, and "empty query returns
+all" — because the stub returned empty results for the fetch-all query.
+
+**Fix:** Changed stub routing to check `sql.includes('WHERE')` to
+distinguish fetch-all from fetch-by-id.
+
+**What should have been in the spec:**
+- "When stubbing a database, the stub's routing logic must cover every
+  distinct SQL query the handler generates. Add a test for each query
+  path: FTS match, fetch-all, fetch-by-id, synonym lookup."
+- "If a test fails with 'expected N, got 0,' suspect the stub before
+  suspecting the handler. Stubs that silently return empty results are
+  the most common cause of false negatives."
+
+---
+
+## 37. Transitive imports create invisible bundle bloat
+
+**Context:** `entities.ts` exported both the `Entity` type and the
+`searchEntities()` function. The function imported the 120KB entity
+index JSON. Any component importing the `Entity` type transitively
+pulled in the entire search corpus — 177KB of dead weight.
+
+**Fix:** Moved types and constants to `entities.ts`, search logic to
+`searchLocal.ts` (later replaced by the API contract). The entity index
+is now loaded only in the route loader, not at import time.
+
+**What should have been in the spec:**
+- "Type-only exports must live in files with no runtime imports. If a
+  file exports both types and functions that import large data, the
+  types will transitively pull in the data for every consumer."
+- "Use `import type { ... }` consistently. TypeScript erases type
+  imports at build time, but only if the import is marked as type-only."
+
+---
+
+## 38. Self-exclusion facet counts are essential UX
+
+**Context:** Facet chips (type, block, phase, era, etymologyOrigin)
+show counts next to each value.
+
+**Problem:** Naive counting (count after all filters are applied)
+causes the active dimension's chips to show misleading counts. If
+`type=element` is active, the type chip for "discoverer" shows 0 —
+making it look like there are no discoverers matching the query, when
+in fact there are. The user can't discover that removing the type
+filter would reveal discoverer results.
+
+**Fix:** Self-exclusion counting: for each facet dimension, recompute
+counts with that dimension's filter removed. This shows what would
+happen if the user toggled each chip. Zero-count chips are disabled
+(greyed out, still visible), not hidden.
+
+**What should have been in the spec:**
+- "Facet counts must use self-exclusion: count results with all filters
+  EXCEPT the current dimension. This lets users see what they'd get by
+  changing each filter."
+- "Zero-count chips must be disabled, not hidden. Hiding creates the
+  impression that the dimension doesn't exist for this query."
+
+---
 
 ## Updated Summary Table
 
@@ -842,11 +1048,35 @@ all 7 violations.
 | 28 | SVG height must include descenders | baseline y + fontSize × 1.2 for safe height |
 | 29 | Amortize cold-start in SPA tests | Batch page visits per viewport, not per page |
 | 30 | Linters must match evolving patterns | Test linters against known violations |
+| 31 | Drill is a design smell — use facets | Navigation state must compose |
+| 32 | Design for server search from day one | Async API contract costs nothing |
+| 33 | Bidirectional + per-term synonyms | Split → expand → reassemble |
+| 34 | Sanitize input before FTS5 MATCH | FTS5 injection is real |
+| 35 | English models miss Latin vocabulary | Belt-and-suspenders with synonym tables |
+| 36 | Stubs must cover every SQL path | Stubs that return empty are silent killers |
+| 37 | Transitive imports cause bundle bloat | Types and runtime must live in separate files |
+| 38 | Self-exclusion facet counts are essential | Show what toggling each chip would do |
 
-### Cross-cutting theme
+### Cross-cutting themes
 
 6. **Tools must evolve with the codebase.** A linter written for
    string literals doesn't catch template literals. A test written
    for two viewports misses the third. A width constant that worked
    at 1280px fails at 812px. Every assumption encoded in a tool is a
    future false negative if the codebase outgrows it.
+
+7. **Compose, don't invent.** Faceted navigation (AND across, OR within,
+   self-exclusion counts) is a solved problem. Drill was a bespoke
+   mechanism that didn't compose. When an established pattern exists,
+   use it — novel interaction models carry hidden edge cases.
+
+8. **Design for the real backend from the start.** An async API contract
+   with a local stand-in adapter costs nothing upfront but makes backend
+   migration trivial. Tight coupling to synchronous client-side search
+   required rewriting components, routes, and tests.
+
+9. **Domain vocabulary needs explicit coverage.** General-purpose tools
+   (embedding models, stemmers, tokenizers) handle common language well
+   but fail on domain-specific terminology. When your domain has its
+   own vocabulary (Latin chemistry names, German mineral names), maintain
+   an explicit mapping as a recall safety net.

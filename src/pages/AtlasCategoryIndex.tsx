@@ -1,9 +1,8 @@
 import { useLoaderData } from 'react-router';
-import { Link } from 'react-router';
 import { getElement } from '../lib/data';
-import { categoryColor, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
-import { VT } from '../lib/transitions';
+import { categoryColor, DEEP_BLUE } from '../lib/theme';
 import PageShell from '../components/PageShell';
+import PageHeader from '../components/PageHeader';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import type { CategoryData } from '../lib/types';
@@ -25,9 +24,7 @@ export default function AtlasCategoryIndex() {
 
   return (
     <PageShell>
-      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: DEEP_BLUE }}>All Categories</h1>
-      <div style={{ borderTop: `4px solid ${DEEP_BLUE}`, marginBottom: '16px' }} />
+      <PageHeader title="All Categories" color={DEEP_BLUE} />
       <SectionedCardList sections={sections} accordion defaultCollapsed />
     </PageShell>
   );
