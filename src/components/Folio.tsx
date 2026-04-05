@@ -13,6 +13,7 @@ import SourceStrip from './SourceStrip';
 
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, categoryColor } from '../lib/theme';
 import { toUrlSlug } from '../lib/slugs';
+import { yearToEra } from '../../shared/era-bins';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
 import SvgLink from './SvgLink';
@@ -532,11 +533,11 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
                 </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
                 <Link
-                  to={element.discoveryYear ? `/eras/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
-                  title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
+                  to={element.discoveryYear ? `/eras/${yearToEra(element.discoveryYear).slug}` : '/discovery-timeline'}
+                  title={element.discoveryYear ? `View the ${yearToEra(element.discoveryYear).label} discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
-                  {element.discoveryYear ? `${Math.floor(element.discoveryYear / 10) * 10}s →` : 'timeline →'}
+                  {element.discoveryYear ? `${yearToEra(element.discoveryYear).label} →` : 'timeline →'}
                 </Link>
               </div>
               {sameDiscoverer.length > 0 && (

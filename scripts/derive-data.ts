@@ -7,6 +7,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { ERA_BINS, yearToEra } from '../shared/era-bins';
 
 type SeedElement = {
   atomicNumber: number;
@@ -532,28 +533,29 @@ function run() {
       href: `/discoverers/${encodeURIComponent(d.name)}`,
     });
   }
-  // Eras from timeline
+  // Eras from timeline — use shared ERA_BINS
   const eraBuckets = new Map<string, string[]>();
   for (const entry of antiquity) {
-    if (!eraBuckets.has('Antiquity')) eraBuckets.set('Antiquity', []);
-    eraBuckets.get('Antiquity')!.push(entry.symbol);
+    const bin = yearToEra(null);
+    if (!eraBuckets.has(bin.slug)) eraBuckets.set(bin.slug, []);
+    eraBuckets.get(bin.slug)!.push(entry.symbol);
   }
   for (const entry of timeline) {
     if (entry.year == null) continue;
-    const decade = Math.floor(entry.year / 10) * 10;
-    const era = `${decade}s`;
-    if (!eraBuckets.has(era)) eraBuckets.set(era, []);
-    eraBuckets.get(era)!.push(entry.symbol);
+    const bin = yearToEra(entry.year);
+    if (!eraBuckets.has(bin.slug)) eraBuckets.set(bin.slug, []);
+    eraBuckets.get(bin.slug)!.push(entry.symbol);
   }
-  for (const [era, symbols] of eraBuckets) {
+  for (const bin of ERA_BINS) {
+    const symbols = eraBuckets.get(bin.slug);
+    if (!symbols || symbols.length === 0) continue;
     const unique = [...new Set(symbols)];
-    const eraParam = era === 'Antiquity' ? 'antiquity' : era.replace('s', '');
     entityIndex.push({
-      id: `era-${era}`, type: 'era',
-      name: era === 'Antiquity' ? 'Antiquity' : era,
-      description: `${unique.length} element${unique.length === 1 ? '' : 's'} discovered in ${era === 'Antiquity' ? 'antiquity' : `the ${era}`}.`,
+      id: `era-${bin.slug}`, type: 'era',
+      name: bin.label,
+      description: `${unique.length} element${unique.length === 1 ? '' : 's'} discovered in ${bin.label}.`,
       colour: ENTITY_TYPE_COLOURS.era, elements: unique,
-      href: `/eras/${eraParam}`,
+      href: `/eras/${bin.slug}`,
     });
   }
   // Etymology origins
@@ -705,11 +707,11 @@ function run() {
     }
   }
 
-  // era -> discoverers (active_during): link eras to discoverers who discovered in that decade
+  // era -> discoverers (active_during): link eras to discoverers who discovered in that era
   for (const entry of timeline) {
     if (entry.year == null) continue;
-    const decade = Math.floor(entry.year / 10) * 10;
-    const eraId = `era-${decade}s`;
+    const bin = yearToEra(entry.year);
+    const eraId = `era-${bin.slug}`;
     const discId = `discoverer-${entry.discoverer}`;
     // Only add if both entities exist in the index
     if (entityIndex.some((e) => e.id === eraId) && entityIndex.some((e) => e.id === discId)) {
@@ -717,7 +719,8 @@ function run() {
     }
   }
   for (const entry of antiquity) {
-    const eraId = 'era-Antiquity';
+    const bin = yearToEra(null);
+    const eraId = `era-${bin.slug}`;
     const discId = `discoverer-${entry.discoverer}`;
     if (entityIndex.some((e) => e.id === discId)) {
       entityRefs.push({ sourceId: eraId, targetId: discId, relType: 'active_during' });

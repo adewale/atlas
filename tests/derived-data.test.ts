@@ -45,6 +45,11 @@ describe('entity-index.json', () => {
     expect(elements).toHaveLength(118);
   });
 
+  it('contains exactly 8 era entities', () => {
+    const eras = entityIndex.filter((e: { type: string }) => e.type === 'era');
+    expect(eras).toHaveLength(8);
+  });
+
   it('element entities have correct href pattern', () => {
     const h = entityIndex.find((e: { id: string }) => e.id === 'element-H');
     expect(h).toBeDefined();

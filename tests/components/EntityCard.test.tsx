@@ -27,13 +27,13 @@ const GROUP_ENTITY: Entity = {
 };
 
 const EMPTY_ENTITY: Entity = {
-  id: 'era-1900s',
+  id: 'era-1900-1939',
   type: 'era',
-  name: '1900s',
-  description: '5 elements discovered in the 1900s.',
+  name: '1900\u20131939',
+  description: '5 elements discovered in 1900\u20131939.',
   colour: '#9e1c2c',
   elements: [],
-  href: '/eras/1900',
+  href: '/eras/1900-1939',
 };
 
 const SAMPLE_REFS: CrossRef[] = [
@@ -89,8 +89,8 @@ describe('EntityCard', () => {
   it('calls onNavigate for entities without children when no onExpand', () => {
     const onNavigate = vi.fn();
     render(<EntityCard entity={EMPTY_ENTITY} index={0} onNavigate={onNavigate} />);
-    fireEvent.click(screen.getByText('1900s'));
-    expect(onNavigate).toHaveBeenCalledWith('/eras/1900');
+    fireEvent.click(screen.getByText('1900\u20131939'));
+    expect(onNavigate).toHaveBeenCalledWith('/eras/1900-1939');
   });
 
   it('applies stagger animation delay based on index', () => {

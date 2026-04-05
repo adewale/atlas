@@ -219,8 +219,8 @@ describe('Folio', () => {
         <Folio element={oxygen} folioBundle={oxygenBundle} animate={false} />
       </MemoryRouter>,
     );
-    const timelineLink = screen.getByText('1770s →');
-    expect(timelineLink).toHaveAttribute('href', '/eras/1770');
+    const timelineLink = screen.getByText('1700s →');
+    expect(timelineLink).toHaveAttribute('href', '/eras/1700s');
   });
 
   it('era label shows decade, not generic "timeline"', () => {
@@ -238,8 +238,8 @@ describe('Folio', () => {
         <Folio element={cobalt} animate={false} />
       </MemoryRouter>,
     );
-    // Should show "1730s →", NOT "timeline →"
-    expect(screen.getByText('1730s →')).toBeInTheDocument();
+    // Should show "1700s →", NOT "timeline →"
+    expect(screen.getByText('1700s →')).toBeInTheDocument();
     expect(screen.queryByText('timeline →')).not.toBeInTheDocument();
   });
 });

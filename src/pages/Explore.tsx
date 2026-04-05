@@ -36,6 +36,7 @@ import {
   CONTROL_SECTION_MIN_HEIGHT,
 } from '../lib/theme';
 import { PRETEXT_SANS } from '../lib/pretext';
+import { ERA_BINS } from '../../shared/era-bins';
 import PageShell from '../components/PageShell';
 import EntityCard from '../components/EntityCard';
 import type { CrossRef } from '../components/EntityCard';
@@ -49,23 +50,12 @@ const FACET_DIMENSIONS: { key: FacetKey; label: string }[] = [
   { key: 'etymologyOrigin', label: 'Etymology' },
 ];
 
-/** All era values sorted chronologically for the slider. */
-const ERA_VALUES = [
-  'Antiquity', '1250s', '1660s', '1730s', '1740s', '1750s', '1760s',
-  '1770s', '1780s', '1790s', '1800s', '1810s', '1820s', '1830s',
-  '1840s', '1860s', '1870s', '1880s', '1890s', '1900s', '1910s',
-  '1920s', '1930s', '1940s', '1950s', '1960s', '1970s', '1980s',
-  '1990s', '2000s', '2010s',
-];
-
-/** Key tick marks to label on the slider. */
-const ERA_TICKS = ['Antiquity', '1750s', '1800s', '1850s', '1900s', '1950s', '2000s'];
-
 /** Display labels for facet values. */
 const FACET_VALUE_LABELS: Record<string, Record<string, string>> = {
   type: Object.fromEntries(ENTITY_TYPES.map((t) => [t, ENTITY_TYPE_LABELS[t]])),
   block: { s: 's-block', p: 'p-block', d: 'd-block', f: 'f-block' },
   phase: { solid: 'Solid', liquid: 'Liquid', gas: 'Gas' },
+  era: Object.fromEntries(ERA_BINS.map(b => [b.slug, b.label])),
 };
 
 /** Colour for a facet chip. */
@@ -330,18 +320,13 @@ export default function Explore() {
           );
         })}
 
-        {/* Era slider — range input with discovery histogram */}
+        {/* Era bar chart — Byrne-style 8-column selector */}
         {(() => {
           const eraCounts = response.facets?.era ?? {};
           const activeEras = facetState.era ?? [];
-          const activeIdx = activeEras.length > 0 ? ERA_VALUES.indexOf(activeEras[0]) : -1;
-          const maxCount = 13; // stable: 1800s peak from full dataset
-          const activeEra = activeIdx >= 0 ? ERA_VALUES[activeIdx] : null;
-          const activeCount = activeEra ? (eraCounts[activeEra] ?? 0) : 0;
-
-          // Build histogram sparkline path
-          const histH = 28;
-          const histY = 0;
+          const activeSlug = activeEras.length > 0 ? activeEras[0] : null;
+          const activeBin = ERA_BINS.find(b => b.slug === activeSlug);
+          const activeCount = activeSlug ? (eraCounts[activeSlug] ?? 0) : 0;
 
           return (
             <div style={{ marginBottom: '16px' }}>
@@ -351,81 +336,58 @@ export default function Explore() {
                 display: 'flex', alignItems: 'baseline', gap: '8px',
               }}>
                 Discovery Era
-                {activeEra && (
+                {activeBin && (
                   <span style={{ fontSize: '12px', fontWeight: 700, color: WARM_RED, textTransform: 'none', letterSpacing: 0 }}>
-                    {activeEra} · {activeCount} result{activeCount !== 1 ? 's' : ''}
+                    {activeBin.label} · {activeCount} result{activeCount !== 1 ? 's' : ''}
                   </span>
                 )}
               </div>
 
-              {/* Histogram background */}
-              <svg
-                width="100%"
-                height={histH}
-                viewBox={`0 0 ${ERA_VALUES.length} ${histH}`}
-                preserveAspectRatio="none"
-                style={{ display: 'block' }}
-                aria-hidden="true"
-              >
-                {ERA_VALUES.map((era, i) => {
-                  const count = eraCounts[era] ?? 0;
-                  const barH = count > 0 ? Math.max(2, Math.round((count / maxCount) * histH)) : 0;
-                  const isActive = i === activeIdx;
+              {/* Bar chart */}
+              <div style={{ display: 'flex', gap: '2px', height: '64px', alignItems: 'flex-end' }}>
+                {ERA_BINS.map((bin) => {
+                  const count = eraCounts[bin.slug] ?? 0;
+                  const isActive = bin.slug === activeSlug;
+                  const barH = Math.max(4, Math.round((count / 25) * 48));
                   return (
-                    <rect
-                      key={era}
-                      x={i}
-                      y={histH - barH}
-                      width={0.8}
-                      height={barH}
-                      fill={isActive ? WARM_RED : MUSTARD}
-                      opacity={isActive ? 1 : 0.4}
-                    />
+                    <button
+                      key={bin.slug}
+                      onClick={() => isActive ? setFacet('era', []) : setFacet('era', [bin.slug])}
+                      aria-pressed={isActive}
+                      aria-label={`${bin.label}: ${count} results`}
+                      style={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        height: '64px',
+                        background: 'transparent',
+                        border: 'none',
+                        padding: 0,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{
+                        width: '80%',
+                        height: `${barH}px`,
+                        background: isActive ? WARM_RED : MUSTARD,
+                        opacity: isActive ? 1 : 0.4,
+                      }} />
+                      <span style={{
+                        fontSize: '8px',
+                        color: GREY_MID,
+                        fontFamily: 'system-ui, sans-serif',
+                        marginTop: '2px',
+                        lineHeight: '14px',
+                        userSelect: 'none',
+                        whiteSpace: 'nowrap',
+                      }}>
+                        {bin.label}
+                      </span>
+                    </button>
                   );
                 })}
-              </svg>
-
-              {/* Range input — snaps to decade indices */}
-              <input
-                type="range"
-                min={-1}
-                max={ERA_VALUES.length - 1}
-                value={activeIdx}
-                onChange={(e) => {
-                  const idx = parseInt(e.target.value, 10);
-                  if (idx < 0) {
-                    // -1 = no selection
-                    const next = { ...facetState, era: undefined };
-                    setSearchParams(buildSearchParams(next), { replace: true });
-                  } else {
-                    const era = ERA_VALUES[idx];
-                    setFacet('era', [era]);
-                  }
-                }}
-                aria-label="Discovery era"
-                style={{
-                  width: '100%',
-                  margin: '0',
-                  display: 'block',
-                  accentColor: WARM_RED,
-                  cursor: 'pointer',
-                }}
-              />
-
-              {/* Tick labels */}
-              <div style={{
-                display: 'flex', justifyContent: 'space-between',
-                fontSize: '9px', color: GREY_MID, fontFamily: 'system-ui, sans-serif',
-                fontVariantNumeric: 'tabular-nums', marginTop: '2px',
-                userSelect: 'none',
-              }}>
-                <span>Ancient</span>
-                <span>1750</span>
-                <span>1800</span>
-                <span>1850</span>
-                <span>1900</span>
-                <span>1950</span>
-                <span>2010</span>
               </div>
             </div>
           );

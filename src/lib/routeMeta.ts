@@ -80,11 +80,11 @@ export const ENTITIES: EntityMeta[] = [
     { name: 'Marie Curie & Pierre Curie', href: '/discoverers/Marie%20Curie%20%26%20Pierre%20Curie' },
     { name: 'Carl Wilhelm Scheele', href: '/discoverers/Carl%20Wilhelm%20Scheele' },
   ]},
-  { id: 'era', label: 'Timeline Era', route: '/eras/:era', count: '30+', colour: DEEP_BLUE, description: 'Decade or "antiquity". Groups discoveries by when they happened. Links to discoverers.', examples: [
-    { name: 'Antiquity', href: '/eras/antiquity' },
-    { name: '1770s', href: '/eras/1770' },
-    { name: '1890s', href: '/eras/1890' },
-    { name: '1940s', href: '/eras/1940' },
+  { id: 'era', label: 'Timeline Era', route: '/eras/:era', count: '8', colour: DEEP_BLUE, description: 'Historical era of element discovery. Groups discoveries by when they happened. Links to discoverers.', examples: [
+    { name: 'Ancient', href: '/eras/ancient' },
+    { name: '1700s', href: '/eras/1700s' },
+    { name: '1850\u20131899', href: '/eras/1850-1899' },
+    { name: '1940\u20131955', href: '/eras/1940-1955' },
   ]},
   { id: 'etymology', label: 'Etymology Origin', route: '/etymology-map#:origin', count: '7', colour: WARM_RED, description: 'Why elements are named: place, person, mythology, property, mineral, astronomical, unknown.', examples: [
     { name: 'Place names', href: '/etymology-map#place' },

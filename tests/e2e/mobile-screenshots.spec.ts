@@ -46,7 +46,7 @@ const routes: { path: string; label: string }[] = [
   { path: '/etymology-map', label: 'etymology-map' },
   { path: '/discoverer-network', label: 'discoverer-network' },
   { path: '/discoverers/Humphry%20Davy', label: 'discoverer-humphry-davy' },
-  { path: '/eras/1770', label: 'timeline-1770' },
+  { path: '/eras/1700s', label: 'timeline-1700s' },
 ];
 
 // ---------------------------------------------------------------------------

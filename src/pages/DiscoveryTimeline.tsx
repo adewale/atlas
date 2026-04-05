@@ -13,6 +13,7 @@ import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { ERA_BINS } from '../../shared/era-bins';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -105,14 +106,8 @@ export default function DiscoveryTimeline() {
     delay: number;
   };
 
-  // All decades with elements (for era browse links)
-  const allDecades = useMemo(() => {
-    const decades = new Set<number>();
-    for (const e of timeline) {
-      if (e.year != null) decades.add(decadeOf(e.year));
-    }
-    return [...decades].sort((a, b) => a - b);
-  }, [timeline]);
+  // Era browse links from shared ERA_BINS
+  const eraBins = ERA_BINS;
 
   // Memoize all layout computations — they depend only on loader data
   const { squares, antiquitySquares } = useMemo(() => {
@@ -253,19 +248,12 @@ export default function DiscoveryTimeline() {
               Browse by Era
             </h2>
             <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-              <NavigationPill
-                to="/eras/antiquity"
-                title="View the Antiquity discovery era"
-                label="Antiquity"
-                color={DEEP_BLUE}
-                dot={false}
-              />
-              {allDecades.map((d) => (
+              {eraBins.map((bin) => (
                 <NavigationPill
-                  key={d}
-                  to={`/eras/${d}`}
-                  title={`View the ${d}s discovery era`}
-                  label={`${d}s`}
+                  key={bin.slug}
+                  to={`/eras/${bin.slug}`}
+                  title={`View the ${bin.label} discovery era`}
+                  label={bin.label}
                   color={DEEP_BLUE}
                   dot={false}
                 />

@@ -33,8 +33,8 @@ describe('buildSearchParams', () => {
   });
 
   it('encodes era facet', () => {
-    const params = buildSearchParams({ q: '', era: ['1890s'] });
-    expect(params.get('era')).toBe('1890s');
+    const params = buildSearchParams({ q: '', era: ['1850-1899'] });
+    expect(params.get('era')).toBe('1850-1899');
   });
 
   it('encodes phase facet', () => {
@@ -89,8 +89,8 @@ describe('parseSearchParams', () => {
   });
 
   it('parses era param', () => {
-    const state = parseSearchParams(new URLSearchParams('era=1890s,1900s'));
-    expect(state.era).toEqual(['1890s', '1900s']);
+    const state = parseSearchParams(new URLSearchParams('era=1850-1899,1900-1939'));
+    expect(state.era).toEqual(['1850-1899', '1900-1939']);
   });
 
   it('parses phase param', () => {
@@ -109,7 +109,7 @@ describe('parseSearchParams', () => {
   });
 
   it('roundtrips through build → parse', () => {
-    const original: FacetState = { q: 'metal', type: ['element', 'category'], block: ['d'], era: ['1890s'] };
+    const original: FacetState = { q: 'metal', type: ['element', 'category'], block: ['d'], era: ['1850-1899'] };
     const params = buildSearchParams(original);
     const parsed = parseSearchParams(params);
     expect(parsed).toEqual(original);

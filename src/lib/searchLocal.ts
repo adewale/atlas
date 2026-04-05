@@ -6,6 +6,7 @@
  * with zero network requests.
  */
 import type { SearchRequest, SearchResponse, SearchResult, FacetCounts } from '../../shared/search-types';
+import { yearToEra } from '../../shared/era-bins';
 
 type EntityEntry = {
   id: string;
@@ -100,10 +101,9 @@ export function createLocalSearch(
       phases.add(el.phase);
       if (el.etymologyOrigin) etymologyOrigins.add(el.etymologyOrigin);
       if (el.discoveryYear != null) {
-        const decade = Math.floor(el.discoveryYear / 10) * 10;
-        eras.add(`${decade}s`);
+        eras.add(yearToEra(el.discoveryYear).slug);
       } else {
-        eras.add('Antiquity');
+        eras.add(yearToEra(null).slug);
       }
     }
     return { ...entity, blocks, phases, etymologyOrigins, eras };
