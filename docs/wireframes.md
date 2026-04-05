@@ -610,3 +610,251 @@ rendered in the actual design language. Inspired by print specimen sheets.
 │                                                                                  │
 └──────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+
+## 12. Explore Page — Faceted Entity Search (`/explore`)
+
+### Desktop landing state (no filters, no search)
+
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                  │
+│  ┌──┐                                                                            │
+│  │A │  ┌─ VizNav ──────────────────────────────────────────────────────────────┐ │
+│  │T │  │ ■ Table  ■ Phase  ■ Neighbours  ■ Anomalies  ■ Scatter  ■ Timeline  │ │
+│  │L │  │ ■ Etymology  ■ Discoverers  █ EXPLORE                               │ │
+│  │A │  └───────────────────────────────────────────────────────────────────────┘ │
+│  │S │                                                                            │
+│  └──┘  ┌─────────────────────────────────────────────────────────────────────┐  │
+│        │                                                                     │  │
+│   ①    │   E X P L O R E                                                    │  │
+│        │   ─────────────                                                     │  │
+│        │                                                                     │  │
+│   ②    │   ┌──────────────────────────────────────────────────┐              │  │
+│        │   │ 🔍  Search entities…                              │              │  │
+│        │   └──────────────────────────────────────────────────┘              │  │
+│        │                                                                     │  │
+│   ③    │   ENTITY TYPE                                                       │  │
+│        │   ░░ Element(118)  ░░ Discoverer(54)  ░░ Era(22)  ░░ Category(10)  │  │
+│        │   ░░ Group(18)  ░░ Block(4)  ░░ Anomaly(5)  ░░ Etymology(7)       │  │
+│        │                                                                     │  │
+│        │   297 entities                                                      │  │
+│        │                                                                     │  │
+│   ④    │   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐ │  │
+│        │   │██████████████████│  │██████████████████│  │██████████████████│ │  │
+│        │   │██ H — Hydrogen ██│  │██ He — Helium  ██│  │██ Li — Lithium ██│ │  │
+│        │   │██████████████████│  │██████████████████│  │██████████████████│ │  │
+│        │   │ ELEMENT           │  │ ELEMENT           │  │ ELEMENT           │ │  │
+│        │   │                   │  │                   │  │                   │ │  │
+│        │   │ Hydrogen is the   │  │ Helium is a noble │  │ Lithium is the   │ │  │
+│        │   │ lightest element  │  │ gas, the second…  │  │ lightest metal…  │ │  │
+│        │   │ and most abundant │  │                   │  │                   │ │  │
+│        │   │                   │  │                   │  │                   │ │  │
+│        │   │ 1 element    ▸   │  │ 1 element    ▸   │  │ 1 element    ▸   │ │  │
+│        │   └──────────────────┘  └──────────────────┘  └──────────────────┘ │  │
+│        │                                                                     │  │
+│        │   ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐ │  │
+│        │   │██████████████████│  │██████████████████│  │██████████████████│ │  │
+│        │   │██  Alkali metals█│  │██   Humphry Davy█│  │██   1800s      ██│ │  │
+│        │   │██████████████████│  │██████████████████│  │██████████████████│ │  │
+│        │   │ CATEGORY          │  │ DISCOVERER        │  │ ERA               │ │  │
+│        │   │                   │  │                   │  │                   │ │  │
+│        │   │ The alkali metals │  │ Discovered 5      │  │ 31 elements       │ │  │
+│        │   │ are soft, silvery │  │ elements: B, Na,  │  │ discovered in the │ │  │
+│        │   │ reactive metals…  │  │ K, Ca, Ba         │  │ 1800s.            │ │  │
+│        │   │ ██ ██ ██ ██ ██ ██ │  │ ██ ██ ██ ██ ██   │  │ ██ ██ ██ ██ ██ ██ │ │  │
+│        │   │ 6 elements   ▸   │  │ 5 elements   ▸   │  │ 31 elements  ▸   │ │  │
+│        │   └──────────────────┘  └──────────────────┘  └──────────────────┘ │  │
+│        │                                                                     │  │
+│        │   (… ~297 cards, all entity types interleaved …)                    │  │
+│        │                                                                     │  │
+│        └─────────────────────────────────────────────────────────────────────┘  │
+│                                                                                  │
+│        ┌─ SiteNav ─────────────────────────────────────────────────────────────┐ │
+│        │ Press ? for shortcuts     Atlas  About  Credits  Design  Explore  …  │ │
+│        └───────────────────────────────────────────────────────────────────────┘ │
+│                                                                                  │
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### Annotations
+
+```
+  ①  INSCRIPTION TITLE — "EXPLORE" in 13px bold uppercase with 0.2em
+     tracking (INSCRIPTION_STYLE).  Coloured MUSTARD.  Same pattern as
+     every other viz page heading.
+
+  ②  SEARCH BOX — always visible, always at the top of the control
+     section.  No "click to reveal" — the box IS the invitation.
+     Black 1.5px border, no border-radius (Byrne: no rounded corners).
+     Placeholder: "Search entities…"
+     Typing filters the entity corpus client-side.  When empty, all
+     ~297 entities are shown.  The search box and facet chips together
+     form the "lens" — they narrow what's below.
+
+     Keyboard: "/" focuses the search box from anywhere on the page.
+     Esc clears the search and blurs.
+
+  ③  FACET CHIPS — one row per facet dimension.  On landing, only the
+     primary facet (Entity Type) is shown.  Each chip:
+       ░░ = outlined, unselected (Byrne: colour border, transparent fill)
+       ██ = filled, selected (Byrne: solid colour fill, contrast text)
+       greyed = disabled, count is 0 (visible but not clickable)
+
+     The (N) count after each label is SELF-EXCLUSION counted:
+     counts for the Entity Type facet ignore which types are currently
+     selected.  This means the user always sees the full distribution.
+
+     Secondary facet rows (Block, Era, Etymology, Phase) appear when
+     the result set is narrowed enough to make them useful — e.g.
+     after selecting Entity Type = Element, or after clicking a
+     discoverer card.
+
+     All chip state is reflected in the URL query string.
+
+  ④  ENTITY CARDS — CSS grid, 3 columns desktop / 1 column mobile.
+     auto-fill with minmax(280px, 1fr).  All entity types use the
+     same card structure:
+
+     ┌──────────────────┐
+     │██████████████████│ ← Colour header: entity type colour from
+     │██   Name       ██│   ENTITY_TYPE_COLOURS (DEEP_BLUE for elements,
+     │██████████████████│   MUSTARD for discoverers, WARM_RED for eras…)
+     │ TYPE LABEL        │ ← 8px uppercase, entity type name
+     │                   │
+     │ Description text  │ ← CSS line-clamp: 3, no manual measurement
+     │ flows here…       │
+     │                   │
+     │ ██ ██ ██ ██ ██    │ ← Child element symbols as mini block-coloured
+     │                   │   squares (only for non-element entities)
+     │ N elements   ▸   │ ← Footer: count + drill affordance
+     └──────────────────┘
+
+     Cards animate in via the existing card-enter keyframe (250ms
+     ease-out, 15ms stagger per card).
+
+     Clicking an ELEMENT card → navigates to /elements/:symbol
+     via View Transition (element-symbol morphs to folio hero).
+
+     Clicking a NON-ELEMENT card → pre-fills that entity as a
+     facet value.  E.g. clicking "Humphry Davy" sets
+     Discoverer = Humphry Davy, narrowing to his 5 elements.
+     Secondary facet rows (Block, Era) appear with counts
+     computed against that narrowed set.
+```
+
+### Desktop active state (search + facets)
+
+```
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                  │
+│  ┌──┐  ┌─ VizNav (█ EXPLORE active) ──────────────────────────────────────────┐ │
+│  │A │  └──────────────────────────────────────────────────────────────────────┘ │
+│  │T │                                                                            │
+│  │L │   E X P L O R E                                                           │
+│  │A │                                                                            │
+│  │S │   ┌─────────────────────────────────────────────┐                          │
+│  └──┘   │ 🔍  curie                                 × │  × Clear all            │
+│         └─────────────────────────────────────────────┘                          │
+│                                                                                  │
+│         ENTITY TYPE                                                              │
+│         ██ Element(3)  ░░ Discoverer(2)  ░░ Era(1)                              │
+│         ░░ Category(2)  ░░ Group(2)  ░░ Block(1)                                │
+│         ·· Anomaly(0)  ░░ Etymology(1)                                          │
+│                   ↑                                                              │
+│                   disabled — no Curie-related anomalies                          │
+│                                                                                  │
+│         BLOCK           ← secondary facet row, appeared because                  │
+│         ░░ s(1)  ░░ p(1)  ░░ d(1)  ·· f(0)    results include elements          │
+│                                       ↑                                          │
+│                                       disabled                                   │
+│                                                                                  │
+│         ERA                                                                      │
+│         ·· 1800s(0)  ░░ 1890s(2)  ░░ 1940s(1)                                  │
+│            ↑                                                                     │
+│            disabled — no Curie entity is from the 1800s                          │
+│                                                                                  │
+│         3 entities (filtered to Element)                                          │
+│                                                                                  │
+│         ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐        │
+│         │██████████████████│  │██████████████████│  │██████████████████│        │
+│         │██ Cm — Curium  ██│  │██ Ra — Radium  ██│  │██ Po — Polonium██│        │
+│         │██████████████████│  │██████████████████│  │██████████████████│        │
+│         │ ELEMENT           │  │ ELEMENT           │  │ ELEMENT           │        │
+│         │                   │  │                   │  │                   │        │
+│         │ Curium is a       │  │ Radium is a       │  │ Polonium is a    │        │
+│         │ synthetic radio-  │  │ radioactive       │  │ radioactive      │        │
+│         │ active element…   │  │ alkaline earth…   │  │ metalloid…       │        │
+│         │                   │  │                   │  │                   │        │
+│         │ 1 element    ▸   │  │ 1 element    ▸   │  │ 1 element    ▸   │        │
+│         └──────────────────┘  └──────────────────┘  └──────────────────┘        │
+│                                                                                  │
+└──────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Mobile landing state
+
+```
+┌──────────────────────────────┐
+│                               │
+│  ■ Table ■ Phase ■ Neigh.    │
+│  ■ Anom. ■ Scatter ■ Time.   │
+│  ■ Etym. ■ Disc. █ EXPLORE   │
+│                               │
+│  E X P L O R E               │
+│                               │
+│  ┌──────────────────────────┐│
+│  │ 🔍  Search entities…      ││
+│  └──────────────────────────┘│
+│                               │
+│  ENTITY TYPE                  │
+│  ░░ Element(118)              │
+│  ░░ Discoverer(54)            │
+│  ░░ Era(22) ░░ Category(10)  │
+│  ░░ Group(18) ░░ Block(4)    │
+│  ░░ Anomaly(5)                │
+│  ░░ Etymology(7)              │
+│                               │
+│  297 entities                 │
+│                               │
+│  ┌──────────────────────────┐│
+│  │██████████████████████████││
+│  │██ H — Hydrogen         ██││
+│  │██████████████████████████││
+│  │ ELEMENT                   ││
+│  │                           ││
+│  │ Hydrogen is the lightest  ││
+│  │ element and most abundant ││
+│  │ chemical substance in…    ││
+│  │                           ││
+│  │ 1 element            ▸   ││
+│  └──────────────────────────┘│
+│                               │
+│  ┌──────────────────────────┐│
+│  │██████████████████████████││
+│  │██ He — Helium          ██││
+│  │██████████████████████████││
+│  │ ELEMENT                   ││
+│  │                           ││
+│  │ Helium is a noble gas,   ││
+│  │ the second lightest…     ││
+│  │                           ││
+│  │ 1 element            ▸   ││
+│  └──────────────────────────┘│
+│                               │
+│  (… single-column cards …)    │
+│                               │
+│  ─────────────────────────── │
+│  Press ? for shortcuts        │
+│  Atlas About Credits Explore  │
+│                               │
+└──────────────────────────────┘
+
+  Mobile notes:
+  - VizNav wraps across 3 rows
+  - Search box is full-width
+  - Chips wrap naturally (flexbox)
+  - Cards are single-column (grid: 1fr)
+  - Same facet logic, just stacked
+  - Touch targets: all chips ≥ 44px tall
+```

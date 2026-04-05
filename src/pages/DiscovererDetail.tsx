@@ -14,6 +14,7 @@ import { getDiscovererMetrics } from '../lib/metrics';
 import NavigationPill from '../components/NavigationPill';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
+import { yearToEra } from '../../shared/era-bins';
 
 // SvgPrevNext renders at 11px in a 400-unit-wide viewBox; each label gets ~196 units.
 // The precomputed navPrev/navNext include the "← " / " →" prefix/suffix.
@@ -193,17 +194,17 @@ export default function DiscovererDetail() {
       <div style={{ marginTop: '24px' }}>
         {years.length > 0 ? (
           <NavigationPill
-            to={`/eras/${Math.floor(years[0] / 10) * 10}`}
-            title={`View the ${Math.floor(years[0] / 10) * 10}s discovery era`}
-            label={`View ${Math.floor(years[0] / 10) * 10}s on Timeline →`}
+            to={`/eras/${yearToEra(years[0]).slug}`}
+            title={`View the ${yearToEra(years[0]).label} discovery era`}
+            label={`View ${yearToEra(years[0]).label} on Timeline →`}
             color={WARM_RED}
             dot={false}
           />
         ) : (
           <NavigationPill
-            to="/eras/antiquity"
-            title="View the Antiquity discovery era"
-            label="View Antiquity on Timeline →"
+            to={`/eras/${yearToEra(null).slug}`}
+            title={`View the ${yearToEra(null).label} discovery era`}
+            label={`View ${yearToEra(null).label} on Timeline →`}
             color={WARM_RED}
             dot={false}
           />

@@ -10,6 +10,7 @@ import { MONO_FONT } from '../src/lib/theme';
 import type { DiscovererData, TimelineData } from '../src/lib/types';
 import discoverersJson from '../data/generated/discoverers.json';
 import timelineJson from '../data/generated/timeline.json';
+import { ERA_BINS, yearToEra } from '../shared/era-bins';
 
 const discoverers = discoverersJson as DiscovererData[];
 const timeline = timelineJson as TimelineData;
@@ -244,12 +245,10 @@ describe('Layout constraints: SvgPrevNext', () => {
     }
   });
 
-  it('all timeline eras: decade labels fit in SvgPrevNext', () => {
-    // TimelineEra uses SvgPrevNext with era names like "1730s", "Antiquity"
-    const eraNames = timeline.timeline.map((e) => e.year != null ? `${Math.floor(e.year / 10) * 10}s` : 'Antiquity');
-    eraNames.push('Antiquity'); // special case
-    for (const name of eraNames) {
-      const label = `\u2190 ${name}`;
+  it('all timeline eras: era labels fit in SvgPrevNext', () => {
+    // TimelineEra uses SvgPrevNext with era names from ERA_BINS
+    for (const bin of ERA_BINS) {
+      const label = `\u2190 ${bin.label}`;
       const charWidth = 6.5;
       expect(label.length * charWidth).toBeLessThan(PREV_NEXT_VIEWBOX_W / 2);
     }
@@ -370,15 +369,9 @@ describe('Layout constraints: NavigationPill', () => {
   });
 
   it('discoverer timeline navigation labels fit in NavigationPill', () => {
-    // Labels like "View 1800s on Timeline ->" - check they fit on mobile
-    const decades = new Set<number>();
-    for (const entry of timeline.timeline) {
-      if (entry.year != null) {
-        decades.add(Math.floor(entry.year / 10) * 10);
-      }
-    }
-    for (const decade of decades) {
-      const label = `View ${decade}s on Timeline \u2192`;
+    // Labels like "View 1800-1849 on Timeline ->" - check they fit on mobile
+    for (const bin of ERA_BINS) {
+      const label = `View ${bin.label} on Timeline \u2192`;
       const charWidth = 7; // 11px uppercase
       const pillWidth = label.length * charWidth + 40; // +chrome
       expect(pillWidth).toBeLessThan(375);
@@ -522,25 +515,25 @@ describe('Layout constraints: DataPlateRow text compression', () => {
 // Regression: discovery era link label matches destination
 // ---------------------------------------------------------------------------
 describe('Layout constraints: discovery era labels', () => {
-  it('elements with discoveryYear show decade label, not generic "timeline"', () => {
+  it('there are exactly 8 era bins', () => {
+    expect(ERA_BINS).toHaveLength(8);
+  });
+
+  it('elements with discoveryYear show era label, not generic "timeline"', () => {
     for (const el of allElements) {
       if (el.discoveryYear) {
-        const decade = Math.floor(el.discoveryYear / 10) * 10;
-        const label = `${decade}s →`;
-        expect(label).toMatch(/^\d{3,4}s →$/);
+        const bin = yearToEra(el.discoveryYear);
+        const label = `${bin.label} →`;
+        expect(label.length).toBeGreaterThan(2);
       }
     }
   });
 
-  it('all discovery decades produce valid era URLs', () => {
-    const decades = new Set(
-      allElements
-        .filter((e) => e.discoveryYear)
-        .map((e) => Math.floor(e.discoveryYear! / 10) * 10),
-    );
-    for (const decade of decades) {
-      expect(decade).toBeGreaterThanOrEqual(0);
-      expect(decade).toBeLessThanOrEqual(2100);
+  it('all discovery years map to a valid era slug', () => {
+    const slugs = new Set(ERA_BINS.map(b => b.slug));
+    for (const el of allElements) {
+      const bin = yearToEra(el.discoveryYear);
+      expect(slugs.has(bin.slug)).toBe(true);
     }
   });
 });

@@ -7,6 +7,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { ERA_BINS, yearToEra } from '../shared/era-bins';
 
 type SeedElement = {
   atomicNumber: number;
@@ -339,6 +340,12 @@ function run() {
   const stripped = elements.map(({ sources: _s, ...rest }) => rest);
   writeFileSync(join(outDir, 'elements.json'), JSON.stringify(stripped, null, 2));
 
+  // symbol-blocks.json — minimal { symbol: block } map (~0.8 KB)
+  // Used by EntityCard to colour mini-symbols without loading full elements.json
+  const symbolBlocks: Record<string, string> = {};
+  for (const el of elements) symbolBlocks[el.symbol] = el.block;
+  writeFileSync(join(outDir, 'symbol-blocks.json'), JSON.stringify(symbolBlocks));
+
   // Per-element files (with sources)
   for (const el of elements) {
     writeFileSync(join(outDir, `element-${el.symbol}.json`), JSON.stringify(el, null, 2));
@@ -467,9 +474,227 @@ function run() {
   };
   writeFileSync(join(outDir, 'credits.json'), JSON.stringify(credits, null, 2));
 
+  // --- grid-elements.json (minimal fields for the periodic table grid) ---
+  const gridElements = elements.map((e) => ({
+    atomicNumber: e.atomicNumber,
+    symbol: e.symbol,
+    name: e.name,
+    block: e.block,
+    group: e.group,
+    period: e.period,
+    category: e.category,
+    phase: e.phase,
+    mass: e.mass,
+    electronegativity: e.electronegativity,
+    ionizationEnergy: e.ionizationEnergy,
+    radius: e.radius,
+    density: e.density,
+    meltingPoint: e.meltingPoint,
+    boilingPoint: e.boilingPoint,
+    halfLife: e.halfLife,
+    neighbors: e.neighbors,
+  }));
+  writeFileSync(join(outDir, 'grid-elements.json'), JSON.stringify(gridElements));
+
+  // --- entity-index.json (pre-built entity corpus for the Explore page) ---
+  // Result entity types: elements and discoverers only.
+  // Anomalies, eras, etymologies are facets — you filter by them, not search for them.
+  // Groups, periods, blocks, categories are structural labels — also facets, not results.
+  const ENTITY_TYPE_COLOURS: Record<string, string> = {
+    element: '#133e7c',
+    discoverer: '#856912',
+  };
+  const entityIndex: Array<{
+    id: string; type: string; name: string; description: string;
+    colour: string; elements: string[]; href: string | null;
+  }> = [];
+
+  for (const el of elements) {
+    // Enrich description with discoverer name so text search connects them
+    const desc = el.discoverer && el.discoverer !== 'unknown'
+      ? `${el.summary} Discovered by ${el.discoverer}.`
+      : el.summary;
+    entityIndex.push({
+      id: `element-${el.symbol}`, type: 'element',
+      name: `${el.symbol} — ${el.name}`, description: desc,
+      colour: ENTITY_TYPE_COLOURS.element, elements: [el.symbol],
+      href: `/elements/${el.symbol}`,
+    });
+  }
+  for (const d of discoverers) {
+    entityIndex.push({
+      id: `discoverer-${d.name}`, type: 'discoverer',
+      name: d.name,
+      description: `Discovered ${d.elements.length} element${d.elements.length === 1 ? '' : 's'}: ${d.elements.join(', ')}`,
+      colour: ENTITY_TYPE_COLOURS.discoverer, elements: d.elements,
+      href: `/discoverers/${encodeURIComponent(d.name)}`,
+    });
+  }
+  writeFileSync(join(outDir, 'entity-index.json'), JSON.stringify(entityIndex));
+
+  // --- folio bundles (pre-resolved per-element data for the Folio page) ---
+  // Each bundle includes everything Folio.tsx needs: no more allElements dependency.
+  for (const el of elements) {
+    const group = el.group != null ? groups.find((g) => g.n === el.group) : null;
+    const elAnomalies = anomalies.filter((a) => a.elements.includes(el.symbol));
+
+    // Prev/next within group (sorted by period)
+    const groupMembers = el.group != null
+      ? elements.filter((e) => e.group === el.group).sort((a, b) => a.period - b.period)
+      : [];
+    const groupIdx = groupMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInGroup = groupIdx > 0 ? groupMembers[groupIdx - 1] : null;
+    const nextInGroup = groupIdx < groupMembers.length - 1 ? groupMembers[groupIdx + 1] : null;
+
+    // Prev/next within period (sorted by atomic number)
+    const periodMembers = elements.filter((e) => e.period === el.period).sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const periodIdx = periodMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInPeriod = periodIdx > 0 ? periodMembers[periodIdx - 1] : null;
+    const nextInPeriod = periodIdx < periodMembers.length - 1 ? periodMembers[periodIdx + 1] : null;
+
+    // Prev/next within block (sorted by atomic number)
+    const blockMembers = elements.filter((e) => e.block === el.block).sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const blockIdx = blockMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInBlock = blockIdx > 0 ? blockMembers[blockIdx - 1] : null;
+    const nextInBlock = blockIdx < blockMembers.length - 1 ? blockMembers[blockIdx + 1] : null;
+
+    // Prev/next within category (sorted by atomic number)
+    const catMembers = elements.filter((e) => e.category === el.category).sort((a, b) => a.atomicNumber - b.atomicNumber);
+    const catIdx = catMembers.findIndex((e) => e.symbol === el.symbol);
+    const prevInCategory = catIdx > 0 ? catMembers[catIdx - 1] : null;
+    const nextInCategory = catIdx < catMembers.length - 1 ? catMembers[catIdx + 1] : null;
+
+    // Group phase strip data
+    const groupPhases = group
+      ? group.elements.map((sym) => {
+          const member = elements.find((e) => e.symbol === sym);
+          return member?.phase ?? null;
+        })
+      : null;
+
+    // Resolved neighbors
+    const resolvedNeighbors = el.neighbors.map((sym) => {
+      const n = elements.find((e) => e.symbol === sym);
+      return n ? { symbol: n.symbol, name: n.name, block: n.block } : null;
+    }).filter(Boolean);
+
+    // Same discoverer
+    const sameDiscoverer = (!el.discoverer || el.discoverer.toLowerCase().includes('antiquity'))
+      ? []
+      : elements
+          .filter((e) => e.discoverer === el.discoverer && e.symbol !== el.symbol)
+          .slice(0, 6)
+          .map((e) => ({ symbol: e.symbol, name: e.name, block: e.block }));
+
+    // Same etymology
+    const sameEtymology = (!el.etymologyOrigin || el.etymologyOrigin === 'unknown')
+      ? []
+      : elements
+          .filter((e) => e.etymologyOrigin === el.etymologyOrigin && e.symbol !== el.symbol)
+          .slice(0, 6)
+          .map((e) => ({ symbol: e.symbol, name: e.name, block: e.block }));
+
+    const asRef = (e: SeedElement | null) => e ? { symbol: e.symbol, name: e.name } : null;
+
+    const folioBundle = {
+      element: el,
+      group: group ? { n: group.n, label: group.label, description: group.description, elements: group.elements } : null,
+      anomalies: elAnomalies.map((a) => ({ slug: a.slug, label: a.label, elementCount: a.elements.length })),
+      nav: {
+        prevInGroup: asRef(prevInGroup),
+        nextInGroup: asRef(nextInGroup),
+        prevInPeriod: asRef(prevInPeriod),
+        nextInPeriod: asRef(nextInPeriod),
+        prevInBlock: asRef(prevInBlock),
+        nextInBlock: asRef(nextInBlock),
+        prevInCategory: asRef(prevInCategory),
+        nextInCategory: asRef(nextInCategory),
+      },
+      groupPhases,
+      neighbors: resolvedNeighbors,
+      sameDiscoverer,
+      sameEtymology,
+    };
+    writeFileSync(join(outDir, `folio-${el.symbol}.json`), JSON.stringify(folioBundle));
+  }
+
+  // --- entity-refs.json (structural cross-references between entities) ---
+  // Phase 2 of enrichment spec: extract bidirectional refs from existing data.
+  const entityRefs: Array<{ sourceId: string; targetId: string; relType: string }> = [];
+
+  // discoverer -> elements (discovered)
+  for (const d of discoverers) {
+    const srcId = `discoverer-${d.name}`;
+    for (const sym of d.elements) {
+      entityRefs.push({ sourceId: srcId, targetId: `element-${sym}`, relType: 'discovered' });
+    }
+  }
+
+  // anomaly -> elements (exhibits)
+  for (const a of anomalies) {
+    const srcId = `anomaly-${a.slug}`;
+    for (const sym of a.elements) {
+      entityRefs.push({ sourceId: srcId, targetId: `element-${sym}`, relType: 'exhibits' });
+    }
+  }
+
+  // element -> category (member_of)
+  for (const el of elements) {
+    entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `category-${el.category}`, relType: 'member_of' });
+  }
+
+  // element -> group (belongs_to)
+  for (const el of elements) {
+    if (el.group != null) {
+      entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `group-${el.group}`, relType: 'belongs_to' });
+    }
+  }
+
+  // element -> period (belongs_to)
+  for (const el of elements) {
+    entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `period-${el.period}`, relType: 'belongs_to' });
+  }
+
+  // element -> block (belongs_to)
+  for (const el of elements) {
+    entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `block-${el.block}`, relType: 'belongs_to' });
+  }
+
+  // element -> etymology (named_for)
+  for (const el of elements) {
+    if (el.etymologyOrigin && el.etymologyOrigin !== 'unknown') {
+      entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `etymology-${el.etymologyOrigin}`, relType: 'named_for' });
+    }
+  }
+
+  // Deduplicate refs
+  const refSet = new Set<string>();
+  const dedupedRefs = entityRefs.filter((r) => {
+    const key = `${r.sourceId}|${r.targetId}|${r.relType}`;
+    if (refSet.has(key)) return false;
+    refSet.add(key);
+    return true;
+  });
+
+  writeFileSync(join(outDir, 'entity-refs.json'), JSON.stringify(dedupedRefs));
+
+  // --- Build per-entity ref lookup (outgoing + incoming grouped by entity id) ---
+  // This creates a compact lookup: { [entityId]: { out: [{id, rel}...], in: [{id, rel}...] } }
+  const refLookup: Record<string, { out: Array<{ id: string; rel: string }>; in: Array<{ id: string; rel: string }> }> = {};
+  for (const ref of dedupedRefs) {
+    if (!refLookup[ref.sourceId]) refLookup[ref.sourceId] = { out: [], in: [] };
+    if (!refLookup[ref.targetId]) refLookup[ref.targetId] = { out: [], in: [] };
+    refLookup[ref.sourceId].out.push({ id: ref.targetId, rel: ref.relType });
+    refLookup[ref.targetId].in.push({ id: ref.sourceId, rel: ref.relType });
+  }
+  writeFileSync(join(outDir, 'entity-ref-lookup.json'), JSON.stringify(refLookup));
+
   console.log('Generated files:');
   console.log(`  elements.json (${stripped.length} elements)`);
+  console.log(`  grid-elements.json (${gridElements.length} elements, grid-only)`);
   console.log(`  ${elements.length} per-element files`);
+  console.log(`  ${elements.length} folio bundle files`);
+  console.log(`  entity-index.json (${entityIndex.length} entities)`);
   console.log(`  groups.json (${groups.length} groups)`);
   console.log(`  periods.json (${periods.length} periods)`);
   console.log(`  blocks.json (${blocks.length} blocks)`);
@@ -477,6 +702,9 @@ function run() {
   console.log(`  rankings.json (${Object.keys(rankings).length} properties)`);
   console.log(`  anomalies.json (${anomalies.length} anomalies)`);
   console.log(`  credits.json`);
+  console.log(`  symbol-blocks.json`);
+  console.log(`  entity-refs.json (${dedupedRefs.length} cross-references)`);
+  console.log(`  entity-ref-lookup.json (${Object.keys(refLookup).length} entities with refs)`);
 }
 
 run();

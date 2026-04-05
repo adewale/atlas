@@ -1,19 +1,19 @@
 import { useMemo, useRef, useState, useLayoutEffect } from 'react';
 import { Link } from 'react-router';
-import type { ElementRecord, ElementSources, AnomalyData } from '../lib/types';
+import type { ElementRecord, ElementSources, FolioBundle } from '../lib/types';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
 import { useShapedText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { getElement, allElements } from '../lib/data';
 import { getElementMetrics } from '../lib/metrics';
 import PretextSvg from './PretextSvg';
 import { GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
-import type { GroupData } from '../lib/types';
 
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, toSlug, categoryColor } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, categoryColor } from '../lib/theme';
+import { toUrlSlug } from '../lib/slugs';
+import { yearToEra } from '../../shared/era-bins';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
 import SvgLink from './SvgLink';
@@ -172,9 +172,8 @@ function resolveOverlaps(positions: (number | null)[], maxY?: number): (number |
 
 type FolioProps = {
   element: ElementRecord;
-  sources?: ElementSources;
-  groups?: GroupData[];
-  anomalies?: AnomalyData[];
+  /** Pre-resolved folio bundle from build-time derivation. */
+  folioBundle?: FolioBundle;
   animate?: boolean;
 };
 
@@ -185,7 +184,7 @@ const PROPERTIES = [
   { label: 'Atomic Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
 ] as const;
 
-export default function Folio({ element, sources, groups, anomalies, animate = true }: FolioProps) {
+export default function Folio({ element, folioBundle, animate = true }: FolioProps) {
   const color = blockColor(element.block);
   const mobile = useIsMobile();
 
@@ -196,7 +195,6 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
   useLayoutEffect(() => {
     const el = mainRef.current;
     if (!el) return;
-    // Use content box (excludes padding) so SVG fits exactly
     const style = getComputedStyle(el);
     const padL = parseFloat(style.paddingLeft) || 0;
     const padR = parseFloat(style.paddingRight) || 0;
@@ -234,87 +232,27 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
     leftIndent: mobile ? undefined : { width: identityWidth, height: IDENTITY_HEIGHT },
   });
 
-  // Group phase data for phase strip (replaces duplicate EN sparkline)
+  // Extract pre-resolved data from folio bundle
+  const nav = folioBundle?.nav;
+  const groupData = folioBundle?.group;
+  const elementAnomalies = folioBundle?.anomalies ?? [];
+  const resolvedNeighbors = folioBundle?.neighbors ?? [];
+  const sameDiscoverer = folioBundle?.sameDiscoverer ?? [];
+  const sameEtymology = folioBundle?.sameEtymology ?? [];
+  const sources: ElementSources | undefined = folioBundle?.element?.sources;
+
+  // Group phase strip data — pre-resolved from folio bundle
   const groupPhaseData = useMemo(() => {
-    if (!groups || element.group === null) return null;
-    const group = groups.find((g) => g.n === element.group);
-    if (!group) return null;
-    const phases = group.elements.map((sym) => {
-      const el = getElement(sym);
-      return el?.phase ?? null;
-    });
-    const highlightIndex = group.elements.indexOf(element.symbol);
-    return { phases, symbols: group.elements, highlightIndex };
-  }, [groups, element]);
+    if (!groupData || !folioBundle?.groupPhases) return null;
+    const highlightIndex = groupData.elements.indexOf(element.symbol);
+    return { phases: folioBundle.groupPhases, symbols: groupData.elements, highlightIndex };
+  }, [groupData, folioBundle?.groupPhases, element.symbol]);
 
-  // Prev/next within group (vertical traversal)
-  const { prevInGroup, nextInGroup } = useMemo(() => {
-    if (element.group == null) return { prevInGroup: null, nextInGroup: null };
-    const groupMembers = allElements
-      .filter((e) => e.group === element.group)
-      .sort((a, b) => a.period - b.period);
-    const idx = groupMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInGroup: idx > 0 ? groupMembers[idx - 1] : null,
-      nextInGroup: idx < groupMembers.length - 1 ? groupMembers[idx + 1] : null,
-    };
-  }, [element.group, element.symbol]);
-
-  // Prev/next within period (horizontal traversal)
-  const { prevInPeriod, nextInPeriod } = useMemo(() => {
-    const periodMembers = allElements
-      .filter((e) => e.period === element.period)
-      .sort((a, b) => a.atomicNumber - b.atomicNumber);
-    const idx = periodMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInPeriod: idx > 0 ? periodMembers[idx - 1] : null,
-      nextInPeriod: idx < periodMembers.length - 1 ? periodMembers[idx + 1] : null,
-    };
-  }, [element.period, element.symbol]);
-
-  // Prev/next within block
-  const { prevInBlock, nextInBlock } = useMemo(() => {
-    const blockMembers = allElements
-      .filter((e) => e.block === element.block)
-      .sort((a, b) => a.atomicNumber - b.atomicNumber);
-    const idx = blockMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInBlock: idx > 0 ? blockMembers[idx - 1] : null,
-      nextInBlock: idx < blockMembers.length - 1 ? blockMembers[idx + 1] : null,
-    };
-  }, [element.block, element.symbol]);
-
-  // Prev/next within category
-  const { prevInCategory, nextInCategory } = useMemo(() => {
-    const catMembers = allElements
-      .filter((e) => e.category === element.category)
-      .sort((a, b) => a.atomicNumber - b.atomicNumber);
-    const idx = catMembers.findIndex((e) => e.symbol === element.symbol);
-    return {
-      prevInCategory: idx > 0 ? catMembers[idx - 1] : null,
-      nextInCategory: idx < catMembers.length - 1 ? catMembers[idx + 1] : null,
-    };
-  }, [element.category, element.symbol]);
-
-  // Find elements sharing the same discoverer (lateral link)
-  const sameDiscoverer = useMemo(() => {
-    if (!element.discoverer || element.discoverer.toLowerCase().includes('antiquity')) return [];
-    return allElements
-      .filter((e) => e.discoverer === element.discoverer && e.symbol !== element.symbol);
-  }, [element]);
-
-  // Find elements sharing the same etymology origin (lateral link)
-  const sameEtymology = useMemo(() => {
-    if (!element.etymologyOrigin || element.etymologyOrigin === 'unknown') return [];
-    return allElements
-      .filter((e) => e.etymologyOrigin === element.etymologyOrigin && e.symbol !== element.symbol);
-  }, [element]);
-
-  // Anomalies this element belongs to
-  const elementAnomalies = useMemo(() => {
-    if (!anomalies) return [];
-    return anomalies.filter((a) => a.elements.includes(element.symbol));
-  }, [anomalies, element.symbol]);
+  // Navigation — pre-resolved from folio bundle
+  const { prevInGroup, nextInGroup } = nav ?? { prevInGroup: null, nextInGroup: null };
+  const { prevInPeriod, nextInPeriod } = nav ?? { prevInPeriod: null, nextInPeriod: null };
+  const { prevInBlock, nextInBlock } = nav ?? { prevInBlock: null, nextInBlock: null };
+  const { prevInCategory, nextInCategory } = nav ?? { prevInCategory: null, nextInCategory: null };
 
   // Fixed width for neighbour chips — align vertical borders across rows
   const neighbourChipWidth = useMemo(() => {
@@ -438,13 +376,13 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
           >
             <div role="img" aria-label={`Data plate: Group ${element.group ?? '—'}, Period ${element.period}, Block ${element.block}, ${element.category}`}>
               {/* Group row — deep blue */}
-              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/groups/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInGroup ? { symbol: prevInGroup.symbol, name: prevInGroup.name } : undefined} next={nextInGroup ? { symbol: nextInGroup.symbol, name: nextInGroup.name } : undefined} />
+              <DataPlateRow label="GROUP" value={element.group ?? '—'} fill={DEEP_BLUE} href={element.group != null ? `/groups/${element.group}` : '#'} ariaLabel={`Group ${element.group ?? '—'}`} title={`View all elements in Group ${element.group ?? '—'}`} viewTransitionName={VT.DATA_PLATE_GROUP} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={nav?.prevInGroup ?? undefined} next={nav?.nextInGroup ?? undefined} />
               {/* Period row — warm red */}
-              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/periods/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInPeriod ? { symbol: prevInPeriod.symbol, name: prevInPeriod.name } : undefined} next={nextInPeriod ? { symbol: nextInPeriod.symbol, name: nextInPeriod.name } : undefined} />
+              <DataPlateRow label="PERIOD" value={element.period} fill={WARM_RED} href={`/periods/${element.period}`} ariaLabel={`Period ${element.period}`} title={`View all elements in Period ${element.period}`} viewTransitionName={VT.DATA_PLATE_PERIOD} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={nav?.prevInPeriod ?? undefined} next={nav?.nextInPeriod ?? undefined} />
               {/* Block row — block colour */}
-              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/blocks/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInBlock ? { symbol: prevInBlock.symbol, name: prevInBlock.name } : undefined} next={nextInBlock ? { symbol: nextInBlock.symbol, name: nextInBlock.name } : undefined} />
+              <DataPlateRow label="BLOCK" value={element.block} fill={color} textFill={contrastTextColor(color)} href={`/blocks/${element.block}`} ariaLabel={`Block ${element.block}`} title={`View all elements in the ${element.block}-block`} viewTransitionName={VT.DATA_PLATE_BLOCK} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={nav?.prevInBlock ?? undefined} next={nav?.nextInBlock ?? undefined} />
               {/* Category row */}
-              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={prevInCategory ? { symbol: prevInCategory.symbol, name: prevInCategory.name } : undefined} next={nextInCategory ? { symbol: nextInCategory.symbol, name: nextInCategory.name } : undefined} />
+              <DataPlateRow label="CATEGORY" value={element.category} fill={categoryColor(element.category)} href={`/categories/${toUrlSlug(element.category)}`} ariaLabel={element.category} title={`View all ${element.category} elements`} rowWidth={mobile ? effectiveWidth : PLATE_WIDTH} prev={nav?.prevInCategory ?? undefined} next={nav?.nextInCategory ?? undefined} />
             </div>
 
           </div>
@@ -539,8 +477,7 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 key={a.slug}
                 slug={a.slug}
                 label={a.label}
-                elementCount={a.elements.length}
-                fixedWidth={anomalyChipWidth}
+                elementCount={a.elementCount}
               />
             ))}
           </div>
@@ -596,11 +533,11 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
                 </Link>
                 {element.discoveryYear ? ` (${element.discoveryYear})` : ''}
                 <Link
-                  to={element.discoveryYear ? `/eras/${Math.floor(element.discoveryYear / 10) * 10}` : '/discovery-timeline'}
-                  title={element.discoveryYear ? `View the ${Math.floor(element.discoveryYear / 10) * 10}s discovery era` : 'View discovery timeline'}
+                  to={element.discoveryYear ? `/eras/${yearToEra(element.discoveryYear).slug}` : '/discovery-timeline'}
+                  title={element.discoveryYear ? `View the ${yearToEra(element.discoveryYear).label} discovery era` : 'View discovery timeline'}
                   style={{ marginLeft: '6px', fontSize: '11px', color }}
                 >
-                  {element.discoveryYear ? `${Math.floor(element.discoveryYear / 10) * 10}s →` : 'timeline →'}
+                  {element.discoveryYear ? `${yearToEra(element.discoveryYear).label} →` : 'timeline →'}
                 </Link>
               </div>
               {sameDiscoverer.length > 0 && (
@@ -637,21 +574,19 @@ export default function Folio({ element, sources, groups, anomalies, animate = t
             Neighbours
           </div>
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {element.neighbors.map((sym) => {
-              const neighbour = getElement(sym);
-              if (!neighbour) return null;
+            {resolvedNeighbors.map((neighbour) => {
               const adj = adjacencyMap.get(element.symbol);
               const dirLabels: Record<string, string> = { left: '← left', right: '→ right', up: '↑ above', down: '↓ below' };
               let direction: string | undefined;
               if (adj) {
                 for (const [dir, target] of Object.entries(adj)) {
-                  if (target === sym) { direction = dirLabels[dir]; break; }
+                  if (target === neighbour.symbol) { direction = dirLabels[dir]; break; }
                 }
               }
               return (
                 <NeighbourChip
-                  key={sym}
-                  symbol={sym}
+                  key={neighbour.symbol}
+                  symbol={neighbour.symbol}
                   name={neighbour.name}
                   color={blockColor(neighbour.block)}
                   direction={direction}

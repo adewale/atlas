@@ -26,9 +26,9 @@ describe('Fix 1: Centralized route metadata', () => {
     expect(ENTITIES).toBeDefined();
   });
 
-  it('VIZ_PAGES has 8 visualization pages', async () => {
+  it('VIZ_PAGES has 9 visualization pages', async () => {
     const { VIZ_PAGES } = await import('../src/lib/routeMeta');
-    expect(VIZ_PAGES).toHaveLength(8);
+    expect(VIZ_PAGES).toHaveLength(9);
   });
 
   it('every VIZ_PAGE has path, label, colour, and entities', async () => {
@@ -113,12 +113,13 @@ describe('Fix 3: Loader caches are properly typed', () => {
     expect(src).not.toMatch(/Cache:\s*unknown/);
   });
 
-  it('routes.tsx imports cache types from types.ts', () => {
+  it('routes.tsx uses cachedLoader factory (types inferred from imports)', () => {
     const src = readFileSync(resolve(SRC, 'routes.tsx'), 'utf-8');
-    expect(src).toContain('GroupData');
-    expect(src).toContain('AnomalyData');
-    expect(src).toContain('DiscovererData');
-    expect(src).toContain('TimelineData');
+    expect(src).toContain('cachedLoader');
+    expect(src).toContain('loadGroups');
+    expect(src).toContain('loadAnomalies');
+    expect(src).toContain('loadDiscoverers');
+    expect(src).toContain('loadTimeline');
   });
 
   it('types.ts exports DiscovererData and TimelineData', () => {

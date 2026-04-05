@@ -63,7 +63,7 @@ test.describe('Data plate navigation arrows', () => {
 
 test.describe('Hero header navigation (TimelineEra)', () => {
   test('prev/next era links appear beneath the hero header', async ({ page }) => {
-    await page.goto('/eras/1800', { waitUntil: 'commit' });
+    await page.goto('/eras/1800-1849', { waitUntil: 'commit' });
     await page.waitForTimeout(1000);
     const navSvg = page.locator('svg[aria-label="Previous and next era navigation"]');
     await expect(navSvg).toBeVisible();

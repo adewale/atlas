@@ -19,7 +19,7 @@
  */
 import { readFileSync } from 'fs';
 import { basename } from 'path';
-import { SRC_DIR, walk, relPath } from './lint-utils.js';
+import { SRC_DIR, walk, relPath, reportAndExit } from './lint-utils.js';
 
 // Matches <a href="/..." or <a href='/' patterns in JSX
 // Ignores: external URLs, anchors, mailto, tel
@@ -85,18 +85,10 @@ function lint(): Violation[] {
 }
 
 // --- Main ---
-const violations = lint();
-
-if (violations.length === 0) {
-  console.log('✓ No plain <a> tags for internal links found.');
-  process.exit(0);
-} else {
-  console.error(`✗ Found ${violations.length} plain <a> tag(s) for internal links:`);
-  console.error('  These should use <Link to="..."> from react-router instead.\n');
-  for (const v of violations) {
-    console.error(`  ${v.file}:${v.line}`);
-    console.error(`    href="${v.href}"`);
-    console.error(`    ${v.text}\n`);
-  }
-  process.exit(1);
-}
+reportAndExit(lint(), {
+  cleanMessage: 'No plain <a> tags for internal links found.',
+  violationNoun: 'plain <a> tag(s) for internal links',
+  hint: 'These should use <Link to="..."> from react-router instead.',
+  formatViolation: (v) => [`L${v.line}: href="${v.href}"`, `  ${v.text}`],
+  alwaysFail: true,
+});

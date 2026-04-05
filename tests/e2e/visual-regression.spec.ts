@@ -83,14 +83,14 @@ test.describe('Visual regression: periodic table home', () => {
 
 test.describe('Visual regression: EntityChip discoverer list', () => {
   test('era page discoverer chips fill width', async ({ page }, testInfo) => {
-    await page.goto('/eras/1770');
+    await page.goto('/eras/1700s');
     await page.waitForLoadState('networkidle');
 
     // Screenshot the discoverer section — validates chip flex layout
     const discovererSection = page.locator('h2:has-text("Discoverers")').locator('..');
     if (await discovererSection.count() > 0) {
       await expect(discovererSection).toHaveScreenshot(
-        `era-1770-discoverers-${testInfo.project.name}.png`,
+        `era-1700s-discoverers-${testInfo.project.name}.png`,
         { maxDiffPixelRatio: 0.01, animations: 'disabled' },
       );
     }

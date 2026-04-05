@@ -1,5 +1,6 @@
 import { useParams, useLoaderData } from 'react-router';
-import { fromSlug, categoryColor } from '../lib/theme';
+import { categoryColor } from '../lib/theme';
+import { fromUrlSlug } from '../lib/slugs';
 import AtlasBrowsePage from '../components/AtlasBrowsePage';
 import MarginNote from '../components/MarginNote';
 import type { CategoryData } from '../lib/types';
@@ -8,7 +9,7 @@ export default function AtlasCategory() {
   const { slug } = useParams();
   const { categories } = useLoaderData() as { categories: CategoryData[] };
 
-  const label = fromSlug(slug ?? '');
+  const label = fromUrlSlug(slug ?? '');
   const cat = categories.find((c) => c.slug === label);
   const color = categoryColor(label);
 

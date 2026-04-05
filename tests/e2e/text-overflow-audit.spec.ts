@@ -36,7 +36,7 @@ const ALL_PAGES = [
   { name: 'Discoverer Index', path: '/discoverers' },
   { name: 'Discoverer Detail', path: '/discoverers/Known%20since%20antiquity' },
   { name: 'Era Index', path: '/eras' },
-  { name: 'Era Detail', path: '/eras/antiquity' },
+  { name: 'Era Detail', path: '/eras/ancient' },
   { name: 'Phase Landscape', path: '/phase-landscape' },
   { name: 'Property Scatter', path: '/property-scatter' },
   { name: 'Anomaly Explorer', path: '/anomaly-explorer' },
