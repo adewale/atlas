@@ -398,12 +398,6 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
             gap: '6px',
             flexWrap: 'wrap',
             alignItems: 'center',
-            paddingLeft: '24px',
-            paddingTop: '6px',
-            paddingBottom: '6px',
-            borderLeft: `3px solid ${BLACK}`,
-            background: 'transparent',
-            borderRadius: 0,
           }}
         >
           {PROPERTY_OPTIONS.map((o) => {
@@ -415,19 +409,19 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
                 aria-pressed={isActive}
                 tabIndex={highlightMode === 'property' ? 0 : -1}
                 style={{
-                  fontSize: '10px',
+                  fontSize: isMobile ? '12px' : '10px',
                   fontWeight: 'bold',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  padding: '3px 7px',
-                  border: `1.5px solid ${isActive ? DEEP_BLUE : BLACK}`,
-                  background: isActive ? DEEP_BLUE : BLACK,
-                  color: PAPER,
+                  padding: isMobile ? '8px 12px' : '6px 10px',
+                  border: `1.5px solid ${isActive ? BLACK : GREY_RULE}`,
+                  background: isActive ? BLACK : 'transparent',
+                  color: isActive ? PAPER : GREY_MID,
                   cursor: 'pointer',
                   minHeight: '44px',
                   minWidth: '44px',
                   fontFamily: 'inherit',
-                  transition: 'background 150ms var(--ease-in-out), color 150ms var(--ease-in-out), border-color 150ms var(--ease-in-out)',
+                  transition: 'background 150ms var(--ease-snap), color 150ms var(--ease-snap), border-color 150ms var(--ease-snap)',
                 }}
               >
                 {o.label}
