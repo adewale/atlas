@@ -80,7 +80,7 @@ export default function EtymologyMap() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: MAX_WIDTH }}>
-        <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={72} />
+        <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={80} />
 
         <SectionedCardList
           sections={sections}

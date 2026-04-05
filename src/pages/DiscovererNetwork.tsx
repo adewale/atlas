@@ -59,7 +59,7 @@ export default function DiscovererNetwork() {
   return (
     <PageShell vizNav>
       <div style={{ maxWidth: INTRO_MAX_W }}>
-        <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={72} />
+        <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
 
         <SectionedCardList sections={discovererSections} accordion defaultCollapsed={isMobile} />
       </div>

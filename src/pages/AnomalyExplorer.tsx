@@ -121,7 +121,7 @@ export default function AnomalyExplorer() {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
-          <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
+          <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
         </div>
 
         <SectionedCardList sections={anomalySections} accordion defaultCollapsed={false} />
@@ -136,7 +136,7 @@ export default function AnomalyExplorer() {
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           {/* ---- Intro paragraph with drop cap ---- */}
-          <IntroBlock text={INTRO_TEXT} color={BLACK} dropCapSize={80} />
+          <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
 
           {/* ---- Byrne colour key: one bold button per anomaly ---- */}
           <div
