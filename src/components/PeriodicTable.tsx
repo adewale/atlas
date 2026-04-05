@@ -387,8 +387,9 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
           maxHeight: highlightMode === 'property' ? '120px' : '0px',
           opacity: highlightMode === 'property' ? 1 : 0,
           transform: highlightMode === 'property' ? 'translateY(0)' : 'translateY(-8px)',
-          transition: 'max-height 250ms var(--ease-in-out), opacity 200ms var(--ease-in-out), transform 250ms var(--ease-in-out), margin-top 250ms var(--ease-in-out)',
-          marginTop: highlightMode === 'property' ? '8px' : '0px',
+          transition: 'max-height 250ms var(--ease-in-out), opacity 200ms var(--ease-in-out), transform 250ms var(--ease-in-out), margin 250ms var(--ease-in-out)',
+          marginTop: highlightMode === 'property' ? '4px' : '0px',
+          marginBottom: highlightMode === 'property' ? '16px' : '0px',
           transformOrigin: 'top right',
         }}
       >

@@ -26,9 +26,9 @@ describe('Fix 1: Centralized route metadata', () => {
     expect(ENTITIES).toBeDefined();
   });
 
-  it('VIZ_PAGES has 9 visualization pages', async () => {
+  it('VIZ_PAGES has 8 visualization pages', async () => {
     const { VIZ_PAGES } = await import('../src/lib/routeMeta');
-    expect(VIZ_PAGES).toHaveLength(9);
+    expect(VIZ_PAGES).toHaveLength(8);
   });
 
   it('every VIZ_PAGE has path, label, colour, and entities', async () => {

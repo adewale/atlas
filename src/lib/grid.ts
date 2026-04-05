@@ -13,13 +13,11 @@ export type CellPosition = { col: number; row: number; x: number; y: number };
 
 const CELL_W = 56;
 const CELL_H = 64;
-const GAP_BEFORE_FBLOCK = CELL_H; // gap between period 7 and f-block rows
-
 /**
  * Map every element to its visual grid position.
  * Main grid: rows 1-7, cols 1-18.
- * Lanthanide row (Ce-Lu): row 9, cols 4-17.
- * Actinide row (Th-Lr): row 10, cols 4-17.
+ * Lanthanide row (Ce-Lu): row 8, cols 4-17 (one row gap after period 7).
+ * Actinide row (Th-Lr): row 9, cols 4-17.
  */
 function computePosition(el: ElementRecord): CellPosition {
   // f-block elements without a group go to the separated rows
@@ -27,21 +25,21 @@ function computePosition(el: ElementRecord): CellPosition {
     // Lanthanides: Ce(58)–Yb(70) → 13 elements
     if (el.period === 6) {
       const col = 4 + (el.atomicNumber - 58); // Ce=4, Pr=5, … Yb=16
-      return { col, row: 9, x: (col - 1) * CELL_W, y: 8 * CELL_H + GAP_BEFORE_FBLOCK };
+      return { col, row: 8, x: (col - 1) * CELL_W, y: 8 * CELL_H };
     }
     // Actinides: Th(90)–No(102) → 13 elements
     const col = 4 + (el.atomicNumber - 90); // Th=4, Pa=5, … No=16
-    return { col, row: 10, x: (col - 1) * CELL_W, y: 9 * CELL_H + GAP_BEFORE_FBLOCK };
+    return { col, row: 9, x: (col - 1) * CELL_W, y: 9 * CELL_H };
   }
 
   // Lu(71) and Lr(103) have group=3 in data but we place them at end of f-block rows
   if (el.atomicNumber === 71) {
     const col = 17; // after Yb(col 16)
-    return { col, row: 9, x: (col - 1) * CELL_W, y: 8 * CELL_H + GAP_BEFORE_FBLOCK };
+    return { col, row: 8, x: (col - 1) * CELL_W, y: 8 * CELL_H };
   }
   if (el.atomicNumber === 103) {
     const col = 17;
-    return { col, row: 10, x: (col - 1) * CELL_W, y: 9 * CELL_H + GAP_BEFORE_FBLOCK };
+    return { col, row: 9, x: (col - 1) * CELL_W, y: 9 * CELL_H };
   }
 
   // Standard main grid
@@ -72,7 +70,7 @@ export function getSymbolAt(row: number, col: number): string | undefined {
 // SVG viewBox dimensions
 // ---------------------------------------------------------------------------
 export const VIEWBOX_W = 18 * CELL_W;
-export const VIEWBOX_H = 9 * CELL_H + GAP_BEFORE_FBLOCK + CELL_H; // 10 rows + gap
+export const VIEWBOX_H = 10 * CELL_H; // rows 0-7 main + row 8 lanthanides + row 9 actinides
 export const CELL_WIDTH = CELL_W;
 export const CELL_HEIGHT = CELL_H;
 
@@ -120,24 +118,19 @@ function computeAdjacency(el: ElementRecord): AdjacencyEntry {
   entry.right = findInDirection(row, col, 0, 1);
 
   // Up/down: special handling for f-block rows
-  if (row === 9) {
+  if (row === 8) {
     // Lanthanide row
-    // Up: go to period 6. Spec: Ce→La, Lu→Hf, middle→same col in period 6
     if (el.atomicNumber === 58) {
-      // Ce → La (group 3, period 6)
       entry.up = 'La';
     } else if (el.atomicNumber === 71) {
-      // Lu → Hf (group 4, period 6)
       entry.up = 'Hf';
     } else {
-      // Middle lanthanides: go to period 6, same column
       entry.up = getSymbolAt(6, col) ?? null;
     }
     // Down: go to actinide at same col
-    entry.down = getSymbolAt(10, col) ?? null;
-  } else if (row === 10) {
+    entry.down = getSymbolAt(9, col) ?? null;
+  } else if (row === 9) {
     // Actinide row
-    // Up: go to period 7. Spec: same logic. Th→Ac, Lr→Rf, middle→same col in period 7
     if (el.atomicNumber === 90) {
       entry.up = 'Ac';
     } else if (el.atomicNumber === 103) {
@@ -145,16 +138,15 @@ function computeAdjacency(el: ElementRecord): AdjacencyEntry {
     } else {
       entry.up = getSymbolAt(7, col) ?? null;
     }
-    // Down: no-op (bottom of grid)
     entry.down = null;
   } else if (row === 6 && col >= 4 && col <= 17) {
     // Period 6, groups 4-17: down goes to lanthanide row
     entry.up = findInDirection(row, col, -1, 0);
-    entry.down = getSymbolAt(9, col) ?? null;
+    entry.down = getSymbolAt(8, col) ?? null;
   } else if (row === 7 && col >= 4 && col <= 17) {
     // Period 7, groups 4-17: down goes to actinide row
     entry.up = findInDirection(row, col, -1, 0);
-    entry.down = getSymbolAt(10, col) ?? null;
+    entry.down = getSymbolAt(9, col) ?? null;
   } else {
     // Standard main grid
     entry.up = findInDirection(row, col, -1, 0);
