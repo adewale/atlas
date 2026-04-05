@@ -11,8 +11,8 @@ import entityRefs from '../data/generated/entity-refs.json';
 import entityRefLookup from '../data/generated/entity-ref-lookup.json';
 
 describe('entity-index.json', () => {
-  it('contains at least 200 entities', () => {
-    expect(entityIndex.length).toBeGreaterThanOrEqual(200);
+  it('contains at least 150 entities (118 elements + discoverers)', () => {
+    expect(entityIndex.length).toBeGreaterThanOrEqual(150);
   });
 
   it('every entity has required fields', () => {
@@ -26,14 +26,16 @@ describe('entity-index.json', () => {
     }
   });
 
-  it('contains all 5 result-worthy entity types', () => {
+  it('contains only element and discoverer entity types', () => {
     const types = new Set(entityIndex.map((e: { type: string }) => e.type));
+    expect(types.size).toBe(2);
     expect(types).toContain('element');
-    expect(types).toContain('anomaly');
     expect(types).toContain('discoverer');
-    expect(types).toContain('era');
-    expect(types).toContain('etymology');
-    // Structural types (category, group, period, block) are facets, not results
+    // Anomalies, eras, etymologies are facets, not results
+    expect(types).not.toContain('anomaly');
+    expect(types).not.toContain('era');
+    expect(types).not.toContain('etymology');
+    // Structural types are also facets
     expect(types).not.toContain('category');
     expect(types).not.toContain('group');
     expect(types).not.toContain('period');
@@ -43,11 +45,6 @@ describe('entity-index.json', () => {
   it('contains exactly 118 element entities', () => {
     const elements = entityIndex.filter((e: { type: string }) => e.type === 'element');
     expect(elements).toHaveLength(118);
-  });
-
-  it('contains exactly 8 era entities', () => {
-    const eras = entityIndex.filter((e: { type: string }) => e.type === 'era');
-    expect(eras).toHaveLength(8);
   });
 
   it('element entities have correct href pattern', () => {
@@ -145,7 +142,6 @@ describe('entity-refs.json', () => {
     expect(types).toContain('belongs_to');
     expect(types).toContain('named_for');
     expect(types).toContain('exhibits');
-    expect(types).toContain('active_during');
   });
 
   it('Fe has outgoing refs to group, period, block, category', () => {

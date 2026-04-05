@@ -497,11 +497,12 @@ function run() {
   writeFileSync(join(outDir, 'grid-elements.json'), JSON.stringify(gridElements));
 
   // --- entity-index.json (pre-built entity corpus for the Explore page) ---
-  // Only result-worthy entity types: elements, discoverers, anomalies, eras, etymologies.
-  // Groups, periods, blocks, categories are structural labels — facets, not results.
+  // Result entity types: elements and discoverers only.
+  // Anomalies, eras, etymologies are facets — you filter by them, not search for them.
+  // Groups, periods, blocks, categories are structural labels — also facets, not results.
   const ENTITY_TYPE_COLOURS: Record<string, string> = {
-    element: '#133e7c', anomaly: '#9e1c2c',
-    discoverer: '#856912', era: '#9e1c2c', etymology: '#0f0f0f',
+    element: '#133e7c',
+    discoverer: '#856912',
   };
   const entityIndex: Array<{
     id: string; type: string; name: string; description: string;
@@ -509,19 +510,15 @@ function run() {
   }> = [];
 
   for (const el of elements) {
+    // Enrich description with discoverer name so text search connects them
+    const desc = el.discoverer && el.discoverer !== 'unknown'
+      ? `${el.summary} Discovered by ${el.discoverer}.`
+      : el.summary;
     entityIndex.push({
       id: `element-${el.symbol}`, type: 'element',
-      name: `${el.symbol} — ${el.name}`, description: el.summary,
+      name: `${el.symbol} — ${el.name}`, description: desc,
       colour: ENTITY_TYPE_COLOURS.element, elements: [el.symbol],
       href: `/elements/${el.symbol}`,
-    });
-  }
-  for (const a of anomalies) {
-    entityIndex.push({
-      id: `anomaly-${a.slug}`, type: 'anomaly',
-      name: a.label, description: a.description,
-      colour: ENTITY_TYPE_COLOURS.anomaly, elements: a.elements,
-      href: `/anomalies/${a.slug}`,
     });
   }
   for (const d of discoverers) {
@@ -531,43 +528,6 @@ function run() {
       description: `Discovered ${d.elements.length} element${d.elements.length === 1 ? '' : 's'}: ${d.elements.join(', ')}`,
       colour: ENTITY_TYPE_COLOURS.discoverer, elements: d.elements,
       href: `/discoverers/${encodeURIComponent(d.name)}`,
-    });
-  }
-  // Eras from timeline — use shared ERA_BINS
-  const eraBuckets = new Map<string, string[]>();
-  for (const entry of antiquity) {
-    const bin = yearToEra(null);
-    if (!eraBuckets.has(bin.slug)) eraBuckets.set(bin.slug, []);
-    eraBuckets.get(bin.slug)!.push(entry.symbol);
-  }
-  for (const entry of timeline) {
-    if (entry.year == null) continue;
-    const bin = yearToEra(entry.year);
-    if (!eraBuckets.has(bin.slug)) eraBuckets.set(bin.slug, []);
-    eraBuckets.get(bin.slug)!.push(entry.symbol);
-  }
-  for (const bin of ERA_BINS) {
-    const symbols = eraBuckets.get(bin.slug);
-    if (!symbols || symbols.length === 0) continue;
-    const unique = [...new Set(symbols)];
-    entityIndex.push({
-      id: `era-${bin.slug}`, type: 'era',
-      name: bin.label,
-      description: `${unique.length} element${unique.length === 1 ? '' : 's'} discovered in ${bin.label}.`,
-      colour: ENTITY_TYPE_COLOURS.era, elements: unique,
-      href: `/eras/${bin.slug}`,
-    });
-  }
-  // Etymology origins
-  for (const ety of etymology) {
-    const symbols = ety.elements.map((e: { symbol: string }) => e.symbol);
-    const capitalised = ety.origin.charAt(0).toUpperCase() + ety.origin.slice(1);
-    entityIndex.push({
-      id: `etymology-${ety.origin}`, type: 'etymology',
-      name: `${capitalised} names`,
-      description: `${symbols.length} elements named for ${ety.origin === 'property' ? 'their properties' : ety.origin === 'place' ? 'places' : ety.origin === 'person' ? 'people' : ety.origin === 'mythology' ? 'mythological figures' : ety.origin === 'mineral' ? 'minerals' : ety.origin === 'astronomical' ? 'celestial bodies' : ety.origin}.`,
-      colour: ENTITY_TYPE_COLOURS.etymology, elements: symbols,
-      href: `/etymology-map#${ety.origin}`,
     });
   }
   writeFileSync(join(outDir, 'entity-index.json'), JSON.stringify(entityIndex));
@@ -704,26 +664,6 @@ function run() {
   for (const el of elements) {
     if (el.etymologyOrigin && el.etymologyOrigin !== 'unknown') {
       entityRefs.push({ sourceId: `element-${el.symbol}`, targetId: `etymology-${el.etymologyOrigin}`, relType: 'named_for' });
-    }
-  }
-
-  // era -> discoverers (active_during): link eras to discoverers who discovered in that era
-  for (const entry of timeline) {
-    if (entry.year == null) continue;
-    const bin = yearToEra(entry.year);
-    const eraId = `era-${bin.slug}`;
-    const discId = `discoverer-${entry.discoverer}`;
-    // Only add if both entities exist in the index
-    if (entityIndex.some((e) => e.id === eraId) && entityIndex.some((e) => e.id === discId)) {
-      entityRefs.push({ sourceId: eraId, targetId: discId, relType: 'active_during' });
-    }
-  }
-  for (const entry of antiquity) {
-    const bin = yearToEra(null);
-    const eraId = `era-${bin.slug}`;
-    const discId = `discoverer-${entry.discoverer}`;
-    if (entityIndex.some((e) => e.id === discId)) {
-      entityRefs.push({ sourceId: eraId, targetId: discId, relType: 'active_during' });
     }
   }
 

@@ -14,19 +14,15 @@ import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK } from './theme';
 /**
  * Result entity types — things worth finding, not just filtering by.
  *
- * Elements: the core objects. Discoverers: people with stories.
- * Anomalies: concepts explaining unusual elements. Eras: historical
- * periods with narrative. Etymology origins: thematic cultural groupings.
+ * Elements: the core objects. Discoverers: people with their own stories.
  *
- * Groups, periods, blocks, categories are structural labels — useful
- * as facets to filter by, but not independent results.
+ * Anomalies, eras, and etymologies are facets — you filter by them,
+ * not search for them. "1700s" filtered results shouldn't include a
+ * card for the era "1700s" itself.
  */
 export const ENTITY_TYPES = [
   'element',
   'discoverer',
-  'anomaly',
-  'era',
-  'etymology',
 ] as const;
 
 export type EntityType = (typeof ENTITY_TYPES)[number];
@@ -34,18 +30,12 @@ export type EntityType = (typeof ENTITY_TYPES)[number];
 export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   element: 'Element',
   discoverer: 'Discoverer',
-  anomaly: 'Anomaly',
-  era: 'Era',
-  etymology: 'Etymology',
 };
 
 /** Byrne colour per entity type — used for card headers and chips. */
 export const ENTITY_TYPE_COLOURS: Record<EntityType, string> = {
   element: DEEP_BLUE,
   discoverer: MUSTARD,
-  anomaly: WARM_RED,
-  era: WARM_RED,
-  etymology: BLACK,
 };
 
 /* ------------------------------------------------------------------ */

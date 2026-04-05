@@ -6,8 +6,10 @@ import {
 } from '../src/lib/entities';
 
 describe('ENTITY_TYPES', () => {
-  it('contains 5 result-worthy entity types', () => {
-    expect(ENTITY_TYPES).toHaveLength(5);
+  it('contains 2 result-worthy entity types', () => {
+    expect(ENTITY_TYPES).toHaveLength(2);
+    expect(ENTITY_TYPES).toContain('element');
+    expect(ENTITY_TYPES).toContain('discoverer');
   });
 
   it('every type has a label', () => {
