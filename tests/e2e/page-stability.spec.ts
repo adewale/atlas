@@ -52,10 +52,10 @@ test.describe('VizNav stability', () => {
     }
   });
 
-  test('VizNav contains all 8 expected links on every viz page', async ({ page }) => {
+  test('VizNav contains all 9 expected links on every viz page', async ({ page }) => {
     const expectedLabels = [
       'Table', 'Phase', 'Scatter', 'Anomalies',
-      'Neighbours', 'Timeline', 'Etymology', 'Discoverers',
+      'Neighbours', 'Timeline', 'Etymology', 'Discoverers', 'Explore',
     ];
 
     for (const route of VIZ_ROUTES) {
@@ -66,7 +66,7 @@ test.describe('VizNav stability', () => {
       await expect(vizNav).toBeVisible();
 
       const links = vizNav.locator('a');
-      await expect(links).toHaveCount(8);
+      await expect(links).toHaveCount(9);
 
       for (const label of expectedLabels) {
         await expect(

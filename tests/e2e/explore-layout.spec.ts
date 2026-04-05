@@ -35,19 +35,18 @@ test.describe('Explore page layout', () => {
     }
   });
 
-  test('era slider does not overlap etymology chips', async ({ page }) => {
+  test('era chips do not overlap etymology chips', async ({ page }) => {
     await page.goto('/explore?era=ancient');
     await page.waitForTimeout(1500);
 
     const layout = await page.evaluate(() => {
       const allDivs = [...document.querySelectorAll('div')];
 
-      // Find Etymology chips container (last chip row before era slider)
+      // Find Etymology and Era chip row labels
       const etyLabel = allDivs.find(d => d.textContent?.trim() === 'Etymology' && d.getAttribute('style')?.includes('uppercase'));
-      const etyChips = etyLabel?.nextElementSibling;
+      const eraLabel = allDivs.find(d => d.textContent?.trim() === 'Era' && d.getAttribute('style')?.includes('uppercase'));
 
-      // Find Era slider container
-      const eraLabel = allDivs.find(d => d.textContent?.trim().startsWith('Discovery Era') && d.getAttribute('style')?.includes('uppercase'));
+      const etyChips = etyLabel?.nextElementSibling;
       const eraContainer = eraLabel?.parentElement;
 
       if (!etyChips || !eraContainer) return null;
@@ -59,7 +58,7 @@ test.describe('Explore page layout', () => {
     });
 
     expect(layout).not.toBeNull();
-    expect(layout!.gap, `Etymology chips overlap era slider by ${-layout!.gap}px`).toBeGreaterThanOrEqual(0);
+    expect(layout!.gap, `Etymology chips overlap era chips by ${-layout!.gap}px`).toBeGreaterThanOrEqual(0);
   });
 
   test('result cards do not overflow container on era filter', async ({ page }) => {

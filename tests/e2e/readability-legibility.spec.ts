@@ -111,7 +111,7 @@ test.describe('Readability: Home / Periodic Table', () => {
 
     const navLinks = page.locator('nav[aria-label="Visualisation pages"] a');
     const count = await navLinks.count();
-    expect(count).toBe(8);
+    expect(count).toBe(9);
     await assertNoOverlap(navLinks, 'Explore nav links');
   });
 });

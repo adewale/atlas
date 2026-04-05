@@ -30,7 +30,7 @@ test.describe('Structural audit — PBT constraints', () => {
 
     const navLinks = page.locator('nav[aria-label="Visualisation pages"] a');
     const count = await navLinks.count();
-    expect(count).toBe(8);
+    expect(count).toBe(9);
 
     const hrefs: string[] = [];
     for (let i = 0; i < count; i++) {
