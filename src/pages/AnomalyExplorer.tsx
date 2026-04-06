@@ -3,7 +3,7 @@ import { useLoaderData, useSearchParams } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { allElements } from '../lib/data';
 import { getCellPosition, contrastTextColor, VIEWBOX_H } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, DIM, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, VIZ_MAX_WIDTH } from '../lib/theme';
 import PeriodicTableGrid from '../components/PeriodicTableGrid';
 import { usePretextLines } from '../hooks/usePretextLines';
 import IntroBlock from '../components/IntroBlock';
@@ -46,7 +46,7 @@ function computeStainOrigin(
 /* ------------------------------------------------------------------ */
 const INTRO_TEXT =
   'Not all elements follow textbook rules. Drawing on data from PubChem, Wikidata, and Wikipedia, this explorer highlights five families of anomaly — from superheavy synthetic elements that exist for mere milliseconds, to diagonal relationships that cut across groups, to electron configurations that defy the aufbau principle. These exceptions are often explained by relativistic effects, electron\u2013electron repulsion, or the near-degeneracy of energy levels in heavier atoms. Select a category below to see which elements break the rules.';
-const INTRO_MAX_W = 760;
+const INTRO_MAX_W = VIZ_MAX_WIDTH;
 
 /* ------------------------------------------------------------------ */
 /* Description text area dimensions                                   */

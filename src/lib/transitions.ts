@@ -25,8 +25,6 @@ export const VT = {
 
   /** Viz navigation bar — persists across viz pages */
   VIZ_NAV: 'viz-nav',
-  /** Viz page <h1> title — morphs between viz pages */
-  VIZ_TITLE: 'viz-title',
 
   /** Folio data plate ↔ AtlasBrowsePage badge */
   DATA_PLATE_GROUP: 'data-plate-group',

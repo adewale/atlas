@@ -63,6 +63,12 @@ export const STROKE_HEAVY = 4;
 /* Typography — canonical monospace stack */
 export const MONO_FONT = "'SF Mono', 'Cascadia Code', 'Fira Code', monospace";
 
+/** Max width for viz page intro/controls (matches SVG grid width). */
+export const VIZ_MAX_WIDTH = 760;
+
+/** Max width for prose pages (About, Credits, Design, Animation, Entity Map). */
+export const PROSE_MAX_WIDTH = 800;
+
 /**
  * Minimum height for the control/intro section between the tab nav and
  * the main visualization.  Every viz page wraps its heading + legend +

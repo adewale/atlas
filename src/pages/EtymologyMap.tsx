@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useLoaderData } from 'react-router';
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK, MINERAL_BROWN, ASTRO_PURPLE, GREY_LIGHT, VIZ_MAX_WIDTH } from '../lib/theme';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
@@ -46,7 +46,7 @@ const ORIGIN_LABELS: Record<string, string> = {
 const INTRO_TEXT =
   'Element names tell the story of science. Some honour places, some honour people, some invoke mythology. The etymology reveals centuries of discovery and human ambition.';
 
-const MAX_WIDTH = 760;
+const MAX_WIDTH = VIZ_MAX_WIDTH;
 
 // ---------------------------------------------------------------------------
 // Component

@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -14,7 +14,7 @@ const EASING_CURVES = [
 ] as const;
 
 const DURATIONS = [
-  { tier: 'Fast', ms: 150, role: 'Persistent chrome: viz-nav, nav-back, color-rule, viz-title' },
+  { tier: 'Fast', ms: 150, role: 'Persistent chrome: viz-nav, nav-back, color-rule' },
   { tier: 'Standard', ms: 250, role: 'Identity morphs: symbol, number, name, cell-bg, data-plate' },
 ] as const;
 
@@ -35,7 +35,6 @@ const VT_NAMES = [
   { name: VT.NAME, tier: 'Standard', easing: '--ease-out', desc: 'Element name (Iron) — grid to Folio heading' },
   { name: VT.CELL_BG, tier: 'Standard', easing: '--ease-out', desc: 'Cell background rect to Folio colour accent bar' },
   { name: VT.VIZ_NAV, tier: 'Fast', easing: '--ease-out', desc: 'Navigation bar — persists across viz pages' },
-  { name: VT.VIZ_TITLE, tier: 'Fast', easing: '--ease-out', desc: 'Page heading — morphs between viz pages' },
   { name: VT.NAV_BACK, tier: 'Fast', easing: '--ease-out', desc: 'Back link — persists across pages' },
   { name: VT.COLOR_RULE, tier: 'Fast', easing: '--ease-out', desc: '4px colour rule — persists across pages' },
   { name: VT.DATA_PLATE_GROUP, tier: 'Standard', easing: '--ease-out', desc: 'Group row — Folio plate to browse badge' },
@@ -49,12 +48,7 @@ const SECTION_STYLE: React.CSSProperties = {
   marginBottom: '48px',
 };
 
-const H2_STYLE: React.CSSProperties = {
-  fontSize: '20px',
-  fontWeight: 700,
-  marginBottom: '16px',
-  letterSpacing: '0.05em',
-};
+const H2_STYLE = SECTION_HEADING_STYLE;
 
 const LABEL_STYLE: React.CSSProperties = {
   fontSize: '11px',
@@ -429,7 +423,7 @@ export default function AnimationPalette() {
 
   return (
     <PageShell>
-      <div style={{ maxWidth: '800px' }}>
+      <div style={{ maxWidth: PROSE_MAX_WIDTH }}>
         <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
         <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px' }}>
           Animation Palette
