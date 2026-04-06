@@ -273,8 +273,6 @@ svg [role="button"] {
 
 ::view-transition-old(viz-nav),
 ::view-transition-new(viz-nav),
-::view-transition-old(viz-title),
-::view-transition-new(viz-title),
 ::view-transition-old(nav-back),
 ::view-transition-new(nav-back),
 ::view-transition-old(color-rule),

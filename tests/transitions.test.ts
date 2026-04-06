@@ -11,7 +11,6 @@ describe('VT constants', () => {
     expect(VT.NAV_BACK).toBe('nav-back');
     expect(VT.COLOR_RULE).toBe('color-rule');
     expect(VT.VIZ_NAV).toBe('viz-nav');
-    expect(VT.VIZ_TITLE).toBe('viz-title');
     expect(VT.DATA_PLATE_GROUP).toBe('data-plate-group');
     expect(VT.DATA_PLATE_PERIOD).toBe('data-plate-period');
     expect(VT.DATA_PLATE_BLOCK).toBe('data-plate-block');

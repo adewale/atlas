@@ -14,7 +14,7 @@ const EASING_CURVES = [
 ] as const;
 
 const DURATIONS = [
-  { tier: 'Fast', ms: 150, role: 'Persistent chrome: viz-nav, nav-back, color-rule, viz-title' },
+  { tier: 'Fast', ms: 150, role: 'Persistent chrome: viz-nav, nav-back, color-rule' },
   { tier: 'Standard', ms: 250, role: 'Identity morphs: symbol, number, name, cell-bg, data-plate' },
 ] as const;
 
@@ -35,7 +35,6 @@ const VT_NAMES = [
   { name: VT.NAME, tier: 'Standard', easing: '--ease-out', desc: 'Element name (Iron) — grid to Folio heading' },
   { name: VT.CELL_BG, tier: 'Standard', easing: '--ease-out', desc: 'Cell background rect to Folio colour accent bar' },
   { name: VT.VIZ_NAV, tier: 'Fast', easing: '--ease-out', desc: 'Navigation bar — persists across viz pages' },
-  { name: VT.VIZ_TITLE, tier: 'Fast', easing: '--ease-out', desc: 'Page heading — morphs between viz pages' },
   { name: VT.NAV_BACK, tier: 'Fast', easing: '--ease-out', desc: 'Back link — persists across pages' },
   { name: VT.COLOR_RULE, tier: 'Fast', easing: '--ease-out', desc: '4px colour rule — persists across pages' },
   { name: VT.DATA_PLATE_GROUP, tier: 'Standard', easing: '--ease-out', desc: 'Group row — Folio plate to browse badge' },
