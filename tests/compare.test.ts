@@ -131,13 +131,16 @@ describe('generateComparisonNotes', () => {
     const a = makeElement({ rankings: { mass: 50 } });
     const b = makeElement({ rankings: { mass: 50 } });
     const notes = generateComparisonNotes(a, b);
-    // block, period, category, groups, mass ranking all match. Phase is same so no phase note.
+    // block, period, category, groups, mass ranking, discoverer, etymology all match.
+    // Phase is same so no phase note. Neighbors are empty so no neighbor note.
     expect(notes).toEqual([
       'Both s-block elements.',
       'Share period 1.',
       'Both classified as nonmetal.',
       'Share group 1.',
       'Similar mass ranking (50 vs 50 of 118).',
+      'Both discovered by Unknown.',
+      'Both named for an unknown.',
     ]);
   });
 
@@ -167,5 +170,151 @@ describe('generateComparisonNotes', () => {
     const b = makeElement({ rankings: { mass: 56 } });
     const notes = generateComparisonNotes(a, b);
     expect(notes.join(' ')).not.toContain('Similar mass');
+  });
+
+  // --- Discovery: same discoverer ---
+
+  it('same discoverer produces "Both discovered by" note', () => {
+    const a = makeElement({ discoverer: 'Marie Curie' });
+    const b = makeElement({ discoverer: 'Marie Curie' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both discovered by Marie Curie.');
+  });
+
+  it('different discoverers do not produce shared discoverer note', () => {
+    const a = makeElement({ discoverer: 'Marie Curie' });
+    const b = makeElement({ discoverer: 'Henry Cavendish' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('Both discovered by');
+  });
+
+  // --- Discovery: year proximity ---
+
+  it('same discovery year produces "Both discovered in" note', () => {
+    const a = makeElement({ discoveryYear: 1898 });
+    const b = makeElement({ discoveryYear: 1898 });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both discovered in 1898.');
+  });
+
+  it('close discovery years (<=10) produce "years apart" note', () => {
+    const a = makeElement({ name: 'Alpha', discoveryYear: 1766 });
+    const b = makeElement({ name: 'Beta', discoveryYear: 1774 });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Discovered 8 years apart — Alpha in 1766, Beta in 1774.');
+  });
+
+  it('1-year gap uses singular "year apart"', () => {
+    const a = makeElement({ name: 'Aa', discoveryYear: 1800 });
+    const b = makeElement({ name: 'Bb', discoveryYear: 1801 });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Discovered 1 year apart — Aa in 1800, Bb in 1801.');
+  });
+
+  it('distant discovery years do not produce years-apart note', () => {
+    const a = makeElement({ discoveryYear: 1766 });
+    const b = makeElement({ discoveryYear: 1898 });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('years apart');
+    expect(notes.join(' ')).not.toContain('year apart');
+  });
+
+  it('null discovery years do not produce discovery year note', () => {
+    const a = makeElement({ discoveryYear: null });
+    const b = makeElement({ discoveryYear: 1898 });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('discovered in');
+    expect(notes.join(' ')).not.toContain('years apart');
+  });
+
+  // --- Etymology ---
+
+  it('same etymology origin "place" produces named-for note', () => {
+    const a = makeElement({ etymologyOrigin: 'place' });
+    const b = makeElement({ etymologyOrigin: 'place' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both named for a place.');
+  });
+
+  it('same etymology origin "person" produces "a person"', () => {
+    const a = makeElement({ etymologyOrigin: 'person' });
+    const b = makeElement({ etymologyOrigin: 'person' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both named for a person.');
+  });
+
+  it('same etymology origin "astronomical" produces "an astronomical body"', () => {
+    const a = makeElement({ etymologyOrigin: 'astronomical' });
+    const b = makeElement({ etymologyOrigin: 'astronomical' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both named for an astronomical body.');
+  });
+
+  it('same etymology origin "property" produces "a property"', () => {
+    const a = makeElement({ etymologyOrigin: 'property' });
+    const b = makeElement({ etymologyOrigin: 'property' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both named for a property.');
+  });
+
+  it('same etymology origin "mythological" produces "a mythological reference"', () => {
+    const a = makeElement({ etymologyOrigin: 'mythological' });
+    const b = makeElement({ etymologyOrigin: 'mythological' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both named for a mythological reference.');
+  });
+
+  it('vowel-initial etymology origin uses "an"', () => {
+    const a = makeElement({ etymologyOrigin: 'obscure' });
+    const b = makeElement({ etymologyOrigin: 'obscure' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both named for an obscure.');
+  });
+
+  it('different etymology origins do not produce etymology note', () => {
+    const a = makeElement({ etymologyOrigin: 'place' });
+    const b = makeElement({ etymologyOrigin: 'person' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('Both named for');
+  });
+
+  // --- Shared neighbors ---
+
+  it('one shared neighbor produces singular note', () => {
+    const a = makeElement({ neighbors: ['He', 'Li'] });
+    const b = makeElement({ neighbors: ['He', 'Be'] });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Share a neighbor: He.');
+  });
+
+  it('multiple shared neighbors lists all', () => {
+    const a = makeElement({ neighbors: ['He', 'Li', 'Be'] });
+    const b = makeElement({ neighbors: ['He', 'Be', 'Na'] });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Share neighbors: He, Be.');
+  });
+
+  it('no shared neighbors produces no neighbor note', () => {
+    const a = makeElement({ neighbors: ['He'] });
+    const b = makeElement({ neighbors: ['Na'] });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('neighbor');
+  });
+
+  it('empty neighbors produces no neighbor note', () => {
+    const a = makeElement({ neighbors: [] });
+    const b = makeElement({ neighbors: ['Na'] });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes.join(' ')).not.toContain('neighbor');
+  });
+
+  // --- Same-everything now includes new notes ---
+
+  it('same-everything elements include discoverer and etymology notes', () => {
+    const a = makeElement({ rankings: { mass: 50 }, discoverer: 'X', etymologyOrigin: 'place' });
+    const b = makeElement({ rankings: { mass: 50 }, discoverer: 'X', etymologyOrigin: 'place' });
+    const notes = generateComparisonNotes(a, b);
+    expect(notes).toContain('Both discovered by X.');
+    expect(notes).toContain('Both named for a place.');
   });
 });

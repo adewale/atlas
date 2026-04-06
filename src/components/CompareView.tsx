@@ -1,19 +1,17 @@
+import { Link } from 'react-router';
 import type { ElementRecord } from '../lib/types';
 import { generateComparisonNotes } from '../lib/compare';
 import { useWedgeText } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
+import SvgLink from './SvgLink';
 
 import { PRETEXT_SANS } from '../lib/pretext';
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT, GREY_MID, LABEL_STYLE } from '../lib/theme';
+import { yearToEra } from '../../shared/era-bins';
+import { ALL_PROPERTIES } from '../lib/properties';
+
 const DEFAULT_WIDTH = 800;
 const SPLIT_H = 280;
-
-const PROPERTIES = [
-  { key: 'mass', label: 'Atomic Mass' },
-  { key: 'electronegativity', label: 'Electronegativity' },
-  { key: 'ionizationEnergy', label: 'Ionisation Energy' },
-  { key: 'radius', label: 'Atomic Radius' },
-] as const;
 
 type CompareViewProps = {
   elementA: ElementRecord;
@@ -22,11 +20,40 @@ type CompareViewProps = {
   vertical?: boolean;
 };
 
+/** Reusable side-by-side row for the discovery/etymology section below the SVG. */
+function CompareRow({ label, left, right, vertical }: { label: string; left: React.ReactNode; right: React.ReactNode; vertical?: boolean }) {
+  const valueStyle: React.CSSProperties = {
+    flex: 1,
+    fontSize: '13px',
+    fontFamily: MONO_FONT,
+    overflowWrap: 'anywhere',
+  };
+  if (vertical) {
+    return (
+      <div data-compare-row style={{ display: 'flex', flexDirection: 'column', gap: '2px', padding: '4px 0' }}>
+        <span style={{ ...LABEL_STYLE }}>{label}</span>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <span style={{ ...valueStyle, color: DEEP_BLUE }}>{left}</span>
+          <span style={{ ...valueStyle, color: WARM_RED }}>{right}</span>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div data-compare-row style={{ display: 'flex', gap: '8px', alignItems: 'baseline', padding: '3px 0' }}>
+      <span style={{ ...LABEL_STYLE, flex: '0 0 90px', textAlign: 'right' }}>{label}</span>
+      <span style={{ ...valueStyle, color: DEEP_BLUE }}>{left}</span>
+      <span style={{ ...valueStyle, color: WARM_RED }}>{right}</span>
+    </div>
+  );
+}
+
 /**
  * Split-screen dramatic compare view.
  * Horizontal: Left half deep blue, right half warm red.
  * Vertical (mobile): Top half deep blue, bottom half warm red.
- * Comparison bands below with horizontal bars per property.
+ * Comparison bands below with horizontal bars per property,
+ * then discovery/etymology info, then relationship notes.
  */
 export default function CompareView({
   elementA,
@@ -50,10 +77,10 @@ export default function CompareView({
   const bandGap = 4;
   const splitH = vertical ? SPLIT_H * 2 : SPLIT_H;
   const bandsY = splitH + 24;
-  const bandsH = PROPERTIES.length * (bandH + bandGap);
+  const bandsH = ALL_PROPERTIES.length * (bandH + bandGap);
   const notesY = bandsY + bandsH + 24;
   const notesBlockH = notesLines.length * notesLineHeight;
-  const totalH = notesY + notesBlockH + 24;
+  const svgH = notesY + notesBlockH + 24;
 
   // Layout helpers for horizontal vs vertical
   const halfW = WIDTH / 2;
@@ -79,8 +106,8 @@ export default function CompareView({
     <div className="compare-svg">
       <svg
         width={WIDTH}
-        height={totalH}
-        viewBox={`0 0 ${WIDTH} ${totalH}`}
+        height={svgH}
+        viewBox={`0 0 ${WIDTH} ${svgH}`}
         role="img"
         style={{ width: '100%', maxWidth: WIDTH }}
         aria-label={`Comparison of ${elementA.name} and ${elementB.name}`}
@@ -221,7 +248,7 @@ export default function CompareView({
         </g>
 
         {/* Comparison bands */}
-        {PROPERTIES.map((prop, i) => {
+        {ALL_PROPERTIES.map((prop, i) => {
           const valA = elementA[prop.key] as number | null;
           const valB = elementB[prop.key] as number | null;
           if (valA == null && valB == null) return null;
@@ -242,7 +269,7 @@ export default function CompareView({
                 fill={BLACK}
                 fontFamily="system-ui"
               >
-                {prop.label}
+                {prop.label}{prop.unit ? ` (${prop.unit})` : ''}
               </text>
               {/* Bar A */}
               <rect
@@ -311,6 +338,85 @@ export default function CompareView({
           animationStagger={animate ? 30 : undefined}
         />
       </svg>
+
+      {/* Discovery & etymology — HTML section below SVG, reusing Folio's layout pattern */}
+      <div
+        style={{
+          marginTop: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2px',
+          maxWidth: WIDTH,
+          opacity: 0,
+          animation: animate ? 'folio-line-reveal 300ms var(--ease-out) 400ms forwards' : undefined,
+          ...(animate ? {} : { opacity: 1 }),
+        }}
+      >
+        <CompareRow
+          vertical={vertical}
+          label="Discovered"
+          left={elementA.discoveryYear ?? '—'}
+          right={elementB.discoveryYear ?? '—'}
+        />
+        <CompareRow
+          vertical={vertical}
+          label="Discoverer"
+          left={
+            <Link
+              to={`/discoverers/${encodeURIComponent(elementA.discoverer)}`}
+              style={{ color: DEEP_BLUE, textDecoration: 'none' }}
+            >
+              {elementA.discoverer}
+            </Link>
+          }
+          right={
+            <Link
+              to={`/discoverers/${encodeURIComponent(elementB.discoverer)}`}
+              style={{ color: WARM_RED, textDecoration: 'none' }}
+            >
+              {elementB.discoverer}
+            </Link>
+          }
+        />
+        <CompareRow
+          vertical={vertical}
+          label="Era"
+          left={
+            <Link
+              to={`/eras/${yearToEra(elementA.discoveryYear).slug}`}
+              style={{ color: DEEP_BLUE, textDecoration: 'none', fontSize: '11px' }}
+            >
+              {yearToEra(elementA.discoveryYear).label}
+            </Link>
+          }
+          right={
+            <Link
+              to={`/eras/${yearToEra(elementB.discoveryYear).slug}`}
+              style={{ color: WARM_RED, textDecoration: 'none', fontSize: '11px' }}
+            >
+              {yearToEra(elementB.discoveryYear).label}
+            </Link>
+          }
+        />
+        <CompareRow
+          vertical={vertical}
+          label="Phase (STP)"
+          left={elementA.phase}
+          right={elementB.phase}
+        />
+        <CompareRow
+          vertical={vertical}
+          label="Etymology"
+          left={elementA.etymologyDescription}
+          right={elementB.etymologyDescription}
+        />
+        <CompareRow
+          vertical={vertical}
+          label="Name origin"
+          left={elementA.etymologyOrigin}
+          right={elementB.etymologyOrigin}
+        />
+      </div>
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function Compare() {
   useDocumentTitle(
     gridElA && gridElB ? `${gridElA.name} vs ${gridElB.name}` : 'Compare Not Found',
     gridElA && gridElB
-      ? `Side-by-side comparison of ${gridElA.name} and ${gridElB.name} — mass, electronegativity, ionisation energy, and atomic radius.`
+      ? `Side-by-side comparison of ${gridElA.name} and ${gridElB.name} — physical properties, discoverers, etymology, and relationship notes.`
       : undefined,
   );
 
