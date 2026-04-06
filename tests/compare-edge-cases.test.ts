@@ -142,66 +142,6 @@ describe('exhaustive same-group pairs', () => {
   });
 });
 
-describe('discovery comparison edge cases', () => {
-  test('Po vs Ra: same discoverer (Marie Curie & Pierre Curie)', () => {
-    const notes = generateComparisonNotes(el('Po'), el('Ra'));
-    expect(notes.some((n) => n.includes('Both discovered by'))).toBe(true);
-  });
-
-  test('Po vs Ra: discovered in same year (1898)', () => {
-    const notes = generateComparisonNotes(el('Po'), el('Ra'));
-    expect(notes.some((n) => n.includes('Both discovered in 1898'))).toBe(true);
-  });
-
-  test('H vs O: discovered close together', () => {
-    const notes = generateComparisonNotes(el('H'), el('O'));
-    const yearNote = notes.find((n) => n.includes('years apart'));
-    expect(yearNote).toBeDefined();
-  });
-
-  test('H vs Og: no close-discovery note (centuries apart)', () => {
-    const notes = generateComparisonNotes(el('H'), el('Og'));
-    const yearNote = notes.find((n) => n.includes('years apart'));
-    expect(yearNote).toBeUndefined();
-  });
-});
-
-describe('etymology comparison edge cases', () => {
-  test('elements with same etymology origin produce etymology note', () => {
-    // Am (astronomical) and Ce (astronomical) — both named for astronomical bodies
-    // Let's check if any two share etymology
-    const am = el('Am');
-    const Ce = el('Ce');
-    if (am.etymologyOrigin === Ce.etymologyOrigin) {
-      const notes = generateComparisonNotes(am, Ce);
-      expect(notes.some((n) => n.includes('Both named for'))).toBe(true);
-    }
-  });
-
-  test('no etymology note for different origins', () => {
-    // H (property) vs Fe (likely different)
-    const h = el('H');
-    const fe = el('Fe');
-    if (h.etymologyOrigin !== fe.etymologyOrigin) {
-      const notes = generateComparisonNotes(h, fe);
-      expect(notes.some((n) => n.includes('Both named for'))).toBe(false);
-    }
-  });
-});
-
-describe('shared neighbor edge cases', () => {
-  test('adjacent elements share neighbors with each other', () => {
-    // Na and Mg are neighbors; Na's neighbors include Mg and vice versa
-    const notes = generateComparisonNotes(el('Na'), el('Mg'));
-    // They may share neighbors like Li, Al, etc
-    // At minimum they should not produce "null" or "undefined"
-    for (const note of notes) {
-      expect(note).not.toContain('null');
-      expect(note).not.toContain('undefined');
-    }
-  });
-});
-
 describe('similar mass ranking edge cases', () => {
   test('elements with very close mass rankings mention similarity', () => {
     // Find two elements with adjacent mass rankings

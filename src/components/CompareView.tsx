@@ -4,18 +4,15 @@ import { useWedgeText } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
 
 import { PRETEXT_SANS } from '../lib/pretext';
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT, GREY_MID } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT } from '../lib/theme';
 const DEFAULT_WIDTH = 800;
 const SPLIT_H = 280;
 
 const PROPERTIES = [
-  { key: 'mass', label: 'Atomic Mass', unit: 'Da' },
-  { key: 'electronegativity', label: 'Electronegativity', unit: '' },
-  { key: 'ionizationEnergy', label: 'Ionisation Energy', unit: 'kJ/mol' },
-  { key: 'radius', label: 'Atomic Radius', unit: 'pm' },
-  { key: 'density', label: 'Density', unit: 'g/cm³' },
-  { key: 'meltingPoint', label: 'Melting Point', unit: 'K' },
-  { key: 'boilingPoint', label: 'Boiling Point', unit: 'K' },
+  { key: 'mass', label: 'Atomic Mass' },
+  { key: 'electronegativity', label: 'Electronegativity' },
+  { key: 'ionizationEnergy', label: 'Ionisation Energy' },
+  { key: 'radius', label: 'Atomic Radius' },
 ] as const;
 
 type CompareViewProps = {
@@ -54,28 +51,7 @@ export default function CompareView({
   const splitH = vertical ? SPLIT_H * 2 : SPLIT_H;
   const bandsY = splitH + 24;
   const bandsH = PROPERTIES.length * (bandH + bandGap);
-
-  // Discovery & etymology info section
-  const infoY = bandsY + bandsH + 20;
-  const infoRowH = 18;
-  const infoLines: { label: string; valA: string; valB: string }[] = [];
-
-  // Discovery year
-  const yearA = elementA.discoveryYear != null ? String(elementA.discoveryYear) : 'Unknown';
-  const yearB = elementB.discoveryYear != null ? String(elementB.discoveryYear) : 'Unknown';
-  infoLines.push({ label: 'Discovered', valA: yearA, valB: yearB });
-
-  // Discoverer
-  infoLines.push({ label: 'Discoverer', valA: elementA.discoverer, valB: elementB.discoverer });
-
-  // Etymology
-  infoLines.push({ label: 'Name origin', valA: elementA.etymologyOrigin, valB: elementB.etymologyOrigin });
-
-  // Phase
-  infoLines.push({ label: 'Phase (STP)', valA: elementA.phase, valB: elementB.phase });
-
-  const infoBlockH = infoLines.length * infoRowH + 16;
-  const notesY = infoY + infoBlockH + 16;
+  const notesY = bandsY + bandsH + 24;
   const notesBlockH = notesLines.length * notesLineHeight;
   const totalH = notesY + notesBlockH + 24;
 
@@ -266,7 +242,7 @@ export default function CompareView({
                 fill={BLACK}
                 fontFamily="system-ui"
               >
-                {prop.label}{prop.unit ? ` (${prop.unit})` : ''}
+                {prop.label}
               </text>
               {/* Bar A */}
               <rect
@@ -317,27 +293,6 @@ export default function CompareView({
                 fontFamily={MONO_FONT}
               >
                 {valB != null ? valB : '—'}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* Discovery & etymology info rows */}
-        {infoLines.map((row, i) => {
-          const y = infoY + i * infoRowH;
-          const colA = vertical ? 4 : 4;
-          const colLabel = vertical ? WIDTH * 0.35 : WIDTH * 0.35;
-          const colB = vertical ? WIDTH * 0.7 : WIDTH * 0.7;
-          return (
-            <g key={row.label}>
-              <text x={colLabel} y={y + 13} textAnchor="middle" fontSize={9} fill={GREY_MID} fontFamily="system-ui" style={{ textTransform: 'uppercase' } as React.CSSProperties}>
-                {row.label}
-              </text>
-              <text x={colA} y={y + 13} fontSize={10} fill={DEEP_BLUE} fontFamily={MONO_FONT}>
-                {row.valA}
-              </text>
-              <text x={colB} y={y + 13} fontSize={10} fill={WARM_RED} fontFamily={MONO_FONT}>
-                {row.valB}
               </text>
             </g>
           );
