@@ -177,12 +177,19 @@ type FolioProps = {
   animate?: boolean;
 };
 
-const PROPERTIES = [
-  { label: 'Atomic Mass', key: 'mass', searchTerm: 'mass', unit: 'Da' },
-  { label: 'Electronegativity', key: 'electronegativity', searchTerm: 'electronegativity', unit: '' },
-  { label: 'Ionisation Energy', key: 'ionizationEnergy', searchTerm: 'ionization', unit: 'kJ/mol' },
-  { label: 'Atomic Radius', key: 'radius', searchTerm: 'radius', unit: 'pm' },
-] as const;
+import { CORE_PROPERTIES } from '../lib/properties';
+
+/** Folio rank rows extend CORE_PROPERTIES with a searchTerm for filtering. */
+const FOLIO_SEARCH_TERMS: Record<string, string> = {
+  mass: 'mass',
+  electronegativity: 'electronegativity',
+  ionizationEnergy: 'ionization',
+  radius: 'radius',
+};
+const PROPERTIES = CORE_PROPERTIES.map((p) => ({
+  ...p,
+  searchTerm: FOLIO_SEARCH_TERMS[p.key] ?? p.key,
+}));
 
 export default function Folio({ element, folioBundle, animate = true }: FolioProps) {
   const color = blockColor(element.block);

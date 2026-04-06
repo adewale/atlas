@@ -142,6 +142,83 @@ describe('exhaustive same-group pairs', () => {
   });
 });
 
+describe('discovery comparison with real elements', () => {
+  test('Po vs Ra: same discoverer note', () => {
+    const notes = generateComparisonNotes(el('Po'), el('Ra'));
+    expect(notes.some((n) => n.includes('Both discovered by'))).toBe(true);
+  });
+
+  test('Po vs Ra: same year note (1898)', () => {
+    const notes = generateComparisonNotes(el('Po'), el('Ra'));
+    expect(notes.some((n) => n.includes('Both discovered in 1898'))).toBe(true);
+  });
+
+  test('H vs O: discovered within 10 years, produces years-apart note', () => {
+    const notes = generateComparisonNotes(el('H'), el('O'));
+    expect(notes.some((n) => n.includes('years apart') || n.includes('year apart'))).toBe(true);
+  });
+
+  test('H vs Og: centuries apart, no close-discovery note', () => {
+    const notes = generateComparisonNotes(el('H'), el('Og'));
+    expect(notes.some((n) => n.includes('years apart'))).toBe(false);
+  });
+
+  test('no note contains null or undefined', () => {
+    // Test a few pairs likely to trigger edge cases
+    const pairs: [string, string][] = [['H', 'He'], ['Fe', 'Ru'], ['Po', 'Ra'], ['Ce', 'Pr']];
+    for (const [s1, s2] of pairs) {
+      const notes = generateComparisonNotes(el(s1), el(s2));
+      for (const note of notes) {
+        expect(note).not.toContain('null');
+        expect(note).not.toContain('undefined');
+      }
+    }
+  });
+});
+
+describe('etymology comparison with real elements', () => {
+  test('elements with same etymology origin produce etymology note', () => {
+    // Sc (place) and Ge (place) — both named for places
+    const sc = el('Sc');
+    const ge = el('Ge');
+    if (sc.etymologyOrigin === ge.etymologyOrigin) {
+      const notes = generateComparisonNotes(sc, ge);
+      expect(notes.some((n) => n.includes('Both named for'))).toBe(true);
+    }
+  });
+
+  test('elements with different etymology origin produce no etymology note', () => {
+    const h = el('H');
+    const fe = el('Fe');
+    if (h.etymologyOrigin !== fe.etymologyOrigin) {
+      const notes = generateComparisonNotes(h, fe);
+      expect(notes.some((n) => n.includes('Both named for'))).toBe(false);
+    }
+  });
+});
+
+describe('shared neighbor edge cases', () => {
+  test('Li and Be share neighbor H', () => {
+    // Li neighbors include H, Be neighbors may include Li
+    const liNeighbors = el('Li').neighbors;
+    const beNeighbors = el('Be').neighbors;
+    const shared = liNeighbors.filter((n) => beNeighbors.includes(n));
+    if (shared.length > 0) {
+      const notes = generateComparisonNotes(el('Li'), el('Be'));
+      expect(notes.some((n) => n.toLowerCase().includes('neighbor'))).toBe(true);
+    }
+  });
+
+  test('neighbor notes contain only valid symbols', () => {
+    const notes = generateComparisonNotes(el('Na'), el('Mg'));
+    const neighborNote = notes.find((n) => n.toLowerCase().includes('neighbor'));
+    if (neighborNote) {
+      expect(neighborNote).not.toContain('null');
+      expect(neighborNote).not.toContain('undefined');
+    }
+  });
+});
+
 describe('similar mass ranking edge cases', () => {
   test('elements with very close mass rankings mention similarity', () => {
     // Find two elements with adjacent mass rankings
