@@ -37,5 +37,42 @@ export function generateComparisonNotes(a: ElementRecord, b: ElementRecord): str
     notes.push(`Similar mass ranking (${massRankA} vs ${massRankB} of 118).`);
   }
 
+  // Discovery comparison
+  if (a.discoverer && b.discoverer && a.discoverer === b.discoverer) {
+    notes.push(`Both discovered by ${a.discoverer}.`);
+  }
+
+  if (a.discoveryYear != null && b.discoveryYear != null) {
+    const gap = Math.abs(a.discoveryYear - b.discoveryYear);
+    if (gap === 0) {
+      notes.push(`Both discovered in ${a.discoveryYear}.`);
+    } else if (gap <= 10) {
+      const earlier = a.discoveryYear < b.discoveryYear ? a : b;
+      const later = a.discoveryYear < b.discoveryYear ? b : a;
+      notes.push(`Discovered ${gap} year${gap === 1 ? '' : 's'} apart — ${earlier.name} in ${earlier.discoveryYear}, ${later.name} in ${later.discoveryYear}.`);
+    }
+  }
+
+  // Etymology comparison
+  if (a.etymologyOrigin && b.etymologyOrigin && a.etymologyOrigin === b.etymologyOrigin) {
+    const origin = a.etymologyOrigin;
+    const label =
+      origin === 'person' ? 'a person'
+      : origin === 'place' ? 'a place'
+      : origin === 'astronomical' ? 'an astronomical body'
+      : origin === 'property' ? 'a property'
+      : origin === 'mythological' ? 'a mythological reference'
+      : /^[aeiou]/i.test(origin) ? `an ${origin}` : `a ${origin}`;
+    notes.push(`Both named for ${label}.`);
+  }
+
+  // Shared neighbors
+  if (a.neighbors.length > 0 && b.neighbors.length > 0) {
+    const shared = a.neighbors.filter((n) => b.neighbors.includes(n));
+    if (shared.length > 0) {
+      notes.push(`Share ${shared.length === 1 ? 'a neighbor' : 'neighbors'}: ${shared.join(', ')}.`);
+    }
+  }
+
   return notes;
 }
