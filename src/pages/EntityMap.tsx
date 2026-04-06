@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { Link } from 'react-router';
-import { BLACK, WARM_RED, DEEP_BLUE, MUSTARD, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE } from '../lib/theme';
+import { BLACK, WARM_RED, DEEP_BLUE, MUSTARD, PAPER, DIM, GREY_MID, GREY_LIGHT, GREY_DARK, GREY_RULE, BACK_LINK_STYLE, MONO_FONT, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { ENTITIES, VIZ_PAGES } from '../lib/routeMeta';
 import type { EntityMeta } from '../lib/routeMeta';
@@ -450,11 +450,12 @@ export default function EntityMapPage() {
 
   return (
     <PageShell>
-      <div style={{ maxWidth: '900px' }}>
+      <div style={{ maxWidth: PROSE_MAX_WIDTH }}>
       <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
-      <h1 style={{ ...INSCRIPTION_STYLE, margin: '16px 0 8px', color: WARM_RED }}>
+      <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: WARM_RED }}>
         Entity Map
       </h1>
+      <div style={{ borderTop: `2px solid ${BLACK}`, marginBottom: '16px' }} />
       <p style={{ lineHeight: 1.7, marginBottom: '32px', fontSize: '14px', color: GREY_DARK }}>
         Atlas models 12 entity types connected by 13 relationship types. Element is the central
         hub — every other entity connects through it. {mobile ? 'Tap' : 'Hover over'} a node to highlight its edges.

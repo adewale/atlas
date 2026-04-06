@@ -6,17 +6,17 @@ import { useFontsReady } from '../hooks/useFontsReady';
 import { PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import PageShell from '../components/PageShell';
-import { BLACK, DEEP_BLUE, DIM, GREY_MID, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, DIM, GREY_MID, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 
-const TEXT_WIDTH = 720;
+// Text width matches PROSE_MAX_WIDTH from theme
 const BODY_FONT = `16px ${PRETEXT_SANS}`;
 
 export default function Credits() {
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
-  const textWidth = isMobile ? 360 : TEXT_WIDTH;
+  const textWidth = isMobile ? 360 : PROSE_MAX_WIDTH;
   const { credits } = useLoaderData() as { credits: CreditsData };
   const fontsReady = useFontsReady();
 
@@ -89,7 +89,7 @@ export default function Credits() {
 
   return (
     <PageShell>
-      <div style={{ maxWidth: '800px' }}>
+      <div style={{ maxWidth: PROSE_MAX_WIDTH }}>
       <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
       <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px' } as React.CSSProperties}>Credits</h1>
 

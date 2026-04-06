@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useLoaderData } from 'react-router';
 import { getElement } from '../lib/data';
-import { WARM_RED, MUSTARD, BLACK, DEEP_BLUE, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
+import { WARM_RED, MUSTARD, BLACK, DEEP_BLUE, MOBILE_VIZ_BREAKPOINT, VIZ_MAX_WIDTH } from '../lib/theme';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
@@ -15,7 +15,7 @@ import { useIsMobile } from '../hooks/useIsMobile';
 const INTRO_TEXT =
   'Some scientists discovered a single element. Others reshaped the periodic table. Glenn Seaborg discovered ten elements. Humphry Davy electrolysed his way to six. This chart maps the prolific discoverers.';
 
-const INTRO_MAX_W = 760;
+const INTRO_MAX_W = VIZ_MAX_WIDTH;
 
 /* Colour cycle for discoverer sections */
 const DISCOVERER_COLORS = [WARM_RED, DEEP_BLUE, MUSTARD, BLACK];

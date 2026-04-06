@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -49,12 +49,7 @@ const SECTION_STYLE: React.CSSProperties = {
   marginBottom: '48px',
 };
 
-const H2_STYLE: React.CSSProperties = {
-  fontSize: '20px',
-  fontWeight: 700,
-  marginBottom: '16px',
-  letterSpacing: '0.05em',
-};
+const H2_STYLE = SECTION_HEADING_STYLE;
 
 const LABEL_STYLE: React.CSSProperties = {
   fontSize: '11px',
@@ -429,7 +424,7 @@ export default function AnimationPalette() {
 
   return (
     <PageShell>
-      <div style={{ maxWidth: '800px' }}>
+      <div style={{ maxWidth: PROSE_MAX_WIDTH }}>
         <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
         <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px' }}>
           Animation Palette

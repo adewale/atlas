@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { allElements } from '../lib/data';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { VIEWBOX_W, CELL_WIDTH, CELL_HEIGHT } from '../lib/grid';
-import { BLACK, DEEP_BLUE, WARM_RED, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_THIN, MONO_FONT } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, VIZ_MAX_WIDTH, GREY_MID, GREY_LIGHT, GREY_RULE, PAPER, STROKE_THIN, MONO_FONT } from '../lib/theme';
 import PeriodicTableGrid from '../components/PeriodicTableGrid';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
@@ -89,7 +89,7 @@ const INTRO_TEXT =
   'At standard temperature and pressure, only 2 elements are liquid — mercury (Hg) and bromine (Br). Just 11 elements exist as gases, all nonmetals or noble gases. The remaining 105 elements are solid, the vast majority of which are metals.';
 
 const SVG_WIDTH = VIEWBOX_W;
-const INTRO_MAX_W = 760;
+const INTRO_MAX_W = VIZ_MAX_WIDTH;
 
 // ---------------------------------------------------------------------------
 // Sparkline Ruler constants

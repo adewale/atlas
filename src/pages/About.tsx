@@ -1,17 +1,16 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router';
-import { usePretextLines, useDropCapText } from '../hooks/usePretextLines';
+import { usePretextLines } from '../hooks/usePretextLines';
 import { useFontsReady } from '../hooks/useFontsReady';
-import { DROP_CAP_FONT, PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
+import { PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
+import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
-import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
-
-const SVG_MAX_WIDTH = 640;
 const BODY_FONT = `16px ${PRETEXT_SANS}`;
 const LINK_TEXT = 'Design Language';
 
@@ -42,17 +41,13 @@ const DESIGN_LANG_TEXT =
 
 export default function About() {
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
-  const textWidth = isMobile ? 360 : SVG_MAX_WIDTH;
+  const textWidth = isMobile ? 360 : PROSE_MAX_WIDTH;
   const fontsReady = useFontsReady();
   const transitionNavigate = useViewTransitionNavigate();
 
   useDocumentTitle('About', 'About Atlas — a structural exploration of the periodic table inspired by Oliver Byrne and Edward Tufte. Built with React, Vite, and open data from PubChem, Wikidata, and Wikipedia.');
 
-  const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
-    text: INTRO_TEXT,
-    maxWidth: textWidth,
-    dropCapFont: `72px ${DROP_CAP_FONT}`,
-  });
+  // Intro paragraph uses shared IntroBlock (rendered below)
 
   const { lines: dataLines, lineHeight: dataLH } = usePretextLines({
     text: DATA_SOURCES_TEXT,
@@ -118,21 +113,14 @@ export default function About() {
 
   return (
     <PageShell>
-      <div style={{ maxWidth: '640px' }}>
+      <div style={{ maxWidth: PROSE_MAX_WIDTH }}>
       <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
       <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px' }}>About Atlas</h1>
 
       <div style={{ borderTop: `2px solid ${BLACK}`, marginBottom: '16px' }} />
 
       <section style={{ marginBottom: '40px' }}>
-        <svg
-          viewBox={`0 0 ${textWidth} ${introLines.length * introLH + introLH}`}
-          aria-label="Introduction"
-          role="img"
-          style={{ width: '100%', maxWidth: textWidth, display: 'block', height: 'auto' }}
-        >
-          <PretextSvg lines={introLines} lineHeight={introLH} x={0} y={0} maxWidth={textWidth} animationStagger={25} dropCap={{ fontSize: 72, fill: DEEP_BLUE, char: introDC.char }} />
-        </svg>
+        <IntroBlock text={INTRO_TEXT} color={DEEP_BLUE} dropCapSize={80} desktopWidth={PROSE_MAX_WIDTH} />
       </section>
 
       <section style={{ marginBottom: '40px' }}>
