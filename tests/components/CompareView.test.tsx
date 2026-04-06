@@ -63,10 +63,10 @@ const elementB = makeElement({
   rankings: { mass: 117, electronegativity: 0, ionizationEnergy: 1, radius: 115 },
 });
 
-function renderCompare(a = elementA, b = elementB) {
+function renderCompare(a = elementA, b = elementB, vertical = false) {
   return render(
     <MemoryRouter>
-      <CompareView elementA={a} elementB={b} animate={false} />
+      <CompareView elementA={a} elementB={b} animate={false} vertical={vertical} />
     </MemoryRouter>,
   );
 }
@@ -131,5 +131,61 @@ describe('CompareView', () => {
     renderCompare();
     expect(screen.getByText(/water-forming/)).toBeInTheDocument();
     expect(screen.getByText(/helios.*sun|sun/)).toBeInTheDocument();
+  });
+});
+
+describe('CompareView mobile (vertical)', () => {
+  it('renders both element symbols in vertical mode', () => {
+    renderCompare(elementA, elementB, true);
+    expect(screen.getAllByText('H').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('He').length).toBeGreaterThan(0);
+  });
+
+  it('uses 400px viewBox width in vertical mode', () => {
+    renderCompare(elementA, elementB, true);
+    const svg = screen.getByRole('img', { name: /Comparison/ });
+    expect(svg.getAttribute('viewBox')).toMatch(/^0 0 400/);
+  });
+
+  it('still shows discoverer names in vertical mode', () => {
+    renderCompare(elementA, elementB, true);
+    expect(screen.getByText('Henry Cavendish')).toBeInTheDocument();
+    expect(screen.getByText('Pierre Janssen')).toBeInTheDocument();
+  });
+
+  it('still shows etymology descriptions in vertical mode', () => {
+    renderCompare(elementA, elementB, true);
+    expect(screen.getByText(/water-forming/)).toBeInTheDocument();
+  });
+
+  it('info section stacks labels above values on mobile', () => {
+    renderCompare(elementA, elementB, true);
+    // In vertical mode, CompareRow should use flexDirection: column or wrap
+    // Find the info container and check it has the vertical CSS class or style
+    const discoveredLabel = screen.getByText('Discovered');
+    const row = discoveredLabel.closest('[data-compare-row]');
+    expect(row).toBeTruthy();
+    const style = row ? (row as HTMLElement).style : null;
+    expect(style?.flexDirection).toBe('column');
+  });
+
+  it('long discoverer names have overflow handling', () => {
+    const longDiscoverer = makeElement({
+      discoverer: 'Marie Skłodowska-Curie & Pierre Curie',
+    });
+    renderCompare(longDiscoverer, elementB, true);
+    const nameEl = screen.getByText('Marie Skłodowska-Curie & Pierre Curie');
+    // overflowWrap is on the <span> value container which wraps the <a> link
+    // Walk up to find the span with the style
+    let el: HTMLElement | null = nameEl as HTMLElement;
+    let found = false;
+    while (el && !found) {
+      const s = el.style;
+      if (s.overflowWrap === 'anywhere' || s.wordBreak === 'break-word' || s.overflow === 'hidden') {
+        found = true;
+      }
+      el = el.parentElement;
+    }
+    expect(found).toBe(true);
   });
 });

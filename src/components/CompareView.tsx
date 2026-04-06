@@ -21,12 +21,29 @@ type CompareViewProps = {
 };
 
 /** Reusable side-by-side row for the discovery/etymology section below the SVG. */
-function CompareRow({ label, left, right }: { label: string; left: React.ReactNode; right: React.ReactNode }) {
+function CompareRow({ label, left, right, vertical }: { label: string; left: React.ReactNode; right: React.ReactNode; vertical?: boolean }) {
+  const valueStyle: React.CSSProperties = {
+    flex: 1,
+    fontSize: '13px',
+    fontFamily: MONO_FONT,
+    overflowWrap: 'anywhere',
+  };
+  if (vertical) {
+    return (
+      <div data-compare-row style={{ display: 'flex', flexDirection: 'column', gap: '2px', padding: '4px 0' }}>
+        <span style={{ ...LABEL_STYLE }}>{label}</span>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <span style={{ ...valueStyle, color: DEEP_BLUE }}>{left}</span>
+          <span style={{ ...valueStyle, color: WARM_RED }}>{right}</span>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline', padding: '3px 0' }}>
+    <div data-compare-row style={{ display: 'flex', gap: '8px', alignItems: 'baseline', padding: '3px 0' }}>
       <span style={{ ...LABEL_STYLE, flex: '0 0 90px', textAlign: 'right' }}>{label}</span>
-      <span style={{ flex: 1, color: DEEP_BLUE, fontSize: '13px', fontFamily: MONO_FONT }}>{left}</span>
-      <span style={{ flex: 1, color: WARM_RED, fontSize: '13px', fontFamily: MONO_FONT }}>{right}</span>
+      <span style={{ ...valueStyle, color: DEEP_BLUE }}>{left}</span>
+      <span style={{ ...valueStyle, color: WARM_RED }}>{right}</span>
     </div>
   );
 }
@@ -336,11 +353,13 @@ export default function CompareView({
         }}
       >
         <CompareRow
+          vertical={vertical}
           label="Discovered"
           left={elementA.discoveryYear ?? '—'}
           right={elementB.discoveryYear ?? '—'}
         />
         <CompareRow
+          vertical={vertical}
           label="Discoverer"
           left={
             <Link
@@ -360,6 +379,7 @@ export default function CompareView({
           }
         />
         <CompareRow
+          vertical={vertical}
           label="Era"
           left={
             <Link
@@ -379,16 +399,19 @@ export default function CompareView({
           }
         />
         <CompareRow
+          vertical={vertical}
           label="Phase (STP)"
           left={elementA.phase}
           right={elementB.phase}
         />
         <CompareRow
+          vertical={vertical}
           label="Etymology"
           left={elementA.etymologyDescription}
           right={elementB.etymologyDescription}
         />
         <CompareRow
+          vertical={vertical}
           label="Name origin"
           left={elementA.etymologyOrigin}
           right={elementB.etymologyOrigin}
