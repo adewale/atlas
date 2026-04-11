@@ -451,7 +451,7 @@ export default function EntityMapPage() {
   return (
     <PageShell>
       <div style={{ maxWidth: PROSE_MAX_WIDTH }}>
-      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
+      <Link to="/about" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← About</Link>
       <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px', color: WARM_RED }}>
         Entity Map
       </h1>

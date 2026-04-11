@@ -27,7 +27,7 @@ export default function AtlasProperty() {
 
   return (
     <AtlasBrowsePage
-      backLink={{ label: '← Table', to: '/' }}
+      backLink={{ label: '← Properties', to: '/properties' }}
       heading={`Ranked by ${label}`}
       color={DEEP_BLUE}
       elements={symbols}

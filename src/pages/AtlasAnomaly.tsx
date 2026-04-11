@@ -15,7 +15,7 @@ export default function AtlasAnomaly() {
   if (!anomaly) {
     return (
       <PageShell>
-        <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
+        <Link to="/anomaly-explorer" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Anomaly Explorer</Link>
         <p>Anomaly not found.</p>
       </PageShell>
     );
@@ -23,7 +23,7 @@ export default function AtlasAnomaly() {
 
   return (
     <AtlasBrowsePage
-      backLink={{ label: '← Table', to: '/' }}
+      backLink={{ label: '← Anomaly Explorer', to: '/anomaly-explorer' }}
       heading={anomaly.label}
       color={WARM_RED}
       description={anomaly.description}

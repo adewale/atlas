@@ -90,7 +90,7 @@ export default function Credits() {
   return (
     <PageShell>
       <div style={{ maxWidth: PROSE_MAX_WIDTH }}>
-      <Link to="/" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← Table</Link>
+      <Link to="/about" style={{ ...BACK_LINK_STYLE, viewTransitionName: VT.NAV_BACK } as React.CSSProperties}>← About</Link>
       <h1 style={{ ...INSCRIPTION_STYLE, margin: '12px 0 16px' } as React.CSSProperties}>Credits</h1>
 
       <div style={{ borderTop: `2px solid ${BLACK}`, marginBottom: '24px' }} />
