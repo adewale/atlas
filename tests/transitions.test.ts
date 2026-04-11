@@ -16,8 +16,8 @@ describe('VT constants', () => {
     expect(VT.DATA_PLATE_BLOCK).toBe('data-plate-block');
   });
 
-  it('has 11 transition names', () => {
-    expect(Object.keys(VT)).toHaveLength(11);
+  it('has 10 transition names', () => {
+    expect(Object.keys(VT)).toHaveLength(10);
   });
 
   it('every value is a unique, non-empty string', () => {

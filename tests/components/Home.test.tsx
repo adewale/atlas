@@ -37,11 +37,11 @@ describe('Home', () => {
 
   it('has navigation links to About, Credits, and Design', () => {
     renderHome();
-    const aboutLink = screen.getByRole('link', { name: /about atlas/i });
+    const aboutLink = screen.getByRole('link', { name: /^about$/i });
     expect(aboutLink).toHaveAttribute('href', '/about');
-    const creditsLink = screen.getByRole('link', { name: /credits/i });
+    const creditsLink = screen.getByRole('link', { name: /^credits$/i });
     expect(creditsLink).toHaveAttribute('href', '/about/credits');
-    const designLink = screen.getByRole('link', { name: /design/i });
+    const designLink = screen.getByRole('link', { name: /^design$/i });
     expect(designLink).toHaveAttribute('href', '/about/design');
   });
 });
