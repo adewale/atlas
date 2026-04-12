@@ -22,6 +22,8 @@
     "verify:grids": "tsx scripts/verify-grid-alignment.ts",
     "debug:layout": "bash scripts/debug-layout.sh",
     "lint:all": "npm run lint && npm run lint:links && npm run lint:colors && npm run lint:assertions && npm run lint:animations && npm run lint:fonts",
+    "test:visual": "zsh tests/visual-regression.sh",
+    "test:visual:update": "zsh tests/update-visual-baselines.sh",
     "deploy": "npm run build && wrangler pages deploy dist/"
   },
   "dependencies": {
