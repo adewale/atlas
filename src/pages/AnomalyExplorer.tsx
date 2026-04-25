@@ -12,6 +12,7 @@ import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import type { AnomalyData } from '../lib/types';
 import PageShell from '../components/PageShell';
+import ViewToggle, { useViewMode } from '../components/ViewToggle';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 
@@ -60,6 +61,7 @@ const DESC_Y_OFFSET = 24;
 export default function AnomalyExplorer() {
   useDocumentTitle('Anomaly Explorer', 'Elements that break the expected periodic trends — diagonal relationships, relativistic effects, and the uniqueness of hydrogen.');
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
+  const [viewMode, setViewMode] = useViewMode(isMobile ? 'list' : 'table');
   const { anomalies } = useLoaderData() as { anomalies: AnomalyData[] };
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedSlug = searchParams.get('anomaly');
@@ -108,14 +110,16 @@ export default function AnomalyExplorer() {
   }, [anomalies]);
 
   // ---------------------------------------------------------------------------
-  // Mobile: sectioned card layout
+  // List view: sectioned card layout (default on mobile, opt-in on desktop)
   // ---------------------------------------------------------------------------
-  if (isMobile) {
+  if (viewMode === 'list') {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
         </div>
+
+        <ViewToggle mode={viewMode} onChange={setViewMode} ariaLabel="Anomaly explorer view" />
 
         <SectionedCardList sections={anomalySections} accordion defaultCollapsed={false} />
       </PageShell>
@@ -123,13 +127,15 @@ export default function AnomalyExplorer() {
   }
 
   // ---------------------------------------------------------------------------
-  // Desktop: periodic table grid with filter buttons
+  // Table view: periodic table grid with filter buttons
   // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           {/* ---- Intro paragraph with drop cap ---- */}
           <IntroBlock text={INTRO_TEXT} color={MUSTARD} dropCapSize={80} />
+
+          <ViewToggle mode={viewMode} onChange={setViewMode} ariaLabel="Anomaly explorer view" />
 
           {/* ---- Byrne colour key: one bold button per anomaly ---- */}
           <div
