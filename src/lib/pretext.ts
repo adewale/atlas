@@ -7,6 +7,7 @@ import {
   type LayoutLine,
   type LayoutCursor,
 } from '@chenglou/pretext';
+import { measureCharWidth } from './measurement-cache';
 
 export type PositionedLine = {
   text: string;
@@ -120,11 +121,11 @@ export function dropCapLayout(
   const dropChar = text[0];
   const restText = text.slice(1);
 
-  // Measure the drop cap character at its large font size
-  const dropPrepared = prepareWithSegments(dropChar, dropCapFont);
-  layout(dropPrepared, 9999, 0);
-  // For a single char, the prepared segments[0] width is the character width
-  const dropWidth = dropPrepared.widths[0] ?? 40;
+  // Measure the drop cap character on a canvas we own (see
+  // ./measurement-cache) so the width is correct after the web font swaps
+  // in. Pretext's singleton canvas can stick to the fallback font's
+  // metrics when the web font loads after the first measurement.
+  const dropWidth = measureCharWidth(dropChar, dropCapFont);
 
   // Parse drop cap font size
   const match = dropCapFont.match(/(\d+(?:\.\d+)?)px/);
