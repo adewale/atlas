@@ -38,3 +38,7 @@ jobs:
 
       - name: E2E tests (desktop)
         run: npx playwright test --project=desktop
+
+      - name: E2E tests (mobile)
+        if: ${{ !cancelled() }}
+        run: npx playwright test --project=mobile
