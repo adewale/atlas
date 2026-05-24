@@ -2,15 +2,18 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 import { getElement } from '../lib/data';
 import type { ElementRecord } from '../lib/types';
-import { BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
+import { BACK_LINK_STYLE, INSCRIPTION_STYLE, GREY_MID } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { usePretextLines } from '../hooks/usePretextLines';
+import { useIsMobile } from '../hooks/useIsMobile';
 import PretextSvg from './PretextSvg';
 import AtlasPlate from './AtlasPlate';
 import PageShell from './PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const DESC_MAX_W = 600;
+// On mobile, descriptions over this many lines are collapsed behind a "Read more" disclosure.
+const MOBILE_COLLAPSE_LINES = 3;
 
 type AtlasBrowsePageProps = {
   backLink: { label: string; to: string };
@@ -50,6 +53,7 @@ export default function AtlasBrowsePage({
   marginNote,
 }: AtlasBrowsePageProps) {
   useDocumentTitle(heading);
+  const isMobile = useIsMobile();
 
   const elements = symbols.map((s) => getElement(s)).filter(
     (e): e is ElementRecord => e != null,
@@ -59,6 +63,9 @@ export default function AtlasBrowsePage({
     text: description ?? '',
     maxWidth: DESC_MAX_W,
   });
+
+  const collapseOnMobile = isMobile && lines.length > MOBILE_COLLAPSE_LINES;
+  const svgHeight = lines.length * lineHeight + lineHeight;
 
   return (
     <PageShell>
@@ -77,24 +84,57 @@ export default function AtlasBrowsePage({
         </h1>
         <div style={{ borderTop: `4px solid ${color}`, marginBottom: '16px', viewTransitionName: VT.COLOR_RULE } as React.CSSProperties} />
         {description && (
-          <svg
-            width={DESC_MAX_W}
-            height={lines.length * lineHeight + lineHeight}
-            viewBox={`0 0 ${DESC_MAX_W} ${lines.length * lineHeight + lineHeight}`}
-            style={{ maxWidth: '100%', height: 'auto', marginBottom: '24px' }}
-            role="img"
-            aria-label={description}
-          >
-            <PretextSvg
-              lines={lines}
-              lineHeight={lineHeight}
-              x={0}
-              y={0}
-              maxWidth={DESC_MAX_W}
-             
-              animationStagger={25}
-            />
-          </svg>
+          collapseOnMobile ? (
+            <details className="atlas-browse-description" style={{ marginBottom: '24px' }}>
+              <summary
+                style={{
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  color: GREY_MID,
+                  marginBottom: '8px',
+                  listStyle: 'none',
+                  padding: '4px 0',
+                }}
+              >
+                Read more →
+              </summary>
+              <svg
+                width="100%"
+                height={svgHeight}
+                viewBox={`0 0 ${DESC_MAX_W} ${svgHeight}`}
+                style={{ maxWidth: `${DESC_MAX_W}px`, height: 'auto' }}
+                role="img"
+                aria-label={description}
+              >
+                <PretextSvg
+                  lines={lines}
+                  lineHeight={lineHeight}
+                  x={0}
+                  y={0}
+                  maxWidth={DESC_MAX_W}
+                  animationStagger={25}
+                />
+              </svg>
+            </details>
+          ) : (
+            <svg
+              width="100%"
+              height={svgHeight}
+              viewBox={`0 0 ${DESC_MAX_W} ${svgHeight}`}
+              style={{ maxWidth: `${DESC_MAX_W}px`, height: 'auto', marginBottom: '24px' }}
+              role="img"
+              aria-label={description}
+            >
+              <PretextSvg
+                lines={lines}
+                lineHeight={lineHeight}
+                x={0}
+                y={0}
+                maxWidth={DESC_MAX_W}
+                animationStagger={25}
+              />
+            </svg>
+          )
         )}
       </div>
       {elements.length > 0 && (

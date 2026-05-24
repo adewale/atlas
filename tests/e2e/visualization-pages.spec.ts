@@ -10,7 +10,7 @@ test.describe('Phase Landscape', () => {
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/phase-landscape.png', fullPage: true });
 
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Phase Landscape at STP');
+    await expect(page).toHaveTitle(/Phase Landscape/);
 
     // Should have 118 element cells
     const cells = page.locator('svg g[role="button"]');
@@ -110,10 +110,10 @@ test.describe('Anomaly Explorer', () => {
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/anomaly-explorer.png', fullPage: true });
 
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Anomaly Explorer');
+    await expect(page).toHaveTitle(/Anomaly Explorer/);
 
-    // Should have anomaly buttons
-    const buttons = page.locator('button');
+    // Should have anomaly buttons (exclude view toggle radio buttons)
+    const buttons = page.locator('button:not([role="radio"])');
     const count = await buttons.count();
     expect(count).toBeGreaterThan(3); // At least 5 anomaly types
 
@@ -127,8 +127,8 @@ test.describe('Anomaly Explorer', () => {
     await page.goto('/anomaly-explorer');
     await page.waitForTimeout(2000);
 
-    // Click first anomaly button
-    await page.locator('button').first().click();
+    // Click first anomaly button (skip view toggle radio buttons)
+    await page.locator('button:not([role="radio"])').first().click();
     await page.waitForTimeout(500);
     await page.screenshot({ path: 'tests/e2e/screenshots/anomaly-selected.png', fullPage: true });
 
@@ -141,8 +141,8 @@ test.describe('Anomaly Explorer', () => {
     await page.goto('/anomaly-explorer');
     await page.waitForTimeout(2000);
 
-    // Select an anomaly
-    await page.locator('button').first().click();
+    // Select an anomaly (skip view toggle radio buttons)
+    await page.locator('button:not([role="radio"])').first().click();
     await page.waitForTimeout(500);
 
     // Check that H and He are still at different positions
@@ -162,7 +162,7 @@ test.describe('Discovery Timeline', () => {
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/discovery-timeline.png', fullPage: true });
 
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Discovery Timeline');
+    await expect(page).toHaveTitle(/Discovery Timeline/);
 
     // Century marks should be visible
     await expect(page.locator('text:text-is("1700")')).toBeVisible();
@@ -218,7 +218,7 @@ test.describe('Etymology Map', () => {
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/etymology-map.png', fullPage: true });
 
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Etymology Map');
+    await expect(page).toHaveTitle(/Etymology Map/);
 
     // Should have origin section headers
     const headers = page.locator('section');
@@ -473,7 +473,7 @@ test.describe('Discoverer Network', () => {
     await page.waitForTimeout(2000);
     await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-network.png', fullPage: true });
 
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Discoverer Network');
+    await expect(page).toHaveTitle(/Discoverer Network/);
 
     // Discoverer network uses SectionedCardList with HTML cards, not SVG rects
     const sections = page.locator('section[role="region"]');

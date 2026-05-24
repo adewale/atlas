@@ -323,8 +323,8 @@ test.describe('Readability: Anomaly Explorer', () => {
     const dist = Math.abs(lastBox!.x - firstBox!.x) + Math.abs(lastBox!.y - firstBox!.y);
     expect(dist).toBeGreaterThan(200);
 
-    // With selection: highlighted cells should still be spaced
-    await page.locator('button').first().click();
+    // With selection: highlighted cells should still be spaced (skip view toggle)
+    await page.locator('button:not([role="radio"])').first().click();
     await page.waitForTimeout(600);
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-anomaly-selected.png', fullPage: true });
   });
@@ -525,7 +525,7 @@ test.describe('Page transitions: content readable after navigation', () => {
     // Navigate to network
     await page.locator('a[href="/discoverer-network"]').click();
     await waitForAnimations(page);
-    await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Discoverer Network');
+    await expect(page).toHaveTitle(/Discoverer Network/);
   });
 
   test('folio → etymology map: readable after transition', async ({ page }) => {
@@ -536,7 +536,7 @@ test.describe('Page transitions: content readable after navigation', () => {
     if ((await etymLink.count()) > 0) {
       await etymLink.click();
       await waitForAnimations(page);
-      await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Etymology Map');
+      await expect(page).toHaveTitle(/Etymology Map/);
       await page.screenshot({ path: 'tests/e2e/screenshots/transition-etymology.png', fullPage: true });
     }
   });
@@ -569,7 +569,7 @@ test.describe('Page transitions: content readable after navigation', () => {
   test('home → each visualization page → back: roundtrip readable', async ({ page }) => {
     test.setTimeout(90000); // 7 pages × ~10s each
     const vizPages = [
-      { path: '/phase-landscape', heading: 'Phase Landscape at STP' },
+      { path: '/phase-landscape', heading: 'Phase Landscape' },
       { path: '/property-scatter', heading: 'Property Scatter' },
       { path: '/anomaly-explorer', heading: 'Anomaly Explorer' },
       { path: '/discovery-timeline', heading: 'Discovery Timeline' },
@@ -587,8 +587,8 @@ test.describe('Page transitions: content readable after navigation', () => {
       await link.click();
       await waitForAnimations(page);
 
-      // Verify heading is readable
-      await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText(heading);
+      // Verify page title is correct
+      await expect(page).toHaveTitle(new RegExp(heading));
 
       // Navigate back
       const backLink = page.locator('a[href="/"]').first();

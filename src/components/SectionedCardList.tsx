@@ -129,6 +129,8 @@ export default function SectionedCardList({
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  // Header buttons indexed by section.id — used for arrow-key navigation.
+  const headerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   // Accordion state: set of expanded section IDs
   const [expanded, setExpanded] = useState<Set<string>>(() => {
@@ -169,6 +171,37 @@ export default function SectionedCardList({
 
   const allExpanded = expanded.size === sections.length;
 
+  // ARIA APG accordion keyboard pattern:
+  //   ArrowDown / ArrowUp → next / previous header (wraps)
+  //   Home / End          → first / last header
+  //   Enter / Space       → toggle (handled natively by <button>)
+  const handleHeaderKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+      const last = sections.length - 1;
+      let nextIndex: number | null = null;
+      switch (event.key) {
+        case 'ArrowDown':
+          nextIndex = currentIndex === last ? 0 : currentIndex + 1;
+          break;
+        case 'ArrowUp':
+          nextIndex = currentIndex === 0 ? last : currentIndex - 1;
+          break;
+        case 'Home':
+          nextIndex = 0;
+          break;
+        case 'End':
+          nextIndex = last;
+          break;
+        default:
+          return;
+      }
+      event.preventDefault();
+      const targetId = sections[nextIndex].id;
+      headerRefs.current[targetId]?.focus();
+    },
+    [sections],
+  );
+
   return (
     <div>
       {accordion && sections.length > 0 && (
@@ -193,20 +226,7 @@ export default function SectionedCardList({
 
       {sections.map((section, sectionIdx) => {
         const isExpanded = expanded.has(section.id);
-        const headerProps = accordion
-          ? {
-              as: 'button' as const,
-              onClick: () => toggleSection(section.id),
-              'aria-expanded': isExpanded,
-              'aria-label': `Toggle ${section.label}`,
-              style: {
-                ...sectionHeaderStyle(section.color),
-                cursor: 'pointer',
-              },
-            }
-          : {
-              style: sectionHeaderStyle(section.color),
-            };
+        const panelId = `${section.id}-panel`;
 
         return (
           <section
@@ -220,8 +240,11 @@ export default function SectionedCardList({
             {accordion ? (
               <h2 style={{ margin: 0 }}>
                 <button
+                  ref={(el) => { headerRefs.current[section.id] = el; }}
                   onClick={() => toggleSection(section.id)}
+                  onKeyDown={(e) => handleHeaderKeyDown(e, sectionIdx)}
                   aria-expanded={isExpanded}
+                  aria-controls={panelId}
                   aria-label={`Toggle ${section.label}`}
                   style={{
                     ...sectionHeaderStyle(section.color),
@@ -248,7 +271,7 @@ export default function SectionedCardList({
             )}
 
             {isExpanded && (
-              <div style={cardGridStyle}>
+              <div id={panelId} role="group" aria-label={`${section.label} elements`} style={cardGridStyle}>
                 {section.items.map((item, cardIdx) => {
                   const stagger = sectionIdx * 30 + cardIdx * 25;
                   return (

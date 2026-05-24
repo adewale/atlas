@@ -39,7 +39,7 @@ function BaseChip({ to, borderColor, primary, secondary, title, 'aria-label': ar
         ...(fixedWidth
           ? { width: fixedWidth, flex: '0 0 auto' }
           : { minWidth: '120px', flex: '1 1 160px', maxWidth: '280px' }),
-        height: '44px',
+        minHeight: '44px',
         padding: '4px 10px 4px 12px',
         borderLeft: `3px solid ${borderColor}`,
         background: hovered ? DIM : 'transparent',

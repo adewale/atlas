@@ -182,6 +182,67 @@ describe('SectionedCardList — accordion', () => {
 });
 
 // ---------------------------------------------------------------------------
+// Keyboard navigation (ARIA APG accordion pattern)
+// ---------------------------------------------------------------------------
+describe('SectionedCardList — keyboard navigation', () => {
+  it('Enter and Space toggle the focused header', async () => {
+    const user = userEvent.setup();
+    renderComponent({ accordion: true });
+    const toggles = screen.getAllByRole('button', { name: /toggle/i });
+    toggles[0].focus();
+    await user.keyboard('{Enter}');
+    expect(toggles[0]).toHaveAttribute('aria-expanded', 'false');
+    await user.keyboard(' ');
+    expect(toggles[0]).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('ArrowDown moves focus to the next header (and wraps at the end)', async () => {
+    const user = userEvent.setup();
+    renderComponent({ accordion: true });
+    const toggles = screen.getAllByRole('button', { name: /toggle/i });
+    toggles[0].focus();
+    await user.keyboard('{ArrowDown}');
+    expect(toggles[1]).toHaveFocus();
+    await user.keyboard('{ArrowDown}');
+    expect(toggles[2]).toHaveFocus();
+    // Wrap from last to first
+    await user.keyboard('{ArrowDown}');
+    expect(toggles[0]).toHaveFocus();
+  });
+
+  it('ArrowUp moves focus to the previous header (and wraps at the start)', async () => {
+    const user = userEvent.setup();
+    renderComponent({ accordion: true });
+    const toggles = screen.getAllByRole('button', { name: /toggle/i });
+    toggles[0].focus();
+    // Wrap from first to last
+    await user.keyboard('{ArrowUp}');
+    expect(toggles[2]).toHaveFocus();
+    await user.keyboard('{ArrowUp}');
+    expect(toggles[1]).toHaveFocus();
+  });
+
+  it('Home jumps to the first header, End jumps to the last', async () => {
+    const user = userEvent.setup();
+    renderComponent({ accordion: true });
+    const toggles = screen.getAllByRole('button', { name: /toggle/i });
+    toggles[1].focus();
+    await user.keyboard('{End}');
+    expect(toggles[2]).toHaveFocus();
+    await user.keyboard('{Home}');
+    expect(toggles[0]).toHaveFocus();
+  });
+
+  it('header has aria-controls referencing the panel when expanded', () => {
+    renderComponent({ accordion: true });
+    const toggles = screen.getAllByRole('button', { name: /toggle/i });
+    const controlsId = toggles[0].getAttribute('aria-controls');
+    expect(controlsId).toBeTruthy();
+    expect(document.getElementById(controlsId!)).not.toBeNull();
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Empty state
 // ---------------------------------------------------------------------------
 describe('SectionedCardList — edge cases', () => {

@@ -254,7 +254,7 @@ test.describe('Information pages', () => {
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('About');
 
     // SVG intro section should be visible (not zero-height)
-    const introSvg = page.locator('svg[aria-label="Introduction"]');
+    const introSvg = page.locator('svg[aria-label="Design principles"]');
     await expect(introSvg).toBeVisible();
     const introBox = await introSvg.boundingBox();
     expect(introBox).not.toBeNull();

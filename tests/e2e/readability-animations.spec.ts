@@ -52,8 +52,8 @@ test.describe('Text readability', () => {
     await page.goto('/about');
     await page.waitForTimeout(1500);
 
-    // Introduction SVG should have real height and text
-    const introSvg = page.locator('svg[aria-label="Introduction"]');
+    // Design principles SVG should have real height and text
+    const introSvg = page.locator('svg[aria-label="Design principles"]');
     await expect(introSvg).toBeVisible();
     const introBox = await introSvg.boundingBox();
     expect(introBox).not.toBeNull();

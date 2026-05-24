@@ -9,6 +9,7 @@ import PageShell from '../components/PageShell';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
 import MarginNote from '../components/MarginNote';
+import ViewToggle, { useViewMode } from '../components/ViewToggle';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { phaseAtTemperature } from '../lib/phase';
@@ -104,6 +105,7 @@ const SVG_RULER_H = SPARK_H + 6; // sparkline + baseline + cap
 export default function PhaseLandscape() {
   useDocumentTitle('Phase Landscape', 'Melting and boiling points of all 118 elements visualised as a landscape, coloured by block.');
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
+  const [viewMode, setViewMode] = useViewMode(isMobile ? 'list' : 'table');
   const transitionNavigate = useViewTransitionNavigate();
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -382,7 +384,9 @@ export default function PhaseLandscape() {
         </div>
       </div>
 
-      {isMobile ? (
+      <ViewToggle mode={viewMode} onChange={setViewMode} ariaLabel="Phase landscape view" />
+
+      {viewMode === 'list' ? (
         <SectionedCardList sections={phaseSections} accordion defaultCollapsed={false} />
       ) : (
         <>

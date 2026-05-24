@@ -10,6 +10,7 @@ import PageShell from '../components/PageShell';
 import ElementSquare from '../components/ElementSquare';
 import SectionedCardList from '../components/SectionedCardList';
 import type { Section } from '../components/SectionedCardList';
+import ViewToggle, { useViewMode } from '../components/ViewToggle';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { ERA_BINS, yearInEra } from '../../shared/era-bins';
@@ -74,6 +75,7 @@ type Tooltip = { x: number; y: number; name: string; year: string; discoverer: s
 export default function DiscoveryTimeline() {
   useDocumentTitle('Discovery Timeline', 'Interactive timeline of element discoveries from antiquity to the present, grouped by decade and coloured by block.');
   const isMobile = useIsMobile(MOBILE_VIZ_BREAKPOINT);
+  const [viewMode, setViewMode] = useViewMode(isMobile ? 'list' : 'table');
   const { antiquity, timeline } = useLoaderData() as TimelineData;
   const navigate = useNavigate();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -198,9 +200,9 @@ export default function DiscoveryTimeline() {
   const totalHeight = eraLabelY + 30;
 
   // ---------------------------------------------------------------------------
-  // Mobile: sectioned card layout
+  // List view: sectioned card layout (default on mobile, opt-in on desktop)
   // ---------------------------------------------------------------------------
-  if (isMobile) {
+  if (viewMode === 'list') {
     return (
       <PageShell vizNav>
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
@@ -208,13 +210,15 @@ export default function DiscoveryTimeline() {
 
         </div>
 
+        <ViewToggle mode={viewMode} onChange={setViewMode} ariaLabel="Discovery timeline view" />
+
         <SectionedCardList sections={eraSections} accordion defaultCollapsed={false} />
       </PageShell>
     );
   }
 
   // ---------------------------------------------------------------------------
-  // Desktop: SVG timeline chart
+  // Table view: SVG timeline chart
   // ---------------------------------------------------------------------------
   return (
     <PageShell vizNav>
@@ -222,6 +226,8 @@ export default function DiscoveryTimeline() {
         <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
           {/* Intro paragraph */}
           <IntroBlock text={INTRO_TEXT} color={WARM_RED} dropCapSize={80} />
+
+          <ViewToggle mode={viewMode} onChange={setViewMode} ariaLabel="Discovery timeline view" />
 
           {/* Era browse links */}
           <section style={{ marginBottom: '16px' }}>

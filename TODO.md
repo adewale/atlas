@@ -44,15 +44,15 @@ Pages that render wide SVGs (700–1008px) with `minWidth` set to the viewBox wi
 ## Other Mobile Improvements
 
 ### AtlasBrowsePage (Group / Period / Block / Category / Rank / Anomaly)
-- Description SVG uses fixed `width={600}` — change to `width="100%"` with `maxWidth: 600px`
-- Add "Read more" accordion trigger on mobile for long descriptions
+- [x] Description SVG uses fixed `width={600}` — change to `width="100%"` with `maxWidth: 600px`
+- [x] Add "Read more" accordion trigger on mobile for long descriptions
 
 ### Element Folio
-- Increase neighbour chip touch targets to 44px minimum height on mobile
-- Consider stacking marginalia below identity block with more spacing
+- [x] Increase neighbour chip touch targets to 44px minimum height on mobile
+- [x] Stack marginalia below identity block with clearer separator on mobile
 
 ### General
-- **View toggle**: Add "Table / List" toggle for pages with both SVG and sectioned views
-- **Keyboard nav**: Ensure accordion headers respond to Enter/Space, add arrow key navigation
-- **Lighthouse CI**: Add performance budget assertions
-- **axe-core**: Add accessibility audits for accordion ARIA compliance
+- [x] **View toggle**: Add "Table / List" toggle for pages with both SVG and sectioned views (Phase Landscape, Anomaly Explorer, Discovery Timeline)
+- [x] **Keyboard nav**: Accordion headers respond to Enter/Space (native), and ArrowUp/ArrowDown/Home/End cycle through headers per ARIA APG
+- [x] **Lighthouse CI**: Performance budgets declared in `lighthouse-budgets.json` and enforced by `npm run lint:budgets`
+- [x] **axe-core**: SectionedCardList accordion audited with axe-core via `tests/components/SectionedCardList.a11y.test.tsx`

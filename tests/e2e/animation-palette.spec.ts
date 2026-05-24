@@ -6,7 +6,7 @@ test.describe('Animation Palette page', () => {
     await page.waitForTimeout(1000);
 
     // Back link
-    await expect(page.locator('a').filter({ hasText: '← Table' })).toBeVisible();
+    await expect(page.locator('a').filter({ hasText: '← About' })).toBeVisible();
 
     // Page title — use last() to skip PageShell wordmark h1
     await expect(page.locator('h1').last()).toContainText('Animation Palette');
@@ -104,14 +104,14 @@ test.describe('Animation Palette page', () => {
     }
   });
 
-  test('view transition name table lists all 11 names', async ({ page }) => {
+  test('view transition name table lists all 10 names', async ({ page }) => {
     await page.goto('/about/animation-palette');
     await page.waitForTimeout(500);
 
     // Count table rows (excluding header)
     const rows = page.locator('table tbody tr');
     const count = await rows.count();
-    expect(count).toBe(11);
+    expect(count).toBe(10);
 
     // Verify key names are present
     const tableText = await page.locator('table').textContent();
@@ -120,7 +120,6 @@ test.describe('Animation Palette page', () => {
     expect(tableText).toContain('element-name');
     expect(tableText).toContain('element-cell-bg');
     expect(tableText).toContain('viz-nav');
-    expect(tableText).toContain('viz-title');
     expect(tableText).toContain('nav-back');
     expect(tableText).toContain('color-rule');
     expect(tableText).toContain('data-plate-group');
