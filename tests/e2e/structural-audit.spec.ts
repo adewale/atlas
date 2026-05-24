@@ -36,9 +36,9 @@ test.describe('Structural audit — PBT constraints', () => {
       hrefs.push(href ?? '');
     }
 
-    // First 4 should be table pages
+    // First 3 should be table pages
     const tablePageSet = new Set(TABLE_PAGES);
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < TABLE_PAGES.length; i++) {
       expect(
         tablePageSet.has(hrefs[i]),
         `Tab position ${i} (${hrefs[i]}) should be a table-showing page`

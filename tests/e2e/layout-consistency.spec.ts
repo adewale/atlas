@@ -124,8 +124,8 @@ test.describe('Anomaly Explorer filter visibility', () => {
     await page.goto('/anomaly-explorer');
     await page.waitForTimeout(2000);
 
-    // Gather all anomaly filter buttons
-    const buttons = page.locator('button');
+    // Gather all anomaly filter buttons (exclude view toggle radio buttons)
+    const buttons = page.locator('button:not([role="radio"])');
     const buttonCount = await buttons.count();
     expect(buttonCount, 'Should have anomaly filter buttons').toBeGreaterThan(0);
 

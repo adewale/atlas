@@ -34,8 +34,8 @@ test.describe('Phase Landscape — temperature interaction', () => {
     await page.goto('/phase-landscape');
     await page.waitForTimeout(2000);
 
-    // Should show STP label
-    await expect(page.locator('text=STP').first()).toBeVisible();
+    // Should show STP landmark label
+    await expect(page.getByText('STP (0 °C)')).toBeAttached();
   });
 
   test('no horizontal overflow with slider', async ({ page }) => {
@@ -89,7 +89,7 @@ test.describe('Phase Landscape — temperature slider (desktop)', () => {
     await page.waitForTimeout(2000);
 
     // At STP, Iron (Fe) should be solid (BLACK fill)
-    const feCell = page.locator('g[aria-label*="Fe —"]').locator('rect').first();
+    const feCell = page.locator('g[aria-label*="Fe 26"]').locator('rect').first();
     const stpFill = await feCell.getAttribute('fill');
 
     // Click near the right end of the ruler (high temperature)
