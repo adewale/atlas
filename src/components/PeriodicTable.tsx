@@ -186,6 +186,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
       {/* Intro paragraph with drop cap */}
       <svg
+        data-testid="pt-intro"
         viewBox={`0 0 ${introMaxW} ${introHeight}`}
         style={{ width: '100%', maxWidth: introMaxW, display: 'block', marginBottom: '12px' }}
       >
