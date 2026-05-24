@@ -93,6 +93,24 @@ svg a:active {
 code, .mono {
   font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
   font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Text-wrap: balance keeps headings from orphaning a single word;
+   pretty keeps the last line of a paragraph from leaving a runt. */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Images that might appear in prose (About, Credits) get a subtle
+   outline so light-on-light edges read. Pure black in light mode —
+   tinted neutrals leave a dirty halo. */
+img {
+  outline: 1px solid rgba(0, 0, 0, 0.1);
+  outline-offset: -1px;
 }
 
 /* Screen reader only */
@@ -139,6 +157,16 @@ button, a, select, input, [role="button"] {
 svg [role="button"] {
   min-height: unset;
   min-width: unset;
+}
+
+/* Scale-on-press: tactile feedback. 0.96 is the established sweet
+   spot — anything smaller reads as exaggerated. Scoped to HTML
+   buttons so SVG cells (role="button") are unaffected. Opt-in for
+   anchor-based pills via .press-scale. */
+button:not(:disabled):active,
+.press-scale:active {
+  transform: scale(0.96);
+  transition: transform 80ms var(--ease-snap);
 }
 
 /* Suppress default blue Chromium focus ring on SVG element cells.
