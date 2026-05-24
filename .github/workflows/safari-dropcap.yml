@@ -1,0 +1,57 @@
+name: Safari drop-cap check
+
+# Manual-only. Runs the drop-cap overlap spec against Playwright's WebKit on
+# a macOS runner — the closest-to-Safari engine available without a paid
+# real-device cloud. macOS WebKit uses the system WebKit/CoreText stack, so
+# it tracks real Safari more closely than the Linux WebKit used elsewhere.
+#
+# Fidelity caveat: this is still Playwright's WebKit, not iOS Safari. The
+# original bug was iOS-Safari-specific (permanent canvas font-resolution
+# stickiness). If this job stays green it is reassuring but NOT a guarantee;
+# only a real iOS Safari device (e.g. a BrowserStack/Sauce job) is definitive.
+#
+# Dispatch from the Actions tab and pick the branch to test. NOTE: the
+# workflow file must exist on the default branch for the "Run workflow"
+# button to appear — merge it to main first, then it can target any branch.
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: safari-dropcap-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  safari:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright WebKit
+        run: npx playwright install webkit
+
+      - name: Drop-cap overlap (WebKit, mobile viewport)
+        run: >
+          npx playwright test
+          --project=webkit-mobile
+          tests/e2e/dropcap-overlap.spec.ts
+          --reporter=html --trace on
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: safari-dropcap-report
+          path: playwright-report/
+          retention-days: 14
