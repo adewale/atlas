@@ -21,6 +21,7 @@ export default function NavigationPill({
       to={to}
       title={title}
       aria-label={label}
+      className="press-scale"
       style={{
         ...NAV_PILL_STYLE,
         padding: '10px 12px',
