@@ -12,7 +12,7 @@
  *  - Self-exclusion counting: counts for facet F ignore F's selection
  *  - URL as source of truth: deep linking and reproducibility
  */
-import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useLoaderData, useSearchParams } from 'react-router';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -29,7 +29,6 @@ import {
   BLACK,
   GREY_MID,
   GREY_RULE,
-  WARM_RED,
   CONTROL_SECTION_MIN_HEIGHT,
 } from '../lib/theme';
 import { PRETEXT_SANS } from '../lib/pretext';
@@ -97,13 +96,13 @@ export default function Explore() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   // Track whether this is the first render — stagger only on initial load
-  const isInitialLoad = useRef(true);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   useEffect(() => {
-    if (response.total > 0 && isInitialLoad.current) {
-      const id = setTimeout(() => { isInitialLoad.current = false; }, 500);
+    if (response.total > 0 && isInitialLoad) {
+      const id = setTimeout(() => setIsInitialLoad(false), 500);
       return () => clearTimeout(id);
     }
-  }, [response.total]);
+  }, [response.total, isInitialLoad]);
 
   // Resolve cross-refs for expanded card
   const expandedRefs = useMemo<CrossRef[]>(() => {
@@ -315,7 +314,7 @@ export default function Explore() {
             <EntityCard
               key={result.id}
               entity={entity}
-              index={isInitialLoad.current ? Math.min(i, MAX_STAGGER_BATCH) : 0}
+              index={isInitialLoad ? Math.min(i, MAX_STAGGER_BATCH) : 0}
               expanded={isExpanded}
               crossRefs={isExpanded ? expandedRefs : undefined}
               onDrill={handleCardDrill}

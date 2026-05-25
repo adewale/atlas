@@ -86,7 +86,7 @@ function findInDirection(
   dRow: number,
   dCol: number,
 ): string | null {
-  let r = startRow + dRow;
+  const r = startRow + dRow;
   let c = startCol + dCol;
   while (r >= 1 && r <= 9 && c >= 1 && c <= 18) {
     const sym = getSymbolAt(r, c);

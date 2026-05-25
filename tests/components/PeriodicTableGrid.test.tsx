@@ -7,8 +7,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import PeriodicTableGrid from '../../src/components/PeriodicTableGrid';
-import { allElements } from '../../src/lib/data';
-import { VIEWBOX_W, VIEWBOX_H, CELL_WIDTH, CELL_HEIGHT } from '../../src/lib/grid';
+import { VIEWBOX_W, VIEWBOX_H } from '../../src/lib/grid';
 
 afterEach(cleanup);
 
@@ -17,19 +16,15 @@ const noop = () => {};
 
 describe('PeriodicTableGrid', () => {
   it('renders 118 element cells as SVG groups', () => {
-    const { container } = render(
-      <PeriodicTableGrid fillFn={defaultFill} onClick={noop} />,
-    );
-    const cells = container.querySelectorAll('g[role="button"]');
+    render(<PeriodicTableGrid fillFn={defaultFill} onClick={noop} />);
+    const cells = screen.getAllByRole('button');
     expect(cells).toHaveLength(118);
   });
 
   it('uses fillFn to determine each cell background', () => {
     const fillFn = (el: { symbol: string }) =>
       el.symbol === 'Fe' ? '#ff0000' : '#ffffff';
-    const { container } = render(
-      <PeriodicTableGrid fillFn={fillFn} onClick={noop} />,
-    );
+    render(<PeriodicTableGrid fillFn={fillFn} onClick={noop} />);
     const feCell = screen.getByLabelText(/Fe.*Iron/);
     const rect = feCell.querySelector('rect');
     expect(rect).toHaveAttribute('fill', '#ff0000');
@@ -54,9 +49,7 @@ describe('PeriodicTableGrid', () => {
   });
 
   it('highlights the active cell with WARM_RED stroke', () => {
-    const { container } = render(
-      <PeriodicTableGrid fillFn={defaultFill} onClick={noop} activeSymbol="Fe" />,
-    );
+    render(<PeriodicTableGrid fillFn={defaultFill} onClick={noop} activeSymbol="Fe" />);
     const feCell = screen.getByLabelText(/Fe.*Iron/);
     const rect = feCell.querySelector('rect');
     // Active cell gets a heavier stroke
@@ -65,9 +58,7 @@ describe('PeriodicTableGrid', () => {
   });
 
   it('applies viewTransitionName to the active cell', () => {
-    const { container } = render(
-      <PeriodicTableGrid fillFn={defaultFill} onClick={noop} activeSymbol="Fe" />,
-    );
+    render(<PeriodicTableGrid fillFn={defaultFill} onClick={noop} activeSymbol="Fe" />);
     const feCell = screen.getByLabelText(/Fe.*Iron/);
     const rect = feCell.querySelector('rect');
     expect(rect!.style.viewTransitionName).toBeTruthy();

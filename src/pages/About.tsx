@@ -6,7 +6,7 @@ import { PRETEXT_SANS, measureLines, computeLineHeight } from '../lib/pretext';
 import PretextSvg from '../components/PretextSvg';
 import IntroBlock from '../components/IntroBlock';
 import PageShell from '../components/PageShell';
-import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH, MOBILE_VIZ_BREAKPOINT, STROKE_HAIRLINE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -66,6 +66,7 @@ export default function About() {
 
   /* ---- Bullet list: measure each item as a separate mini-paragraph ---- */
   const bulletData = useMemo(() => {
+    void fontsReady;
     const lh = computeLineHeight(BODY_FONT);
     const allLines: Array<{ text: string; width: number; x: number; y: number }> = [];
     let yOffset = 0;
@@ -90,6 +91,7 @@ export default function About() {
   });
 
   const linkMetrics = useMemo(() => {
+    void fontsReady;
     const lineIdx = designLines.findIndex((l) => l.text.includes(LINK_TEXT));
     if (lineIdx === -1 || typeof document === 'undefined') return null;
     const line = designLines[lineIdx];
@@ -191,21 +193,6 @@ export default function About() {
 
             return (
               <g key={i}>
-                {i > 0 && (
-                  <line
-                    x1={0}
-                    y1={line.y}
-                    x2={textWidth}
-                    y2={line.y}
-                    stroke={BLACK}
-                    strokeWidth={STROKE_HAIRLINE}
-                    opacity={0.2}
-                    style={{
-                      clipPath: 'inset(0 100% 0 0)',
-                      animation: `rule-draw 400ms var(--ease-out) ${delay}ms forwards`,
-                    }}
-                  />
-                )}
                 <text
                   x={line.x}
                   y={lineY}

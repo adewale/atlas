@@ -222,8 +222,8 @@ test.describe('Atlas pages', () => {
     // Should have a heading
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toBeVisible();
 
-    // Plate with element cards
-    const plate = page.locator('svg[role="img"]').first();
+    // Plate with element cards (the description SVG may appear before it)
+    const plate = page.locator('svg[role="img"]').last();
     await expect(plate).toBeVisible();
 
     // Back link
@@ -271,12 +271,15 @@ test.describe('Information pages', () => {
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Credits');
 
-    // Summaries table should have 118 rows (one per element)
+    // Summaries should have 118 entries (desktop table rows, mobile stacked cards)
     const tableRows = page.locator('tbody tr');
-    const rowCount = await tableRows.count();
+    const tableRowCount = await tableRows.count();
+    const rowCount = tableRowCount > 0
+      ? tableRowCount
+      : await page.locator('section:has(h2:has-text("Text Summaries")) a[href^="/elements/"]').count();
     expect(rowCount).toBe(118);
 
-    // Element links in table should use client-side routing
+    // Element links should use client-side routing
     const feLink = page.locator('a[href="/elements/Fe"]');
     await expect(feLink).toBeVisible();
 

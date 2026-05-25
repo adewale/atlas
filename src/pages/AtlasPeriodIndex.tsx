@@ -1,6 +1,5 @@
 import { useLoaderData } from 'react-router';
 import { getElement } from '../lib/data';
-import { blockColor } from '../lib/grid';
 import { WARM_RED, DEEP_BLUE } from '../lib/theme';
 import PageShell from '../components/PageShell';
 import PageHeader from '../components/PageHeader';

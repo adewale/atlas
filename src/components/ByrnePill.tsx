@@ -9,7 +9,7 @@
  * Inactive = transparent with coloured border + text.
  * Disabled = greyed-out, non-interactive.
  */
-import { PAPER, GREY_MID, GREY_RULE } from '../lib/theme';
+import { GREY_MID, GREY_RULE } from '../lib/theme';
 import { contrastTextColor } from '../lib/gridColors';
 
 export interface ByrnePillProps {

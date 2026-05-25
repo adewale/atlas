@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { clearCache } from '@chenglou/pretext';
-import { DROP_CAP_FONT } from '../lib/pretext';
+import { invalidateMeasurementState } from '../lib/measurement-cache';
 
 /**
  * Returns true once the Cinzel web font (used for drop caps and the
@@ -16,10 +15,10 @@ import { DROP_CAP_FONT } from '../lib/pretext';
  * listen to the `loadingdone` event which fires each time a batch of
  * fonts finishes loading.
  *
- * When fonts arrive we also flush the pretext measurement cache so
- * that hooks which depend on `fontsReady` re-measure with the real
- * font metrics rather than the fallback-font metrics that were cached
- * before the web font loaded.
+ * When fonts arrive we discard our cached measurement canvas and
+ * pretext's width-cache (see `lib/measurement-cache`) so hooks which
+ * depend on `fontsReady` re-measure against the real font metrics
+ * instead of the fallback metrics from the pre-load period.
  *
  * This is intentionally in its own file so that usePretextLines.ts
  * stays free of useState/useEffect (the perf test asserts that).
@@ -37,7 +36,10 @@ const listeners = new Set<() => void>();
 function markReady() {
   if (globalFontsReady) return;
   globalFontsReady = true;
-  clearCache(); // flush stale fallback-font measurements
+  // Discard the cached drop-cap canvas AND pretext's width-cache so the
+  // next measurement runs against the just-loaded web font instead of
+  // the stale fallback metrics.
+  invalidateMeasurementState();
   listeners.forEach((fn) => fn());
   listeners.clear();
 }
@@ -63,15 +65,12 @@ if (typeof document !== 'undefined' && document.fonts) {
 export function useFontsReady(): boolean {
   const [ready, setReady] = useState(globalFontsReady);
   useEffect(() => {
-    if (globalFontsReady) {
-      setReady(true);
-      return;
-    }
+    if (globalFontsReady) return;
     const cb = () => setReady(true);
     listeners.add(cb);
     return () => {
       listeners.delete(cb);
     };
   }, []);
-  return ready;
+  return ready || globalFontsReady;
 }

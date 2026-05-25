@@ -32,7 +32,7 @@ const PROPERTY_OPTIONS: { value: NumericProperty; label: string }[] = [
 
 import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, GREY_RULE, categoryColor, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT } from '../lib/theme';
 import { useDropCapText } from '../hooks/usePretextLines';
-import { DROP_CAP_FONT } from '../lib/pretext';
+import { dropCapCanvasFont } from '../lib/pretext';
 import PretextSvg from './PretextSvg';
 import { useIsMobile } from '../hooks/useIsMobile';
 
@@ -112,7 +112,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   const { dropCap: introDC, lines: introLines, lineHeight: introLH } = useDropCapText({
     text: INTRO_TEXT,
     maxWidth: introMaxW,
-    dropCapFont: `80px ${DROP_CAP_FONT}`,
+    dropCapFont: dropCapCanvasFont(80),
   });
   const DROP_CAP_SIZE = 80;
   const introHeight = Math.max(introLines.length * introLH + 16, DROP_CAP_SIZE + 4);
@@ -186,6 +186,7 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
       <div style={{ minHeight: CONTROL_SECTION_MIN_HEIGHT }}>
       {/* Intro paragraph with drop cap */}
       <svg
+        data-testid="pt-intro"
         viewBox={`0 0 ${introMaxW} ${introHeight}`}
         style={{ width: '100%', maxWidth: introMaxW, display: 'block', marginBottom: '12px' }}
       >

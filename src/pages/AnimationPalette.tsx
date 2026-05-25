@@ -1,7 +1,7 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from 'react-router';
 import { blockColor, contrastTextColor } from '../lib/grid';
-import { DEEP_BLUE, WARM_RED, MUSTARD, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH } from '../lib/theme';
+import { DEEP_BLUE, WARM_RED, PAPER, BLACK, GREY_MID, MONO_FONT, BACK_LINK_STYLE, INSCRIPTION_STYLE, SECTION_HEADING_STYLE, PROSE_MAX_WIDTH } from '../lib/theme';
 import { VT } from '../lib/transitions';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';

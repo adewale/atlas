@@ -153,6 +153,7 @@ test.describe('Route crawler', () => {
       '/discoverers',
       '/discoverers/:name',
       '/eras',
+      '/eras/:era',
     ]);
 
     const unexpectedOrphans = orphaned.filter((r) => !KNOWN_DEEP_ROUTES.has(r));

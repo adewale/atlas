@@ -183,7 +183,7 @@ test.describe('Layout shift guards', () => {
           plateBox.x < headingBox.x + headingBox.width;
 
         // If they share horizontal space, they shouldn't fully overlap vertically
-        if (overlapsHorizontally) {
+        if (overlapsHorizontally && overlapsVertically) {
           // Allow some overlap (8px tolerance) but not complete stacking
           const overlapAmount = Math.min(headingBottom, plateBottom) - Math.max(headingBox.y, plateBox.y);
           expect(

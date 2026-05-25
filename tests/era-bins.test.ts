@@ -3,6 +3,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { ERA_BINS, yearToEra, eraBySlug, yearInEra } from '../shared/era-bins';
+import elements from '../data/generated/elements.json';
 
 describe('ERA_BINS', () => {
   it('has exactly 8 eras', () => {
@@ -34,7 +35,7 @@ describe('ERA_BINS', () => {
 
   it('slugs are URL-safe (no spaces, no unicode)', () => {
     for (const bin of ERA_BINS) {
-      expect(bin.slug).toMatch(/^[a-z0-9\-]+$/);
+      expect(bin.slug).toMatch(/^[a-z0-9-]+$/);
     }
   });
 });
@@ -91,7 +92,6 @@ describe('yearToEra', () => {
   });
 
   it('every element maps to a valid era', () => {
-    const elements = require('../data/generated/elements.json');
     for (const el of elements) {
       const era = yearToEra(el.discoveryYear);
       expect(ERA_BINS).toContain(era);

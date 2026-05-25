@@ -15,7 +15,7 @@
 import { chromium } from 'playwright';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { spawn, execSync } from 'node:child_process';
+import { spawn } from 'node:child_process';
 
 const ROOT = join(import.meta.dirname, '..');
 const OUT = join(ROOT, 'data', 'generated', 'text-metrics.json');

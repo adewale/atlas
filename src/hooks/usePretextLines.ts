@@ -5,7 +5,7 @@ import {
   dropCapLayout,
   computeLineHeight,
   PRETEXT_SANS,
-  DROP_CAP_FONT,
+  dropCapCanvasFont,
   type PositionedLine,
 } from '../lib/pretext';
 import { useFontsReady } from './useFontsReady';
@@ -28,6 +28,7 @@ export function usePretextLines({
 }: UsePretextLinesOptions): { lines: PositionedLine[]; lineHeight: number } {
   const fontsReady = useFontsReady();
   return useMemo(() => {
+    void fontsReady;
     const lineHeight = computeLineHeight(font);
     const lines = measureLines(text, font, maxWidth, lineHeight);
     return { lines, lineHeight };
@@ -62,9 +63,10 @@ export function useWedgeText({
   font = BODY_FONT,
 }: UseWedgeTextOptions): { lines: PositionedLine[]; lineHeight: number } {
   const fontsReady = useFontsReady();
-  const lh = useMemo(() => computeLineHeight(font), [font, fontsReady]);
+  const lh = useMemo(() => computeLineHeight(font), [font]);
 
   const lines = useMemo(() => {
+    void fontsReady;
     if (!text) return [];
 
     // Estimate line count using average width
@@ -105,6 +107,7 @@ export function useShapedText({
 } {
   const fontsReady = useFontsReady();
   return useMemo(() => {
+    void fontsReady;
     const lineHeight = computeLineHeight(font);
     const plateHeightInLines = Math.ceil(plateHeight / lineHeight);
     const identityHeightInLines = leftIndent
@@ -161,7 +164,7 @@ export function useDropCapText({
   text,
   maxWidth,
   font = BODY_FONT,
-  dropCapFont = `48px ${DROP_CAP_FONT}`,
+  dropCapFont = dropCapCanvasFont(48),
 }: UseDropCapOptions): {
   dropCap: { char: string; width: number; height: number; fontSize: number };
   lines: PositionedLine[];
@@ -169,6 +172,7 @@ export function useDropCapText({
 } {
   const fontsReady = useFontsReady();
   return useMemo(() => {
+    void fontsReady;
     const lineHeight = computeLineHeight(font);
     if (!text) {
       return { dropCap: { char: '', width: 0, height: 0, fontSize: 0 }, lines: [], lineHeight };

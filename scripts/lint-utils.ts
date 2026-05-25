@@ -1,5 +1,5 @@
-import { readFileSync, readdirSync, statSync } from 'fs';
-import { join, extname, basename } from 'path';
+import { readdirSync, statSync } from 'fs';
+import { join, extname } from 'path';
 
 export const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
 export const COMMENT_RE = /^\s*(\/\/|\/?\*|\*)/;
@@ -36,7 +36,7 @@ export function groupBy<T>(items: T[], key: (item: T) => string): Map<string, T[
   return map;
 }
 
-type ReportOptions = {
+type ReportOptions<T> = {
   /** Displayed on clean run. E.g. "No hardcoded hex colours found." */
   cleanMessage: string;
   /** Prefix for violation summary. E.g. "hex colour literal(s)" */
@@ -44,7 +44,7 @@ type ReportOptions = {
   /** Guidance line shown below the count. */
   hint: string;
   /** Format a single violation into lines for display. */
-  formatViolation: (v: any) => string[];
+  formatViolation: (v: T) => string[];
   /** If true, always exit 1 on violations. Otherwise only with --strict. */
   alwaysFail?: boolean;
 };
@@ -53,7 +53,7 @@ type ReportOptions = {
  * Shared report-and-exit logic for all lint scripts.
  * Handles the clean/warn/strict pattern so each linter only provides the scan.
  */
-export function reportAndExit<T extends { file: string }>(violations: T[], opts: ReportOptions): never {
+export function reportAndExit<T extends { file: string }>(violations: T[], opts: ReportOptions<T>): never {
   if (violations.length === 0) {
     console.log(`\u2713 ${opts.cleanMessage}`);
     process.exit(0);

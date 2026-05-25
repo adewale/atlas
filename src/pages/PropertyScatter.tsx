@@ -2,9 +2,8 @@ import { useState, useMemo, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { allElements } from '../lib/data';
 import { blockColor } from '../lib/grid';
-import { BLACK, PAPER, DEEP_BLUE, GREY_MID, GREY_RULE, GREY_LIGHT, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, VIZ_MAX_WIDTH, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
+import { BLACK, PAPER, DEEP_BLUE, GREY_RULE, GREY_LIGHT, CONTROL_SECTION_MIN_HEIGHT, MOBILE_VIZ_BREAKPOINT, VIZ_MAX_WIDTH, STROKE_HAIRLINE, STROKE_REGULAR, STROKE_MEDIUM } from '../lib/theme';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { PRETEXT_SANS, measureLines } from '../lib/pretext';
 import { getElementMetrics, getPropertyMetrics } from '../lib/metrics';
 import IntroBlock from '../components/IntroBlock';
 

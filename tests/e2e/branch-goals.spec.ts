@@ -20,7 +20,8 @@ test.describe('Goal 1: No text overflow', () => {
 
 // Goal 3: Identity block is tighter than the old 120px static width
 test.describe('Goal 3: Identity block tighter than 120px', () => {
-  test('Fe identity width < 120px', async ({ page }) => {
+  test('Fe identity width < 120px', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'desktop-only: mobile identity block intentionally spans the column');
     await page.goto('/elements/Fe');
     await page.waitForSelector('.folio-identity', { timeout: 10000 });
     await page.waitForTimeout(800);
@@ -84,15 +85,15 @@ test.describe('Goal 7: No slice limits on lateral links', () => {
     await page.goto('/elements/Fe');
     await page.waitForTimeout(2000);
     const etymLinks = await page.evaluate(() => {
-      const links = [...document.querySelectorAll('a')];
-      return links.filter(a => {
-        const href = a.getAttribute('href') ?? '';
-        return href.startsWith('/elements/') && a.closest('.folio-marginalia') == null
-          && a.textContent?.includes('—');
-      }).length;
+      const section = [...document.querySelectorAll('div')]
+        .find((el) => el.textContent?.startsWith('Also named for property:'));
+      return section
+        ? [...section.querySelectorAll('a[href^="/elements/"]')].length
+        : 0;
     });
     // Not testing exact count, just that it's not capped at 6
     // (the actual count depends on the element)
+    expect(etymLinks).toBeGreaterThan(6);
   });
 });
 

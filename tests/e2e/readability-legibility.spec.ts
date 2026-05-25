@@ -139,8 +139,6 @@ test.describe('Readability: Element Folio', () => {
     await waitForAnimations(page);
 
     // Prev (←) and next (→) arrows exist in the data plate SVG links
-    const prevLink = page.locator('a[href="/elements/Mn"]').first();
-    const nextLink = page.locator('a[href="/elements/Co"]').first();
     // There may be multiple prev/next in different plate rows; just check at least one exists
     const prevCount = await page.locator('a[href="/elements/Mn"]').count();
     const nextCount = await page.locator('a[href="/elements/Co"]').count();
@@ -249,6 +247,10 @@ test.describe('Readability: Compare Page', () => {
 });
 
 test.describe('Readability: Phase Landscape', () => {
+  test.beforeEach(({ page: _page }, testInfo) => {
+    test.skip(testInfo.project.name === 'mobile', 'mobile layout uses sectioned cards; covered in sectioned-mobile.spec.ts');
+  });
+
   test('all cells are distinct and text is readable', async ({ page }) => {
     await page.goto('/phase-landscape');
     await waitForAnimations(page);
@@ -295,7 +297,7 @@ test.describe('Readability: Property Scatter', () => {
     await page.goto('/property-scatter');
     await waitForAnimations(page, 4000); // Staggered animation: 118 * 15ms = ~1.8s
 
-    const squares = page.locator('svg rect[width="10"]');
+    const squares = page.locator('svg rect[width="10"], svg rect[width="16"]');
     const count = await squares.count();
     expect(count).toBeGreaterThan(50);
 
@@ -308,6 +310,10 @@ test.describe('Readability: Property Scatter', () => {
 });
 
 test.describe('Readability: Anomaly Explorer', () => {
+  test.beforeEach(({ page: _page }, testInfo) => {
+    test.skip(testInfo.project.name === 'mobile', 'mobile layout uses sectioned cards; covered in sectioned-mobile.spec.ts');
+  });
+
   test('grid cells are distinct with and without selection', async ({ page }) => {
     await page.goto('/anomaly-explorer');
     await waitForAnimations(page);
@@ -331,6 +337,10 @@ test.describe('Readability: Anomaly Explorer', () => {
 });
 
 test.describe('Readability: Discovery Timeline', () => {
+  test.beforeEach(({ page: _page }, testInfo) => {
+    test.skip(testInfo.project.name === 'mobile', 'mobile layout uses sectioned cards; covered in sectioned-mobile.spec.ts');
+  });
+
   test('timeline elements do not overflow or stack illegibly', async ({ page }) => {
     await page.goto('/discovery-timeline');
     await waitForAnimations(page);
@@ -421,6 +431,9 @@ test.describe('Readability: Discoverer Network', () => {
   test('element cards in sections are present', async ({ page }) => {
     await page.goto('/discoverer-network');
     await waitForAnimations(page);
+
+    const expandAll = page.getByRole('button', { name: 'Expand all' });
+    if (await expandAll.isVisible()) await expandAll.click();
 
     // Discoverer network uses SectionedCardList with HTML card links, not SVG rects
     const cards = page.locator('section[role="region"] a[href^="/elements/"]');

@@ -7,6 +7,7 @@ import {
   type LayoutLine,
   type LayoutCursor,
 } from '@chenglou/pretext';
+import { measureCharWidth } from './measurement-cache';
 
 export type PositionedLine = {
   text: string;
@@ -17,6 +18,11 @@ export type PositionedLine = {
 
 export const PRETEXT_SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 export const DROP_CAP_FONT = 'Cinzel, Georgia, serif';
+export const DROP_CAP_FONT_WEIGHT = 700;
+
+export function dropCapCanvasFont(fontSizePx: number): string {
+  return `${DROP_CAP_FONT_WEIGHT} ${fontSizePx}px ${DROP_CAP_FONT}`;
+}
 
 const DEFAULT_FONT = `16px ${PRETEXT_SANS}`;
 
@@ -120,11 +126,11 @@ export function dropCapLayout(
   const dropChar = text[0];
   const restText = text.slice(1);
 
-  // Measure the drop cap character at its large font size
-  const dropPrepared = prepareWithSegments(dropChar, dropCapFont);
-  layout(dropPrepared, 9999, 0);
-  // For a single char, the prepared segments[0] width is the character width
-  const dropWidth = dropPrepared.widths[0] ?? 40;
+  // Measure the drop cap character on a canvas we own (see
+  // ./measurement-cache) so the width is correct after the web font swaps
+  // in. Pretext's singleton canvas can stick to the fallback font's
+  // metrics when the web font loads after the first measurement.
+  const dropWidth = measureCharWidth(dropChar, dropCapFont);
 
   // Parse drop cap font size
   const match = dropCapFont.match(/(\d+(?:\.\d+)?)px/);
@@ -134,7 +140,7 @@ export function dropCapLayout(
 
   // How many body lines the drop cap spans
   const dropCapLines = Math.ceil(dropHeight / lineHeight);
-  const gap = 4; // tight space between drop cap and body text
+  const gap = 8; // breathing room between drop-cap ink and body text
 
   // Build variable-width array: narrow beside drop cap, full after
   const narrowWidth = maxWidth - dropWidth - gap;

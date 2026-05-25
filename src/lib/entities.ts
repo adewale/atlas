@@ -5,7 +5,7 @@
  * loaded from entity-index.json. All querying goes through the search
  * API — no client-side scoring in this module.
  */
-import { DEEP_BLUE, WARM_RED, MUSTARD, BLACK } from './theme';
+import { DEEP_BLUE, MUSTARD } from './theme';
 
 /* ------------------------------------------------------------------ */
 /* Entity types & colours                                             */
