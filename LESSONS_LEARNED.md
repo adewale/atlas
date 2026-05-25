@@ -23,3 +23,9 @@
 **What happened:** `npm run lint:all` had drifted red even though CI was green, and performance budget tests silently skipped in CI because `npm test` ran before `dist/` existed.
 **Resolution:** Fixed the lint findings, added `lint:all` to CI, and added a post-build `lint:budgets` CI step so dist-based budget tests run against real build output.
 **Rule:** If a script is described as a guardrail, CI must run it; if a test depends on generated build output, run it after the build rather than relying on skip-if-missing behavior.
+
+### 2026-05-25 — Pages deploys need an explicit project name
+**Context:** Deploying audit fixes to Cloudflare Pages.
+**What happened:** `npm run deploy` built successfully but `wrangler pages deploy dist/` failed non-interactively with “Must specify a project name.” The account has a single Pages project named `atlas`, but Wrangler v4 still requires the project name in this context.
+**Resolution:** Updated the deploy script to pass `--project-name atlas`.
+**Rule:** Cloudflare Pages deploy scripts should include `--project-name <name>` so non-interactive deploys do not depend on Wrangler prompts or account inference.
