@@ -10,8 +10,7 @@ const INTRO_FONT = `14px ${PRETEXT_SANS}`;
 const SHORTCUTS: { keys: string; action: string }[] = [
   { keys: '← → ↑ ↓', action: 'Navigate grid' },
   { keys: 'Enter / Space', action: 'Open element folio' },
-  { keys: '/', action: 'Focus search' },
-  { keys: 'Esc', action: 'Close overlay or clear search' },
+  { keys: 'Esc', action: 'Close overlay' },
   { keys: '?', action: 'Toggle this overlay' },
 ];
 

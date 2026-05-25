@@ -17,3 +17,9 @@
 **What happened:** Several desktop specs asserted SVG grid geometry on pages that intentionally switch to accordion/card layouts on mobile. Visual screenshot comparisons were also treated as normal tests even though their baselines are OS/font-renderer sensitive.
 **Resolution:** Kept desktop SVG geometry assertions on the desktop project, treated sectioned-card mobile layouts as separate coverage, broadened selectors only where the component truly renders in both modes, and made pixel visual regression opt-in with `RUN_VISUAL=1`.
 **Rule:** Responsive tests should assert the layout actually rendered for that viewport; do not force desktop geometry expectations onto a different mobile component tree. Pixel snapshots belong behind an explicit opt-in unless the runner, OS, browser, and fonts are controlled.
+
+### 2026-05-25 — Custom quality gates must run where their inputs exist
+**Context:** Auditing all commits since April after PR #30 landed.
+**What happened:** `npm run lint:all` had drifted red even though CI was green, and performance budget tests silently skipped in CI because `npm test` ran before `dist/` existed.
+**Resolution:** Fixed the lint findings, added `lint:all` to CI, and added a post-build `lint:budgets` CI step so dist-based budget tests run against real build output.
+**Rule:** If a script is described as a guardrail, CI must run it; if a test depends on generated build output, run it after the build rather than relying on skip-if-missing behavior.

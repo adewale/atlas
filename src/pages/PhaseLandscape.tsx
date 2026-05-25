@@ -143,7 +143,9 @@ export default function PhaseLandscape() {
     }
     for (const el of allElements) {
       const phase = elementPhases.get(el.symbol) ?? 'unknown';
-      grouped.get(phase)!.push({ symbol: el.symbol, description: el.name });
+      const items = grouped.get(phase);
+      if (items) items.push({ symbol: el.symbol, description: el.name });
+      else grouped.set(phase, [{ symbol: el.symbol, description: el.name }]);
     }
     return PHASE_ORDER
       .map(phase => ({

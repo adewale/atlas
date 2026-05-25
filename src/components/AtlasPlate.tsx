@@ -4,6 +4,7 @@ import { blockColor, contrastTextColor } from '../lib/grid';
 import { BLACK, GREY_MID, MONO_FONT } from '../lib/theme';
 import { fitLabel, measureLines, PRETEXT_SANS } from '../lib/pretext';
 import { getCategoryMetrics } from '../lib/metrics';
+import { ALL_PROPERTIES } from '../lib/properties';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useFontsReady } from '../hooks/useFontsReady';
 import { useViewTransitionNavigate } from '../hooks/useViewTransition';
@@ -18,17 +19,16 @@ const NAME_MAX_W = CARD_W - 12; // 6px padding each side
 const CAPTION_FONT = `bold 16px ${PRETEXT_SANS}`;
 const CAPTION_PADDING = 12;
 
-const UNITS: Record<string, string> = {
-  mass: 'Da',
-  electronegativity: '',
-  ionizationEnergy: 'eV',
-  radius: 'pm',
-};
+const UNITS: Record<string, string> = Object.fromEntries(
+  ALL_PROPERTIES.map((property) => [property.key, property.unit]),
+);
 
 const UNIT_TOOLTIPS: Record<string, string> = {
   Da: 'Daltons — atomic mass unit',
   eV: 'Electron volts — ionisation energy',
   pm: 'Picometres — atomic radius',
+  'g/cm³': 'Grams per cubic centimetre — density',
+  K: 'Kelvin — thermodynamic temperature',
 };
 
 const ABBREV: Record<string, string> = {

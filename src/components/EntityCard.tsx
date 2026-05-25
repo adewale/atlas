@@ -80,7 +80,8 @@ export default function EntityCard({
   onExpand,
   compact = false,
 }: EntityCardProps) {
-  const showSymbols = entity.elements.length > 0 && entity.type !== 'element';
+  const rendersBody = !compact || isExpanded;
+  const showSymbols = rendersBody && entity.elements.length > 0 && entity.type !== 'element';
   const typeLabel = ENTITY_TYPE_LABELS[entity.type];
   const cardRef = useRef<HTMLDivElement>(null);
   const [symbolsObserved, setSymbolsObserved] = useState(false);
@@ -187,8 +188,8 @@ export default function EntityCard({
         </div>
       </div>
 
-      {/* Body — hidden in compact mode */}
-      {!compact && <div style={{ padding: '8px 10px' }}>
+      {/* Body — hidden only while a compact card is collapsed */}
+      {rendersBody && <div style={{ padding: '8px 10px' }}>
         {/* Description — full text when expanded, clamped otherwise */}
         <div
           style={{

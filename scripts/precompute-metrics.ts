@@ -12,10 +12,10 @@
  * Requires: npm run build (so dist/ exists for the preview server)
  */
 
-import { chromium } from 'playwright';
+import { chromium, type Browser } from 'playwright';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn, type ChildProcess } from 'node:child_process';
 
 const ROOT = join(import.meta.dirname, '..');
 const OUT = join(ROOT, 'data', 'generated', 'text-metrics.json');
@@ -137,44 +137,63 @@ for (const label of EDGE_LABELS) {
 async function main() {
   console.log(`Measuring ${jobs.length} text strings in Chromium...`);
 
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+  let browser: Browser | undefined;
+  let server: ChildProcess | undefined;
+  let results: Record<string, number> | undefined;
 
-  // Start preview server in background
-  const server = spawn('npx', ['vite', 'preview', '--port', '4199'], {
-    cwd: ROOT,
-    stdio: 'ignore',
-    detached: true,
-  });
-  server.unref();
-  // Wait for server to be ready
-  for (let i = 0; i < 20; i++) {
-    try {
-      await page.goto('http://localhost:4199', { timeout: 2000 });
-      break;
-    } catch {
-      await new Promise((r) => setTimeout(r, 500));
+  try {
+    browser = await chromium.launch();
+    const page = await browser.newPage();
+
+    // Start preview server in background
+    server = spawn('npx', ['vite', 'preview', '--port', '4199'], {
+      cwd: ROOT,
+      stdio: 'ignore',
+      detached: true,
+    });
+    server.unref();
+
+    // Wait for server to be ready
+    let ready = false;
+    for (let i = 0; i < 20; i++) {
+      try {
+        await page.goto('http://localhost:4199', { timeout: 2000 });
+        ready = true;
+        break;
+      } catch {
+        await new Promise((r) => setTimeout(r, 500));
+      }
+    }
+    if (!ready) {
+      throw new Error('Timed out waiting for vite preview on http://localhost:4199');
+    }
+
+    // Wait for fonts to load
+    await page.evaluate(() => document.fonts.ready);
+    await new Promise((r) => setTimeout(r, 500));
+
+    // Measure all jobs in the browser context using canvas
+    results = await page.evaluate((jobsArg: Job[]) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Canvas 2D context unavailable');
+      const widths: Record<string, number> = {};
+      for (const job of jobsArg) {
+        ctx.font = job.font;
+        widths[job.key] = Math.ceil(ctx.measureText(job.text).width);
+      }
+      return widths;
+    }, jobs);
+  } finally {
+    await browser?.close().catch(() => undefined);
+    if (server?.pid) {
+      try { process.kill(-server.pid, 'SIGTERM'); } catch { /* ignore */ }
     }
   }
-  // Wait for fonts to load
-  await page.evaluate(() => document.fonts.ready);
-  await new Promise((r) => setTimeout(r, 500));
 
-  // Measure all jobs in the browser context using canvas
-  const results = await page.evaluate((jobsArg: Job[]) => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d')!;
-    const widths: Record<string, number> = {};
-    for (const job of jobsArg) {
-      ctx.font = job.font;
-      widths[job.key] = Math.ceil(ctx.measureText(job.text).width);
-    }
-    return widths;
-  }, jobs);
-
-  await browser.close();
-  // Kill preview server
-  try { process.kill(-server.pid!, 'SIGTERM'); } catch { /* ignore */ }
+  if (!results) {
+    throw new Error('No text metrics were measured');
+  }
 
   // Now assemble the structured output
   const elementMetrics: Record<string, {
@@ -242,7 +261,7 @@ async function main() {
   }
 
   const textMetrics = {
-    _generated: new Date().toISOString(),
+    _generated: 'deterministic',
     _jobCount: jobs.length,
     elements: elementMetrics,
     categories: categoryMetrics,

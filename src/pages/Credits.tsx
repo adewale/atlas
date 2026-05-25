@@ -20,7 +20,7 @@ export default function Credits() {
   const { credits } = useLoaderData() as { credits: CreditsData };
   const fontsReady = useFontsReady();
 
-  const structuredText = `${credits.structured.provider} — ${credits.structured.license}. Atomic mass, electronegativity, ionisation energy, radius, and phase data.`;
+  const structuredText = `${credits.structured.provider} — ${credits.structured.license}. Atomic mass, electronegativity, ionisation energy, radius, density, melting/boiling point, half-life, and phase data.`;
   const identifiersText = `${credits.identifiers.provider} — ${credits.identifiers.license}. QIDs (Wikidata identifiers), Wikipedia sitelinks, category classification, group/periods/block.`;
   const summariesNoteText = 'Excerpts may differ from current Wikipedia content. All used under CC BY-SA 4.0.';
   const aboutText = 'Atlas is an original editorial and design work. The derived data (rankings, groupings, anomaly descriptions) and comparison templates are original content.';

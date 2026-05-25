@@ -17,7 +17,8 @@ export type PositionedLine = {
 };
 
 export const PRETEXT_SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-export const DROP_CAP_FONT = 'Cinzel, Georgia, serif';
+export const DROP_CAP_FONT_FACE = 'Cinzel';
+export const DROP_CAP_FONT = `${DROP_CAP_FONT_FACE}, Georgia, serif`;
 export const DROP_CAP_FONT_WEIGHT = 700;
 
 export function dropCapCanvasFont(fontSizePx: number): string {

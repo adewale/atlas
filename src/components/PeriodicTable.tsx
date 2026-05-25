@@ -161,6 +161,9 @@ export default function PeriodicTable({ onSelectElement }: PeriodicTableProps) {
   // Prefetch shared route data after the table has painted
   useEffect(() => {
     const prefetch = () => {
+      const connection = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+      if (connection?.saveData || connection?.effectiveType?.includes('2g')) return;
+
       import('../../data/generated/groups.json');
       import('../../data/generated/anomalies.json');
       import('../pages/Element');

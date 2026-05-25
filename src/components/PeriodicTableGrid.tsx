@@ -209,7 +209,8 @@ export default function PeriodicTableGrid({
         strokeDasharray="4 4"
       />
       {allElements.map((el) => {
-        const pos = CELL_POSITIONS.get(el.symbol)!;
+        const pos = CELL_POSITIONS.get(el.symbol);
+        if (!pos) return null;
         const isActive = el.symbol === (activeSymbol ?? null);
         const fill = fillFn(el);
         const textColor = contrastTextColor(fill);

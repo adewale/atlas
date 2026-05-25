@@ -108,8 +108,9 @@ export default function DiscoveryTimeline() {
     for (const entry of timeline) {
       if (entry.year == null) continue;
       const d = decadeOf(entry.year);
-      if (!decadeBins.has(d)) decadeBins.set(d, []);
-      decadeBins.get(d)!.push(entry);
+      const entries = decadeBins.get(d);
+      if (entries) entries.push(entry);
+      else decadeBins.set(d, [entry]);
     }
 
     const years = timeline.filter((e) => e.year != null).map((e) => e.year!);

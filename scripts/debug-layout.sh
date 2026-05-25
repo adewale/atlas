@@ -28,7 +28,13 @@ for arg in "$@"; do
       echo "  --screenshot: save annotated screenshots to debug-screenshots/"
       exit 0
       ;;
-    *) ELEMENTS+=("$arg") ;;
+    *)
+      if [[ ! "$arg" =~ ^[A-Z][a-z]?$ ]]; then
+        echo "ERROR: invalid element symbol '$arg'" >&2
+        exit 2
+      fi
+      ELEMENTS+=("$arg")
+      ;;
   esac
 done
 
@@ -137,8 +143,10 @@ check_element() {
   local sym="$1"
   local url="$BASE_URL/elements/$sym"
 
-  # Navigate via stdin eval (avoids shell escaping issues with URLs)
-  echo "location.assign(\"$url\")" | agent-browser eval --stdin --session "$SESSION" --timeout 2000 >/dev/null 2>&1 || true
+  # Navigate via stdin eval with JSON-escaped URL (avoids shell/JS injection from args or BASE_URL)
+  local url_js
+  url_js=$(python3 -c 'import json, sys; print("location.assign(" + json.dumps(sys.argv[1]) + ")")' "$url")
+  echo "$url_js" | agent-browser eval --stdin --session "$SESSION" --timeout 2000 >/dev/null 2>&1 || true
   sleep 2
 
   # Wait for folio to render

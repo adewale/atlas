@@ -37,6 +37,15 @@ test.describe('Explore page layout', () => {
 
   // Era/etymology overlap is covered by the general facet section overlap test above.
 
+  test('type facet is visible and compact non-element cards expand to actions', async ({ page }) => {
+    await page.goto('/explore?q=davy');
+    await expect(page.getByText('Type')).toBeVisible();
+
+    await page.getByText('Humphry Davy').first().click();
+    await expect(page.getByText(/Show elements/)).toBeVisible();
+    await expect(page.getByText(/Read more/)).toBeVisible();
+  });
+
   test('result cards do not overflow container on era filter', async ({ page }) => {
     await page.goto('/explore?era=ancient');
     await page.waitForTimeout(1500);

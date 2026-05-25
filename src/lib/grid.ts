@@ -59,7 +59,11 @@ for (const el of gridElements) {
 }
 
 export function getCellPosition(element: GridElement): CellPosition {
-  return positionsBySymbol.get(element.symbol)!;
+  const pos = positionsBySymbol.get(element.symbol);
+  if (!pos) {
+    throw new Error(`No periodic-table position for element ${element.symbol}`);
+  }
+  return pos;
 }
 
 export function getSymbolAt(row: number, col: number): string | undefined {

@@ -63,11 +63,11 @@ export const ENTITIES: EntityMeta[] = [
     { name: 'Alkali metal', href: '/categories/alkali-metal' },
     { name: 'Metalloid', href: '/categories/metalloid' },
   ]},
-  { id: 'property', label: 'Property', route: '/properties/:property', count: '4', colour: MUSTARD, description: 'Elements ordered by a numeric property: mass, electronegativity, ionisation energy, or radius.', examples: [
+  { id: 'property', label: 'Property', route: '/properties/:property', count: '7', colour: MUSTARD, description: 'Elements ordered by numeric properties: atomic mass, electronegativity, ionisation energy, radius, density, melting point, and boiling point.', examples: [
     { name: 'Ranked by mass', href: '/properties/mass' },
     { name: 'By electronegativity', href: '/properties/electronegativity' },
     { name: 'By ionisation energy', href: '/properties/ionizationEnergy' },
-    { name: 'By atomic radius', href: '/properties/radius' },
+    { name: 'By density', href: '/properties/density' },
   ]},
   { id: 'anomaly', label: 'Anomaly', route: '/anomalies/:slug', count: '5', colour: WARM_RED, description: 'Periodic table rule-breakers: aufbau deviations, diagonal relationships, metalloid boundary.', examples: [
     { name: 'Electron config anomalies', href: '/anomalies/electron-configuration-anomalies' },

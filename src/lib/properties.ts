@@ -24,7 +24,7 @@ export type PropertyDef = {
 export const CORE_PROPERTIES: readonly PropertyDef[] = [
   { key: 'mass', label: 'Atomic Mass', unit: 'Da' },
   { key: 'electronegativity', label: 'Electronegativity', unit: '' },
-  { key: 'ionizationEnergy', label: 'Ionisation Energy', unit: 'kJ/mol' },
+  { key: 'ionizationEnergy', label: 'Ionisation Energy', unit: 'eV' },
   { key: 'radius', label: 'Atomic Radius', unit: 'pm' },
 ] as const;
 

@@ -210,4 +210,28 @@ describe('EntityCard', () => {
     const arrows = screen.queryAllByText('▸');
     expect(arrows).toHaveLength(0);
   });
+
+  it('keeps compact collapsed cards concise', () => {
+    render(<EntityCard entity={DISCOVERER_ENTITY} index={0} compact />);
+    expect(screen.getByText('Humphry Davy')).toBeInTheDocument();
+    expect(screen.queryByText(/Discovered 6 elements/)).not.toBeInTheDocument();
+  });
+
+  it('shows compact card actions once expanded', () => {
+    const onDrill = vi.fn();
+    const onNavigate = vi.fn();
+    render(
+      <EntityCard
+        entity={DISCOVERER_ENTITY}
+        index={0}
+        compact
+        expanded
+        onDrill={onDrill}
+        onNavigate={onNavigate}
+      />,
+    );
+    expect(screen.getByText(/Discovered 6 elements/)).toBeInTheDocument();
+    expect(screen.getByText(/Show elements/)).toBeInTheDocument();
+    expect(screen.getByText(/Read more/)).toBeInTheDocument();
+  });
 });

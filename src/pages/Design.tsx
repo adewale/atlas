@@ -289,7 +289,7 @@ export default function Design() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <PropertyBar label="Atomic Mass" rank={93} color={WARM_RED} value={55.845} unit="Da" />
           <PropertyBar label="Electronegativity" rank={41} color={DEEP_BLUE} value={1.83} />
-          <PropertyBar label="Ionisation Energy" rank={35} color={MUSTARD} value={762.5} unit="kJ/mol" />
+          <PropertyBar label="Ionisation Energy" rank={35} color={MUSTARD} value={7.902} unit="eV" />
           <PropertyBar label="Atomic Radius" rank={67} color={BLACK} value={126} unit="pm" />
         </div>
       </section>
@@ -1085,7 +1085,7 @@ function TooltipPatterns() {
             {''}
           </InfoTip>
           <span style={{ marginLeft: '16px' }}>Ionisation Energy</span>
-          <InfoTip label="Energy required to remove the outermost electron from a gaseous atom. Measured in kJ/mol.">
+          <InfoTip label="Energy required to remove the outermost electron from a gaseous atom. Measured in eV.">
             {''}
           </InfoTip>
         </div>

@@ -19,7 +19,9 @@ export default function ElementIndex() {
   const byLetter = new Map<string, ElementRecord[]>();
   for (const el of sorted) {
     const letter = el.name[0].toUpperCase();
-    (byLetter.get(letter) ?? byLetter.set(letter, []).get(letter)!).push(el);
+    const bucket = byLetter.get(letter);
+    if (bucket) bucket.push(el);
+    else byLetter.set(letter, [el]);
   }
 
   const sections: Section[] = Array.from(byLetter.entries()).map(([letter, els]) => ({

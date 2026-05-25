@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { createBrowserRouter, redirect, Outlet, ScrollRestoration } from 'react-router';
-import type { LoaderFunctionArgs } from 'react-router';
+import type { LoaderFunctionArgs, ShouldRevalidateFunctionArgs } from 'react-router';
 import { getElement } from './lib/data';
 
 /** Root layout that provides scroll restoration for all routes. */
@@ -39,6 +39,31 @@ const loadAnomalies = cachedLoader(() => import('../data/generated/anomalies.jso
 const loadDiscoverers = cachedLoader(() => import('../data/generated/discoverers.json'), 'discoverers');
 const loadTimeline = cachedLoaderRaw(() => import('../data/generated/timeline.json'));
 const loadElements = cachedLoader(() => import('../data/generated/elements.json'), 'elements');
+
+async function createExploreLoaderData() {
+  const [entityMod, refMod, elemData] = await Promise.all([
+    import('../data/generated/entity-index.json'),
+    import('../data/generated/entity-ref-lookup.json'),
+    loadElements(),
+  ]);
+  const { createLocalSearch } = await import('./lib/searchLocal');
+  const search = createLocalSearch(entityMod.default, elemData.elements);
+  return { search, refLookup: refMod.default };
+}
+
+let exploreLoaderDataPromise: Promise<Awaited<ReturnType<typeof createExploreLoaderData>>> | null = null;
+
+function loadExploreData() {
+  exploreLoaderDataPromise ??= createExploreLoaderData();
+  return exploreLoaderDataPromise;
+}
+
+function skipSearchParamRevalidation({ currentUrl, nextUrl, defaultShouldRevalidate }: ShouldRevalidateFunctionArgs) {
+  if (currentUrl.pathname === nextUrl.pathname && currentUrl.search !== nextUrl.search) {
+    return false;
+  }
+  return defaultShouldRevalidate;
+}
 
 const Home = lazy(() => import('./pages/Home'));
 const Element = lazy(() => import('./pages/Element'));
@@ -114,11 +139,8 @@ export const router = createBrowserRouter([
     path: '/properties/:property',
     Component: AtlasProperty,
     loader: async () => {
-      const [rankData, elemData] = await Promise.all([
-        import('../data/generated/rankings.json').then((m) => m.default),
-        loadElements(),
-      ]);
-      return { rankings: rankData, ...elemData };
+      const rankings = await import('../data/generated/rankings.json').then((m) => m.default);
+      return { rankings };
     },
   },
 
@@ -155,16 +177,8 @@ export const router = createBrowserRouter([
   {
     path: '/explore',
     Component: Explore,
-    loader: async () => {
-      const [entityMod, refMod, elemData] = await Promise.all([
-        import('../data/generated/entity-index.json'),
-        import('../data/generated/entity-ref-lookup.json'),
-        loadElements(),
-      ]);
-      const { createLocalSearch } = await import('./lib/searchLocal');
-      const search = createLocalSearch(entityMod.default, elemData.elements);
-      return { search, refLookup: refMod.default };
-    },
+    loader: loadExploreData,
+    shouldRevalidate: skipSearchParamRevalidation,
   },
 
   /* ── Visualization pages ─────────────────── */

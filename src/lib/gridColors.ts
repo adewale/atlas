@@ -2,7 +2,7 @@
  * Pure colour utilities — no data dependencies.
  *
  * Block colours and WCAG contrast calculation. These functions are
- * imported by EntityCard, ByrneChips, and many other components that
+ * imported by EntityCard and other components that
  * only need colour lookups. Keeping them separate from grid layout
  * avoids pulling in the 177KB allElements chunk.
  */

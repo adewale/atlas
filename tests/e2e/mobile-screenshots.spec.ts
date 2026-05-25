@@ -4,8 +4,8 @@ import { test, expect, type Page, type BrowserContext } from '@playwright/test';
  * Mobile Screenshot Test Suite
  *
  * Takes full-page screenshots of every major route on three iPhone viewports
- * and verifies readability: no horizontal overflow, no console errors, and
- * visual regression via saved PNGs.
+ * and verifies readability: no horizontal overflow and no console errors.
+ * Screenshots are saved as diagnostic artifacts, not pixel baselines.
  */
 
 // ---------------------------------------------------------------------------
@@ -96,38 +96,40 @@ for (const device of devices) {
           viewport: { width: device.width, height: device.height },
           deviceScaleFactor: device.scaleFactor,
         });
-        const page = await context.newPage();
+        try {
+          const page = await context.newPage();
 
-        page.on('console', (msg) => {
-          if (msg.type() === 'error') {
-            consoleErrors.push(msg.text());
-          }
-        });
+          page.on('console', (msg) => {
+            if (msg.type() === 'error') {
+              consoleErrors.push(msg.text());
+            }
+          });
 
-        // Navigate and wait for animations
-        await page.goto(route.path);
-        await waitForAnimations(page);
+          // Navigate and wait for animations
+          await page.goto(route.path);
+          await waitForAnimations(page);
 
-        // Take full-page screenshot
-        const screenshotPath = `${SCREENSHOT_DIR}/mobile-${device.name}-${route.label}.png`;
-        await page.screenshot({ path: screenshotPath, fullPage: true });
+          // Take full-page screenshot
+          const screenshotPath = `${SCREENSHOT_DIR}/mobile-${device.name}-${route.label}.png`;
+          await page.screenshot({ path: screenshotPath, fullPage: true });
 
-        // Assert no horizontal overflow
-        await assertNoHorizontalOverflow(page, device.width, `${device.name}/${route.label}`);
+          // Assert no horizontal overflow
+          await assertNoHorizontalOverflow(page, device.width, `${device.name}/${route.label}`);
 
-        // Assert no console errors (filter out known benign messages)
-        const realErrors = consoleErrors.filter(
-          (msg) =>
-            !msg.includes('favicon') &&
-            !msg.includes('Failed to load resource') &&
-            !msg.includes('DevTools'),
-        );
-        expect(
-          realErrors,
-          `${device.name}/${route.label}: unexpected console errors:\n${realErrors.join('\n')}`,
-        ).toHaveLength(0);
-
-        await context.close();
+          // Assert no console errors (filter out known benign messages)
+          const realErrors = consoleErrors.filter(
+            (msg) =>
+              !msg.includes('favicon') &&
+              !msg.includes('Failed to load resource') &&
+              !msg.includes('DevTools'),
+          );
+          expect(
+            realErrors,
+            `${device.name}/${route.label}: unexpected console errors:\n${realErrors.join('\n')}`,
+          ).toHaveLength(0);
+        } finally {
+          await context.close();
+        }
       });
     }
   });

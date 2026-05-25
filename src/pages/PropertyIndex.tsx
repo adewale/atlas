@@ -1,18 +1,24 @@
 import { Link } from 'react-router';
 import { MUSTARD, BACK_LINK_STYLE, INSCRIPTION_STYLE } from '../lib/theme';
 import { VT } from '../lib/transitions';
+import { ALL_PROPERTIES, type NumericElementKey } from '../lib/properties';
 import PageShell from '../components/PageShell';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
-const PROPERTIES = [
-  { key: 'mass', label: 'Atomic Mass', description: 'All 118 elements ordered by atomic mass (u)' },
-  { key: 'electronegativity', label: 'Electronegativity', description: 'Pauling scale electronegativity values' },
-  { key: 'ionizationEnergy', label: 'Ionisation Energy', description: 'First ionisation energy (eV)' },
-  { key: 'radius', label: 'Atomic Radius', description: 'Empirical atomic radius (pm)' },
-  { key: 'density', label: 'Density', description: 'Density at STP (g/cm³)' },
-  { key: 'meltingPoint', label: 'Melting Point', description: 'Melting point (K)' },
-  { key: 'boilingPoint', label: 'Boiling Point', description: 'Boiling point (K)' },
-];
+const PROPERTY_DESCRIPTIONS: Record<NumericElementKey, string> = {
+  mass: 'Elements ordered by atomic mass (Da)',
+  electronegativity: 'Pauling scale electronegativity values',
+  ionizationEnergy: 'First ionisation energy (eV)',
+  radius: 'Empirical atomic radius (pm)',
+  density: 'Density at STP (g/cm³)',
+  meltingPoint: 'Melting point (K)',
+  boilingPoint: 'Boiling point (K)',
+};
+
+const PROPERTIES = ALL_PROPERTIES.map((property) => ({
+  ...property,
+  description: PROPERTY_DESCRIPTIONS[property.key],
+}));
 
 export default function PropertyIndex() {
   useDocumentTitle('All Properties');

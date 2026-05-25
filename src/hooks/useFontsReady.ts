@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { invalidateMeasurementState } from '../lib/measurement-cache';
+import { DROP_CAP_FONT_FACE, DROP_CAP_FONT_WEIGHT } from '../lib/pretext';
 
 /**
  * Returns true once the Cinzel web font (used for drop caps and the
@@ -28,7 +29,7 @@ import { invalidateMeasurementState } from '../lib/measurement-cache';
 // list matches, so "Cinzel, Georgia, serif" would match Georgia (system)
 // before Cinzel loads. Probing "Cinzel" alone ensures we wait for the
 // actual web font.
-const FONT_PROBE = '700 48px Cinzel';
+const FONT_PROBE = `${DROP_CAP_FONT_WEIGHT} 48px ${DROP_CAP_FONT_FACE}`;
 
 let globalFontsReady = false;
 const listeners = new Set<() => void>();
