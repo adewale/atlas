@@ -18,6 +18,11 @@ export type PositionedLine = {
 
 export const PRETEXT_SANS = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 export const DROP_CAP_FONT = 'Cinzel, Georgia, serif';
+export const DROP_CAP_FONT_WEIGHT = 700;
+
+export function dropCapCanvasFont(fontSizePx: number): string {
+  return `${DROP_CAP_FONT_WEIGHT} ${fontSizePx}px ${DROP_CAP_FONT}`;
+}
 
 const DEFAULT_FONT = `16px ${PRETEXT_SANS}`;
 

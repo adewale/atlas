@@ -49,6 +49,23 @@ describe('dropCapLayout: indent tracks the corrected drop-cap width', () => {
     expect(fresh.lines[0].x).toBeGreaterThan(stale.lines[0].x);
   });
 
+  it('uses an explicit bold canvas font for drop-cap measurement', async () => {
+    let measuredFont = '';
+    vi.doMock('../src/lib/measurement-cache', () => ({
+      measureCharWidth: (_char: string, font: string) => {
+        measuredFont = font;
+        return 60;
+      },
+      invalidateMeasurementState: () => {},
+    }));
+    const { dropCapLayout, dropCapCanvasFont } = await import('../src/lib/pretext');
+
+    const font = dropCapCanvasFont(80);
+    dropCapLayout(TEXT, '16px sans-serif', font, 360, 20);
+
+    expect(measuredFont).toBe('700 80px Cinzel, Georgia, serif');
+  });
+
   it('every indented line clears the drop cap width (no overlap by construction)', async () => {
     for (const w of [20, 35, 50, 65, 80]) {
       vi.resetModules();

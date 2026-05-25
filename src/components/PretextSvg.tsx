@@ -1,5 +1,5 @@
 import type { PositionedLine } from '../lib/pretext';
-import { PRETEXT_SANS, DROP_CAP_FONT } from '../lib/pretext';
+import { PRETEXT_SANS, DROP_CAP_FONT, DROP_CAP_FONT_WEIGHT } from '../lib/pretext';
 import { BLACK, STROKE_HAIRLINE, STROKE_THIN } from '../lib/theme';
 
 export type InlineSparklineConfig = {
@@ -114,7 +114,7 @@ export default function PretextSvg({
           x={0}
           y={lines[0].y + dropCap.fontSize * 0.82}
           fontSize={dropCap.fontSize}
-          fontWeight="bold"
+          fontWeight={DROP_CAP_FONT_WEIGHT}
           fill={dropCap.fill}
           fontFamily={DROP_CAP_FONT}
           style={

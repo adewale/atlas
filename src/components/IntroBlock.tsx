@@ -1,6 +1,5 @@
 import { useDropCapText } from '../hooks/usePretextLines';
-import { DROP_CAP_FONT } from '../lib/pretext';
-import { BLACK } from '../lib/theme';
+import { dropCapCanvasFont } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import PretextSvg from './PretextSvg';
 
@@ -28,7 +27,7 @@ export default function IntroBlock({
   const { dropCap, lines, lineHeight } = useDropCapText({
     text,
     maxWidth: introWidth,
-    dropCapFont: `${dropCapSize}px ${DROP_CAP_FONT}`,
+    dropCapFont: dropCapCanvasFont(dropCapSize),
   });
   const height = Math.max(lines.length * lineHeight + lineHeight, minHeight);
 

@@ -3,7 +3,7 @@ import { clearCache } from '@chenglou/pretext';
 /**
  * Bug this exists to prevent: drop-cap "O" overlapping body text on first
  * load. `@chenglou/pretext` keeps a singleton OffscreenCanvas; WebKit
- * caches the resolved font on a 2D context, so once `ctx.font = "80px
+ * caches the resolved font on a 2D context, so once `ctx.font = "700 80px
  * Cinzel, Georgia, serif"` resolves to Georgia (web font not loaded yet),
  * re-setting the same string after Cinzel loads doesn't re-resolve. The
  * canvas keeps returning Georgia metrics. Pretext's `clearCache()` clears
@@ -17,12 +17,33 @@ import { clearCache } from '@chenglou/pretext';
  * creates a fresh canvas that has no prior font binding to be stuck on.
  */
 
-let cachedContext: OffscreenCanvasRenderingContext2D | null = null;
+type MeasurementContext = {
+  font: string;
+  measureText(text: string): TextMetrics;
+};
 
-function getContext(): OffscreenCanvasRenderingContext2D {
+let cachedContext: MeasurementContext | null = null;
+
+function getContext(): MeasurementContext {
   if (cachedContext !== null) return cachedContext;
-  cachedContext = new OffscreenCanvas(1, 1).getContext('2d')!;
-  return cachedContext;
+
+  if (typeof OffscreenCanvas !== 'undefined') {
+    const ctx = new OffscreenCanvas(1, 1).getContext('2d');
+    if (ctx) {
+      cachedContext = ctx;
+      return cachedContext;
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    const ctx = document.createElement('canvas').getContext('2d');
+    if (ctx) {
+      cachedContext = ctx;
+      return cachedContext;
+    }
+  }
+
+  throw new Error('Text measurement requires OffscreenCanvas or a DOM canvas context.');
 }
 
 /**

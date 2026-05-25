@@ -17,38 +17,40 @@ import { test, expect, type Page } from '@playwright/test';
  * the next line even when no ink does.
  *
  * - "warm load" runs on every project; it guards the indent math generally.
- * - "cold load" delays the font file so the fallback is measured first; on
- *   the `webkit-mobile` project this reproduces the original failure path.
+ * - "cold load" delays the font file so the fallback is measured first, then
+ *   requires Cinzel to arrive before asserting the repaired geometry.
  */
 
 const TOLERANCE = 2;
 
-async function indentViolations(page: Page): Promise<string[]> {
+type IndentCheck = { checked: number; violations: string[] };
+
+async function checkIndent(page: Page): Promise<IndentCheck> {
   return page.evaluate((tol) => {
     const svg = document.querySelector('[data-testid="pt-intro"]');
-    if (!svg) return ['MISSING: [data-testid="pt-intro"]'];
+    if (!svg) return { checked: 0, violations: ['MISSING: [data-testid="pt-intro"]'] };
 
     const texts = Array.from(svg.querySelectorAll('text'));
     const dropCap = texts.find(
       (t) => parseFloat(t.getAttribute('font-size') || '0') >= 48,
     );
-    if (!dropCap) return ['MISSING: drop cap (font-size >= 48)'];
+    if (!dropCap) return { checked: 0, violations: ['MISSING: drop cap (font-size >= 48)'] };
 
     const body = texts.filter((t) => t !== dropCap);
-    if (body.length === 0) return ['MISSING: body lines'];
+    if (body.length === 0) return { checked: 0, violations: ['MISSING: body lines'] };
 
     const dcRight = dropCap.getBoundingClientRect().right;
-    // The non-indented lines sit at the paragraph's left margin; that is the
-    // minimum left edge across all body lines.
-    const marginLeft = Math.min(
-      ...body.map((t) => t.getBoundingClientRect().left),
-    );
 
+    let checked = 0;
     const violations: string[] = [];
     for (const line of body) {
       const left = line.getBoundingClientRect().left;
-      const isIndented = left > marginLeft + 20; // clearly pushed off the margin
+      // The app writes computed flow offsets to each SVG <text x="...">.
+      // Use that authored x-offset, not the minimum rendered left edge, because
+      // wide desktop layouts can have only indented body lines.
+      const isIndented = parseFloat(line.getAttribute('x') || '0') > 0;
       if (!isIndented) continue;
+      checked++;
       if (left < dcRight - tol) {
         violations.push(
           `indented line "${(line.textContent || '').slice(0, 24)}" ` +
@@ -56,8 +58,13 @@ async function indentViolations(page: Page): Promise<string[]> {
         );
       }
     }
-    return violations;
+    return { checked, violations };
   }, TOLERANCE);
+}
+
+function expectNoOverlap({ checked, violations }: IndentCheck, label: string) {
+  expect(checked, `${label}: expected at least one line beside the drop cap`).toBeGreaterThan(0);
+  expect(violations, `${label}: indent does not clear drop cap:\n${violations.join('\n')}`).toEqual([]);
 }
 
 test.describe('Intro drop cap: indented lines must clear the drop cap', () => {
@@ -66,8 +73,7 @@ test.describe('Intro drop cap: indented lines must clear the drop cap', () => {
     await page.waitForSelector('[data-testid="pt-intro"] text', { timeout: 15000 });
     await page.waitForTimeout(1200); // settle any font swap + re-layout
 
-    const violations = await indentViolations(page);
-    expect(violations, `indent does not clear drop cap:\n${violations.join('\n')}`).toEqual([]);
+    expectNoOverlap(await checkIndent(page), 'warm load');
   });
 
   test('cold load (font delayed → fallback measured first, then swapped)', async ({ page }) => {
@@ -80,16 +86,20 @@ test.describe('Intro drop cap: indented lines must clear the drop cap', () => {
     await page.goto('/');
     await page.waitForSelector('[data-testid="pt-intro"] text', { timeout: 15000 });
 
-    // Wait for the web font to apply if the environment has network; tolerate
-    // offline sandboxes where it never loads (fallback stays — still valid).
-    await page
-      .waitForFunction(() => (document as Document).fonts.check('700 48px Cinzel'), null, {
-        timeout: 5000,
-      })
-      .catch(() => undefined);
+    // This regression only proves anything if Cinzel really arrives. If the
+    // font never loads, the page stays in fallback and the stale-canvas failure
+    // path was not exercised.
+    await expect
+      .poll(
+        () => page.evaluate(async () => {
+          const faces = await document.fonts.load('700 80px Cinzel', 'O');
+          return faces.length > 0 && document.fonts.check('700 80px Cinzel');
+        }),
+        { timeout: 10000 },
+      )
+      .toBe(true);
     await page.waitForTimeout(800); // let the post-swap re-layout flush
 
-    const violations = await indentViolations(page);
-    expect(violations, `indent does not clear drop cap after swap:\n${violations.join('\n')}`).toEqual([]);
+    expectNoOverlap(await checkIndent(page), 'cold load after font swap');
   });
 });

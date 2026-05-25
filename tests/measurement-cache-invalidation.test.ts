@@ -30,7 +30,7 @@ function uninstallCanvasTracker(): void {
  *
  * Root cause: `@chenglou/pretext` uses a singleton OffscreenCanvas for all
  * measurements. WebKit caches the resolved font on a 2D context — once
- * `ctx.font = "80px Cinzel, Georgia, serif"` resolves to Georgia (because
+ * `ctx.font = "700 80px Cinzel, Georgia, serif"` resolves to Georgia (because
  * Cinzel hasn't loaded yet), re-setting the same string after Cinzel
  * loads does not re-resolve. `clearCache()` clears the width-cache map but
  * does NOT touch the canvas, so post-font-load re-measurements stay stuck
@@ -70,6 +70,15 @@ describe('measurement-cache: own canvas avoids pretext singleton stickiness', ()
       measureCharWidth('b', '80px serif');
       measureCharWidth('c', '80px serif');
       expect(constructionCount).toBe(1);
+    });
+
+    it('falls back to a DOM canvas when OffscreenCanvas is unavailable', () => {
+      invalidateMeasurementState();
+      (globalThis as { OffscreenCanvas: unknown }).OffscreenCanvas = undefined;
+
+      const w = measureCharWidth('O', '80px serif');
+
+      expect(w).toBeGreaterThan(0);
     });
   });
 
