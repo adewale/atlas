@@ -3,10 +3,8 @@ import type { ElementRecord } from '../lib/types';
 import { generateComparisonNotes } from '../lib/compare';
 import { useWedgeText } from '../hooks/usePretextLines';
 import PretextSvg from './PretextSvg';
-import SvgLink from './SvgLink';
-
 import { PRETEXT_SANS } from '../lib/pretext';
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT, GREY_MID, LABEL_STYLE } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, MONO_FONT, LABEL_STYLE } from '../lib/theme';
 import { yearToEra } from '../../shared/era-bins';
 import { ALL_PROPERTIES } from '../lib/properties';
 

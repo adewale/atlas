@@ -83,27 +83,19 @@ export default function EntityCard({
   const showSymbols = entity.elements.length > 0 && entity.type !== 'element';
   const typeLabel = ENTITY_TYPE_LABELS[entity.type];
   const cardRef = useRef<HTMLDivElement>(null);
-  const [symbolsVisible, setSymbolsVisible] = useState(false);
+  const [symbolsObserved, setSymbolsObserved] = useState(false);
 
   // Two-tier rendering: show symbols when card enters viewport
   useEffect(() => {
-    if (!showSymbols) {
-      setSymbolsVisible(true);
-      return;
-    }
+    if (!showSymbols || typeof IntersectionObserver === 'undefined') return;
 
     const el = cardRef.current;
     if (!el) return;
 
-    if (typeof IntersectionObserver === 'undefined') {
-      setSymbolsVisible(true);
-      return;
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setSymbolsVisible(true);
+          setSymbolsObserved(true);
           observer.disconnect();
         }
       },
@@ -113,6 +105,7 @@ export default function EntityCard({
     return () => observer.disconnect();
   }, [showSymbols]);
 
+  const symbolsVisible = !showSymbols || symbolsObserved || typeof IntersectionObserver === 'undefined';
   const visibleSymbols = symbolsVisible ? entity.elements.slice(0, MAX_SYMBOLS) : [];
   const overflow = entity.elements.length - MAX_SYMBOLS;
 

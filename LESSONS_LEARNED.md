@@ -11,3 +11,9 @@
 **What happened:** The existing full E2E suite is not mobile-project clean; running every spec under `--project=mobile` produced unrelated failures and made the PR build red even though the drop-cap regression passed.
 **Resolution:** Scoped the CI mobile job to `tests/e2e/dropcap-overlap.spec.ts`, the regression this PR needs to guard, instead of running the entire desktop-oriented suite under a mobile viewport.
 **Rule:** When adding a new browser/device CI project, either first make the whole suite pass under that project or scope the job to the specific specs that are known to support that device.
+
+### 2026-05-25 — Mobile E2E assertions must match the mobile UI
+**Context:** Cleaning up the broader E2E suite after PR #30 introduced a mobile Playwright project.
+**What happened:** Several desktop specs asserted SVG grid geometry on pages that intentionally switch to accordion/card layouts on mobile. Visual screenshot comparisons were also treated as normal tests even though their baselines are OS/font-renderer sensitive.
+**Resolution:** Kept desktop SVG geometry assertions on the desktop project, treated sectioned-card mobile layouts as separate coverage, broadened selectors only where the component truly renders in both modes, and made pixel visual regression opt-in with `RUN_VISUAL=1`.
+**Rule:** Responsive tests should assert the layout actually rendered for that viewport; do not force desktop geometry expectations onto a different mobile component tree. Pixel snapshots belong behind an explicit opt-in unless the runner, OS, browser, and fonts are controlled.

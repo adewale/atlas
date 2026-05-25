@@ -7,13 +7,13 @@ import { test, expect } from '@playwright/test';
  * Screenshots are stored in tests/e2e/visual-regression.spec.ts-snapshots/
  * and compared against baselines on subsequent runs.
  *
- * SKIPPED in CI: toHaveScreenshot() fails across different OS/font environments.
- * Run locally with --update-snapshots to refresh baselines.
+ * OPT-IN: toHaveScreenshot() fails across different OS/font environments.
+ * Run locally with RUN_VISUAL=1 and --update-snapshots to refresh baselines.
  */
 
-// Skip all visual regression tests — they require identical font rendering
+// Skip visual regression tests by default — they require identical font rendering
 // which differs between macOS, Linux CI, and different Chromium versions.
-test.skip(!!process.env.CI, 'Visual regression tests are skipped in CI');
+test.skip(process.env.RUN_VISUAL !== '1', 'Visual regression tests are opt-in: set RUN_VISUAL=1 to run');
 
 /** Wait for page load + animation settle. */
 async function waitForAnimations(page: import('@playwright/test').Page, ms = 600) {

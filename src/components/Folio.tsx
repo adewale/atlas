@@ -4,14 +4,13 @@ import type { ElementRecord, ElementSources, FolioBundle } from '../lib/types';
 import { blockColor, contrastTextColor, adjacencyMap } from '../lib/grid';
 import { useShapedText } from '../hooks/usePretextLines';
 import { PRETEXT_SANS, measureLines } from '../lib/pretext';
-import type { PositionedLine } from '../lib/pretext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { getElementMetrics } from '../lib/metrics';
 import PretextSvg from './PretextSvg';
 import { GroupPhaseStrip } from './Sparkline';
 import SourceStrip from './SourceStrip';
 
-import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, GREY_LIGHT, MONO_FONT, categoryColor } from '../lib/theme';
+import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, MONO_FONT, categoryColor } from '../lib/theme';
 import { toUrlSlug } from '../lib/slugs';
 import { yearToEra } from '../../shared/era-bins';
 import { VT } from '../lib/transitions';
@@ -28,12 +27,10 @@ const PLATE_HEIGHT = PLATE_ROW_H * PLATE_ROWS + PLATE_ROW_GAP * (PLATE_ROWS - 1)
 const RANK_ROW_H = 24;
 const FULL_WIDTH = 560;
 const PLATE_GAP = 24;
-const NARROW_WIDTH = FULL_WIDTH - PLATE_WIDTH - PLATE_GAP;
 
 // Identity block: number + symbol + name, acts as a large "drop cap"
 // Height: number (48px lh1) + symbol (36px lh1.1≈40) + name (10px+2px≈17) ≈ 105px
 const IDENTITY_HEIGHT = 106;
-const MIN_ANNOTATION_GAP = 24;
 
 /** Measure the identity block's actual width from element data using Pretext. */
 function measureIdentityWidth(paddedNumber: string, symbol: string, name: string, mobile: boolean): number {
@@ -105,70 +102,6 @@ function DataPlateRow({ label, value, fill, textFill = PAPER, href, ariaLabel, t
     </div>
   );
 }
-
-/** Find the y-position of the first text line containing `keyword`. */
-function findLineYForKeyword(
-  lines: PositionedLine[],
-  keyword: string,
-  lineHeight: number,
-): number | null {
-  const kw = keyword.toLowerCase();
-  for (const line of lines) {
-    if (line.text.toLowerCase().includes(kw)) {
-      return line.y + lineHeight;
-    }
-  }
-  return null;
-}
-
-/** Resolve overlap: if two annotations are within MIN_ANNOTATION_GAP, push later ones down.
- *  If maxY is provided, clamp annotations so they don't exceed that boundary;
- *  overflow items are stacked upward from maxY with MIN_ANNOTATION_GAP spacing. */
-function resolveOverlaps(positions: (number | null)[], maxY?: number): (number | null)[] {
-  const result = [...positions];
-  // Sort indices by their non-null y values, preserving order for nulls
-  const nonNullIndices = result
-    .map((y, i) => ({ y, i }))
-    .filter((e): e is { y: number; i: number } => e.y != null)
-    .sort((a, b) => a.y - b.y);
-
-  for (let j = 1; j < nonNullIndices.length; j++) {
-    const prev = nonNullIndices[j - 1];
-    const curr = nonNullIndices[j];
-    const prevY = result[prev.i]!;
-    const currY = result[curr.i]!;
-    if (currY - prevY < MIN_ANNOTATION_GAP) {
-      result[curr.i] = prevY + MIN_ANNOTATION_GAP;
-    }
-  }
-
-  // Clamp to maxY: if any annotation exceeds the available height,
-  // stack them upward from maxY with MIN_ANNOTATION_GAP spacing.
-  if (maxY != null && nonNullIndices.length > 0) {
-    // Walk backwards through sorted annotations and pull any that exceed maxY
-    for (let j = nonNullIndices.length - 1; j >= 0; j--) {
-      const idx = nonNullIndices[j].i;
-      const y = result[idx]!;
-      const limit = maxY - (nonNullIndices.length - 1 - j) * MIN_ANNOTATION_GAP;
-      if (y > limit) {
-        result[idx] = limit;
-      }
-    }
-    // Re-enforce minimum gap from top to bottom after clamping
-    for (let j = 1; j < nonNullIndices.length; j++) {
-      const prev = nonNullIndices[j - 1];
-      const curr = nonNullIndices[j];
-      const prevY = result[prev.i]!;
-      const currY = result[curr.i]!;
-      if (currY - prevY < MIN_ANNOTATION_GAP) {
-        result[curr.i] = prevY + MIN_ANNOTATION_GAP;
-      }
-    }
-  }
-
-  return result;
-}
-
 
 type FolioProps = {
   element: ElementRecord;
@@ -242,6 +175,7 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
   // Extract pre-resolved data from folio bundle
   const nav = folioBundle?.nav;
   const groupData = folioBundle?.group;
+  const groupPhases = folioBundle?.groupPhases;
   const elementAnomalies = folioBundle?.anomalies ?? [];
   const resolvedNeighbors = folioBundle?.neighbors ?? [];
   const sameDiscoverer = folioBundle?.sameDiscoverer ?? [];
@@ -250,16 +184,10 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
 
   // Group phase strip data — pre-resolved from folio bundle
   const groupPhaseData = useMemo(() => {
-    if (!groupData || !folioBundle?.groupPhases) return null;
+    if (!groupData || !groupPhases) return null;
     const highlightIndex = groupData.elements.indexOf(element.symbol);
-    return { phases: folioBundle.groupPhases, symbols: groupData.elements, highlightIndex };
-  }, [groupData, folioBundle?.groupPhases, element.symbol]);
-
-  // Navigation — pre-resolved from folio bundle
-  const { prevInGroup, nextInGroup } = nav ?? { prevInGroup: null, nextInGroup: null };
-  const { prevInPeriod, nextInPeriod } = nav ?? { prevInPeriod: null, nextInPeriod: null };
-  const { prevInBlock, nextInBlock } = nav ?? { prevInBlock: null, nextInBlock: null };
-  const { prevInCategory, nextInCategory } = nav ?? { prevInCategory: null, nextInCategory: null };
+    return { phases: groupPhases, symbols: groupData.elements, highlightIndex };
+  }, [groupData, groupPhases, element.symbol]);
 
   // Fixed width for neighbour chips — align vertical borders across rows
   const neighbourChipWidth = useMemo(() => {
@@ -273,18 +201,6 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
     );
     return Math.max(maxChipTextW + chipPadding, 120);
   }, [element.neighbors]);
-
-  // Fixed width for anomaly chips — align vertical borders across rows
-  const anomalyChipWidth = useMemo(() => {
-    if (elementAnomalies.length <= 1) return undefined;
-    // Anomaly labels aren't in text-metrics.json; use a reasonable fixed width
-    // based on the longest label character count (11px bold ≈ 6.5px per char average)
-    const maxLabelW = Math.max(
-      ...elementAnomalies.map((a) => Math.ceil(a.label.length * 6.5)),
-    );
-    const chipPadding = 25; // 12px left + 10px right + 3px border
-    return Math.max(maxLabelW + chipPadding, 120);
-  }, [elementAnomalies]);
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const marginaliaRef = useRef<HTMLElement>(null);

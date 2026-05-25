@@ -145,12 +145,9 @@ export default function SectionedCardList({
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Keep expanded set in sync if sections change
-  useEffect(() => {
-    if (!accordion) {
-      setExpanded(new Set(sections.map(s => s.id)));
-    }
-  }, [sections, accordion]);
+  const effectiveExpanded = accordion
+    ? expanded
+    : new Set(sections.map(s => s.id));
 
   const toggleSection = useCallback((id: string) => {
     setExpanded(prev => {
@@ -169,7 +166,7 @@ export default function SectionedCardList({
     setExpanded(new Set());
   }, []);
 
-  const allExpanded = expanded.size === sections.length;
+  const allExpanded = effectiveExpanded.size === sections.length;
 
   // ARIA APG accordion keyboard pattern:
   //   ArrowDown / ArrowUp → next / previous header (wraps)
@@ -178,7 +175,7 @@ export default function SectionedCardList({
   const handleHeaderKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
       const last = sections.length - 1;
-      let nextIndex: number | null = null;
+      let nextIndex: number;
       switch (event.key) {
         case 'ArrowDown':
           nextIndex = currentIndex === last ? 0 : currentIndex + 1;
@@ -225,7 +222,7 @@ export default function SectionedCardList({
       )}
 
       {sections.map((section, sectionIdx) => {
-        const isExpanded = expanded.has(section.id);
+        const isExpanded = effectiveExpanded.has(section.id);
         const panelId = `${section.id}-panel`;
 
         return (

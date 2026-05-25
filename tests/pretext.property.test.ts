@@ -13,7 +13,7 @@ import { measureLines, shapeText, fitLabel, computeLineHeight, dropCapLayout } f
 // Use printable ASCII strings that match our actual usage (English text, no control chars).
 // Pretext drops content for certain special-character + narrow-width combinations.
 const textArb = fc.stringOf(
-  fc.constantFrom(...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,;:!?-()\'\"'.split('')),
+  fc.constantFrom(...'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,;:!?-()\'"'.split('')),
   { minLength: 1, maxLength: 200 },
 ).filter((s) => s.trim().length > 0);
 const widthArb = fc.integer({ min: 60, max: 2000 });

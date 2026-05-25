@@ -13,13 +13,6 @@ import type { Section } from '../src/components/SectionedCardList';
 // ---------------------------------------------------------------------------
 // Arbitraries
 // ---------------------------------------------------------------------------
-const arbSymbol = fc.stringOf(
-  fc.constantFrom('H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne',
-    'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca',
-    'Fe', 'Cu', 'Zn', 'Ag', 'Au', 'Hg', 'Pb', 'U', 'Og'),
-  { minLength: 1, maxLength: 1 },
-).map(s => s); // single char from the pool
-
 const arbItem = fc.record({
   symbol: fc.constantFrom('H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne',
     'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca',

@@ -2,7 +2,7 @@ import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import Folio from '../../src/components/Folio';
-import type { ElementRecord, ElementSources, FolioBundle } from '../../src/lib/types';
+import type { ElementRecord, FolioBundle } from '../../src/lib/types';
 import { FE, FE_SOURCES, TEST_ACCESS_DATE } from '../fixtures/element-fe';
 import { IR } from '../fixtures/element-ir';
 

@@ -49,6 +49,7 @@ export default function Credits() {
 
   /* ---- Software list: measure each item, track name positions for links ---- */
   const softwareData = useMemo(() => {
+    void fontsReady;
     const lh = computeLineHeight(BODY_FONT);
     const allLines: Array<{ text: string; width: number; x: number; y: number }> = [];
     const links: Array<{ x: number; y: number; width: number; lineY: number; url: string; name: string }> = [];

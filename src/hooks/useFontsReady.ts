@@ -65,15 +65,12 @@ if (typeof document !== 'undefined' && document.fonts) {
 export function useFontsReady(): boolean {
   const [ready, setReady] = useState(globalFontsReady);
   useEffect(() => {
-    if (globalFontsReady) {
-      setReady(true);
-      return;
-    }
+    if (globalFontsReady) return;
     const cb = () => setReady(true);
     listeners.add(cb);
     return () => {
       listeners.delete(cb);
     };
   }, []);
-  return ready;
+  return ready || globalFontsReady;
 }

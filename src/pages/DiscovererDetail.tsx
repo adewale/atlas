@@ -85,7 +85,6 @@ export default function DiscovererDetail() {
       );
       const dYears = dElements.map((e) => e.discoveryYear).filter((y): y is number => y != null);
       const dGroups = dElements.map((e) => e.group).filter((g): g is number => g != null);
-      const dSymbols = new Set(d.elements);
 
       // Same exact year?
       if (dYears.some((y) => years.has(y))) return true;

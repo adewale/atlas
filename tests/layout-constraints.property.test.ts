@@ -6,16 +6,13 @@ import * as fc from 'fast-check';
 
 import { fitLabel, PRETEXT_SANS } from '../src/lib/pretext';
 import rawFullElements from '../data/generated/elements.json';
-import { MONO_FONT } from '../src/lib/theme';
-import type { ElementRecord, DiscovererData, TimelineData } from '../src/lib/types';
+import type { ElementRecord, DiscovererData } from '../src/lib/types';
 
 const allElements = rawFullElements as ElementRecord[];
 import discoverersJson from '../data/generated/discoverers.json';
-import timelineJson from '../data/generated/timeline.json';
 import { ERA_BINS, yearToEra } from '../shared/era-bins';
 
 const discoverers = discoverersJson as DiscovererData[];
-const timeline = timelineJson as TimelineData;
 
 // ---------------------------------------------------------------------------
 // Constants mirroring component code
@@ -23,7 +20,6 @@ const timeline = timelineJson as TimelineData;
 
 // AtlasPlate
 const CARD_W = 100;
-const CARD_H = 80;
 const NAME_MAX_W = CARD_W - 12; // 88px
 const NAME_FONT = `8px ${PRETEXT_SANS}`;
 
@@ -42,9 +38,6 @@ const PLATE_WIDTH = 160;
 // SvgPrevNext
 const PREV_NEXT_VIEWBOX_W = 400;
 const PREV_NEXT_FONT_SIZE = 11;
-
-// EntityChip
-const ENTITY_CHIP_MAX_W = 160; // maxWidth from BaseChip styles
 
 // Discoverer prev/next truncation
 // DiscovererDetail now uses fitLabel-based truncation (NAV_LABEL_MAX_W=180, 11px font)

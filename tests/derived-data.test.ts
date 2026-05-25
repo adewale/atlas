@@ -10,6 +10,20 @@ import folioH from '../data/generated/folio-H.json';
 import entityRefs from '../data/generated/entity-refs.json';
 import entityRefLookup from '../data/generated/entity-ref-lookup.json';
 
+type LightweightGridElement = {
+  symbol: string;
+  summary?: unknown;
+  sources?: unknown;
+  rankings?: unknown;
+  etymologyDescription?: unknown;
+  wikidataId?: unknown;
+  wikipediaTitle?: unknown;
+  wikipediaUrl?: unknown;
+  discoverer?: string;
+  discoveryYear?: number;
+  etymologyOrigin?: string;
+};
+
 describe('entity-index.json', () => {
   it('contains at least 150 entities (118 elements + discoverers)', () => {
     expect(entityIndex.length).toBeGreaterThanOrEqual(150);
@@ -70,7 +84,7 @@ describe('grid-elements.json', () => {
   });
 
   it('does NOT include heavy text fields (stripped for size)', () => {
-    for (const e of gridElements as any[]) {
+    for (const e of gridElements as LightweightGridElement[]) {
       expect(e.summary).toBeUndefined();
       expect(e.sources).toBeUndefined();
       expect(e.rankings).toBeUndefined();
@@ -82,7 +96,9 @@ describe('grid-elements.json', () => {
   });
 
   it('includes lightweight discoverer/etymology fields needed by pages', () => {
-    const h = (gridElements as any[]).find((e: any) => e.symbol === 'H');
+    const h = (gridElements as LightweightGridElement[]).find((e) => e.symbol === 'H');
+    expect(h).toBeDefined();
+    if (!h) throw new Error('Hydrogen fixture missing from grid-elements.json');
     expect(h.discoverer).toBe('Henry Cavendish');
     expect(h.discoveryYear).toBe(1766);
     expect(h.etymologyOrigin).toBe('property');
@@ -109,8 +125,8 @@ describe('folio bundles', () => {
   });
 
   it('Fe bundle has sameEtymology links', () => {
-    // Fe has etymologyOrigin: "property"
-    expect(folioFe.sameEtymology.length).toBeGreaterThan(0);
+    // Fe has etymologyOrigin: "property"; this should not be artificially capped.
+    expect(folioFe.sameEtymology.length).toBeGreaterThan(6);
     expect(folioFe.sameEtymology[0]).toHaveProperty('symbol');
     expect(folioFe.sameEtymology[0]).toHaveProperty('name');
     expect(folioFe.sameEtymology[0]).toHaveProperty('block');

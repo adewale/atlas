@@ -7,7 +7,6 @@
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { ERA_BINS, yearToEra } from '../shared/era-bins';
 
 type SeedElement = {
   atomicNumber: number;
@@ -581,7 +580,6 @@ function run() {
       ? []
       : elements
           .filter((e) => e.discoverer === el.discoverer && e.symbol !== el.symbol)
-          .slice(0, 6)
           .map((e) => ({ symbol: e.symbol, name: e.name, block: e.block }));
 
     // Same etymology
@@ -589,7 +587,6 @@ function run() {
       ? []
       : elements
           .filter((e) => e.etymologyOrigin === el.etymologyOrigin && e.symbol !== el.symbol)
-          .slice(0, 6)
           .map((e) => ({ symbol: e.symbol, name: e.name, block: e.block }));
 
     const asRef = (e: SeedElement | null) => e ? { symbol: e.symbol, name: e.name } : null;

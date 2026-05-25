@@ -37,7 +37,7 @@ function BaseChip({ to, borderColor, primary, secondary, title, 'aria-label': ar
         flexDirection: 'column',
         justifyContent: 'center',
         ...(fixedWidth
-          ? { width: fixedWidth, flex: '0 0 auto' }
+          ? { width: fixedWidth, maxWidth: '100%', flex: '0 1 auto' }
           : { minWidth: '120px', flex: '1 1 160px', maxWidth: '280px' }),
         minHeight: '44px',
         padding: '4px 10px 4px 12px',
