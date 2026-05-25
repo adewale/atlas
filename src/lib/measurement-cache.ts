@@ -55,7 +55,11 @@ function getContext(): MeasurementContext {
 export function measureCharWidth(char: string, font: string): number {
   const ctx = getContext();
   ctx.font = font;
-  return ctx.measureText(char).width;
+  const metrics = ctx.measureText(char);
+  // Canvas `width` is the advance width. SVG overlap cares about painted ink;
+  // glyphs can extend past their advance box on some platforms. Use the right
+  // ink bound when the browser exposes it, falling back to advance width.
+  return Math.max(metrics.width, metrics.actualBoundingBoxRight || 0);
 }
 
 /**

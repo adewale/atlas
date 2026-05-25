@@ -140,7 +140,7 @@ export function dropCapLayout(
 
   // How many body lines the drop cap spans
   const dropCapLines = Math.ceil(dropHeight / lineHeight);
-  const gap = 4; // tight space between drop cap and body text
+  const gap = 8; // breathing room between drop-cap ink and body text
 
   // Build variable-width array: narrow beside drop cap, full after
   const narrowWidth = maxWidth - dropWidth - gap;

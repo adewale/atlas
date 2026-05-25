@@ -39,13 +39,13 @@ describe('dropCapLayout: indent tracks the corrected drop-cap width', () => {
 
     const stale = dropCapLayout(TEXT, '16px sans-serif', '80px Cinzel, serif', 360, 20);
     expect(stale.dropCap.width).toBe(30);
-    expect(stale.lines[0].x).toBe(34); // 30 + gap(4)
+    expect(stale.lines[0].x).toBe(38); // 30 + gap(8)
 
     // Web font swaps in → wider glyph.
     charWidth = 60;
     const fresh = dropCapLayout(TEXT, '16px sans-serif', '80px Cinzel, serif', 360, 20);
     expect(fresh.dropCap.width).toBe(60);
-    expect(fresh.lines[0].x).toBe(64);
+    expect(fresh.lines[0].x).toBe(68);
     expect(fresh.lines[0].x).toBeGreaterThan(stale.lines[0].x);
   });
 
