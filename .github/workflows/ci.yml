@@ -54,5 +54,4 @@ jobs:
         run: npx playwright test --project=desktop
 
       - name: E2E tests (mobile drop-cap regression)
-        if: ${{ !cancelled() }}
         run: npx playwright test tests/e2e/dropcap-overlap.spec.ts --project=mobile

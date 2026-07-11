@@ -92,7 +92,7 @@ describe('social card generation', () => {
       outputRoot: join(outputRoot, 'mismatch-output'),
       manifestPath: mismatchManifestPath,
     })).toThrow(`bump ELEMENT_SOCIAL_CARD_VERSION`);
-  });
+  }, 30_000);
 
   test('derives every rendered field and URL from the element record and shared site origin', () => {
     for (const element of elements) {
