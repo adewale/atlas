@@ -6,8 +6,11 @@ import categoriesJson from '../../data/generated/categories.json';
 import anomaliesJson from '../../data/generated/anomalies.json';
 import discoverersJson from '../../data/generated/discoverers.json';
 import { ERA_BINS } from '../../shared/era-bins';
+import { canonicalComparisonPathForElements, getFolioComparisonPath } from './comparisonPaths';
 import { ALL_PROPERTIES } from './properties';
+import { SITE_NAME, SITE_ORIGIN } from './site';
 import { toUrlSlug } from './slugs';
+import { elementSocialImagePath } from './socialImages';
 import type {
   AnomalyData,
   BlockData,
@@ -18,11 +21,11 @@ import type {
   PeriodData,
 } from './types';
 
-export const SITE_ORIGIN = 'https://atlas-48p.pages.dev';
-export const SITE_NAME = 'Atlas';
+export { SITE_NAME, SITE_ORIGIN } from './site';
 export const SOCIAL_IMAGE_PATH = '/social-card.png';
 export const SOCIAL_IMAGE_URL = `${SITE_ORIGIN}${SOCIAL_IMAGE_PATH}`;
 export const SOCIAL_IMAGE_ALT = 'Atlas periodic table rendered as a geometric field of chemical elements';
+export { ELEMENT_SOCIAL_CARD_VERSION, elementSocialImagePath } from './socialImages';
 
 const DEFAULT_DESCRIPTION =
   'Explore all 118 chemical elements through an interactive periodic table, element folios, discovery history, etymology, properties, and comparisons.';
@@ -38,6 +41,14 @@ const anomalies = anomaliesJson as AnomalyData[];
 const discoverers = discoverersJson as DiscovererData[];
 
 const elementBySymbol = new Map(elements.map((element) => [element.symbol, element]));
+const indexableComparisonPaths = Object.freeze([
+  ...new Set(
+    elements
+      .map((element) => getFolioComparisonPath(element, (symbol) => elementBySymbol.get(symbol)))
+      .filter((path): path is string => path != null),
+  ),
+]);
+const indexableComparisonPathSet = new Set(indexableComparisonPaths);
 
 type SchemaNode = Record<string, unknown>;
 
@@ -67,6 +78,14 @@ type StaticPage = {
 
 function absoluteUrl(path: string): string {
   return path === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${path}`;
+}
+
+function elementSocialImageUrl(symbol: string): string {
+  return absoluteUrl(elementSocialImagePath(symbol));
+}
+
+function elementSocialImageAlt(element: ElementRecord): string {
+  return `Atlas element card for ${element.name} (${element.symbol}), atomic number ${element.atomicNumber}, category ${element.category}`;
 }
 
 function normalizePath(pathname: string): string {
@@ -134,10 +153,14 @@ function createPageMetadata(options: {
   mainEntityId?: string;
   canonicalPath?: string;
   robots?: string;
+  imageUrl?: string;
+  imageAlt?: string;
 }): SeoMetadata {
   const canonicalPath = options.canonicalPath ?? options.path;
   const canonicalUrl = absoluteUrl(canonicalPath);
   const description = concise(options.description);
+  const imageUrl = options.imageUrl ?? SOCIAL_IMAGE_URL;
+  const imageAlt = options.imageAlt ?? SOCIAL_IMAGE_ALT;
   const pageId = `${canonicalUrl}#webpage`;
   const breadcrumbs = options.breadcrumbs ?? [];
   const breadcrumb = breadcrumbNode(canonicalUrl, breadcrumbs);
@@ -160,11 +183,11 @@ function createPageMetadata(options: {
   const imageNode: SchemaNode = {
     '@type': 'ImageObject',
     '@id': `${canonicalUrl}#primaryimage`,
-    url: SOCIAL_IMAGE_URL,
-    contentUrl: SOCIAL_IMAGE_URL,
+    url: imageUrl,
+    contentUrl: imageUrl,
     width: 1200,
     height: 630,
-    caption: SOCIAL_IMAGE_ALT,
+    caption: imageAlt,
   };
 
   const graph: SchemaNode[] = [pageNode, imageNode];
@@ -180,8 +203,8 @@ function createPageMetadata(options: {
     description,
     robots: options.robots ?? INDEX_ROBOTS,
     ogType: 'website',
-    imageUrl: SOCIAL_IMAGE_URL,
-    imageAlt: SOCIAL_IMAGE_ALT,
+    imageUrl,
+    imageAlt,
     schema: {
       '@context': 'https://schema.org',
       '@graph': graph,
@@ -443,7 +466,7 @@ function elementSchema(element: ElementRecord, canonicalUrl: string, description
     alternateName: element.symbol,
     description,
     chemicalComposition: element.symbol,
-    image: SOCIAL_IMAGE_URL,
+    image: elementSocialImageUrl(element.symbol),
     identifier: [
       { '@type': 'PropertyValue', name: 'Chemical symbol', value: element.symbol },
       { '@type': 'PropertyValue', name: 'Atomic number', value: element.atomicNumber },
@@ -458,6 +481,8 @@ function elementSchema(element: ElementRecord, canonicalUrl: string, description
 function elementMetadata(element: ElementRecord): SeoMetadata {
   const path = `/elements/${element.symbol}`;
   const canonicalUrl = absoluteUrl(path);
+  const imageUrl = elementSocialImageUrl(element.symbol);
+  const imageAlt = elementSocialImageAlt(element);
   const description = concise(
     `${element.name} (${element.symbol}) is the chemical element with atomic number ${element.atomicNumber}. ${element.summary}`,
   );
@@ -472,6 +497,8 @@ function elementMetadata(element: ElementRecord): SeoMetadata {
     ],
     mainEntityId: `${canonicalUrl}#element`,
     extraNodes: [elementSchema(element, canonicalUrl, description)],
+    imageUrl,
+    imageAlt,
   });
 }
 
@@ -585,11 +612,7 @@ export function canonicalComparisonPath(symbol: string, other: string): string |
   const elementA = elementBySymbol.get(symbol);
   const elementB = elementBySymbol.get(other);
   if (!elementA || !elementB) return null;
-  if (elementA.atomicNumber === elementB.atomicNumber) return `/elements/${elementA.symbol}`;
-  const [first, second] = elementA.atomicNumber < elementB.atomicNumber
-    ? [elementA, elementB]
-    : [elementB, elementA];
-  return `/elements/${first.symbol}/compare/${second.symbol}`;
+  return canonicalComparisonPathForElements(elementA, elementB);
 }
 
 function comparisonMetadata(elementA: ElementRecord, elementB: ElementRecord): SeoMetadata {
@@ -606,6 +629,7 @@ function comparisonMetadata(elementA: ElementRecord, elementB: ElementRecord): S
     canonicalPath,
     heading: `${first.name} vs ${second.name} — Element Comparison`,
     description: `Compare ${first.name} (${first.symbol}) and ${second.name} (${second.symbol}) side by side: atomic structure, physical properties, discovery history, etymology, and periodic relationships.`,
+    robots: indexableComparisonPathSet.has(canonicalPath) ? INDEX_ROBOTS : NOINDEX_ROBOTS,
     breadcrumbs: [
       { name: 'Atlas', path: '/' },
       { name: 'Elements', path: '/elements' },
@@ -715,6 +739,18 @@ export function* getIndexableSeoRoutes(): Generator<SeoMetadata> {
   for (const anomaly of anomalies) yield anomalyMetadata(anomaly);
   for (const discoverer of discoverers) yield discovererMetadata(discoverer);
   for (const era of ERA_BINS) yield eraMetadata(era);
+  for (const path of indexableComparisonPaths) {
+    const metadata = getSeoMetadata(path);
+    if (metadata) yield metadata;
+  }
+}
+
+export function getIndexableComparisonPaths(): readonly string[] {
+  return indexableComparisonPaths;
+}
+
+/** All canonical pairs remain addressable even though only folio-linked pairs are indexed. */
+export function* getCanonicalComparisonSeoRoutes(): Generator<SeoMetadata> {
   for (let first = 0; first < elements.length; first += 1) {
     for (let second = first + 1; second < elements.length; second += 1) {
       yield comparisonMetadata(elements[first], elements[second]);

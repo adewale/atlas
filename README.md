@@ -24,6 +24,12 @@ npm run build:data   # derive element data from seed
 npm run dev          # http://localhost:5173
 ```
 
+The reviewed social-card PNGs are committed, so a fresh clone serves them in
+development and production without host-dependent regeneration. If their
+design or element content changes, first bump `ELEMENT_SOCIAL_CARD_VERSION`,
+then run `npm run build:social`; the generator retains earlier versions and
+refuses to change an existing immutable version.
+
 ## Pages
 
 | Route | What it shows |

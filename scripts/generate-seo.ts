@@ -34,8 +34,8 @@ for (const route of routes) {
   if (seen.has(route.path)) throw new Error(`Duplicate SEO route: ${route.path}`);
   seen.add(route.path);
 
-  // Comparison pages are rendered by the narrowly scoped Pages Function so
-  // 6,903 pairs do not become 6,903 nearly identical deployment assets.
+  // The 117 indexed comparison pages are rendered by the narrowly scoped
+  // Pages Function. The remaining 6,786 pairs stay available but noindex.
   if (route.path.includes('/compare/')) continue;
 
   const outputPath = outputPathForRoute(route.path);
@@ -50,4 +50,4 @@ for (const route of routes) {
 await writeFile(join(DIST, 'sitemap.xml'), renderSitemap(routes));
 await writeFile(join(DIST, 'robots.txt'), renderRobotsTxt());
 
-console.log('Generated 274 static route heads and a sitemap covering 7,177 canonical URLs.');
+console.log('Generated 274 static route heads and a sitemap covering 391 canonical URLs, including 117 comparisons.');

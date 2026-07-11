@@ -30,6 +30,16 @@ describe('comparison Pages Function', () => {
     expect(await response.text()).toContain(renderSeoHead(getSeoMetadata('/elements/Mn/compare/Fe')!));
   });
 
+  test('serves non-indexed comparisons with generic social metadata', async () => {
+    const requestContext = context('Fe', 'Cu');
+    const response = await onRequest(requestContext);
+    const html = await response.text();
+    expect(response.status).toBe(200);
+    expect(html).toContain('name="robots" content="noindex,follow"');
+    expect(html).toContain('property="og:image" content="https://atlas-48p.pages.dev/social-card.png"');
+    expect(html).toContain('name="twitter:image" content="https://atlas-48p.pages.dev/social-card.png"');
+  });
+
   test('redirects reverse and self comparisons permanently', async () => {
     const reverse = await onRequest(context('Fe', 'Mn'));
     expect(reverse.status).toBe(308);
