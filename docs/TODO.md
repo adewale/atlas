@@ -118,6 +118,16 @@ See `docs/search-spec.md` for full technical specification and ASCII UI mocks.
 - [ ] Drop cap element symbols in search result cards (miniature folios)
 - [ ] Inline sparklines in element results showing current property rank
 
+### Pretext Reliability Audit (2026-07-11)
+- [ ] **PXT-01 · Medium — Preserve measured text styles through rendering.** Replace `PretextSvg`'s unused `font` prop with an explicit measured-text style contract covering family, size, weight, and letter spacing. Make `AtlasPlate` captions and Design-page tooltips render with the same style used for measurement, then add a computed-style parity regression.
+- [ ] **PXT-02 · Medium — Remove layout-sensitive `system-ui` measurements.** Use a named or bundled font for Folio, Discovery Timeline, Entity Map, Design tooltips, and precomputed metrics, or measure at runtime in the active engine. Record the generator/browser/font version, add a metrics freshness check to CI, and stop describing Chromium canvas snapshots as universally identical or deterministic.
+- [ ] **PXT-03 · Medium — Adopt Pretext's native `letterSpacing` option.** Expose `PrepareOptions` through the Atlas wrapper, replace manual `(length - 1) * spacing` and blanket-percentage approximations, and add terminal-spacing plus measured-versus-rendered width tests.
+- [ ] **PXT-04 · Medium — Restore semantic text for drop-cap prose.** Keep the SVG glyph decomposition presentational and expose the original paragraph once through semantic HTML or a single accessible SVG name. Add an accessibility-tree regression proving first words such as “One” and “Atlas” are neither split nor duplicated.
+- [ ] **PXT-05 · Medium — Replace misleading Pretext contract tests with behavioural coverage.** Exercise the real library over Atlas's Unicode corpus, compare predicted geometry with rendered `getBBox()` values, assert font weight/tracking parity, and run the focused geometry suite in Chromium and WebKit.
+- [ ] **PXT-06 · Low — Reuse width-independent preparation.** Memoize `PreparedTextWithSegments` by text/font/options, perform only layout when width changes, and depend on indent scalar values rather than inline object identity.
+- [ ] **PXT-07 · Low — Use intrinsic-width and rich-inline APIs.** Replace `measureLines(..., 9999)` and duplicated raw-canvas measurements with `measureNaturalWidth()` or a small prepared-width wrapper; evaluate Pretext `rich-inline` for linked About/Credits phrases.
+- [ ] **PXT-08 · Low — Correct Pretext documentation boundaries.** Update the metric-generator comments, README, and performance notes to distinguish selected SVG composition from ordinary HTML prose and to describe precomputed values accurately as Chromium canvas snapshots.
+
 ### Animation Choreography
 - [ ] Search reveal: filter bar expands, results wipe down, items stagger, table pulses
 - [ ] Search clear: results wipe up, table elements fade back in ripple from centre
