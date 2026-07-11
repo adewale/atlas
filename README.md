@@ -29,25 +29,26 @@ npm run dev          # http://localhost:5173
 | Route | What it shows |
 |---|---|
 | `/` | Interactive periodic table with keyboard navigation (arrow keys + Enter) |
-| `/element/:symbol` | Folio — one element's full story with shaped text flowing around a data plate |
-| `/compare/:a/:b` | Side-by-side element comparison with split-screen animation |
+| `/elements` / `/elements/:symbol` | All elements, or one element's full folio |
+| `/elements/:symbol/compare/:other` | Side-by-side element comparison, canonicalized by atomic number |
+| `/groups` / `/groups/:n` | All IUPAC groups, or the elements in one group |
+| `/periods` / `/periods/:n` | All periods, or the elements in one period |
+| `/blocks` / `/blocks/:block` | All electron blocks, or the elements in one block |
+| `/categories` / `/categories/:slug` | All chemical families, or the elements in one category |
+| `/properties` / `/properties/:property` | All numeric properties, or an element ranking by one property |
+| `/anomalies` / `/anomalies/:slug` | All periodic anomalies, or the elements in one anomaly |
+| `/discoverers` / `/discoverers/:name` | Discoverer index and individual discovery pages |
+| `/eras` / `/eras/:era` | Discovery-era index and individual era pages |
+| `/explore` | Search and faceted navigation across every entity type |
 | `/phase-landscape` | Elements arranged by melting and boiling points |
 | `/property-scatter` | Scatter plot of any two numeric properties |
 | `/anomaly-explorer` | Interactive exploration of periodic table rule-breakers |
-| `/neighbourhood-graph` | Force-directed graph of element neighbourhood relationships |
 | `/discovery-timeline` | When every element was discovered, from antiquity to 2010s |
 | `/etymology-map` | Elements grouped by the origin of their names |
 | `/discoverer-network` | Who discovered what, with lateral navigation between co-discoveries |
-| `/atlas/group/:n` | Elements in a specific IUPAC group |
-| `/atlas/period/:n` | Elements in a specific period |
-| `/atlas/block/:b` | Elements in an electron block (s/p/d/f) |
-| `/atlas/category/:slug` | Elements by category (alkali metal, halogen, etc.) |
-| `/atlas/rank/:property` | Elements ranked by a numeric property |
-| `/atlas/anomaly/:slug` | Elements involved in a specific anomaly |
-| `/discoverer/:name` | Individual discoverer page with their elements, prev/next navigation, and related discoverers |
-| `/timeline/:era` | Timeline era page (decade or "antiquity") with elements, discoverers, and nearby era links |
-| `/design` | Design language reference (palette, typography, spacing, animation) |
-| `/entity-map` | Entity relationship graph, catalogue, and navigable links |
+| `/about` / `/about/credits` | Project background, sources, licences, and attribution |
+| `/about/design` / `/about/animation-palette` | Design language and motion reference |
+| `/about/entity-map` | Entity relationship graph, catalogue, and navigable links |
 
 ## Graph Navigation
 

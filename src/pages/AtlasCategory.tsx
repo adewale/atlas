@@ -12,14 +12,15 @@ export default function AtlasCategory() {
   const label = fromUrlSlug(slug ?? '');
   const cat = categories.find((c) => c.slug === label);
   const color = categoryColor(label);
+  const displayLabel = cat?.label ?? label;
 
   return (
     <AtlasBrowsePage
       backLink={{ label: '← Table', to: '/' }}
-      heading={label}
+      heading={displayLabel}
       color={color}
       elements={cat ? cat.elements : []}
-      caption={label}
+      caption={displayLabel}
       captionColor={color}
       description={cat?.description}
       marginNote={

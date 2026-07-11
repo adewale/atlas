@@ -575,7 +575,11 @@ test.describe('Page transitions: content readable after navigation', () => {
 
     await page.locator('a:has-text("Compare")').first().click();
     await waitForAnimations(page);
-    await expect(page.getByText('Iron').first()).toBeVisible();
+    // Scope to rendered SVG text so hidden <title> accessibility nodes do not
+    // win when canonical pair ordering places the other element first.
+    const ironLabel = page.locator('svg[aria-label*="Comparison"] text').filter({ hasText: 'Iron' });
+    await expect(ironLabel).toHaveCount(1);
+    await expect(ironLabel).toBeVisible();
     await page.screenshot({ path: 'tests/e2e/screenshots/transition-compare.png', fullPage: true });
   });
 

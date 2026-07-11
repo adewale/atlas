@@ -108,7 +108,7 @@ describe('Folio', () => {
   it('compare link points to correct URL', () => {
     renderFolio();
     const link = screen.getByText('Compare →');
-    expect(link).toHaveAttribute('href', '/elements/Fe/compare/Mn');
+    expect(link).toHaveAttribute('href', '/elements/Mn/compare/Fe');
   });
 
   it('shaped text lines are rendered in SVG', () => {

@@ -52,7 +52,7 @@ export default function AtlasBrowsePage({
   sparkline,
   marginNote,
 }: AtlasBrowsePageProps) {
-  useDocumentTitle(heading);
+  useDocumentTitle(heading, description);
   const isMobile = useIsMobile();
 
   const elements = symbols.map((s) => getElement(s)).filter(
