@@ -40,6 +40,11 @@ jobs:
       - name: Verify dist output
         run: |
           test -f dist/index.html
+          test -f dist/elements/Fe.html
+          test -f dist/sitemap.xml
+          test -f dist/robots.txt
+          test -f dist/social-card.png
+          test -f dist/404.html
           ls dist/assets/*.js | head -5
 
       - name: Install Playwright browsers

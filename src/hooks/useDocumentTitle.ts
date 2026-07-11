@@ -1,29 +1,33 @@
 import { useEffect } from 'react';
+import {
+  applySeoMetadata,
+  getNotFoundMetadata,
+  getSeoMetadata,
+} from '../lib/seo';
 
-const BASE_TITLE = 'Atlas — Periodic Table';
-const BASE_DESCRIPTION = 'Atlas is an interactive periodic table featuring element folios, discovery timelines, etymology maps, and property comparisons — all rendered in a Byrne-inspired geometric design.';
-
-let metaDescription: HTMLMetaElement | null = null;
-
-function getMetaDescription(): HTMLMetaElement {
-  if (!metaDescription) {
-    metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      metaDescription.name = 'description';
-      document.head.appendChild(metaDescription);
-    }
-  }
-  return metaDescription;
+/**
+ * Keep metadata correct after client-side navigation. Direct requests receive
+ * the same data in their build-generated HTML, so crawlers do not need to run
+ * JavaScript to see it.
+ */
+export function useRouteMetadata(pathname: string) {
+  useEffect(() => {
+    applySeoMetadata(getSeoMetadata(pathname) ?? getNotFoundMetadata(pathname));
+  }, [pathname]);
 }
 
 export function useDocumentTitle(title?: string, description?: string) {
+  const pathname = typeof window === 'undefined' ? '/' : window.location.pathname;
   useEffect(() => {
-    document.title = title ? `${title} — Atlas` : BASE_TITLE;
-    getMetaDescription().content = description ?? BASE_DESCRIPTION;
-    return () => {
-      document.title = BASE_TITLE;
-      getMetaDescription().content = BASE_DESCRIPTION;
-    };
-  }, [title, description]);
+    const routeMetadata = getSeoMetadata(pathname);
+    if (routeMetadata) {
+      applySeoMetadata(routeMetadata);
+      return;
+    }
+
+    const notFound = getNotFoundMetadata(pathname);
+    if (title) notFound.title = `${title} — Atlas`;
+    if (description) notFound.description = description;
+    applySeoMetadata(notFound);
+  }, [title, description, pathname]);
 }

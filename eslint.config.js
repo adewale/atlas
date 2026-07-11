@@ -30,6 +30,7 @@ export default tseslint.config(
       "node_modules/",
       "data/",
       "vendor/",
+      ".wrangler/",
       "test-results/",
       "playwright-report/",
     ],

@@ -13,6 +13,7 @@ import SourceStrip from './SourceStrip';
 import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, MONO_FONT, categoryColor } from '../lib/theme';
 import { toUrlSlug } from '../lib/slugs';
 import { yearToEra } from '../../shared/era-bins';
+import { getElement } from '../lib/data';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
 import SvgLink from './SvgLink';
@@ -527,7 +528,13 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
 
         {/* Compare link */}
         <div style={{ marginTop: '12px' }}>
-          <Link to={`/elements/${element.symbol}/compare/${element.neighbors[0] ?? 'O'}`}>
+          <Link to={(() => {
+            const neighbour = getElement(element.neighbors[0] ?? 'O');
+            if (!neighbour || element.atomicNumber < neighbour.atomicNumber) {
+              return `/elements/${element.symbol}/compare/${neighbour?.symbol ?? 'O'}`;
+            }
+            return `/elements/${neighbour.symbol}/compare/${element.symbol}`;
+          })()}>
             Compare →
           </Link>
         </div>

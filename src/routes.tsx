@@ -1,10 +1,14 @@
 import { lazy } from 'react';
-import { createBrowserRouter, redirect, Outlet, ScrollRestoration } from 'react-router';
+import { createBrowserRouter, redirect, Outlet, ScrollRestoration, useLocation } from 'react-router';
 import type { LoaderFunctionArgs, ShouldRevalidateFunctionArgs } from 'react-router';
 import { getElement } from './lib/data';
+import { canonicalComparisonPath } from './lib/seo';
+import { useRouteMetadata } from './hooks/useDocumentTitle';
 
 /** Root layout that provides scroll restoration for all routes. */
 function RootLayout() {
+  const location = useLocation();
+  useRouteMetadata(location.pathname);
   return (
     <>
       <ScrollRestoration />
@@ -149,7 +153,19 @@ export const router = createBrowserRouter([
   { path: '/anomalies/:slug', Component: AtlasAnomaly, loader: loadAnomalies },
 
   /* ── Compare (sub-resource of element) ────── */
-  { path: '/elements/:symbol/compare/:other', Component: Compare, loader: loadElements },
+  {
+    path: '/elements/:symbol/compare/:other',
+    Component: Compare,
+    loader: async ({ params }: LoaderFunctionArgs) => {
+      const symbol = params.symbol ?? '';
+      const other = params.other ?? '';
+      const canonicalPath = canonicalComparisonPath(symbol, other);
+      if (!canonicalPath) return redirect('/');
+      const requestedPath = `/elements/${symbol}/compare/${other}`;
+      if (canonicalPath !== requestedPath) return redirect(canonicalPath);
+      return loadElements();
+    },
+  },
 
   /* ── About & meta pages ──────────────────── */
   { path: '/about', Component: About },
