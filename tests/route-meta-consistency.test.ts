@@ -17,6 +17,7 @@
  */
 import { describe, test, expect } from 'vitest';
 import { VIZ_PAGES, ENTITIES } from '../src/lib/routeMeta';
+import { getIndexableComparisonPaths } from '../src/lib/seo';
 
 /**
  * Route patterns extracted from routes.tsx.
@@ -129,6 +130,15 @@ describe('ENTITIES consistency', () => {
       }
     }
     expect(broken).toEqual([]);
+  });
+
+  test('comparison examples stay within the indexed folio-linked set', () => {
+    const comparison = ENTITIES.find((entity) => entity.id === 'comparison');
+    expect(comparison).toBeDefined();
+    const indexed = new Set(getIndexableComparisonPaths());
+    for (const example of comparison?.examples ?? []) {
+      expect(indexed.has(example.href), example.href).toBe(true);
+    }
   });
 
   test('no duplicate ENTITIES ids', () => {

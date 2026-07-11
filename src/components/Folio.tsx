@@ -14,6 +14,7 @@ import { BLACK, DEEP_BLUE, WARM_RED, PAPER, GREY_DARK, GREY_MID, MONO_FONT, cate
 import { toUrlSlug } from '../lib/slugs';
 import { yearToEra } from '../../shared/era-bins';
 import { getElement } from '../lib/data';
+import { getFolioComparisonPath } from '../lib/comparisonPaths';
 import { VT } from '../lib/transitions';
 import InfoTip from './InfoTip';
 import SvgLink from './SvgLink';
@@ -202,6 +203,7 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
     );
     return Math.max(maxChipTextW + chipPadding, 120);
   }, [element.neighbors]);
+  const comparisonPath = getFolioComparisonPath(element, getElement);
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const marginaliaRef = useRef<HTMLElement>(null);
@@ -527,17 +529,11 @@ export default function Folio({ element, folioBundle, animate = true }: FolioPro
         )}
 
         {/* Compare link */}
-        <div style={{ marginTop: '12px' }}>
-          <Link to={(() => {
-            const neighbour = getElement(element.neighbors[0] ?? 'O');
-            if (!neighbour || element.atomicNumber < neighbour.atomicNumber) {
-              return `/elements/${element.symbol}/compare/${neighbour?.symbol ?? 'O'}`;
-            }
-            return `/elements/${neighbour.symbol}/compare/${element.symbol}`;
-          })()}>
-            Compare →
-          </Link>
-        </div>
+        {comparisonPath && (
+          <div style={{ marginTop: '12px' }}>
+            <Link to={comparisonPath}>Compare →</Link>
+          </div>
+        )}
       </aside>
     </div>
   );

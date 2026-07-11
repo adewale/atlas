@@ -8,8 +8,8 @@ const SEO_BLOCK = /<!-- atlas-seo:start -->[\s\S]*?<!-- atlas-seo:end -->/;
 
 /**
  * Collapse the ordered comparison route space to one URL per distinct pair.
- * Canonical static pages pass through; reverse and self-pairs receive a real
- * redirect before Cloudflare looks up the generated HTML asset.
+ * Canonical pairs receive bot-visible metadata; reverse and self-pairs receive
+ * a real redirect before Cloudflare looks up the generated HTML asset.
  */
 export async function onRequest(context) {
   const symbol = context.params.symbol;
