@@ -71,9 +71,12 @@ const blockTextColours: Record<ElementRecord['block'], string> = {
   f: PAPER,
 };
 
-function createCard() {
+function createCard(opaque = false) {
   const canvas = createCanvas(SOCIAL_CARD_WIDTH, SOCIAL_CARD_HEIGHT);
-  const context = canvas.getContext('2d');
+  // Element cards are fully opaque. Encoding them as RGB removes an
+  // unnecessary alpha channel and keeps the assets on the most conservative
+  // social-media image-processing path.
+  const context = opaque ? canvas.getContext('2d', { alpha: false }) : canvas.getContext('2d');
   context.fillStyle = PAPER;
   context.fillRect(0, 0, SOCIAL_CARD_WIDTH, SOCIAL_CARD_HEIGHT);
   return { canvas, context };
@@ -231,7 +234,7 @@ export function getElementSocialCardContent(element: ElementRecord): ElementSoci
 }
 
 export function renderElementSocialCard(element: ElementRecord): Buffer {
-  const { canvas, context } = createCard();
+  const { canvas, context } = createCard(true);
   drawAtlasBars(context);
   const content = getElementSocialCardContent(element);
 

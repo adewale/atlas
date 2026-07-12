@@ -28,11 +28,16 @@ const elements = elementsJson as ElementRecord[];
 let outputRoot: string;
 let generated: GeneratedSocialCards;
 
-function expectValidSocialPng(card: Buffer): void {
+function expectValidSocialPng(card: Buffer, expectedColorType?: number): void {
   expect(card.length).toBeGreaterThan(10_000);
   expect(card.toString('ascii', 1, 4)).toBe('PNG');
   expect(card.readUInt32BE(16)).toBe(SOCIAL_CARD_WIDTH);
   expect(card.readUInt32BE(20)).toBe(SOCIAL_CARD_HEIGHT);
+  expect(card.readUInt8(24)).toBe(8); // bit depth
+  if (expectedColorType != null) expect(card.readUInt8(25)).toBe(expectedColorType);
+  expect(card.readUInt8(26)).toBe(0); // standard compression
+  expect(card.readUInt8(27)).toBe(0); // standard filter method
+  expect(card.readUInt8(28)).toBe(0); // non-interlaced
 }
 
 beforeAll(() => {
@@ -51,6 +56,11 @@ afterAll(() => {
 });
 
 describe('social card generation', () => {
+  test('uses a fresh v2 image cache key', () => {
+    expect(ELEMENT_SOCIAL_CARD_VERSION).toBe('v2');
+    expect(elementSocialImagePath('Pm')).toBe('/social/elements/v2/Pm.png');
+  });
+
   test('writes exactly one valid, unique PNG for every element', () => {
     expect(generated.elementCardPaths).toHaveLength(118);
     expect(existsSync(join(outputRoot, 'social', 'elements', 'v0', 'stale.png'))).toBe(true);
@@ -64,7 +74,7 @@ describe('social card generation', () => {
     for (const element of elements) {
       const path = join(outputRoot, elementSocialImagePath(element.symbol).slice(1));
       const card = readFileSync(path);
-      expectValidSocialPng(card);
+      expectValidSocialPng(card, 2); // truecolour RGB, no alpha channel
       hashes.add(createHash('sha256').update(card).digest('hex'));
     }
     expect(hashes.size).toBe(118);

@@ -29,3 +29,9 @@
 **What happened:** `npm run deploy` built successfully but `wrangler pages deploy dist/` failed non-interactively with “Must specify a project name.” The account has a single Pages project named `atlas`, but Wrangler v4 still requires the project name in this context.
 **Resolution:** Updated the deploy script to pass `--project-name atlas`.
 **Rule:** Cloudflare Pages deploy scripts should include `--project-name <name>` so non-interactive deploys do not depend on Wrangler prompts or account inference.
+
+### 2026-07-12 — Social-card cache busts must change the image URL
+**Context:** Diagnosing an X post that parsed Atlas's card metadata but displayed a grey image fallback.
+**What happened:** X stored the correct `summary_large_image` title, description, domain, and alt text, but no processed image fields. Adding a query parameter to the page did not help because its canonical identity and `twitter:image` URL were unchanged.
+**Resolution:** Bumped the immutable element-card path, encoded the fully opaque cards as RGB PNGs, and added PNG colour-type and metadata-path regressions.
+**Rule:** When a social platform negatively caches an image fetch, publish a genuinely new image pathname; changing only the sharing page's query string is not an image-cache bust.
