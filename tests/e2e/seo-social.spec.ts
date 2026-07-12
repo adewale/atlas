@@ -74,7 +74,7 @@ test.describe('bot-visible search and social metadata', () => {
       const pageResponse = await request.get(`/elements/${symbol}`);
       const html = await pageResponse.text();
       const imageUrl = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
-      expect(imageUrl).toBe(`https://atlas-48p.pages.dev/social/elements/v1/${symbol}.png`);
+      expect(imageUrl).toBe(`https://atlas-48p.pages.dev/social/elements/v2/${symbol}.png`);
       expect(html).toContain(`name="twitter:image" content="${imageUrl}"`);
       expect(html).toContain(`property="og:image:alt" content="Atlas element card for ${name} (${symbol})`);
 
@@ -85,6 +85,7 @@ test.describe('bot-visible search and social metadata', () => {
       expect(imageResponse.headers()['cache-control']).toContain('immutable');
       const body = await imageResponse.body();
       expect(body.toString('ascii', 1, 4)).toBe('PNG');
+      expect(body.readUInt8(25)).toBe(2); // PNG truecolour (RGB), without an alpha channel.
       imagePaths.push(imagePath);
       imageBodies.push(body);
     }

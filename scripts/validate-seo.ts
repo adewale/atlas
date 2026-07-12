@@ -36,11 +36,14 @@ function sha256(value: Buffer): string {
   return createHash('sha256').update(value).digest('hex');
 }
 
-function validateSocialPng(card: Buffer, label: string): void {
+function validateSocialPng(card: Buffer, label: string, expectedColorType?: number): void {
   if (card.length < 10_000) fail(`${label} is unexpectedly small`);
   if (card.toString('ascii', 1, 4) !== 'PNG') fail(`${label} is not a PNG file`);
   if (card.readUInt32BE(16) !== 1200 || card.readUInt32BE(20) !== 630) {
     fail(`${label} must be 1200×630`);
+  }
+  if (expectedColorType != null && card.readUInt8(25) !== expectedColorType) {
+    fail(`${label} must use PNG colour type ${expectedColorType}`);
   }
 }
 
@@ -187,7 +190,11 @@ for (const version of cardVersions) {
   for (const element of elements) {
     const relativePath = `/social/elements/${version}/${element.symbol}.png`;
     const elementCard = await readFile(join(DIST, relativePath.slice(1)));
-    validateSocialPng(elementCard, relativePath);
+    validateSocialPng(
+      elementCard,
+      relativePath,
+      version === ELEMENT_SOCIAL_CARD_VERSION ? 2 : undefined,
+    );
     const hash = sha256(elementCard);
     if (hash !== versionManifest.elementCardSha256[element.symbol]) {
       fail(`${relativePath} differs from the immutable manifest`);
