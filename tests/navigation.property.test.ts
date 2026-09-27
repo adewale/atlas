@@ -1,8 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import * as fc from 'fast-check';
+import { forEveryElement } from './every-element';
 import { allElements } from '../src/lib/data';
 
-const elementArb = fc.integer({ min: 0, max: allElements.length - 1 }).map((i) => allElements[i]);
 
 /**
  * Helper: compute prev/next within a filtered, sorted subset of elements.
@@ -24,200 +23,178 @@ function findPrevNext(
 
 describe('Group navigation property tests', () => {
   it('forAll(element with group): prev-in-group has the same group', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        if (el.group == null) return; // skip lanthanides/actinides
-        const { prev } = findPrevNext(
-          el,
-          (e) => e.group === el.group,
-          (a, b) => a.period - b.period,
-        );
-        if (prev) {
-          expect(prev.group).toBe(el.group);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      if (el.group == null) return; // skip lanthanides/actinides
+      const { prev } = findPrevNext(
+        el,
+        (e) => e.group === el.group,
+        (a, b) => a.period - b.period,
+      );
+      if (prev) {
+        expect(prev.group).toBe(el.group);
+      }
+    });
   });
 
   it('forAll(element with group): next-in-group has the same group', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        if (el.group == null) return;
-        const { next } = findPrevNext(
-          el,
-          (e) => e.group === el.group,
-          (a, b) => a.period - b.period,
-        );
-        if (next) {
-          expect(next.group).toBe(el.group);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      if (el.group == null) return;
+      const { next } = findPrevNext(
+        el,
+        (e) => e.group === el.group,
+        (a, b) => a.period - b.period,
+      );
+      if (next) {
+        expect(next.group).toBe(el.group);
+      }
+    });
   });
 
   it('forAll(element with group): group navigation is reversible', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        if (el.group == null) return;
-        const members = allElements
-          .filter((e) => e.group === el.group)
-          .sort((a, b) => a.period - b.period || a.atomicNumber - b.atomicNumber);
-        const idx = members.findIndex((e) => e.symbol === el.symbol);
+    forEveryElement(allElements, (el) => {
+      if (el.group == null) return;
+      const members = allElements
+        .filter((e) => e.group === el.group)
+        .sort((a, b) => a.period - b.period || a.atomicNumber - b.atomicNumber);
+      const idx = members.findIndex((e) => e.symbol === el.symbol);
 
-        // If A's next is B, then B's prev should be A
-        if (idx < members.length - 1) {
-          const nextEl = members[idx + 1];
-          const nextIdx = members.findIndex((e) => e.symbol === nextEl.symbol);
-          expect(members[nextIdx - 1].symbol).toBe(el.symbol);
-        }
-        // If A's prev is B, then B's next should be A
-        if (idx > 0) {
-          const prevEl = members[idx - 1];
-          const prevIdx = members.findIndex((e) => e.symbol === prevEl.symbol);
-          expect(members[prevIdx + 1].symbol).toBe(el.symbol);
-        }
-      }),
-    );
+      // If A's next is B, then B's prev should be A
+      if (idx < members.length - 1) {
+        const nextEl = members[idx + 1];
+        const nextIdx = members.findIndex((e) => e.symbol === nextEl.symbol);
+        expect(members[nextIdx - 1].symbol).toBe(el.symbol);
+      }
+      // If A's prev is B, then B's next should be A
+      if (idx > 0) {
+        const prevEl = members[idx - 1];
+        const prevIdx = members.findIndex((e) => e.symbol === prevEl.symbol);
+        expect(members[prevIdx + 1].symbol).toBe(el.symbol);
+      }
+    });
   });
 
   it('forAll(element with group): prev-in-group has a smaller or equal period', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        if (el.group == null) return;
-        const { prev } = findPrevNext(
-          el,
-          (e) => e.group === el.group,
-          (a, b) => a.period - b.period || a.atomicNumber - b.atomicNumber,
-        );
-        if (prev) {
-          expect(prev.period).toBeLessThanOrEqual(el.period);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      if (el.group == null) return;
+      const { prev } = findPrevNext(
+        el,
+        (e) => e.group === el.group,
+        (a, b) => a.period - b.period || a.atomicNumber - b.atomicNumber,
+      );
+      if (prev) {
+        expect(prev.period).toBeLessThanOrEqual(el.period);
+      }
+    });
   });
 
   it('forAll(element with group): next-in-group has a larger or equal period', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        if (el.group == null) return;
-        const { next } = findPrevNext(
-          el,
-          (e) => e.group === el.group,
-          (a, b) => a.period - b.period || a.atomicNumber - b.atomicNumber,
-        );
-        if (next) {
-          expect(next.period).toBeGreaterThanOrEqual(el.period);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      if (el.group == null) return;
+      const { next } = findPrevNext(
+        el,
+        (e) => e.group === el.group,
+        (a, b) => a.period - b.period || a.atomicNumber - b.atomicNumber,
+      );
+      if (next) {
+        expect(next.period).toBeGreaterThanOrEqual(el.period);
+      }
+    });
   });
 });
 
 describe('Period navigation property tests', () => {
   it('forAll(element): prev-in-period has the same period', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const { prev } = findPrevNext(
-          el,
-          (e) => e.period === el.period,
-          (a, b) => a.atomicNumber - b.atomicNumber,
-        );
-        if (prev) {
-          expect(prev.period).toBe(el.period);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const { prev } = findPrevNext(
+        el,
+        (e) => e.period === el.period,
+        (a, b) => a.atomicNumber - b.atomicNumber,
+      );
+      if (prev) {
+        expect(prev.period).toBe(el.period);
+      }
+    });
   });
 
   it('forAll(element): next-in-period has the same period', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const { next } = findPrevNext(
-          el,
-          (e) => e.period === el.period,
-          (a, b) => a.atomicNumber - b.atomicNumber,
-        );
-        if (next) {
-          expect(next.period).toBe(el.period);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const { next } = findPrevNext(
+        el,
+        (e) => e.period === el.period,
+        (a, b) => a.atomicNumber - b.atomicNumber,
+      );
+      if (next) {
+        expect(next.period).toBe(el.period);
+      }
+    });
   });
 
   it('forAll(element): period navigation is reversible', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const members = allElements
-          .filter((e) => e.period === el.period)
-          .sort((a, b) => a.atomicNumber - b.atomicNumber);
-        const idx = members.findIndex((e) => e.symbol === el.symbol);
+    forEveryElement(allElements, (el) => {
+      const members = allElements
+        .filter((e) => e.period === el.period)
+        .sort((a, b) => a.atomicNumber - b.atomicNumber);
+      const idx = members.findIndex((e) => e.symbol === el.symbol);
 
-        if (idx < members.length - 1) {
-          const nextEl = members[idx + 1];
-          const nextIdx = members.findIndex((e) => e.symbol === nextEl.symbol);
-          expect(members[nextIdx - 1].symbol).toBe(el.symbol);
-        }
-        if (idx > 0) {
-          const prevEl = members[idx - 1];
-          const prevIdx = members.findIndex((e) => e.symbol === prevEl.symbol);
-          expect(members[prevIdx + 1].symbol).toBe(el.symbol);
-        }
-      }),
-    );
+      if (idx < members.length - 1) {
+        const nextEl = members[idx + 1];
+        const nextIdx = members.findIndex((e) => e.symbol === nextEl.symbol);
+        expect(members[nextIdx - 1].symbol).toBe(el.symbol);
+      }
+      if (idx > 0) {
+        const prevEl = members[idx - 1];
+        const prevIdx = members.findIndex((e) => e.symbol === prevEl.symbol);
+        expect(members[prevIdx + 1].symbol).toBe(el.symbol);
+      }
+    });
   });
 });
 
 describe('Block navigation property tests', () => {
   it('forAll(element): prev-in-block has the same block', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const { prev } = findPrevNext(
-          el,
-          (e) => e.block === el.block,
-          (a, b) => a.atomicNumber - b.atomicNumber,
-        );
-        if (prev) {
-          expect(prev.block).toBe(el.block);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const { prev } = findPrevNext(
+        el,
+        (e) => e.block === el.block,
+        (a, b) => a.atomicNumber - b.atomicNumber,
+      );
+      if (prev) {
+        expect(prev.block).toBe(el.block);
+      }
+    });
   });
 
   it('forAll(element): next-in-block has the same block', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const { next } = findPrevNext(
-          el,
-          (e) => e.block === el.block,
-          (a, b) => a.atomicNumber - b.atomicNumber,
-        );
-        if (next) {
-          expect(next.block).toBe(el.block);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const { next } = findPrevNext(
+        el,
+        (e) => e.block === el.block,
+        (a, b) => a.atomicNumber - b.atomicNumber,
+      );
+      if (next) {
+        expect(next.block).toBe(el.block);
+      }
+    });
   });
 
   it('forAll(element): block navigation is reversible', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const members = allElements
-          .filter((e) => e.block === el.block)
-          .sort((a, b) => a.atomicNumber - b.atomicNumber);
-        const idx = members.findIndex((e) => e.symbol === el.symbol);
+    forEveryElement(allElements, (el) => {
+      const members = allElements
+        .filter((e) => e.block === el.block)
+        .sort((a, b) => a.atomicNumber - b.atomicNumber);
+      const idx = members.findIndex((e) => e.symbol === el.symbol);
 
-        if (idx < members.length - 1) {
-          const nextEl = members[idx + 1];
-          const nextIdx = members.findIndex((e) => e.symbol === nextEl.symbol);
-          expect(members[nextIdx - 1].symbol).toBe(el.symbol);
-        }
-        if (idx > 0) {
-          const prevEl = members[idx - 1];
-          const prevIdx = members.findIndex((e) => e.symbol === prevEl.symbol);
-          expect(members[prevIdx + 1].symbol).toBe(el.symbol);
-        }
-      }),
-    );
+      if (idx < members.length - 1) {
+        const nextEl = members[idx + 1];
+        const nextIdx = members.findIndex((e) => e.symbol === nextEl.symbol);
+        expect(members[nextIdx - 1].symbol).toBe(el.symbol);
+      }
+      if (idx > 0) {
+        const prevEl = members[idx - 1];
+        const prevIdx = members.findIndex((e) => e.symbol === prevEl.symbol);
+        expect(members[prevIdx + 1].symbol).toBe(el.symbol);
+      }
+    });
   });
 
   it('block sizes sum to 118', () => {
