@@ -1,4 +1,5 @@
-import { test, expect, type Page, type BrowserContext } from '@playwright/test';
+import { test, expect, type BrowserContext, serveFontsLocally } from './fixtures';
+import { settle, waitForAnimations } from './helpers/settle';
 
 /**
  * Entity Graph Contrast & Readability Tests
@@ -13,10 +14,6 @@ import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 
 const SCREENSHOT_DIR = 'tests/e2e/screenshots';
 
-/** Wait for load animations to settle. */
-async function settle(page: Page, ms = 2000) {
-  await page.waitForTimeout(ms);
-}
 
 // ---------------------------------------------------------------------------
 // Desktop tests (1280×720 viewport — inherits from playwright config)
@@ -103,7 +100,7 @@ test.describe('Entity graph contrast — desktop', () => {
     // Hover over the "element" node (central, largest)
     const elementNode = graphSvg.locator('g[style*="cursor"]').first();
     await elementNode.hover();
-    await page.waitForTimeout(500);
+    await waitForAnimations(page);
 
     // After hovering, a description group should appear with a background rect
     // The tooltip is the last <g> child of the SVG that contains a <rect> + PretextSvg text
@@ -167,7 +164,7 @@ test.describe('Entity graph contrast — desktop', () => {
     // Hover the first node to activate edges
     const firstNode = graphSvg.locator('g[style*="cursor"]').first();
     await firstNode.hover({ timeout: 10_000 });
-    await page.waitForTimeout(600);
+    await waitForAnimations(page);
 
     // Now edge label rects should be in the DOM — query their opacity attribute
     const opacities = await graphSvg.evaluate((svg) => {
@@ -204,6 +201,7 @@ test.describe('Entity graph contrast — mobile', () => {
       deviceScaleFactor: 3,
       baseURL: BASE,
     });
+    await serveFontsLocally(context);
     const page = await context.newPage();
 
     await page.goto('/about/entity-map');
@@ -236,7 +234,7 @@ test.describe('Entity graph contrast — mobile', () => {
     // Tap the element node to show tooltip (mobile uses tap, not hover)
     const elementNode = nodeGroups.first();
     await elementNode.click();
-    await page.waitForTimeout(500);
+    await waitForAnimations(page);
 
     await page.screenshot({
       path: `${SCREENSHOT_DIR}/entity-graph-mobile-430.png`,
@@ -256,6 +254,7 @@ test.describe('Entity graph contrast — mobile', () => {
       deviceScaleFactor: 3,
       baseURL: BASE,
     });
+    await serveFontsLocally(context);
     const page = await context.newPage();
 
     await page.goto('/about/entity-map');

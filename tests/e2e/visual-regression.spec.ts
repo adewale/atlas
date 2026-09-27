@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
+import { settle as waitForAnimations } from './helpers/settle';
 
 /**
  * Visual Regression Tests — pixel-level screenshot comparisons.
@@ -15,11 +16,6 @@ import { test, expect } from '@playwright/test';
 // which differs between macOS, Linux CI, and different Chromium versions.
 test.skip(process.env.RUN_VISUAL !== '1', 'Visual regression tests are opt-in: set RUN_VISUAL=1 to run');
 
-/** Wait for page load + animation settle. */
-async function waitForAnimations(page: import('@playwright/test').Page, ms = 600) {
-  await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(ms);
-}
 
 const FOLIO_ELEMENTS = [
   { symbol: 'Fe', name: 'Iron — transition metal' },
@@ -55,7 +51,7 @@ test.describe('Visual regression: AtlasPlate grids', () => {
     test(`${pg.name} grid layout`, async ({ page }, testInfo) => {
       await page.goto(pg.url);
       await page.waitForSelector('svg[role="img"]', { timeout: 10000 });
-      await waitForAnimations(page, 400);
+      await waitForAnimations(page);
 
       const plate = page.locator('svg[role="img"]').first();
       await expect(plate).toHaveScreenshot(`plate-${pg.name}-${testInfo.project.name}.png`, {
@@ -70,7 +66,7 @@ test.describe('Visual regression: periodic table home', () => {
   test('periodic table grid', async ({ page }, testInfo) => {
     await page.goto('/');
     await page.waitForSelector('svg [role="button"]', { timeout: 10000 });
-    await page.waitForTimeout(400);
+    await waitForAnimations(page);
 
     // Screenshot just the main SVG periodic table
     const tableSvg = page.locator('svg').first();

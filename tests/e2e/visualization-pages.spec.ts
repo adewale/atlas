@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
+import { settle } from './helpers/settle';
 
 // ---------------------------------------------------------------------------
 // Screenshot tests for all 7 visualization pages
@@ -11,7 +12,7 @@ test.describe('Phase Landscape', () => {
 
   test('renders 118 elements colored by phase', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/phase-landscape.png', fullPage: true });
 
     await expect(page).toHaveTitle(/Phase Landscape/);
@@ -26,7 +27,7 @@ test.describe('Phase Landscape', () => {
 
   test('element cells are not stacked — spot-check corners', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // H (top-left) and He (top-right) should be far apart
     const h = page.locator('g[aria-label*="Hydrogen"]');
@@ -52,7 +53,7 @@ test.describe('Phase Landscape', () => {
 
   test('clicking element navigates to folio', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
     // Click on Iron — the g element with role="button" has the onClick handler
     await page.locator('g[aria-label*="Iron"][role="button"]').click();
     await page.waitForURL(/\/elements\/Fe/);
@@ -63,7 +64,7 @@ test.describe('Phase Landscape', () => {
 test.describe('Property Scatter', () => {
   test('renders scatter plot with element squares', async ({ page }) => {
     await page.goto('/property-scatter');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/property-scatter.png', fullPage: true });
 
     // Axis labels should be visible
@@ -78,11 +79,11 @@ test.describe('Property Scatter', () => {
 
   test('changing axes updates the plot', async ({ page }) => {
     await page.goto('/property-scatter');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Change X axis to mass
     await page.selectOption('select >> nth=0', 'mass');
-    await page.waitForTimeout(500);
+    await settle(page);
 
     // X axis label should update
     await expect(page.locator('text:has-text("Atomic mass")')).toBeVisible();
@@ -92,12 +93,12 @@ test.describe('Property Scatter', () => {
 
   test('hover shows tooltip that does not overflow', async ({ page }) => {
     await page.goto('/property-scatter');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Hover over the first square (force: true to bypass transparent hit-area overlay)
     const firstSquare = page.locator('svg rect[width="10"], svg rect[width="16"]').first();
     await firstSquare.hover({ force: true });
-    await page.waitForTimeout(500);
+    await settle(page);
 
     // A tooltip should appear — either a rect or a text element
     const tooltipRects = page.locator('svg rect[width="120"]');
@@ -115,7 +116,7 @@ test.describe('Anomaly Explorer', () => {
 
   test('renders periodic table with anomaly buttons', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/anomaly-explorer.png', fullPage: true });
 
     await expect(page).toHaveTitle(/Anomaly Explorer/);
@@ -133,11 +134,11 @@ test.describe('Anomaly Explorer', () => {
 
   test('selecting anomaly highlights elements and shows description', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Click first anomaly button (skip view toggle radio buttons)
     await page.locator('button:not([role="radio"])').first().click();
-    await page.waitForTimeout(500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/anomaly-selected.png', fullPage: true });
 
     // Description text should appear below the grid
@@ -147,11 +148,11 @@ test.describe('Anomaly Explorer', () => {
 
   test('elements are not stacked when anomaly is selected', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Select an anomaly (skip view toggle radio buttons)
     await page.locator('button:not([role="radio"])').first().click();
-    await page.waitForTimeout(500);
+    await settle(page);
 
     // Check that H and He are still at different positions
     const h = page.locator('g:has(text:text-is("H")) >> nth=0');
@@ -171,7 +172,7 @@ test.describe('Discovery Timeline', () => {
 
   test('renders timeline with antiquity and historical elements', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/discovery-timeline.png', fullPage: true });
 
     await expect(page).toHaveTitle(/Discovery Timeline/);
@@ -191,7 +192,7 @@ test.describe('Discovery Timeline', () => {
 
   test('timeline squares are not vertically stacked beyond viewbox', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // All squares should be within the SVG viewport
     const svg = page.locator('svg[aria-label*="Timeline"]');
@@ -211,12 +212,12 @@ test.describe('Discovery Timeline', () => {
 
   test('hover shows tooltip', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Hover over an antiquity square
     const square = page.locator('rect[aria-label*="known since antiquity"]').first();
     await square.hover();
-    await page.waitForTimeout(200);
+    await settle(page);
 
     // Tooltip rect should appear (the dark background)
     const tooltipRect = page.locator('g[style*="pointer-events"] rect');
@@ -227,7 +228,7 @@ test.describe('Discovery Timeline', () => {
 test.describe('Etymology Map', () => {
   test('renders all origin sections with element cards', async ({ page }) => {
     await page.goto('/etymology-map');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/etymology-map.png', fullPage: true });
 
     await expect(page).toHaveTitle(/Etymology Map/);
@@ -240,7 +241,7 @@ test.describe('Etymology Map', () => {
 
   test('cards are not overlapping — flex wrap works', async ({ page }) => {
     await page.goto('/etymology-map');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Get all element cards in the first section
     const firstSection = page.locator('section').first();
@@ -262,12 +263,12 @@ test.describe('Etymology Map', () => {
 
   test('clicking element card navigates to folio', async ({ page }) => {
     await page.goto('/etymology-map');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Click first element card
     const firstCard = page.locator('section a').first();
     await firstCard.click();
-    await page.waitForTimeout(1000);
+    await settle(page);
 
     expect(page.url()).toContain('/elements/');
   });
@@ -277,7 +278,7 @@ test.describe('Drop cap text flow', () => {
   test('drop cap initial does not overlap body text on etymology-map', async ({ page }) => {
     // IntroBlock with drop cap is rendered on viz pages, not element folios
     await page.goto('/etymology-map');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-etymology.png', fullPage: true });
 
     // The IntroBlock renders an SVG with a drop cap <text> (font-size="72" on etymology-map)
@@ -302,7 +303,7 @@ test.describe('Drop cap text flow', () => {
 
   test('drop cap flows text on discoverer-network', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/drop-cap-discoverer.png', fullPage: true });
 
     // IntroBlock SVG should be visible with text
@@ -315,7 +316,7 @@ test.describe('Drop cap text flow', () => {
 
   test('drop cap flows text on phase-landscape', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // IntroBlock SVG should be visible
     const introSvg = page.locator('.page-shell-content svg').first();
@@ -334,7 +335,7 @@ test.describe('Drop cap text flow', () => {
 test.describe('Discoverer Detail', () => {
   test('renders discoverer page with elements', async ({ page }) => {
     await page.goto('/discoverers/' + encodeURIComponent('Humphry Davy'));
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-davy.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Humphry Davy');
@@ -351,7 +352,7 @@ test.describe('Discoverer Detail', () => {
 
   test('prev/next navigation works', async ({ page }) => {
     await page.goto('/discoverers/' + encodeURIComponent('Humphry Davy'));
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should have prev or next links
     const navLinks = page.locator('svg[aria-label*="navigation"] a');
@@ -360,7 +361,7 @@ test.describe('Discoverer Detail', () => {
 
     // Click a nav link
     await navLinks.first().click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be on a different discoverer page
     await expect(page.locator('h1:not([aria-label="Atlas"])').first()).toBeVisible();
@@ -368,13 +369,13 @@ test.describe('Discoverer Detail', () => {
 
   test('related discoverer links navigate correctly', async ({ page }) => {
     await page.goto('/discoverers/' + encodeURIComponent('Humphry Davy'));
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     const relatedLinks = page.locator('section:has(h2:has-text("Related")) a');
     const count = await relatedLinks.count();
     if (count > 0) {
       await relatedLinks.first().click();
-      await page.waitForTimeout(1500);
+      await settle(page);
       // Should be on another discoverer detail page
       await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
     }
@@ -384,7 +385,7 @@ test.describe('Discoverer Detail', () => {
 test.describe('Timeline Era', () => {
   test('renders era page with elements', async ({ page }) => {
     await page.goto('/eras/1700s');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/timeline-1700s.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('1700s');
@@ -401,7 +402,7 @@ test.describe('Timeline Era', () => {
 
   test('antiquity era page works', async ({ page }) => {
     await page.goto('/eras/ancient');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Ancient');
     await expect(page.getByText(/\d+ elements?/).first()).toBeVisible();
@@ -409,26 +410,26 @@ test.describe('Timeline Era', () => {
 
   test('prev/next era navigation works', async ({ page }) => {
     await page.goto('/eras/1700s');
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     const navLinks = page.locator('svg[aria-label*="navigation"] a');
     const count = await navLinks.count();
     expect(count).toBeGreaterThan(0);
 
     await navLinks.first().click();
-    await page.waitForTimeout(1500);
+    await settle(page);
     await expect(page.locator('h1:not([aria-label="Atlas"])').first()).toBeVisible();
   });
 
   test('discoverer links from era page work', async ({ page }) => {
     await page.goto('/eras/1700s');
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     const discovererLinks = page.locator('section:has(h2:has-text("Discoverers")) a');
     const count = await discovererLinks.count();
     if (count > 0) {
       await discovererLinks.first().click();
-      await page.waitForTimeout(1500);
+      await settle(page);
       // Should be on a discoverer detail page
       await expect(page.locator('a[href="/discoverer-network"]')).toBeVisible();
     }
@@ -438,7 +439,7 @@ test.describe('Timeline Era', () => {
 test.describe('Entity Map', () => {
   test('renders graph, catalogue, and relationships', async ({ page }) => {
     await page.goto('/about/entity-map');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/entity-map.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toHaveText('Entity Map');
@@ -447,7 +448,7 @@ test.describe('Entity Map', () => {
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
     await expect(graphSvg).toBeVisible();
     const circles = graphSvg.locator('circle');
-    expect(await circles.count()).toBe(12);
+    await expect(circles).toHaveCount(12);
 
     // Node labels should be readable (font-size >= 10)
     const nodeLabels = graphSvg.locator('text[font-weight="bold"]');
@@ -463,7 +464,7 @@ test.describe('Entity Map', () => {
 
   test('graph labels are readable — bounding boxes have positive size', async ({ page }) => {
     await page.goto('/about/entity-map');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const graphSvg = page.locator('svg[aria-label*="Entity relationship"]');
     const nodeLabels = graphSvg.locator('text[font-weight="bold"]');
@@ -482,7 +483,7 @@ test.describe('Entity Map', () => {
 test.describe('Discoverer Network', () => {
   test('renders discoverer rows with element squares', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/discoverer-network.png', fullPage: true });
 
     await expect(page).toHaveTitle(/Discoverer Network/);
@@ -495,7 +496,7 @@ test.describe('Discoverer Network', () => {
 
   test('discoverer names are readable — not truncated to empty', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Check that discoverer name text elements have content
     // Use exact matches to avoid collisions with intro paragraph text
@@ -505,7 +506,7 @@ test.describe('Discoverer Network', () => {
 
   test('rows are vertically separated — not overlapping', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Verify specific discoverer names are at different y positions
     // These are the prolific discoverer row labels (not block legend, not intro text)
@@ -527,13 +528,13 @@ test.describe('Discoverer Network', () => {
 
   test('element card is hoverable', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Discoverer network uses SectionedCardList — hover over a card link
     const firstCard = page.locator('section[role="region"] a').first();
     if (await firstCard.count() > 0) {
       await firstCard.hover({ force: true });
-      await page.waitForTimeout(200);
+      await settle(page);
     }
   });
 });

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, serveFontsLocally } from './fixtures';
 
 /**
  * Text overflow audit: checks every page at desktop, mobile portrait,
@@ -100,6 +100,7 @@ for (const vp of VIEWPORTS) {
     const context = await browser.newContext({
       viewport: { width: vp.width, height: vp.height },
     });
+    await serveFontsLocally(context);
     const page = await context.newPage();
 
     const failures: PageResult[] = [];

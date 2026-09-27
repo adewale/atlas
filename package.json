@@ -21,11 +21,12 @@
     "lint:assertions": "tsx scripts/lint-non-null-assertions.ts",
     "lint:animations": "tsx scripts/lint-animation-tokens.ts",
     "lint:fonts": "tsx scripts/lint-font-tokens.ts",
+    "lint:e2e": "tsx scripts/lint-e2e.ts",
     "lint:budgets": "vitest run tests/performance.test.ts",
     "verify:grids": "tsx scripts/verify-grid-alignment.ts",
     "validate:seo": "tsx scripts/validate-seo.ts",
     "debug:layout": "bash scripts/debug-layout.sh",
-    "lint:all": "npm run lint && npm run lint:links && npm run lint:colors && npm run lint:assertions && npm run lint:animations && npm run lint:fonts",
+    "lint:all": "npm run lint && npm run lint:links && npm run lint:colors && npm run lint:assertions && npm run lint:animations && npm run lint:fonts && npm run lint:e2e",
     "test:visual": "zsh tests/visual-regression.sh",
     "test:visual:update": "zsh tests/update-visual-baselines.sh",
     "deploy": "npm run build && wrangler pages deploy dist/ --project-name atlas"
