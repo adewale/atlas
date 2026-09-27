@@ -20,7 +20,7 @@
     "lint:colors": "tsx scripts/lint-color-tokens.ts",
     "lint:assertions": "tsx scripts/lint-non-null-assertions.ts",
     "lint:animations": "tsx scripts/lint-animation-tokens.ts",
-    "lint:fonts": "tsx scripts/lint-font-tokens.ts",
+    "lint:fonts": "tsx scripts/lint-font-tokens.ts --strict",
     "lint:e2e": "tsx scripts/lint-e2e.ts",
     "lint:budgets": "vitest run tests/performance.test.ts",
     "verify:grids": "tsx scripts/verify-grid-alignment.ts",
