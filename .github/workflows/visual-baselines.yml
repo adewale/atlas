@@ -1,0 +1,47 @@
+name: Visual baselines
+
+# Manual only. Renders the Linux screenshot baselines for
+# tests/e2e/visual-regression.spec.ts on the same image CI compares on
+# (ci.yml, ubuntu-24.04) and uploads them as an artifact. It never commits:
+# download `visual-baselines-linux`, review the PNGs, and commit them to
+# tests/e2e/visual-regression.spec.ts-snapshots/ in a normal PR. From then on
+# CI compares against them. Re-run after an intentional visual change.
+#
+# The workflow file must exist on the default branch for the "Run workflow"
+# button to appear; it can then target any branch.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04  # must match ci.yml
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --legacy-peer-deps
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Render Linux baselines
+        run: RUN_VISUAL=1 npx playwright test tests/e2e/visual-regression.spec.ts --project=desktop --update-snapshots=all
+
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: visual-baselines-linux
+          path: tests/e2e/visual-regression.spec.ts-snapshots/*-linux.png
+          if-no-files-found: error
+          retention-days: 30
