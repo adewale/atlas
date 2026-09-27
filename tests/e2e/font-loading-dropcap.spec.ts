@@ -11,7 +11,7 @@
  * This test verifies the drop cap size is stable — same immediately
  * after load and after a delay (no late resize).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Drop cap font stability', () => {
   test('drop cap on home page does not resize after load', async ({ page }) => {

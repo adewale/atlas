@@ -1,4 +1,5 @@
-import { test, expect, type Page, type BrowserContext } from '@playwright/test';
+import { test, expect, type Page, type BrowserContext, serveFontsLocally } from './fixtures';
+import { settle as waitForAnimations } from './helpers/settle';
 
 /**
  * Mobile Screenshot Test Suite
@@ -58,10 +59,6 @@ const SCREENSHOT_DIR = 'tests/e2e/screenshots';
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** Wait for load animations to settle. */
-async function waitForAnimations(page: Page, timeout = 2500) {
-  await page.waitForTimeout(timeout);
-}
 
 /**
  * Assert that the page has no horizontal overflow — the document's scroll
@@ -96,6 +93,7 @@ for (const device of devices) {
           viewport: { width: device.width, height: device.height },
           deviceScaleFactor: device.scaleFactor,
         });
+        await serveFontsLocally(context);
         try {
           const page = await context.newPage();
 

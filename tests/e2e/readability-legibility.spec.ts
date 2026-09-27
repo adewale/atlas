@@ -1,4 +1,5 @@
-import { test, expect, type Page, type Locator } from '@playwright/test';
+import { test, expect, type Locator } from './fixtures';
+import { settle as waitForAnimations } from './helpers/settle';
 
 /**
  * Readability & Legibility Test Suite
@@ -58,10 +59,6 @@ async function assertAllVisible(locators: Locator, label: string, minSize = 5) {
   }
 }
 
-/** Wait for all animations to complete and check opacity reaches 1. */
-async function waitForAnimations(page: Page, timeout = 2500) {
-  await page.waitForTimeout(timeout);
-}
 
 // ---------------------------------------------------------------------------
 // Per-page readability tests
@@ -295,7 +292,7 @@ test.describe('Readability: Property Scatter', () => {
 
   test('element squares have non-zero size after animation', async ({ page }) => {
     await page.goto('/property-scatter');
-    await waitForAnimations(page, 4000); // Staggered animation: 118 * 15ms = ~1.8s
+    await waitForAnimations(page); // waits out the staggered entry animation (118 × 15ms)
 
     const squares = page.locator('svg rect[width="10"], svg rect[width="16"]');
     const count = await squares.count();
@@ -331,7 +328,7 @@ test.describe('Readability: Anomaly Explorer', () => {
 
     // With selection: highlighted cells should still be spaced (skip view toggle)
     await page.locator('button:not([role="radio"])').first().click();
-    await page.waitForTimeout(600);
+    await waitForAnimations(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/readability-anomaly-selected.png', fullPage: true });
   });
 });
@@ -615,7 +612,7 @@ test.describe('Page transitions: content readable after navigation', () => {
 
       // Home should be intact
       const cells = page.locator('svg g[role="button"]');
-      expect(await cells.count()).toBe(118);
+      await expect(cells).toHaveCount(118);
     }
   });
 });

@@ -1,0 +1,23 @@
+{
+  "tests/e2e/animation-easing.spec.ts": 2,
+  "tests/e2e/animation-palette.spec.ts": 11,
+  "tests/e2e/branch-goals.spec.ts": 12,
+  "tests/e2e/data-plate-navigation.spec.ts": 8,
+  "tests/e2e/dropcap-overlap.spec.ts": 2,
+  "tests/e2e/etymology-map.spec.ts": 8,
+  "tests/e2e/explore-layout.spec.ts": 2,
+  "tests/e2e/folio-overlap.spec.ts": 4,
+  "tests/e2e/font-loading-dropcap.spec.ts": 2,
+  "tests/e2e/font-measurement.spec.ts": 3,
+  "tests/e2e/layout-consistency.spec.ts": 5,
+  "tests/e2e/layout-shift-detector.spec.ts": 2,
+  "tests/e2e/navigation.spec.ts": 2,
+  "tests/e2e/page-stability.spec.ts": 20,
+  "tests/e2e/performance-screenshots.spec.ts": 12,
+  "tests/e2e/readability-animations.spec.ts": 15,
+  "tests/e2e/sectioned-performance.spec.ts": 8,
+  "tests/e2e/structural-audit.spec.ts": 6,
+  "tests/e2e/temperature-slider.spec.ts": 12,
+  "tests/e2e/text-overflow-audit.spec.ts": 1,
+  "tests/e2e/view-transition-health.spec.ts": 7
+}

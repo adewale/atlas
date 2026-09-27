@@ -2,7 +2,7 @@
  * Tests for every goal of the audit-text-overflow PR.
  * Each test verifies a specific improvement made on this branch.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 // Goal 1: Text overflow — no text overflows its container on key pages
 test.describe('Goal 1: No text overflow', () => {

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Text readability', () => {
   test('periodic table element names are readable (non-zero size)', async ({ page }) => {

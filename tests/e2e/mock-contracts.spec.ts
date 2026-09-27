@@ -15,7 +15,7 @@
  * When you add a new mock in tests/setup.ts or a test file, add a
  * corresponding contract test here.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Pretext library contracts', () => {
   test('text measurement returns positive height for real fonts', async ({ page }) => {
