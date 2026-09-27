@@ -3,7 +3,10 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: 'tests/e2e',
   timeout: 60000,
-  retries: 1,
+  // No retries: a retry turns a flaky test into a silent pass. Converted
+  // specs ran with --retries=0 (see tests/e2e/helpers/settle.ts).
+  retries: 0,
+  forbidOnly: !!process.env.CI,
   use: {
     baseURL: 'http://localhost:4173',
     headless: true,
@@ -35,26 +38,8 @@ export default defineConfig({
         ...devices['iPhone 13'],
       },
     },
-    {
-      name: 'iphone15promax',
-      use: {
-        viewport: { width: 430, height: 932 },
-        deviceScaleFactor: 3,
-      },
-    },
-    {
-      name: 'iphone16promax',
-      use: {
-        viewport: { width: 440, height: 956 },
-        deviceScaleFactor: 3,
-      },
-    },
-    {
-      name: 'iphone17',
-      use: {
-        viewport: { width: 440, height: 956 },
-        deviceScaleFactor: 3,
-      },
-    },
+    // iPhone 15 Pro Max / 16 Pro Max / 17 viewports are covered by
+    // mobile-screenshots.spec.ts, which CI runs in the desktop project; the
+    // per-device projects that duplicated them were never run.
   ],
 });

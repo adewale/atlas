@@ -8,13 +8,19 @@ import { settle as waitForAnimations } from './helpers/settle';
  * Screenshots are stored in tests/e2e/visual-regression.spec.ts-snapshots/
  * and compared against baselines on subsequent runs.
  *
- * OPT-IN: toHaveScreenshot() fails across different OS/font environments.
- * Run locally with RUN_VISUAL=1 and --update-snapshots to refresh baselines.
+ * Baselines are per platform (`*-darwin.png`, `*-linux.png`). CI compares
+ * against the `*-linux.png` baselines, which must be rendered on the CI image
+ * by the manual "Visual baselines" workflow (.github/workflows/
+ * visual-baselines.yml), reviewed, and committed. Fonts come from the
+ * committed copies (tests/fonts/), not Google Fonts.
+ *
+ * Locally: `npm run test:visual` (add --update-snapshots to refresh your
+ * platform's baselines).
  */
 
-// Skip visual regression tests by default — they require identical font rendering
-// which differs between macOS, Linux CI, and different Chromium versions.
-test.skip(process.env.RUN_VISUAL !== '1', 'Visual regression tests are opt-in: set RUN_VISUAL=1 to run');
+// Pixels are only comparable on the platform that rendered the baselines, so
+// this spec runs when asked (RUN_VISUAL=1): CI sets it once Linux baselines exist.
+test.skip(process.env.RUN_VISUAL !== '1', 'Visual regression runs with RUN_VISUAL=1 (see header)');
 
 
 const FOLIO_ELEMENTS = [
