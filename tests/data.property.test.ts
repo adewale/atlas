@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as fc from 'fast-check';
+import { forEveryElement } from './every-element';
 import { allElements, getElement, searchElements } from '../src/lib/data';
 import rawFullElements from '../data/generated/elements.json';
 import type { ElementRecord, GroupData, PeriodData, CategoryData, RankingsData } from '../src/lib/types';
@@ -16,55 +17,44 @@ const categories = categoriesJson as CategoryData[];
 const rankings = rankingsJson as RankingsData;
 
 const validSymbols = new Set(allElements.map((e) => e.symbol));
-const elementArb = fc.integer({ min: 0, max: allElements.length - 1 }).map((i) => allElements[i]);
 
 describe('Data integrity property-based tests', () => {
   it('forAll(element): atomicNumber in 1..118, period in 1..7', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        expect(el.atomicNumber).toBeGreaterThanOrEqual(1);
-        expect(el.atomicNumber).toBeLessThanOrEqual(118);
-        expect(el.period).toBeGreaterThanOrEqual(1);
-        expect(el.period).toBeLessThanOrEqual(7);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      expect(el.atomicNumber).toBeGreaterThanOrEqual(1);
+      expect(el.atomicNumber).toBeLessThanOrEqual(118);
+      expect(el.period).toBeGreaterThanOrEqual(1);
+      expect(el.period).toBeLessThanOrEqual(7);
+    });
   });
 
   it('forAll(element): if group !== null then group in 1..18', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        if (el.group !== null) {
-          expect(el.group).toBeGreaterThanOrEqual(1);
-          expect(el.group).toBeLessThanOrEqual(18);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      if (el.group !== null) {
+        expect(el.group).toBeGreaterThanOrEqual(1);
+        expect(el.group).toBeLessThanOrEqual(18);
+      }
+    });
   });
 
   it('forAll(element): block in [s, p, d, f]', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        expect(['s', 'p', 'd', 'f']).toContain(el.block);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      expect(['s', 'p', 'd', 'f']).toContain(el.block);
+    });
   });
 
   it('forAll(element): mass > 0', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        expect(el.mass).toBeGreaterThan(0);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      expect(el.mass).toBeGreaterThan(0);
+    });
   });
 
   it('forAll(element): neighbors only contain valid symbols', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        for (const neighbor of el.neighbors) {
-          expect(validSymbols.has(neighbor)).toBe(true);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      for (const neighbor of el.neighbors) {
+        expect(validSymbols.has(neighbor)).toBe(true);
+      }
+    });
   });
 
   it('forAll(a, adjacent b): neighbor symmetry', () => {
@@ -122,23 +112,19 @@ describe('Data integrity property-based tests', () => {
 
 describe('Search property-based tests', () => {
   it('forAll(element): searchElements(symbol) includes it', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const results = searchElements(el.symbol);
-        const found = results.some((r) => r.symbol === el.symbol);
-        expect(found).toBe(true);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const results = searchElements(el.symbol);
+      const found = results.some((r) => r.symbol === el.symbol);
+      expect(found).toBe(true);
+    });
   });
 
   it('forAll(element): searchElements(name) includes it', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const results = searchElements(el.name);
-        const found = results.some((r) => r.symbol === el.symbol);
-        expect(found).toBe(true);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const results = searchElements(el.name);
+      const found = results.some((r) => r.symbol === el.symbol);
+      expect(found).toBe(true);
+    });
   });
 });
 
