@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
+import { settle } from './helpers/settle';
 
 /**
  * E2E tests for the SectionedCardList mobile refactor.
@@ -18,7 +19,7 @@ test.describe('Phase Landscape — mobile sectioned view', () => {
 
   test('renders phase sections with headers and element cards', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Should have section regions for phase groups
     const sections = page.locator('section[role="region"]');
@@ -42,7 +43,7 @@ test.describe('Phase Landscape — mobile sectioned view', () => {
 
   test('section headers show correct counts', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Each section header <h2> should contain a numeric count
     const headings = page.locator('section[role="region"] h2');
@@ -58,7 +59,7 @@ test.describe('Phase Landscape — mobile sectioned view', () => {
 
   test('element cards link to element pages', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const cards = page.locator('section[role="region"] a');
     const count = await cards.count();
@@ -71,7 +72,7 @@ test.describe('Phase Landscape — mobile sectioned view', () => {
 
   test('no horizontal overflow on mobile', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     expect(scrollWidth).toBeLessThanOrEqual(MOBILE_VIEWPORT.width + 1);
@@ -79,7 +80,7 @@ test.describe('Phase Landscape — mobile sectioned view', () => {
 
   test('screenshot', async ({ page }) => {
     await page.goto('/phase-landscape');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({
       path: 'tests/e2e/screenshots/phase-landscape-mobile-sectioned.png',
       fullPage: true,
@@ -95,7 +96,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
 
   test('renders anomaly type sections with headers and element cards', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const sections = page.locator('section[role="region"]');
     const count = await sections.count();
@@ -104,7 +105,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
 
   test('each section has a heading with label and count', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const headings = page.locator('section[role="region"] h2');
     const count = await headings.count();
@@ -119,7 +120,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
 
   test('element cards link to element pages', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const cards = page.locator('section[role="region"] a');
     const count = await cards.count();
@@ -131,7 +132,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
 
   test('no horizontal overflow on mobile', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     expect(scrollWidth).toBeLessThanOrEqual(MOBILE_VIEWPORT.width + 1);
@@ -139,7 +140,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
 
   test('accordion toggles work', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Should have toggle buttons
     const toggles = page.locator('section[role="region"] h2 button');
@@ -147,7 +148,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
     if (toggleCount > 0) {
       // Click first toggle to collapse
       await toggles.first().click();
-      await page.waitForTimeout(300);
+      await settle(page);
 
       // The first section's cards should be hidden
       const firstSection = page.locator('section[role="region"]').first();
@@ -158,7 +159,7 @@ test.describe('Anomaly Explorer — mobile sectioned view', () => {
 
   test('screenshot', async ({ page }) => {
     await page.goto('/anomaly-explorer');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({
       path: 'tests/e2e/screenshots/anomaly-explorer-mobile-sectioned.png',
       fullPage: true,
@@ -174,7 +175,7 @@ test.describe('Discovery Timeline — mobile sectioned view', () => {
 
   test('renders era sections with headers and element cards', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const sections = page.locator('section[role="region"]');
     const count = await sections.count();
@@ -183,7 +184,7 @@ test.describe('Discovery Timeline — mobile sectioned view', () => {
 
   test('has an Ancient section', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const ancient = page.locator('section#ancient');
     await expect(ancient).toBeVisible();
@@ -191,7 +192,7 @@ test.describe('Discovery Timeline — mobile sectioned view', () => {
 
   test('element cards show discovery year in description', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Cards outside Ancient era should mention a year in description
     const sections = page.locator('section[role="region"]:not(#ancient)');
@@ -206,7 +207,7 @@ test.describe('Discovery Timeline — mobile sectioned view', () => {
 
   test('no horizontal overflow on mobile', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     expect(scrollWidth).toBeLessThanOrEqual(MOBILE_VIEWPORT.width + 1);
@@ -214,7 +215,7 @@ test.describe('Discovery Timeline — mobile sectioned view', () => {
 
   test('screenshot', async ({ page }) => {
     await page.goto('/discovery-timeline');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({
       path: 'tests/e2e/screenshots/discovery-timeline-mobile-sectioned.png',
       fullPage: true,
@@ -230,7 +231,7 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
 
   test('renders discoverer sections with headers and element cards', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const sections = page.locator('section[role="region"]');
     const count = await sections.count();
@@ -239,7 +240,7 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
 
   test('section headers show discoverer name and count', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const headings = page.locator('section[role="region"] h2');
     const count = await headings.count();
@@ -258,13 +259,13 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
 
   test('element cards link to element pages', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // On mobile, sections start collapsed — expand the first one
     const firstToggle = page.locator('section[role="region"] button[aria-expanded]').first();
     if (await firstToggle.count() > 0) {
       await firstToggle.click();
-      await page.waitForTimeout(500);
+      await settle(page);
     }
 
     const cards = page.locator('section[role="region"] a');
@@ -277,7 +278,7 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
 
   test('no horizontal overflow on mobile', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
     expect(scrollWidth).toBeLessThanOrEqual(MOBILE_VIEWPORT.width + 1);
@@ -285,7 +286,7 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
 
   test('accordion behaviour — collapse and expand', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     const toggles = page.locator('section[role="region"] h2 button');
     const toggleCount = await toggles.count();
@@ -296,19 +297,19 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
       // On mobile, sections start collapsed (0 cards) — click to expand
       if (cardsBefore === 0) {
         await toggles.first().click();
-        await page.waitForTimeout(300);
+        await settle(page);
         const cardsExpanded = await firstSection.locator('a').count();
         expect(cardsExpanded).toBeGreaterThan(0);
 
         // Click again to collapse
         await toggles.first().click();
-        await page.waitForTimeout(300);
+        await settle(page);
         const cardsCollapsed = await firstSection.locator('a').count();
         expect(cardsCollapsed).toBe(0);
       } else {
         // Desktop: sections start expanded — click to collapse
         await toggles.first().click();
-        await page.waitForTimeout(300);
+        await settle(page);
         const cardsAfter = await firstSection.locator('a').count();
         expect(cardsAfter).toBe(0);
       }
@@ -317,7 +318,7 @@ test.describe('Discoverer Network — mobile sectioned view', () => {
 
   test('screenshot', async ({ page }) => {
     await page.goto('/discoverer-network');
-    await page.waitForTimeout(2000);
+    await settle(page);
     await page.screenshot({
       path: 'tests/e2e/screenshots/discoverer-network-mobile-sectioned.png',
       fullPage: true,

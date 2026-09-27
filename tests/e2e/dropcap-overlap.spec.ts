@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Page } from './fixtures';
 
 /**
  * Drop-cap overlap regression (the bug fixed by lib/measurement-cache).
@@ -78,9 +78,11 @@ test.describe('Intro drop cap: indented lines must clear the drop cap', () => {
 
   test('cold load (font delayed → fallback measured first, then swapped)', async ({ page }) => {
     // Hold the web-font file back so the first measurement uses the fallback.
+    // fallback() hands the request to the fixture that serves the committed
+    // font (tests/e2e/fixtures.ts), so this never depends on the network.
     await page.route(/fonts\.gstatic\.com/, async (route) => {
       await new Promise((r) => setTimeout(r, 1500));
-      await route.continue();
+      await route.fallback();
     });
 
     await page.goto('/');

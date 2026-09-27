@@ -1,7 +1,8 @@
 import { readdirSync, statSync } from 'fs';
 import { join, extname } from 'path';
 
-export const SRC_DIR = join(import.meta.dirname ?? __dirname, '..', 'src');
+// LINT_SRC_DIR lets tests/lint-scripts.test.ts point a linter at planted fixtures.
+export const SRC_DIR = process.env.LINT_SRC_DIR ?? join(import.meta.dirname ?? __dirname, '..', 'src');
 export const COMMENT_RE = /^\s*(\/\/|\/?\*|\*)/;
 export const IMPORT_RE = /^\s*import\s/;
 

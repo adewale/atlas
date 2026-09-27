@@ -16,7 +16,7 @@
  *   3. Assert that every visited page renders meaningful content (not blank).
  *   4. Assert that every defined route was visited at least once.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /** All route patterns from routes.tsx that a user should be able to reach. */
 const DEFINED_ROUTE_PATTERNS = [

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, serveFontsLocally } from './fixtures';
 
 /**
  * Folio layout regression tests.
@@ -25,6 +25,7 @@ test.describe('Folio layout — no overlap or clipping', () => {
   for (const vp of VIEWPORTS) {
     test(`[${vp.name}] data plate does not overlap rank rows`, async ({ browser }) => {
       const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
+      await serveFontsLocally(context);
       const page = await context.newPage();
 
       for (const el of ELEMENTS) {
@@ -51,6 +52,7 @@ test.describe('Folio layout — no overlap or clipping', () => {
 
     test(`[${vp.name}] category text is not clipped in data plate`, async ({ browser }) => {
       const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
+      await serveFontsLocally(context);
       const page = await context.newPage();
 
       for (const el of ELEMENTS) {
@@ -86,6 +88,7 @@ test.describe('Folio layout — no overlap or clipping', () => {
 test.describe('Folio layout — mobile stacking', () => {
   test('mobile: layout is column flex, marginalia below main', async ({ browser }) => {
     const context = await browser.newContext({ viewport: { width: 375, height: 812 } });
+    await serveFontsLocally(context);
     const page = await context.newPage();
     await page.goto('/elements/Fe', { waitUntil: 'commit' });
     await page.waitForSelector('.folio-layout', { timeout: 10000 });
@@ -105,6 +108,7 @@ test.describe('Folio layout — mobile stacking', () => {
 
   test('desktop: layout is row flex, marginalia beside main', async ({ browser }) => {
     const context = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+    await serveFontsLocally(context);
     const page = await context.newPage();
     await page.goto('/elements/Fe', { waitUntil: 'commit' });
     await page.waitForSelector('.folio-layout', { timeout: 10000 });

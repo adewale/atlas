@@ -11,7 +11,9 @@ permissions:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # Pinned image: the visual-regression step compares against Linux
+    # baselines rendered on this same image by visual-baselines.yml.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
@@ -55,3 +57,27 @@ jobs:
 
       - name: E2E tests (mobile drop-cap regression)
         run: npx playwright test tests/e2e/dropcap-overlap.spec.ts --project=mobile
+
+      - name: Visual regression against committed Linux baselines
+        run: |
+          if compgen -G "tests/e2e/visual-regression.spec.ts-snapshots/*-linux.png" > /dev/null; then
+            # A missing or changed baseline fails; nothing is written.
+            RUN_VISUAL=1 npx playwright test tests/e2e/visual-regression.spec.ts --project=desktop --update-snapshots=none
+          else
+            msg="No *-linux.png baselines are committed yet, so visual regression did not run. Run the 'Visual baselines' workflow, review its artifact, and commit the PNGs to tests/e2e/visual-regression.spec.ts-snapshots/."
+            echo "::warning title=Visual baselines not bootstrapped::$msg"
+            echo "### Visual regression skipped: $msg" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      # The audit specs save page.screenshot() files for human review and
+      # Playwright writes failure screenshots/traces to test-results/.
+      - name: Upload E2E screenshots
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: e2e-screenshots
+          path: |
+            tests/e2e/screenshots/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14

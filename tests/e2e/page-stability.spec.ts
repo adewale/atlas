@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 // ---------------------------------------------------------------------------
 // Page stability tests — verify structural consistency across navigation

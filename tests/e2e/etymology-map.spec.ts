@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 // ---------------------------------------------------------------------------
 // Property-based e2e tests for the Etymology Map page

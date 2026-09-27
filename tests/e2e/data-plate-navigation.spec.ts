@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 // Block Google Fonts (unreachable in sandbox) and use 'commit' to avoid load timeout
 test.beforeEach(async ({ page }) => {

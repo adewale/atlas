@@ -12,7 +12,7 @@
  *   2. Verifies dynamic number displays use tabular-nums
  *   3. Measures bounding boxes before and after interaction to detect reflow
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Layout shift: conditional rendering', () => {
   test('PhaseLandscape STP button does not shift layout', async ({ page }) => {
