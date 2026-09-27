@@ -29,3 +29,16 @@ export function cinzelStylesheet(baseUrl: string): string {
 }`).join('\n');
 }
 
+/**
+ * Register the latin Cinzel faces with node-canvas (tests/setup.ts and
+ * tests/e2e/measurement-parity.spec.ts). The latin-ext files cover other
+ * code points; registering both under one family/weight would make
+ * node-canvas pick one arbitrarily.
+ */
+export function registerCinzelWithNodeCanvas(
+  registerFont: (path: string, face: { family: string; weight: string }) => void,
+): void {
+  for (const face of CINZEL_FACES.filter((f) => !f.file.includes('-latin-ext-'))) {
+    registerFont(join(FONT_DIR, face.file), { family: face.family, weight: String(face.weight) });
+  }
+}
