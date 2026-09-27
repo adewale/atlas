@@ -26,8 +26,12 @@ const CASES = [
   { font: dropCapCanvasFont(56), texts: ['E', 'P', 'Q', 'Z'] },
   { font: `16px ${PRETEXT_SANS}`, texts: ['Iron is a transition metal.', 'The quick brown fox jumps over the lazy dog'] },
 ];
-// Relative width difference allowed between the two engines.
+// Allowed difference between the two engines: 1% of the width, but at
+// least 1 px. Chromium on the CI image returns hinted whole-pixel advances
+// for single glyphs (E at 56 px: 36.00 vs node-canvas 35.39); a fallback
+// font is off by 5-12 px per drop-cap glyph, so it still fails.
 const TOLERANCE = 0.01;
+const MIN_TOLERANCE_PX = 1;
 
 function nodeWidths(): Record<string, number> {
   const ctx = createCanvas(10, 10).getContext('2d');
@@ -61,7 +65,7 @@ test('node-canvas and Chromium agree on text widths for the fonts the app measur
   expect(Object.keys(browserWidths).sort()).toEqual(Object.keys(node).sort());
   const mismatches = Object.entries(browserWidths)
     .map(([key, chromium]) => ({ key, chromium, node: node[key], diff: Math.abs(node[key] - chromium) / chromium }))
-    .filter(({ diff }) => !(diff <= TOLERANCE));
+    .filter(({ chromium, node: n }) => !(Math.abs(n - chromium) <= Math.max(TOLERANCE * chromium, MIN_TOLERANCE_PX)));
   expect(
     mismatches,
     mismatches.map((m) => `${m.key}: chromium ${m.chromium.toFixed(2)} vs node-canvas ${m.node.toFixed(2)}`).join('\n'),
