@@ -138,7 +138,7 @@ describe('PeriodicTableGrid', () => {
     render(
       <PeriodicTableGrid fillFn={defaultFill} onClick={noop} staggerOrigin={{ col: 8, row: 4 }} />,
     );
-    expect(fillDelay('Fe')).toMatch(/^fill 250ms .* 0ms$/);
+    expect(fillDelay('Fe')).toBe('fill 250ms var(--ease-out) 0ms');
     expect(fillDelay('Co')).toMatch(/ 8ms$/);
     expect(fillDelay('Ru')).toMatch(/ 8ms$/);
     expect(fillDelay('Os')).toMatch(/ 16ms$/);
