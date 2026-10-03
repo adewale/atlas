@@ -54,9 +54,10 @@ describe('VIZ_PAGES consistency', () => {
     expect(missing).toEqual([]);
   });
 
-  test('every VIZ_PAGES entry has a non-empty label', () => {
+  test('every VIZ_PAGES entry has a non-empty label and a hex colour', () => {
     for (const page of VIZ_PAGES) {
       expect(page.label.length, `VIZ_PAGES entry with path ${page.path} has empty label`).toBeGreaterThan(0);
+      expect(page.colour, page.path).toMatch(/^#[0-9a-f]{6}$/i);
     }
   });
 
@@ -103,9 +104,12 @@ describe('ENTITIES consistency', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  test('every ENTITIES entry has at least one example', () => {
+  test('every ENTITIES entry has at least one named example', () => {
     for (const entity of ENTITIES) {
       expect(entity.examples.length, `Entity "${entity.label}" has no examples`).toBeGreaterThan(0);
+      for (const example of entity.examples) {
+        expect(example.name.trim(), `${entity.label} example ${example.href} has no name`).not.toBe('');
+      }
     }
   });
 });
