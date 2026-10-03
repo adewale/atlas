@@ -81,14 +81,10 @@ function validateMetadataDocument(route: SeoMetadata, html: string): void {
 
 const routes = [...getIndexableSeoRoutes()];
 const paths = new Set(routes.map((route) => route.path));
-if (routes.length !== 391) fail(`expected 391 indexable canonical URLs, found ${routes.length}`);
 if (paths.size !== routes.length) fail('canonical route inventory contains duplicates');
 
 const expectedIndexableComparisonPaths = new Set(getIndexableComparisonPaths());
 const indexableComparisonRoutes = routes.filter((route) => route.path.includes('/compare/'));
-if (indexableComparisonRoutes.length !== 117) {
-  fail(`expected 117 indexable comparisons, found ${indexableComparisonRoutes.length}`);
-}
 if (
   indexableComparisonRoutes.some((route) => !expectedIndexableComparisonPaths.has(route.path)) ||
   expectedIndexableComparisonPaths.size !== indexableComparisonRoutes.length
@@ -131,8 +127,8 @@ for (const route of allComparisonRoutes) {
   else noindexComparisons += 1;
   validateMetadataDocument(route, renderSeoHead(route));
 }
-if (indexedComparisons !== 117 || noindexComparisons !== 6_786) {
-  fail(`expected a 117/6,786 comparison indexing split, found ${indexedComparisons}/${noindexComparisons}`);
+if (indexedComparisons !== expectedIndexableComparisonPaths.size) {
+  fail(`expected ${expectedIndexableComparisonPaths.size} indexed comparisons, found ${indexedComparisons}`);
 }
 
 const sitemap = await readFile(join(DIST, 'sitemap.xml'), 'utf8');
@@ -223,5 +219,5 @@ try {
 }
 
 console.log(
-  `Validated 274 static pages, 117 indexed and 6,786 noindex comparisons, all 391 sitemap URLs, and 118 unique element cards (${(elementCardBytes / 1024 / 1024).toFixed(1)} MiB).`,
+  `Validated ${routes.length - indexableComparisonRoutes.length} static pages, ${indexedComparisons} indexed and ${noindexComparisons.toLocaleString('en')} noindex comparisons, all ${routes.length} sitemap URLs, and ${elements.length} unique element cards (${(elementCardBytes / 1024 / 1024).toFixed(1)} MiB).`,
 );

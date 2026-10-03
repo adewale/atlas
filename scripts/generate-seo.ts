@@ -50,4 +50,7 @@ for (const route of routes) {
 await writeFile(join(DIST, 'sitemap.xml'), renderSitemap(routes));
 await writeFile(join(DIST, 'robots.txt'), renderRobotsTxt());
 
-console.log('Generated 274 static route heads and a sitemap covering 391 canonical URLs, including 117 comparisons.');
+const comparisonCount = routes.filter((route) => route.path.includes('/compare/')).length;
+console.log(
+  `Generated ${routes.length - comparisonCount} static route heads and a sitemap covering ${routes.length} canonical URLs, including ${comparisonCount} comparisons.`,
+);
