@@ -126,4 +126,30 @@ describe('PeriodicTableGrid', () => {
     );
     expect(container.querySelector('[data-testid="overlay"]')).toBeInTheDocument();
   });
+
+  it('ripples fill changes outward from staggerOrigin at 8ms per grid step', () => {
+    const fillDelay = (symbol: string) =>
+      screen.getByLabelText(new RegExp(`^${symbol} `)).querySelector('rect')!.style.transition;
+
+    // Spec: docs/animation-palette.md (fill 250ms, delay dist * 8ms, Manhattan).
+    // Origin at Fe (group 8, period 4). Distances are Manhattan steps on the
+    // printed table: Co is one column right, Ru one row down, Os two rows
+    // down, H (group 1, period 1) is 7 + 3 = 10 steps away.
+    render(
+      <PeriodicTableGrid fillFn={defaultFill} onClick={noop} staggerOrigin={{ col: 8, row: 4 }} />,
+    );
+    expect(fillDelay('Fe')).toBe('fill 250ms var(--ease-out) 0ms');
+    expect(fillDelay('Co')).toMatch(/ 8ms$/);
+    expect(fillDelay('Ru')).toMatch(/ 8ms$/);
+    expect(fillDelay('Os')).toMatch(/ 16ms$/);
+    expect(fillDelay('H')).toMatch(/ 80ms$/);
+  });
+
+  it('changes every fill at once when there is no staggerOrigin', () => {
+    render(<PeriodicTableGrid fillFn={defaultFill} onClick={noop} />);
+    const delays = screen
+      .getAllByRole('button')
+      .map((cell) => cell.querySelector('rect')!.style.transition.split(' ').at(-1));
+    expect(new Set(delays)).toEqual(new Set(['0ms']));
+  });
 });
