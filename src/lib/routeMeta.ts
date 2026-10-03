@@ -70,7 +70,7 @@ export const ENTITIES: EntityMeta[] = [
     { name: 'By density', href: '/properties/density' },
   ]},
   { id: 'anomaly', label: 'Anomaly', route: '/anomalies/:slug', count: '5', colour: WARM_RED, description: 'Periodic table rule-breakers: aufbau deviations, diagonal relationships, metalloid boundary.', examples: [
-    { name: 'Electron config anomalies', href: '/anomalies/electron-configuration-anomalies' },
+    { name: 'Electron config anomalies', href: '/anomalies/electron-config-anomalies' },
     { name: 'Diagonal relationships', href: '/anomalies/diagonal-relationships' },
     { name: 'Synthetic heavyweights', href: '/anomalies/synthetic-heavy' },
   ]},
