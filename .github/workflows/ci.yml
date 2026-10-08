@@ -28,11 +28,14 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Unit tests
-        run: npm run test
-
       - name: Build
         run: npm run build
+
+      - name: Verify generated data is current
+        run: git diff --exit-code -- data/generated
+
+      - name: Unit tests
+        run: npm run test
 
       - name: Performance budgets
         run: npm run lint:budgets
