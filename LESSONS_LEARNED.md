@@ -42,3 +42,12 @@
 **What happened:** The property suite sampled a domain containing only 118 elements and recomputed previous/next relationships with a test-only helper. It proved properties of that helper, not of the deployed `data/generated/folio-*.json` bundles. CI also ran unit tests before the build regenerated those bundles, so stale committed navigation could be tested successfully.
 **Resolution:** Replaced the sampled helper properties with exhaustive checks over all 118 production folios and every group, period, block, and category link. CI now builds first, rejects any resulting diff in `data/generated`, and only then runs the navigation suite against the fresh output.
 **Rule:** When the complete production domain is small, test every emitted artefact instead of sampling a parallel test model. Any test that consumes generated data must run after generation, and CI must fail if committed output was stale.
+
+### 2026-10-09 — Security updates need a coherent peer graph
+
+React Router's patched 7.x release is sufficient; forcing 8.x is unnecessary.
+A normal install also exposed pre-existing ESLint 9/@eslint/js 10 and canvas
+3/jsdom 25 peer conflicts. Align @eslint/js with ESLint 9 and move jsdom to
+the compatible 26.x release, then verify installation without force flags,
+tests and the production build. An audit exit code alone proves neither
+compatible installation nor application behavior.
