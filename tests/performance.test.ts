@@ -6,9 +6,9 @@
  *  - Data module loading (lazy vs eager)
  *  - Text measurement deferral
  *
- * The dist/ checks skip when there is no build (the plain `npm test` run in
- * CI happens before `npm run build`). `npm run lint:budgets` runs after the
- * build and must measure something, so in that lane a missing build fails.
+ * The dist/ checks skip when there is no build, so a plain local `npm test`
+ * works before `npm run build`. CI runs this file only through
+ * `npm run lint:budgets`, after the build; in that lane a missing build fails.
  */
 import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
