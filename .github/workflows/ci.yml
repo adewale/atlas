@@ -12,7 +12,7 @@ permissions:
 jobs:
   check:
     # Pinned image: the visual-regression step compares against Linux
-    # baselines rendered on this same image by visual-baselines.yml.
+    # baselines rendered on this same image by that step.
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
@@ -69,7 +69,10 @@ jobs:
             # A missing or changed baseline fails; nothing is written.
             RUN_VISUAL=1 npx playwright test tests/e2e/visual-regression.spec.ts --project=desktop --update-snapshots=none
           else
-            msg="No *-linux.png baselines are committed yet, so visual regression did not run. Run the 'Visual baselines' workflow, review its artifact, and commit the PNGs to tests/e2e/visual-regression.spec.ts-snapshots/."
+            # Bootstrap: render the baselines on this image for review. The
+            # e2e-screenshots artifact below carries them; nothing is committed.
+            RUN_VISUAL=1 npx playwright test tests/e2e/visual-regression.spec.ts --project=desktop --update-snapshots=all
+            msg="No *-linux.png baselines are committed yet, so visual regression compared nothing. This run rendered them: review tests/e2e/visual-regression.spec.ts-snapshots/ in the e2e-screenshots artifact and commit the PNGs there."
             echo "::warning title=Visual baselines not bootstrapped::$msg"
             echo "### Visual regression skipped: $msg" >> "$GITHUB_STEP_SUMMARY"
           fi
@@ -83,6 +86,7 @@ jobs:
           name: e2e-screenshots
           path: |
             tests/e2e/screenshots/
+            tests/e2e/visual-regression.spec.ts-snapshots/
             test-results/
           if-no-files-found: ignore
           retention-days: 14

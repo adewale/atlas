@@ -9,9 +9,9 @@ import { settle as waitForAnimations } from './helpers/settle';
  * and compared against baselines on subsequent runs.
  *
  * Baselines are per platform (`*-darwin.png`, `*-linux.png`). CI compares
- * against the `*-linux.png` baselines, which must be rendered on the CI image
- * by the manual "Visual baselines" workflow (.github/workflows/
- * visual-baselines.yml), reviewed, and committed. Fonts come from the
+ * against the `*-linux.png` baselines. Until they are committed, the CI
+ * visual step renders them on the CI image into its e2e-screenshots artifact
+ * for review and commit. Fonts come from the
  * committed copies (tests/fonts/), not Google Fonts.
  *
  * Locally: `npm run test:visual` (add --update-snapshots to refresh your
