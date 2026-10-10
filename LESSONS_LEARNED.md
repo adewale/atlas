@@ -43,6 +43,15 @@
 **Resolution:** Replaced the sampled helper properties with exhaustive checks over all 118 production folios and every group, period, block, and category link. CI now builds first, rejects any resulting diff in `data/generated`, and only then runs the navigation suite against the fresh output.
 **Rule:** When the complete production domain is small, test every emitted artefact instead of sampling a parallel test model. Any test that consumes generated data must run after generation, and CI must fail if committed output was stale.
 
+### 2026-10-09 — Security updates need a coherent peer graph
+
+React Router's patched 7.x release is sufficient; forcing 8.x is unnecessary.
+A normal install also exposed pre-existing ESLint 9/@eslint/js 10 and canvas
+3/jsdom 25 peer conflicts. Align @eslint/js with ESLint 9 and move jsdom to
+the compatible 26.x release, then verify installation without force flags,
+tests and the production build. An audit exit code alone proves neither
+compatible installation nor application behavior.
+
 ### 2026-10-09 — Link tests must resolve entities, not just route patterns
 **Context:** Test audit folded into PR #37 (originally PR #38).
 **What happened:** `route-meta-consistency.test.ts` matched example hrefs against a hand-copied list of route patterns, where any slug satisfies `:slug`. Six internal links on the Entity Map and Design pages (`/anomalies/electron-configuration-anomalies`, `/discoverers/{Seaborg,Davy,Curie}`, `/anomalies/{electron-config,melting-point}`) named entities that do not exist and opened an in-app "not found" state, while the test passed. The same audit found tests that used the code under test as their own oracle (VizNav checked against `VIZ_PAGES`) and source greps standing in for behaviour.
