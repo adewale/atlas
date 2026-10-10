@@ -12,7 +12,7 @@
   "tests/e2e/layout-consistency.spec.ts": 5,
   "tests/e2e/layout-shift-detector.spec.ts": 2,
   "tests/e2e/navigation.spec.ts": 2,
-  "tests/e2e/page-stability.spec.ts": 20,
+  "tests/e2e/page-stability.spec.ts": 18,
   "tests/e2e/performance-screenshots.spec.ts": 12,
   "tests/e2e/readability-animations.spec.ts": 15,
   "tests/e2e/sectioned-performance.spec.ts": 8,
