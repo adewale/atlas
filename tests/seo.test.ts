@@ -1,4 +1,15 @@
 import { afterEach, describe, expect, test } from 'vitest';
+import { matchRoutes, type RouteObject } from 'react-router';
+import { router } from '../src/routes';
+import { allElements } from '../src/lib/data';
+import { ALL_PROPERTIES } from '../src/lib/properties';
+import { ERA_BINS } from '../shared/era-bins';
+import groups from '../data/generated/groups.json';
+import periods from '../data/generated/periods.json';
+import blocks from '../data/generated/blocks.json';
+import categories from '../data/generated/categories.json';
+import anomalies from '../data/generated/anomalies.json';
+import discoverers from '../data/generated/discoverers.json';
 import {
   SITE_ORIGIN,
   SOCIAL_IMAGE_URL,
@@ -20,14 +31,49 @@ afterEach(() => {
   document.title = '';
 });
 
-describe('canonical SEO route inventory', () => {
-  test('covers every canonical URL exactly once', () => {
-    const routes = [...getIndexableSeoRoutes()];
-    const paths = routes.map((route) => route.path);
+function routePatterns(routes: readonly RouteObject[]): string[] {
+  return routes.flatMap((route) => [
+    ...(route.path ? [route.path] : []),
+    ...routePatterns(route.children ?? []),
+  ]);
+}
 
-    expect(routes).toHaveLength(391);
-    expect(new Set(paths).size).toBe(routes.length);
-    expect(paths.filter((path) => path.includes('/compare/'))).toHaveLength(117);
+/** Router pattern serving `path` — the app's route table is the oracle. */
+function servingPattern(path: string): string | undefined {
+  return matchRoutes(router.routes, path)?.at(-1)?.route.path;
+}
+
+describe('canonical SEO route inventory', () => {
+  test('indexes every static page and every entity page the router serves, exactly once', () => {
+    const paths = [...getIndexableSeoRoutes()].map((route) => route.path);
+    expect(new Set(paths).size).toBe(paths.length);
+
+    const perPattern = new Map<string, number>();
+    for (const path of paths) {
+      const pattern = servingPattern(path);
+      expect(pattern, `${path} is not served by any route`).toBeDefined();
+      perPattern.set(pattern!, (perPattern.get(pattern!) ?? 0) + 1);
+    }
+
+    const staticPages = routePatterns(router.routes).filter((pattern) => !pattern.includes(':'));
+    const expected = new Map<string, number>([
+      ...staticPages.map((pattern) => [pattern, 1] as const),
+      ['/elements/:symbol', allElements.length],
+      ['/groups/:n', groups.length],
+      ['/periods/:n', periods.length],
+      ['/blocks/:block', blocks.length],
+      ['/categories/:slug', categories.length],
+      ['/properties/:property', ALL_PROPERTIES.length],
+      ['/anomalies/:slug', anomalies.length],
+      ['/discoverers/:name', discoverers.length],
+      ['/eras/:era', ERA_BINS.length],
+      ['/elements/:symbol/compare/:other', getIndexableComparisonPaths().length],
+    ]);
+    expect(Object.fromEntries(perPattern)).toEqual(Object.fromEntries(expected));
+  });
+
+  test('includes and excludes known canonical URLs', () => {
+    const paths = [...getIndexableSeoRoutes()].map((route) => route.path);
     expect(paths).toContain('/');
     expect(paths).toContain('/elements/H');
     expect(paths).toContain('/groups/18');
@@ -190,7 +236,7 @@ describe('head, sitemap, and robots rendering', () => {
   test('sitemap and robots expose only the selected canonical inventory', () => {
     const routes = [...getIndexableSeoRoutes()];
     const sitemap = renderSitemap(routes);
-    expect(sitemap.match(/<url>/g)).toHaveLength(391);
+    expect(sitemap.match(/<url>/g)).toHaveLength(routes.length);
     expect(sitemap).toContain('<loc>https://atlas-48p.pages.dev/elements/H</loc>');
     expect(sitemap).toContain('<loc>https://atlas-48p.pages.dev/elements/H/compare/He</loc>');
     expect(sitemap).not.toContain('<loc>https://atlas-48p.pages.dev/elements/Fe/compare/Cu</loc>');

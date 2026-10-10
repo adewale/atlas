@@ -1,4 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
+import { nextFrames, settle } from './helpers/settle';
+import { recordLayoutShifts, takeLayoutShifts } from './helpers/layout-shift';
 
 // ---------------------------------------------------------------------------
 // Page stability tests — verify structural consistency across navigation
@@ -262,32 +264,38 @@ test.describe('Navigation round-trip stability', () => {
 // ---------------------------------------------------------------------------
 // 4. Content doesn't shift (no CLS)
 // ---------------------------------------------------------------------------
+//
+// Layout shift is measured with the Layout Instability API (see
+// helpers/layout-shift.ts): every `layout-shift` entry from navigation start,
+// through load and the entry animations (settle), and over a further 500 ms
+// observation window. The pass condition is no shift at all.
+//
+// These tests used to compare the PNG byte sizes of two fullPage screenshots
+// taken 500 ms apart, after a 3 s sleep. That failed intermittently on
+// /discovery-timeline with nothing moving (atlas #37). Each fullPage
+// screenshot made Chromium report a 1x1 window. The app re-rendered its mobile
+// layout and back, and IntroBlock replayed its reveal animation. The two
+// screenshots differed whenever only one of them saw the 1x1 resize, or they
+// caught the replay at different points.
 
 test.describe('No content layout shift', () => {
   for (const route of VIZ_ROUTES) {
     test(`no layout shift on ${route}`, async ({ page }) => {
+      await recordLayoutShifts(page);
       await page.goto(route);
-      // Wait for animations to fully settle (staggered entry animations take up to ~2s)
-      await page.waitForTimeout(3000);
+      // Lazy route chunks, fonts and the staggered entry animations
+      await settle(page);
 
-      // Measure positions after animations are done
       const vizNav = page.locator('nav[aria-label="Visualisation pages"]');
       await expect(vizNav).toBeVisible();
       const navBoxBefore = await vizNav.boundingBox();
       expect(navBoxBefore).not.toBeNull();
 
-      // Take first screenshot
-      const shot1 = await page.screenshot({ fullPage: true });
-
-      // Wait 500ms for any deferred layout
+      // Observation window: deferred layout (timers, late data) would land here.
       await page.waitForTimeout(500);
 
-      // Measure again
       const navBoxAfter = await vizNav.boundingBox();
       expect(navBoxAfter).not.toBeNull();
-
-      // Take second screenshot
-      const shot2 = await page.screenshot({ fullPage: true });
 
       // VizNav should not have shifted
       expect(
@@ -299,21 +307,19 @@ test.describe('No content layout shift', () => {
         `VizNav should not shift horizontally on ${route}`,
       ).toBeLessThanOrEqual(1);
 
-      // Screenshot sizes should be very similar (no major reflow)
-      const sizeDiff = Math.abs(shot1.length - shot2.length);
-      const sizeRatio = sizeDiff / shot1.length;
       expect(
-        sizeRatio,
-        `Screenshot size should be stable on ${route} (ratio: ${sizeRatio.toFixed(4)})`,
-      ).toBeLessThan(0.05);
+        await takeLayoutShifts(page),
+        `Layout shifts on ${route} since navigation start`,
+      ).toEqual([]);
     });
   }
 
   for (const route of ['/about', '/about/credits', '/about/design', '/elements/Fe']) {
     test(`no layout shift on ${route}`, async ({ page }) => {
+      await recordLayoutShifts(page);
       await page.goto(route);
-      // Wait for animations to settle (element folios have long staggered animations)
-      await page.waitForTimeout(4000);
+      // Element folios have long staggered entry animations
+      await settle(page);
 
       // Use SiteNav as the stability anchor on non-viz pages
       const siteNav = page.locator('nav').filter({ hasText: 'keyboard shortcuts' });
@@ -321,14 +327,11 @@ test.describe('No content layout shift', () => {
       const navBoxBefore = await siteNav.boundingBox();
       expect(navBoxBefore).not.toBeNull();
 
-      const shot1 = await page.screenshot({ fullPage: true });
-
+      // Observation window: deferred layout (timers, late data) would land here.
       await page.waitForTimeout(500);
 
       const navBoxAfter = await siteNav.boundingBox();
       expect(navBoxAfter).not.toBeNull();
-
-      const shot2 = await page.screenshot({ fullPage: true });
 
       // SiteNav should not shift
       expect(
@@ -336,17 +339,32 @@ test.describe('No content layout shift', () => {
         `SiteNav should not shift vertically on ${route}`,
       ).toBeLessThanOrEqual(5);
 
-      // Element folios have complex animations; allow larger tolerance.
-      // Non-viz pages may also shift slightly during lazy load.
-      const threshold = route.startsWith('/elements/') ? 0.25 : 0.15;
-      const sizeDiff = Math.abs(shot1.length - shot2.length);
-      const sizeRatio = sizeDiff / shot1.length;
       expect(
-        sizeRatio,
-        `Screenshot size should be stable on ${route}`,
-      ).toBeLessThan(threshold);
+        await takeLayoutShifts(page),
+        `Layout shifts on ${route} since navigation start`,
+      ).toEqual([]);
     });
   }
+
+  // Control: the measurement above must be able to fail. A block inserted at
+  // the top of <main> after load (a late banner) pushes the content down.
+  test('layout-shift measurement detects a late banner', async ({ page }) => {
+    await recordLayoutShifts(page);
+    await page.goto('/discovery-timeline');
+    await settle(page);
+    expect(await takeLayoutShifts(page)).toEqual([]);
+
+    await page.evaluate(() => {
+      const banner = document.createElement('div');
+      banner.style.height = '40px';
+      document.querySelector('main')?.prepend(banner);
+    });
+    await nextFrames(page, 2);
+
+    const shifts = await takeLayoutShifts(page);
+    expect(shifts.length, 'the inserted banner should register as a layout shift').toBeGreaterThan(0);
+    expect(shifts.reduce((sum, s) => sum + s.value, 0)).toBeGreaterThan(0);
+  });
 });
 
 // ---------------------------------------------------------------------------
