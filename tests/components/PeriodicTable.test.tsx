@@ -80,4 +80,11 @@ describe('PeriodicTable', () => {
     const svg = document.querySelector('svg.periodic-table-svg');
     expect(svg, 'SVG should have periodic-table-svg class for focus styling').not.toBeNull();
   });
+
+  it('isolates the scrollable table with CSS containment', () => {
+    const { container } = renderTable();
+    const scroller = container.querySelector<HTMLElement>('.pt-scroll-container');
+    expect(scroller).not.toBeNull();
+    expect(scroller!.style.contain).toBe('layout style paint');
+  });
 });

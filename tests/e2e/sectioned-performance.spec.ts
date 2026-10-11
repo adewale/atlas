@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, serveFontsLocally } from './fixtures';
 
 /**
  * Performance tests for the SectionedCardList mobile refactor.
@@ -105,6 +105,7 @@ test.describe('Sectioned pages — screenshot audit', () => {
       const ctx = await browser.newContext({
         viewport: { width: 1280, height: 720 },
       });
+      await serveFontsLocally(ctx);
       const page = await ctx.newPage();
       await page.goto(pg.path);
       await page.waitForTimeout(2500);
@@ -119,6 +120,7 @@ test.describe('Sectioned pages — screenshot audit', () => {
       const ctx = await browser.newContext({
         viewport: MOBILE_VIEWPORT,
       });
+      await serveFontsLocally(ctx);
       const page = await ctx.newPage();
       await page.goto(pg.path);
       await page.waitForTimeout(2500);
@@ -134,6 +136,7 @@ test.describe('Sectioned pages — screenshot audit', () => {
         viewport: { width: 430, height: 932 },
         deviceScaleFactor: 3,
       });
+      await serveFontsLocally(ctx);
       const page = await ctx.newPage();
       await page.goto(pg.path);
       await page.waitForTimeout(2500);

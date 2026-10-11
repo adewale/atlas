@@ -1,7 +1,7 @@
 /**
  * Explore page layout tests — no overlapping facets or result cards.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Explore page layout', () => {
   test('facet sections do not overlap each other', async ({ page }) => {

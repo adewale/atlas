@@ -84,8 +84,11 @@ data/
   generated/     Derived JSON files (built from seed via scripts/)
 scripts/         Data derivation and enrichment scripts
 tests/
-  unit/          Vitest unit tests
-  e2e/           Playwright end-to-end tests (desktop + mobile)
+  *.test.ts      Vitest unit and property tests (jsdom + node-canvas)
+  components/    Vitest component tests
+  fonts/         Committed Cinzel files served to tests instead of Google Fonts
+  e2e/           Playwright end-to-end tests (desktop + mobile); import test
+                 from e2e/fixtures.ts and wait with e2e/helpers/settle.ts
 ```
 
 **Key dependencies:**

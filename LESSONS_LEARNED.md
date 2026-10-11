@@ -51,3 +51,9 @@ A normal install also exposed pre-existing ESLint 9/@eslint/js 10 and canvas
 the compatible 26.x release, then verify installation without force flags,
 tests and the production build. An audit exit code alone proves neither
 compatible installation nor application behavior.
+
+### 2026-10-09 — Link tests must resolve entities, not just route patterns
+**Context:** Test audit folded into PR #37 (originally PR #38).
+**What happened:** `route-meta-consistency.test.ts` matched example hrefs against a hand-copied list of route patterns, where any slug satisfies `:slug`. Six internal links on the Entity Map and Design pages (`/anomalies/electron-configuration-anomalies`, `/discoverers/{Seaborg,Davy,Curie}`, `/anomalies/{electron-config,melting-point}`) named entities that do not exist and opened an in-app "not found" state, while the test passed. The same audit found tests that used the code under test as their own oracle (VizNav checked against `VIZ_PAGES`) and source greps standing in for behaviour.
+**Resolution:** Pointed the links at real entities. Route checks now use the exported router with `matchRoutes`, and a render test collects every internal link on both pages and requires `getSeoMetadata` to recognise the entity. VizNav is checked against a hand-written page list, and source greps were replaced with rendered behaviour.
+**Rule:** A link test must prove the destination exists: match the real router, then resolve the parameter to a real entity. Never let a test copy its oracle from the code it checks.

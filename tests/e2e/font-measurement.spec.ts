@@ -11,7 +11,7 @@
  *   2. Text measurements use the loaded font, not the fallback
  *   3. The Folio summary text doesn't overflow its container after font load
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Font-dependent text measurement', () => {
   test('Folio SVG text is stable after fonts load', async ({ page }) => {

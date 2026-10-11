@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import * as fc from 'fast-check';
+import { forEveryElement } from './every-element';
 
 // No mock — uses real @chenglou/pretext via node-canvas OffscreenCanvas polyfill
 // (see tests/setup.ts). This gives us real font metrics for fitLabel assertions.
@@ -48,7 +48,6 @@ const DISC_NAV_MAX_W = 180;
 const SCREEN_WIDTHS = [375, 812, 1280] as const;
 
 // Arbitraries
-const elementArb = fc.integer({ min: 0, max: allElements.length - 1 }).map((i) => allElements[i]);
 
 // ---------------------------------------------------------------------------
 // Helpers — replicate truncation logic from AtlasPlate
@@ -81,15 +80,13 @@ function truncateToFit(name: string, font: string, maxWidth: number): string {
 
 describe('Layout constraints: AtlasPlate card', () => {
   it('forAll(element): symbol is 1-3 characters and fits comfortably in card', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        expect(el.symbol.length).toBeGreaterThanOrEqual(1);
-        expect(el.symbol.length).toBeLessThanOrEqual(3);
-        // At fontSize=20 bold, 3 chars is at most ~48px, well within CARD_W=100
-        const symbolWidth = el.symbol.length * 12; // generous estimate for bold 20px
-        expect(symbolWidth).toBeLessThan(CARD_W);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      expect(el.symbol.length).toBeGreaterThanOrEqual(1);
+      expect(el.symbol.length).toBeLessThanOrEqual(3);
+      // At fontSize=20 bold, 3 chars is at most ~48px, well within CARD_W=100
+      const symbolWidth = el.symbol.length * 12; // generous estimate for bold 20px
+      expect(symbolWidth).toBeLessThan(CARD_W);
+    });
   });
 
   it('all 118 elements: symbol fits at fontSize 20', () => {
@@ -100,14 +97,12 @@ describe('Layout constraints: AtlasPlate card', () => {
   });
 
   it('forAll(element): name either fits in NAME_MAX_W or truncateToFit produces a fitting result', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const label = truncateToFit(el.name, NAME_FONT, NAME_MAX_W);
-        // After truncation, the label must fit (fitLabel returns true)
-        const fits = fitLabel(label, NAME_FONT, NAME_MAX_W);
-        expect(fits).toBe(true);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const label = truncateToFit(el.name, NAME_FONT, NAME_MAX_W);
+      // After truncation, the label must fit (fitLabel returns true)
+      const fits = fitLabel(label, NAME_FONT, NAME_MAX_W);
+      expect(fits).toBe(true);
+    });
   });
 
   it('all 118 elements: category truncation via truncateToFit always produces a fitting label', () => {
@@ -126,15 +121,13 @@ describe('Layout constraints: AtlasPlate card', () => {
   });
 
   it('forAll(element): atomic number padded to 3 digits fits in card', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const padded = String(el.atomicNumber).padStart(3, '0');
-        expect(padded.length).toBe(3);
-        // At fontSize=9, 3 chars is ~27px, well within CARD_W=100
-        const width = padded.length * 6; // ~6px per char at 9px font
-        expect(width).toBeLessThan(CARD_W - 12); // 6px padding each side
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const padded = String(el.atomicNumber).padStart(3, '0');
+      expect(padded.length).toBe(3);
+      // At fontSize=9, 3 chars is ~27px, well within CARD_W=100
+      const width = padded.length * 6; // ~6px per char at 9px font
+      expect(width).toBeLessThan(CARD_W - 12); // 6px padding each side
+    });
   });
 
   it('all known ABBREV entries are shorter than their originals', () => {
@@ -144,17 +137,15 @@ describe('Layout constraints: AtlasPlate card', () => {
   });
 
   it('forAll(element): property value display string is bounded', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        // Mass display: e.g. "12.011 Da" — check it fits CARD_W at fontSize=10
-        const massStr = el.mass != null ? `${el.mass} Da` : '\u2014';
-        // At fontSize=10 mono, ~6px per char; CARD_W - 12 = 88px available
-        const width = massStr.length * 6;
-        // This should fit; mass values are typically < 300 chars
-        expect(massStr.length).toBeLessThan(20);
-        expect(width).toBeLessThan(CARD_W);
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      // Mass display: e.g. "12.011 Da" — check it fits CARD_W at fontSize=10
+      const massStr = el.mass != null ? `${el.mass} Da` : '\u2014';
+      // At fontSize=10 mono, ~6px per char; CARD_W - 12 = 88px available
+      const width = massStr.length * 6;
+      // This should fit; mass values are typically < 300 chars
+      expect(massStr.length).toBeLessThan(20);
+      expect(width).toBeLessThan(CARD_W);
+    });
   });
 });
 
@@ -320,28 +311,26 @@ describe('Layout constraints: IntroBlock drop cap', () => {
   });
 
   it('forAll(element): summary text fits in IntroBlock at all screen widths', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        // IntroBlock desktop width = 760, mobile = 360
-        // Drop cap takes ~40px width + 4px gap = 44px
-        // Remaining width for first lines: 760 - 44 = 716px (desktop), 360 - 44 = 316px (mobile)
-        // At 16px font, ~8px per char = ~39 chars per line on mobile
-        // Summary is always > 50 chars (verified in data.property.test.ts)
-        // The text wraps naturally, so it always fits — we verify widths are sane
-        const desktopRemainder = 760 - 44;
-        const mobileRemainder = 360 - 44;
-        expect(desktopRemainder).toBeGreaterThan(200);
-        expect(mobileRemainder).toBeGreaterThan(200);
-        // No single word in the summary should be wider than the narrowest available width
-        const words = el.summary.split(/\s+/);
-        for (const word of words) {
-          const wordWidth = word.length * 8; // 8px per char heuristic
-          // Even the narrowest line (mobileRemainder=316px) can fit ~39 chars
-          // Scientific terms rarely exceed 30 chars
-          expect(wordWidth).toBeLessThan(mobileRemainder);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      // IntroBlock desktop width = 760, mobile = 360
+      // Drop cap takes ~40px width + 4px gap = 44px
+      // Remaining width for first lines: 760 - 44 = 716px (desktop), 360 - 44 = 316px (mobile)
+      // At 16px font, ~8px per char = ~39 chars per line on mobile
+      // Summary is always > 50 chars (verified in data.property.test.ts)
+      // The text wraps naturally, so it always fits — we verify widths are sane
+      const desktopRemainder = 760 - 44;
+      const mobileRemainder = 360 - 44;
+      expect(desktopRemainder).toBeGreaterThan(200);
+      expect(mobileRemainder).toBeGreaterThan(200);
+      // No single word in the summary should be wider than the narrowest available width
+      const words = el.summary.split(/\s+/);
+      for (const word of words) {
+        const wordWidth = word.length * 8; // 8px per char heuristic
+        // Even the narrowest line (mobileRemainder=316px) can fit ~39 chars
+        // Scientific terms rarely exceed 30 chars
+        expect(wordWidth).toBeLessThan(mobileRemainder);
+      }
+    });
   });
 });
 
@@ -447,16 +436,14 @@ describe('Layout constraints: element name lengths', () => {
   });
 
   it('forAll(element): element name at 8px font either fits or truncates gracefully', () => {
-    fc.assert(
-      fc.property(elementArb, (el) => {
-        const result = truncateToFit(el.name, NAME_FONT, NAME_MAX_W);
-        expect(fitLabel(result, NAME_FONT, NAME_MAX_W)).toBe(true);
-        // If truncated, it should end with ellipsis
-        if (result !== el.name) {
-          expect(result.endsWith('\u2026')).toBe(true);
-        }
-      }),
-    );
+    forEveryElement(allElements, (el) => {
+      const result = truncateToFit(el.name, NAME_FONT, NAME_MAX_W);
+      expect(fitLabel(result, NAME_FONT, NAME_MAX_W)).toBe(true);
+      // If truncated, it should end with ellipsis
+      if (result !== el.name) {
+        expect(result.endsWith('\u2026')).toBe(true);
+      }
+    });
   });
 });
 

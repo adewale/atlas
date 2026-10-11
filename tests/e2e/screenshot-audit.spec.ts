@@ -1,18 +1,20 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
+import { settle } from './helpers/settle';
 
 test.describe('Homepage screenshot audit', () => {
   test('all 118 elements are visible on the periodic table', async ({ page }) => {
     await page.goto('/');
     // Wait for load animation to complete
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Take full-page screenshot
     await page.screenshot({ path: 'tests/e2e/screenshots/home-full.png', fullPage: true });
 
     // Count the number of element cells (g elements with role="button")
     const cells = page.locator('svg g[role="button"]');
-    const count = await cells.count();
-    expect(count).toBe(118);
+    // Retrying assertion: waits for the table to render (lazy route chunk,
+    // view transition) instead of counting once.
+    await expect(cells).toHaveCount(118);
 
     // Verify elements are positioned correctly (not all stacked at 0,0)
     // H should be at col 1 (x=0), He at col 18 (x=952) — they should NOT overlap
@@ -60,7 +62,7 @@ test.describe('Homepage screenshot audit', () => {
 
   test('element folio renders correctly for Iron', async ({ page }) => {
     await page.goto('/elements/Fe');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/folio-fe.png', fullPage: true });
 
     // Verify key content
@@ -79,7 +81,7 @@ test.describe('Homepage screenshot audit', () => {
 
   test('navigation links are present on homepage', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(1000);
+    await settle(page);
 
     const aboutLink = page.locator('a[href="/about"]');
     await expect(aboutLink).toBeVisible();
@@ -89,7 +91,7 @@ test.describe('Homepage screenshot audit', () => {
 
   test('compare page renders correctly', async ({ page }) => {
     await page.goto('/elements/Fe/compare/Cu');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/compare-fe-cu.png', fullPage: true });
 
     // Both element names should appear in the SVG comparison
@@ -101,7 +103,7 @@ test.describe('Homepage screenshot audit', () => {
 test.describe('Element folio journeys', () => {
   test('Hydrogen folio (edge case: period 1, group 1, s-block)', async ({ page }) => {
     await page.goto('/elements/H');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/folio-h.png', fullPage: true });
 
     await expect(page.locator('.folio-symbol')).toHaveText('H');
@@ -119,7 +121,7 @@ test.describe('Element folio journeys', () => {
 
   test('Oganesson folio (edge case: last element, period 7, group 18, p-block)', async ({ page }) => {
     await page.goto('/elements/Og');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/folio-og.png', fullPage: true });
 
     await expect(page.locator('.folio-symbol')).toHaveText('Og');
@@ -131,7 +133,7 @@ test.describe('Element folio journeys', () => {
 
   test('Lanthanum folio (edge case: lanthanide, null group in some datasets)', async ({ page }) => {
     await page.goto('/elements/La');
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     await expect(page.locator('.folio-symbol')).toHaveText('La');
     await expect(page.locator('h2')).toContainText('Lanthanum');
@@ -141,23 +143,24 @@ test.describe('Element folio journeys', () => {
 
   test('folio → periodic table navigation works (no full reload)', async ({ page }) => {
     await page.goto('/elements/Fe');
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Click back to periodic table
     await page.locator('a[href="/"]').first().click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should now be on home with all 118 elements
     const cells = page.locator('svg g[role="button"]');
-    const count = await cells.count();
-    expect(count).toBe(118);
+    // Retrying assertion: waits for the table to render (lazy route chunk,
+    // view transition) instead of counting once.
+    await expect(cells).toHaveCount(118);
   });
 });
 
 test.describe('Atlas pages', () => {
   test('Group 8 page shows correct elements with cards', async ({ page }) => {
     await page.goto('/groups/8');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-group-8.png', fullPage: true });
 
     // Heading
@@ -173,7 +176,7 @@ test.describe('Atlas pages', () => {
 
   test('Period 4 page shows correct element count', async ({ page }) => {
     await page.goto('/periods/4');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-period-4.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Period 4');
@@ -184,7 +187,7 @@ test.describe('Atlas pages', () => {
 
   test('Block d page shows transition metals', async ({ page }) => {
     await page.goto('/blocks/d');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-block-d.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('block');
@@ -195,7 +198,7 @@ test.describe('Atlas pages', () => {
 
   test('Category: transition metal page', async ({ page }) => {
     await page.goto('/categories/transition-metal');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-category-transition-metal.png', fullPage: true });
 
     // Should have a plate with element cards
@@ -205,7 +208,7 @@ test.describe('Atlas pages', () => {
 
   test('Rank by mass page shows all 118 elements ordered', async ({ page }) => {
     await page.goto('/properties/mass');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-rank-mass.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Atomic Mass');
@@ -216,7 +219,7 @@ test.describe('Atlas pages', () => {
 
   test('Anomaly: synthetic-heavy page', async ({ page }) => {
     await page.goto('/anomalies/synthetic-heavy');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/atlas-anomaly-synthetic-heavy.png', fullPage: true });
 
     // Should have a heading
@@ -232,13 +235,13 @@ test.describe('Atlas pages', () => {
 
   test('Atlas group → element folio navigation works', async ({ page }) => {
     await page.goto('/groups/8');
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Click on Iron card in the AtlasPlate SVG (uses g[role="link"] with onClick navigation)
     const feCard = page.locator('g[aria-label*="Iron"]').first();
     await expect(feCard).toBeVisible();
     await feCard.click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be on the Iron folio page
     await expect(page.locator('.folio-symbol')).toHaveText('Fe');
@@ -248,7 +251,7 @@ test.describe('Atlas pages', () => {
 test.describe('Information pages', () => {
   test('About page renders with all sections', async ({ page }) => {
     await page.goto('/about');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/about.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('About');
@@ -266,7 +269,7 @@ test.describe('Information pages', () => {
 
   test('Credits page renders with table and all sections', async ({ page }) => {
     await page.goto('/about/credits');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/credits.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Credits');
@@ -289,7 +292,7 @@ test.describe('Information pages', () => {
 
   test('Design page renders palette, blocks, typography, and components', async ({ page }) => {
     await page.goto('/about/design');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/design.png', fullPage: true });
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Design');
@@ -303,69 +306,70 @@ test.describe('Information pages', () => {
 
   test('About page → home navigation works', async ({ page }) => {
     await page.goto('/about');
-    await page.waitForTimeout(1000);
+    await settle(page);
 
     await page.locator('a[href="/"]').first().click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be on home with periodic table
     const cells = page.locator('svg g[role="button"]');
-    const count = await cells.count();
-    expect(count).toBe(118);
+    // Retrying assertion: waits for the table to render (lazy route chunk,
+    // view transition) instead of counting once.
+    await expect(cells).toHaveCount(118);
   });
 });
 
 test.describe('Cross-page user journeys', () => {
   test('Home → element folio → atlas group → back to home', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(2000);
+    await settle(page);
 
     // Click on Iron in the periodic table
     await page.locator('g[aria-label*="Iron"]').click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be on Iron folio
     await expect(page.locator('.folio-symbol')).toHaveText('Fe');
 
     // Click group 8 link in data plate
     await page.locator('a[href="/groups/8"]').click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be on group 8 atlas page
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Group 8');
 
     // Click back to periodic table
     await page.locator('a[href="/"]').first().click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be back on home with all 118 elements
     const cells = page.locator('svg g[role="button"]');
-    expect(await cells.count()).toBe(118);
+    await expect(cells).toHaveCount(118);
   });
 
   test('Home → About via nav link', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(1000);
+    await settle(page);
 
     await page.locator('a[href="/about"]').click();
-    await page.waitForTimeout(1000);
+    await settle(page);
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('About');
   });
 
   test('Home → Credits via nav link', async ({ page }) => {
     await page.goto('/');
-    await page.waitForTimeout(1000);
+    await settle(page);
 
     await page.locator('a[href="/about/credits"]').click();
-    await page.waitForTimeout(1000);
+    await settle(page);
 
     await expect(page.locator('h1:not([aria-label="Atlas"])')).toContainText('Credits');
   });
 
   test('Compare page has back link and both elements', async ({ page }) => {
     await page.goto('/elements/H/compare/He');
-    await page.waitForTimeout(1500);
+    await settle(page);
     await page.screenshot({ path: 'tests/e2e/screenshots/compare-h-he.png', fullPage: true });
 
     // Check the comparison SVG exists with both elements named
@@ -376,13 +380,13 @@ test.describe('Cross-page user journeys', () => {
 
   test('Folio compare link navigates correctly', async ({ page }) => {
     await page.goto('/elements/Fe');
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Click "Compare →" link
     const compareLink = page.locator('a[href*="/compare/"]').first();
     await expect(compareLink).toBeVisible();
     await compareLink.click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be on a compare page — check SVG aria-label contains "Iron"
     const svg = page.locator('svg[aria-label*="Iron"]');
@@ -391,11 +395,11 @@ test.describe('Cross-page user journeys', () => {
 
   test('Credits table element link navigates to folio', async ({ page }) => {
     await page.goto('/about/credits');
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Click on Fe link in the credits table
     await page.locator('a[href="/elements/Fe"]').click();
-    await page.waitForTimeout(1500);
+    await settle(page);
 
     // Should be on Iron folio
     await expect(page.locator('.folio-symbol')).toHaveText('Fe');

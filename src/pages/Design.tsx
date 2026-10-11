@@ -771,9 +771,9 @@ export default function Design() {
             DiscovererChip — compact card with mustard left border, name + element count or year range
           </div>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <DiscovererChip name="Seaborg" elementCount={10} />
-            <DiscovererChip name="Davy" yearRange="1807–1808" />
-            <DiscovererChip name="Curie" elementCount={2} />
+            <DiscovererChip name="Carl Wilhelm Scheele" elementCount={2} />
+            <DiscovererChip name="Humphry Davy" yearRange="1807–1808" />
+            <DiscovererChip name="Marie Curie & Pierre Curie" elementCount={2} />
           </div>
         </div>
 
@@ -870,8 +870,8 @@ export default function Design() {
             AnomalyChip — compact card with warm red left border, anomaly label + element count
           </div>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <AnomalyChip slug="electron-config" label="Electron config" elementCount={19} />
-            <AnomalyChip slug="melting-point" label="Melting point" elementCount={5} />
+            <AnomalyChip slug="electron-config-anomalies" label="Electron config" elementCount={10} />
+            <AnomalyChip slug="metalloid-boundary" label="Metalloid boundary" elementCount={6} />
           </div>
         </div>
 

@@ -6,7 +6,7 @@
  *  2. Performance metrics (load times, DOM node counts, transition timing)
  *  3. Bundle loading behaviour (lazy vs eager)
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 // ---------------------------------------------------------------------------
 // Screenshot: Home page periodic table (visual regression)

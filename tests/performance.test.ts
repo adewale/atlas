@@ -4,14 +4,17 @@
  * These tests measure and assert budgets for:
  *  - Bundle sizes (index chunk, elements data chunk)
  *  - Data module loading (lazy vs eager)
- *  - Highlight mode transition efficiency
- *  - Route loader parallelism
- *  - SVG DOM node counts
  *  - Text measurement deferral
+ *
+ * The dist/ checks skip when there is no build, so a plain local `npm test`
+ * works before `npm run build`. CI runs this file only through
+ * `npm run lint:budgets`, after the build; in that lane a missing build fails.
  */
 import { describe, it, expect } from 'vitest';
+import { renderHook } from '@testing-library/react';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
+import { usePretextLines } from '../src/hooks/usePretextLines';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -30,6 +33,8 @@ function getDistAssets(): { name: string; sizeKB: number }[] {
   }
 }
 
+const BUDGETS_LANE = process.env.npm_lifecycle_event === 'lint:budgets';
+
 function findAsset(assets: { name: string; sizeKB: number }[], pattern: RegExp) {
   return assets.find(a => pattern.test(a.name));
 }
@@ -40,6 +45,10 @@ function findAsset(assets: { name: string; sizeKB: number }[], pattern: RegExp) 
 describe('Bundle size budgets', () => {
   const assets = getDistAssets();
   const hasBuild = assets.length > 0;
+
+  it.runIf(BUDGETS_LANE)('npm run lint:budgets has a dist/ build to measure', () => {
+    expect(hasBuild, 'run `npm run build` before `npm run lint:budgets`').toBe(true);
+  });
 
   it.skipIf(!hasBuild)('index bundle is under 400 KB', () => {
     const index = findAsset(assets, /^index-/);
@@ -170,65 +179,22 @@ describe('Data module', () => {
 });
 
 // ---------------------------------------------------------------------------
-// C) Highlight transition batching
+// C) Text measurement
 // ---------------------------------------------------------------------------
-describe('Highlight transition optimization', () => {
-  it('GridCell uses staggered ripple delay with custom easing', async () => {
-    const src = readFileSync(
-      join(__dirname, '..', 'src', 'components', 'PeriodicTableGrid.tsx'),
-      'utf-8',
-    );
-    // Original design: staggered ripple propagation using dist * 8 delay
-    expect(src).toContain('dist * 8');
-    // Custom easing curve preserved
-    expect(src).toContain('var(--ease-out)');
-  });
-});
-
-// ---------------------------------------------------------------------------
-// D) Text measurement
-// ---------------------------------------------------------------------------
+// The highlight ripple and table containment are asserted on rendered
+// components in tests/components/PeriodicTableGrid.test.tsx and
+// PeriodicTable.test.tsx; chunk splitting is asserted on dist/ above.
 describe('Text measurement', () => {
-  it('usePretextLines uses synchronous useMemo', async () => {
-    const src = readFileSync(
-      join(__dirname, '..', 'src', 'hooks', 'usePretextLines.ts'),
-      'utf-8',
-    );
-    expect(src).toContain('useMemo');
-    // Must NOT use useState+useEffect (causes flash of empty content)
-    expect(src).not.toContain('useState');
-    expect(src).not.toContain('useEffect');
-  });
-});
-
-// ---------------------------------------------------------------------------
-// E) Vite manual chunks config
-// ---------------------------------------------------------------------------
-describe('Vite manual chunks splitting', () => {
-  it('vite.config.ts defines manualChunks', () => {
-    const src = readFileSync(
-      join(__dirname, '..', 'vite.config.ts'),
-      'utf-8',
-    );
-    expect(src).toContain('manualChunks');
-  });
-});
-
-// ---------------------------------------------------------------------------
-// F) SVG DOM optimization
-// ---------------------------------------------------------------------------
-describe('SVG DOM optimization', () => {
-  it('PeriodicTable uses content-visibility or virtualization hint', () => {
-    const src = readFileSync(
-      join(__dirname, '..', 'src', 'components', 'PeriodicTable.tsx'),
-      'utf-8',
-    );
-    const hasOptimization =
-      src.includes('content-visibility') ||
-      src.includes('contentVisibility') ||
-      src.includes('will-change') ||
-      src.includes('willChange') ||
-      src.includes('contain');
-    expect(hasOptimization).toBe(true);
+  it('usePretextLines returns measured lines on the first render (no empty flash)', () => {
+    const firstRenderLineCounts: number[] = [];
+    renderHook(() => {
+      const result = usePretextLines({
+        text: 'Iron is a chemical element with symbol Fe and atomic number twenty-six.',
+        maxWidth: 120,
+      });
+      firstRenderLineCounts.push(result.lines.length);
+      return result;
+    });
+    expect(firstRenderLineCounts[0]).toBeGreaterThan(1);
   });
 });

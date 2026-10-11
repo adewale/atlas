@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, serveFontsLocally } from './fixtures';
 
 /**
  * Animation Easing & Timing Validation Tests.
@@ -184,6 +184,7 @@ test.describe('prefers-reduced-motion', () => {
     const context = await browser.newContext({
       reducedMotion: 'reduce',
     });
+    await serveFontsLocally(context);
     const page = await context.newPage();
     await page.goto('/elements/Fe');
     await page.waitForSelector('.folio-identity', { timeout: 10000 });

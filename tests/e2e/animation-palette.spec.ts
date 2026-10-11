@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Animation Palette page', () => {
   test('page loads and renders all sections', async ({ page }) => {

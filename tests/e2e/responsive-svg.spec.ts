@@ -13,7 +13,7 @@
  *   2. SVG content is readable (text not scaled below 6px effective)
  *   3. Content fills available width (no dead space > 50% of viewport)
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Responsive SVG at mobile viewport (375px)', () => {
   test.use({ viewport: { width: 375, height: 812 } });

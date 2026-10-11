@@ -11,7 +11,7 @@
  *   3. Mobile <details> are interactive (can be opened/closed)
  *   4. No margin notes overflow the viewport on mobile
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 /** Pages known to use MarginNote. */
 const PAGES_WITH_MARGIN_NOTES = [

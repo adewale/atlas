@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Home page', () => {
   test('loads and shows 118 element cells', async ({ page }) => {

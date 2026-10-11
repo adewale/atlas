@@ -16,7 +16,7 @@
  * — bounding boxes, spatial separation, non-zero dimensions — in a real
  * Chromium browser via Playwright.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test.describe('Periodic table spatial layout', () => {
   test('H is at far-left, He at far-right, with >400px separation', async ({ page }) => {

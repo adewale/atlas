@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 // All visualization pages that show in VizNav
 const VIZ_PAGES = [
