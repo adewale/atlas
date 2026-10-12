@@ -10,10 +10,11 @@ import { settle as waitForAnimations } from './helpers/settle';
  *
  * Baselines are per platform (`*-darwin.png`, `*-linux.png`). CI compares
  * against the committed `*-linux.png` baselines. They come only from the CI
- * image, never a local render. To add or change one, take the `*-actual.png`
- * that the CI run puts under test-results/ in its e2e-screenshots artifact
- * (a missing or changed baseline fails the compare and is rendered there),
- * review it, and commit it as the `-linux.png` baseline.
+ * image, never a local render. When one differs, the failing compare saves
+ * the new render as `*-actual.png` under test-results/ in that run's
+ * e2e-screenshots artifact: review it and commit it as the `-linux.png`
+ * baseline. The compare does not render a missing baseline; only with no
+ * `*-linux.png` committed at all does CI render every one into the artifact.
  * Fonts come from the committed copies (tests/fonts/), not Google Fonts.
  *
  * Locally: `npm run test:visual` (add --update-snapshots to refresh your
