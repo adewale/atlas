@@ -9,10 +9,13 @@ import { settle as waitForAnimations } from './helpers/settle';
  * and compared against baselines on subsequent runs.
  *
  * Baselines are per platform (`*-darwin.png`, `*-linux.png`). CI compares
- * against the `*-linux.png` baselines. Until they are committed, the CI
- * visual step renders them on the CI image into its e2e-screenshots artifact
- * for review and commit. Fonts come from the
- * committed copies (tests/fonts/), not Google Fonts.
+ * against the committed `*-linux.png` baselines. They come only from the CI
+ * image, never a local render. When one differs, the failing compare saves
+ * the new render as `*-actual.png` under test-results/ in that run's
+ * e2e-screenshots artifact: review it and commit it as the `-linux.png`
+ * baseline. The compare does not render a missing baseline; only with no
+ * `*-linux.png` committed at all does CI render every one into the artifact.
+ * Fonts come from the committed copies (tests/fonts/), not Google Fonts.
  *
  * Locally: `npm run test:visual` (add --update-snapshots to refresh your
  * platform's baselines).
@@ -56,10 +59,13 @@ test.describe('Visual regression: AtlasPlate grids', () => {
   for (const pg of GRID_PAGES) {
     test(`${pg.name} grid layout`, async ({ page }, testInfo) => {
       await page.goto(pg.url);
-      await page.waitForSelector('svg[role="img"]', { timeout: 10000 });
+      // The AtlasPlate is the img whose element cards are links. The page's
+      // description is also an svg[role="img"] and comes first, so `.first()`
+      // would capture the description text instead of the grid.
+      const plate = page.locator('svg[role="img"]').filter({ has: page.locator('g[role="link"]') });
+      await plate.waitFor({ timeout: 10000 });
       await waitForAnimations(page);
 
-      const plate = page.locator('svg[role="img"]').first();
       await expect(plate).toHaveScreenshot(`plate-${pg.name}-${testInfo.project.name}.png`, {
         maxDiffPixelRatio: 0.01,
         animations: 'disabled',
@@ -74,8 +80,9 @@ test.describe('Visual regression: periodic table home', () => {
     await page.waitForSelector('svg [role="button"]', { timeout: 10000 });
     await waitForAnimations(page);
 
-    // Screenshot just the main SVG periodic table
-    const tableSvg = page.locator('svg').first();
+    // The table's own SVG, by its accessible name. The first svg on the page
+    // is the ATLAS wordmark, not the table.
+    const tableSvg = page.locator('svg[aria-label="Periodic table of elements"]');
     await expect(tableSvg).toHaveScreenshot(`periodic-table-${testInfo.project.name}.png`, {
       maxDiffPixelRatio: 0.02,
       animations: 'disabled',
