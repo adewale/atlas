@@ -71,51 +71,7 @@ describe('Color consistency: grid.ts ↔ theme.ts ↔ globals.css', () => {
 // When dropCap.char was explicitly provided, the component sliced lines[0]
 // again, losing the first letter of the first word.
 // ---------------------------------------------------------------------------
-describe('PretextSvg: explicit dropCap.char prevents double-slice', () => {
-  // We test the logic extracted from PretextSvg without rendering React.
-  // The key condition: when hasExplicitDropCap is true, line.text must NOT
-  // be sliced. When it is false (legacy path), line.text IS sliced.
-
-  function simulateRenderedText(
-    lineText: string,
-    dropCapChar: string | undefined,
-  ): string {
-    // Mirrors the logic on line 204 of PretextSvg.tsx:
-    //   dropCapChar && i === 0 && !hasExplicitDropCap ? line.text.slice(1) : line.text
-    const hasExplicitDropCap = dropCapChar != null;
-    const resolvedDropCapChar = dropCapChar ?? lineText[0];
-    if (resolvedDropCapChar && !hasExplicitDropCap) {
-      return lineText.slice(1);
-    }
-    return lineText;
-  }
-
-  it('explicit dropCap.char: first line text is NOT re-sliced', () => {
-    // Scenario: useDropCapText already sliced "H" off, so lines[0] = "ello world"
-    // dropCap.char = "H" (explicit)
-    const rendered = simulateRenderedText('ello world', 'H');
-    expect(rendered).toBe('ello world');
-    // Before the fix, this would have been "llo world" (double-sliced)
-    expect(rendered).not.toBe('llo world');
-  });
-
-  it('no explicit dropCap.char (legacy path): first line IS sliced', () => {
-    // Scenario: lines[0] = "Hello world", no explicit char
-    const rendered = simulateRenderedText('Hello world', undefined);
-    expect(rendered).toBe('ello world');
-  });
-
-  it('explicit dropCap.char preserves single-character first line', () => {
-    // Edge case: first line is a single character after pre-slicing
-    const rendered = simulateRenderedText('x', 'A');
-    expect(rendered).toBe('x');
-  });
-
-  it('explicit dropCap.char preserves empty first line', () => {
-    const rendered = simulateRenderedText('', 'A');
-    expect(rendered).toBe('');
-  });
-});
+// The production PretextSvg component is exercised in components/PretextSvg.test.tsx.
 
 // ---------------------------------------------------------------------------
 // Bug 3: Theme token completeness
