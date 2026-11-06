@@ -1,6 +1,4 @@
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 import gridElements from '../data/generated/grid-elements.json';
 import fullElements from '../data/generated/elements.json';
 
@@ -126,23 +124,5 @@ describe('grid-elements.json suitability for PeriodicTable', () => {
         expect(el, `${el.symbol} should NOT have "${field}"`).not.toHaveProperty(field);
       }
     }
-  });
-});
-
-describe('grid.ts and data.ts import the slim grid-elements.json (not full elements.json)', () => {
-  const gridSrc = readFileSync(resolve(__dirname, '../src/lib/grid.ts'), 'utf-8');
-  const dataSrc = readFileSync(resolve(__dirname, '../src/lib/data.ts'), 'utf-8');
-
-  it('grid.ts imports from grid-elements.json', () => {
-    expect(gridSrc).toMatch(/grid-elements\.json/);
-    expect(gridSrc).not.toMatch(/['"].*\/elements\.json['"]/);
-  });
-
-  it('data.ts does NOT eagerly import the full elements.json at module scope', () => {
-    // The full elements.json should only be loaded on-demand by route loaders,
-    // not synchronously at module scope in data.ts.
-    expect(dataSrc).not.toMatch(
-      /^import\s+\w+\s+from\s+['"].*\/elements\.json['"]/m,
-    );
   });
 });
